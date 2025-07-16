@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 100 100"
+   version="1.1"
+   x="0px"
+   y="0px"
+   id="svg12"
+   sodipodi:docname="1-theDVDTitle-noun_Movie_32984.html"
+   width="100"
+   height="100"
+   inkscape:version="0.92.1 r15371">
+  <metadata
+     id="metadata18">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>avi</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs16" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1506"
+     id="namedview14"
+     showgrid="false"
+     inkscape:zoom="4.8108742"
+     inkscape:cx="-77.349521"
+     inkscape:cy="6.6916408"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg12" />
+  <title
+     id="title2">avi</title>
+  <description>Created with Sketch (http://www.bohemiancoding.com/sketch)</description>
+  <g
+     sketch:type="MSPage"
+     id="g6"
+     style="fill:none;fill-rule:evenodd;stroke:none;stroke-width:0.94736844"
+     transform="matrix(1.0555556,0,0,1.0555556,4.2252803,-7.7217687)">
+    <path
+       d="M 17.64889,66 14.649432,55.087298 66.319121,45.976537 69.208985,58.023437 19.908933,66 H 71 V 95 H 17 V 66 Z M 10,97.997559 V 12 c 0,-2 2,-2 2,-2 h 46 l 18,18 v 70 c 0,2 -2,2 -2,2 H 12 c 0,0 -2,0 -2,-2.002441 z m 3,-2.879854 V 14.88 C 13,13 14.820896,13 14.820896,13 H 55 v 16 c 0,2 2,2 2,2 H 73 V 95.12 C 73,97 71.179104,97 71.179104,97 H 14.820896 C 14.820896,97 13,97 13,95.117705 Z m 3.144121,-38.824346 6.787049,-1.19674 7.217215,7.175566 -7.085546,1.249373 z m 12.706686,-2.240531 6.787049,-1.19674 7.217215,7.175566 -7.085546,1.249373 z m 12.706686,-2.240532 6.787049,-1.19674 7.217215,7.175566 -7.085546,1.249373 z m 12.706685,-2.240532 6.78705,-1.196739 7.217214,7.175566 -7.085545,1.249373 z m 8.842183,17.823401 h 7.019226 l -5.759769,6.981997 h -7.327933 z m -12.902707,0 h 7.019226 l -5.759769,6.981997 h -7.327933 z m -12.902707,0 h 7.019226 l -5.759769,6.981997 h -7.327933 z m -12.902707,0 h 7.019226 l -5.759769,6.981997 H 18.329764 Z M 18,76 v 1 h 52 v -1 z m 0,0"
+       sketch:type="MSShapeGroup"
+       id="path4"
+       inkscape:connector-curvature="0"
+       style="fill:#000000;stroke-width:0.94736844" />
+  </g>
+</svg>
