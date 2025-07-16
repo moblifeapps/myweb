@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:i="http://ns.adobe.com/AdobeIllustrator/10.0/"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 100 100"
+   x="0px"
+   y="0px"
+   version="1.1"
+   id="svg14"
+   sodipodi:docname="videoplayer.svg"
+   width="100"
+   height="100"
+   inkscape:version="0.92.1 r15371">
+  <metadata
+     id="metadata20">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs18" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1506"
+     id="namedview16"
+     showgrid="false"
+     inkscape:zoom="3.776"
+     inkscape:cx="19.734573"
+     inkscape:cy="46.278405"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg14" />
+  <switch
+     transform="matrix(1.2838544,0,0,1.2838544,-7.0100902,9.741887)"
+     id="switch56"
+     style="stroke-width:0.7789045">
+    <foreignObject
+       requiredExtensions="http://ns.adobe.com/AdobeIllustrator/10.0/"
+       x="0"
+       y="0"
+       width="1"
+       height="1" />
+    <g
+       i:extraneous="self"
+       id="g54"
+       style="stroke-width:0.7789045">
+      <g
+         id="g4"
+         style="stroke-width:0.7789045">
+        <path
+           inkscape:connector-curvature="0"
+           d="M 7.034,22.88 V 62.375 H 82.406 V 22.88 Z m 49.733,24.711 c 0,0.262 -0.213,0.474 -0.474,0.474 h -22.98 c -0.261,0 -0.474,-0.212 -0.474,-0.474 v -9.932 c 0,-0.261 0.213,-0.473 0.474,-0.473 h 22.979 c 0.261,0 0.474,0.212 0.474,0.473 v 9.932 z"
+           id="path2-0"
+           style="stroke-width:0.7789045" />
+      </g>
+      <g
+         id="g8"
+         style="stroke-width:0.7789045">
+        <path
+           inkscape:connector-curvature="0"
+           d="m 81.337,62.251 v 6.277 H 8.018 v -6.277 h 73.319 m 0.525,-1 H 7.492 c -0.262,0 -0.474,0.212 -0.474,0.473 v 7.332 c 0,0.261 0.212,0.473 0.474,0.473 h 74.37 c 0.263,0 0.475,-0.212 0.475,-0.473 v -7.332 c 0,-0.261 -0.212,-0.473 -0.475,-0.473 z"
+           id="path6-8"
+           style="stroke-width:0.7789045" />
+      </g>
+      <polygon
+         points="12.589,65.769 10.131,67.188 10.131,64.35 "
+         id="polygon10"
+         style="stroke-width:0.7789045" />
+      <g
+         id="g14"
+         style="stroke-width:0.7789045">
+        <path
+           inkscape:connector-curvature="0"
+           d="m 67.757,64.669 c 0.262,0 0.475,0.212 0.475,0.474 v 0.946 c 0,0.261 -0.213,0.473 -0.475,0.473 H 29.803 c -0.261,0 -0.474,-0.212 -0.474,-0.473 v -0.946 c 0,-0.262 0.212,-0.474 0.474,-0.474 h 37.954 m 0,-0.5 H 29.803 c -0.537,0 -0.974,0.437 -0.974,0.974 v 0.946 c 0,0.536 0.437,0.973 0.974,0.973 h 37.954 c 0.537,0 0.975,-0.437 0.975,-0.973 v -0.946 c -0.001,-0.538 -0.438,-0.974 -0.975,-0.974 z"
+           id="path12"
+           style="stroke-width:0.7789045" />
+      </g>
+      <path
+         style="stroke:#000000;stroke-width:0.38945225;stroke-miterlimit:10"
+         inkscape:connector-curvature="0"
+         stroke-miterlimit="10"
+         d="m 50.081,65.143 c 0,-0.262 -0.211,-0.474 -0.473,-0.474 H 29.803 c -0.261,0 -0.474,0.212 -0.474,0.474 v 0.946 c 0,0.261 0.212,0.473 0.474,0.473 h 19.805 c 0.262,0 0.473,-0.212 0.473,-0.473 z"
+         id="path16" />
+      <path
+         inkscape:connector-curvature="0"
+         d="m 80.856,67.452 c 0,0.13 -0.106,0.235 -0.236,0.235 h -2.839 c -0.13,0 -0.235,-0.105 -0.235,-0.235 v -2.839 c 0,-0.13 0.105,-0.236 0.235,-0.236 h 2.839 c 0.13,0 0.236,0.106 0.236,0.236 z"
+         id="path18"
+         style="stroke-width:0.7789045" />
+      <g
+         id="g44"
+         style="stroke-width:0.7789045">
+        <g
+           id="g24"
+           style="stroke-width:0.7789045">
+          <polygon
+             style="fill:#000000;stroke-width:0.7789045"
+             points="78.313,65.783 78.077,65.783 78.077,64.926 78.935,64.926 78.935,65.162 78.313,65.162 "
+             id="polygon20" />
+          <rect
+             style="fill:#000000;stroke-width:0.7789045"
+             x="78.042999"
+             y="65.294998"
+             transform="matrix(0.7066,0.7076,-0.7076,0.7066,69.3328,-36.4007)"
+             width="1.045"
+             height="0.237"
+             id="rect22" />
+        </g>
+        <g
+           id="g30"
+           style="stroke-width:0.7789045">
+          <polygon
+             style="fill:#000000;stroke-width:0.7789045"
+             points="80.324,65.783 80.087,65.783 80.087,65.162 79.467,65.162 79.467,64.926 80.324,64.926 "
+             id="polygon26" />
+          <rect
+             style="fill:#000000;stroke-width:0.7789045"
+             x="79.718002"
+             y="64.889999"
+             transform="matrix(0.7092,0.705,-0.705,0.7092,69.3385,-37.2635)"
+             width="0.237"
+             height="1.046"
+             id="rect28" />
+        </g>
+        <g
+           id="g36"
+           style="stroke-width:0.7789045">
+          <polygon
+             style="fill:#000000;stroke-width:0.7789045"
+             points="78.935,67.14 78.077,67.14 78.077,66.282 78.313,66.282 78.313,66.903 78.935,66.903 "
+             id="polygon32" />
+          <rect
+             style="fill:#000000;stroke-width:0.7789045"
+             x="78.446999"
+             y="66.128998"
+             transform="matrix(0.7071,0.7071,-0.7071,0.7071,70.1408,-36.0321)"
+             width="0.236"
+             height="1.045"
+             id="rect34" />
+        </g>
+        <g
+           id="g42"
+           style="stroke-width:0.7789045">
+          <polygon
+             style="fill:#000000;stroke-width:0.7789045"
+             points="80.324,67.14 79.467,67.14 79.467,66.903 80.087,66.903 80.087,66.282 80.324,66.282 "
+             id="polygon38" />
+          <rect
+             style="fill:#000000;stroke-width:0.7789045"
+             x="79.314003"
+             y="66.532997"
+             transform="matrix(0.7071,0.7071,-0.7071,0.7071,70.5132,-36.9311)"
+             width="1.045"
+             height="0.237"
+             id="rect40" />
+        </g>
+      </g>
+      <path
+         inkscape:connector-curvature="0"
+         d="m 17.658,64.519 c -0.098,0 -0.543,0.417 -0.784,0.65 -10e-4,0 -0.002,-10e-4 -0.004,-10e-4 h -0.873 c -0.114,0 -0.206,0.092 -0.206,0.205 v 0.789 c 0,0.112 0.092,0.203 0.206,0.203 h 0.873 c 10e-4,0 0.002,0 0.002,0 0.241,0.234 0.688,0.652 0.786,0.652 0.137,0 0.377,0 0.377,0 v -1.061 -0.378 -1.061 c 0,0.002 -0.241,0.002 -0.377,0.002 z"
+         id="path46"
+         style="stroke-width:0.7789045" />
+      <path
+         inkscape:connector-curvature="0"
+         d="m 18.976,65.768 c 0,-0.411 -0.266,-0.756 -0.633,-0.885 v 0.242 c 0.24,0.115 0.407,0.359 0.407,0.643 0,0.284 -0.167,0.527 -0.407,0.643 v 0.242 c 0.367,-0.129 0.633,-0.475 0.633,-0.885 z"
+         id="path48"
+         style="stroke-width:0.7789045" />
+      <path
+         inkscape:connector-curvature="0"
+         d="m 19.9,65.769 c 0,-0.686 -0.374,-1.286 -0.928,-1.609 l -0.342,0.325 c 0.484,0.225 0.821,0.716 0.821,1.284 0,0.562 -0.331,1.05 -0.807,1.277 l 0.331,0.331 C 19.528,67.054 19.9,66.453 19.9,65.769 Z"
+         id="path50"
+         style="stroke-width:0.7789045" />
+      <polygon
+         points="47.178,42.708 42.262,45.546 42.262,39.871 "
+         id="polygon52"
+         style="stroke-width:0.7789045" />
+    </g>
+  </switch>
+</svg>
