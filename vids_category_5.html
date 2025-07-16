@@ -3608,7 +3608,7 @@ $('.mynextButton').fadeIn();
 //Click event to go next
 var xx = $(location).attr('pathname');
 
-var wheretogo = "index.html";
+var wheretogo = "/";
 var next = "";
 //alert("Current Page:" + xx);
 //xx = "hlpmyvideos_3.html";
@@ -3717,7 +3717,7 @@ case "/hlpwinrare_6.html": next =  "hlpwinrare_1"; break
 
 }
 
-$('.mynextButton').attr("href", wheretogo + next);
+$('.mynextButton').attr("href", wheretogo + next + ".html");
 
 
 
@@ -3828,7 +3828,7 @@ case "/hlpwinrare_4.html": nextpage = "hlpwinrare_3"; break;
 case "/hlpwinrare_5.html": nextpage = "hlpwinrare_4"; break;
 case "/hlpwinrare_6.html": nextpage = "hlpwinrare_5"; break;
 }
-window.location.href = wheretogonext + nextpage;
+window.location.href = wheretogonext + nextpage + ".html";;
 
     });
 
