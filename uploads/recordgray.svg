@@ -9,13 +9,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="120mm"
-   height="120mm"
+   width="453.5433"
+   height="453.5433"
    viewBox="0 0 120 120"
    version="1.1"
    id="svg5135"
    inkscape:version="0.92.1 r15371"
-   sodipodi:docname="contactgray.svg">
+   sodipodi:docname="recordgray.svg">
   <defs
      id="defs5129" />
   <sodipodi:namedview
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.9899495"
-     inkscape:cx="-423.54016"
-     inkscape:cy="244.21578"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="-58.871856"
+     inkscape:cy="119.36112"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -35,7 +35,8 @@
      inkscape:window-height="1506"
      inkscape:window-x="-11"
      inkscape:window-y="-11"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     units="px" />
   <metadata
      id="metadata5132">
     <rdf:RDF>
@@ -83,7 +84,7 @@
        style="opacity:0.95;fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:0.69999999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <g
        id="g5081"
-       transform="matrix(1.0247024,0,0,1.0208404,8.4598741,-802.40154)"
+       transform="matrix(1.0247024,0,0,1.0208404,8.3262393,-802.53517)"
        style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:0.55242133;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
       <path
          id="path5079"
@@ -95,31 +96,44 @@
          d="m 50.000002,968.36218 c -18.77766,0 -34,15.22258 -34,34.00002 0,18.7776 15.22234,34 34,34 18.777656,0 33.999997,-15.2224 33.999997,-34 0,-18.77744 -15.222341,-34.00002 -33.999997,-34.00002 z"
          inkscape:connector-curvature="0" />
     </g>
-    <g
-       transform="matrix(0.77907286,0,0,0.77613663,24.501504,184.83112)"
-       id="g6"
-       style="fill:#ed432a;fill-opacity:1;stroke-width:0.34025472">
-      <polygon
-         points="25.7,28.1 47.4,46.2 69.1,28.1 "
-         id="polygon2"
-         style="fill:#ed432a;fill-opacity:1;stroke-width:0.34025472" />
-      <path
-         inkscape:connector-curvature="0"
-         d="M 26.7,44.5 H 10 c -0.9,0 -1.7,0.8 -1.7,1.7 0,0.9 0.8,1.7 1.7,1.7 h 21.7 c 0.9,0 1.7,-0.8 1.7,-1.7 0,0 0,0 0,0 0,0 0,0 0,0 0.4,3.7 -0.8,4.9 -1.7,4.9 H 23.1 V 54 H 15 c -0.9,0 -1.7,0.8 -1.7,1.7 0,0.9 0.8,1.7 1.7,1.7 h 21.9 c 0.9,0 1.7,-0.8 1.7,-1.7 0,-0.1 0,-0.2 0,0 0.4,3.2 -0.8,4 -1.7,4 H 23.1 v 3.1 c 0,0.9 0.8,1.7 1.7,1.7 h 40.9 c 3.3,0 5.9,-2.7 5.9,-5.9 V 30.4 L 48.4,49.7 c -0.3,0.3 -0.7,0.4 -1.1,0.4 -0.4,0 -0.8,-0.1 -1.1,-0.4 L 23.1,30.3 v 8.3 h -5.2 c -0.9,0 -1.7,0.8 -1.7,1.7 0,0.9 0.8,1.7 1.7,1.7 h 8.8 c 0.9,0 1.7,-0.8 1.7,-1.7 0,-0.1 0,-0.1 0,0 0.1,2.9 -0.8,4.2 -1.7,4.2 z"
-         id="path4"
-         style="fill:#ed432a;fill-opacity:1;stroke-width:0.34025472" />
-    </g>
     <text
-       style="font-weight:bold;font-size:12.88615799px;font-family:'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif;fill:#ed432a;stroke-width:0.26458335;fill-opacity:1;"
-       x="26.932014"
-       y="286.12961"
+       style="font-weight:bold;font-size:12.88615799px;font-family:'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif;fill:#ed432a;fill-opacity:1;stroke-width:0.26458338;"
+       x="27.12862"
+       y="286.2355"
        font-size="5px"
        font-weight="bold"
-       id="text8"
-       transform="scale(1.0018898,0.99811378)">
+       id="text8-7"
+       transform="scale(1.0018898,0.99811377)">
       <tspan
-         style="font-size:17.6802578px;fill:#ed432a;fill-opacity:1;stroke-width:0.26458335;"
-         id="tspan6304">Contact</tspan>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16.93333244px;font-family:'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif;-inkscape-font-specification:'Helvetica Neue, Helvetica, Arial-Unicode, Arial, Sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ed432a;fill-opacity:1;stroke-width:0.26458338;"
+         id="tspan6304-6">Record !</tspan>
     </text>
+    <path
+       id="path1-2"
+       transform="matrix(0.26458333,0,0,0.26458333,0,177)"
+       style="fill:none;stroke:#dd2c00;stroke-width:3.77952766;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 138.70898,94.439453 V 143.4668 h 10.32422 v -38.13282 h 36.12891 V 94.439453 Z m 118.71875,0 v 10.894527 h 36.13086 v 38.13282 h 10.32422 V 94.439453 Z M 138.70898,187.04688 v 49.02929 h 46.45313 V 225.18164 H 149.0332 v -38.13476 z m 154.84961,0 v 38.13476 h -36.13086 v 10.89453 h 46.45508 v -49.02929 z" />
+    <g
+       transform="matrix(0.16265687,0,0,0.16265687,49.191266,209.88567)"
+       id="g5627-2"
+       style="stroke-width:1.62663484">
+      <path
+         style="fill:#dd2c00;stroke-width:1.62663484"
+         inkscape:connector-curvature="0"
+         id="path1-6-6"
+         transform="matrix(2.125,0,0,2.125,30,31.381249)"
+         d="m 16,7.7999924 c -4.199951,0 -7.5,3.3999956 -7.5,7.5000046 0,4.200015 3.400024,7.500005 7.5,7.500005 4.200012,0 7.5,-3.399996 7.5,-7.500005 0,-4.100009 -3.299988,-7.5000046 -7.5,-7.5000046 z M 5.1000366,0 H 26.900024 C 29.700012,1.3211502e-7 32,2.2999893 32,5.1000093 V 25.600022 C 32,28.400012 29.700012,30.7 26.900024,30.7 H 5.1000366 C 2.3000488,30.7 0,28.400012 0,25.600022 V 5.1000093 C 0,2.2999893 2.3000488,1.3211502e-7 5.1000366,0 Z" />
+    </g>
+    <g
+       transform="matrix(0.24593252,0,0,0.24593272,62.647649,187.79714)"
+       id="g5063"
+       style="stroke-width:2.43969263;stroke:#e6e6e6;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none">
+      <path
+         style="fill:#dd2c00;stroke-width:1.14809065;stroke:#e6e6e6;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+         inkscape:connector-curvature="0"
+         id="path1-3"
+         transform="matrix(2.125,0,0,2.125,30.000002,30)"
+         d="m 15.2,0 3,8.3000002 L 25.1,2.6000004 22.5,11 31.499999,10.4 24.3,15.7 31.999999,20.3 22.9,20.5 l 3.4,8.1 -7.4,-5 -2.1,8.400001 L 13.8,23.7 6.9000001,29.400001 9.4999998,21 0.5,21.6 7.6999998,16.3 0,11.8 9.0999999,11.6 5.5999999,3.5 13,8.5 Z" />
+    </g>
   </g>
 </svg>
