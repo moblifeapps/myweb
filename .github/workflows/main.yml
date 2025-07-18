@@ -16,10 +16,13 @@ jobs:
         fetch-depth: 0 
         
     - name: Generate the sitemap
-      id: sitemap
+      id: sitemap22
       uses: cicirello/generate-sitemap@v1.10.2
       with:
-        base-url-path: https://mlapplications.com/
+        base-url-path: https://github.com/moblifeapps/myweb
+        include-pdf: false
+        sitemap-format: xml
+        path-to-root: uploads
 
     - name: Output stats
       run: |
