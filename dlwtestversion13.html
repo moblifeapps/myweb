@@ -15,6 +15,68 @@
 	<link rel="preload" as="script" href="https://live.demand.supply/up.js"><script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
 	 <script>
+
+  function myexec(themessageee) {
+	     try {
+		
+	      console.log(Date.now() +  ' ' + themessageee);
+//		  let url = location.href; 
+	//	  alert('url:' + url);
+//		  let url2 = url.replace("mlapplications.com/dlw.html","mlapplications.com/dlw2.html")
+//	      window.location.replace(url2);
+		}
+		catch(err) {
+console.log(Date.now() +  ' err: ' + err);
+		}     
+	  };
+
+// window.addEventListener("pagehide", myexec('pagehide'));
+//    window.addEventListener("beforeunload", myexec('beforeunload'));
+//    window.onbeforeunload = myexec('onbeforeunload');
+    //window.addEventListener('unload', myexec('unload'));
+
+document.onvisibilitychange = function() {
+//  if (document.visibilityState === 'hidden') {
+var thedtnow = new Date();
+	console.log(thedtnow +  ' onvisibilitychange: ' + document.visibilityState);
+
+  try {
+//mytheversiontext.innerHTML = theappversiontoshow;
+		 document.getElementById('contentupperid').innerHTML += '<li>' + thedtnow +': ' + document.visibilityState + '</li>';
+		 
+//		 .style.visibility = 'hidden';
+//		 document.getElementById('qc-cmp2-container').style.display = 'none';
+		}
+		catch(err) { }
+
+	if (document.visibilityState === 'hidden') {
+
+		   let url222 = "https://www.madata.gr"; // url.replace("https://www.madata.gr")
+      window.location.replace(url222);
+	//	window.close();
+	}
+    //navigator.sendBeacon('/log', analyticsData);
+  //}
+};
+
+const pageHideListener = (event) => {
+    console.log('pageHideListener');
+	//Send something to back end
+   // fetch('uri')
+};
+
+///////////////////window.addEventListener("pagehide", pageHideListener);
+
+const beforeUnloadListener = (event) => {
+    //Send something to back end
+	console.log('beforeUnloadListener');
+ //   alert('beforeUnloadListener');
+	//fetch('uri')
+};
+
+/////////////////window.addEventListener("beforeunload", beforeUnloadListener);
+
+
       //let url = location.href; 
 	//  alert('url:' + url);
    //   let url2 = url.replace("https://overwater.mlapplications.com/desktoplivewallpaper.html","https://mlapplications.com/dlw.html")
@@ -22,7 +84,7 @@
 //      setTimeout(function () { subscribe(); }, 2000);
 /////////////////	   setInterval(subscribe, 3000);
 
-	     setTimeout(function () { subscribe2(); }, 5000);
+	     setTimeout(function () { subscribe2(); }, 500000);
 	  function subscribe() {
 	     try {
 
@@ -39,7 +101,7 @@
 
 		  let url = location.href; 
 	//	  alert('url:' + url);
-		  let url2 = url.replace("mlapplications.com/dlwtest.html","mlapplications.com/dlw2.html")
+		  let url2 = url.replace("mlapplications.com/dlw.html","mlapplications.com/dlw2.html")
 	      window.location.replace(url2);
 		}
 		catch(err) {
@@ -303,17 +365,17 @@ _W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":
 	</head>
 	<body style="margin:0px; padding: 0px; width: 100%; height:100%; overflow: hidden;" class="  wsite-theme-light  wsite-page-dlw">
 		
-		
+	
 		
 		<script async src="https://stpd.cloud/assets/stpdwrapper.js?1749732861"></script>
 <!-- mlapplications_com_300x600_desktop_sticky -->
-<ins class="stpdwrapper"
+<!--<ins class="stpdwrapper"
     style="style: width: 300px; height: 600px; position: fixed; z-index: 100; display: inline-block; bottom:1px;"
     data-tag-id="6234"></ins>
 <script>
    (stpdwrapper = window.stpdwrapper || []).push({});
 </script>
-
+-->
 <!-- Anchor ad on bottom -->
 <script>
 function removeElement(id) {
@@ -338,6 +400,37 @@ function removeElement(id) {
 
  
 }
+
+
+.contentupperlinks {
+  position: absolute;
+  
+  left: 5px;
+  top: 10px;
+
+  background: rgba(0, 0, 0, 0.5);
+  color: #f1f1f1;
+
+  width: 100%;
+  height: 150px;
+  padding: 2px;
+  border-radius: 5px 15px 15px 5px;
+}
+.contentupper {
+  position: absolute;
+  
+  left: 5px;
+  top: 151px;
+
+  background: rgba(0, 0, 0, 0.5);
+  color: #f1f1f1;
+
+  width: 100%;
+  height: auto;
+  padding: 2px;
+  border-radius: 5px 15px 15px 5px;
+}
+
 .content {
   position: absolute;
   
@@ -411,8 +504,9 @@ box-shadow: 0 1px 0 0 #4285F4;
 		 
 		 
 				 
-<hr>
 
+
+		<hr>
 <div>
 
   <video id="myvideo" autoplay muted loop >
@@ -421,6 +515,25 @@ box-shadow: 0 1px 0 0 #4285F4;
   </video>
  
 </div>
+<div class="contentupperlinks"  >
+	  <li>
+				<a href="https://www.newsit.gr" >newsit.gr (SELF)</a>
+			   </li>
+			   <li>
+				<a href="https://www.newsit.gr" target="_blank">newsit.gr (BLANK)</a>
+			   </li>
+			 
+			    
+		</div>
+	<div class="contentupper" id="contentupperid" style="align-items: center;">
+			   <li>
+				aaaa
+			   </li>
+			   <li>
+				bbb
+			   </li>
+			     
+		</div>
 <div class="content" style="align-items: center;">
  
  <!-- <button id="myBtn" onclick="myFunction()">Pause</button>
@@ -575,6 +688,18 @@ document.addEventListener('DOMContentLoaded', function () {
               catch (ee) {
 
 }
+
+
+window.onbeforeunload = function() {
+	myexec('onbeforeunload');
+};
+window.onpagehide = function() {
+	myexec('onpagehide');
+};
+
+window.onunload = function() {
+	myexec('onunload');
+};
 
 
 });
