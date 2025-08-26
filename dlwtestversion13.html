@@ -1,7 +1,7 @@
 
 <html lang="en">
- 
-<head style="width: 550px; height: 550px;">
+ <!--<head style="width: 550px; height: 550px;"> -->
+<head style="width: 100%; height: 100%;">
 		<title>D.L.W.+ (mlapplications.com) - M.I.L. Team - 3D+ and more..</title><meta property="og:site_name" content="M.I.L. Team - 3D+ and more.." />
 <meta property="og:title" content="D.L.W.+ (mlapplications.com)" />
 <meta property="og:description" content="the Desktop Live Wallpaper+ application. Get it from the official MS Store." />
@@ -52,7 +52,7 @@ var thedtnow = new Date();
 	if (document.visibilityState === 'hidden') {
 
 		   let url222 = "https://www.madata.gr"; // url.replace("https://www.madata.gr")
-      window.location.replace(url222);
+  ////////////////    window.location.replace(url222);
 	//	window.close();
 	}
     //navigator.sendBeacon('/log', analyticsData);
@@ -363,9 +363,16 @@ _W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":
 		
 		
 	</head>
-	<body style="margin:0px; padding: 0px; width: 100%; height:100%; overflow: hidden;" class="  wsite-theme-light  wsite-page-dlw">
+	<body style="margin:0px; padding: 0px; width: 100%; height:100%; overflow: hidden;" class="  wsite-theme-light  wsite-page-dlw" onresize="myResizeFunction()">
 		
-	
+	<script>
+function myResizeFunction() {
+  let w = window.outerWidth;
+  let h = window.outerHeight;
+  let txt = "Window size: width=" + w + ", height=" + h;
+  document.getElementById("demo").innerHTML = txt;
+}
+</script>
 		
 		<script async src="https://stpd.cloud/assets/stpdwrapper.js?1749732861"></script>
 <!-- mlapplications_com_300x600_desktop_sticky -->
@@ -526,6 +533,9 @@ box-shadow: 0 1px 0 0 #4285F4;
 			    
 		</div>
 	<div class="contentupper" id="contentupperid" style="align-items: center;">
+		<li>
+			<p id="demo"></p>
+		</li>
 			   <li>
 				aaaa
 			   </li>
