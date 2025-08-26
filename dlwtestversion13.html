@@ -42,7 +42,7 @@ var thedtnow = new Date();
 
   try {
 //mytheversiontext.innerHTML = theappversiontoshow;
-		 document.getElementById('contentupperid').innerHTML += '<li>' + thedtnow +': ' + document.visibilityState + '</li>';
+	//	 document.getElementById('contentupperid').innerHTML += '<li>' + thedtnow +': ' + document.visibilityState + '</li>';
 		 
 //		 .style.visibility = 'hidden';
 //		 document.getElementById('qc-cmp2-container').style.display = 'none';
@@ -371,6 +371,8 @@ function myResizeFunction() {
   let h = window.outerHeight;
   let txt = "Window size: width=" + w + ", height=" + h;
   document.getElementById("demo").innerHTML = txt;
+
+  	 document.getElementById('contentupperid').innerHTML = '<li>' + thedtnow +': ' + txt + '</li>' + document.getElementById('contentupperid').innerHTML;
 }
 </script>
 		
