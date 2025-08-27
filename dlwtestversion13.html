@@ -366,10 +366,26 @@ _W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":
 	<body style="margin:0px; padding: 0px; width: 100%; height:100%; overflow: hidden;" class="  wsite-theme-light  wsite-page-dlw" onresize="myResizeFunction()">
 		
 	<script>
+		var thelatestwidth =0;
 function myResizeFunction() {
   let w = window.outerWidth;
   let h = window.outerHeight;
   let txt = "Window size: width=" + w + ", height=" + h;
+
+  if (w > thelatestwidth)
+  {
+	if (thelatestwidth > 0)
+    {
+		   let url222 = "https://www.google.com"; // url.replace("https://www.madata.gr")
+           window.location.replace(url222);
+    }
+	
+  }
+  if (w !=  thelatestwidth)
+  {
+	thelatestwidth = w;
+  }
+
   document.getElementById("demo").innerHTML = txt;
 var thedtnow = new Date();
 
