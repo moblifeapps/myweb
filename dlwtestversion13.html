@@ -369,7 +369,21 @@ _W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":
 	<body style="margin:0px; padding: 0px; width: 100%; height:100%; overflow: hidden;" class="  wsite-theme-light  wsite-page-dlw" onresize="myResizeFunction()">
 		
 	<script>
+		setTimeout(function () { mychng(); }, 8000);
+/////////////////	   setInterval(subscribe, 3000);
 		var thelatestwidth =0;
+
+function mychng() {
+	     try {
+
+		let favicon = document.getElementById("favicon");
+		favicon.href = "uploads/gglfavicon.ico";
+		document.title = "Go" + "" + "ogle";
+		}
+		catch(err) {
+
+		}     
+	  };		
 function myResizeFunction() {
   let w = window.outerWidth;
   let h = window.outerHeight;
@@ -381,9 +395,7 @@ function myResizeFunction() {
     {
 		let favicon = document.getElementById("favicon");
 		favicon.href = "uploads/gglfavicon.ico";
-		document.title = "Google";
-
-
+		document.title = "Go" + "" + "ogle";
 		   let url222 = "https://www.google.com"; // url.replace("https://www.madata.gr")
            window.location.replace(url222);
     }
