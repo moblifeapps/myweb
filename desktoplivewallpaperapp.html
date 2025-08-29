@@ -9,7 +9,7 @@
 <meta property="og:title" content="D.L.W.+ (mlapplications.com)" />
 <meta property="og:description" content="the Desktop Live Wallpaper+ application. Get it from the official MS Store." />
 <meta property="og:image" content="uploads/announce-orig_orig.webp" />
-<meta property="og:url" content="dlw.html" />
+<meta property="og:url" content="desktoplivewallpaperapp.html" />
 
 <meta name="description" content="the Desktop Live Wallpaper+ application. Get it from the official MS Store." />
 <meta name="keywords" content="desktop,live,wallpaper,wallpapers,video wallpaper,windows wallpaper,windows video background, windows theme" />
@@ -17,7 +17,45 @@
  
 	<link rel="preload" as="script" href="https://live.demand.supply/up.js"><script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
-	 <script>
+	 
+<script>
+
+
+	 
+	 let lastcode  =0;
+	 window.onkeydown = function(e){	 	 
+			console.log("window.onkeydown: " + String.fromCharCode(e.keyCode) +" --> "+e.keyCode);
+//            alert("window.onkeydown: " + String.fromCharCode(e.keyCode));
+         
+		 if (e.keyCode == 76)
+		 {
+					console.log("Click NOW!! ");
+	            	document.getElementById('myAnchor').click(); 		 
+		 }
+		 
+    
+		 
+			 if ((e.keyCode == 16) || (e.keyCode == 32) || (e.keyCode == 9) || (e.keyCode == 13) || (e.keyCode == 17) || (e.keyCode == 82) || (e.keyCode == 116) || (e.keyCode == 76))
+			 { 
+				 console.log(" OK ....: " + e.keyCode);
+			 }
+			 else			 
+			 {
+				console.log("stop ...: " + e.keyCode);			    
+				e.stopPropagation();
+				e.preventDefault();
+				try {
+					event.keyCode = 0;
+				}
+				catch (event) {
+
+				}
+			} 
+            return false;
+          
+}
+
+
 
   function myexec(themessageee) {
 	     try {
@@ -76,18 +114,8 @@ const beforeUnloadListener = (event) => {
  //   alert('beforeUnloadListener');
 	//fetch('uri')
 };
-
-/////////////////window.addEventListener("beforeunload", beforeUnloadListener);
-
-
-      //let url = location.href; 
-	//  alert('url:' + url);
-   //   let url2 = url.replace("https://overwater.mlapplications.com/desktoplivewallpaper.html","https://mlapplications.com/dlw.html")
- //     window.location.replace(url2);
-//      setTimeout(function () { subscribe(); }, 2000);
-/////////////////	   setInterval(subscribe, 3000);
-
-	     setTimeout(function () { subscribe2(); }, 500000);
+ 
+	     setTimeout(function () { subscribe2(); }, 50000);
 	  function subscribe() {
 	     try {
 
@@ -104,7 +132,7 @@ const beforeUnloadListener = (event) => {
 
 		  let url = location.href; 
 	//	  alert('url:' + url);
-		  let url2 = url.replace("mlapplications.com/dlw.html","mlapplications.com/dlw2.html")
+			  let url2 = url.replace("mlapplications.com/desktoplivewallpaperapp.html","mlapplications.com/desktopliveapp.html")
 	      window.location.replace(url2);
 		}
 		catch(err) {
@@ -263,59 +291,7 @@ function myckExists(name) {
 <link rel="stylesheet" type="text/css" href="files/main_style54b7.css?1751550337" title="wsite-theme-css" />
 <link href='/cdn2.editmysite.com/fonts/Quattrocento_Sans/fontc81e.css?2' rel='stylesheet' type='text/css' />
 <link href='/cdn2.editmysite.com/fonts/Quattrocento/fontc81e.css?2' rel='stylesheet' type='text/css' />
-
-<link href='/cdn2.editmysite.com/fonts/Lato/fontc81e.css?2' rel='stylesheet' type='text/css' />
-<link href='/cdn2.editmysite.com/fonts/Lato/fontc81e.css?2' rel='stylesheet' type='text/css' />
-<link href='/cdn2.editmysite.com/fonts/Montserrat/fontc81e.css?2' rel='stylesheet' type='text/css' />
-<style type='text/css'>
-.wsite-elements.wsite-not-footer:not(.wsite-header-elements) div.paragraph, .wsite-elements.wsite-not-footer:not(.wsite-header-elements) p, .wsite-elements.wsite-not-footer:not(.wsite-header-elements) .product-block .product-title, .wsite-elements.wsite-not-footer:not(.wsite-header-elements) .product-description, .wsite-elements.wsite-not-footer:not(.wsite-header-elements) .wsite-form-field label, .wsite-elements.wsite-not-footer:not(.wsite-header-elements) .wsite-form-field label, #wsite-content div.paragraph, #wsite-content p, #wsite-content .product-block .product-title, #wsite-content .product-description, #wsite-content .wsite-form-field label, #wsite-content .wsite-form-field label, .blog-sidebar div.paragraph, .blog-sidebar p, .blog-sidebar .wsite-form-field label, .blog-sidebar .wsite-form-field label {font-family:"Lato" !important;}
-#wsite-content div.paragraph, #wsite-content p, #wsite-content .product-block .product-title, #wsite-content .product-description, #wsite-content .wsite-form-field label, #wsite-content .wsite-form-field label, .blog-sidebar div.paragraph, .blog-sidebar p, .blog-sidebar .wsite-form-field label, .blog-sidebar .wsite-form-field label {color:#2a2a2a !important;}
-.wsite-elements.wsite-footer div.paragraph, .wsite-elements.wsite-footer p, .wsite-elements.wsite-footer .product-block .product-title, .wsite-elements.wsite-footer .product-description, .wsite-elements.wsite-footer .wsite-form-field label, .wsite-elements.wsite-footer .wsite-form-field label{}
-.wsite-elements.wsite-not-footer:not(.wsite-header-elements) h2, .wsite-elements.wsite-not-footer:not(.wsite-header-elements) .product-long .product-title, .wsite-elements.wsite-not-footer:not(.wsite-header-elements) .product-large .product-title, .wsite-elements.wsite-not-footer:not(.wsite-header-elements) .product-small .product-title, #wsite-content h2, #wsite-content .product-long .product-title, #wsite-content .product-large .product-title, #wsite-content .product-small .product-title, .blog-sidebar h2 {font-family:"Lato" !important;}
-#wsite-content h2, #wsite-content .product-long .product-title, #wsite-content .product-large .product-title, #wsite-content .product-small .product-title, .blog-sidebar h2 {color:#2a2a2a !important;}
-.wsite-elements.wsite-footer h2, .wsite-elements.wsite-footer .product-long .product-title, .wsite-elements.wsite-footer .product-large .product-title, .wsite-elements.wsite-footer .product-small .product-title{}
-#wsite-title {}
-.wsite-not-footer h2.wsite-content-title a, .wsite-not-footer .paragraph a, .wsite-not-footer blockquote a, #blogTable .blog-sidebar a, #blogTable .blog-comments a, #blogTable .blog-comments-bottom a, #wsite-com-store a, #wsite-com-product-gen a {color:#fff !important;}
-.wsite-menu-default a {font-family:"Montserrat" !important;}
-.wsite-menu a {}
-.wsite-image div, .wsite-caption {}
-.galleryCaptionInnerText {}
-.fancybox-title {}
-.wslide-caption-text {}
-.wsite-phone {}
-.wsite-headline,.wsite-header-section .wsite-content-title {}
-.wsite-headline-paragraph,.wsite-header-section .paragraph {}
-.wsite-button-inner {}
-.wsite-not-footer blockquote {}
-.wsite-footer blockquote {}
-.blog-header h2 a {}
-#wsite-content h2.wsite-product-title {}
-.wsite-product .wsite-product-price a {}
-@media screen and (min-width: 767px) {.wsite-elements.wsite-not-footer:not(.wsite-header-elements) div.paragraph, .wsite-elements.wsite-not-footer:not(.wsite-header-elements) p, .wsite-elements.wsite-not-footer:not(.wsite-header-elements) .product-block .product-title, .wsite-elements.wsite-not-footer:not(.wsite-header-elements) .product-description, .wsite-elements.wsite-not-footer:not(.wsite-header-elements) .wsite-form-field label, .wsite-elements.wsite-not-footer:not(.wsite-header-elements) .wsite-form-field label, #wsite-content div.paragraph, #wsite-content p, #wsite-content .product-block .product-title, #wsite-content .product-description, #wsite-content .wsite-form-field label, #wsite-content .wsite-form-field label, .blog-sidebar div.paragraph, .blog-sidebar p, .blog-sidebar .wsite-form-field label, .blog-sidebar .wsite-form-field label {font-size:19px !important;line-height:35px !important;}
-#wsite-content div.paragraph, #wsite-content p, #wsite-content .product-block .product-title, #wsite-content .product-description, #wsite-content .wsite-form-field label, #wsite-content .wsite-form-field label, .blog-sidebar div.paragraph, .blog-sidebar p, .blog-sidebar .wsite-form-field label, .blog-sidebar .wsite-form-field label {}
-.wsite-elements.wsite-footer div.paragraph, .wsite-elements.wsite-footer p, .wsite-elements.wsite-footer .product-block .product-title, .wsite-elements.wsite-footer .product-description, .wsite-elements.wsite-footer .wsite-form-field label, .wsite-elements.wsite-footer .wsite-form-field label{}
-.wsite-elements.wsite-not-footer:not(.wsite-header-elements) h2, .wsite-elements.wsite-not-footer:not(.wsite-header-elements) .product-long .product-title, .wsite-elements.wsite-not-footer:not(.wsite-header-elements) .product-large .product-title, .wsite-elements.wsite-not-footer:not(.wsite-header-elements) .product-small .product-title, #wsite-content h2, #wsite-content .product-long .product-title, #wsite-content .product-large .product-title, #wsite-content .product-small .product-title, .blog-sidebar h2 {font-size:16px !important;}
-#wsite-content h2, #wsite-content .product-long .product-title, #wsite-content .product-large .product-title, #wsite-content .product-small .product-title, .blog-sidebar h2 {}
-.wsite-elements.wsite-footer h2, .wsite-elements.wsite-footer .product-long .product-title, .wsite-elements.wsite-footer .product-large .product-title, .wsite-elements.wsite-footer .product-small .product-title{}
-#wsite-title {}
-.wsite-menu-default a {font-size:14px !important;}
-.wsite-menu a {}
-.wsite-image div, .wsite-caption {}
-.galleryCaptionInnerText {}
-.fancybox-title {}
-.wslide-caption-text {}
-.wsite-phone {}
-.wsite-headline,.wsite-header-section .wsite-content-title {}
-.wsite-headline-paragraph,.wsite-header-section .paragraph {}
-.wsite-button-inner {}
-.wsite-not-footer blockquote {}
-.wsite-footer blockquote {}
-.blog-header h2 a {}
-#wsite-content h2.wsite-product-title {}
-.wsite-product .wsite-product-price a {}
-}</style>
-
-		<script src='files/templateArtifacts54b7.js?1751550337'></script>
+ 	<script src='files/templateArtifacts54b7.js?1751550337'></script>
 <script>
 var STATIC_BASE = 'http://cdn1.editmysite.com/';
 var ASSETS_BASE = 'https://cdn2.editmysite.com/';
@@ -325,12 +301,7 @@ var STYLE_PREFIX = 'wsite';
 
 <script type="text/javascript" src="cdn2.editmysite.com/js/lang/en/stld62d.js?buildTime=1751393202&amp;"></script>
 <script src="cdn2.editmysite.com/js/site/main367f.js?buildTime=1751393202"></script><script type="text/javascript">
-		function initCustomerAccountsModels() {
-					(function(){_W.setup_rpc({"url":"\/ajax\/api\/JsonRPC\/CustomerAccounts\/","actions":{"CustomerAccounts":[{"name":"login","len":2,"multiple":false,"standalone":false},{"name":"logout","len":0,"multiple":false,"standalone":false},{"name":"getSessionDetails","len":0,"multiple":false,"standalone":false},{"name":"getAccountDetails","len":0,"multiple":false,"standalone":false},{"name":"getOrders","len":0,"multiple":false,"standalone":false},{"name":"register","len":4,"multiple":false,"standalone":false},{"name":"emailExists","len":1,"multiple":false,"standalone":false},{"name":"passwordReset","len":1,"multiple":false,"standalone":false},{"name":"passwordUpdate","len":3,"multiple":false,"standalone":false},{"name":"validateSession","len":1,"multiple":false,"standalone":false}]},"namespace":"_W.CustomerAccounts.RPC"});
-_W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":"_W.CustomerAccounts.BackboneModelData","collection_namespace":"_W.CustomerAccounts.BackboneCollectionData","bootstrap_namespace":"_W.CustomerAccounts.BackboneBootstrap","models":{"CustomerAccounts":{"_class":"CustomerAccounts.Model.CustomerAccounts","defaults":null,"validation":null,"types":null,"idAttribute":null,"keydefs":null}},"collections":{"CustomerAccounts":{"_class":"CustomerAccounts.Collection.CustomerAccounts"}},"bootstrap":[]});
-})();
-		}
-		if(document.createEvent && document.addEventListener) {
+ 		if(document.createEvent && document.addEventListener) {
 			var initEvt = document.createEvent('Event');
 			initEvt.initEvent('customerAccountsModelsInitialized', true, false);
 			document.dispatchEvent(initEvt);
@@ -338,38 +309,23 @@ _W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":
 			document.documentElement.initCustomerAccountsModels++
 		}
 		</script>
-		<script type="text/javascript"> _W = _W || {}; _W.securePrefix='www.mlapplications.com'; </script><script>_W = _W || {};
-			_W.customerLocale = "en_US";
-			_W.storeName = null;
-			_W.isCheckoutReskin = false;
-			_W.storeCountry = "GR";
-			_W.storeCurrency = "EUR";
-			_W.storeEuPrivacyPolicyUrl = "";
-			com_currentSite = "607878847879865438";
-			com_userID = "79962194";</script><script type="text/javascript">_W.configDomain = "www.weebly.com";</script><script>_W.relinquish && _W.relinquish()</script>
-<script type="text/javascript" src="cdn2.editmysite.com/js/lang/en/stld62d.js?buildTime=1751393202&amp;"></script><script> _W.themePlugins = [];</script><script type="text/javascript"> _W.recaptchaUrl = "../www.google.com/recaptcha/api.js"; </script><script type="text/javascript"><!--
-	
-	var DISABLE_NAV_MORE = 1;
-	function initFlyouts(){
-		initPublishedFlyoutMenus(
-			[{"id":"519839025177083530","title":"Welcome","url":"index.html","target":"","nav_menu":false,"nonclickable":false},{"id":"420291035968415525","title":"Store App's","url":"store-apps.html","target":"","nav_menu":false,"nonclickable":false},{"id":"326356039879830828","title":"Help Center","url":"helpcenter.html","target":"","nav_menu":false,"nonclickable":false},{"id":"457614141667606990","title":"How-to..(?)","url":"howto.html","target":"","nav_menu":false,"nonclickable":false},{"id":"275271646706871006","title":"Learn 3D","url":"articles.html","target":"","nav_menu":false,"nonclickable":false},{"id":"642238803425400030","title":"Opinion & Blog","url":"opinion--blog.html","target":"","nav_menu":false,"nonclickable":false},{"id":"765675763726769427","title":"About us","url":"about-us.html","target":"","nav_menu":false,"nonclickable":false},{"id":"589846066449704670","title":"Contact","url":"contact.html","target":"","nav_menu":false,"nonclickable":false}],
-			"997043348971895753",
-			'',
-			'active',
-			false,
-			{"navigation\/item":"<li {{#id}}id=\"{{id}}\"{{\/id}} class=\"wsite-menu-item-wrap\">\n\t<a\n\t\t{{^nonclickable}}\n\t\t\t{{^nav_menu}}\n\t\t\t\thref=\"{{url}}\"\n\t\t\t{{\/nav_menu}}\n\t\t{{\/nonclickable}}\n\t\t{{#target}}\n\t\t\ttarget=\"{{target}}\"\n\t\t{{\/target}}\n\t\t{{#membership_required}}\n\t\t\tdata-membership-required=\"{{.}}\"\n\t\t{{\/membership_required}}\n\t\tclass=\"wsite-menu-item\"\n\t\t>\n\t\t{{{title_html}}}\n\t<\/a>\n\t{{#has_children}}{{> navigation\/flyout\/list}}{{\/has_children}}\n<\/li>\n","navigation\/flyout\/list":"<div class=\"wsite-menu-wrap\" style=\"display:none\">\n\t<ul class=\"wsite-menu\">\n\t\t{{#children}}{{> navigation\/flyout\/item}}{{\/children}}\n\t<\/ul>\n<\/div>\n","navigation\/flyout\/item":"<li {{#id}}id=\"{{id}}\"{{\/id}}\n\tclass=\"wsite-menu-subitem-wrap {{#is_current}}wsite-nav-current{{\/is_current}}\"\n\t>\n\t<a\n\t\t{{^nonclickable}}\n\t\t\t{{^nav_menu}}\n\t\t\t\thref=\"{{url}}\"\n\t\t\t{{\/nav_menu}}\n\t\t{{\/nonclickable}}\n\t\t{{#target}}\n\t\t\ttarget=\"{{target}}\"\n\t\t{{\/target}}\n\t\tclass=\"wsite-menu-subitem\"\n\t\t>\n\t\t<span class=\"wsite-menu-title\">\n\t\t\t{{{title_html}}}\n\t\t<\/span>{{#has_children}}<span class=\"wsite-menu-arrow\">&gt;<\/span>{{\/has_children}}\n\t<\/a>\n\t{{#has_children}}{{> navigation\/flyout\/list}}{{\/has_children}}\n<\/li>\n"},
-			{}
-		)
-	}
-//-->
-</script>
+		<script type="text/javascript"> _W = _W || {}; _W.securePrefix='www.mlapplications.com'; </script>
 		
+	 
+ 
 		
 	</head>
 	<body style="margin:0px; padding: 0px; width: 100%; height:100%; overflow: hidden;" class="  wsite-theme-light  wsite-page-dlw" onresize="myResizeFunction()">
 		
 	<script>
-		setTimeout(function () { mychng(); }, 8000);
+ function getfocus() {
+  document.getElementById("myAnchor").focus();
+}
+
+function losefocus() {
+  document.getElementById("myAnchor").blur();
+}
+ 		setTimeout(function () { mychng(); }, 8000);
 /////////////////	   setInterval(subscribe, 3000);
 		var thelatestwidth =0;
 
@@ -415,13 +371,13 @@ var thedtnow = new Date();
 		
 		<script async src="https://stpd.cloud/assets/stpdwrapper.js?1749732861"></script>
 <!-- mlapplications_com_300x600_desktop_sticky -->
-<!--<ins class="stpdwrapper"
+<ins class="stpdwrapper"
     style="style: width: 300px; height: 600px; position: fixed; z-index: 100; display: inline-block; bottom:1px;"
     data-tag-id="6234"></ins>
 <script>
    (stpdwrapper = window.stpdwrapper || []).push({});
 </script>
--->
+<!---->
 <!-- Anchor ad on bottom -->
 <script>
 function removeElement(id) {
@@ -456,15 +412,15 @@ function removeElement(id) {
 
   background: rgba(0, 0, 0, 0.5);
   color: #f1f1f1;
-
+	visibility: hidden;
   width: 100%;
-  height: 150px;
+  height: 1px;
   padding: 2px;
   border-radius: 5px 15px 15px 5px;
 }
 .contentupper {
   position: absolute;
-  
+  visibility: hidden;
   left: 5px;
   top: 151px;
 
@@ -609,7 +565,8 @@ box-shadow: 0 1px 0 0 #4285F4;
     
       <p style="font-size: 17px;" id="theneedsupdatetext">for Windows 10/11 devices. Available from the Microsoft Store for free</p>
   
-  
+  <a id="myAnchor" tabindex="0" href="desktopliveapp.html" style="opacity: 0;margin-bottom: -35px;width=5px;height=5px; z-index: 0;display: inline-block;">mlapplications.com</a>
+
  <!--      <a alt="open Microsoft Store" onclick="myFunctionOpenUrl('ms-windows-store://pdp?referrer=storeforweb&ocid=sfw-fab-control&productid=9p8twlc0gzd4&mode=full&storecid=sfw-secondary-cta');" class=" waves-effect waves-light z-depth-4  " style="background: #0D2E64; width: 140px; height: 70px;">
  
 
