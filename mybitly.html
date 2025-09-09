@@ -3,26 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URI Path Decoder</title>
+    <title>M.L.applications decoder..</title>
 </head>
 <body>
-    <h1>Decoding URI Path...</h1>
+<!--    <h1>Decoding URI Path...</h1>
     <p>Current Path: <span id="currentHref"></span></p>
-    <p>Decoded Path: <span id="decodedHref"></span></p>
+    <p>Decoded Path: <span id="decodedHref"></span></p> -->
 
     <script>
         // Get the current URI path
         const currentHref = window.location.href;
-        console.log('currentHref' + currentHref);
-        document.getElementById('currentHref').textContent = currentHref;
-
-        try {
-            // Decode the URI path
-            const decodedHref = decodeURIComponent(currentHref);
-            document.getElementById('decodedHref').textContent = decodedHref;
-
-            // Redirect to the decoded path if it's different
-            if (decodedHref !== currentHref) {
+        const decodedHref = decodeURIComponent(currentHref);
+         try {
+          if (decodedHref !== currentHref) {
                 
                 let thenewhref = decodedHref.replace("mybitly.html?","");
              //////   alert('thenewhref');
@@ -31,6 +24,8 @@
         } catch (e) {
             document.getElementById('decodedHref').textContent = 'Error: Invalid URI path';
         }
+
+         
     </script>
 </body>
 </html>
