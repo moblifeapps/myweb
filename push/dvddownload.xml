@@ -8,7 +8,7 @@
 <image placement="appLogoOverride" hint-crop="circle" src="https://mlapplications.com/uploads/myupdateicon.jpg" /></binding>
   </visual>
   <actions>
-	<action activationType = "Protocol"  imageUri="https://mlapplications.com/uploads/toastbuttonrocket.png" arguments="https://apps.microsoft.com/detail/9NBLGGH4Q76Z" content="Download .. !" />
+	<action activationType = "Protocol"  imageUri="https://mlapplications.com/uploads/toastbuttonrocket.png" arguments="ms-windows-store://pdp/?productid=9NBLGGH4Q76Z" content="Download .. !" />
 	<action activationType="system" imageUri="https://mlapplications.com/uploads/toastbuttoncancel.png"  arguments="dismiss" content="Not now.." />
   </actions>
 </toast>
