@@ -1551,8 +1551,14 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 /////////////////////   msg = 'BROWSER' + msg;
    console.log('Edw... tha steilw to msg!' + msg);
                // Make sure you are sending a string, and to stringify JSON
-         /////////////////      iframeEl.contentWindow.postMessage(msg, '*');
-         try
+     try
+         {
+               iframeEl.contentWindow.postMessage(msg, 'https://dvdmsgtest.mlapplications.com',);
+         }
+         catch (exxxx ) { console.log('error on: ' + exxxx); }
+           
+
+         /* try
          {
          console.log('ligoprin 1');
          var messageInput = iframeEl.contentWindow.document.getElementById('themessage');
@@ -1562,7 +1568,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
          console.log('ligoprin 3');
          iframeEl.contentWindow.document.getElementById('sendmessage').click();
          console.log('ligoprin 4');
-       } catch (exxxx ) { console.log('error on: ' + exxxx); }
+       } catch (exxxx ) { console.log('error on: ' + exxxx); } */
            };
 
            function mySenddd(the_what) {
@@ -2785,22 +2791,23 @@ console.log('Edw... tha steilw to msg!' + msg);
   
 
 
-const data = {
-  id: 1,
-  name: username,
-  themesssagggge: msg,
+//const data = {
+//  id: 1,
+//  name: username,
+//  themesssagggge: msg,
   //name: 'bobby hadz',
   //salary: 1500,
-};
+//};
 
 iframeEl.contentWindow.postMessage(
 //frame.contentWindow.postMessage(
   // 👇️ data you want to pass to the other page
-  data,
+  msg,
   'https://dvdmsgtest.mlapplications.com',
   //'https://YOUR-OTHER-PAGE.com',
 );
    console.log('ligoprin 2');
+/*
  var messageInput = iframeEl.contentWindow.document.getElementById('themessage');
 
    console.log('ligoprin 2A+++');
@@ -2808,7 +2815,7 @@ iframeEl.contentWindow.postMessage(
    //messageInput.value = msg;
    console.log('ligoprin 3');
    iframeEl.contentWindow.document.getElementById('sendmessage').click();
-   console.log('ligoprin 4');
+   console.log('ligoprin 4'); */
  } catch (exxxx ) { console.log('error on: ' + exxxx); }
      };
 
