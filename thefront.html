@@ -2782,8 +2782,7 @@ console.log('Edw... tha steilw to msg!' + msg);
    try
    {
    console.log('ligoprin 1');
-   var messageInput = iframeEl.contentWindow.document.getElementById('themessage');
-   console.log('ligoprin 2');
+  
 
 
 const data = {
@@ -2801,6 +2800,9 @@ iframeEl.contentWindow.postMessage(
   'https://mlapplications.com',
   //'https://YOUR-OTHER-PAGE.com',
 );
+   console.log('ligoprin 2');
+ var messageInput = iframeEl.contentWindow.document.getElementById('themessage');
+
    console.log('ligoprin 2A+++');
    messageInput.innerHTML = msg;
    //messageInput.value = msg;
