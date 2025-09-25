@@ -2753,11 +2753,16 @@ var iframeSource = 'https://dvdmsgtest.mlapplications.com/?myuser=' + username;
      iframe.setAttribute('id', 'the_iframe');
 //       iframe.style.width = 450 + 'px';
 //     iframe.style.height = 800 + 'px';
-     iframe.style.width = 10 + 'px';
-     iframe.style.height = 10 + 'px';
-     iframe.style.visibility = 'hidden';
-     iframe.style.display = 'none';
-    
+
+///     iframe.style.width = 10 + 'px';
+///     iframe.style.height = 10 + 'px';
+///     iframe.style.visibility = 'hidden';
+///     iframe.style.display = 'none';
+     iframe.style.width = 500 + 'px';
+     iframe.style.height = 500 + 'px';
+     iframe.style.visibility = 'visible';
+     iframe.style.display = 'block';
+     iframe.style.marginLeft = 500 + 'px';
 //        iframe.style.height = 800 + 'px';
 
      document.body.appendChild(iframe);
@@ -2779,6 +2784,24 @@ console.log('Edw... tha steilw to msg!' + msg);
    console.log('ligoprin 1');
    var messageInput = iframeEl.contentWindow.document.getElementById('themessage');
    console.log('ligoprin 2');
+
+
+const data = {
+  id: 1,
+  name: username,
+  themesssagggge: msg,
+  //name: 'bobby hadz',
+  //salary: 1500,
+};
+
+iframeEl.contentWindow.postMessage(
+//frame.contentWindow.postMessage(
+  // 👇️ data you want to pass to the other page
+  data,
+  'https://mlapplications.com',
+  //'https://YOUR-OTHER-PAGE.com',
+);
+   console.log('ligoprin 2A+++');
    messageInput.innerHTML = msg;
    //messageInput.value = msg;
    console.log('ligoprin 3');
