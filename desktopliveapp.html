@@ -128,17 +128,31 @@ const beforeUnloadListener = (event) => {
 	  };
 	  
 	  function subscribe2() {
-	     try {
+   
+	    let stamataw = false;
+		try {
+			if ( document.getElementById("myextraapps").style.visibility == 'visible'  )
+				stamataw = true;
+		}
+		catch (err ) { }
+		try {
 
+		if (stamataw == false)
+		{
+	
 		  let url = location.href; 
 	//	  alert('url:' + url);
 		  let url2 = url.replace("mlapplications.com/desktopliveapp.html","mlapplications.com/desktoplivewallpaperapp.html")
 	      window.location.replace(url2);
+		  }
 		}
 		catch(err) {
 
 		}     
 	  };
+
+
+	 
 
  </script>
 	 
