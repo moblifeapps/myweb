@@ -2041,7 +2041,7 @@ var     openConnection=  function () {
 
       };
 
-
+var username = "";
 
      var aNewMessageReceived = function(tomessage2) {
      //     alert('Hereeee');
@@ -2705,7 +2705,7 @@ else
 //var iframeSource = 'https://dvdmsg.mlapplications.com/?myuser=BROWSERgeorgepcdeviceid';
 //var iframeSource = 'https://dvdmsg.mlapplications.com';
 
-var username = "";
+
 
 try {
              const queryString = window.location.search;
@@ -2721,7 +2721,7 @@ try {
 
                  username = myuser;
                  username = "BROWSER" + username;
-
+                 console.log('found username:' + username);
        //      alert('Open Connection Here!!!');
 egineconnected = true;
     
