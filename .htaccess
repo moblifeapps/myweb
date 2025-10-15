@@ -1,4 +1,4 @@
-<IfModule mod_headers.c>
+<IfModule mod_headers.c> 
     Header set Permissions-Policy "browsing-topics=()"
 </IfModule>
 DirectoryIndex www.mlapplications.com\index.html
