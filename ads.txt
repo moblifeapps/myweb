@@ -52,9 +52,9 @@ adcolony.com, 801e49d1be83b5f9, RESELLER, 1ad675c9de6b5176
 admixer.net, 3bc509b2-6568-4bd8-a997-9859ba0c9118, RESELLER
 adtech.com, 12068, RESELLER, e1a5b5b6e3255540
 webeyemob.com, 70080, RESELLER
-contextweb.com,562541,RESELLER,89ff185a4c4e857c
-smartadserver.com,4125,RESELLER,060d053dcf45cbf3
-emxdgt.com,2009,RESELLER,1e1d41537f7cad7f
+contextweb.com, 562541, RESELLER, 89ff185a4c4e857c
+smartadserver.com, 4125,RESELLER,060d053dcf45cbf3
+emxdgt.com, 2009,RESELLER,1e1d41537f7cad7f
 yahoo.com, 58905, RESELLER, e1a5b5b6e3255540
 rubiconproject.com, 11006, RESELLER, 0bfd66d529a55807
 smartadserver.com, 4111, RESELLER
