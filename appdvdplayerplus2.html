@@ -3500,23 +3500,35 @@ window.location.href = wheretogonext + nextpage + ".html";;
 });
  
     </script>
-
 <script>
 
 const myTimeoutss = setTimeout(myGreetings, 3000);
-
 const myTimeoutssdbl = setTimeout(myGreetings, 7000);
 
 function myGreetings() {
 try
-          {
-const lala = document.getElementsByClassName("fc-cta-consent");
+	{
+		//console.log('mygr');
+		const lala = document.getElementsByClassName("fc-cta-consent");
+		lala[0].click();
+	}
+catch (ee) 
+	{ 
+		console.log('no fc');
+	}
+try
+{
+	const lala22 = document.getElementById('accept-btn'); //.getElementsByClassName("fc-cta-consent");
+	//console.log('lala22' + lala22);
+	lala22.click();
+	window.location.reload(true);
+}   catch (ee22) { 
+			console.log('no lala22'+ ee22);
+}
 
-lala[0].click();
-            }
-            catch (ee) { }
 }
 </script>
+
 <script type="text/javascript">
 	var _gaq = _gaq || [];
 	_gaq.push(['_setAccount', 'UA-7870337-1']);
