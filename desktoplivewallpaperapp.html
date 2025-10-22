@@ -735,17 +735,16 @@ function removeElement(id) {
 		
 		<!--<body class='mybody  wsite-theme-light' style="margin:0px; padding: 0px; width: 100%; height:100%;">-->
 
-		<style>
+	<style>
 #myvideo {
-  position: absolute;
+    position: fixed  ;
     width: 100%;
-     
-    right: -10px;
+	align-self: center;
     top: 4px;
+	left: 100px;
 
  
 }
-
 
 .contentupperlinks {
   position: absolute;
@@ -2664,12 +2663,12 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 		 
 <div id="myvideodiv">
-
-  <video id="myvideo" autoplay muted loop >
+	<img id="myvideo" style="width: 700px; height: 600px;" src="uploads/SPLASH_dlw.jpg" />
+<!--  <video id="myvideo" autoplay muted loop >
     <source src="uploads/mydemo.mp4" type="video/mp4">
     
   </video>
- 
+-->
 </div>
 
 <script>

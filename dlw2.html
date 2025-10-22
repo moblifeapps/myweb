@@ -657,11 +657,11 @@ function removeElement(id) {
 
 		<style>
 #myvideo {
-  position: absolute;
+    position: fixed  ;
     width: 100%;
-     
-    right: -10px;
+	align-self: center;
     top: 4px;
+	left: 100px;
 
  
 }
@@ -740,13 +740,13 @@ box-shadow: 0 1px 0 0 #4285F4;
 				 
 <hr>
 
-<div>
-
-  <video id="myvideo" autoplay muted loop >
+<div id="myvideodiv">
+	<img id="myvideo" style="width: 700px; height: 600px;" src="uploads/SPLASH_dlw.jpg" />
+<!--  <video id="myvideo" autoplay muted loop >
     <source src="uploads/mydemo.mp4" type="video/mp4">
     
   </video>
- 
+-->
 </div>
 <div class="content" style="align-items: center;">
  

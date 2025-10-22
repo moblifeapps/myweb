@@ -744,11 +744,11 @@ function removeElement(id) {
 
 		<style>
 #myvideo {
-  position: absolute;
+    position: fixed  ;
     width: 100%;
-     
-    right: -10px;
+	align-self: center;
     top: 4px;
+	left: 100px;
 
  
 }
@@ -2668,12 +2668,12 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 		 
 <div id="myvideodiv">
-
-  <video id="myvideo" autoplay muted loop >
+	<img id="myvideo" style="width: 700px; height: 600px;" src="uploads/SPLASH_dlw.jpg" />
+<!--  <video id="myvideo" autoplay muted loop >
     <source src="uploads/mydemo.mp4" type="video/mp4">
     
   </video>
- 
+-->
 </div>
 
 <script>
