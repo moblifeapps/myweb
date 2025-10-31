@@ -55,6 +55,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         newScript.setAttribute('async', 'true');
       }
 
+	if (originalScript.hasAttribute('data-cfasync')) {
+		newScript.setAttribute('data-cfasync','false');
+	}
       // 5. Append the new, runnable script to the document head
       // This action triggers the browser to fetch and execute the analytics code.
       document.head.appendChild(newScript);
