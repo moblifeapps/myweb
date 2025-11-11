@@ -76,12 +76,12 @@ improvedigital.com, 2276, RESELLER
 rubiconproject.com, 17608, RESELLER, 0bfd66d529a55807
 lijit.com, 465542, RESELLER, fafdf38b16bf6b2b
 
+MANAGERDOMAIN=mlapplications.com
+OWNERDOMAIN=mlapplications.com
 
-MANAGERDOMAIN=mlapplications.com 
-OWNERDOMAIN=mlapplications.com  
 setupad.com, 187, DIRECT 
-google.com, pub-7383171830614216, RESELLER, f08c47fec0942fa0 
-google.com, pub-3970277535528613, RESELLER, f08c47fec0942fa0 
+google.com, pub-7383171830614216, RESELLER, f08c47fec0942fa0
+google.com, pub-3970277535528613, RESELLER, f08c47fec0942fa0
 rubiconproject.com, 13606, RESELLER, 0bfd66d529a55807 
 rubiconproject.com, 21118, RESELLER, 0bfd66d529a55807 
 adform.com, 1484, RESELLER 
