@@ -3,26 +3,7 @@
 <html lang="en">
  <!--<head style="width: 550px; height: 550px;"> -->
 <head style="width: 100%; height: 100%;">
-	<!--
  
--->
-
-<!--<script>
-  // Define dataLayer and the gtag function.
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-
-  // Set default consent to 'denied' as a placeholder
-  // Determine actual values based on your own requirements
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-    'analytics_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-  });
-</script>-->
  <link rel="preload" as="script" href="https://live.demand.supply/up.js"><script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
 
@@ -34,59 +15,7 @@
 
   gtag('config', 'G-87MTDXTF59');
 </script>
-
-<!-- Google Tag Manager -->
- <!--
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-5BBV9FN');</script>-->
-<!-- End Google Tag Manager -->
-<!--
- <link rel="preload" as="script" href="https://live.demand.supply/up.js"><script id="analytics-script" type="text/plain" data-consent-category="statistics" async data-cfasync="false"  src="https://live.demand.supply/up.js"></script>
--->
-<!--<script>
-	function executeScriptsssssssssssOnConsent(category) {
-  // 1. Find all script elements that were blocked for this category
-  const blockedScripts = document.querySelectorAll(
-    `script[data-consent-category="${category}"]`
-  );
-
-  blockedScripts.forEach(originalScript => {
-    // 2. Change the type back to a runnable JavaScript type
-    originalScript.setAttribute('type', 'text/javascript');
-    
-    // 3. Get the source URL
-    const scriptSrc = originalScript.getAttribute('src');
-
-    // 4. Create a NEW script element to force execution
-    // Browsers often don't execute a script just by changing the type, 
-    // so we need to create a fresh element and append it.
-    if (scriptSrc) {
-      const newScript = document.createElement('script');
-      newScript.src = scriptSrc;
-      
-      // Preserve original attributes like 'async' or 'defer'
-      if (originalScript.hasAttribute('async')) {
-        newScript.setAttribute('async', 'true');
-      }
-
-	if (originalScript.hasAttribute('data-cfasync')) {
-		newScript.setAttribute('data-cfasync','false');
-	}
-      // 5. Append the new, runnable script to the document head
-      // This action triggers the browser to fetch and execute the analytics code.
-      document.head.appendChild(newScript);
-
-      // (Optional) Remove the original blocked script element to keep the DOM clean
-      originalScript.remove(); 
-    }
-  });
-}
-</script>-->
-
-<link rel="icon" id="favicon" type="image/x-icon" href="/uploads/favpreview.gif">
+ <link rel="icon" id="favicon" type="image/x-icon" href="/uploads/favpreview.gif">
 
 		<title>D.L.W.+ (mlapplications.com) - M.I.L. Team - 3D+ and more..</title><meta property="og:site_name" content="M.I.L. Team - 3D+ and more.." />
 <meta property="og:title" content="D.L.W.+ (mlapplications.com)" />
@@ -98,14 +27,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="keywords" content="desktop,live,wallpaper,wallpapers,video wallpaper,windows wallpaper,windows video background, windows theme" />
 <meta name="viewport" content="width=device-width , initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   
-
-
-
-
- <!-- 
- <link rel="preload" as="script" href="https://live.demand.supply/up.js"><script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
--->	
-
 	 
 <script>
 
@@ -118,7 +39,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
          
 		 if (e.keyCode == 76)
 		 {
-					console.log("Click NOW!! ");
+				//	console.log("Click NOW!! ");
+
+					try
+					{
+					document.getElementById('myAnchor').href += "stp=" + Math.floor(Date.now() / 1000); 
+					} catch (exx)  {} 
 	            	document.getElementById('myAnchor').click(); 		 
 		 }
 		 
@@ -164,59 +90,11 @@ console.log(Date.now() +  ' err: ' + err);
 //    window.addEventListener("beforeunload", myexec('beforeunload'));
 //    window.onbeforeunload = myexec('onbeforeunload');
     //window.addEventListener('unload', myexec('unload'));
-
-document.onvisibilitychange = function() {
-//  if (document.visibilityState === 'hidden') {
-var thedtnow = new Date();
-	console.log(thedtnow +  ' onvisibilitychange: ' + document.visibilityState);
-
-  try {
-//mytheversiontext.innerHTML = theappversiontoshow;
-	//	 document.getElementById('contentupperid').innerHTML += '<li>' + thedtnow +': ' + document.visibilityState + '</li>';
-		 
-//		 .style.visibility = 'hidden';
-//		 document.getElementById('qc-cmp2-container').style.display = 'none';
-		}
-		catch(err) { }
-
-	if (document.visibilityState === 'hidden') {
-
-		   let url222 = "https://www.madata.gr"; // url.replace("https://www.madata.gr")
-  ////////////////    window.location.replace(url222);
-	//	window.close();
-	}
-    //navigator.sendBeacon('/log', analyticsData);
-  //}
-};
-
-const pageHideListener = (event) => {
-    console.log('pageHideListener');
-	//Send something to back end
-   // fetch('uri')
-};
-
-///////////////////window.addEventListener("pagehide", pageHideListener);
-
-const beforeUnloadListener = (event) => {
-    //Send something to back end
-	console.log('beforeUnloadListener');
- //   alert('beforeUnloadListener');
-	//fetch('uri')
-};
  
 	     setTimeout(function () { subscribe2(); }, 50000);
-	  function subscribe() {
-	     try {
-
-		 document.getElementById('qc-cmp2-container').style.visibility = 'hidden';
-		 document.getElementById('qc-cmp2-container').style.display = 'none';
-		}
-		catch(err) {
-
-		}     
-	  };
-	  
+	   
 	  function subscribe2() {
+   
 	    let stamataw = false;
 		try {
 			if ( document.getElementById("myextraapps").style.visibility == 'visible'  )
@@ -230,7 +108,7 @@ const beforeUnloadListener = (event) => {
 	
 		  let url = location.href; 
 	//	  alert('url:' + url);
-			  let url2 = url.replace("mlapplications.com/desktoplivewallpaperapp.html","mlapplications.com/desktopliveapp.html")
+		  let url2 = url.replace("mlapplications.com/desktoplivewallpaperapp.html","mlapplications.com/desktopliveapp.html")
 	      window.location.replace(url2);
 		  }
 		}
@@ -238,6 +116,9 @@ const beforeUnloadListener = (event) => {
 
 		}     
 	  };
+
+
+	 
 
  </script>
 	 
@@ -287,123 +168,14 @@ function myckExists(name) {
 </script> 
 
  
-
-
-<script>
-	  function SetFirstTimeStorage()
-  {
-      if(typeof(Storage) !== "undefined") 
-      {
-          localStorage.firsttimehere = '-';
-      }
-  }
-  
-  
-  
-  function checkStorage() {
-      if(typeof(Storage) !== "undefined") 
-      {
-          if (localStorage.firsttimehere) 
-           {
-              IsFirstTimeHere = 'false';
-          }
-          else
-          {
-              IsFirstTimeHere = 'true';	
-          }
-      }
-    
-  }
-  
-  function setCookie(cname,cvalue,exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires=" + d.toGMTString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }
-  
-  function getCookie(cname) {
-	//console.log('getCookie: mpike sto getcookie');
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-///    return "";
-		//console.log('getCookie: den brike !' , cname);
-		return null;
-  }
-  
-  
-  function checkCookie() {
-    var user=getCookie("firsttimehere");
-    if (user != null) {
-  
-	//    if (user != "") {
-    //  alert("Welcome again " + user);
-  IsFirstTimeHere = 'false';
-  SetFirstTimeStorage();
-    } 
-    
-  }
-  
-  function checkCookieOLD() {
-    var user=getCookie("firsttimehere");
-    if (user != "") {
-    //  alert("Welcome again " + user);
-  IsFirstTimeHere = 'false';
-    } else {
-      // user = prompt("Please enter your name:","");
-     //  if (user != "" && user != null) {
-     //    setCookie("username", user, 300);
-  IsFirstTimeHere = 'true';
-       }
-    
-  }
-</script>
-
  
-
-  
  
-		<link id="wsite-base-style" rel="stylesheet" type="text/css" href="cdn2.editmysite.com/css/sites367f.css?buildTime=1751393202" />
-<link rel="stylesheet" type="text/css" href="cdn2.editmysite.com/css/old/fancybox5209.css?1751393202" />
-<link rel="stylesheet" type="text/css" href="cdn2.editmysite.com/css/social-icons9aef.css?buildtime=1751393202" media="screen,projection" />
-<link rel="stylesheet" type="text/css" href="files/main_style54b7.css?1751550337" title="wsite-theme-css" />
-<link href='/cdn2.editmysite.com/fonts/Quattrocento_Sans/fontc81e.css?2' rel='stylesheet' type='text/css' />
-<link href='/cdn2.editmysite.com/fonts/Quattrocento/fontc81e.css?2' rel='stylesheet' type='text/css' />
- 	<script src='files/templateArtifacts54b7.js?1751550337'></script>
-<script>
-var STATIC_BASE = 'http://cdn1.editmysite.com/';
-var ASSETS_BASE = 'https://cdn2.editmysite.com/';
-var STYLE_PREFIX = 'wsite';
-</script>
-<script src='/cdn2.editmysite.com/js/jquery-1.8.3.min.js'></script>
-
-<script type="text/javascript" src="cdn2.editmysite.com/js/lang/en/stld62d.js?buildTime=1751393202&amp;"></script>
-<script src="cdn2.editmysite.com/js/site/main367f.js?buildTime=1751393202"></script><script type="text/javascript">
- 		if(document.createEvent && document.addEventListener) {
-			var initEvt = document.createEvent('Event');
-			initEvt.initEvent('customerAccountsModelsInitialized', true, false);
-			document.dispatchEvent(initEvt);
-		} else if(document.documentElement.initCustomerAccountsModels === 0){
-			document.documentElement.initCustomerAccountsModels++
-		}
-		</script>
-		<script type="text/javascript"> _W = _W || {}; _W.securePrefix='www.mlapplications.com'; </script>
-		
+   	
 	 
  
 		
 	</head>
-	<body  style=" margin:0px;
+	<body style=" margin:0px;
             padding: 0px;
             width: 100%;
             height:100%;
@@ -415,9 +187,23 @@ var STYLE_PREFIX = 'wsite';
             /* background-position-y: center; */
             background-position-x: center;" class="  wsite-theme-light  wsite-page-dlw" onresize="myResizeFunction()">
 
-		
+
  <div data-ad="mlapplications.com_extra_large_video_my_btf_xl" data-devices="m:0,t:1,d:1"   class="demand-supply"></div>
-			
+	
+	
+<!--<script async src="https://stpd.cloud/assets/stpdwrapper.js?1749732861"></script>
+-->
+<!-- mlapplications_com_300x600_desktop_sticky -->
+<!--<ins class="stpdwrapper"
+    style="style: width: 300px; height: 600px; position: fixed; z-index: 100; display: inline-block; bottom:1px;"
+    data-tag-id="6234"></ins>
+<script>
+   (stpdwrapper = window.stpdwrapper || []).push({});
+</script>
+-->
+<!--			
+ <div data-ad="mlapplications.com_extra_large_video_my_btf_xl" data-devices="m:0,t:1,d:1"   class="demand-supply"></div>
+	-->
 <!-- Google Tag Manager (noscript) -->
 <!--<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5BBV9FN"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>-->
@@ -431,25 +217,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 function losefocus() {
   document.getElementById("myAnchor").blur();
 }
- 	/////////////	setTimeout(function () { mychng(); }, 8000);
+ 		//////////setTimeout(function () { mychng(); }, 8000);
 /////////////////	   setInterval(subscribe, 3000);
 		var thelatestwidth =0;
 
 function mychng() {
 	     try {
-document.title = "Our other apps (!)";
-		document.getElementById("myextraapps").style.visibility = 'visible';
-		document.getElementById("myvideo").remove();
-		document.getElementById("mycontentid").remove();
-	//	let favicon = document.getElementById("favicon");
-	//	favicon.href = "uploads/gglfavicon.ico";
-	//	document.title = "Go" + "" + "ogle";
+
+		let favicon = document.getElementById("favicon");
+		favicon.href = "uploads/gglfavicon.ico";
+		document.title = "Go" + "" + "ogle";
 		}
 		catch(err) {
 
 		}     
 	  };		
 function myResizeFunction() {
+
+	try
+	{
+
+	
   let w = window.outerWidth;
   let h = window.outerHeight;
   let txt = "Window size: width=" + w + ", height=" + h;
@@ -460,9 +248,10 @@ function myResizeFunction() {
     {
 		document.title = "Our other apps (!)";
 		document.getElementById("myextraapps").style.visibility = 'visible';
-		document.getElementById("myvideo").remove();
-		document.getElementById("mycontentid").remove();
-	//	let favicon = document.getElementById("favicon");
+	document.getElementById("mycontentid").remove();
+	document.getElementById("myvideo").remove();
+		
+//		let favicon = document.getElementById("favicon");
 //		favicon.href = "uploads/gglfavicon.ico";
 //		document.title = "Go" + "" + "ogle";
 //		   let url222 = "https://www.google.com"; // url.replace("https://www.madata.gr")
@@ -476,14 +265,14 @@ function myResizeFunction() {
   }
 
   document.getElementById("demo").innerHTML = txt;
-var thedtnow = new Date();
-
-  	 document.getElementById('contentupperid').innerHTML = '<li>' + thedtnow +': ' + txt + '</li>' + document.getElementById('contentupperid').innerHTML;
+  var thedtnow = new Date();
+} catch (err) { }
+  //	 document.getElementById('contentupperid').innerHTML = '<li>' + thedtnow +': ' + txt + '</li>' + document.getElementById('contentupperid').innerHTML;
 }
 </script>
 		
-	<!--	<script async src="https://stpd.cloud/assets/stpdwrapper.js?1749732861"></script>
- mlapplications_com_300x600_desktop_sticky -->
+	<!--	<script async src="https://stpd.cloud/assets/stpdwrapper.js?1749732861"></script>-->
+<!-- mlapplications_com_300x600_desktop_sticky -->
 <!--<ins class="stpdwrapper"
     style="style: width: 300px; height: 600px; position: fixed; z-index: 100; display: inline-block; bottom:1px;"
     data-tag-id="6234"></ins>
@@ -505,7 +294,7 @@ function removeElement(id) {
 		
 		<!--<body class='mybody  wsite-theme-light' style="margin:0px; padding: 0px; width: 100%; height:100%;">-->
 
-	<style>
+		<style>
 #myvideo {
     position: fixed  ;
     width: 100%;
@@ -515,6 +304,7 @@ function removeElement(id) {
 
  
 }
+
 
 .contentupperlinks {
   position: absolute;
@@ -616,16 +406,25 @@ box-shadow: 0 1px 0 0 #4285F4;
 	 
  
 		 
-		 
-				 
-				 
-<div id="myextraapps">
+	<!--
+			 <div data-ad="mlapplications.com_728x90_sticky_display_top_1" data-devices="m:0,t:1,d:1"   class="demand-supply"></div> 
+	
+<div data-ad="mlapplications.com_728x90_sticky_display_top_mytop_0918" data-devices="m:0,t:0,d:1"   class="demand-supply"></div>	 
+		-->
+<div data-placement="top">
+  
+
+
+  
+  </div>
+					 
+<div id="myextraapps" style="visibility: hidden;">
 
 <div id="793792370394641623"><div><style type="text/css">
 	#element-c8528244-f97a-40af-99c7-8def92864609 .content-color-box-wrapper {
   padding: 20px;
   border-radius: 15px;
-  background-color: rgba(0,120,255,0.75);
+  background-color: rgb(192, 192, 192);
   border-style: Solid;
   border-color: rgba(85,85,85,0.5);
   border-width: 1px;
@@ -1530,7 +1329,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 	#element-24a730dc-8446-40c1-a4e5-b61270af914e .content-color-box-wrapper {
   padding: 20px;
   border-radius: 15px;
-  background-color: rgba(255,255,255,0.75);
+  background-color: rgba(255,255,255,1);
   border-style: Solid;
   border-color: rgba(85,85,85,0.5);
   border-width: 1px;
@@ -2429,8 +2228,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </div>
 
-	
-
 		 
 <div id="myvideodiv">
 <!--	<img id="myvideo" style="width: 700px; height: 600px;" src="uploads/SPLASH_dlw.jpg" />
@@ -2445,7 +2242,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 	document.getElementById("myextraapps").style.visibility = 'hidden';
 
 </script>
-<!-- 
+<!--
 <div class="contentupperlinks"  >
 	  <li>
 				<a href="https://www.newsit.gr" >newsit.gr (SELF)</a>
@@ -2468,7 +2265,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			   </li>
 			     
 		</div> -->
-<div id="mycontentid"  class="content" style="align-items: center;">
+<div id="mycontentid" class="content" style="align-items: center;">
  
  <!-- <button id="myBtn" onclick="myFunction()">Pause</button>
 -->
@@ -2494,7 +2291,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
     
       <p style="font-size: 17px;" id="theneedsupdatetext">for Windows 10/11 devices. Available from the Microsoft Store for free</p>
   
-  <a id="myAnchor" tabindex="0" href="desktopliveapp.html" style="opacity: 0;margin-bottom: -35px;width=5px;height=5px; z-index: 0;display: inline-block;">mlapplications.com</a>
+  <a id="myAnchor" tabindex="0" href="https://mlapplications.com/desktopliveapp.html" style="opacity: 0;margin-bottom: -35px;width:5px;height:5px; z-index: 0;display: inline-block;">mlapplications.com</a>
 
  <!--      <a alt="open Microsoft Store" onclick="myFunctionOpenUrl('ms-windows-store://pdp?referrer=storeforweb&ocid=sfw-fab-control&productid=9p8twlc0gzd4&mode=full&storecid=sfw-secondary-cta');" class=" waves-effect waves-light z-depth-4  " style="background: #0D2E64; width: 140px; height: 70px;">
  
@@ -2624,19 +2421,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 }
 
-
-window.onbeforeunload = function() {
-	myexec('onbeforeunload');
-};
-window.onpagehide = function() {
-	myexec('onpagehide');
-};
-
-window.onunload = function() {
-	myexec('onunload');
-};
-
-
+ 
 });
 
 //setTimeout(function(){
@@ -4108,7 +3893,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <hr class="styled-hr" style="width:100%;"></hr>
 <div style="height: 0px; overflow: hidden; width: 100%;"></div></div></div></div>
 
-
+   
   
  
 
@@ -4134,7 +3919,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 </div> 
 
 
-   
+     
     
 
 		<!--
@@ -4149,275 +3934,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
             display: none !important;
         }
     </style>
-    <script>
-$(document).ready(function(){
-
-
- 
-    //Check to see if the window is top if not then display button
-    $(window).scroll(function(){
-        if ($(this).scrollTop() > 50) {
-            $('.scrollToTop').fadeIn();
-            $('.mynextButton').fadeIn();
- 
-
-        } else {
-            $('.scrollToTop').fadeOut();
-        }
-
- if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-      // alert("near bottom!");
-$('.mynextButton').fadeIn();
-$('.mynextButton').fadeOut();
-$('.mynextButton').fadeIn();
-$('.mynextButton').fadeOut();
-$('.mynextButton').fadeIn();
- 
-   }
-
-    });
-
-    //Click event to scroll to top
-    $('.scrollToTop').click(function(){
-        $('html, body').animate({scrollTop : 0},800);
-        return false;
-    });
-
-
-//Click event to go next
-var xx = $(location).attr('pathname');
-
-var wheretogo = "index.html";
-var next = "";
-//alert("Current Page:" + xx);
-//xx = "hlpmyvideos_3.html";
-switch (xx) {
-   case "/hlpmyvideos_1.html": next =  "hlpmyvideos_2"; break;
-case "/hlpmyvideos_2.html": next =  "hlpmyvideos_3"; break;
-case "/hlpmyvideos_3.html": next =  "hlpmyvideos_4"; break;
-case "/hlpmyvideos_4.html": next =  "hlpmyvideos_5"; break;
-case "/hlpmyvideos_5.html": next =  "hlpmyvideos_6"; break;
-case "/hlpmyvideos_6.html": next =  "hlpmyvideos_1"; break;
-case "/uwphlpconvert_1.html": next =  "uwphlpconvert_2"; break;
-case "/uwphlpconvert_2.html": next =  "uwphlpconvert_3"; break;
-case "/uwphlpconvert_3.html": next =  "uwphlpconvert_4"; break;
-case "/uwphlpconvert_4.html": next =  "uwphlpconvert_1"; break;
-case "/uwphlpmyplayer_1.html": next =  "uwphlpmyplayer_2"; break;
-case "/uwphlpmyplayer_2.html": next =  "uwphlpmyplayer_3"; break;
-case "/uwphlpmyplayer_3.html": next =  "uwphlpmyplayer_4"; break;
-case "/uwphlpmyplayer_4.html": next =  "uwphlpmyplayer_5"; break;
-case "/uwphlpmyplayer_5.html": next =  "uwphlpmyplayer_6"; break;
-case "/uwphlpmyplayer_6.html": next =  "uwphlpmyplayer_1"; break;
-case "/uwphlprotate_1.html": next =  "uwphlprotate_2"; break;
-case "/uwphlprotate_2.html": next =  "uwphlprotate_3"; break;
-case "/uwphlprotate_3.html": next =  "uwphlprotate_4"; break;
-case "/uwphlprotate_4.html": next =  "uwphlprotate_1"; break;
-case "/uwphlpwatermark_1.html": next =  "uwphlpwatermark_2"; break;
-case "/uwphlpwatermark_2.html": next =  "uwphlpwatermark_3"; break;
-case "/uwphlpwatermark_3.html": next =  "uwphlpwatermark_4"; break;
-case "/uwphlpwatermark_4.html": next =  "uwphlpwatermark_1"; break;
-case "/uwphlpsearchsave_1.html": next =  "uwphlpsearchsave_2"; break;
-case "/uwphlpsearchsave_2.html": next =  "uwphlpsearchsave_3"; break;
-case "/uwphlpsearchsave_3.html": next =  "uwphlpsearchsave_4"; break;
-case "/uwphlpsearchsave_4.html": next =  "uwphlpsearchsave_1"; break;
-case "/uwphlp_mediainfo_1.html": next =  "uwphlp_mediainfo_2"; break;
-case "/uwphlp_mediainfo_2.html": next =  "uwphlp_mediainfo_3"; break;
-case "/uwphlp_mediainfo_3.html": next =  "uwphlp_mediainfo_4"; break;
-case "/uwphlp_mediainfo_4.html": next =  "uwphlp_mediainfo_1"; break;
-case "/uwphlp_videospeed_1.html": next =  "uwphlp_videospeed_2"; break;
-case "/uwphlp_videospeed_2.html": next =  "uwphlp_videospeed_3"; break;
-case "/uwphlp_videospeed_3.html": next =  "uwphlp_videospeed_4"; break;
-case "/uwphlp_videospeed_4.html": next =  "uwphlp_videospeed_1"; break;
-case "/androidhlpsearchsave_1.html": next =  "androidhlpsearchsave_2"; break;
-case "/androidhlpsearchsave_2.html": next =  "androidhlpsearchsave_3"; break;
-case "/androidhlpsearchsave_3.html": next =  "androidhlpsearchsave_4"; break;
-case "/androidhlpsearchsave_4.html": next =  "androidhlpsearchsave_1"; break;
-case "/androidhlpmyvideos_1.html": next =  "androidhlpmyvideos_2"; break;
-case "/androidhlpmyvideos_2.html": next =  "androidhlpmyvideos_3"; break;
-case "/androidhlpmyvideos_3.html": next =  "androidhlpmyvideos_4"; break;
-case "/androidhlpmyvideos_4.html": next =  "androidhlpmyvideos_5"; break;
-case "/androidhlpmyvideos_5.html": next =  "androidhlpmyvideos_6"; break;
-case "/androidhlpmyvideos_6.html": next =  "androidhlpmyvideos_1"; break;
-case "/hlpdvdplayerfree_1.html": next =  "hlpdvdplayerfree_2"; break;
-case "/hlpdvdplayerfree_2.html": next =  "hlpdvdplayerfree_3"; break;
-case "/hlpdvdplayerfree_3.html": next =  "hlpdvdplayerfree_4"; break;
-case "/hlpdvdplayerfree_4.html": next =  "hlpdvdplayerfree_5"; break;
-case "/hlpdvdplayerfree_5.html": next =  "hlpdvdplayerfree_6"; break;
-case "/hlpdvdplayerfree_6.html": next =  "hlpdvdplayerfree_1"; break;
-case "/hlpdvdplayer_1.html": next =  "hlpdvdplayer_2"; break;
-case "/hlpdvdplayer_2.html": next =  "hlpdvdplayer_3"; break;
-case "/hlpdvdplayer_3.html": next =  "hlpdvdplayer_4"; break;
-case "/hlpdvdplayer_4.html": next =  "hlpdvdplayer_5"; break;
-case "/hlpdvdplayer_5.html": next =  "hlpdvdplayer_6"; break;
-case "/hlpdvdplayer_6.html": next =  "hlpdvdplayer_7"; break;
-case "/hlpdvdplayer_7.html": next =  "hlpdvdplayer_1"; break;
-case "/howto-check-dvd.html": next = "hlpdvdplayer_1.html"; break;
-case "/hlpdvdplayer_remote_1.html": next =  "hlpdvdplayer_remote_2"; break;
-case "/hlpdvdplayer_remote_2.html": next =  "hlpdvdplayer_remote_3"; break;
-case "/hlpdvdplayer_remote_3.html": next =  "hlpdvdplayer_remote_4"; break;
-case "/hlpdvdplayer_remote_4.html": next =  "hlpdvdplayer_remote_5"; break;
-case "/hlpdvdplayer_remote_5.html": next =  "hlpdvdplayer_remote_6"; break;
-case "/hlpdvdplayer_remote_6.html": next =  "hlpdvdplayer_remote_7"; break;
-case "/hlpdvdplayer_remote_7.html": next =  "hlpdvdplayer_remote_8"; break;
-case "/hlpdvdplayer_remote_8.html": next =  "hlpdvdplayer_remote_1"; break;
-case "/hlpblurayplayer_1.html": next =  "hlpblurayplayer_2"; break;
-case "/hlpblurayplayer_2.html": next =  "hlpblurayplayer_3"; break;
-case "/hlpblurayplayer_3.html": next =  "hlpblurayplayer_4"; break;
-case "/hlpblurayplayer_4.html": next =  "hlpblurayplayer_5"; break;
-case "/hlpblurayplayer_5.html": next =  "hlpblurayplayer_6"; break;
-case "/hlpblurayplayer_6.html": next =  "hlpblurayplayer_1"; break;
-case "/hlpdesktopplus_1.html": next =  "hlpdesktopplus_2"; break;
-case "/hlpdesktopplus_2.html": next =  "hlpdesktopplus_3"; break;
-case "/hlpdesktopplus_3.html": next =  "hlpdesktopplus_4"; break;
-case "/hlpdesktopplus_4.html": next =  "hlpdesktopplus_5"; break;
-case "/hlpdesktopplus_5.html": next =  "hlpdesktopplus_6"; break;
-case "/hlpdesktopplus_6.html": next =  "hlpdesktopplus_1"; break;
-case "/screenrecplus_1.html": next =  "screenrecplus_2"; break;
-case "/screenrecplus_2.html": next =  "screenrecplus_3"; break;
-case "/screenrecplus_3.html": next =  "screenrecplus_4"; break;
-case "/screenrecplus_4.html": next =  "screenrecplus_5"; break;
-case "/screenrecplus_5.html": next =  "screenrecplus_1"; break;
-case "/hlpbreatheplus_1.html": next =  "hlpbreatheplus_2"; break;
-case "/hlpbreatheplus_2.html": next =  "hlpbreatheplus_3"; break;
-case "/hlpbreatheplus_3.html": next =  "hlpbreatheplus_4"; break;
-case "/hlpbreatheplus_4.html": next =  "hlpbreatheplus_5"; break;
-case "/hlpbreatheplus_5.html": next =  "hlpbreatheplus_1"; break;
-case "/dvdplayer_whatsnew.html": next =  "appdvdplayerplus"; break;
-case "/screenrec_whatsnew.html": next =  "appscreenrecorder"; break;
-case "/winrar_whatsnew.html": next =  "appwinrareplus"; break;
-case "/blurayplayer_whatsnew.html": next =  "appblurayplayerplus"; break;
-case "/breatheplus_whatsnew.html": next =  "appbreatheplus"; break;
-case "/hlpwinrare_1.html": next =  "hlpwinrare_2"; break;
-case "/hlpwinrare_2.html": next =  "hlpwinrare_3"; break;
-case "/hlpwinrare_3.html": next =  "hlpwinrare_4"; break;
-case "/hlpwinrare_4.html": next =  "hlpwinrare_5"; break;
-case "/hlpwinrare_5.html": next =  "hlpwinrare_6"; break;
-case "/hlpwinrare_6.html": next =  "hlpwinrare_1"; break
-
-}
-
-$('.mynextButton').attr("href", wheretogo + next + ".html");
-
-
-
-
-//Click event to go previous
-$('.mypreviousButton').click(function(){
-var yy = $(location).attr('pathname');
-
-var wheretogonext = "index.html";
-var nextpage = "";
-//alert("Current Page:" + yy);
-
-switch (yy) {
-
-case "/hlpmyvideos_1.html": nextpage = "hlpmyvideos_6"; break;
-case "/hlpmyvideos_2.html": nextpage = "hlpmyvideos_1"; break;
-case "/hlpmyvideos_3.html": nextpage = "hlpmyvideos_2"; break;
-case "/hlpmyvideos_4.html": nextpage = "hlpmyvideos_3"; break;
-case "/hlpmyvideos_5.html": nextpage = "hlpmyvideos_4"; break;
-case "/hlpmyvideos_6.html": nextpage = "hlpmyvideos_5"; break;
-case "/uwphlpconvert_1.html": nextpage = "uwphlpconvert_4"; break;
-case "/uwphlpconvert_2.html": nextpage = "uwphlpconvert_1"; break;
-case "/uwphlpconvert_3.html": nextpage = "uwphlpconvert_2"; break;
-case "/uwphlpconvert_4.html": nextpage = "uwphlpconvert_3"; break;
-case "/uwphlpmyplayer_1.html": nextpage = "uwphlpmyplayer_6"; break;
-case "/uwphlpmyplayer_2.html": nextpage = "uwphlpmyplayer_1"; break;
-case "/uwphlpmyplayer_3.html": nextpage = "uwphlpmyplayer_2"; break;
-case "/uwphlpmyplayer_4.html": nextpage = "uwphlpmyplayer_3"; break;
-case "/uwphlpmyplayer_5.html": nextpage = "uwphlpmyplayer_4"; break;
-case "/uwphlpmyplayer_6.html": nextpage = "uwphlpmyplayer_5html"; break;
-case "/uwphlprotate_1.html": nextpage = "uwphlprotate_4"; break;
-case "/uwphlprotate_2.html": nextpage = "uwphlprotate_1"; break;
-case "/uwphlprotate_3.html": nextpage = "uwphlprotate_2"; break;
-case "/uwphlprotate_4.html": nextpage = "uwphlprotate_3"; break;
-case "/uwphlpwatermark_1.html": nextpage = "uwphlpwatermark_4"; break;
-case "/uwphlpwatermark_2.html": nextpage = "uwphlpwatermark_1"; break;
-case "/uwphlpwatermark_3.html": nextpage = "uwphlpwatermark_2"; break;
-case "/uwphlpwatermark_4.html": nextpage = "uwphlpwatermark_3"; break;
-case "/uwphlpsearchsave_1.html": nextpage = "uwphlpsearchsave_4"; break;
-case "/uwphlpsearchsave_2.html": nextpage = "uwphlpsearchsave_1"; break;
-case "/uwphlpsearchsave_3.html": nextpage = "uwphlpsearchsave_2"; break;
-case "/uwphlpsearchsave_4.html": nextpage = "uwphlpsearchsave_3"; break;
-case "/uwphlp_mediainfo_1.html": nextpage = "uwphlp_mediainfo_4"; break;
-case "/uwphlp_mediainfo_2.html": nextpage = "uwphlp_mediainfo_1"; break;
-case "/uwphlp_mediainfo_3.html": nextpage = "uwphlp_mediainfo_2"; break;
-case "/uwphlp_mediainfo_4.html": nextpage = "uwphlp_mediainfo_3"; break;
-case "/uwphlp_videospeed_1.html": nextpage = "uwphlp_videospeed_4"; break;
-case "/uwphlp_videospeed_2.html": nextpage = "uwphlp_videospeed_1"; break;
-case "/uwphlp_videospeed_3.html": nextpage = "uwphlp_videospeed_2"; break;
-case "/uwphlp_videospeed_4.html": nextpage = "uwphlp_videospeed_3"; break;
-case "/androidhlpsearchsave_1.html": nextpage = "androidhlpsearchsave_4"; break;
-case "/androidhlpsearchsave_2.html": nextpage = "androidhlpsearchsave_1"; break;
-case "/androidhlpsearchsave_3.html": nextpage = "androidhlpsearchsave_2"; break;
-case "/androidhlpsearchsave_4.html": nextpage = "androidhlpsearchsave_3"; break;
-case "/androidhlpmyvideos_1.html": nextpage = "androidhlpmyvideos_6"; break;
-case "/androidhlpmyvideos_2.html": nextpage = "androidhlpmyvideos_1"; break;
-case "/androidhlpmyvideos_3.html": nextpage = "androidhlpmyvideos_2"; break;
-case "/androidhlpmyvideos_4.html": nextpage = "androidhlpmyvideos_3"; break;
-case "/androidhlpmyvideos_5.html": nextpage = "androidhlpmyvideos_4"; break;
-case "/androidhlpmyvideos_6.html": nextpage = "androidhlpmyvideos_5"; break;
-case "/hlpdvdplayerfree_1.html": nextpage = "hlpdvdplayerfree_6"; break;
-case "/hlpdvdplayerfree_2.html": nextpage = "hlpdvdplayerfree_1"; break;
-case "/hlpdvdplayerfree_3.html": nextpage = "hlpdvdplayerfree_2"; break;
-case "/hlpdvdplayerfree_4.html": nextpage = "hlpdvdplayerfree_3"; break;
-case "/hlpdvdplayerfree_5.html": nextpage = "hlpdvdplayerfree_4"; break;
-case "/hlpdvdplayerfree_6.html": nextpage = "hlpdvdplayerfree_5"; break;
-case "/hlpdvdplayer_1.html": nextpage = "hlpdvdplayer_7"; break;
-case "/hlpdvdplayer_2.html": nextpage = "hlpdvdplayer_1"; break;
-case "/hlpdvdplayer_3.html": nextpage = "hlpdvdplayer_2"; break;
-case "/hlpdvdplayer_4.html": nextpage = "hlpdvdplayer_3"; break;
-case "/hlpdvdplayer_5.html": nextpage = "hlpdvdplayer_4"; break;
-case "/hlpdvdplayer_6.html": nextpage = "hlpdvdplayer_5"; break;
-case "/hlpdvdplayer_7.html": nextpage = "hlpdvdplayer_6"; break;
-case "/hlpdvdplayer_remote_1.html": nextpage = "hlpdvdplayer_remote_8"; break;
-case "/hlpdvdplayer_remote_2.html": nextpage = "hlpdvdplayer_remote_1"; break;
-case "/hlpdvdplayer_remote_3.html": nextpage = "hlpdvdplayer_remote_2"; break;
-case "/hlpdvdplayer_remote_4.html": nextpage = "hlpdvdplayer_remote_3"; break;
-case "/hlpdvdplayer_remote_5.html": nextpage = "hlpdvdplayer_remote_4"; break;
-case "/hlpdvdplayer_remote_6.html": nextpage = "hlpdvdplayer_remote_5"; break;
-case "/hlpdvdplayer_remote_7.html": nextpage = "hlpdvdplayer_remote_6"; break;
-case "/hlpdvdplayer_remote_8.html": nextpage = "hlpdvdplayer_remote_7"; break;
-case "/hlpblurayplayer_1.html": nextpage = "hlpblurayplayer_6"; break;
-case "/hlpblurayplayer_2.html": nextpage = "hlpblurayplayer_1"; break;
-case "/hlpblurayplayer_3.html": nextpage = "hlpblurayplayer_2"; break;
-case "/hlpblurayplayer_4.html": nextpage = "hlpblurayplayer_3"; break;
-case "/hlpblurayplayer_5.html": nextpage = "hlpblurayplayer_4"; break;
-case "/hlpblurayplayer_6.html": nextpage = "hlpblurayplayer_5"; break;
-case "/hlpdesktopplus_1.html": nextpage = "hlpdesktopplus_6"; break;
-case "/hlpdesktopplus_2.html": nextpage = "hlpdesktopplus_1"; break;
-case "/hlpdesktopplus_3.html": nextpage = "hlpdesktopplus_2"; break;
-case "/hlpdesktopplus_4.html": nextpage = "hlpdesktopplus_3"; break;
-case "/hlpdesktopplus_5.html": nextpage = "hlpdesktopplus_4"; break;
-case "/hlpdesktopplus_6.html": nextpage = "hlpdesktopplus_5"; break;
-case "/screenrecplus_1.html": nextpage = "screenrecplus_5"; break;
-case "/screenrecplus_2.html": nextpage = "screenrecplus_1"; break;
-case "/screenrecplus_3.html": nextpage = "screenrecplus_2"; break;
-case "/screenrecplus_4.html": nextpage = "screenrecplus_3"; break;
-case "/screenrecplus_5.html": nextpage = "screenrecplus_4"; break;
-case "/hlpbreatheplus_1.html": nextpage = "hlpbreatheplus_5"; break;
-case "/hlpbreatheplus_2.html": nextpage = "hlpbreatheplus_1"; break;
-case "/hlpbreatheplus_3.html": nextpage = "hlpbreatheplus_2"; break;
-case "/hlpbreatheplus_4.html": nextpage = "hlpbreatheplus_3"; break;
-case "/hlpbreatheplus_5.html": nextpage = "hlpbreatheplus_4"; break;
-case "/hlpwinrare_1.html": nextpage = "hlpwinrare_6"; break;
-case "/hlpwinrare_2.html": nextpage = "hlpwinrare_1"; break;
-case "/hlpwinrare_3.html": nextpage = "hlpwinrare_2"; break;
-case "/hlpwinrare_4.html": nextpage = "hlpwinrare_3"; break;
-case "/hlpwinrare_5.html": nextpage = "hlpwinrare_4"; break;
-case "/hlpwinrare_6.html": nextpage = "hlpwinrare_5"; break;
-}
-window.location.href = wheretogonext + nextpage + ".html";;
-
-    });
-
- 
- 
-
-   
-});
- 
-    </script>
 <script>
 
 const myTimeoutss = setTimeout(myGreetings, 3000);
@@ -4492,11 +4008,7 @@ try
 		catch(ex) {}
 	})(window._W && _W.jQuery);
 </script>
-
-<script>
-	window._W.isEUUser = true;
-	window._W.showCookieToAll = "all";
-</script>
+ 
 
 <script>
 	(function(jQuery) {
