@@ -646,8 +646,6 @@ pubfuture.com, 692073d732300f5d300cd5ec, DIRECT
 33across.com, 0015a00002y7TWTAA2, RESELLER, bbea06d9c4d2853c
 33across.com, 0015a00003DKg9ZAAT, RESELLER, bbea06d9c4d2853c
 33across.com, 001Pg000002MH4HIAW, RESELLER, bbea06d9c4d2853c
-33across.com, 001Pg000002MH4HIAW, RESELLER, bbea06d9c4d2853c #33Across #hb #tag
-33across.com, 001Pg000007PnplIAC, DIRECT, bbea06d9c4d2853c #33Across #hb #tag
 33across.com, 001Pg000009Gtq2IAC, DIRECT, bbea06d9c4d2853c
 33across.com, 001Pg000009Gtq2IAC, RESELLER
 33across.com, 001Pg00000HDbTOIA1, DIRECT, bbea06d9c4d2853c
@@ -948,7 +946,6 @@ appnexus.com , 12290, RESELLER
 appnexus.com,  9284, DIRECT, f5ab79cb980f11d1
 appnexus.com, 1001, RESELLER, f5ab79cb980f11d1
 appnexus.com, 10040, RESELLER, f5ab79cb980f11d1
-appnexus.com, 10239, RESELLER, f5ab79cb980f11d1 #33Across #hb #tag #viewable
 appnexus.com, 10264, RESELLER, f5ab79cb980f11d1
 appnexus.com, 10490, RESELLER, f5ab79cb980f11d1
 appnexus.com, 10736, RESELLER
@@ -1014,7 +1011,6 @@ appnexus.com, 8826,RESELLER, f5ab79cb980f11d1
 appnexus.com, 926, RESELLER, f5ab79cb980f11d1
 appnexus.com, 9284, RESELLER, f5ab79cb980f11d1
 appnexus.com, 9316, RESELLER, f5ab79cb980f11d1
-appnexus.com, 9316, RESELLER, f5ab79cb980f11d1 # AppNexus
 appnexus.com, 9382, RESELLER, f5ab79cb980f11d1
 appnexus.com, 9393, DIRECT
 appnexus.com, 9393, RESELLER, f5ab79cb980f11d1
@@ -1069,7 +1065,6 @@ aps.amazon.com,d01b77a1-eb2e-40f1-8c68-14ae1eb1dcd9,DIRECT
 arabella.ag , abl-5345-p1, DIRECT
 arabella.ag, abl-5345, DIRECT
 aralego.com, par-488A3E6BD8D997D0ED8B3BD34D8BA4B, RESELLER
-aralego.com, par-488A3E6BD8D997D0ED8B3BD34D8BA4B, RESELLER # ucFunnel
 aralego.com, par-9A2627866DA4BBE4F4AA4A67A3DDE686, RESELLER
 atasdigital.com, 504278, RESELLER
 atlas5.co, 4749, DIRECT
@@ -1409,7 +1404,6 @@ google.com, pub-3328898302928686, RESELLER, f08c47fec0942fa0
 google.com, pub-3400636089340699, DIRECT, f08c47fec0942fa0
 google.com, pub-3479162065560922, DIRECT, f08c47fec0942fa0
 google.com, pub-3565385483761681, RESELLER, f08c47fec0942fa0
-google.com, pub-3565385483761681, RESELLER, f08c47fec0942fa0 #diDNA_google
 google.com, pub-3619133031508264, DIRECT, f08c47fec0942fa0
 google.com, pub-3619133031508264, RESELLER, f08c47fec0942fa0
 google.com, pub-3769010358500643, RESELLER, f08c47fec0942fa0
@@ -1443,7 +1437,6 @@ google.com, pub-5372661266361105, RESELLER, f08c47fec0942fa0
 google.com, pub-5533854580432370, RESELLER, f08c47fec0942fa0
 google.com, pub-5617098146054077, RESELLER, f08c47fec0942fa0
 google.com, pub-5717092533913515, RESELLER, f08c47fec0942fa0
-google.com, pub-5717092533913515, RESELLER, f08c47fec0942fa0 #NPMpartners
 google.com, pub-5738383349802109, DIRECT, f08c47fec0942fa0
 google.com, pub-5761017298734489, RESELLER, f08c47fec0942fa0
 google.com, pub-5814872297601307, RESELLER, f08c47fec0942fa0
@@ -1597,7 +1590,6 @@ improvedigital.com, 1408, RESELLER
 improvedigital.com, 1532, RESELLER
 improvedigital.com, 1552, RESELLER
 improvedigital.com, 1669, RESELLER
-improvedigital.com, 1669, RESELLER # ImproveDigital
 improvedigital.com, 1698, DIRECT
 improvedigital.com, 1785, RESELLER
 improvedigital.com, 1845, RESELLER
@@ -1772,7 +1764,6 @@ lijit.com, 367217-eb, DIRECT, fafdf38b16bf6b2b
 lijit.com, 374714, RESELLER, fafdf38b16bf6b2b
 lijit.com, 375328, RESELLER, fafdf38b16bf6b2b
 lijit.com, 380632, RESELLER, fafdf38b16bf6b2b
-lijit.com, 380632, RESELLER, fafdf38b16bf6b2b #SOVRN
 lijit.com, 397546, DIRECT, fafdf38b16bf6b2b
 lijit.com, 400766, RESELLER, fafdf38b16bf6b2b
 lijit.com, 407406, RESELLER, fafdf38b16bf6b2b
@@ -1955,7 +1946,6 @@ onetag.com, 2bb78272a859ca6, RESELLER
 onetag.com, 2e02577081e8ade, DIRECT
 onetag.com, 46218987a9da2b5, DIRECT
 onetag.com, 572a470226457b8, RESELLER
-onetag.com, 572a470226457b8, RESELLER # OneTag
 onetag.com, 58cb2f4547ea1e2, DIRECT
 onetag.com, 59817ac704fe3e8, RESELLER
 onetag.com, 59a18369e249bfb, DIRECT
@@ -2146,7 +2136,6 @@ pubmatic.com, 156136, RESELLER, 5d62403b186f2ace
 pubmatic.com, 156177, RESELLER
 pubmatic.com, 156177, RESELLER, 5d62403b186f2ace
 pubmatic.com, 156344, RESELLER, 5d62403b186f2ace
-pubmatic.com, 156344, RESELLER, 5d62403b186f2ace # Pubmatic
 pubmatic.com, 156425, RESELLER, 5d62403b186f2ace
 pubmatic.com, 156439, RESELLER,
 pubmatic.com, 156538, RESELLER, 5d62403b186f2ace
@@ -2383,7 +2372,6 @@ rubiconproject.com, 11734, RESELLER, 0bfd66d529a55807
 rubiconproject.com, 12266, RESELLER, 0bfd66d529a55807
 rubiconproject.com, 13132, Reseller, 0bfd66d529a55807
 rubiconproject.com, 13344, RESELLER, 0bfd66d529a55807
-rubiconproject.com, 13344, RESELLER, 0bfd66d529a55807 # Rubicon
 rubiconproject.com, 13702, DIRECT, 0bfd66d529a55807
 rubiconproject.com, 13732, RESELLER, 0bfd66d529a55807
 rubiconproject.com, 13918, RESELLER, 0bfd66d529a55807
@@ -2419,7 +2407,6 @@ rubiconproject.com, 21274, DIRECT, 0bfd66d529a55807
 rubiconproject.com, 21310, RESELLER, 0bfd66d529a55807
 rubiconproject.com, 21506, RESELLER, 0bfd66d529a55807
 rubiconproject.com, 21642, RESELLER, 0bfd66d529a55807
-rubiconproject.com, 21642, RESELLER, 0bfd66d529a55807 #33Across #hb #tag #viewable
 rubiconproject.com, 22328, RESELLER, 0bfd66d529a55807
 rubiconproject.com, 22330, RESELLER, 0bfd66d529a55807
 rubiconproject.com, 22342, DIRECT, 0bfd66d529a55807
@@ -2895,7 +2882,6 @@ trustedstack.com,TSL72ADG4,DIRECT
 tvp.tv, AR40, RESELLER, 1125b6434104a723
 tvp.tv, BC15, RESELLER, 1125b6434104a723
 ucfunnel.com, par-488A3E6BD8D997D0ED8B3BD34D8BA4B, RESELLER
-ucfunnel.com, par-488A3E6BD8D997D0ED8B3BD34D8BA4B, RESELLER # ucFunnel
 udmserve.net,4273,DIRECT,0cf60ed62b5f3e40
 uis.mobfox.com, 165, RESELLER
 uis.mobfox.com, 1955, DIRECT, 5529a3d1f59865be
@@ -3131,3 +3117,36 @@ zmaticoo.com, 5135082, RESELLER
 zmaticoo.com,113149,RESELLER
 zmaticoo.com,5135082,RESELLER
 zoklent.com, zok-1000, RESELLER
+33Across.com, 001Pg00000eHKL7IAO, RESELLER, bbea06d9c4d2853c
+33across.com, 0010b00002ODU4HAAX,reseller, bbea06d9c4d2853c
+Media.net, 8CUZ1MK22, RESELLER
+adbite.com, 202171, RESELLER
+adform.com,2926,reseller,9f5210a2f0999e32
+appnexus.com,8826,reseller,f5ab79cb980f11d1
+contextweb.com, 562836, RESELLER, 89ff185a4c4e857c
+improvedigital.com,2106,reseller
+indexexchange.com, 190500, RESELLER
+integralstream.com, 2, RESELLER
+lijit.com,407406,reseller,fafdf38b16bf6b2b
+loopme.com,11576,reseller,6c8d5f95897a5a3b
+media.net, 8CU816538, DIRECT
+media.net, 8CUV34PJ4, RESELLER
+media.net,8cu4jtrf9,reseller
+onetag.com,6e053d779444c00,reseller
+pubmatic.com, 162882, RESELLER, 5d62403b186f2ace
+pubmatic.com, 163319, RESELLER, 5d62403b186f2ace
+pubmatic.com, 165266, Reseller, 5d62403b186f2ace
+pubmatic.com,162110,reseller,5d62403b186f2ace
+rubiconproject.com,16920,reseller,0bfd66d529a55807
+sharethrough.com,n98xdzel,reseller,d53b998a7bd4ecd2
+smartadserver.com,4288,reseller,060d053dcf45cbf3
+sonobi.com,4c4fba1717,reseller,d1a215d9eb5aee9e
+start.io, 185522363, reseller
+themediagrid.com,JTQKMP,RESELLER,35d5010d7789b49d
+themediagrid.com,uot45z,reseller,35d5010d7789b49d
+trustedstack.com, TSIO6G4I5, reseller
+video.unrulymedia.com,3486482593,reseller
+vidoomy.com, 7763608, RESELLER
+xapads.com, 139660, DIRECT
+yieldmo.com,3133660606033240149,reseller
+zetaglobal.com,108,reseller
