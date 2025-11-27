@@ -1,7 +1,6 @@
 MANAGERDOMAIN=mlapplications.com
 OWNERDOMAIN=mlapplications.com
 CONTACT=mil.applications@hotmail.com
-
 #adsense
 google.com,pub-7710644763832143,DIRECT,f08c47fec0942fa0
 #sulvo
@@ -1071,7 +1070,8 @@ atlas5.co, 4749, DIRECT
 audienceconnect.io, 540, RESELLER
 audienciad.com, 203562, DIRECT
 audienciad.com, 209562, DIRECT
-axis-marketplace.com, 192, RESELLERaxtionms.com  NetworkCode DIRECT
+axis-marketplace.com, 192, RESELLER
+axtionms.com  NetworkCode DIRECT
 axis-marketplace.com, 21072105, RESELLER
 axonix.com, 56805, reseller, bc385f2b4a87b721
 axonix.com, 57264, RESELLER, bc385f2b4a87b721
