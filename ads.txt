@@ -3160,4 +3160,6 @@ rubiconproject.com, 24246, RESELLER, 0bfd66d529a55807
 smaato.com,1100059464,reseller
 triplelift.com,14670,reseller
 vidgyor.com, 11284, DIRECT
-axis-marketplace.com, 192, RESELLER axtionms.com  NetworkCode DIRECT
+axis-marketplace.com, 192, RESELLER axtionms.com  NetworkCode DIRECT
+axis-marketplace.com, 192, RESELLER
+axtionms.com  NetworkCode DIRECT
