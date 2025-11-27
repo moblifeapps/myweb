@@ -1071,7 +1071,7 @@ atlas5.co, 4749, DIRECT
 audienceconnect.io, 540, RESELLER
 audienciad.com, 203562, DIRECT
 audienciad.com, 209562, DIRECT
-axis-marketplace.com, 192, RESELLER axtionms.com  NetworkCode DIRECT
+axis-marketplace.com, 192, RESELLERaxtionms.com  NetworkCode DIRECT
 axis-marketplace.com, 21072105, RESELLER
 axonix.com, 56805, reseller, bc385f2b4a87b721
 axonix.com, 57264, RESELLER, bc385f2b4a87b721
@@ -3150,3 +3150,14 @@ vidoomy.com, 7763608, RESELLER
 xapads.com, 139660, DIRECT
 yieldmo.com,3133660606033240149,reseller
 zetaglobal.com,108,reseller
+adform.com, 3064, RESELLER
+adipolosolutions.com, nextmil, DIRECT
+appnexus.com, 16912, RESELLER, f5ab79cb980f11d1
+league-m.de, 119, DIRECT
+mcgads.com, WEW7M4, RESELLER
+netaddiction.it, 2016, RESELLER
+pubmatic.com, 162319, DIRECT, 5d62403b186f2ace
+rubiconproject.com, 24246, RESELLER, 0bfd66d529a55807
+smaato.com,1100059464,reseller
+triplelift.com,14670,reseller
+vidgyor.com, 11284, DIRECT
