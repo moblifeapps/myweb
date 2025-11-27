@@ -140,7 +140,7 @@
   </url>
   <url>
     <loc>https://mlapplications.com/desktoplivewallpaper.html</loc>
-    <lastmod>2025-11-24</lastmod>
+    <lastmod>2025-11-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -170,7 +170,13 @@
   </url>
   <url>
     <loc>https://mlapplications.com/dlw.html</loc>
-    <lastmod>2025-11-24</lastmod>
+    <lastmod>2025-11-26</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://mlapplications.com/dlw2.html</loc>
+    <lastmod>2025-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -283,12 +289,6 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://mlapplications.com/games.html</loc>
-    <lastmod>2025-11-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
     <loc>https://mlapplications.com/GET.html</loc>
     <lastmod>2025-11-13</lastmod>
     <changefreq>daily</changefreq>
@@ -392,7 +392,7 @@
   </url>
   <url>
     <loc>https://mlapplications.com/hlpdvdplayer_2.html</loc>
-    <lastmod>2025-11-24</lastmod>
+    <lastmod>2025-11-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
