@@ -127,12 +127,6 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://mlapplications.com/choice.html</loc>
-    <lastmod>2025-11-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
     <loc>https://mlapplications.com/contact.html</loc>
     <lastmod>2025-11-27</lastmod>
     <changefreq>daily</changefreq>
@@ -541,12 +535,6 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://mlapplications.com/myHeader.html</loc>
-    <lastmod>2025-11-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
     <loc>https://mlapplications.com/myimdbmovie_info.html</loc>
     <lastmod>2025-11-27</lastmod>
     <changefreq>daily</changefreq>
@@ -567,12 +555,6 @@
   <url>
     <loc>https://mlapplications.com/opinion--blog.html</loc>
     <lastmod>2025-11-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://mlapplications.com/pwapuzzle-service-worker.html</loc>
-    <lastmod>2025-11-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
