@@ -29,7 +29,7 @@
 /* Wrapper for all connect elements.
  */
 .noUi-connects {
-  overflow: hidden;
+   
   z-index: 0;
 }
 .noUi-connect,
