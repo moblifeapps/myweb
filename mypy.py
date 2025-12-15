@@ -98,7 +98,20 @@ def hasMetaRobotsNoindex(f) :
     try:
         with open(f, "r", errors="surrogateescape") as file :
             contents = file.read()
-            m = re.search("</head>", contents, flags=re.I)
+            m = re.search("<script>
+    console.log('here i am not from cloudflare tag setup !');
+</script>
+<link rel="preload" as="script" href="https://live.demand.supply/up.js"><script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-87MTDXTF59');
+
+</script>
+</head>", contents, flags=re.I)
             if not m :
                 m = re.search("<body>", contents, flags=re.I)
             all_meta_tags = RE_META_TAG.findall(contents, endpos=m.start()) if m else RE_META_TAG.findall(contents)
