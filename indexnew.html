@@ -982,6 +982,126 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 	</div>
 </div>
+<style>
+	
+/* Button */
+.content__cta-container {
+	display: flex;
+	justify-content: center;
+	margin: 50px 0;
+	flex-direction: row;
+}
+
+.content__cta--loading::after {
+	content: "";
+	position: absolute;
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	border: 4px solid transparent;
+	border-top-color: #ffffff;
+	border-radius: 50%;
+	animation: button-loading-spinner 1s ease infinite;
+}
+
+@keyframes button-loading-spinner {
+	from {
+		transform: rotate(0turn);
+	}
+
+	to {
+		transform: rotate(1turn);
+	}
+}
+
+.content__cta--button:disabled {
+	background-color: gray;
+}
+
+.content__cta--button {
+	min-width: 215px;
+	min-height: 60px;
+	position: relative;
+	padding: 0 30px;
+	font-size: 18px;
+	font-weight: bold;
+	color: #ffffff;
+	background-color: #0078ff;
+	border: none;
+	border-radius: 30px;
+	text-decoration: none;
+	text-align: center;
+	transition: all 0.3s ease;
+	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+	margin: 0 15px;
+}
+
+.nofill {
+	background-color: gray;
+}
+
+.content__cta--loading .content__cta--text {
+	visibility: hidden;
+	opacity: 0;
+}
+
+/* Active state */
+.content__cta--button:active {
+	background-color: #004a91; /* Darker color on click */
+	transform: scale(0.98); /* Slightly shrink the button */
+
+	box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2); /* Reduced shadow */
+}
+
+/* Hover effect */
+.content__cta--button:not(:disabled):hover {
+	background-color: #005bb5; /* Darker shade on hover */
+	transform: translateY(-3px); /* Lift effect */
+	box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+}
+
+/* Focus effect */
+.content__cta--button:focus {
+}
+
+
+	</style>
+
+<section class="content__cta-container">					
+
+	<button class="content__cta--button spinner nofill" id="playRewardedVideo">Continue With The Article</button>
+
+</section>
+<script>
+/*	
+ document.getElementById("playRewardedVideo").addEventListener("click", () => {
+ ramp.manuallyCreateRewardUi({ skipConfirmation: true })
+  .then(() => {
+   console.log("✅ Reward granted");
+  })
+  .catch((error) => {
+   console.error("❌ Rewarded video error:", error);
+  });
+});
+*/
+ramp.manuallyCreateRewardUi({
+  watchAdId: "watchAdBtn",
+  closeId: "cancelBtn"
+})
+.then(() => {
+  console.log("✅ Video flow completed");
+})
+.catch((error) => {
+  console.error("❌ Video error:", error);
+});
+</script>
+
+
 <div class="wsite-section-wrap">
 	<div class="wsite-section wsite-body-section wsite-section-bg-image wsite-background-1503" style="background-image: url(uploads/1953379859.jpg) ;background-repeat: no-repeat ;background-position: 50% 50% ;background-size: 100% ;background-color: transparent ;background-size: cover;" >
 		<div class="wsite-section-content">
