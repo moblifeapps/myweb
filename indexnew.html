@@ -88,45 +88,6 @@
  console.log('arxidiaaaa');
 
 
-const modalConfig = {
- title: 'Earn a reward!',
- confirmButtonText: 'Watch the Video!',
- backgroundOverlay: true,
- backgroundColor: '',
- confirmButtonColor: undefined,
- titleColor: undefined,
- logoSrc: '',
- nameLogoSrc: ''
-};
- console.log('arxidiaaaa2223333');
-
-const confirmModalConfig = {
- title: 'Thank you for watching',
- subTitle: 'You have earned 2 coins!',
- closeButtonText: '',
- backgroundOverlay: false,
- backgroundColor: '',
- subTitleTextColor: '#FF0000',
- buttonColor: undefined,
- titleColor: '#FF0000',
- logoSrc: ''
-};
- console.log('arxidiaaaa345');
-
-ramp.showRewardedVideoModal(modalConfig, confirmModalConfig)
- .then(() => {
-  // Make an API call here
-  return fetch('https://api.example.com/data');
- })
- .then(() => {
-  // Show confirmation modal after reward logic
-  ramp.showRewardedVideoConfirmationModal();
- })
- .catch((error) => {
-  console.error('Error:', error);
- });
-
-
 
 
 
