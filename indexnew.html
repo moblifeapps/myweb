@@ -84,7 +84,8 @@
     <script type="text/javascript" >
       $(document).ready(function () {
       	$(".button-collapse").sideNav();
-
+ });
+ console.log('arxidiaaaa');
 
 
 const modalConfig = {
@@ -97,6 +98,7 @@ const modalConfig = {
  logoSrc: '',
  nameLogoSrc: ''
 };
+ console.log('arxidiaaaa2223333');
 
 const confirmModalConfig = {
  title: 'Thank you for watching',
@@ -109,6 +111,7 @@ const confirmModalConfig = {
  titleColor: '#FF0000',
  logoSrc: ''
 };
+ console.log('arxidiaaaa345');
 
 ramp.showRewardedVideoModal(modalConfig, confirmModalConfig)
  .then(() => {
@@ -123,55 +126,12 @@ ramp.showRewardedVideoModal(modalConfig, confirmModalConfig)
   console.error('Error:', error);
  });
 
- console.log('arxidiaaaa');
-document.getElementById('playRewardedVideo').style.visibility = 'visible';
 
- document.addEventListener("rewardedAdVideoRewardReady", function(e){ 
-//if (agnoise == 'yes') { e.preventDefault(); }
-console.log("🎥 Ad is ready to play2222!");
-}, false);
 
- console.log('arxidiaaaa kapama');
+
+
+
      
-/*
-window.addEventListener("rewardedAdVideoRewardReady", () => {
-	//alert('here');
-console.log("🎥 Ad is ready to play!");
-document.getElementById('playRewardedVideo').style.visibility = 'visible';
-
-//document.getElementById("playRewardedVideo").setAttribute('style',)
-
-});
-	*/
- document.getElementById("playRewardedVideo").addEventListener("click", () => {
- ramp.manuallyCreateRewardUi({ skipConfirmation: true })
-  .then(() => {
-   console.log("✅ Reward granted");
-  })
-  .catch((error) => {
-   console.error("❌ Rewarded video error:", error);
-  });
-});
-
-/*
-ramp.manuallyCreateRewardUi({
-  watchAdId: "watchAdBtn",
-  closeId: "cancelBtn"
-})
-.then(() => {
-  console.log("✅ Video flow completed");
-})
-.catch((error) => {
-  console.error("❌ Video error:", error);
-});
-*/
- 
-
-
-
-
-
-      });
    
  </script>
  <!-- Compiled and minified CSS
@@ -5992,6 +5952,51 @@ href="contact.html">
 <footer class="page-footer blue darken-3" style="margin-top: -2px;">
  <script data-cfasync="false" async src="//cdn.intergient.com/1025674/76793/ramp.js"></script>
 
+ <script>
+	
+document.getElementById('playRewardedVideo').style.visibility = 'visible';
+
+ document.addEventListener("rewardedAdVideoRewardReady", function(e){ 
+//if (agnoise == 'yes') { e.preventDefault(); }
+console.log("🎥 Ad is ready to play2222!");
+}, false);
+
+ console.log('arxidiaaaa kapama');
+     
+/*
+window.addEventListener("rewardedAdVideoRewardReady", () => {
+	//alert('here');
+console.log("🎥 Ad is ready to play!");
+document.getElementById('playRewardedVideo').style.visibility = 'visible';
+
+//document.getElementById("playRewardedVideo").setAttribute('style',)
+
+});
+	*/
+ document.getElementById("playRewardedVideo").addEventListener("click", () => {
+ ramp.manuallyCreateRewardUi({ skipConfirmation: true })
+  .then(() => {
+   console.log("✅ Reward granted");
+  })
+  .catch((error) => {
+   console.error("❌ Rewarded video error:", error);
+  });
+});
+
+/*
+ramp.manuallyCreateRewardUi({
+  watchAdId: "watchAdBtn",
+  closeId: "cancelBtn"
+})
+.then(() => {
+  console.log("✅ Video flow completed");
+})
+.catch((error) => {
+  console.error("❌ Video error:", error);
+});
+*/
+ 
+	</script>
 <div class="footer-copyright">
 <div class="container s5">
 © 2025 ML Applications
