@@ -81,12 +81,99 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     
-    <script>
+    <script type="text/javascript" >
       $(document).ready(function () {
       	$(".button-collapse").sideNav();
-      });
-    </script>
 
+
+
+const modalConfig = {
+ title: 'Earn a reward!',
+ confirmButtonText: 'Watch the Video!',
+ backgroundOverlay: true,
+ backgroundColor: '',
+ confirmButtonColor: undefined,
+ titleColor: undefined,
+ logoSrc: '',
+ nameLogoSrc: ''
+};
+
+const confirmModalConfig = {
+ title: 'Thank you for watching',
+ subTitle: 'You have earned 2 coins!',
+ closeButtonText: '',
+ backgroundOverlay: false,
+ backgroundColor: '',
+ subTitleTextColor: '#FF0000',
+ buttonColor: undefined,
+ titleColor: '#FF0000',
+ logoSrc: ''
+};
+
+ramp.showRewardedVideoModal(modalConfig, confirmModalConfig)
+ .then(() => {
+  // Make an API call here
+  return fetch('https://api.example.com/data');
+ })
+ .then(() => {
+  // Show confirmation modal after reward logic
+  ramp.showRewardedVideoConfirmationModal();
+ })
+ .catch((error) => {
+  console.error('Error:', error);
+ });
+
+ console.log('arxidiaaaa');
+document.getElementById('playRewardedVideo').style.visibility = 'visible';
+
+ document.addEventListener("rewardedAdVideoRewardReady", function(e){ 
+//if (agnoise == 'yes') { e.preventDefault(); }
+console.log("🎥 Ad is ready to play2222!");
+}, false);
+
+ console.log('arxidiaaaa kapama');
+     
+/*
+window.addEventListener("rewardedAdVideoRewardReady", () => {
+	//alert('here');
+console.log("🎥 Ad is ready to play!");
+document.getElementById('playRewardedVideo').style.visibility = 'visible';
+
+//document.getElementById("playRewardedVideo").setAttribute('style',)
+
+});
+	*/
+ document.getElementById("playRewardedVideo").addEventListener("click", () => {
+ ramp.manuallyCreateRewardUi({ skipConfirmation: true })
+  .then(() => {
+   console.log("✅ Reward granted");
+  })
+  .catch((error) => {
+   console.error("❌ Rewarded video error:", error);
+  });
+});
+
+/*
+ramp.manuallyCreateRewardUi({
+  watchAdId: "watchAdBtn",
+  closeId: "cancelBtn"
+})
+.then(() => {
+  console.log("✅ Video flow completed");
+})
+.catch((error) => {
+  console.error("❌ Video error:", error);
+});
+*/
+ 
+
+
+
+
+
+      });
+   
+ </script>
  <!-- Compiled and minified CSS
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
  -->
@@ -1015,89 +1102,9 @@ function removeElement(id) {
 
 <section class="content__cta-container">					
 
-	<button class="content__cta--button spinner nofill" style="visibility: hidden;" id="playRewardedVideo">Continue With The Article</button>
+	<button class="content__cta--button spinner nofill" style="visibility: visible;" id="playRewardedVideo">Continue With The Article</button>
 
 </section>
-<script type="text/javascript" >
-const modalConfig = {
- title: 'Earn a reward!',
- confirmButtonText: 'Watch the Video!',
- backgroundOverlay: true,
- backgroundColor: '',
- confirmButtonColor: undefined,
- titleColor: undefined,
- logoSrc: '',
- nameLogoSrc: ''
-};
-
-const confirmModalConfig = {
- title: 'Thank you for watching',
- subTitle: 'You have earned 2 coins!',
- closeButtonText: '',
- backgroundOverlay: false,
- backgroundColor: '',
- subTitleTextColor: '#FF0000',
- buttonColor: undefined,
- titleColor: '#FF0000',
- logoSrc: ''
-};
-
-ramp.showRewardedVideoModal(modalConfig, confirmModalConfig)
- .then(() => {
-  // Make an API call here
-  return fetch('https://api.example.com/data');
- })
- .then(() => {
-  // Show confirmation modal after reward logic
-  ramp.showRewardedVideoConfirmationModal();
- })
- .catch((error) => {
-  console.error('Error:', error);
- });
-
- console.log('arxidiaaaa');
-document.getElementById('playRewardedVideo').style.visibility = 'visible';
-
- document.addEventListener("rewardedAdVideoRewardReady", function(e){ 
-//if (agnoise == 'yes') { e.preventDefault(); }
-console.log("🎥 Ad is ready to play2222!");
-}, false);
-
- console.log('arxidiaaaa kapama');
-     
-/*
-window.addEventListener("rewardedAdVideoRewardReady", () => {
-	//alert('here');
-console.log("🎥 Ad is ready to play!");
-document.getElementById('playRewardedVideo').style.visibility = 'visible';
-
-//document.getElementById("playRewardedVideo").setAttribute('style',)
-
-});
-	*/
- document.getElementById("playRewardedVideo").addEventListener("click", () => {
- ramp.manuallyCreateRewardUi({ skipConfirmation: true })
-  .then(() => {
-   console.log("✅ Reward granted");
-  })
-  .catch((error) => {
-   console.error("❌ Rewarded video error:", error);
-  });
-});
-
-/*
-ramp.manuallyCreateRewardUi({
-  watchAdId: "watchAdBtn",
-  closeId: "cancelBtn"
-})
-.then(() => {
-  console.log("✅ Video flow completed");
-})
-.catch((error) => {
-  console.error("❌ Video error:", error);
-});
-*/
-</script>
 
 
 <div class="wsite-section-wrap">
