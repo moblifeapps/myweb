@@ -1055,14 +1055,17 @@ ramp.showRewardedVideoModal(modalConfig, confirmModalConfig)
   console.error('Error:', error);
  });
 
-//document.addEventListener("rewardedAdVideoRewardReady", function(e){ 
+ console.log('arxidiaaaa');
+document.getElementById('playRewardedVideo').style.visibility = 'visible';
+
+ document.addEventListener("rewardedAdVideoRewardReady", function(e){ 
 //if (agnoise == 'yes') { e.preventDefault(); }
-//console.log("🎥 Ad is ready to play2222!");
-//document.getElementById('playRewardedVideo').style.visibility = 'visible';
-//}, false);
+console.log("🎥 Ad is ready to play2222!");
+}, false);
 
+ console.log('arxidiaaaa kapama');
      
-
+/*
 window.addEventListener("rewardedAdVideoRewardReady", () => {
 	//alert('here');
 console.log("🎥 Ad is ready to play!");
@@ -1071,7 +1074,7 @@ document.getElementById('playRewardedVideo').style.visibility = 'visible';
 //document.getElementById("playRewardedVideo").setAttribute('style',)
 
 });
-	
+	*/
  document.getElementById("playRewardedVideo").addEventListener("click", () => {
  ramp.manuallyCreateRewardUi({ skipConfirmation: true })
   .then(() => {
