@@ -213,7 +213,7 @@ ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, body, html, p, blockquote, fields
  }
  .scrollToTop { padding: 0em; color: #444; position: fixed; width: 80px; height: 80px; bottom: -3px; left: 50%; margin-left: -40px; -webkit-transition: -webkit-transform .3s ease-in-out; -ms-transition: -ms-transform .3s ease-in-out; transition: transform .3s ease-in-out; z-index: 1; }
  .scrollToTop:hover { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); }
- .mynextButton { padding: 1em; color: #444; position: fixed; right: 0; top: 50%; margin-top: -75px; margin-right: -30px; -webkit-transition: -webkit-transform .3s ease-in-out; -ms-transition: -ms-transform .3s ease-in-out; transition: transform .3s ease-in-out; z-index: 1; }
+ .mynextButton { padding: 1em; color: #444; position: fixed; right: 0; top: 10%; margin-top: -75px; margin-right: -30px; -webkit-transition: -webkit-transform .3s ease-in-out; -ms-transition: -ms-transform .3s ease-in-out; transition: transform .3s ease-in-out; z-index: 1; }
  .mynextButton:hover { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); }
  .mypreviousButton { padding: 1em; color: #444; position: fixed; left: 0; top: 50%; margin-top: -75px; margin-left: -30px; -webkit-transition: -webkit-transform .3s ease-in-out; -ms-transition: -ms-transform .3s ease-in-out; transition: transform .3s ease-in-out; z-index: 1; }
  .mypreviousButton:hover { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); }
