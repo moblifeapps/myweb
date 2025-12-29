@@ -237,14 +237,15 @@ img {
 <style>
 .manual-railway {
     position: fixed;
-    top: 150px; /* Exactly 150px from top */
-    right: calc((100% - 1000px) / 2); /* Adjust based on your 700px content alignment */
-    width: 300px;
+	    top: 160px; /* Exactly 150px from top */
+    left: calc((100% - 320px)); /* Adjust based on your 700px content alignment */
+    width: 310px;
     z-index: 100;
+
 }
 
 /* Hide on mobile */
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1020px) {
     .manual-railway { display: none; }
 }
 </style>
