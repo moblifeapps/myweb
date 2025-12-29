@@ -161,31 +161,58 @@ img {
 </style>
 
 <style>
-	/* General rule for both */
+/* The main wrapper for your site */
+.railway-layout {
+  /* Fill the whole width minus the 300px for the ad */
+  width: calc(100% - 300px) !important;
+  
+  /* Hard limit to your preferred content width 
+  max-width: 700px !important; */
+  
+  /* Pin to the left */
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  
+  /* Clear the sticky header (120px) */
+  margin-top: 120px;
+}
+
+/* Ensure mobile devices (below 1000px) go full width */
+@media only screen and (max-width: 1000px) {
+  .railway-layout {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: 60px; /* Smaller gap for mobile header if needed */
+  }
+}
+
+
+	/* General rule for both 
 .railway-layout {
   width: 700px !important;
   max-width: 700px !important;
 }
-
-/* Page Type A: Content on Left, Ad on Right */
+*/
+/* Page Type A: Content on Left, Ad on Right 
 .ad-on-right {
   margin-left: 0 !important;
   margin-right: auto !important;
 }
-
-/* Page Type B: Content on Right, Ad on Left */
+*/
+/* Page Type B: Content on Right, Ad on Left 
 .ad-on-left {
   margin-left: auto !important;
   margin-right: 0 !important;
 }
-
-/* Mobile Reset */
+*/
+/* Mobile Reset 
 @media only screen and (max-width: 1000px) {
   .railway-layout {
     width: 100% !important;
     margin: 0 !important;
   }
 }
+*/
 </style>
 
 </head>
@@ -387,7 +414,7 @@ function removeElement(id) {
       </div> 
     </div>  -->
 
-   <header class="no-padding" style="margin-top: 90px;">
+   <header class="no-padding" style="margin-top: 90px;" google-side-rail-overlap="false">
 
     
 		<div class="navbar-fixed">  
@@ -447,7 +474,7 @@ function removeElement(id) {
 	</header>
 
 
-    <div class="content-wrap railway-layout ad-on-right" >
+    <div class="content-wrap railway-layout  " >
       <div id="wsite-content" class="wsite-elements wsite-not-footer">
 
 <div class="wsite-section-wrap">
