@@ -207,17 +207,20 @@ img {
 
 		<div id="ad-spacer" 
      google-side-rail-overlap="false" 
-     style="height: 150px; width: 100%; position: absolute; top: 0; pointer-events: none; background: transparent;">
+     style="height: 150px; width: 100%; position: absolute; top: 0; pointer-events: none; background: #0D47A1;">
 </div>
 
 <style>
 .manual-railway {
     position: fixed;
 	    top: 160px; /* Exactly 150px from top */
-    left: calc((100% - 320px)); /* Adjust based on your 700px content alignment */
+   /* left: calc((100% - 320px)); /* Adjust based on your 700px content alignment */
     width: 310px;
-    z-index: 100;
-
+    z-index: 9999;
+	display: flex; 
+	flex-direction: column; 
+	align-items: center;
+	bottom: 0;
 }
 
 /* Hide on mobile */
@@ -225,10 +228,25 @@ img {
     .manual-railway { display: none; }
 }
 </style>
+<!--
+<div id="sticky-wrapper" style="position: fixed; bottom: 0; width: 100%; z-index: 9999; display: flex; flex-direction: column; align-items: center;">
+    
+    <button onclick="document.getElementById('sticky-wrapper').style.display='none'" 
+            style="background: #333; color: white; border: none; padding: 5px 10px; cursor: pointer; align-self: flex-end; font-size: 12px;">
+        Close [X]
+    </button>
 
+    <div id="div-gpt-ad-xxxxxx-0">
+        <script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-xxxxxx-0'); });</script>
+    </div>
+</div>
+-->
 
-<div class="manual-railway">
-
+<div class="manual-railway" id="sticky-wrapper">
+  <button onclick="document.getElementById('sticky-wrapper').style.display='none'" 
+            style="background: #333; color: white; border: none; padding: 5px 10px; cursor: pointer; align-self: flex-end; font-size: 12px;">
+        Close [X]
+    </button>
 	<!-- /423204242/myStickyCode -->
 <div id='div-gpt-ad-1767079683337-0' style='min-width: 160px; min-height: 250px;'>
   <script>
