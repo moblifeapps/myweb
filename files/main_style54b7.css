@@ -155,6 +155,20 @@ ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, body, html, p, blockquote, fields
     .manual-railway { display: none; }
 }
 
+
+ @media only screen and (max-width: 1020px) {
+  .railway-layout-right {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: 60px; /* Smaller gap for mobile header if needed */
+  }
+}
+@media screen and (max-width: 1020px) {
+    .manual-railway-right { display: none; }
+}
+
+
+
  @media screen and (max-width: 767px) {
  body { background-size: initial; background-position: top center; background-attachment: inherit; font-size: 15px; }
  body.wsite-checkout-page .banner-wrap, body.wsite-native-mobile-editor .banner-wrap { margin-top: 0; }
@@ -265,4 +279,31 @@ div.paragraph ol, div.paragraph ol li { list-style: decimal outside !important; 
 	align-items: center;
 	bottom: 0;
 	right: 5px;
+}
+
+.railway-layout-right {
+  /* Fill the whole width minus the 300px for the ad */
+  width: calc(100% - 322px) !important;
+  
+  /* Hard limit to your preferred content width 
+  max-width: 700px !important; */
+  
+  /* Pin to the left */
+  margin-right: 0 !important;
+  margin-left: auto !important;
+  
+  /* Clear the sticky header (120px)
+  margin-top: 120px; */
+}
+.manual-railway-right {
+    position: fixed;
+	    top: 160px; /* Exactly 150px from top */
+   /* left: calc((100% - 320px)); /* Adjust based on your 700px content alignment */
+    width: 310px;
+    z-index: 9999;
+	display: flex; 
+	flex-direction: column; 
+	align-items: center;
+	bottom: 0;
+	left: 5px;
 }
