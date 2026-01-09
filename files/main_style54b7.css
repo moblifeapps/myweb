@@ -307,3 +307,17 @@ div.paragraph ol, div.paragraph ol li { list-style: decimal outside !important; 
 	bottom: 0;
 	left: 5px;
 }
+
+.promo-caption {
+    font-size: 1.7rem;
+    font-weight: 500;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+.promo-caption2 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
