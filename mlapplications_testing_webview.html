@@ -3,65 +3,34 @@
 	 
   <head>
  
-
- 
- <script>console.log('here goes sulvo');</script>
-
-
- <script>console.log('here goes f59');</script>
  
  
- <title>Testing Webview – ML Applications</title>
-  <meta name="description" content="Read the Terms of Service for using ML Applications, including usage rules, disclaimers, and legal obligations.">
-<link rel="icon" id="favicon" type="image/x-icon" href="/uploads/favpreview.gif">
+ 
+ <link rel="icon" id="favicon" type="image/x-icon" href="/uploads/favpreview.gif">
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Terms of Service – ML Applications">
-  <meta property="og:description" content="Read the Terms of Service for using ML Applications, including usage rules, disclaimers, and legal obligations.">
-  <meta property="og:type" content="website">
+		<title>D.L.W.+ (mlapplications.com) - M.I.L. Team - 3D+ and more..</title><meta property="og:site_name" content="M.I.L. Team - 3D+ and more.." />
+<meta property="og:title" content="D.L.W.+ (mlapplications.com)" />
+<meta name="description" property="og:description"  content="Desktop Live Wallpaper+ by M.I.L. Applications lets you turn your personal videos and photos into animated live wallpapers. Enjoy automatic playback, animation effects, timeline control, and seamless startup on Windows 10/11." />
+<meta property="og:image" content="uploads/announce-orig_orig.webp" />
+<meta property="og:url" content="desktopliveapp.html" />
+
+ <meta name="keywords" content="desktop,live,wallpaper,wallpapers,video wallpaper,windows wallpaper,windows video background, windows theme" />
+<meta name="viewport" content="width=device-width , initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   
-<meta property="og:url" content="https://mlapplications.com/mlapplications_testing_webview.html" />
-<meta property="og:site_name" content="MLApplications" />
-<!-- Optionally add an image for social previews -->
-<meta property="og:image" content="https://mlapplications.com//uploads/favpreview.gif" />
-<meta property="og:locale" content="en_US" />
 
-  <!-- Twitter Cards -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Terms of Service – ML Applications">
-  <meta name="twitter:description" content="Read the Terms of Service for using ML Applications, our website.">
+
+ <meta name="keywords" content="MLApplications, cookies policy, data protection, cookies, personal data, GDPR, website privacy, user data security" />
+
+<link rel="canonical" href="https://mlapplications.com/desktopliveapp.html" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
 
   <!-- Materialize CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" />
 
   <link rel="stylesheet" type="text/css" href="files/main_style54b7.css" title="wsite-theme-css" />
-
-  <!-- JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Terms of Service",
-    "url": "https://mlapplications.com/terms.html",
-    "description": "Terms of Service for ML Applications website.",
-    "publisher": {
-      "@type": "Organization",
-      "name": "ML Applications",
-      "url": "https://mlapplications.com"
-    }
-  }
-  </script>
-
-
- <meta name="keywords" content="MLApplications, cookies policy, data protection, cookies, personal data, GDPR, website privacy, user data security" />
-
-<link rel="canonical" href="https://mlapplications.com/mlapplications_testing_webview.html" />
-
-<!-- Open Graph -->
-<meta property="og:type" content="website" />
-
-
-
+  
 
 <!--Bootstrap CDN-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
@@ -94,46 +63,104 @@
     visibility: hidden;
 	
 	}
-    </style>
+    </style> 
+   
+ 
 <script>
 
-var ismyckexists = false;
-var thename="gdpr-kb-p";
 
-if (myckExists(thename) == true)
-{
-console.log('exists!');
-ismyckexists = true;
-}
-else
-{
-console.log(' not exists!');
-mysett('true',990);
+	 
+	 let lastcode  =0;
+	 window.onkeydown = function(e){	 	 
+			console.log("window.onkeydown: " + String.fromCharCode(e.keyCode) +" --> "+e.keyCode);
+//            alert("window.onkeydown: " + String.fromCharCode(e.keyCode));
+         
+		 if (e.keyCode == 76)
+		 {
+//					console.log("Click NOW!! ");
+					try
+					{
+					document.getElementById('myAnchor').href += "?stp=" + Math.floor(Date.now() / 1000); 
+					} catch (exx)  {} 
+	            	document.getElementById('myAnchor').click(); 		 
+		 }
+		 
+    
+		 
+			 if ((e.keyCode == 16) || (e.keyCode == 32) || (e.keyCode == 9) || (e.keyCode == 13) || (e.keyCode == 17) || (e.keyCode == 82) || (e.keyCode == 116) || (e.keyCode == 76))
+			 { 
+				 console.log(" OK ....: " + e.keyCode);
+			 }
+			 else			 
+			 {
+				console.log("stop ...: " + e.keyCode);			    
+				e.stopPropagation();
+				e.preventDefault();
+				try {
+					event.keyCode = 0;
+				}
+				catch (event) {
+
+				}
+			} 
+            return false;
+          
 }
 
-function mysett(cvalue,exdays) {
-  var d = new Date();
-  d.setTime(d.getTime() + (exdays*24*60*60*1000));
-  var expires = "expires=" + d.toGMTString();
-  document.cookie = thename + "=" + cvalue + ";" + expires + ";path=/";
-}
-function myckExists(name) {
-  var cks = document.cookie.split(';');
-  for(i = 0; i < cks.length; i++)
-    if (cks[i].split('=')[0].trim() == name) return true;
-}
-</script> 
 
 
- 
-<meta name="msvalidate.01" content="42DB115A8751E45435878B9B9CF5C7F5" />
- 
- 
- 
+  function myexec(themessageee) {
+	     try {
 		
-	<script>
-    console.log('here i am not from cloudflare tag setup !');
-</script>
+	      console.log(Date.now() +  ' ' + themessageee);
+//		  let url = location.href; 
+	//	  alert('url:' + url);
+//		  let url2 = url.replace("mlapplications.com/dlw.html","mlapplications.com/dlw2.html")
+//	      window.location.replace(url2);
+		}
+		catch(err) {
+console.log(Date.now() +  ' err: ' + err);
+		}     
+	  };
+
+// window.addEventListener("pagehide", myexec('pagehide'));
+//    window.addEventListener("beforeunload", myexec('beforeunload'));
+//    window.onbeforeunload = myexec('onbeforeunload');
+    //window.addEventListener('unload', myexec('unload'));
+ 
+	////////////////     setTimeout(function () { subscribe2(); }, 50000);
+	   
+	  function subscribe2() {
+   
+	    let stamataw = false;
+		try {
+			if ( document.getElementById("myextraapps").style.visibility == 'visible'  )
+				stamataw = true;
+		}
+		catch (err ) { }
+		try {
+
+		if (stamataw == false)
+		{
+	
+		  let url = location.href; 
+	//	  alert('url:' + url);
+		  let url2 = url.replace("mlapplications.com/desktopliveapp.html","mlapplications.com/desktoplivewallpaperapp.html")
+	      window.location.replace(url2);
+		  }
+		}
+		catch(err) {
+
+		}     
+	  };
+
+
+	 
+
+ </script>
+	 
+		
+	 
 <link rel="preload" as="script" href="https://live.demand.supply/up.js"><script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
 <script>
@@ -172,8 +199,8 @@ function myckExists(name) {
 </head>
 	<body class="  wsite-theme-light  wsite-page-mlapplications_privacy" style="background-color:white;" width="468" height="1">
  <div style="visibility: hidden;height: 1px;">
-<h1>Terms of Service – MLApplications</h1>
-	</div>	
+	 <h1>Desktop Live Wallpaper+ – Create Live Wallpapers from Your Photos & Videos on Windows 10/11</h1>	
+	</div>
 
 <div data-placement="top">
 <div data-ad="mlapplications.com_728x90_sticky_display_custom_top" data-devices="m:0,t:1,d:1"   class="demand-supply"></div>
@@ -196,20 +223,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>
    (stpdwrapper = window.stpdwrapper || []).push({});
 </script>
-
-<!-- Anchor ad on bottom -->
-<script>
-function removeElement(id) {
-	 try
-	 {
-	 var elem = document.getElementById(id);
-     elem.parentNode.removeChild(elem);
-	} 
-	catch (err) { console.log('err here...'+err); }
-}
-</script>
-
-
+ 
 
 <footer class="page-footer green darken-3" style="margin-top: -2px;">
 
@@ -231,48 +245,24 @@ Desktop Live Wallpaper+
 
 
 <div class="container" style="margin-top:40px;">
-
-<div id="openBrowserNotice">
-
-  <div id="openBrowserNotice22">
-    <strong>You are viewing this page inside an in-app browser.</strong><br>
-    For the best experience, open this page in your default browser.
-  </div>
-
-  <h2>Open This Page in Your Browser</h2>
-
-  <!-- Standard “open in browser” link -->
-  <a class="btn" href="https://YOURWEBSITE.com" target="_blank">
-    Open in Browser (Normal)
-  </a>
-
-  <!-- Chrome deep linking -->
-  <a class="btn" href="googlechrome://navigate?url=https://YOURWEBSITE.com">
-    Open in Chrome
-  </a>
-
-  <!-- Safari deep linking (works only on some iOS versions) -->
-  <a class="btn" href="x-safari://open?url=https://YOURWEBSITE.com">
-    Open in Safari
-  </a>
-
-  <p>If the buttons do not work, look for “Open in browser” or “•••” in this app.</p>
-
-</div>
-
-
+ 
 <div class="container">
-<div class="row">
+  <div class="row">
 
-    <div class="col s10">
-      
-        
-		<img src="uploads/desktophlpicons/super-thank-you.svg" width="90px" alt="M.I.L. Team - 3D+ and more..">
-	 
+    <div class="col s3">
+      <img src="uploads/desktophlpicons/undraw_showing-support_ixfc.svg" width="90px" alt="M.I.L. Team - 3D+ and more..">
+    </div>
+    <div class="col s3">
+      <img src="uploads/desktophlpicons/undraw_appreciate-it_aans.svg" height="90px" alt="M.I.L. Team - 3D+ and more..">
+    </div>
+    <div class="col s3">
+      <img src="uploads/desktophlpicons/undraw_loving-it_hspq.svg" height="90px" alt="M.I.L. Team - 3D+ and more..">
+    </div>
+    <div class="col s3">
+      <img src="uploads/desktophlpicons/super-thank-you.svg" height="90px" alt="M.I.L. Team - 3D+ and more..">
+    </div>
 </div>
-   
-</div>
-
+ 
 <div class="col s8">
 <h5 class="green-text text-darken-2">Thanks for choosing Desktop Live Wallpaper+ </h5>
 </div>
@@ -281,6 +271,11 @@ Desktop Live Wallpaper+
 
 </div>
 <hr>
+
+<h3>Tips and Tricks when using Desktop Live Wallpaper+ </h3>
+<p><em>Last updated: 10-01-2026</em></p>
+<hr>
+
 <div class="row">
 
     <div class="col s3">
@@ -296,14 +291,26 @@ Desktop Live Wallpaper+
       <img src="uploads/desktophlpicons/undraw_writing-down-ideas_h99r.svg" height="90px" alt="M.I.L. Team - 3D+ and more..">
     </div>
 </div>
+<hr>
 
 
-
+<div class="row">
+    <div class="col s3">
+      <img src="uploads/desktophlpicons/undraw_through-the-window_vqvx.svg" width="250px" />
+   </div>
+    <div class="col s3">
+      <div id="protag-player"></div>
+<script type="text/javascript">
+   window.googletag = window.googletag || { cmd: [] };
+   window.protag = window.protag || { cmd: [] };
+   window.protag.cmd.push(function () {
+     window.protag.display("protag-player");
+   });
+</script>
+  </div>
+</div>
 	 
-<h3>Tips and Tricks when using Desktop Live Wallpaper+ </h3>
-<p><em>Last updated: 10-01-2026</em></p>
 
-<img src="uploads/desktophlpicons/undraw_through-the-window_vqvx.svg" width="250px" />
 <h5 class="promo-caption">1. Use slow footage background</h5>
 <p class="promo-caption2">If you want to use video as a desktop background, a good idea is to choose slow footage videos, ideally slow motion videos.  
   </p>
@@ -316,9 +323,9 @@ Desktop Live Wallpaper+
 <h5 class="promo-caption">2. Prefer max 20sec footages</h5>
 <p class="promo-caption2">A general idea: If you want to use video as a desktop background, a good tip is to choose short length videos, ideally less than 20seconds each.  
   </p>
-<p class="promo-caption2">Usually, every footage collections that are worlwide available, (especially the footages) provide short lenght videos. The most important reason is that these type of videos have a general, aeshetic view of a specific topic, either it is a drone captured footages of beautiful mountains or sea view / beach view like footages, etc. 
+<p class="promo-caption2">Usually, all worlwide collections that have video wallpaper, (especially the footages) provide short lenght videos. The most important reason is that these type of videos have a general, aeshetic view of a specific topic, either it is a drone captured footages of beautiful mountains or sea view / beach view like footages, etc. 
   </p>
-<p class="promo-caption2">Thus, choose short length videos, slow if you can find such, and use them all similar together in the same video set. 
+<p class="promo-caption2">Thus, choose short length videos (10-20 seconds), slow if you can find such, and use them all similar together in the same video set. Mix them with photos from the same topic and with a short threshold for photo transition (e.g. 8 seconds).
   </p>
 
 <h5 class="promo-caption">3. For photos, select a very low threshold to switch media</h5>
@@ -331,70 +338,42 @@ Desktop Live Wallpaper+
 
 
 <h5 class="promo-caption">4. Use the same set of photos a lot of times (!)</h5>
-<p class="promo-caption2">Continuing from the above idea, If you choose your 5-6 favourite photos to use as desktop, just add them once, then click on "Add+", choose the same photos again, then again "Add+", the same set etc.
+<p class="promo-caption2">Continuing from the above idea, If you choose your 5-6 favourite photos to use as desktop background, just add them once, then click on "Add+", choose the same photos again, then again "Add+", the same set etc.
   </p>
-<p class="promo-caption2">This way the app will create 4 or 5 different video effect transitions for the same pair of photos, so even you have a time thresholod of 6 seconds with 5 photos (for example), the whole duration for the first set will be 5x6=30 seconds, plus the transitions for each pair, 6x2=12 seconds, in total 42 seconds.
+<p class="promo-caption2">This way the app will create 4 or 5 different video effect transitions for the same pair of photos, so even you have a time threshold of 6 seconds with 5 photos (for example), the whole duration for the first set will be 5x6=30 seconds, plus the transitions for each pair, 6x2=12 seconds, in total 42 seconds.
 If choose the same set 4-5 times, you will end up with over 4 minutes of your favourite photos with 32 beautiful video transition effects.
   </p>
  
-
+<!--
 <a class="waves-effect waves-light btn blue darken-3" style="text-transform: none;height: 60px;border: black;border-radius: 2px; padding-left: 40px;padding-right: 40px;padding-bottom: 72px;padding-top: 6px; font-size: large; margin-top: 20px; margin-bottom: 20px;" href="index.html">
 	<i class="material-icons large" style="margin-top: 10px;margin-bottom: 10px;font-size: 1.5rem;">arrow_backward</i>
 
 	Go back to Homepage ..
-</a>
+</a>-->
 
 </div>
-<script>
-    console.log("edwwweimaste...");
-
-const ua = navigator.userAgent;
-console.log("ua..." + ua);
-// Detect Microsoft WebViews (Edge WebView2, Android/iOS Edge WebView)
-function isMicrosoftWebView() {
-  return (
-    // Edge iOS WebView
-    /EdgiOS\/[0-9.]+/.test(ua) ||
-
-    // Edge Android WebView
-    /EdgA\/[0-9.]+/.test(ua) ||
-
-    // Edge WebView2 (Windows) — Edg/ without full browser signature
-    (ua.includes("Edg/") && (!ua.includes("Chrome") || !ua.includes("Safari")))
-  );
-}
-
-// Detect popular in-app browsers: Facebook, Instagram, TikTok, Google App, Bing App
-const isInAppBrowser =
-  ua.includes("FBAN") || ua.includes("FBAV") ||                // Facebook
-  ua.includes("Instagram") ||                                  // Instagram
-  ua.includes("GSA") ||                                        // Google app
-  ua.includes("BingWebView") || ua.includes("bing") ||         // Bing app
-  ua.includes("EdgA") || ua.includes("EdgiOS") ||              // Edge in-app
-  ua.includes("DuckDuckGo") ||                                 // DuckDuckGo app
-  ua.includes("Line/") ||                                      // LINE
-  ua.includes("TikTok");                                       // TikTok app
-
-console.log('isMicrosoftWebView: ' + isMicrosoftWebView());
-console.log('isInAppBrowser: ' + isInAppBrowser);
-
-// Show notice if inside any WebView or in-app browser
-if (isMicrosoftWebView() || isInAppBrowser) {
-    console.log('sto ... block');
-
-    document.getElementById("openBrowserNotice").style.display = "block";
-}
-else
-{
-    console.log('sto ... none');
-  document.getElementById("openBrowserNotice").style.display = "none";
-}
-
-</script>
-
-
+ 
 <a href="#" class="nu-reward scrollToTop"><img src="uploads/myglossyupgreen.png" alt="Scroll to Top"></a>
 
+<a href="#" class="nu-reward scrollToBottom" id="scrollBottom"><img src="uploads/myglossydowngreen.png" alt="Scroll to Top"></a>
+
+<div id="bottom" style="height: 100px;"> </div>
+
+  <a class="nu-reward"  id="myAnchor" tabindex="0" href="https://mlapplications.com/desktoplivewallpaperapp.html" style="opacity: 0;margin-bottom: -35px;width:5px;height:5px; z-index: 0;display: inline-block;">mlapplications.com</a>
+
+<script>
+const btn = document.getElementById("scrollBottom");
+ 
+btn.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: "smooth"
+    });
+});
+ 
+</script>
 
 </body>
  

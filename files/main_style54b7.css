@@ -237,6 +237,16 @@ ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, body, html, p, blockquote, fields
  #wsite-search-results { width: 100%; }
  #wsite-search-product-results .wsite-search-product-result { width: 100%; padding-right: 0; }
  }
+
+
+
+
+
+ .scrollToBottom { padding: 0em; color: #444; position: fixed; width: 80px; height: 80px; bottom: -3px; left: 0%; margin-left: 300px; -webkit-transition: -webkit-transform .3s ease-in-out; -ms-transition: -ms-transform .3s ease-in-out; transition: transform .3s ease-in-out; z-index: 1; }
+ .scrollToBottom:hover { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); }
+ .scrollToBottom.hidden {
+    display: none;
+}
  .scrollToTop { padding: 0em; color: #444; position: fixed; width: 80px; height: 80px; bottom: -3px; left: 0%; margin-left: 100px; -webkit-transition: -webkit-transform .3s ease-in-out; -ms-transition: -ms-transform .3s ease-in-out; transition: transform .3s ease-in-out; z-index: 1; }
  .scrollToTop:hover { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); }
  .mynextButton { padding: 0em; color: #444; position: fixed; width: 80px; height: 80px; bottom: 83px; left: 50%; margin-left: -40px; -webkit-transition: -webkit-transform .3s ease-in-out; -ms-transition: -ms-transform .3s ease-in-out; transition: transform .3s ease-in-out; z-index: 1; }
