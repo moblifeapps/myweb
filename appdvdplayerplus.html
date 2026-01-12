@@ -682,6 +682,18 @@ img {margin-bottom: -8px;}
         window.protag.pageInit();
     });
 </script>
+
+
+<style>	
+/* Fix fixed ad overflow */
+.mybottom {
+	position: fixed;
+  max-width: 100vw !important;
+  right: 0 !important;
+}
+</style>
+
+
 </head>
 	<body class="header-page  wsite-theme-light  wsite-page-appdvdplayerplus"> 
 		<div style="visibility: hidden;height: 1px;">
@@ -707,8 +719,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
   
 <div id="mydivforpremium" ></div>
-      <div data-ad="mlapplications.com_160x600_sticky_display_right" data-devices="m:0,t:1,d:1"   class="demand-supply"></div>
-
+   <!--   <div data-ad="mlapplications.com_160x600_sticky_display_right" data-devices="m:0,t:1,d:1"   class="demand-supply"></div>
+-->
 <!-- <script async src="https://stpd.cloud/assets/stpdwrapper.js?1749732861"></script>
  mlapplications_com_300x600_desktop_sticky
 <ins class="stpdwrapper"
@@ -3872,6 +3884,27 @@ function plusDivs(n) {
 function showDivs(n) {
    
 }
+</script>
+
+ 
+<div id="bottom" class="mybottom" style="height: 80px; right: 0%; margin-right: 50px; width: 200px;">
+<a href="#" class="nu-reward scrollToTopRight"><img src="uploads/scrollupblue.png" height="70px" alt="Scroll to Top"></a>
+
+<a href="#" class="nu-reward scrollToBottomRight" id="scrollBottom"><img src="uploads/scrolldownblue.png" height="70px" alt="Scroll to Top"></a>  
+</div>
+
+<script>
+const btn = document.getElementById("scrollBottom");
+ 
+btn.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: "smooth"
+    });
+});
+ 
 </script>
 	</body>
 

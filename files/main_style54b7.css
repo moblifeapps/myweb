@@ -331,3 +331,12 @@ div.paragraph ol, div.paragraph ol li { list-style: decimal outside !important; 
     margin-top: 5px;
     margin-bottom: 0;
 }
+
+
+ .scrollToBottomRight { padding: 0em; color: #444; position: fixed; width: 80px; height: 80px; bottom: -3px; right: 0%; margin-right: 50px; -webkit-transition: -webkit-transform .3s ease-in-out; -ms-transition: -ms-transform .3s ease-in-out; transition: transform .3s ease-in-out; z-index: 1; }
+ .scrollToBottomRight:hover { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); }
+ .scrollToBottomRight.hidden {
+    display: none;
+}
+ .scrollToTopRight { padding: 0em; color: #444; position: fixed; width: 80px; height: 80px; bottom: -3px; right: 0%; margin-right: 150px; -webkit-transition: -webkit-transform .3s ease-in-out; -ms-transition: -ms-transform .3s ease-in-out; transition: transform .3s ease-in-out; z-index: 1; }
+ .scrollToTopRight:hover { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); }
