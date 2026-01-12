@@ -202,6 +202,28 @@ img {
         window.protag.pageInit();
     });
 </script>
+
+
+
+
+<style>	
+  
+ .scrollToBottom { padding: 0em; color: #444; position: fixed; width: 80px; height: 80px; bottom: -3px; left: 50%; margin-left: 0px; -webkit-transition: -webkit-transform .3s ease-in-out; -ms-transition: -ms-transform .3s ease-in-out; transition: transform .3s ease-in-out; z-index: 1; }
+ .scrollToBottom:hover { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); }
+ .scrollToBottom.hidden {
+    display: none;
+}
+ .scrollToTop { padding: 0em; color: #444; position: fixed; width: 80px; height: 80px; bottom: -3px; left: 50%; margin-left: -100px; -webkit-transition: -webkit-transform .3s ease-in-out; -ms-transition: -ms-transform .3s ease-in-out; transition: transform .3s ease-in-out; z-index: 1; }
+ .scrollToTop:hover { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); }
+
+
+/* Fix fixed ad overflow */
+.stpdwrapper {
+  max-width: 100vw !important;
+  right: 0 !important;
+}
+</style>
+
 </head>
 	<body class="header-page  wsite-theme-light  wsite-page-index page-id-5 page">
 	<div id="ad-spacer" 
@@ -3564,6 +3586,26 @@ href="contact.html">
 </td> -->
 </div>
 </footer>
+  
+<div id="bottom" style="height: 80px;">
+<a href="#" class="nu-reward scrollToTop"><img src="uploads/myglossyupgreen.png" alt="Scroll to Top"></a>
+
+<a href="#" class="nu-reward scrollToBottom" id="scrollBottom"><img src="uploads/myglossydowngreen.png" alt="Scroll to Top"></a>  
+</div>
+
+<script>
+const btn = document.getElementById("scrollBottom");
+ 
+btn.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: "smooth"
+    });
+});
+ 
+</script>
 
 	</body>
 
