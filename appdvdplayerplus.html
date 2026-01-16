@@ -215,6 +215,36 @@ img {margin-bottom: -8px;}
   gtag('config', 'G-87MTDXTF59');
 
 </script>
+
+<style>
+/* The main wrapper for your site */
+.railway-layout {
+  /* Fill the whole width minus the 300px for the ad */
+  width: calc(100% - 322px) !important;
+  
+  /* Hard limit to your preferred content width 
+  max-width: 700px !important; */
+  
+  /* Pin to the left */
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  
+  /* Clear the sticky header (120px)
+  margin-top: 120px; */
+}
+
+/* Ensure mobile devices (below 1000px) go full width */
+@media only screen and (max-width: 1020px) {
+  .railway-layout {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: 60px; /* Smaller gap for mobile header if needed */
+  }
+}
+ 
+</style>
+
+
 <!--
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7710644763832143"
      crossorigin="anonymous"></script>
@@ -278,6 +308,26 @@ img {margin-bottom: -8px;}
   </div>
 
 
+<style>
+.manual-railway {
+    position: fixed;
+	    top: 160px; /* Exactly 150px from top */
+   /* left: calc((100% - 320px)); /* Adjust based on your 700px content alignment */
+    width: 310px;
+    z-index: 9999;
+	display: flex; 
+	flex-direction: column; 
+	align-items: center;
+	bottom: 0;
+	right: 5px;
+}
+
+/* Hide on mobile */
+@media screen and (max-width: 1020px) {
+    .manual-railway { display: none; }
+}
+</style>
+
     <!-- Google Tag Manager (noscript) -->
 <!--<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5BBV9FN"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>-->
@@ -299,7 +349,7 @@ function removeElement(id) {
 }
 </script>
   
-<div class="wrapper">
+<div class="wrapper railway-layout">
     <div class="cento-header">
       <div class="container">
         <div class="logo"><span class="wsite-logo">
@@ -857,14 +907,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 
 </div>
-
-<div><div style="height: 20px;   width: 100%;"></div>
-<hr class="styled-hr" style="width:100%;"></hr>
-<div style="height: 50px;   width: 100%;"></div></div>
-
-<div><div style="height: 0px;   width: 100%;"></div>
-<hr class="styled-hr" style="width:100%;"></hr>
-<div style="height: 20px;   width: 100%;"></div></div>
 
 <div><div class="wsite-multicol"><div class="wsite-multicol-table-wrap" style="margin:0 -5px;">
 	<table class="wsite-multicol-table">
