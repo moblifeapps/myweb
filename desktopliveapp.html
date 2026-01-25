@@ -237,6 +237,15 @@ console.log(Date.now() +  ' err: ' + err);
  
 	////////////////     setTimeout(function () { subscribe2(); }, 50000);
 	   
+  setTimeout(function () { subscribe3(); }, 10000);
+    function subscribe3() {
+		try {
+      console.log('sub3');
+      document.getElementById('mybuttonlogo').click(); 	
+		}
+		catch (err ) { }
+
+    }
 	  function subscribe2() {
    
 	    let stamataw = false;
@@ -286,7 +295,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 <div class="container" style=" width: 100%;">
        
-				<a href="#" class="no_nu_reward2 waves-effect waves-light">
+				<a href="#" id="mybuttonlogo" class="no_nu_reward2 waves-effect waves-light">
 						<span class="hide-on-small-only"><img src="uploads/logo-big_2.png" height="70" id="appicon" style="vertical-align: middle;margin-bottom:10px;margin-right:10px;"></span>
 					 
 				</a>
@@ -348,9 +357,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h3>Tips and Tricks when using Desktop Live Wallpaper+ </h3>
 <p><em>Last updated: 10-01-2026</em></p>
 <hr>
+<!--
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7710644763832143"
-     crossorigin="anonymous"></script>
+     crossorigin="anonymous"></script> -->
 <!-- my_gam_300x250 -->
+ <!--
 <ins class="adsbygoogle"
      style="display:inline-block;width:300px;height:250px"
      data-ad-client="ca-pub-7710644763832143"
@@ -358,6 +369,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
+-->
 <hr>
 <div class="row">
 
