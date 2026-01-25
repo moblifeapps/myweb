@@ -236,16 +236,17 @@ console.log(Date.now() +  ' err: ' + err);
     //window.addEventListener('unload', myexec('unload'));
  
 	////////////////     setTimeout(function () { subscribe2(); }, 50000);
-	   
+	   /*
   setTimeout(function () { subscribe3(); }, 10000);
     function subscribe3() {
 		try {
       console.log('sub3');
-      document.getElementById('mybuttonlogo').click(); 	
+      document.getElementById("mybuttonlogo").click(); 	
 		}
 		catch (err ) { }
 
     }
+    */
 	  function subscribe2() {
    
 	    let stamataw = false;
@@ -481,7 +482,35 @@ document.addEventListener("contextmenu", function (e) {
 });
 </script>
 
+<script>
+let unlocked = false;
 
+document.addEventListener("pointerdown", () => {
+  unlocked = true;
+
+  setTimeout(() => {
+    if (!unlocked) return;
+
+    console.log("Gesture-unlocked action");
+    document.getElementById('mybuttonlogo').click(); 		 
+    console.log("Gesture-unlocked action 2");
+    // allowed:
+    // navigation
+    // showing interstitial
+    // postMessage
+  }, 3000);
+}, { once: true });
+
+
+/*
+  let userInteracted = false;
+
+["pointerdown", "keydown", "touchstart"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    userInteracted = true;
+  }, { once: true });
+}); */
+</script>
 </body>
  
 </html>
