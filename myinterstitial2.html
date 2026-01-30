@@ -10,66 +10,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Display a GPT-managed web interstitial ad." />
     <title>Display a web interstitial ad</title>
-   <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
 
-<script>
-      window.googletag = window.googletag || { cmd: [] };
 
-      let interstitialSlot;
+<!--Google GPT/ADM code -->
+<script type="text/javascript" async="async" src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+<script type="module" src="https://cdn.nuload.net/mlapplications_com/ad.js"></script>
+<script type="text/javascript">
+    window.googletag = window.googletag || { cmd: [] };
+    window.googletag.cmd.push(function () {
+        window.googletag.pubads().enableSingleRequest();
+    });
+</script>
 
-      googletag.cmd.push(() => {
-        // Define a web interstitial ad slot.
-        //googletag.defineOutOfPageSlot('/423204242/myInterStitial', 'div-gpt-ad-1767378504003-0').addService(googletag.pubads());
-        interstitialSlot = googletag.defineOutOfPageSlot(
-          "/423204242/myInterStitial",
-          'div-gpt-ad-1767378037299-0',
-        );
+<!--Site config -->
+<script type="text/javascript" async="async" src="https://protagcdn.com/s/mlapplications.com/site.js"></script>
+<script type="text/javascript">
+    window.protag = window.protag || { cmd: [] };
+    window.protag.cmd.push(function () {
+        window.protag.pageInit();
+    });
+</script>
 
-        // Slot returns null if the page or device does not support interstitials.
-        if (interstitialSlot) {
-          // Enable optional interstitial triggers and register the slot.
-          interstitialSlot.addService(googletag.pubads()).setConfig({
-            interstitial: {
-              triggers: {
-                navBar: true,
-                unhideWindow: true,
-              },
-            },
-          });
 
-          document.getElementById("status").textContent = "Interstitial is loading...";
-
-          // Add event listener to enable navigation once the interstitial loads.
-          // If this event doesn't fire, try clearing local storage and refreshing
-          // the page.
-          googletag.pubads().addEventListener("slotOnload", (event) => {
-            if (interstitialSlot === event.slot) {
-              document.getElementById("link").style.display = "block";
-              document.getElementById("status").textContent = "Interstitial is loaded.";
-            }
-          });
-
-          // By default, the detected language of the current page is used to render
-          // interstitial UI elements. This behavior can be overridden by manually
-          // specifying the document language:
-          // googletag.pubads().set("document_language", "en");
-        }
-
-        // Define static ad slots.
-        
-        googletag
-          .defineSlot('/423204242/myInterStitial', [[336, 280], [300, 250], [320, 480]], 'div-gpt-ad-1767378037299-0')
-          .addService(googletag.pubads());
-
-        // Enable SRA.
-        googletag.setConfig({
-          singleRequest: true,
-        });
-
-        // Enable services.
-        googletag.enableServices();
-      });
-    </script>
     <style>
       #link {
         display: none;
