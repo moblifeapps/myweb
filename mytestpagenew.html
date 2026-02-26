@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Desktop App Controller</title>
+</head>
+<body>
+
+    <div id="connection-status" style="padding: 10px; margin-bottom: 20px; border: 1px solid #ccc;">
+        Checking Desktop Connection...
+    </div>
+
+    <div id="block-guide" style="display:none; color: red; border: 1px solid red; padding: 10px;">
+        <strong>Action Required:</strong> The browser blocked the connection. 
+        Click the icon next to the URL bar and <strong>Allow Private Network Access</strong>.
+    </div>
+
+    <button id="btn-open-folder" onclick="handleButtonClick('OPEN_FOLDER')" disabled>
+        Open My Folder
+    </button>
+
+    <script>
+        const APP_URL = "https://myttbplus.mlapplications.com:5001";
+        const APP_TOKEN = "your-random-generated-token";
+
+        // --- STEP 1: The "Silent Probe" Function ---
+        async function probeApp() {
+            try {
+                // Use a short timeout so the page doesn't hang
+                const controller = new AbortController();
+                setTimeout(() => controller.abort(), 2000);
+
+                const response = await fetch(`${APP_URL}/health`, { 
+                    method: 'GET',
+                    signal: controller.signal 
+                });
+
+                if (response.ok) {
+                    updateUI("CONNECTED");
+                }
+            } catch (err) {
+                // If health fails, check if it's because it's blocked or just offline
+                diagnoseFailure();
+            }
+        }
+
+        // --- STEP 2: The Diagnosis (Differentiate Offline vs Blocked) ---
+        async function diagnoseFailure() {
+            try {
+                // 'no-cors' trick: If this works, the app is ON but the browser is blocking the HEADERS
+                await fetch(`${APP_URL}/health`, { mode: 'no-cors' });
+                updateUI("BLOCKED");
+            } catch (err) {
+                // If even no-cors fails, the EXE isn't running
+                updateUI("OFFLINE");
+            }
+        }
+
+        // --- STEP 3: UI Management ---
+        function updateUI(state) {
+            const statusDiv = document.getElementById("connection-status");
+            const btn = document.getElementById("btn-open-folder");
+            const guide = document.getElementById("block-guide");
+
+            if (state === "CONNECTED") {
+                statusDiv.innerHTML = "✅ Desktop App Connected";
+                statusDiv.style.color = "green";
+                btn.disabled = false;
+                guide.style.display = "none";
+            } else if (state === "BLOCKED") {
+                statusDiv.innerHTML = "⚠️ Permission Required";
+                statusDiv.style.color = "orange";
+                btn.disabled = false; // Keep enabled so user can click to trigger the prompt
+                guide.style.display = "block";
+            } else {
+                statusDiv.innerHTML = "❌ Desktop App Offline";
+                statusDiv.style.color = "red";
+                btn.disabled = true;
+                guide.style.display = "none";
+            }
+        }
+
+        // --- STEP 4: The Actual Command ---
+        async function handleButtonClick(action) {
+            try {
+                const response = await fetch(`${APP_URL}/command`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-App-Token": APP_TOKEN
+                    },
+                    body: JSON.stringify({ action: action })
+                });
+
+                const data = await response.json();
+                console.log("Response from Desktop:", data);
+            } catch (err) {
+                // If it fails here, the user likely saw the Edge/Chrome prompt
+                // Running the probe again will update the UI after they click Allow/Block
+                probeApp();
+            }
+        }
+
+        // Run the probe as soon as the page loads
+        window.onload = probeApp;
+    </script>
+</body>
+</html>
