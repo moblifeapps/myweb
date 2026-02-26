@@ -26,6 +26,13 @@
 -->
 </head>
 <body>mygeo
+
+
+  <div id="status-banner" style="display:none; background: #fff3cd; padding: 10px;">
+    It looks like we need permission to talk to your Desktop App. 
+    <button onclick="requestAccess()">Enable Connection</button>
+</div>
+
  <button class="ripple-btn" id="continueBtn" >
 <svg style="margin-bottom: -4px;    "  width="22" height="22" viewBox="0 3 15.36 10.36">
   <g stroke="none" stroke-width="1" transform="matrix(0.03996414,0,0,0.03996414,-2.9895922,-2.5577048)">
@@ -36,6 +43,105 @@
 Reset Default Values 
        </button> 
 <script>
+async function checkDesktopConnection() {
+    try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 second timeout
+
+        const response = await fetch("https://myttbplus.mlapplications.com:5001/health", {
+            method: "GET",
+            signal: controller.signal
+        });
+
+        if (response.ok) {
+            console.log("Status: Connected & Permitted");
+            return "CONNECTED";
+        }
+    } catch (err) {
+        if (err.name === 'AbortError') return "TIMEOUT";
+        
+        // This is where PNA blocks usually end up
+        console.warn("Connection blocked or app not running.");
+        return "BLOCKED_OR_OFFLINE";
+    }
+}
+
+async function sendCommand(data) {
+    try {
+        const response = await fetch("https://myttbplus.mlapplications.com:5001/command", {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json",
+                "X-App-Token": "secret" 
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            console.log("Success!");
+        } else if (response.status === 403 || response.status === 401) {
+            console.error("APP BLOCK: The Desktop App is running, but the Security Token is wrong.");
+        }
+    } catch (err) {
+        // If we land here, the request never finished. 
+        // We check if the 'health' endpoint is reachable to see if the app is even on.
+        const isAppRunning = await checkIsAppRunning(); 
+        
+        if (!isAppRunning) {
+            alert("OFFLINE: Please open the Desktop App first.");
+        } else {
+            alert("BROWSER BLOCK: Please click 'Allow' in the browser security prompt at the top.");
+        }
+    }
+}
+
+async function checkIsAppRunning() {
+    try {
+        // We use a very short timeout
+        const res = await fetch("https://myttbplus.mlapplications.com:5001/health", { mode: 'no-cors' });
+        return true; 
+    } catch {
+        return false;
+    }
+}
+
+  async function diagnoseConnection() {
+    try {
+        // Try a very basic fetch
+        await fetch("https://myttbplus.mlapplications.com:5001/command", { 
+            mode: 'no-cors', // Tells browser: "Don't worry about headers, just try to connect"
+            cache: 'no-store'
+        });
+        
+        // If we get here, the app IS running, but your real fetch failed earlier.
+        // Therefore, the problem is likely the "Block" permission.
+        return "USER_BLOCKED";
+    } catch (err) {
+        // If even a no-cors fetch fails, the app is simply not listening on that port.
+        return "APP_OFFLINE";
+    }
+}
+  async function runDesktopCommand(command) {
+    try {
+        const response = await fetch("https://myttbplus.mlapplications.com:5001/command", {
+            method: "POST",
+            headers: { "X-App-Token": "secret", "Content-Type": "application/json" },
+            body: JSON.stringify(command)
+        });
+        
+        if (response.ok) alert("Command sent!");
+
+    } catch (err) {
+        const reason = await diagnoseConnection();
+        
+        if (reason === "USER_BLOCKED") {
+            showInstructions("It looks like the connection was blocked. Please click the icon next to the URL and allow access.");
+        } else {
+            showInstructions("The Desktop App is not running. Please open it and try again.");
+        }
+    }
+}
+
   const continueBtn = document.getElementById("continueBtn");
 const myData = { 
     action: "open_file", 
@@ -60,6 +166,24 @@ continueBtn.addEventListener("click", () => {
 
 });
 
+async function requestAccess() {
+    // This second attempt, triggered by a button click, 
+    // forces the browser to show the "Allow/Block" prompt.
+    const status = await checkDesktopConnection();
+    if (status === "CONNECTED") {
+        document.getElementById('status-banner').style.display = 'none';
+    } else {
+        alert("Please ensure the Desktop App is running and click 'Allow' in the browser popup.");
+    }
+}
+
+// Check on page load
+window.onload = async () => {
+    const status = await checkDesktopConnection();
+    if (status !== "CONNECTED") {
+        document.getElementById('status-banner').style.display = 'block';
+    }
+};
 </script>
 </body>
 </html>
