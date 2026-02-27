@@ -1988,14 +1988,27 @@ const continueBtn = document.getElementById("continueBtn");
 
 let selected = null;
 
+
+//window.appParams = {{theme: '{App.setting_theme}',  choice: {mychoice}, color1: '{App.setting_color1}' , color2: '{App.setting_color2}' ,color3: '{App.setting_color3}' ,colorbuttons: '{App.setting_colorbuttons}' , colordock: '{App.setting_colordock}' , autostart: '{App.setting_autostart}' , autoshow: '{App.setting_autoshow}' ,show_blink: '{App.setting_show_blink}' ,show_clicks: '{App.setting_show_clicks}' , show_shadow: '{App.setting_show_shadow}' }};
+
+
+const urlparams = new URLSearchParams(window.location.search);
+
+window.appParams = Object.fromEntries(urlparams.entries());
+
+
+//window.appParams = 
 //const params = new URLSearchParams(window.location.search);
+//const params = window.appParams;
 const params = window.appParams;
+
 //////////const choice = parseInt(params.get("choice"), 10);
 //const colorParam = params.get("color");
 
 //const choice = parseInt(window.appParams.choice, 10);
 
-const choice = window.appParams.choice;
+//////const choice = window.appParams.choice;
+const choice = parseInt(window.appParams.choice, 10);
 console.log('choice:' + choice);
 
 //document.getElementById('arxidia').innerHTML = "paparia,'choice:'  " + choice; 
