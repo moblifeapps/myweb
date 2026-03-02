@@ -2678,6 +2678,11 @@ bindRestart("softresetbutton");
 
         // --- STEP 4: The Actual Command ---
         async function handleButtonClick(action) {
+            console.log('action:' + action);
+//            let papar = JSON.stringify({ action: action });
+            let papar = JSON.stringify(action);
+            console.log('papar:' + papar);
+
             try {
                 const response = await fetch(`${APP_URL}/command`, {
                     method: "POST",
@@ -2685,7 +2690,7 @@ bindRestart("softresetbutton");
                         "Content-Type": "application/json",
                         "X-App-Token": APP_TOKEN
                     },
-                    body: { action }
+                    body: papar
 
 //                    body: JSON.stringify({ action: action })
                 });
