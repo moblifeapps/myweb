@@ -2002,6 +2002,9 @@ window.appParams = Object.fromEntries(urlparams.entries());
 //const params = window.appParams;
 const params = window.appParams;
 
+// This removes the search string but keeps the path
+window.history.replaceState({}, document.title, window.location.pathname);
+
 //////////const choice = parseInt(params.get("choice"), 10);
 //const colorParam = params.get("color");
 
@@ -2616,7 +2619,12 @@ bindRestart("softresetbutton");
 
 </script>
     <script>
-        const APP_URL = "https://myttbplus.mlapplications.com:5001";
+        let APP_PORT = 5001;
+
+         APP_PORT = window.appParams.prt;
+         console.log('APP_PORT: ' + APP_PORT );
+//        const APP_URL = "https://myttbplus.mlapplications.com:5001";
+        const APP_URL = "https://myttbplus.mlapplications.com:" + APP_PORT;
         const APP_TOKEN = "your-random-generated-token";
 
         // --- STEP 1: The "Silent Probe" Function ---
@@ -2626,7 +2634,7 @@ bindRestart("softresetbutton");
                 const controller = new AbortController();
                 setTimeout(() => controller.abort(), 2000);
 
-                const response = await fetch(`${APP_URL}/health`, { 
+                const response = await fetch(`${APP_URL}/ping`, { 
                     method: 'GET',
                     signal: controller.signal 
                 });
@@ -2635,7 +2643,7 @@ bindRestart("softresetbutton");
                     updateUI("CONNECTED");
                 }
             } catch (err) {
-                // If health fails, check if it's because it's blocked or just offline
+                // If ping fails, check if it's because it's blocked or just offline
                 diagnoseFailure();
             }
         }
@@ -2644,7 +2652,7 @@ bindRestart("softresetbutton");
         async function diagnoseFailure() {
             try {
                 // 'no-cors' trick: If this works, the app is ON but the browser is blocking the HEADERS
-                await fetch(`${APP_URL}/health`, { mode: 'no-cors' });
+                await fetch(`${APP_URL}/ping`, { mode: 'no-cors' });
                 updateUI("BLOCKED");
             } catch (err) {
                 // If even no-cors fails, the EXE isn't running
