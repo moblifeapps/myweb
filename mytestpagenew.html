@@ -2685,7 +2685,9 @@ bindRestart("softresetbutton");
                         "Content-Type": "application/json",
                         "X-App-Token": APP_TOKEN
                     },
-                    body: JSON.stringify({ action: action })
+                    body: { action }
+
+//                    body: JSON.stringify({ action: action })
                 });
 
                 const data = await response.json();
