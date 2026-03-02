@@ -2113,6 +2113,7 @@ continueBtn.addEventListener("click", () => {
         chrome.webview.postMessage(payload);
     }
 
+    handleButtonClick(payload);
     ApplyDefaultValues();
 });
 
@@ -2164,6 +2165,7 @@ return;
     if (window.chrome && window.chrome.webview) {
         chrome.webview.postMessage(payload);
     }
+    handleButtonClick(payload);
 
     // 🔜 Add more logic here if needed
 }
@@ -2444,6 +2446,7 @@ document.querySelectorAll(".ripple-btn-apply").forEach(btn => {
         chrome.webview.postMessage(payload);
     }
 
+    handleButtonClick(payload);
 
     }); /* */
 });
@@ -2496,6 +2499,7 @@ function bindToggle(id) {
         chrome.webview.postMessage(payload);
     }
 
+    handleButtonClick(payload);
 
     });
   }
@@ -2584,6 +2588,7 @@ function bindRestart(id) {
     if (window.chrome && window.chrome.webview) {
         chrome.webview.postMessage(payload234);
     }
+    handleButtonClick(payload);
 
 
     });
