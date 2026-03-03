@@ -398,9 +398,16 @@
     overflow: hidden;
     padding: 12px 22px;
     border-radius: 12px;
-    border: 1px;
+    border: 3px;
     border-color: black;
-    background:  rgba(0, 76, 154, 1); /* var(--accent-soft);*/
+  background: linear-gradient(
+        0deg,
+        rgba(0, 57, 116, 1)  0%,
+        rgba(0, 57, 116, 1) 50%,
+        rgba(0, 57, 116, 1)  50%,
+        rgba(0, 76, 154, 1)  100%
+
+    )  ; /* var(--accent-soft);*/
     color: white; /* #020617; */
     font-size: 14px;
     cursor: pointer;
@@ -424,6 +431,10 @@
 
 
 :root {
+
+   --bgTopHeader: #dfdfdf;
+   --bgTopHeaderDARK: #2c2c2c;
+   --bgTopHeaderLIGHT: #dfdfdf;
   /*  --bg: #0f172a;
     --card: #020617; */
       --bgDARK: linear-gradient(
@@ -479,6 +490,35 @@
   width: 100%;
   z-index: 100;
  top: 1px;
+     opacity: 1;
+    background:  
+    var(--bgTopHeader);
+    /*
+    linear-gradient(
+        110deg,
+         var(--bg) 0%,
+        var(--bg) 50%,
+        var(--bg) 50%,
+        var(--bg) 100%
+    );*/
+    border-color: black;
+    border-bottom: black;
+    border-style: outset;
+        border-radius: 2px;
+        box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        display: flex;
+/*
+        #0B306C 0%,
+        #0B306C 50%,
+        #003974 50%,
+        #003974 100%
+
+*/
+
+/*    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+       <GradientStop Color="#FF0B306C"/>
+       <GradientStop Color="#FF003974" Offset="1"/>
+   </LinearGradientBrush>; */
 }
 
 body {
@@ -644,37 +684,7 @@ button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
-
-.top-header {
-    opacity: 1;
-    background:  
-    
-    linear-gradient(
-        110deg,
-         var(--bg) 0%,
-        var(--bg) 50%,
-        var(--bg) 50%,
-        var(--bg) 100%
-    );
-    border-color: black;
-    border-bottom: black;
-    border-style: outset;
-        border-radius: 2px;
-        box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-        display: flex;
-/*
-        #0B306C 0%,
-        #0B306C 50%,
-        #003974 50%,
-        #003974 100%
-
-*/
-
-/*    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-       <GradientStop Color="#FF0B306C"/>
-       <GradientStop Color="#FF003974" Offset="1"/>
-   </LinearGradientBrush>; */
-}
+ 
 /* Fixed image */
 .logo {
     width: 100px;
@@ -724,9 +734,9 @@ button:disabled {
         Open My Folder
     </button>
 <div class="top-header">
-    <img src="uploads/ttbicon.png" class="logo" />
+    <img style="margin-top: 37px;" src="uploads/ttbicon.png" class="logo" />
 
-        <button onclick="" class="ripple-btn" id="OpenHelpBtn" >
+        <button style="margin-top: 50px;" onclick="" class="ripple-btn" id="OpenHelpBtn" >
 <svg style="margin-top: -11px; margin-bottom: -11px; margin-right: 5px;" 
   fill="#ffffff"
    viewBox="0 0 30 30"
@@ -743,7 +753,7 @@ Help
            
        
 </button> 
-  <button onclick="" class="ripple-btn" id="OpenHelpBtn" >
+  <button style="margin-top: 50px;" onclick="" class="ripple-btn" id="OpenHelpBtn" >
 <svg style="margin-top: -11px; margin-bottom: -11px; margin-right: 5px;" 
   fill="#ffffff"
    viewBox="0 0 30 34"
@@ -755,7 +765,7 @@ Help
 Share
 </button> 
 
-  <button onclick="" class="ripple-btn" id="OpenHelpBtn" >
+  <button style="margin-top: 50px;"  onclick="" class="ripple-btn" id="OpenHelpBtn" >
 <svg style="margin-top: -1px; margin-bottom: -16px; margin-right: -5px;" 
   fill="#ffffff"
    viewBox="-6 -6 65 31"
@@ -767,7 +777,7 @@ Share
 Rate us
 </button> 
  
-  <button onclick="" class="ripple-btn" id="OpenHelpBtn" >
+  <button style="margin-top: 50px;"  onclick="" class="ripple-btn" id="OpenHelpBtn" >
 <svg style="margin-top: -1px; margin-bottom: -16px; margin-right: -5px;" 
   fill="#ffffff"
    viewBox="-6 4 65 31"
@@ -779,7 +789,7 @@ Rate us
 Privacy
 </button> 
  
-  <button onclick="" class="ripple-btn" id="OpenHelpBtn" >
+  <button style="margin-top: 50px;"  onclick="" class="ripple-btn" id="OpenHelpBtn" >
 <svg style="margin-top: -1px; margin-bottom: -16px; margin-right: 2px;" 
   fill="#ffffff"
    viewBox="26 44 65 31"
@@ -790,7 +800,7 @@ Privacy
 </svg> 
 Tips & Tricks
 </button> 
-     <img src="uploads/ttbdrawingheader.png" class="logo" />
+     <img style="margin-left: 25px; margin-top: 40px;"  src="uploads/ttbdrawingheader.png" class="logo" />
 
     <div class="svg-container">
        <!-- <svg viewBox="0 0 200 100" preserveAspectRatio="none">
@@ -2979,6 +2989,7 @@ function mySetTheDarkTheme()
     document.documentElement.style.setProperty('--panel', 'var(--panelDARK)');
     document.documentElement.style.setProperty('--card', 'var(--cardDARK)');
     document.documentElement.style.setProperty('--card2', 'var(--card2DARK)');
+    document.documentElement.style.setProperty('--bgTopHeader', 'var(--bgTopHeaderDARK)');
   
 
     //    --bg = --bgDARK;
@@ -2990,6 +3001,7 @@ function mySetTheLightTheme()
     document.documentElement.style.setProperty('--panel', 'var(--panelLIGHT)');
     document.documentElement.style.setProperty('--card', 'var(--cardLIGHT)');
     document.documentElement.style.setProperty('--card2', 'var(--card2LIGHT)');
+    document.documentElement.style.setProperty('--bgTopHeader', 'var(--bgTopHeaderLIGHT)');
   
 
     //    --bg = --bgDARK;
