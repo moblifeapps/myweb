@@ -821,9 +821,7 @@ button:disabled {
 </style>
 <body>
 
-    <div id="connection-status" style="padding: 10px; margin-bottom: 20px; border: 1px solid #ccc;">
-        Checking Desktop Connection...
-    </div>
+   
 
     <div id="block-guide" style="display:none; color: red; border: 1px solid red; padding: 10px;">
         <strong>Action Required:</strong> The browser blocked the connection. 
@@ -1156,6 +1154,10 @@ viewBox="0 0 33 33" preserveAspectRatio="none"
         <option value="Dark">🌙 Dark</option>
     </select>
 </div>
+
+ <div id="connection-status" style="padding: 10px;margin-left: 20px; margin-bottom: 2px; border: 1px solid #ccc;">
+        Checking Desktop Connection...
+    </div>
     <!--<img  src="uploads/ttbicon.png" class="logo" /> -->
 </div>
 </div>  
@@ -1417,7 +1419,7 @@ viewBox="0 0 33 33" preserveAspectRatio="none"
 
 </div>
 -->
-<div class="panel" style="padding-top: 100px;">
+<div class="panel" style="padding-top: 150px;">
    <!-- <div id="arxidia">
 
     </div> -->
@@ -2577,6 +2579,7 @@ const chckParama_9 = params.show_clicks;
 const chckParama_10 = params.show_shadow;
 
 let thetheme = params.theme;
+console.log('thetheme:' + thetheme);
 //alert('choice:' + choice);
 /*const colorParam_1 = params.get("color1");
 const colorParam_2 = params.get("color2");
@@ -3104,6 +3107,7 @@ function mySetTheDarkTheme()
     document.documentElement.style.setProperty('--bgTopHeader', 'var(--bgTopHeaderDARK)');
   
    document.documentElement.setAttribute("data-theme", "Dark");
+  //  themeSelect.target.value = "Dark";
   
     //    --bg = --bgDARK;
 
@@ -3117,7 +3121,7 @@ function mySetTheLightTheme()
     document.documentElement.style.setProperty('--bgTopHeader', 'var(--bgTopHeaderLIGHT)');
     document.documentElement.setAttribute("data-theme", "Light");
   
-
+//    themeSelect.target.value = "Light";
     //    --bg = --bgDARK;
 
 }
@@ -3174,27 +3178,32 @@ bindRestart("softresetbutton");
     window.open("https://mlapplications.com/hlp_ttbplus_effects.html", "_blank");
   });
   
-  if (thetheme == "Dark")
+
+  console.log("einai: thetheme:" + thetheme);
+  if (thetheme === "Dark")
   {
+//  document.documentElement.setAttribute("data-theme", "Dark");
   mySetTheDarkTheme();
-  document.documentElement.setAttribute("data-theme", "Dark");
+  themeSelect.selectedIndex=1;
   }
-  else if (thetheme == "Light")
+  else if (thetheme === "Light")
   {
+//  document.documentElement.setAttribute("data-theme", "Light");
   mySetTheLightTheme();
-  document.documentElement.setAttribute("data-theme", "Light");
+  themeSelect.selectedIndex=0;
   }
   else
   {
   mySetTheLightTheme();
-  document.documentElement.setAttribute("data-theme", "Light");
+  themeSelect.selectedIndex=0;
+ // document.documentElement.setAttribute("data-theme", "Light");
 
   }
 
 
 </script>
     <script>
-   const themeFromUrl = window.appParams.theme;
+//   const themeFromUrl = window.appParams.theme;
 
 /*
     if (themeFromUrl === "Dark")
