@@ -3330,16 +3330,36 @@ bindRestart("softresetbutton");
                 statusDiv.style.color = "green";
                 btn.disabled = false;
                 guide.style.display = "none";
+
+                document.getElementById("welcomeDialog").style.display = "none";
+                document.getElementById("panel").style.display = "initial";
+                document.getElementById("panel2").style.display = "initial";
+                document.getElementById("panel3").style.display = "initial";
+
+
             } else if (state === "BLOCKED") {
                 statusDiv.innerHTML = "⚠️ Permission Required";
                 statusDiv.style.color = "orange";
                 btn.disabled = false; // Keep enabled so user can click to trigger the prompt
                 guide.style.display = "block";
+
+                document.getElementById("welcomeDialog").style.display = "none";
+                document.getElementById("panel").style.display = "none";
+                document.getElementById("panel2").style.display = "none";
+                document.getElementById("panel3").style.display = "none";
+
+
             } else {
                 statusDiv.innerHTML = "❌ Desktop App Offline";
                 statusDiv.style.color = "red";
                 btn.disabled = true;
                 guide.style.display = "none";
+
+                document.getElementById("welcomeDialog").style.display = "none";
+                document.getElementById("panel").style.display = "none";
+                document.getElementById("panel2").style.display = "none";
+                document.getElementById("panel3").style.display = "none";
+
             }
         }
 
