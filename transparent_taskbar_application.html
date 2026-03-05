@@ -3355,6 +3355,7 @@ bindRestart("softresetbutton");
 
 
                 
+                document.getElementById("PermissionDialog").style.display = "none";
                 document.getElementById("NotConnectedDialog").style.display = "none";
                 document.getElementById("welcomeDialog").style.display = "none";
                 document.getElementById("panel").style.display = "initial";
@@ -3368,6 +3369,7 @@ bindRestart("softresetbutton");
                 btn.disabled = false; // Keep enabled so user can click to trigger the prompt
                 guide.style.display = "block";
 
+                document.getElementById("PermissionDialog").style.display = "initial";
                 document.getElementById("NotConnectedDialog").style.display = "none";
                 document.getElementById("welcomeDialog").style.display = "none";
                 document.getElementById("panel").style.display = "none";
@@ -3381,6 +3383,7 @@ bindRestart("softresetbutton");
                 btn.disabled = true;
                 guide.style.display = "none";
 
+                document.getElementById("PermissionDialog").style.display = "none";
                 document.getElementById("welcomeDialog").style.display = "none";
                 document.getElementById("panel").style.display = "none";
                 document.getElementById("panel2").style.display = "none";
@@ -3425,7 +3428,11 @@ window.addEventListener("DOMContentLoaded", () => {
    document.getElementById("panel").style.display = "none";
     document.getElementById("panel2").style.display = "none";
     document.getElementById("panel3").style.display = "none";
+    document.getElementById("PermissionDialog").style.display = "none";
+    document.getElementById("NotConnectedDialog").style.display = "none";
+    document.getElementById("welcomeDialog").style.display = "none";
 
+    
   if (hide === "true") {
     document.getElementById("welcomeDialog").style.display = "none";
     document.getElementById("panel").style.display = "initial";
@@ -3434,10 +3441,11 @@ window.addEventListener("DOMContentLoaded", () => {
     probeApp();
     // Run the probe as soon as the page loads
         //window.onload = probeApp;
-
   }
   else
   {
+    document.getElementById("welcomeDialog").style.display = "initial";
+    
     document.getElementById("panel").style.display = "none";
     document.getElementById("panel2").style.display = "none";
     document.getElementById("panel3").style.display = "none";
