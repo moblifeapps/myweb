@@ -2580,7 +2580,7 @@ Open help ..
 </button>
 
 
-<div id="welcomeDialog" style="font-size: 14px; display: initial;" class="dialog-overlay">
+<div id="welcomeDialog" style="font-size: 14px; display: none;" class="dialog-overlay">
   <div class="dialog">
     <h1 style="color: var(--accent);"><img src="/uploads/ttbicon.png" style="margin-top: -12px; margin-bottom: -12px; margin-left: 15px; margin-right: 10px;  width: 40px;">
 Transparent Taskbar+ Lite</h1>
@@ -2606,7 +2606,7 @@ Transparent Taskbar+ Lite</h1>
   </div>
 </div>
 
-<div id="NotConnectedDialog" style=" font-size: 14px; display: initial;" class="dialog-overlay">
+<div id="NotConnectedDialog" style=" font-size: 14px; display: none;" class="dialog-overlay">
   <div class="dialog" style="width: 400px;">
     <h1 style="color: var(--accent);"><img src="/uploads/ttbicon.png" style="margin-top: -12px; margin-bottom: -12px; margin-left: 15px; margin-right: 10px;  width: 40px;">
 Transparent Taskbar+ Lite</h1>
@@ -2637,8 +2637,7 @@ Launch App on Windows
   </div>
 </div>
 
-
-<div id="PermissionDialog" style=" font-size: 14px; display: initial;" class="dialog-overlay">
+<div id="PermissionDialog" style=" font-size: 14px; display: none;" class="dialog-overlay">
   <div class="dialog" style="width: 400px;">
     <h1 style="color: var(--accent);"><img src="/uploads/ttbicon.png" style="margin-top: -12px; margin-bottom: -12px; margin-left: 15px; margin-right: 10px;  width: 40px;">
 Transparent Taskbar+ Lite</h1>
@@ -3424,33 +3423,34 @@ bindRestart("softresetbutton");
 
 window.addEventListener("DOMContentLoaded", () => {
 
-  const hide = localStorage.getItem("hideWelcomeDialog");
-   document.getElementById("panel").style.display = "none";
+
+    document.getElementById("panel").style.display = "none";
     document.getElementById("panel2").style.display = "none";
     document.getElementById("panel3").style.display = "none";
     document.getElementById("PermissionDialog").style.display = "none";
     document.getElementById("NotConnectedDialog").style.display = "none";
     document.getElementById("welcomeDialog").style.display = "none";
 
+
+    const hide = localStorage.getItem("hideWelcomeDialog");
+
+try
+{
+
     
   if (hide === "true") {
-    document.getElementById("welcomeDialog").style.display = "none";
-    document.getElementById("panel").style.display = "initial";
-    document.getElementById("panel2").style.display = "initial";
-    document.getElementById("panel3").style.display = "initial";
-    probeApp();
-    // Run the probe as soon as the page loads
-        //window.onload = probeApp;
+    document.getElementById("welcomeDialog").style.display = "none"; 
   }
   else
   {
     document.getElementById("welcomeDialog").style.display = "initial";
-    
-    document.getElementById("panel").style.display = "none";
-    document.getElementById("panel2").style.display = "none";
-    document.getElementById("panel3").style.display = "none";
-
   }
+} catch (err ) { 
+
+    
+}
+
+  probeApp();
 });
 
 function tryLaunchApp() {
