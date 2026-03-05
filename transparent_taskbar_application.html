@@ -3341,6 +3341,8 @@ bindRestart("softresetbutton");
 
         // --- STEP 3: UI Management ---
         function updateUI(state) {
+
+            console.log("updateUI(state): " + state);
             const statusDiv = document.getElementById("connection-status");
             const btn = document.getElementById("btn-open-folder");
             const guide = document.getElementById("block-guide");
