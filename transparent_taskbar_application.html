@@ -6,7 +6,35 @@
 <title>Transparent Taskbar+ Lite</title>
 
 <style>
+.dialog-overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:1000;
+}
 
+.dialog{
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  width:720px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+.dialog button{
+  padding:10px 20px;
+  border:none;
+  background:#2d7ef7;
+  color:white;
+  border-radius:6px;
+  cursor:pointer;
+}
 .theme-switcher {
   position: relative;
   display: inline-block;
@@ -1419,7 +1447,7 @@ viewBox="0 0 33 33" preserveAspectRatio="none"
 
 </div>
 -->
-<div class="panel" style="padding-top: 150px;">
+<div class="panel" id="panel" style="padding-top: 150px;">
    <!-- <div id="arxidia">
 
     </div> -->
@@ -1848,7 +1876,7 @@ Reset Default Values
 </div>
 
 
-<div class="panel2">
+<div class="panel2" id="panel2">
     <h1>Taskbar Effects !</h1> 
     <svg
    width="80.3731"
@@ -2229,7 +2257,7 @@ Effects usage ..
     </div>
 </div>
 
-<div class="panel3">
+<div class="panel3" id="panel3">
     <h1>App Settings !</h1> 
     <svg style="width: 100px; height: 68px">
         <path
@@ -3095,6 +3123,33 @@ function bindToggle(id) {
         <span>taskbar</span>
     </div>
 </button>
+
+
+<div id="welcomeDialog" style="font-size: 14px;" class="dialog-overlay">
+  <div class="dialog">
+    <h1 style="color: var(--accent);">Transparent Taskbar+ Lite</h2>
+    <hr><p style="font-size: 16px; font-style: italic;">You are accessing the Application's Settings User Interface from your browser.</p>
+    <p style="color: var(--accent);">To use the browser's UI, you must accept a permission on your browser to send commands to the application. This is required <b>once</b>.</p>
+    <p></p>
+    <hr>
+    <p style="color: var(--accent-hard);">When prompted from the browser, just click the <b>"Allow"</b> button once. No other actions needed.</p>
+<img src="/uploads/TTB_Browser_allow.jpg" style="width: 380px;">
+    <hr>
+    <p style="color: grey; font-style: italic;">If you accidentally click on <b>"Block"</b> or you want to <b>revoke</b> this permission, you can easily do this:</p>
+<img src="/uploads/TTB_Revoke.jpg" style="width: 220px;">
+<hr>
+
+
+    <label>
+      <input type="checkbox" id="dontShow" >
+      Don't show me again
+    </label>
+
+    <br><br>
+    <button onclick="closeDialog()">OK</button>
+  </div>
+</div>
+
 <script>
 const themeSelect = document.getElementById("themeSelect");
 
@@ -3202,6 +3257,9 @@ bindRestart("softresetbutton");
 
 
 </script>
+
+
+
     <script>
 //   const themeFromUrl = window.appParams.theme;
 
@@ -3313,8 +3371,54 @@ bindRestart("softresetbutton");
             }
         }
 
+
+window.addEventListener("DOMContentLoaded", () => {
+
+  const hide = localStorage.getItem("hideWelcomeDialog");
+   document.getElementById("panel").style.display = "none";
+    document.getElementById("panel2").style.display = "none";
+    document.getElementById("panel3").style.display = "none";
+
+  if (hide === "true") {
+    document.getElementById("welcomeDialog").style.display = "none";
+    document.getElementById("panel").style.display = "initial";
+    document.getElementById("panel2").style.display = "initial";
+    document.getElementById("panel3").style.display = "initial";
+    probeApp();
+    // Run the probe as soon as the page loads
+        //window.onload = probeApp;
+
+  }
+  else
+  {
+    document.getElementById("panel").style.display = "none";
+    document.getElementById("panel2").style.display = "none";
+    document.getElementById("panel3").style.display = "none";
+
+  }
+});
+
+function closeDialog() {
+
+  const dontShow = document.getElementById("dontShow").checked;
+
+  if (dontShow) {
+    localStorage.setItem("hideWelcomeDialog", "true");
+  }
+
+  document.getElementById("welcomeDialog").style.display = "none";
+  document.getElementById("panel").style.display = "initial";
+  document.getElementById("panel2").style.display = "initial";
+  document.getElementById("panel3").style.display = "initial";
+
+    probeApp();
+
+}
+
+
+
         // Run the probe as soon as the page loads
-        window.onload = probeApp;
+       // window.onload = probeApp;
     </script>
 </body>
 </html>
