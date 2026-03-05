@@ -3416,7 +3416,7 @@ bindRestart("softresetbutton");
             } catch (err) {
                 // If it fails here, the user likely saw the Edge/Chrome prompt
                 // Running the probe again will update the UI after they click Allow/Block
-                probeApp();
+            //    probeApp();
             }
         }
 
@@ -3440,6 +3440,8 @@ try
     
   if (hide === "true") {
     document.getElementById("welcomeDialog").style.display = "none"; 
+
+    setInterval(probeApp, 3000);
   }
   else
   {
@@ -3450,7 +3452,7 @@ try
     
 }
 
-  probeApp();
+//////  probeApp();
 });
 
 function tryLaunchApp() {
@@ -3472,11 +3474,13 @@ function closeDialog() {
   }
 
   document.getElementById("welcomeDialog").style.display = "none";
-  document.getElementById("panel").style.display = "initial";
-  document.getElementById("panel2").style.display = "initial";
-  document.getElementById("panel3").style.display = "initial";
+ // document.getElementById("panel").style.display = "initial";
+//  document.getElementById("panel2").style.display = "initial";
+//  document.getElementById("panel3").style.display = "initial";
 
-    probeApp();
+      setInterval(probeApp, 3000);
+
+  ///  probeApp();
 
 }
 
