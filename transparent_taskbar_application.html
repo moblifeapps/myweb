@@ -2582,7 +2582,8 @@ Open help ..
 
 <div id="welcomeDialog" style="font-size: 14px; visibility:hidden;" class="dialog-overlay">
   <div class="dialog">
-    <h1 style="color: var(--accent);">Transparent Taskbar+ Lite</h2>
+    <h1 style="color: var(--accent);"><img src="/uploads/ttbicon.png" style="margin-top: -12px; margin-bottom: -12px; margin-left: 15px; margin-right: 10px;  width: 40px;">
+Transparent Taskbar+ Lite</h1>
     <hr><p style="font-size: 16px; font-style: italic;">You are accessing the Application's Settings User Interface from your browser.</p>
     <p style="color: var(--accent);">To use the browser's UI, you must accept a permission on your browser to send commands to the application. This is required <b>once</b>.</p>
     <p></p>
@@ -2605,12 +2606,13 @@ Open help ..
   </div>
 </div>
 
-<div id="NotConnectedDialog" style=" font-size: 14px; visibility:visible;" class="dialog-overlay">
+<div id="NotConnectedDialog" style=" font-size: 14px; visibility:hidden;" class="dialog-overlay">
   <div class="dialog" style="width: 400px;">
-    <h1 style="color: var(--accent);">Transparent Taskbar+ Lite</h2>
+    <h1 style="color: var(--accent);"><img src="/uploads/ttbicon.png" style="margin-top: -12px; margin-bottom: -12px; margin-left: 15px; margin-right: 10px;  width: 40px;">
+Transparent Taskbar+ Lite</h1>
     <hr>
     <p style="font-size: 16px; font-weight: normal;"><b>Status: </b> ❌ Desktop App Offline</p>
-    <p style="font-size: 16px; font-style: italic;">It seems the "Transparent Taskbar+ Lite" is not running on your Windows PC. </p>
+    <p style="font-size: 16px; font-style: italic;">It seems the "<b>Transparent Taskbar+ Lite</b> application" is not running on your Windows PC. </p>
    
     <p style="font-size: 16px; color: var(--accent);">You can try to launch the app now. Click on the button below:</p>
     <p></p>
@@ -2623,13 +2625,46 @@ Launch App on Windows
                     <path d="M -1.50248,-2.597172 A 0.035136,0.035136 0 0 0 -1.514144,-2.64624 l -0.357192,-0.217152 a 0.037116,0.037116 0 0 0 -0.01926,-0.00536 c -0.02016,0 -0.036468,0.015948 -0.036468,0.03564 v 0.434196 c 0,0.00666 0.00191,0.013176 0.00551,0.018828 0.010656,0.016704 0.03312,0.021816 0.05022,0.011412 l 0.357192,-0.217116 c 0.00472,-0.00288 0.00875,-0.0068 0.0117,-0.011412 z m 0.00648,0.084276 -0.33678,0.204732 c -0.0513,0.031212 -0.1188,0.01584 -0.150696,-0.034236 A 0.105048,0.105048 0 0 1 -2,-2.39892 V -2.83308 C -2,-2.892156 -1.95104,-2.94 -1.89056,-2.94 c 0.020412,0 0.040428,0.00558 0.05778,0.016128 L -1.496,-2.71914 V -2.868 a 0.072,0.072 0 0 1 0.072,-0.072 h 0.072 a 0.072,0.072 0 0 1 0.072,0.072 v 0.504 a 0.072,0.072 0 0 1 -0.072,0.072 H -1.424 A 0.072,0.072 0 0 1 -1.496,-2.364 Z M -1.424,-2.868 v 0.504 h 0.072 v -0.504 z" style="stroke-width:0.036" />
                 </svg>
 </button> 
-      
+ <hr>     
+ <p st> </p>
+<p style="margin-top: 20px;">Example:</p>
+<img src="/uploads/TTBPLUS_launch_app.jpg" style="margin-top: 2px; margin-left: 15px; width: 370px;">
+
 
    
     <hr>
     
   </div>
 </div>
+
+
+<div id="PermissionDialog" style=" font-size: 14px; visibility:visible;" class="dialog-overlay">
+  <div class="dialog" style="width: 400px;">
+    <h1 style="color: var(--accent);"><img src="/uploads/ttbicon.png" style="margin-top: -12px; margin-bottom: -12px; margin-left: 15px; margin-right: 10px;  width: 40px;">
+Transparent Taskbar+ Lite</h1>
+    <hr>
+    <p style="font-size: 16px; font-weight: normal;"><b>Status: </b> ⚠️ Permission Required</p>
+    <p style="font-size: 16px; font-style: italic;">You must give permission from your browser to send commands to the "<b>Transparent Taskbar+ Lite</b> application" that is running on your Windows PC. </p>
+   
+    <p style="font-size: 16px; color: var(--accent);">You can give permission like the example below: Be sure to select the "<b>Allowed</b>":</p>
+    <p>After that, <b>close</b> this browser tab and <b>restart</b> the application from Windows</p>
+    <p></p>
+    
+    
+ <hr>     
+ <p st> </p>
+<p style="margin-top: 20px;">Example:</p>
+<img src="/uploads/TTB_Revoke.jpg" style="margin-top: 2px; margin-left: 15px; width: 370px;">
+
+
+   
+    <hr>
+    
+  </div>
+</div>
+
+
+
 <script>
 const options = document.querySelectorAll(".option");
 const continueBtn = document.getElementById("continueBtn");
