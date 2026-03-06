@@ -3044,7 +3044,7 @@ bindRestart("softresetbutton");
             if (state === "CONNECTED") {
                 statusDiv.innerHTML = "✅ Desktop App Connected";
                 statusDiv.style.color = "green";
-                btn.disabled = false;
+               /////// btn.disabled = false;
                 guide.style.display = "none";
 
 
@@ -3060,7 +3060,7 @@ bindRestart("softresetbutton");
             } else if (state === "BLOCKED") {
                 statusDiv.innerHTML = "⚠️ Permission Required";
                 statusDiv.style.color = "orange";
-                btn.disabled = false; // Keep enabled so user can click to trigger the prompt
+             ///////  btn.disabled = false; // Keep enabled so user can click to trigger the prompt
                 guide.style.display = "block";
 
                 document.getElementById("PermissionDialog").style.display = "initial";
@@ -3074,7 +3074,7 @@ bindRestart("softresetbutton");
             } else {
                 statusDiv.innerHTML = "❌ Desktop App Offline";
                 statusDiv.style.color = "red";
-                btn.disabled = true;
+            ///////    btn.disabled = true;
                 guide.style.display = "none";
 
                 document.getElementById("PermissionDialog").style.display = "none";
