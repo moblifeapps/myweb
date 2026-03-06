@@ -3000,12 +3000,14 @@ bindRestart("softresetbutton");
                 console.log('mpike sto probeApp');
                 // Use a short timeout so the page doesn't hang
                 const controller = new AbortController();
-                setTimeout(() => controller.abort(), 2000);
+        //////////////        setTimeout(() => controller.abort(), 2000);
 
                 const response = await fetch(`${APP_URL}/ping`, { 
                     method: 'GET',
                     signal: controller.signal 
                 });
+
+                console.log(response);
 
                 if (response.ok) {
                     updateUI("CONNECTED");
@@ -3106,7 +3108,7 @@ bindRestart("softresetbutton");
             } catch (err) {
                 // If it fails here, the user likely saw the Edge/Chrome prompt
                 // Running the probe again will update the UI after they click Allow/Block
-                probeApp();
+               ///// probeApp();
             }
         }
 
@@ -3183,7 +3185,7 @@ function closeDialog() {
 
  //     setInterval(probeApp, 2000);
 
-     probeApp();
+   //////////////  probeApp();
 
 }
 
