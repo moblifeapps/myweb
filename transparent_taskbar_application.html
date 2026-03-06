@@ -3000,7 +3000,7 @@ bindRestart("softresetbutton");
                 console.log('mpike sto probeApp');
                 // Use a short timeout so the page doesn't hang
                 const controller = new AbortController();
-                setTimeout(() => controller.abort(), 500);
+                setTimeout(() => controller.abort(), 2000);
 
                 const response = await fetch(`${APP_URL}/ping`, { 
                     method: 'GET',
@@ -3106,7 +3106,7 @@ bindRestart("softresetbutton");
             } catch (err) {
                 // If it fails here, the user likely saw the Edge/Chrome prompt
                 // Running the probe again will update the UI after they click Allow/Block
-            //    probeApp();
+                probeApp();
             }
         }
 
@@ -3122,26 +3122,6 @@ window.addEventListener("DOMContentLoaded", () => {
     document.getElementById("welcomeDialog").style.display = "none";
 
 
-    const hide = localStorage.getItem("hideWelcomeDialog");
-
-try
-{
-
-    
-  if (hide === "true") {
-    document.getElementById("welcomeDialog").style.display = "none"; 
-
-    probeApp();
-    //setInterval(probeApp, 3000);
-  }
-  else
-  {
-    document.getElementById("welcomeDialog").style.display = "initial";
-  }
-} catch (err ) { 
-
-    
-}
 
 try
 {
@@ -3149,8 +3129,34 @@ try
         document.body.classList.remove("popup-open");
 }
 catch (ex) { }
+
+
+ //////////////   const hide = localStorage.getItem("hideWelcomeDialog");
+document.getElementById("welcomeDialog").style.display = "none"; 
+probeApp();
+/*
+try
+{
+
+    
+  if (hide === "true") {
+    document.getElementById("welcomeDialog").style.display = "none"; 
+
+      probeApp();
+    //setInterval(probeApp, 3000);
+  }
+  else
+  {
+    document.getElementById("welcomeDialog").style.display = "initial";
+  }
+} catch (err ) { 
+*/
+    
+}
+
 //////  probeApp();
-});
+//}
+);
 
 function tryLaunchApp() {
     try
