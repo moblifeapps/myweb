@@ -3131,7 +3131,8 @@ try
   if (hide === "true") {
     document.getElementById("welcomeDialog").style.display = "none"; 
 
-    setInterval(probeApp, 3000);
+    probeApp();
+    //setInterval(probeApp, 3000);
   }
   else
   {
@@ -3174,9 +3175,9 @@ function closeDialog() {
 //  document.getElementById("panel2").style.display = "initial";
 //  document.getElementById("panel3").style.display = "initial";
 
-      setInterval(probeApp, 2000);
+ //     setInterval(probeApp, 2000);
 
-  ///  probeApp();
+     probeApp();
 
 }
 
