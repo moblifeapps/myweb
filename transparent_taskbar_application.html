@@ -3010,9 +3010,12 @@ bindRestart("softresetbutton");
                 console.log(response);
 
                 if (response.ok) {
+                    onsole.log('response.ok');
                     updateUI("CONNECTED");
                 }
             } catch (err) {
+
+                console.log('errr' + err);
                 // If ping fails, check if it's because it's blocked or just offline
                 diagnoseFailure();
             }
