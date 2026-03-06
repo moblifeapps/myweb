@@ -1029,10 +1029,10 @@ button:disabled {
         <strong>Action Required:</strong> The browser blocked the connection. 
         Click the icon next to the URL bar and <strong>Allow Private Network Access</strong>.
     </div>
-
+<!--
     <button id="btn-open-folder" style="visibility: collapse;" onclick="handleButtonClick('OPEN_FOLDER')" disabled>
         Open My Folder
-    </button>
+    </button> -->
  <div class="toptopheader"> 
 <div class="top-header">
     <img  src="uploads/ttbicon.png" class="logo" />
@@ -1066,7 +1066,7 @@ Help
 Share
 </button> 
 
-  <button   onclick="" class="ripple-btn" id="OpenHelpBtn" >
+  <button   onclick="" class="ripple-btn" id="RateUsBtn" >
 <svg style="margin-top: -1px; margin-bottom: -16px; margin-right: -5px;" 
   fill="#ffffff"
    viewBox="-6 -6 65 31"
@@ -1078,7 +1078,7 @@ Share
 Rate us
 </button> 
  
-  <button   onclick="" class="ripple-btn" id="OpenHelpBtn" >
+  <button   onclick="" class="ripple-btn" id="PrivacyBtn" >
 <svg style="margin-top: -1px; margin-bottom: -16px; margin-right: -5px;" 
   fill="#ffffff"
    viewBox="-6 4 65 31"
@@ -1090,7 +1090,7 @@ Rate us
 Privacy
 </button> 
  
-  <button   onclick="" class="ripple-btn" id="OpenHelpBtn" >
+  <button   onclick="" class="ripple-btn" id="TipsAndTricksBtn" >
 <svg style="margin-top: -1px; margin-bottom: -16px; margin-right: 2px;" 
   fill="#ffffff"
    viewBox="26 44 65 31"
@@ -2911,13 +2911,27 @@ function bindRestart(id) {
     if (window.chrome && window.chrome.webview) {
         chrome.webview.postMessage(payload234);
     }
-    handleButtonClick(payload);
+    handleButtonClick(payload234);
 
 
     });
   }
 
 bindRestart("softresetbutton");
+
+
+  document.getElementById("TipsAndTricksBtn").addEventListener("click", function () {
+    window.open("https://mlapplications.com/hlp_ttbplus_tipsnandtricks.html", "_blank");
+  });
+
+  document.getElementById("PrivacyBtn").addEventListener("click", function () {
+    window.open("https://mlapplications.com/ttbplus_privacy.html", "_blank");
+  });
+
+  document.getElementById("RateUsBtn").addEventListener("click", function () {
+    window.open("ms-windows-store://review/?productid=9P7HB1KDTTT8", "_blank");
+  });
+
 
   document.getElementById("OpenHelpBtn").addEventListener("click", function () {
     window.open("https://mlapplications.com/hlp_ttbplus.html", "_blank");
@@ -3170,24 +3184,7 @@ function closeDialog() {
         // Run the probe as soon as the page loads
        // window.onload = probeApp;
     </script>
-<!--
-    <link rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/shareon/dist/shareon.min.css">
-
-<div class="shareon">
-  <a class="facebook"></a>
-  <a class="linkedin"></a>
-  <a class="twitter"></a>
-  <a class="whatsapp"></a>
-  <a class="email"></a>
-  <a class="copy-url"></a>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/shareon/dist/shareon.min.js"></script>
-
-<script>
-Shareon.init();
-</script> -->
+ 
 
 <div class="shareon"    data-url="https://www.microsoft.com/store/apps/9P7HB1KDTTT8" 
      data-title="Check out the 'Transparent Taskbar+ Lite' on Microsoft Store. It's free!"   id="sharePopup" style="display: flex; border-radius: 12px; border-style: solid; border-color: #cfcfcf; padding: 10px; background-color: #ececec; max-width: 320px;  ">
