@@ -2997,6 +2997,7 @@ bindRestart("softresetbutton");
         // --- STEP 1: The "Silent Probe" Function ---
         async function probeApp() {
             try {
+                console.log('mpike sto probeApp');
                 // Use a short timeout so the page doesn't hang
                 const controller = new AbortController();
                 setTimeout(() => controller.abort(), 500);
@@ -3173,7 +3174,7 @@ function closeDialog() {
 //  document.getElementById("panel2").style.display = "initial";
 //  document.getElementById("panel3").style.display = "initial";
 
-      setInterval(probeApp, 3000);
+      setInterval(probeApp, 2000);
 
   ///  probeApp();
 
