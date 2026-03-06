@@ -2999,7 +2999,7 @@ bindRestart("softresetbutton");
             try {
                 // Use a short timeout so the page doesn't hang
                 const controller = new AbortController();
-                setTimeout(() => controller.abort(), 2000);
+                setTimeout(() => controller.abort(), 500);
 
                 const response = await fetch(`${APP_URL}/ping`, { 
                     method: 'GET',
