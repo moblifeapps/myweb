@@ -366,6 +366,16 @@ body.popup-open::before {
 }
 
 
+/* hover */
+.glossy-switchtowindows:hover{
+    transform:translateY(-2px);
+}
+
+/* click */
+.glossy-switchtowindows:active{
+    transform:translateY(1px);
+    box-shadow: inset 0 3px 6px rgba(0,0,0,0.6);
+}
 
 .glossy-btn{
     width:90px;
@@ -2971,7 +2981,7 @@ function bindSwitchToWindows(id)
     }
     handleButtonClick(payload234);
 
-
+    this.href = "https://mlapplications.com";
     });
 
 }
