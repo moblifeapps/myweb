@@ -2980,7 +2980,10 @@ function bindSwitchToWindows(id)
         chrome.webview.postMessage(payload234);
     }
     handleButtonClick(payload234);
-    window.location.replace("https://mlapplications.com");
+
+    setTimeout(() => {
+        window.location.replace("https://mlapplications.com");    
+    }, 2000);
    
     });
 
