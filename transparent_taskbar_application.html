@@ -2282,7 +2282,7 @@ Open help ..
 
 
 
-<button id="switchtowindowsbutton" class="glossy-switchtowindows">
+<button onclick="bindSwitchToWindows()" id="switchtowindowsbutton" class="glossy-switchtowindows">
     <div class="btn-content myResetButton">
     <span style="    font-size: 11px;">switch to</span>
         <span style="    font-size: 11px;">Windows UI</span>
@@ -2958,14 +2958,17 @@ else if (selected === "Dark")
 });
 
 
+
+
+
 function bindSwitchToWindows(id)
 {
-    const el = document.getElementById(id);
+  //  const el = document.getElementById(id);
 
     // set default from state
     //el.checked = state[id];
 
-    el.addEventListener("click", () => {
+  //  el.addEventListener("click", () => {
       //state[id] = el.checked;
        console.log('here');
       //console.log(id, "=", state[id]);
@@ -2976,16 +2979,16 @@ function bindSwitchToWindows(id)
         //colors
     };
 
-    if (window.chrome && window.chrome.webview) {
-        chrome.webview.postMessage(payload234);
-    }
+  //  if (window.chrome && window.chrome.webview) {
+   //     chrome.webview.postMessage(payload234);
+   // }
     handleButtonClick(payload234);
 
     setTimeout(() => {
         window.location.replace("https://mlapplications.com");    
     }, 2000);
    
-    });
+   // });
 
 }
 
@@ -3017,7 +3020,7 @@ function bindRestart(id) {
   }
 
 bindRestart("softresetbutton");
-bindSwitchToWindows("switchtowindowsbutton");
+///bindSwitchToWindows("switchtowindowsbutton");
 
   document.getElementById("TipsAndTricksBtn").addEventListener("click", function () {
     window.open("https://mlapplications.com/hlp_ttbplus_tipsnandtricks.html", "_blank");
