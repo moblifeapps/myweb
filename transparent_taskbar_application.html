@@ -5,15 +5,26 @@
 <meta charset="UTF-8" />
 <title>Transparent Taskbar+ Lite</title>
 
+<link
+href="uploads/shareon.min.css"
+rel="stylesheet">
+
+<script
+  src="uploads/shareon.life.js"
+  defer
+  init
+></script>
+
+<!--
 <link 
   href="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.min.css"
   rel="stylesheet"
->
+> 
 <script
   src="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.iife.js"
   defer
   init
-></script>
+></script>-->
 <!--
 <script src="https://cdn.jsdelivr.net/npm/shareon/dist/shareon.min.js" defer></script>-->
 <style>
@@ -36,7 +47,7 @@ body.popup-open::before {
     content: "";
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.0);
     z-index: 9998;
 }
 
@@ -108,24 +119,7 @@ body.popup-open::before {
 .shareon .copy-url::after{ content:"Copy"; }
 .shareon .web-share::after{ content:"Link"; }
 
-
-/*  <a class="facebook"></a>
-    <a class="linkedin"></a>
-    <a class="pinterest"></a>
-    <a class="twitter"></a>
-    <a class="reddit"></a>
-    <a class="teams"></a>
-    <a class="telegram"></a>
-    <a class="tumblr"></a>
-  
-    <a class="viber"></a>
-    <a class="whatsapp"></a>
-    <a class="copy-url"></a>
-  <!--  <a class="email"></a>
-    <a class="print"></a> -->
-    <!-- Does not work in every browser -->
-    <a class="web-share"></a>*/
-
+ 
 /* Optional: hover effect */
 .shareon a:hover:before {
     transform: scale(1.1);
@@ -194,6 +188,9 @@ body.popup-open::before {
 }
 
 .dialog{
+  margin-left: 200px;
+  margin-top: 120px;
+
   background:white;
   padding:20px;
   border-radius:10px;
@@ -332,6 +329,44 @@ body.popup-open::before {
 }
 
 
+.glossy-switchtowindows{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    border:none;
+    cursor:pointer;
+    position:fixed;
+    bottom:50%;
+    margin-bottom: 55px;;
+    left:-5px;
+    z-index:9999;
+    background:linear-gradient(180deg,#0034ae,#0034ae);
+
+    box-shadow:
+        inset 0 4px 6px rgba(255,255,255,0.35),
+        inset 0 -6px 10px rgba(0,0,0,0.35),
+        0 6px 16px rgba(0,0,0,0.6);
+
+    transition:all .2s ease;
+}
+
+/* glossy shine */
+.glossy-switchtowindows::before{
+    content:"";
+    position:absolute;
+    top:4px;
+    left:4px;
+    right:4px;
+    height:75%;
+    border-radius:50%;
+    background:linear-gradient(
+        rgba(255,255,255,.2),
+        rgba(255,255,255,.2)
+    );
+}
+
+
+
 .glossy-btn{
     width:90px;
     height:90px;
@@ -339,7 +374,8 @@ body.popup-open::before {
     border:none;
     cursor:pointer;
     position:fixed;
-    bottom:-5px;
+    bottom:50%;
+    margin-bottom: -55px;;
     left:-5px;
     z-index:9999;
 
@@ -2236,9 +2272,31 @@ Open help ..
 
 
 
+<button id="switchtowindowsbutton" class="glossy-switchtowindows">
+    <div class="btn-content myResetButton">
+    <span style="    font-size: 11px;">switch to</span>
+        <span style="    font-size: 11px;">Windows UI</span>
+        <!-- SVG ICON -->
+         <svg viewBox="-5 -15 26 25.459635">
+    <path d="M 9.4121094 -10 C 8.74335 -10 8.2070187 -9.4687793 8.1992188 -8.8125 C 8.1914188 -8.1531407 8.7273194 -7.6074094 9.3867188 -7.5996094 C 13.363275 -7.5589894 16.599609 -4.2952285 16.599609 -0.3203125 C 16.599609 1.6234456 15.843749 3.4569926 14.46875 4.8320312 L 11.800781 7.5 L 11.800781 3.1992188 C 11.800781 2.5398594 11.258969 2 10.599609 2 C 9.94025 2 9.4003906 2.5398594 9.4003906 3.1992188 L 9.4003906 8 C 9.4003906 9.984358 11.015642 11.599609 13 11.599609 L 17.800781 11.599609 C 18.460141 11.599609 19 11.05975 19 10.400391 C 19 9.7410313 18.460141 9.1992188 17.800781 9.1992188 L 13.492188 9.1992188 L 16.164062 6.5273438 C 17.992181 4.6992256 19 2.2688849 19 -0.3203125 C 19 -5.6047072 14.699704 -9.9484001 9.4121094 -10 z M -3.8007812 -8.4101562 C -4.4601406 -8.4101562 -5 -7.8683437 -5 -7.2089844 C -5 -6.549625 -4.4601406 -6.0097656 -3.8007812 -6.0097656 L 0.5078125 -6.0097656 L -2.1640625 -3.3378906 C -3.9921807 -1.5097725 -5 0.92056821 -5 3.5097656 L -5 3.5117188 C -5 8.7961135 -0.69970409 13.137853 4.5878906 13.189453 C 5.25665 13.189453 5.7929813 12.658232 5.8007812 12.001953 C 5.8085812 11.342594 5.2726806 10.798816 4.6132812 10.791016 C 0.63672523 10.750396 -2.5996094 7.4866348 -2.5996094 3.5117188 C -2.5996094 1.5679607 -1.8437486 -0.26558638 -0.46875 -1.640625 L 2.1992188 -4.3085938 L 2.1992188 -0.009765625 C 2.1992188 0.64959372 2.7410313 1.1914063 3.4003906 1.1914062 C 4.05975 1.1914062 4.5996094 0.64959372 4.5996094 -0.009765625 L 4.5996094 -4.8085938 C 4.5996094 -6.7929518 2.984358 -8.4101563 1 -8.4101562 L -3.8007812 -8.4101562 z "/>
+</svg>
+<!--
+        <svg viewBox="0 0 24 24">
+            <path d="M12 2L15 8l6 .9-4.5 4.4L17.8 20 12 16.9 6.2 20l1.3-6.7L3 8.9 9 8z"/>
+        </svg>
+    -->
+    
+    </div>
+</button>
+
+
+
+
+
 <button id="softresetbutton" class="glossy-btn">
     <div class="btn-content myResetButton">
-
+  <span>reset</span>
+        <span>taskbar</span>
         <!-- SVG ICON -->
          <svg viewBox="0 0 24 24">
     <path d="M12 5V1L7 6l5 5V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/>
@@ -2248,8 +2306,7 @@ Open help ..
             <path d="M12 2L15 8l6 .9-4.5 4.4L17.8 20 12 16.9 6.2 20l1.3-6.7L3 8.9 9 8z"/>
         </svg>
     -->
-        <span>reset</span>
-        <span>taskbar</span>
+      
     </div>
 </button>
 
@@ -2890,6 +2947,35 @@ else if (selected === "Dark")
    // applyTheme(selected);
 });
 
+
+function bindSwitchToWindows(id)
+{
+    const el = document.getElementById(id);
+
+    // set default from state
+    //el.checked = state[id];
+
+    el.addEventListener("click", () => {
+      //state[id] = el.checked;
+       console.log('here');
+      //console.log(id, "=", state[id]);
+      //let thewhat = id + ":" + state[id];
+      const payload234 = {
+        type: "styleSelected",
+        style: "switchtowindows" // "ResetDefault",
+        //colors
+    };
+
+    if (window.chrome && window.chrome.webview) {
+        chrome.webview.postMessage(payload234);
+    }
+    handleButtonClick(payload234);
+
+
+    });
+
+}
+
 function bindRestart(id) {
    
     const el = document.getElementById(id);
@@ -2918,7 +3004,7 @@ function bindRestart(id) {
   }
 
 bindRestart("softresetbutton");
-
+bindSwitchToWindows("switchtowindowsbutton");
 
   document.getElementById("TipsAndTricksBtn").addEventListener("click", function () {
     window.open("https://mlapplications.com/hlp_ttbplus_tipsnandtricks.html", "_blank");
@@ -3200,9 +3286,11 @@ function closeDialog() {
  
 
 <div class="shareon"    data-url="https://www.microsoft.com/store/apps/9P7HB1KDTTT8" 
-     data-title="Check out the 'Transparent Taskbar+ Lite' on Microsoft Store. It's free!"   id="sharePopup" style="display: flex; border-radius: 12px; border-style: solid; border-color: #cfcfcf; padding: 10px; background-color: #ececec; max-width: 320px;  ">
-   <div style="background-color: transparent; color: gray; width: 320px;">
-    dsaasdads
+     data-title="Check out the 'Transparent Taskbar+ Lite' on Microsoft Store. It's free!"   id="sharePopup" style="display: flex; border-radius: 12px; border-style: solid; border-color: #cfcfcf; padding: 10px; background-color: white; max-width: 320px;  ">
+   <div style="background-color: transparent; color: gray; width: 320px; display: flex;">
+    
+     <img src="/uploads/ttb_share.jpg" style="margin-top: -12px; margin-bottom: -12px; margin-left: 15px; margin-right: 10px;  ">
+Share the app. 
    </div>
 <!--    <a class="vkontakte"></a>
     <a class="pocket"></a>
