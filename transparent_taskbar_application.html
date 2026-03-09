@@ -3114,6 +3114,7 @@ bindRestart("softresetbutton");
                 if (response.ok) {
                     console.log('response.ok');
                     updateUI("CONNECTED");
+                    SendTheAppliedThemeAfterConnected();
                 }
             } catch (err) {
 
@@ -3216,6 +3217,25 @@ bindRestart("softresetbutton");
                ///// probeApp();
             }
         }
+
+
+
+function SendTheAppliedThemeAfterConnected()
+{
+    console.log('SendTheAppliedThemeAfterConnected()');
+    const colors = [...selected.querySelectorAll("input[type=color]")]
+        .map(c => c.value); 
+
+    const payload = {
+        type: "styleSelected",
+        style: selected.dataset.type,
+        colors
+    };
+ console.log("Option selected payload:", payload);
+    if (window.chrome && window.chrome.webview) {
+        chrome.webview.postMessage(payload);
+    }
+}
 
 
 window.addEventListener("DOMContentLoaded", () => {
