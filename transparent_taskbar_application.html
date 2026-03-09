@@ -3235,6 +3235,9 @@ function SendTheAppliedThemeAfterConnected()
     if (window.chrome && window.chrome.webview) {
         chrome.webview.postMessage(payload);
     }
+ 
+    handleButtonClick(payload);
+
 }
 
 
