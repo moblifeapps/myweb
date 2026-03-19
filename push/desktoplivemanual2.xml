@@ -1,0 +1,14 @@
+<toast activationType="protocol" duration="long" launch="https://mlapplications.com/mybitly.html?hlpdesktopplus_1.html?utm_source=notifyapp%26utm_medium=banner%26utm_campaign=fromintro%26utm_term=wallpaper" scenario="reminder">
+  <visual>
+    <binding template="ToastGeneric">
+<text> Desktop Live wallpaper+ for Windows 10/11... app's manual</text>
+<text> - Quickstart guide for the Desktop Live wallpaper+ app.!</text>
+<text> - Read useful tips for all the available features.</text>
+<image src="https://mlapplications.com/uploads/desktoplivepushmanual.jpg" />
+<image placement="appLogoOverride" hint-crop="circle" src="https://mlapplications.com/uploads/myupdateicon.jpg" /></binding>
+  </visual>
+  <actions>
+	<action activationType = "Protocol"  imageUri="https://mlapplications.com/uploads/toastbuttonrocket.png" arguments="https://mlapplications.com/mybitly.html?hlpdesktopplus_1.html?utm_source=notifyapp%26utm_medium=banner%26utm_campaign=fromintro%26utm_term=wallpaper" content="Open now.. !" />
+	<action activationType="system" imageUri="https://mlapplications.com/uploads/toastbuttoncancel.png"  arguments="dismiss" content="Maybe Later.." />
+  </actions>
+</toast>
