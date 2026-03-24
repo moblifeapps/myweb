@@ -97,7 +97,86 @@
       });
     </script> 
 -->
-	<style>
+
+<style>
+	/* GRID LAYOUT */
+.apps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    padding: 40px;
+}
+
+/* CARD */
+.app-card {
+    background: rgba(255,255,255,0.85);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+/* CAROUSEL */
+.app-carousel {
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.app-carousel img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    left: 100%;
+    top: 0;
+    transition: transform 0.5s ease, left 0s 0.5s;
+}
+
+/* Active image */
+.app-carousel img.active {
+    left: 0;
+    transform: translateX(0);
+}
+
+/* Previous image (slides out) */
+.app-carousel img.prev {
+    left: 0;
+    transform: translateX(-100%);
+}
+
+/* Next image (slides in) */
+.app-carousel img.next {
+    left: 100%;
+}
+
+/* ICON */
+.app-icon {
+    width: 130px;
+    margin: 10px 0;
+}
+
+/* BUTTONS */
+.btn {
+    display: inline-block;
+    margin: 5px;
+    padding: 8px 14px;
+    background: #0078d4;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.btn.secondary {
+    background: #eee;
+    color: #333;
+}
+</style>
+
+<style>
 		html, body {
    width: 100%;
   margin: 0;
@@ -820,6 +899,167 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 	</div>
 </div>
 
+
+	 
+<div class="wsite-section-wrap">
+	<div class="wsite-section wsite-body-section wsite-section-bg-video wsite-background-637" style="background-image: url('uploads/261944431_861.jpg'); background-size: cover;" data-image="" data-position="fill" data-is_customized="1" data-video_type="upload" data-video_url="uploads/261944431_861.mp4" data-video_id="uploads/261944431_861.mp4" data-loop="1" data-autoplay="1" data-mute="1" data-background_url="uploads/261944431_861.jpg" >
+		<div class="wsite-section-content">
+        <div class="container">
+			<div class="wsite-section-elements">
+				<div>
+					<div class="wsite-image wsite-image-border-none " style="padding-top:10px;padding-bottom:10px;margin-left:0px;margin-right:0px;text-align:center">
+					<a class="no_nu_reward2"  href='store-apps.html'>
+					<img src="uploads/storeapps-orig-2-orig_orig.webp" alt="Picture" style="width:auto;max-width:100%" />
+					</a>
+					<div style="display:block;font-size:90%"></div>
+					</div>
+</div>
+
+<div><div style="height: 20px;   width: 100%;"></div>
+<hr class="styled-hr" style="width:100%;"></hr>
+<div style="height: 20px;   width: 100%;"></div></div>
+ 
+ 
+
+<div style="text-align:center;"><div style="height: 0px;  "></div>
+ 
+
+
+<section class="apps">
+
+  <div class="app-card">
+    
+   <img src="/uploads/ttbicon.png" alt="TTB+ Icon" class="app-icon">
+      <p class="blue-text blue-text text-darken-2" style="margin-top: 0px; font-size: large; font-weight: bold;" class="app-title">Transparent Taskbar+ Lite</p>
+ <hr>
+<div class="app-carousel" data-index="0">
+
+		    <img src="uploads/ttbplus_screen1.jpg" alt="TTB+ Screenshot 1">
+        <img src="uploads/ttbplus_screen2.jpg" alt="TTB+ Screenshot 2">
+        <img src="uploads/ttbplus_screen3.jpg" alt="TTB+ Screenshot 3">
+    </div>
+      <hr>
+
+	  <p class="app-description">Transform your desktop. Create stunning transparent, gradient, or "MacOs dock-style" taskbars with zero registry changes.  100% free application! </p>
+      <div class="app-buttons" >
+<a href="https://apps.microsoft.com/detail/9p7hb1kdttt8?referrer=appbadge&cid=myhomepg&mode=full" target="_blank"  rel="noopener noreferrer">
+	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
+</a>
+	
+<a class="waves-effect waves-light btn blue darken-3" style="text-transform: none;height: 50px;border: black;border-radius: 2px; padding-left: 40px;padding-right: 40px;padding-bottom: 62px;padding-top: 6px; font-size: large; margin-top: 10px;" 
+href="transparent_taskbar_windows.html">
+
+	Read more..
+	<i class="material-icons large" style="margin-top: 10px;margin-bottom: 10px;">info_outline
+</i>
+</a>      </div>
+
+	 
+  </div>
+ <div class="app-card">
+    
+   <img src="/uploads/dlw_icon.png" alt="DLW+ Icon" class="app-icon">
+      <p class="green-text text-darken-2" style="margin-top: 0px; font-size: large; font-weight: bold;" class="app-title">Desktop Live Wallpaper+</p>
+ <hr>
+<div class="app-carousel" data-index="0">
+
+		    <img src="uploads/dlw_screen1.jpg" alt="DLW+ Screenshot 1">
+        <img src="uploads/dlw_screen2.jpg" alt="DLW+ Screenshot 2">
+        <img src="uploads/dlw_screen3.jpg" alt="DLW+ Screenshot 3">
+    </div>
+      <hr>
+
+	  <p class="app-description">Apply a beautiful Live Timeline of your favorite photos & videos, directly into your Win11 Desktop. You are the Creator & the Producer </p>
+      <div class="app-buttons" >
+<a href="https://apps.microsoft.com/detail/9p8twlc0gzd4?referrer=appbadge&cid=myhomepg&mode=full" target="_blank"  rel="noopener noreferrer">
+	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
+</a>
+	
+<a class="waves-effect waves-light btn blue darken-3" style="text-transform: none;height: 50px;border: black;border-radius: 2px; padding-left: 40px;padding-right: 40px;padding-bottom: 62px;padding-top: 6px; font-size: large; margin-top: 10px;" 
+href="appdesktopliveplus.html">
+
+	Read more..
+	<i class="material-icons large" style="margin-top: 10px;margin-bottom: 10px;">info_outline
+</i>
+</a>      </div>
+
+	 
+  </div>
+   <div class="app-card">
+    
+   <img src="/uploads/screenrecorderplusicon300x300-orig_1.png" alt="Screen Recorder+ Icon" class="app-icon">
+      <p class="orange-text text-darken-2" style="margin-top: 0px; font-size: large; font-weight: bold;" class="app-title">Screen Recorder+</p>
+ <hr>
+<div class="app-carousel" data-index="0">
+
+		    <img src="uploads/screenrec_screen1.jpg" alt="Screen Rec 1">
+        <img src="uploads/screenrec_screen2.jpg" alt="Screen Rec 2">
+        <img src="uploads/screenrec_screen3.jpg" alt="Screen Rec 3">
+    </div>
+      <hr>
+
+	  <p class="app-description">Record any screen activity with sound on your Windows 10 device, with or without the mouse pointer! You are free to record/capture</p>
+      <div class="app-buttons" >
+<a href="https://apps.microsoft.com/detail/9nhq77f5dhvp?referrer=appbadge&cid=myhomepg&mode=full" target="_blank"  rel="noopener noreferrer">
+	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
+</a>
+	
+<a class="waves-effect waves-light btn blue darken-3" style="text-transform: none;height: 50px;border: black;border-radius: 2px; padding-left: 40px;padding-right: 40px;padding-bottom: 62px;padding-top: 6px; font-size: large; margin-top: 10px;" 
+href="screenrecplus_1.html">
+
+	Read more..
+	<i class="material-icons large" style="margin-top: 10px;margin-bottom: 10px;">info_outline
+</i>
+</a>      </div>
+
+	 
+  </div>
+  <div class="app-card">
+    
+   <img src="/uploads/dvdplayer-new-logo-phone-letters_orig.png" alt="DVD Player+ Icon" class="app-icon">
+      <p class="blue-text blue-text text-darken-2" style="margin-top: 0px; font-size: x-large; font-weight: bold;" class="app-title">DVD Player+</p>
+ <hr>
+<div class="app-carousel" data-index="0">
+
+		    <img src="uploads/dvdplayer_screen1.jpg" alt="DVD Player+ Screenshot 1">
+        <img src="uploads/dvdplayer_screen2.jpg" alt="DVD Player+ Screenshot 2">
+        <img src="uploads/dvdplayer_screen3.jpg" alt="DVD Player+ Screenshot 3">
+    </div>
+      <hr>
+
+	  <p class="app-description">Play DVD and Blu-Ray on Windows with full menu navigation, subtitles, and chapter control. </p>
+      <div class="app-buttons" >
+<a href="https://apps.microsoft.com/detail/9nblggh4q76z?referrer=appbadge&cid=myhomepg&mode=full" target="_blank"  rel="noopener noreferrer">
+	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
+</a>
+	
+<a class="waves-effect waves-light btn blue darken-3" style="text-transform: none;height: 50px;border: black;border-radius: 2px; padding-left: 40px;padding-right: 40px;padding-bottom: 62px;padding-top: 6px; font-size: large; margin-top: 10px;" 
+href="Best_DVD_Player_for_Windows_2025.html">
+
+	Read more..
+	<i class="material-icons large" style="margin-top: 10px;margin-bottom: 10px;">info_outline
+</i>
+</a>      </div>
+
+	 
+  </div>
+
+  <!-- COPY this card for App 2, 3, 4 -->
+
+
+
+</section>
+
+
+
+<div style="height: 0px;  "></div></div>
+			</div>
+		</div>
+      </div>
+
+	</div>
+</div>
+
 <div class="wsite-section-wrap">
 	<div class="wsite-section wsite-body-section wsite-section-bg-image wsite-background-1503" style="background-image: url(uploads/1953379859.jpg) ;background-repeat: no-repeat ;background-position: 50% 50% ;background-size: 100% ;background-color: transparent ;background-size: cover;" >
 		<div class="wsite-section-content">
@@ -1059,324 +1299,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 	</div>
 </div>
 
-<div id="protag-player"></div>
-	 
-<div class="wsite-section-wrap">
-	<div class="wsite-section wsite-body-section wsite-section-bg-video wsite-background-637" style="background-image: url('uploads/261944431_861.jpg'); background-size: cover;" data-image="" data-position="fill" data-is_customized="1" data-video_type="upload" data-video_url="uploads/261944431_861.mp4" data-video_id="uploads/261944431_861.mp4" data-loop="1" data-autoplay="1" data-mute="1" data-background_url="uploads/261944431_861.jpg" >
-		<div class="wsite-section-content">
-        <div class="container">
-			<div class="wsite-section-elements">
-				<div>
-					<div class="wsite-image wsite-image-border-none " style="padding-top:10px;padding-bottom:10px;margin-left:0px;margin-right:0px;text-align:center">
-					<a class="no_nu_reward2"  href='store-apps.html'>
-					<img src="uploads/storeapps-orig-2-orig_orig.webp" alt="Picture" style="width:auto;max-width:100%" />
-					</a>
-					<div style="display:block;font-size:90%"></div>
-					</div>
-</div>
-
-<div><div style="height: 20px;   width: 100%;"></div>
-<hr class="styled-hr" style="width:100%;"></hr>
-<div style="height: 20px;   width: 100%;"></div></div>
-
-<div><div class="wsite-multicol"><div class="wsite-multicol-table-wrap" style="margin:0 -15px;">
-	<table class="wsite-multicol-table">
-		<tbody class="wsite-multicol-tbody">
-			<tr class="wsite-multicol-tr">
-				<td class="wsite-multicol-col" style="width:24.526315789474%; padding:0 15px;">
-					
-						
-
-<div id="792734277793584461"><div><style type="text/css">
-	#element-6fa295ba-636e-4002-bb10-e0ec49f87785 .content-color-box-wrapper {
-  padding: 5px;
-  border-radius: 20px;
-  background-color: rgba(255,255,255,0);
-  border-style: Solid;
-  border-color: #0078ff;
-  border-width: 2px;
-}
-
-</style><div id="element-6fa295ba-636e-4002-bb10-e0ec49f87785" data-platform-element-id="698263678581730663-1.1.0" class="platform-element-contents">
-<div class="content-color-box-wrapper">
-<div style="width: 100%"><div></div><div><div id="499447732848218158" align="center" style="width: 100%; " class="wcustomhtml"><video autoplay loop muted playsinline style="width: 100%; padding-top:10px;padding-bottom:10px;margin-left:0px;margin-right:0px;text-align:center">
-<source src="uploads/storeapps.webm" type="video/webm">
-</video></div>
-
-
-
-</div></div>
-</div>
-</div>
-<div style="clear:both;"></div><script type="text/javascript" class="element-script">function setupElement792734277793584461() {
-	var requireFunc = window.platformElementRequire || window.require;
-
-	// Relies on a global require, specific to platform elements
-	requireFunc([
-		'w-global',
-		'underscore',
-		'jquery',
-		'backbone',
-		'util/platform/elements/PlatformElement',
-		'util/platform/elements/PlatformElementSettings'
-	], function(
-		_W,
-		_,
-		$,
-		Backbone,
-		PlatformElement,
-		PlatformElementSettings
-	) {
-		var dependencies = null || [];
-		var platform_element_id = "698263678581730663-1.1.0";
-
-		if (typeof _W.loadedPlatformDependencies === 'undefined') {
-			_W.loadedPlatformDependencies = [];
-		}
-
-		if (typeof _W.platformElements === 'undefined') {
-			_W.platformElements = [];
-		}
-
-		if (typeof _W.platformElements[platform_element_id] === 'undefined') {
-			_W.platformElements[platform_element_id] = {};
-			_W.platformElements[platform_element_id].deferredObject = new $.Deferred();
-			_W.platformElements[platform_element_id].deferredPromise = _W.platformElements[platform_element_id].deferredObject.promise();
-		}
-
-		if(_.intersection(_W.loadedPlatformDependencies, dependencies).length !== dependencies.length){
-			_.reduce(dependencies, function(promise, nextScript){
-				_W.loadedPlatformDependencies.push(nextScript);
-				return promise.then(function(){
-					return $.getScript(nextScript);
-				});
-			}, $().promise()).then(function(){
-				_W.platformElements[platform_element_id].deferredObject.resolve();
-			});
-		}
-
-		if (dependencies.length === 0){
-			_W.platformElements[platform_element_id].deferredObject.resolve();
-		}
-
-		_W.platformElements[platform_element_id].deferredPromise.done(function(){
-			var _ElementDefinition = PlatformElement.extend({initialize:function(options){},events:{}});;
-
-			if (typeof _ElementDefinition == 'undefined' || typeof _ElementDefinition == 'null') {
-				var _ElementDefinition = PlatformElement.extend({});
-			}
-
-			var _Element = _ElementDefinition.extend({
-				initialize: function() {
-					// we still want to call the initialize function defined by the developer
-					// however, we don't want to call it until placeholders have been replaced
-					this.placeholderInterval = setInterval(function() {
-						// so use setInterval to check for placeholders.
-						if (this.$('.platform-element-child-placeholder').length == 0) {
-							clearInterval(this.placeholderInterval);
-							this.constructor.__super__.initialize.apply(this);
-						}
-					}.bind(this), 100);
-				}
-			});
-
-			_Element.prototype.settings = new PlatformElementSettings({"spacingSize_each":[{"spacingSize_index":0},{"spacingSize_index":1},{"spacingSize_index":2},{"spacingSize_index":3},{"spacingSize_index":4}],"cornerRadius_each":[{"cornerRadius_index":0},{"cornerRadius_index":1},{"cornerRadius_index":2},{"cornerRadius_index":3},{"cornerRadius_index":4},{"cornerRadius_index":5},{"cornerRadius_index":6},{"cornerRadius_index":7},{"cornerRadius_index":8},{"cornerRadius_index":9},{"cornerRadius_index":10},{"cornerRadius_index":11},{"cornerRadius_index":12},{"cornerRadius_index":13},{"cornerRadius_index":14},{"cornerRadius_index":15},{"cornerRadius_index":16},{"cornerRadius_index":17},{"cornerRadius_index":18},{"cornerRadius_index":19}],"borderWidth_each":[{"borderWidth_index":0},{"borderWidth_index":1}],"backgroundColor":"#ffffff","backgroundTransparency":0,"spacingSize":5,"cornerRadius":20,"borderStyle":"Solid","borderColor":"#0078FF","borderWidth":2,"borderTransparency":100});
-			//_Element.prototype.settings.page_element_id = "792734277793584461";
-
-			//_Element.prototype.element_id = "6fa295ba-636e-4002-bb10-e0ec49f87785";
-			//_Element.prototype.user_id = "79962194";
-			//_Element.prototype.site_id = "607878847879865438";
-			//_Element.prototype.assets_path = "http://marketplace.editmysite.com/uploads/b/marketplace-elements-698263678581730663-1.1.0/assets/";
-			new _Element({
-				el: '#element-6fa295ba-636e-4002-bb10-e0ec49f87785'
-			});
-		});
-	});
-
-}
-
-if (typeof document.documentElement.appReady == 'undefined') {
-	document.documentElement.appReady = 0;
-}
-
-if (document.documentElement.appReady || (window.inEditor && window.inEditor())) {
-	setupElement792734277793584461();
-} else if (document.createEvent && document.addEventListener) {
-	document.addEventListener('appReady', setupElement792734277793584461, false);
-} else {
-	document.documentElement.attachEvent('onpropertychange', function(event){
-		if (event.propertyName == 'appReady') {
-			setupElement792734277793584461();
-		}
-	});
-}
-
-</script></div></div>
-
-
-					
-				</td>				<td class="wsite-multicol-col" style="width:75.473684210526%; padding:0 15px;">
-					
-						
-
-<div id="377029053774281667"><div><style type="text/css">
-	#element-1d8bdd2b-b5ee-42c0-ba49-3f4976ecb2ca .content-color-box-wrapper {
-  padding: 5px;
-  border-radius: 20px;
-  background-color: rgba(0,120,255,0.65);
-  border-style: None;
-  border-color: #555555;
-  border-width: 3px;
-}
-
-</style><div id="element-1d8bdd2b-b5ee-42c0-ba49-3f4976ecb2ca" data-platform-element-id="698263678581730663-1.1.0" class="platform-element-contents">
-<div class="content-color-box-wrapper">
-<div style="width: 100%"><div></div><div><div style="height: 20px;   width: 50%;"></div>
-<hr class="styled-hr" style="width:50%;"></hr>
-<div style="height: 20px;   width: 50%;"></div></div>
-
-<h2 class="wsite-content-title" style="text-align:center;"><font size="5" color="#ffffff">All our App's for all Stores</font></h2>
-
-<div><div style="height: 0px;   width: 50%;"></div>
-<hr class="styled-hr" style="width:50%;"></hr>
-<div style="height: 10px;   width: 50%;"></div></div>
-
-<div class="paragraph" style="text-align:center;"><font color="#ffffff">Find&nbsp;<strong>all our&nbsp;</strong><strong><u>FREE</u>&nbsp;</strong><strong>applications&nbsp;</strong>listings categorized on for all&nbsp;available&nbsp;Stores:</font><br /><strong style="color:rgb(255, 255, 255)">Microsoft Store</strong><font color="#ffffff">,&nbsp;</font><strong style="color:rgb(255, 255, 255)">Google Play Store</strong><font color="#ffffff">,&nbsp;</font><strong style="color:rgb(255, 255, 255)">Amazon</strong><font color="#ffffff">, etc...&nbsp;</font><br /><strong><font color="#ffffff" size="3">- Windows 10 and Windows 8 Desktop, Tablet, Phones</font></strong><br /><strong><font color="#ffffff" size="3">- for Android Tablets and Phones</font></strong>&#8203;</div></div>
-</div>
-</div>
-<div style="clear:both;"></div><script type="text/javascript" class="element-script">function setupElement377029053774281667() {
-	var requireFunc = window.platformElementRequire || window.require;
-
-	// Relies on a global require, specific to platform elements
-	requireFunc([
-		'w-global',
-		'underscore',
-		'jquery',
-		'backbone',
-		'util/platform/elements/PlatformElement',
-		'util/platform/elements/PlatformElementSettings'
-	], function(
-		_W,
-		_,
-		$,
-		Backbone,
-		PlatformElement,
-		PlatformElementSettings
-	) {
-		var dependencies = null || [];
-		var platform_element_id = "698263678581730663-1.1.0";
-
-		if (typeof _W.loadedPlatformDependencies === 'undefined') {
-			_W.loadedPlatformDependencies = [];
-		}
-
-		if (typeof _W.platformElements === 'undefined') {
-			_W.platformElements = [];
-		}
-
-		if (typeof _W.platformElements[platform_element_id] === 'undefined') {
-			_W.platformElements[platform_element_id] = {};
-			_W.platformElements[platform_element_id].deferredObject = new $.Deferred();
-			_W.platformElements[platform_element_id].deferredPromise = _W.platformElements[platform_element_id].deferredObject.promise();
-		}
-
-		if(_.intersection(_W.loadedPlatformDependencies, dependencies).length !== dependencies.length){
-			_.reduce(dependencies, function(promise, nextScript){
-				_W.loadedPlatformDependencies.push(nextScript);
-				return promise.then(function(){
-					return $.getScript(nextScript);
-				});
-			}, $().promise()).then(function(){
-				_W.platformElements[platform_element_id].deferredObject.resolve();
-			});
-		}
-
-		if (dependencies.length === 0){
-			_W.platformElements[platform_element_id].deferredObject.resolve();
-		}
-
-		_W.platformElements[platform_element_id].deferredPromise.done(function(){
-			var _ElementDefinition = PlatformElement.extend({initialize:function(options){},events:{}});;
-
-			if (typeof _ElementDefinition == 'undefined' || typeof _ElementDefinition == 'null') {
-				var _ElementDefinition = PlatformElement.extend({});
-			}
-
-			var _Element = _ElementDefinition.extend({
-				initialize: function() {
-					// we still want to call the initialize function defined by the developer
-					// however, we don't want to call it until placeholders have been replaced
-					this.placeholderInterval = setInterval(function() {
-						// so use setInterval to check for placeholders.
-						if (this.$('.platform-element-child-placeholder').length == 0) {
-							clearInterval(this.placeholderInterval);
-							this.constructor.__super__.initialize.apply(this);
-						}
-					}.bind(this), 100);
-				}
-			});
-
-			_Element.prototype.settings = new PlatformElementSettings({"spacingSize_each":[{"spacingSize_index":0},{"spacingSize_index":1},{"spacingSize_index":2},{"spacingSize_index":3},{"spacingSize_index":4}],"cornerRadius_each":[{"cornerRadius_index":0},{"cornerRadius_index":1},{"cornerRadius_index":2},{"cornerRadius_index":3},{"cornerRadius_index":4},{"cornerRadius_index":5},{"cornerRadius_index":6},{"cornerRadius_index":7},{"cornerRadius_index":8},{"cornerRadius_index":9},{"cornerRadius_index":10},{"cornerRadius_index":11},{"cornerRadius_index":12},{"cornerRadius_index":13},{"cornerRadius_index":14},{"cornerRadius_index":15},{"cornerRadius_index":16},{"cornerRadius_index":17},{"cornerRadius_index":18},{"cornerRadius_index":19}],"borderWidth_each":[{"borderWidth_index":0},{"borderWidth_index":1},{"borderWidth_index":2}],"backgroundColor":"#0078FF","backgroundTransparency":65,"spacingSize":5,"cornerRadius":20,"borderStyle":"None","borderColor":"#555","borderWidth":3,"borderTransparency":100});
-			//_Element.prototype.settings.page_element_id = "377029053774281667";
-
-			//_Element.prototype.element_id = "1d8bdd2b-b5ee-42c0-ba49-3f4976ecb2ca";
-			//_Element.prototype.user_id = "79962194";
-			//_Element.prototype.site_id = "607878847879865438";
-			//_Element.prototype.assets_path = "http://marketplace.editmysite.com/uploads/b/marketplace-elements-698263678581730663-1.1.0/assets/";
-			new _Element({
-				el: '#element-1d8bdd2b-b5ee-42c0-ba49-3f4976ecb2ca'
-			});
-		});
-	});
-
-}
-
-if (typeof document.documentElement.appReady == 'undefined') {
-	document.documentElement.appReady = 0;
-}
-
-if (document.documentElement.appReady || (window.inEditor && window.inEditor())) {
-	setupElement377029053774281667();
-} else if (document.createEvent && document.addEventListener) {
-	document.addEventListener('appReady', setupElement377029053774281667, false);
-} else {
-	document.documentElement.attachEvent('onpropertychange', function(event){
-		if (event.propertyName == 'appReady') {
-			setupElement377029053774281667();
-		}
-	});
-}
-
-</script></div></div>
-
-
-					
-				</td>			</tr>
-		</tbody>
-	</table>
-</div></div></div>
-
-<div><div style="height: 20px;   width: 100%;"></div>
-<hr class="styled-hr" style="width:100%;"></hr>
-<div style="height: 20px;   width: 100%;"></div></div>
-
-<div style="text-align:center;"><div style="height: 0px;  "></div>
  
-
-
-
-<a class="waves-effect waves-light btn blue darken-3" style="text-transform: none;height: 60px;border: black;border-radius: 2px; padding-left: 40px;padding-right: 40px;padding-bottom: 72px;padding-top: 6px; font-size: large; margin-top: 20px; margin-bottom: 20px;" href="store-apps.html" >
-
-	Open the App&#x27;s list ..
-	<i class="material-icons large" style="margin-top: 10px;margin-bottom: 10px;font-size: 1.5rem;" >arrow_forward</i>
-</a>
-<div style="height: 0px;  "></div></div>
-			</div>
-		</div>
-      </div>
-
-	</div>
-</div>
 <div class="wsite-section-wrap">
 	<div class="wsite-section wsite-body-section wsite-section-bg-image wsite-background-346" style="background-image: url(uploads/1434262774.webp) ;background-repeat: no-repeat ;background-position: 50% 50% ;background-size: 100% ;background-color: transparent ;background-size: cover;" >
 		<div class="wsite-section-content">
@@ -3599,7 +3522,38 @@ btn.addEventListener("click", function (e) {
 });
  
 </script>
+<script>
+document.querySelectorAll('.app-carousel').forEach(carousel => {
+    const images = carousel.querySelectorAll('img');
+    let index = 0;
 
+    // init
+    images[0].classList.add('active');
+
+    carousel.addEventListener('mouseenter', () => {
+        carousel.interval = setInterval(() => {
+            let current = images[index];
+            let nextIndex = (index + 1) % images.length;
+            let next = images[nextIndex];
+
+            current.classList.remove('active');
+            current.classList.add('prev');
+
+            next.classList.add('active');
+
+            setTimeout(() => {
+                current.classList.remove('prev');
+            }, 500);
+
+            index = nextIndex;
+        }, 2000);
+    });
+
+    carousel.addEventListener('mouseleave', () => {
+        clearInterval(carousel.interval);
+    });
+});
+</script>
 	</body>
 
  </html>
