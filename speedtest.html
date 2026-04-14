@@ -1,0 +1,2393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="preload" as="script" href="https://live.demand.supply/up.js"><script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
+
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<link rel="icon" id="favicon" type="image/x-icon" href="/uploads/favpreview.gif">
+<title>Speed Test for your Network Connection - Connection Quality Score | MLApplications - Official page</title>
+ <!-- Meta Description -->
+  <meta name="description" content="test your network connection for free with our advanced network quality score utility." />
+
+  <!-- Meta Keywords (optional) -->
+  <meta name="keywords" content="connection speed,network speed,connection quality,ping test,Cloudflare ping,Google server ping,MLApplications" />
+
+  <!-- Robots -->
+  <meta name="robots" content="index, follow" />
+
+<meta property="og:title" content="Speed Test for your Network Connection - Connection Quality Score" />
+<meta property="og:image" content="uploads/welcome-letters_orig.webp?123" />
+<meta property="og:image" content="uploads/smallwelcomesaxophone5de3.webp?1749727213" />
+<meta property="og:image" content="uploads/6389784-6_1.webp?123" />
+<meta property="og:image" content="uploads/man-with-bulb-01-3_1.webp?123" />
+<meta property="og:image" content="uploads/man-flying-2_1.webp?123" />
+<meta property="og:image" content="uploads//dvdplayerletters2_3.png?123" />
+<meta property="og:image" content="uploads/logodvdplayerplus_3.jpg?123" />
+<meta property="og:image" content="uploads/letterdesktop_1.jpg?123" />
+<meta property="og:image" content="uploads/largetile-scale-100_3.png?123" />
+<meta property="og:image" content="uploads/letters-orig_1.jpg?123" />
+<meta property="og:url" content="speedtest.html" />
+
+
+<meta charset="UTF-8" />
+
+<!-- Open Graph / Facebook -->
+  <meta property="og:description" content="test your network connection for free with our advanced network quality score utility." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://mlapplications.com/speedtest.html" />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Connection Quality Test & Speed Test | MLApplications" />
+  <meta name="twitter:description" content="test your network connection." />
+  <meta name="twitter:image" content="https://mlapplications.com//uploads/favpreview.gif" />
+
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://mlapplications.com/speedtest.html",
+    "name": "Mobility in Life LApplications TEAM",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Mobility in Life LApplications Team"
+    },
+    "description": "Connection Quality Test & Speed Test"
+  }
+  </script>
+
+<!-- Canonical URL -->
+  <link rel="canonical" href="https://mlapplications.com/speedtest.html" />
+ <!--
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js" integrity="sha512-J9QfbPuFlqGD2CYVCa6zn8/7PEgZnGpM5qtFOBZgwujjDnG5w5Fjx46YzqvIh/ORstcj7luStvvIHkisQi5SKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+-->
+ 
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+<!-- 
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@300;400;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet"/>
+
+-->
+<!--
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+-->
+
+<style>
+/* ═══════════════════════════════════════════════
+   RESET & TOKENS
+════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #060810;
+  --bg1:       #0b0e18;
+  --bg2:       #0f1320;
+  --border:    #1a2035;
+  --border2:   #242d45;
+  --text:      #e8eaf6;
+  --muted:     #3d4a68;
+  --muted2:    #2a3350;
+  --accent:    #00d4ff;
+  --accent2:   #0099cc;
+  --green:     #00e5a0;
+  --amber:     #ffb547;
+  --red:       #ff4757;
+  --orange:    #ff7c3a;
+  --purple:    #b48cff;
+  --mono:      'Rubik', monospace;
+  --sans:      'Rubik', sans-serif;
+  --cond:      'Rubik', sans-serif;
+  --radius:    12px;
+  --glow-c:    rgba(0, 212, 255, 0.15);
+  /*
+    --mono:      'Share Tech Mono', monospace;
+  --sans:      'Barlow', sans-serif;
+  --cond:      'Barlow Condensed', sans-serif;
+
+  */
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  overflow-x: hidden;
+}
+
+/* subtle grid texture */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,212,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* radial glow behind center */
+body::after {
+  content: '';
+  position: fixed;
+  top: -200px; left: 50%;
+  transform: translateX(-50%);
+  width: 900px; height: 600px;
+  background: radial-gradient(ellipse, rgba(0,180,255,.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ═══════════════════════════════════════════════
+   LAYOUT
+════════════════════════════════════════════════ */
+#app {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── NAV BAR ── */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 60px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(6,8,16,.9);
+  backdrop-filter: blur(12px);
+  position: sticky; top: 0; z-index: 100;
+}
+
+.logo {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--cond);
+  font-size: 20px; font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.logo-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent), 0 0 24px rgba(0,212,255,.4);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 12px var(--accent), 0 0 24px rgba(0,212,255,.4); }
+  50%       { opacity: .7; box-shadow: 0 0 6px var(--accent); }
+}
+.logo span { color: var(--accent); }
+.logo em { color: var(--text); font-style: normal; }
+
+.nav-right {
+  display: flex; align-items: center; gap: 20px;
+  font-family: var(--mono);
+  font-size: 11px; color: var(--muted);
+}
+#nav-time { color: var(--text); letter-spacing: .06em; }
+#status-badge {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 12px;
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  font-size: 10px; letter-spacing: .1em;
+  text-transform: uppercase;
+  transition: all .3s;
+}
+#status-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--muted); transition: all .3s;
+}
+#status-badge.active #status-dot {
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: blink 1.2s ease-in-out infinite;
+}
+#status-badge.active { border-color: rgba(0,229,160,.3); color: var(--green); }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.5} }
+
+/* ── MAIN ── */
+main {
+  flex: 1;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ── SPEEDTEST HERO ── */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,.15), transparent);
+}
+
+.card-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 8px;
+}
+.card-title::after {
+  content: '';
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--border2), transparent);
+}
+
+/* ═══════════════════════════════════════════════
+   SPEED GAUGE
+════════════════════════════════════════════════ */
+.gauge-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.gauges-row {
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  justify-content: center;
+}
+
+.gauge-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.gauge-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .15em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.gauge-canvas-wrap {
+  position: relative;
+  width: 200px; height: 120px;
+}
+
+.gauge-canvas-wrap canvas {
+  position: absolute; top: 0; left: 0;
+}
+
+.gauge-value {
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.gauge-num {
+  font-family: var(--cond);
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: -.02em;
+  line-height: 1;
+  color: var(--text);
+  transition: color .3s;
+}
+
+.gauge-unit {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: .1em;
+}
+
+/* center divider */
+.gauge-divider {
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(180deg, transparent, var(--border2), transparent);
+  margin-bottom: 16px;
+}
+
+/* ── Test Button ── */
+.test-btn-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+#test-btn {
+  position: relative;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-ring {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--border2);
+  transition: all .3s;
+}
+
+.btn-ring-inner {
+  position: absolute; inset: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #0f1a2e, #06080f);
+  border: 1px solid var(--border2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  transition: all .3s;
+}
+
+.btn-label {
+  font-family: var(--cond);
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: .12em;
+  color: var(--accent);
+  line-height: 1;
+  transition: color .3s;
+}
+
+.btn-sub {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+#test-btn:hover .btn-ring { border-color: var(--accent); box-shadow: 0 0 20px rgba(0,212,255,.2); }
+#test-btn:hover .btn-ring-inner { background: radial-gradient(circle at 40% 35%, #0f2030, #060d18); }
+#test-btn:hover .btn-label { color: #fff; text-shadow: 0 0 16px var(--accent); }
+
+#test-btn.testing .btn-ring { border-color: var(--amber); box-shadow: 0 0 20px rgba(255,181,71,.2); animation: spin-ring 3s linear infinite; }
+#test-btn.testing .btn-label { color: var(--amber); }
+
+#test-btn.done .btn-ring { border-color: var(--green); box-shadow: 0 0 20px rgba(0,229,160,.2); }
+#test-btn.done .btn-label { color: var(--green); }
+
+@keyframes spin-ring { to { transform: rotate(360deg); } }
+
+/* progress arc drawn on canvas — handled in JS */
+
+.test-phase {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: .1em;
+  text-align: center;
+  min-height: 18px;
+  transition: color .3s;
+}
+
+/* ═══════════════════════════════════════════════
+   PING METRICS ROW
+════════════════════════════════════════════════ */
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.metric-card {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .3s;
+}
+.metric-card.active { border-color: var(--border2); }
+
+.metric-card-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .18em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.metric-card-value {
+  font-family: var(--cond);
+  font-size: 38px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--text);
+  transition: color .3s;
+}
+
+.metric-card-unit {
+  display: inline;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--muted);
+  margin-left: 3px;
+  vertical-align: bottom;
+  line-height: 2.4;
+}
+
+.metric-card-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  margin-top: 6px;
+  transition: color .3s;
+}
+
+/* accent stripe */
+.metric-card-stripe {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--muted2);
+  border-radius: 0 0 10px 10px;
+  transition: background .3s;
+}
+
+/* ═══════════════════════════════════════════════
+   BOTTOM GRID: CHART + QUALITY + LOG
+════════════════════════════════════════════════ */
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 24px;
+}
+
+.bottom-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── CHART ── */
+.chart-card {
+  flex: 1;
+  min-height: 200px;
+}
+
+.chart-wrap {
+  position: relative;
+  width: 100%;
+  height: 180px;
+}
+
+.chart-wrap canvas {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+
+/* ── PING CONTROLS ── */
+.ping-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.host-select {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  outline: none;
+  cursor: pointer;
+  letter-spacing: .04em;
+}
+.host-select:focus { border-color: var(--accent); }
+
+.pill-btn {
+  padding: 8px 20px;
+  border-radius: 6px;
+  border: 1px solid var(--border2);
+  background: var(--bg2);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all .2s;
+}
+.pill-btn:hover { border-color: var(--accent); color: var(--accent); }
+.pill-btn.active { background: var(--accent); border-color: var(--accent); color: #000; font-weight: bold; }
+.pill-btn.danger { border-color: rgba(255,71,87,.5); color: var(--red); }
+.pill-btn.danger:hover { background: var(--red); border-color: var(--red); color: #fff; }
+
+/* ═══════════════════════════════════════════════
+   QUALITY SCORE
+════════════════════════════════════════════════ */
+.quality-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.quality-main {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.quality-num {
+  font-family: var(--cond);
+  font-size: 72px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--muted);
+  transition: color .5s;
+  letter-spacing: -.02em;
+}
+
+.quality-right {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 8px;
+}
+
+.quality-grade {
+  font-family: var(--cond);
+  font-size: 36px;
+  font-weight: 900;
+  letter-spacing: .04em;
+  color: var(--muted);
+  transition: color .5s;
+}
+
+.quality-grade-name {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .15em;
+  color: var(--muted);
+  text-transform: uppercase;
+  transition: color .5s;
+}
+
+/* score bar */
+.quality-bar-track {
+  height: 6px;
+  background: var(--bg2);
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.quality-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  width: 0%;
+  transition: width .8s cubic-bezier(.4,0,.2,1), background .5s;
+  background: var(--muted2);
+}
+
+/* sub-score dots */
+.sub-scores {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sub-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sub-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  width: 72px;
+}
+
+.sub-dots {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--muted2);
+  transition: color .4s;
+}
+
+.sub-val {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  width: 32px;
+  text-align: right;
+  transition: color .4s;
+}
+
+/* ═══════════════════════════════════════════════
+   RIGHT SIDE: STATS + LOG
+════════════════════════════════════════════════ */
+.right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Session stats grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.stat-cell {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.stat-cell-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: .16em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.stat-cell-val {
+  font-family: var(--cond);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  transition: color .3s;
+}
+
+.stat-cell-unit {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-left: 2px;
+}
+
+/* ── LOG ── */
+.log-body {
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.7;
+  color: var(--muted);
+  max-height: 180px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border2) transparent;
+}
+.log-body::-webkit-scrollbar { width: 4px; }
+.log-body::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+.log-line { padding: 1px 0; }
+.log-line.ok  { color: #3d6e8a; }
+.log-line.ok .log-ms { color: #5ab0d4; }
+.log-line.err { color: rgba(255,71,87,.5); }
+.log-line.err .log-ms { color: var(--red); }
+
+/* ═══════════════════════════════════════════════
+   STATUS FOOTER
+════════════════════════════════════════════════ */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: .06em;
+  background: rgba(6,8,16,.7);
+}
+
+/* ═══════════════════════════════════════════════
+   ANIMATIONS
+════════════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.card, .metric-card { animation: fadeUp .5s ease both; }
+.metric-card:nth-child(1) { animation-delay: .05s; }
+.metric-card:nth-child(2) { animation-delay: .1s; }
+.metric-card:nth-child(3) { animation-delay: .15s; }
+.metric-card:nth-child(4) { animation-delay: .2s; }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .hero { grid-template-columns: 1fr; }
+  .bottom-grid { grid-template-columns: 1fr; }
+  .right-col { display: grid; grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 700px) {
+  main { padding: 16px; }
+  .metrics-row { grid-template-columns: 1fr 1fr; }
+  .right-col { grid-template-columns: 1fr; }
+  nav { padding: 0 16px; }
+  .gauges-row { gap: 24px; }
+}
+
+/* ═══════════════════════════════════════════════
+   COMPACT WIDGET
+   The widget is a small self-contained grid that
+   embeds inside any page at a caller-specified
+   width (40–120 px) and height (80–120 px).
+   It re-renders all internals dynamically when
+   setCompactWidgetSize(w, h) is called.
+════════════════════════════════════════════════ */
+#widget-demo-section {
+  border-top: 1px solid var(--border);
+  padding: 28px 32px 32px;
+  background: rgba(6,8,16,.6);
+}
+.widget-demo-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  display: flex; align-items: center; gap: 10px;
+}
+.widget-demo-title::after {
+  content: '';
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--border2), transparent);
+}
+.widget-demo-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.widget-demo-controls label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: .1em;
+  display: flex; align-items: center; gap: 8px;
+}
+.widget-demo-controls input[type=range] {
+  -webkit-appearance: none;
+  width: 110px; height: 4px;
+  background: var(--border2);
+  border-radius: 2px; outline: none; cursor: pointer;
+}
+.widget-demo-controls input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px rgba(0,212,255,.5);
+}
+.widget-size-val {
+  color: var(--text);
+  min-width: 28px;
+  text-align: right;
+}
+.widget-mode-btn {
+  padding: 5px 14px;
+  border-radius: 5px;
+  border: 1px solid var(--border2);
+  background: var(--bg2);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .08em;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all .2s;
+}
+.widget-mode-btn:hover { border-color: var(--accent); color: var(--accent); }
+.widget-mode-btn.active { background: rgba(0,212,255,.1); border-color: var(--accent); color: var(--accent); }
+
+/* The stage that holds the live widget preview + size indicator */
+.widget-stage {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.widget-stage-inner {
+  position: relative;
+}
+/* Dashed ruler outline that resizes with the widget */
+.widget-ruler {
+  position: absolute;
+  inset: -5px;
+  border: 1px dashed rgba(0,212,255,.2);
+  border-radius: 5px;
+  pointer-events: none;
+}
+.widget-ruler-label {
+  position: absolute;
+  bottom: -18px; left: 0;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--muted);
+  white-space: nowrap;
+  letter-spacing: .06em;
+}
+
+/* ── THE COMPACT WIDGET ITSELF ── */
+.np-widget {
+  display: grid;
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid var(--border2);
+  background: var(--bg1);
+  font-family: var(--mono);
+  position: relative;
+  transition: width .25s cubic-bezier(.4,0,.2,1),
+              height .25s cubic-bezier(.4,0,.2,1);
+  /* width/height set by JS */
+}
+
+/* layout modes: 2-cell vs 3-cell */
+.np-widget[data-mode="2"] {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+.np-widget[data-mode="3"] {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+/* individual cells */
+.np-wcell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: background .4s;
+}
+.np-wcell:last-child  { border-right: none; }
+.np-wcell:nth-child(2){ border-right: none; }
+/* in 3-cell mode the chart spans bottom row full width */
+.np-widget[data-mode="3"] .np-wcell-chart {
+  grid-column: 1 / -1;
+  border-right: none;
+  border-bottom: none;
+  padding: 2px 3px 2px;
+}
+.np-widget[data-mode="2"] .np-wcell:last-child { border-bottom: none; }
+.np-widget[data-mode="3"] .np-wcell:nth-child(2) { border-bottom: 1px solid var(--border); }
+
+/* colored accent stripe at top of each cell */
+.np-wcell::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--cell-accent, var(--border2));
+  opacity: .7;
+}
+
+/* cell label (tiny, only visible when wide enough) */
+.np-wlabel {
+  font-size: 7px;
+  letter-spacing: .12em;
+  color: var(--muted);
+  text-transform: uppercase;
+  line-height: 1;
+  margin-top: 4px;
+  transition: opacity .2s;
+  white-space: nowrap;
+}
+
+/* cell value */
+.np-wval {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+  transition: color .3s, font-size .25s;
+}
+
+/* cell unit */
+.np-wunit {
+  font-size: 6px;
+  color: var(--muted);
+  letter-spacing: .08em;
+  line-height: 1.2;
+}
+
+/* chart canvas in widget */
+.np-wcanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* tooltip on hover */
+.np-widget:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(11,14,24,.95);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .06em;
+  padding: 5px 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 999;
+  line-height: 1.6;
+}
+
+/* embed demo description */
+.embed-hint {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.8;
+  letter-spacing: .04em;
+  border-left: 2px solid var(--border2);
+  padding-left: 14px;
+  max-width: 380px;
+}
+.embed-hint code {
+  color: var(--accent);
+  background: var(--bg2);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 9px;
+}
+</style>
+</head>
+<body>
+  <div data-ad="mlapplications.com_728x90_sticky_display_custom_top" data-devices="m:0,t:1,d:1"   class="demand-supply"></div>
+
+<div id="app">
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">
+      <div class="logo-dot"></div>
+      <span>Speed</span><em>Test</em>
+    </div>
+    <div class="nav-right">
+      <span id="nav-time">--:--:--</span>
+      <div id="status-badge">
+        <div id="status-dot"></div>
+        <span id="status-text">IDLE</span>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ── HERO ROW: Speed test + Ping controls ── -->
+    <div class="hero">
+
+      <!-- Speed Test Card -->
+      <div class="card">
+        <div class="card-title">Speed Test</div>
+        <div class="gauge-section">
+          <div class="gauges-row">
+
+            <!-- Download Gauge -->
+            <div class="gauge-wrap">
+              <div class="gauge-label">↓ Download</div>
+              <div class="gauge-canvas-wrap" style="width:190px;height:110px;">
+                <canvas id="gauge-dl" width="190" height="110"></canvas>
+                <div class="gauge-value">
+                  <div class="gauge-num" id="dl-num" style="color:var(--accent)">—</div>
+                  <div class="gauge-unit">Mbps</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Center button -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+              <div class="gauge-divider"></div>
+              <div class="test-btn-wrap">
+                <button id="test-btn" onclick="runSpeedTest()">
+                  <div class="btn-ring"></div>
+                  <canvas id="btn-arc" width="140" height="140" style="position:absolute;inset:0;border-radius:50%;"></canvas>
+                  <div class="btn-ring-inner">
+                    <div class="btn-label" id="btn-label">GO</div>
+                    <div class="btn-sub" id="btn-sub">START TEST</div>
+                  </div>
+                </button>
+                <div class="test-phase" id="test-phase">Click to begin</div>
+              </div>
+              <div class="gauge-divider"></div>
+            </div>
+
+            <!-- Upload Gauge -->
+            <div class="gauge-wrap">
+              <div class="gauge-label">↑ Upload</div>
+              <div class="gauge-canvas-wrap" style="width:190px;height:110px;">
+                <canvas id="gauge-ul" width="190" height="110"></canvas>
+                <div class="gauge-value">
+                  <div class="gauge-num" id="ul-num" style="color:var(--green)">—</div>
+                  <div class="gauge-unit">Mbps</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ping Controls Card -->
+      <div class="card" style="display:flex;flex-direction:column;gap:16px;">
+        <div class="card-title">Ping Monitor</div>
+        <div class="ping-controls">
+          <select class="host-select" id="host-select">
+            <option value="8.8.8.8">8.8.8.8 — Google DNS</option>
+            <option value="1.1.1.1">1.1.1.1 — Cloudflare</option>
+            <option value="9.9.9.9">9.9.9.9 — Quad9</option>
+            <option value="208.67.222.222">208.67.222.222 — OpenDNS</option>
+          </select>
+          <button class="pill-btn" id="ping-toggle-btn" onclick="togglePing()">▶ Start</button>
+        </div>
+
+        <!-- Live ping value big display -->
+        <div style="text-align:center;padding:8px 0;">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.16em;margin-bottom:6px;">LIVE LATENCY</div>
+          <div style="display:flex;align-items:baseline;justify-content:center;gap:4px;">
+            <span id="live-ping-val" style="font-family:var(--cond);font-size:64px;font-weight:900;color:var(--muted);transition:color .3s;line-height:1;">—</span>
+            <span style="font-family:var(--mono);font-size:14px;color:var(--muted);padding-bottom:6px;">ms</span>
+          </div>
+          <div id="live-ping-label" style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.14em;margin-top:4px;">WAITING</div>
+        </div>
+
+        <div style="font-family:var(--mono);font-size:9px;color:var(--muted2);letter-spacing:.08em;text-align:center;margin-top:auto;">
+          Note: Browser WebRTC pings to public DNS.<br/>For ICMP accuracy, use the WPF desktop app.
+        </div>
+      </div>
+    </div>
+
+    <!-- ── METRICS ROW ── -->
+    <div class="metrics-row">
+      <!-- Latency -->
+      <div class="metric-card" id="mc-latency">
+        <div class="metric-card-label">Avg Latency (5s)</div>
+        <div>
+          <span class="metric-card-value" id="mc-latency-val">—</span>
+          <span class="metric-card-unit">ms</span>
+        </div>
+        <div class="metric-card-sub" id="mc-latency-sub" style="color:var(--muted)">WAITING</div>
+        <div class="metric-card-stripe" id="mc-latency-stripe"></div>
+      </div>
+
+      <!-- Jitter -->
+      <div class="metric-card" id="mc-jitter">
+        <div class="metric-card-label">Jitter (5s)</div>
+        <div>
+          <span class="metric-card-value" id="mc-jitter-val">—</span>
+          <span class="metric-card-unit">ms</span>
+        </div>
+        <div class="metric-card-sub" id="mc-jitter-sub" style="color:var(--muted)">WAITING</div>
+        <div class="metric-card-stripe" id="mc-jitter-stripe"></div>
+      </div>
+
+      <!-- Packet Loss -->
+      <div class="metric-card" id="mc-loss">
+        <div class="metric-card-label">Packet Loss (5s)</div>
+        <div>
+          <span class="metric-card-value" id="mc-loss-val">—</span>
+          <span class="metric-card-unit">%</span>
+        </div>
+        <div class="metric-card-sub" id="mc-loss-sub" style="color:var(--muted)">WAITING</div>
+        <div class="metric-card-stripe" id="mc-loss-stripe"></div>
+      </div>
+
+      <!-- Min/Max -->
+      <div class="metric-card">
+        <div class="metric-card-label">Min / Max (5s)</div>
+        <div style="display:flex;align-items:baseline;gap:8px;">
+          <span class="metric-card-value" id="mc-min-val" style="font-size:28px;color:var(--green)">—</span>
+          <span style="font-family:var(--mono);font-size:16px;color:var(--muted2)">/</span>
+          <span class="metric-card-value" id="mc-max-val" style="font-size:28px;color:var(--amber)">—</span>
+          <span class="metric-card-unit">ms</span>
+        </div>
+        <div class="metric-card-sub" id="mc-minmax-sub" style="color:var(--muted)">WINDOW RANGE</div>
+        <div class="metric-card-stripe" id="mc-minmax-stripe" style="background:linear-gradient(90deg,var(--green),var(--amber))"></div>
+      </div>
+    </div>
+
+    <!-- ── BOTTOM GRID ── -->
+    <div class="bottom-grid">
+
+      <!-- LEFT: Chart + Quality -->
+      <div class="bottom-left">
+
+        <!-- Latency Chart -->
+        <div class="card chart-card">
+          <div class="card-title">
+            Latency History
+            <span style="font-size:9px;color:var(--muted);letter-spacing:.08em;margin-left:4px;">last 60 pings  ·  red bars = packet loss</span>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="latency-chart"></canvas>
+          </div>
+        </div>
+
+        <!-- Quality Score -->
+        <div class="card quality-card">
+          <div class="card-title">Connection Quality Score</div>
+          <div class="quality-main">
+            <div class="quality-num" id="q-score">—</div>
+            <div class="quality-right">
+              <div class="quality-grade" id="q-grade">—</div>
+              <div class="quality-grade-name" id="q-grade-name">No data</div>
+            </div>
+          </div>
+          <div class="quality-bar-track">
+            <div class="quality-bar-fill" id="q-bar"></div>
+          </div>
+          <div class="sub-scores">
+            <div class="sub-row">
+              <div class="sub-label">Latency</div>
+              <div class="sub-dots" id="sd-lat">○○○○○</div>
+              <div class="sub-val" id="sv-lat">—</div>
+            </div>
+            <div class="sub-row">
+              <div class="sub-label">Jitter</div>
+              <div class="sub-dots" id="sd-jit">○○○○○</div>
+              <div class="sub-val" id="sv-jit">—</div>
+            </div>
+            <div class="sub-row">
+              <div class="sub-label">Pkt Loss</div>
+              <div class="sub-dots" id="sd-pkt">○○○○○</div>
+              <div class="sub-val" id="sv-pkt">—</div>
+            </div>
+          </div>
+
+          <!-- Grade legend -->
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">
+            <span style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.06em;">SCALE:</span>
+            <span style="font-family:var(--mono);font-size:9px;color:var(--green);">S 90–100 PERFECT</span>
+            <span style="font-family:var(--mono);font-size:9px;color:#38bdf8;">A 75–89 EXCELLENT</span>
+            <span style="font-family:var(--mono);font-size:9px;color:var(--accent);">B 60–74 GOOD</span>
+            <span style="font-family:var(--mono);font-size:9px;color:var(--amber);">C 45–59 FAIR</span>
+            <span style="font-family:var(--mono);font-size:9px;color:var(--orange);">D 25–44 POOR</span>
+            <span style="font-family:var(--mono);font-size:9px;color:var(--red);">F 0–24 CRITICAL</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Session stats + log -->
+      <div class="right-col">
+
+        <!-- Session Stats -->
+        <div class="card">
+          <div class="card-title">Session Stats</div>
+          <div class="stats-grid">
+            <div class="stat-cell">
+              <div class="stat-cell-label">Total Pings</div>
+              <div class="stat-cell-val" id="st-total">0</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-cell-label">Failed</div>
+              <div class="stat-cell-val" id="st-failed" style="color:var(--red)">0</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-cell-label">Session Min</div>
+              <div class="stat-cell-val" id="st-min" style="color:var(--green)">—<span class="stat-cell-unit">ms</span></div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-cell-label">Session Max</div>
+              <div class="stat-cell-val" id="st-max" style="color:var(--amber)">—<span class="stat-cell-unit">ms</span></div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-cell-label">Uptime</div>
+              <div class="stat-cell-val" id="st-uptime" style="color:var(--purple)">—</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-cell-label">Elapsed</div>
+              <div class="stat-cell-val" id="st-elapsed" style="font-size:16px;padding-top:4px">00:00:00</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ping Log -->
+        <div class="card" style="flex:1;">
+          <div class="card-title">Ping Log</div>
+          <div class="log-body" id="log-body"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════
+       COMPACT WIDGET DEMO SECTION
+  ═══════════════════════════════════════════════ -->
+  <div id="widget-demo-section">
+    <div class="widget-demo-title">Compact Embeddable Widget</div>
+
+    <!-- Controls -->
+    <div class="widget-demo-controls">
+
+      <label>
+        WIDTH
+        <input type="range" id="ctrl-w" min="40" max="120" value="80"
+               oninput="onWidgetSlider()"/>
+        <span class="widget-size-val" id="ctrl-w-val">80</span>px
+      </label>
+
+      <label>
+        HEIGHT
+        <input type="range" id="ctrl-h" min="80" max="120" value="96"
+               oninput="onWidgetSlider()"/>
+        <span class="widget-size-val" id="ctrl-h-val">96</span>px
+      </label>
+
+      <span style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em;">MODE:</span>
+      <button class="widget-mode-btn active" id="mode-btn-2" onclick="setWidgetMode(2)">2 cells</button>
+      <button class="widget-mode-btn"        id="mode-btn-3" onclick="setWidgetMode(3)">3 cells</button>
+    </div>
+
+    <!-- Stage: live widget + description -->
+    <div class="widget-stage">
+
+      <!-- Live resizable preview -->
+      <div class="widget-stage-inner" id="widget-stage-inner">
+        <div class="widget-ruler"></div>
+        <div class="widget-ruler-label" id="widget-ruler-label">80 × 96 px</div>
+
+        <!-- THE WIDGET (populated by JS) -->
+        <div class="np-widget" id="np-widget" data-mode="2"
+             data-tooltip="Quality: — | Ping: — ms | Loss: —%"></div>
+      </div>
+
+      <!-- Embed usage hint -->
+      <div class="embed-hint">
+        <div style="color:var(--accent);margin-bottom:8px;letter-spacing:.14em;">HOW TO USE</div>
+        Call <code>setCompactWidgetSize(width, height)</code> to resize.<br/>
+        Call <code>setWidgetMode(2)</code> or <code>setWidgetMode(3)</code> to switch layouts.<br/><br/>
+        <b style="color:var(--text);">2-cell mode</b> — Score cell + Ping cell<br/>
+        Shows quality grade, score, live latency &amp; packet loss.<br/><br/>
+        <b style="color:var(--text);">3-cell mode</b> — Score + Ping + mini chart<br/>
+        Adds a sparkline chart spanning the bottom row.<br/><br/>
+        Widget auto-scales font sizes and hides labels<br/>
+        below <code>60px</code> width for ultra-compact display.<br/><br/>
+        Hover the widget for a full tooltip summary.
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>Connection Quality and Speed Test // NETWORK MONITOR</span>
+    <span id="footer-status">IDLE — click START PING or GO to begin</span>
+    <span id="footer-time"></span>
+  </footer>
+
+<a href="javascript:googlefc.callbackQueue.push(googlefc.showRevocationMessage)" class="no_nu_reward2 privacyBottom" id="scrollBottom"><img src="uploads/privacyblue.png" alt="Scroll to Top"></a>  
+
+</div><!-- /#app -->
+
+<script>
+/* ═══════════════════════════════════════════════
+   UTILITIES
+════════════════════════════════════════════════ */
+const $ = id => document.getElementById(id);
+const lerp = (a, b, t) => a + (b - a) * Math.max(0, Math.min(1, t));
+
+function formatTime(date) {
+  return date.toTimeString().slice(0,8);
+}
+function fmtElapsed(ms) {
+  const s = Math.floor(ms / 1000);
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sc = s % 60;
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
+}
+
+/* ═══════════════════════════════════════════════
+   PING STATE
+════════════════════════════════════════════════ */
+let pingRunning    = false;
+let pingTimer      = null;
+let pingRecords    = [];          // {time, latency} latency=null → timeout
+let chartHistory   = [];          // last 60 entries
+const CHART_MAX    = 60;
+const WINDOW_MS    = 5000;
+
+// session stats
+let sessionStart   = null;
+let totalPings     = 0;
+let failedPings    = 0;
+let sessionMinMs   = Infinity;
+let sessionMaxMs   = -Infinity;
+let logLines       = [];
+const MAX_LOG      = 150;
+
+/* ─── WebRTC-based latency measurement ──────────────────────────────────── */
+// We measure round-trip to a public STUN server (Google's) via WebRTC.
+// This is the most reliable cross-origin latency method in browsers.
+async function measureLatency() {
+  return new Promise((resolve) => {
+    const start = performance.now();
+    let done = false;
+    const finish = (latency) => {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      resolve(latency);
+    };
+
+    const pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
+    pc.createDataChannel('');
+    pc.createOffer().then(offer => pc.setLocalDescription(offer));
+
+    pc.onicecandidate = e => {
+      if (e.candidate) {
+        finish(Math.round(performance.now() - start));
+        pc.close();
+      }
+    };
+
+    // fallback: use image ping to a fast CDN
+    const timer = setTimeout(() => {
+      pc.close();
+      const img = new Image();
+      const t0 = performance.now();
+      img.onload = img.onerror = () => finish(Math.round(performance.now() - t0));
+      img.src = 'https://www.google.com/favicon.ico?_=' + Date.now();
+    }, 1500);
+  });
+}
+
+/* ─── Ping loop ──────────────────────────────────────────────────────────── */
+async function doPing() {
+  if (!pingRunning) return;
+
+  let latency = null;
+  try {
+    const ms = await measureLatency();
+    if (ms > 0 && ms < 2000) latency = ms;
+  } catch {}
+
+  const now = new Date();
+  totalPings++;
+  if (latency === null) failedPings++;
+  if (latency !== null) {
+    if (latency < sessionMinMs) sessionMinMs = latency;
+    if (latency > sessionMaxMs) sessionMaxMs = latency;
+  }
+
+  // rolling 5-second window
+  pingRecords.push({ time: now.getTime(), latency });
+  const cutoff = Date.now() - WINDOW_MS;
+  pingRecords = pingRecords.filter(r => r.time >= cutoff);
+
+  // chart history
+  chartHistory.push(latency);
+  if (chartHistory.length > CHART_MAX) chartHistory.shift();
+
+  // log
+  const host = $('host-select').value;
+  const logEntry = latency !== null
+    ? { ok: true,  text: `${formatTime(now)}  ${host}  ${String(latency).padStart(4,' ')}ms` }
+    : { ok: false, text: `${formatTime(now)}  ${host}  TIMEOUT` };
+  logLines.push(logEntry);
+  if (logLines.length > MAX_LOG) logLines.shift();
+
+  updatePingUI();
+
+  if (pingRunning) pingTimer = setTimeout(doPing, 900);
+}
+
+function updatePingUI() {
+  const win = pingRecords;
+  const successes = win.filter(r => r.latency !== null);
+  const latencies = successes.map(r => r.latency);
+
+  const current = latencies.length > 0 ? latencies[latencies.length - 1] : null;
+  const avg     = latencies.length > 0 ? latencies.reduce((a,b)=>a+b,0)/latencies.length : null;
+  const jitter  = calcJitter(latencies);
+  const loss    = win.length > 0 ? (win.length - successes.length) * 100 / win.length : 0;
+  const winMin  = latencies.length > 0 ? Math.min(...latencies) : null;
+  const winMax  = latencies.length > 0 ? Math.max(...latencies) : null;
+
+  // live ping
+  $('live-ping-val').textContent = current !== null ? current : '—';
+  $('live-ping-val').style.color = latencyColor(current);
+  $('live-ping-label').textContent = latencyLabel(current);
+  $('live-ping-label').style.color = latencyColor(current);
+
+  // metric cards
+  setMetricCard('latency', avg, 'ms', latencyLabel(avg), latencyColor(avg));
+  setMetricCard('jitter',  jitter, 'ms', jitterLabel(jitter), jitterColor(jitter));
+  setMetricCard('loss', loss, '%', lossLabel(loss), lossColor(loss), loss.toFixed(1));
+  $('mc-min-val').textContent = winMin !== null ? winMin : '—';
+  $('mc-max-val').textContent = winMax !== null ? winMax : '—';
+
+  // session stats
+  $('st-total').textContent  = totalPings;
+  $('st-failed').textContent = failedPings;
+  $('st-min').innerHTML      = sessionMinMs < Infinity
+    ? `${sessionMinMs}<span class="stat-cell-unit">ms</span>` : '—';
+  $('st-max').innerHTML      = sessionMaxMs > -Infinity
+    ? `${sessionMaxMs}<span class="stat-cell-unit">ms</span>` : '—';
+  const uptime = totalPings > 0 ? ((totalPings - failedPings) / totalPings * 100).toFixed(1) : '—';
+  $('st-uptime').textContent = uptime !== '—' ? uptime + '%' : '—';
+  if (sessionStart) $('st-elapsed').textContent = fmtElapsed(Date.now() - sessionStart);
+
+  // log
+  renderLog();
+
+  // chart
+  drawChart();
+
+  // quality score
+  updateQuality(avg, jitter, loss, win.length > 0);
+
+  // footer
+  $('footer-status').textContent = current !== null
+    ? `PINGING ${$('host-select').value}  ·  ${current}ms` : 'MONITORING...';
+}
+
+function setMetricCard(id, val, unit, label, color, override) {
+  const vEl = $(`mc-${id}-val`);
+  const sEl = $(`mc-${id}-sub`);
+  const stripe = $(`mc-${id}-stripe`);
+
+  if (val === null || val === undefined) {
+    vEl.textContent = '—';
+    sEl.textContent = 'WAITING';
+    sEl.style.color = 'var(--muted)';
+    stripe.style.background = 'var(--muted2)';
+    return;
+  }
+
+  vEl.textContent = override !== undefined ? override : (Number.isInteger(val) ? val : val.toFixed(1));
+  vEl.style.color = color;
+  sEl.textContent = label;
+  sEl.style.color = color;
+  stripe.style.background = color;
+}
+
+function renderLog() {
+  const body = $('log-body');
+  const fragment = logLines.slice(-60).map(l => {
+    if (l.ok) {
+      const parts = l.text.split(/(\d+ms)/);
+      return `<div class="log-line ok">${escHtml(parts[0])}<span class="log-ms">${escHtml(parts[1] || '')}</span>${escHtml(parts[2] || '')}</div>`;
+    }
+    return `<div class="log-line err">${escHtml(l.text)}</div>`;
+  }).join('');
+  body.innerHTML = fragment;
+  body.scrollTop = body.scrollHeight;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ─── Toggle ping ────────────────────────────────────────────────────────── */
+function togglePing() {
+  if (pingRunning) {
+    pingRunning = false;
+    clearTimeout(pingTimer);
+    $('ping-toggle-btn').textContent = '▶ Start';
+    $('ping-toggle-btn').classList.remove('active','danger');
+    $('status-badge').classList.remove('active');
+    $('status-text').textContent = 'IDLE';
+    $('footer-status').textContent = 'STOPPED';
+  } else {
+    pingRunning  = true;
+    sessionStart = Date.now();
+    totalPings = failedPings = 0;
+    sessionMinMs = Infinity; sessionMaxMs = -Infinity;
+    pingRecords = []; chartHistory = []; logLines = [];
+    $('log-body').innerHTML = '';
+    $('ping-toggle-btn').textContent = '■ Stop';
+    $('ping-toggle-btn').classList.add('active','danger');
+    $('ping-toggle-btn').classList.remove('active');
+    $('ping-toggle-btn').classList.add('danger');
+    $('status-badge').classList.add('active');
+    $('status-text').textContent = 'MONITORING';
+    doPing();
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   QUALITY SCORE
+════════════════════════════════════════════════ */
+function calcJitter(latencies) {
+  if (latencies.length < 2) return null;
+  let sum = 0;
+  for (let i = 1; i < latencies.length; i++) sum += Math.abs(latencies[i] - latencies[i-1]);
+  return sum / (latencies.length - 1);
+}
+
+function scoreLatency(ms) {
+  if (ms <= 10)  return 100;
+  if (ms <= 20)  return 95;
+  if (ms <= 40)  return lerp(85, 95,  (40 - ms) / 20);
+  if (ms <= 80)  return lerp(70, 85,  (80 - ms) / 40);
+  if (ms <= 120) return lerp(55, 70,  (120 - ms) / 40);
+  if (ms <= 200) return lerp(35, 55,  (200 - ms) / 80);
+  if (ms <= 350) return lerp(15, 35,  (350 - ms) / 150);
+  return 0;
+}
+function scoreJitter(j) {
+  if (j === null) return 100;
+  if (j < 2)  return 100;
+  if (j < 5)  return lerp(90, 100, (5 - j) / 3);
+  if (j < 10) return lerp(75, 90,  (10 - j) / 5);
+  if (j < 20) return lerp(55, 75,  (20 - j) / 10);
+  if (j < 40) return lerp(30, 55,  (40 - j) / 20);
+  return 0;
+}
+function scoreLoss(pct) {
+  if (pct === 0)    return 100;
+  if (pct < 0.5)   return lerp(90, 100, (0.5 - pct) / 0.5);
+  if (pct < 1.0)   return lerp(75, 90,  (1.0 - pct) / 0.5);
+  if (pct < 2.0)   return lerp(55, 75,  (2.0 - pct) / 1.0);
+  if (pct < 5.0)   return lerp(30, 55,  (5.0 - pct) / 3.0);
+  return 0;
+}
+
+function getGrade(score) {
+  if (score >= 90) return { grade: 'S', name: 'Perfect',   color: 'var(--green)',  hex: '#00e5a0' };
+  if (score >= 75) return { grade: 'A', name: 'Excellent', color: '#38bdf8',       hex: '#38bdf8' };
+  if (score >= 60) return { grade: 'B', name: 'Good',      color: 'var(--accent)', hex: '#00d4ff' };
+  if (score >= 45) return { grade: 'C', name: 'Fair',      color: 'var(--amber)',  hex: '#ffb547' };
+  if (score >= 25) return { grade: 'D', name: 'Poor',      color: 'var(--orange)', hex: '#ff7c3a' };
+  return           { grade: 'F', name: 'Critical',         color: 'var(--red)',    hex: '#ff4757' };
+}
+
+function dots(filled) {
+  return '●'.repeat(filled) + '○'.repeat(5 - filled);
+}
+
+function updateQuality(avg, jitter, loss, hasData) {
+  if (!hasData || avg === null) {
+    $('q-score').textContent = '—';
+    $('q-grade').textContent = '—';
+    $('q-grade-name').textContent = 'No data';
+    $('q-bar').style.width = '0%';
+    ['lat','jit','pkt'].forEach(k => {
+      $(`sd-${k}`).textContent = '○○○○○';
+      $(`sd-${k}`).style.color = '';
+      $(`sv-${k}`).textContent = '—';
+      $(`sv-${k}`).style.color = '';
+    });
+    return;
+  }
+
+  const ls = scoreLatency(avg);
+  const js = scoreJitter(jitter);
+  const ps = scoreLoss(loss);
+  const composite = Math.round(ls * 0.45 + js * 0.30 + ps * 0.25);
+  const g = getGrade(composite);
+
+  $('q-score').textContent = composite;
+  $('q-score').style.color = g.color;
+  $('q-grade').textContent = g.grade;
+  $('q-grade').style.color = g.color;
+  $('q-grade-name').textContent = g.name.toUpperCase();
+  $('q-grade-name').style.color = g.color;
+
+  $('q-bar').style.width = composite + '%';
+  const barGrad = `linear-gradient(90deg, #ff4757 0%, #ffb547 40%, #00e5a0 100%)`;
+  $('q-bar').style.background = barGrad;
+  $('q-bar').style.backgroundSize = '100% 100%';
+  // clip to show only up to score
+  $('q-bar').style.clipPath = `inset(0 ${100 - composite}% 0 0 round 3px)`;
+  $('q-bar').style.width = '100%';
+
+  // sub-score dots
+  const ld = Math.round(ls / 20);
+  const jd = Math.round(js / 20);
+  const pd = Math.round(ps / 20);
+
+  $('sd-lat').textContent = dots(ld); $('sd-lat').style.color = g.hex;
+  $('sd-jit').textContent = dots(jd); $('sd-jit').style.color = g.hex;
+  $('sd-pkt').textContent = dots(pd); $('sd-pkt').style.color = g.hex;
+  $('sv-lat').textContent = Math.round(ls); $('sv-lat').style.color = g.color;
+  $('sv-jit').textContent = Math.round(js); $('sv-jit').style.color = g.color;
+  $('sv-pkt').textContent = Math.round(ps); $('sv-pkt').style.color = g.color;
+}
+
+/* ═══════════════════════════════════════════════
+   LATENCY CHART
+════════════════════════════════════════════════ */
+function drawChart() {
+  const canvas = $('latency-chart');
+  const wrap   = canvas.parentElement;
+  canvas.width  = wrap.clientWidth  || 600;
+  canvas.height = wrap.clientHeight || 180;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const padL = 42, padR = 12, padT = 10, padB = 26;
+  const pw = W - padL - padR, ph = H - padT - padB;
+
+  ctx.clearRect(0, 0, W, H);
+
+  if (chartHistory.length === 0) {
+    ctx.fillStyle = 'rgba(61,74,104,.4)';
+    ctx.font = '11px Share Tech Mono';
+    ctx.textAlign = 'center';
+    ctx.fillText('Start ping monitor to see latency history', W/2, H/2);
+    return;
+  }
+
+  const valid = chartHistory.filter(v => v !== null);
+  const maxVal = valid.length > 0 ? Math.max(...valid) * 1.2 : 200;
+  const minVal = 0;
+
+  // grid lines
+  ctx.strokeStyle = 'rgba(26,32,53,.8)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const val = minVal + (maxVal - minVal) * i / 4;
+    const y   = padT + ph - (ph * (val - minVal) / (maxVal - minVal));
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + pw, y); ctx.stroke();
+    ctx.fillStyle = 'rgba(61,74,104,.6)';
+    ctx.font = '9px Share Tech Mono';
+    ctx.textAlign = 'right';
+    ctx.fillText(Math.round(val), padL - 6, y + 4);
+  }
+
+  // x-axis
+  ctx.strokeStyle = 'rgba(36,45,69,.9)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(padL, padT + ph); ctx.lineTo(padL + pw, padT + ph); ctx.stroke();
+
+  // build segments (split on nulls = packet loss)
+  const segments = [];
+  let cur = [];
+  chartHistory.forEach((v, i) => {
+    const x = padL + pw * i / (CHART_MAX - 1);
+    if (v !== null) {
+      const y = padT + ph - (ph * (v - minVal) / (maxVal - minVal));
+      cur.push([x, Math.max(padT, Math.min(padT + ph, y))]);
+    } else {
+      // draw red loss marker
+      ctx.fillStyle = 'rgba(255,71,87,.5)';
+      ctx.fillRect(x - 2, padT + ph - 14, 4, 14);
+      if (cur.length) { segments.push(cur); cur = []; }
+    }
+  });
+  if (cur.length) segments.push(cur);
+
+  // draw area + line per segment
+  segments.forEach(seg => {
+    if (seg.length < 2) return;
+
+    // area fill
+    const grad = ctx.createLinearGradient(0, padT, 0, padT + ph);
+    grad.addColorStop(0,   'rgba(0,212,255,.18)');
+    grad.addColorStop(1,   'rgba(0,212,255,0)');
+    ctx.beginPath();
+    ctx.moveTo(seg[0][0], padT + ph);
+    seg.forEach(([x,y]) => ctx.lineTo(x, y));
+    ctx.lineTo(seg[seg.length-1][0], padT + ph);
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // line
+    ctx.beginPath();
+    seg.forEach(([x,y], i) => i === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y));
+    ctx.strokeStyle = 'rgba(0,212,255,.85)';
+    ctx.lineWidth   = 1.8;
+    ctx.lineJoin    = 'round';
+    ctx.shadowColor = 'rgba(0,212,255,.4)';
+    ctx.shadowBlur  = 6;
+    ctx.stroke();
+    ctx.shadowBlur  = 0;
+  });
+
+  // dot on last valid point
+  const lastIdx = chartHistory.map((v,i) => v !== null ? i : -1).filter(i => i >= 0).pop();
+  if (lastIdx !== undefined) {
+    const x = padL + pw * lastIdx / (CHART_MAX - 1);
+    const y = padT + ph - (ph * (chartHistory[lastIdx] - minVal) / (maxVal - minVal));
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI*2);
+    ctx.fillStyle = '#00d4ff';
+    ctx.shadowColor = '#00d4ff'; ctx.shadowBlur = 10;
+    ctx.fill(); ctx.shadowBlur = 0;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   GAUGE DRAWING
+════════════════════════════════════════════════ */
+function drawGauge(canvasId, value, maxVal, colorStart, colorEnd) {
+  const canvas = $(canvasId);
+  const W = canvas.width, H = canvas.height;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, W, H);
+
+  const cx = W / 2, cy = H - 8;
+  const r  = Math.min(W, H * 1.8) * 0.46;
+  const startA = Math.PI,      endA = 2 * Math.PI;
+  const pct    = value !== null ? Math.min(value / maxVal, 1) : 0;
+  const fillA  = startA + pct * Math.PI;
+
+  // Track
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, startA, endA);
+  ctx.strokeStyle = 'rgba(26,32,53,1)';
+  ctx.lineWidth = 10;
+  ctx.lineCap = 'round';
+  ctx.stroke();
+
+  if (value !== null && value > 0) {
+    // Gradient fill
+    const grad = ctx.createLinearGradient(cx - r, cy, cx + r, cy);
+    grad.addColorStop(0, colorStart);
+    grad.addColorStop(1, colorEnd);
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, startA, fillA);
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = 10;
+    ctx.lineCap = 'round';
+    ctx.shadowColor = colorEnd;
+    ctx.shadowBlur = 12;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Tick marks
+    for (let i = 0; i <= 10; i++) {
+      const angle = startA + (i / 10) * Math.PI;
+      const inner = r - 14, outer = r - 8;
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(angle) * inner, cy + Math.sin(angle) * inner);
+      ctx.lineTo(cx + Math.cos(angle) * outer, cy + Math.sin(angle) * outer);
+      ctx.strokeStyle = i / 10 <= pct ? 'rgba(255,255,255,.3)' : 'rgba(255,255,255,.08)';
+      ctx.lineWidth = i % 5 === 0 ? 2 : 1;
+      ctx.stroke();
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   BUTTON ARC (progress indicator)
+════════════════════════════════════════════════ */
+let arcProgress = 0;
+let arcAnimate  = null;
+
+function drawBtnArc(pct) {
+  const canvas = $('btn-arc');
+  const W = canvas.width, H = canvas.height;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, W, H);
+  if (pct <= 0) return;
+
+  const cx = W/2, cy = H/2, r = W/2 - 6;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, -Math.PI/2, -Math.PI/2 + pct * 2 * Math.PI);
+  ctx.strokeStyle = pct < 0.5 ? 'rgba(0,212,255,.8)' : 'rgba(0,229,160,.8)';
+  ctx.lineWidth   = 2;
+  ctx.lineCap     = 'round';
+  ctx.shadowColor = pct < 0.5 ? '#00d4ff' : '#00e5a0';
+  ctx.shadowBlur  = 8;
+  ctx.stroke();
+}
+
+/* ═══════════════════════════════════════════════
+   SPEED TEST
+════════════════════════════════════════════════ */
+let speedTestRunning = false;
+
+async function runSpeedTest() {
+  if (speedTestRunning) return;
+  speedTestRunning = true;
+
+  const btn = $('test-btn');
+  btn.classList.add('testing');
+  $('btn-label').textContent  = '...';
+  $('btn-sub').textContent    = 'TESTING';
+  $('test-phase').textContent = 'Initializing...';
+
+  $('dl-num').textContent = '—';
+  $('ul-num').textContent = '—';
+  drawGauge('gauge-dl', 0, 1000, '#00d4ff', '#0099cc');
+  drawGauge('gauge-ul', 0, 1000, '#00e5a0', '#009966');
+
+  arcProgress = 0;
+  drawBtnArc(0);
+
+  try {
+    // ── DOWNLOAD ──
+    $('test-phase').style.color = 'var(--accent)';
+    $('test-phase').textContent = 'Testing download speed...';
+    $('btn-label').textContent  = '↓';
+
+    const dlMbps = await measureDownload((p) => {
+      arcProgress = p * 0.5;
+      drawBtnArc(arcProgress);
+      const live = Math.round(p * 150); // animate gauge during test
+      drawGauge('gauge-dl', live, 1000, '#00d4ff', '#0099cc');
+      $('dl-num').textContent = live;
+    });
+
+    $('dl-num').textContent = dlMbps.toFixed(1);
+    drawGauge('gauge-dl', dlMbps, 1000, '#00d4ff', '#0099cc');
+
+    // ── UPLOAD ──
+    $('test-phase').style.color = 'var(--green)';
+    $('test-phase').textContent = 'Testing upload speed...';
+    $('btn-label').textContent  = '↑';
+
+    const ulMbps = await measureUpload((p) => {
+      arcProgress = 0.5 + p * 0.5;
+      drawBtnArc(arcProgress);
+      const live = Math.round(p * 80);
+      drawGauge('gauge-ul', live, 1000, '#00e5a0', '#009966');
+      $('ul-num').textContent = live;
+    });
+
+    $('ul-num').textContent = ulMbps.toFixed(1);
+    drawGauge('gauge-ul', ulMbps, 1000, '#00e5a0', '#009966');
+
+    // ── DONE ──
+    arcProgress = 1;
+    drawBtnArc(1);
+    btn.classList.remove('testing');
+    btn.classList.add('done');
+    $('btn-label').textContent  = '✓';
+    $('btn-sub').textContent    = 'COMPLETE';
+    $('test-phase').style.color = 'var(--green)';
+    $('test-phase').textContent = `↓ ${dlMbps.toFixed(1)} Mbps  ·  ↑ ${ulMbps.toFixed(1)} Mbps`;
+
+    setTimeout(() => {
+      btn.classList.remove('done');
+      $('btn-label').textContent  = 'GO';
+      $('btn-sub').textContent    = 'RUN AGAIN';
+      $('test-phase').textContent = 'Click to rerun';
+      $('test-phase').style.color = '';
+      drawBtnArc(0);
+    }, 4000);
+
+  } catch(e) {
+    btn.classList.remove('testing','done');
+    $('btn-label').textContent  = '!';
+    $('btn-sub').textContent    = 'ERROR';
+    $('test-phase').style.color = 'var(--red)';
+    $('test-phase').textContent = 'Test failed. Check connection.';
+    drawBtnArc(0);
+    setTimeout(() => {
+      $('btn-label').textContent  = 'GO';
+      $('btn-sub').textContent    = 'RETRY';
+      $('test-phase').textContent = 'Click to retry';
+      $('test-phase').style.color = '';
+    }, 3000);
+  }
+
+  speedTestRunning = false;
+}
+
+async function measureDownload(onProgress) {
+  const urls = [
+    'https://speed.cloudflare.com/__down?bytes=10000000',
+    'https://httpbin.org/bytes/5000000'
+  ];
+  // Try Cloudflare first
+  for (const url of urls) {
+    try {
+      const start = performance.now();
+      const res = await fetch(url + '&_=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) continue;
+      const reader = res.body.getReader();
+      let loaded = 0;
+      const total = parseInt(res.headers.get('content-length') || '10000000');
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        loaded += value.length;
+        onProgress(Math.min(loaded / total, 0.95));
+      }
+      const elapsed = (performance.now() - start) / 1000;
+      onProgress(1);
+      return (loaded * 8) / (elapsed * 1_000_000);
+    } catch {}
+  }
+  throw new Error('Download test failed');
+}
+
+async function measureUpload(onProgress) {
+  const size   = 3_000_000; // 3MB — enough for a browser test
+  const chunk  = new Uint8Array(size);
+  crypto.getRandomValues(chunk.slice(0, Math.min(65536, size))); // fill first 64KB randomly
+
+  const endpoints = [
+    'https://httpbin.org/post',
+    'https://postman-echo.com/post'
+  ];
+
+  for (const url of endpoints) {
+    try {
+      onProgress(0.05);
+      const start  = performance.now();
+
+      // Use XMLHttpRequest for upload progress
+      const mbps = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', url);
+        xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+        xhr.upload.onprogress = e => {
+          if (e.lengthComputable) onProgress(0.05 + (e.loaded / e.total) * 0.9);
+        };
+        xhr.onload = () => {
+          const elapsed = (performance.now() - start) / 1000;
+          onProgress(1);
+          resolve((size * 8) / (elapsed * 1_000_000));
+        };
+        xhr.onerror = xhr.ontimeout = reject;
+        xhr.timeout = 30000;
+        xhr.send(chunk);
+      });
+
+      return mbps;
+    } catch {}
+  }
+  throw new Error('Upload test failed');
+}
+
+/* ═══════════════════════════════════════════════
+   COLOR HELPERS
+════════════════════════════════════════════════ */
+function latencyColor(ms) {
+  if (ms === null || ms === undefined) return 'var(--red)';
+  if (ms < 30)  return 'var(--green)';
+  if (ms < 80)  return 'var(--accent)';
+  if (ms < 150) return 'var(--amber)';
+  return 'var(--red)';
+}
+function latencyLabel(ms) {
+  if (ms === null || ms === undefined) return 'TIMEOUT';
+  if (ms < 30)  return 'EXCELLENT';
+  if (ms < 80)  return 'GOOD';
+  if (ms < 150) return 'FAIR';
+  return 'POOR';
+}
+function jitterColor(j) {
+  if (j === null) return 'var(--muted)';
+  if (j < 5)  return 'var(--green)';
+  if (j < 15) return 'var(--amber)';
+  return 'var(--red)';
+}
+function jitterLabel(j) {
+  if (j === null) return 'NO DATA';
+  if (j < 5)  return 'STABLE';
+  if (j < 15) return 'MODERATE';
+  return 'UNSTABLE';
+}
+function lossColor(pct) {
+  if (pct === 0) return 'var(--green)';
+  if (pct < 1)   return 'var(--amber)';
+  return 'var(--red)';
+}
+function lossLabel(pct) {
+  if (pct === 0) return 'NO LOSS';
+  if (pct < 1)   return 'NEGLIGIBLE';
+  if (pct < 5)   return 'DEGRADED';
+  return 'SEVERE LOSS';
+}
+
+/* ═══════════════════════════════════════════════
+   CLOCK
+════════════════════════════════════════════════ */
+function updateClock() {
+  const now = new Date();
+  $('nav-time').textContent  = formatTime(now);
+  $('footer-time').textContent = now.toLocaleDateString() + '  ' + formatTime(now);
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+/* ═══════════════════════════════════════════════
+   INIT GAUGES
+════════════════════════════════════════════════ */
+drawGauge('gauge-dl', 0, 1000, '#00d4ff', '#0099cc');
+drawGauge('gauge-ul', 0, 1000, '#00e5a0', '#009966');
+drawChart();
+
+window.addEventListener('resize', () => {
+  drawChart();
+  drawGauge('gauge-dl', null, 1000, '#00d4ff', '#0099cc');
+  drawGauge('gauge-ul', null, 1000, '#00e5a0', '#009966');
+});
+
+/* ═══════════════════════════════════════════════
+   COMPACT WIDGET ENGINE
+   ───────────────────────────────────────────────
+   Public API:
+     setCompactWidgetSize(width, height)
+       width  : 40–120 px
+       height : 80–120 px
+
+     setWidgetMode(n)
+       n = 2 → Score cell + Ping cell
+       n = 3 → Score cell + Ping cell + Chart cell
+
+   The widget reads live data from the same
+   state variables as the main dashboard
+   (chartHistory, pingRecords, totalPings, etc.)
+   and re-renders on every ping update.
+════════════════════════════════════════════════ */
+
+// ── Shared widget state ──────────────────────────────────────────────────────
+let _widgetW    = 80;
+let _widgetH    = 96;
+let _widgetMode = 2;   // 2 or 3
+
+// Called by the slider controls in the demo section
+function onWidgetSlider() {
+  const w = parseInt(document.getElementById('ctrl-w').value);
+  const h = parseInt(document.getElementById('ctrl-h').value);
+  document.getElementById('ctrl-w-val').textContent = w;
+  document.getElementById('ctrl-h-val').textContent = h;
+  setCompactWidgetSize(w, h);
+}
+
+/**
+ * Resize the compact widget.
+ * @param {number} w  Width  in px, clamped to [40, 120]
+ * @param {number} h  Height in px, clamped to [80, 120]
+ */
+function setCompactWidgetSize(w, h) {
+  _widgetW = Math.max(40, Math.min(120, Math.round(w)));
+  _widgetH = Math.max(80, Math.min(120, Math.round(h)));
+
+  const el = document.getElementById('np-widget');
+  if (!el) return;
+  el.style.width  = _widgetW + 'px';
+  el.style.height = _widgetH + 'px';
+
+  // update ruler label
+  const lbl = document.getElementById('widget-ruler-label');
+  if (lbl) lbl.textContent = `${_widgetW} × ${_widgetH} px`;
+
+  // sync sliders if called programmatically
+  const sw = document.getElementById('ctrl-w');
+  const sh = document.getElementById('ctrl-h');
+  if (sw && parseInt(sw.value) !== _widgetW) { sw.value = _widgetW; document.getElementById('ctrl-w-val').textContent = _widgetW; }
+  if (sh && parseInt(sh.value) !== _widgetH) { sh.value = _widgetH; document.getElementById('ctrl-h-val').textContent = _widgetH; }
+
+  renderWidget();
+}
+
+/**
+ * Switch between 2-cell and 3-cell layout.
+ * @param {number} mode  2 or 3
+ */
+function setWidgetMode(mode) {
+  _widgetMode = mode === 3 ? 3 : 2;
+  const el = document.getElementById('np-widget');
+  if (el) el.setAttribute('data-mode', _widgetMode);
+
+  document.getElementById('mode-btn-2').classList.toggle('active', _widgetMode === 2);
+  document.getElementById('mode-btn-3').classList.toggle('active', _widgetMode === 3);
+
+  buildWidgetDOM();
+  renderWidget();
+}
+
+// ── Build the cell DOM (once per mode change) ────────────────────────────────
+function buildWidgetDOM() {
+  const el = document.getElementById('np-widget');
+  if (!el) return;
+  el.innerHTML = '';
+  el.setAttribute('data-mode', _widgetMode);
+
+  // Cell 0 — Quality score
+  el.appendChild(makeCell('np-wcell-score', 'QUALITY',
+    '<span class="np-wval" id="wv-score">—</span>' +
+    '<span class="np-wunit" id="wu-grade">—</span>'
+  ));
+
+  // Cell 1 — Ping / loss
+  el.appendChild(makeCell('np-wcell-ping', 'PING',
+    '<span class="np-wval" id="wv-ping">—</span>' +
+    '<span class="np-wunit" id="wu-ping-unit">ms</span>' +
+    '<span class="np-wunit" id="wu-loss" style="margin-top:1px">LOSS —</span>'
+  ));
+
+  // Cell 2 (mode 3 only) — Mini chart
+  if (_widgetMode === 3) {
+    const chartCell = makeCell('np-wcell-chart', null,
+      '<canvas class="np-wcanvas" id="wv-chart"></canvas>'
+    );
+    chartCell.classList.add('np-wcell-chart');
+    el.appendChild(chartCell);
+  }
+}
+
+function makeCell(cls, labelText, innerHtml) {
+  const cell = document.createElement('div');
+  cell.className = 'np-wcell ' + cls;
+  if (labelText) {
+    const lbl = document.createElement('div');
+    lbl.className = 'np-wlabel';
+    lbl.textContent = labelText;
+    cell.appendChild(lbl);
+  }
+  cell.insertAdjacentHTML('beforeend', innerHtml);
+  return cell;
+}
+
+// ── Render live data into the widget ────────────────────────────────────────
+function renderWidget() {
+  const el = document.getElementById('np-widget');
+  if (!el) return;
+
+  // ── Derive current stats from global state ──
+  const win      = pingRecords;
+  const successes = win.filter(r => r.latency !== null);
+  const lats      = successes.map(r => r.latency);
+  const avg       = lats.length > 0 ? lats.reduce((a,b)=>a+b,0)/lats.length : null;
+  const jit       = calcJitter(lats);
+  const loss      = win.length > 0 ? (win.length - successes.length) * 100 / win.length : 0;
+  const current   = lats.length > 0 ? lats[lats.length - 1] : null;
+
+  // quality composite
+  let score = null, gradeObj = null;
+  if (avg !== null) {
+    const ls = scoreLatency(avg);
+    const js = scoreJitter(jit);
+    const ps = scoreLoss(loss);
+    score    = Math.round(ls * 0.45 + js * 0.30 + ps * 0.25);
+    gradeObj = getGrade(score);
+  }
+
+  // ── Compute adaptive font sizes based on width ──
+  const w = _widgetW;
+  const h = _widgetH;
+  const valSize   = w < 55 ? 14 : w < 70 ? 17 : w < 90 ? 20 : 24;   // px
+  const unitSize  = w < 55 ?  5 : w < 70 ?  6 :  7;
+  const labelVis  = w >= 58 ? '1' : '0';                               // hide labels when tiny
+
+  // ── Cell 0: Quality score ──
+  const scoreEl = document.getElementById('wv-score');
+  const gradeEl = document.getElementById('wu-grade');
+  if (scoreEl && gradeEl) {
+    scoreEl.textContent = score !== null ? score : '—';
+    scoreEl.style.fontSize = valSize + 'px';
+    scoreEl.style.color    = gradeObj ? gradeObj.color : 'var(--muted)';
+
+    gradeEl.textContent = gradeObj ? gradeObj.grade : '—';
+    gradeEl.style.fontSize = unitSize + 'px';
+    gradeEl.style.color    = gradeObj ? gradeObj.color : 'var(--muted)';
+
+    // cell accent color
+    const scoreCell = el.querySelector('.np-wcell-score');
+    if (scoreCell) scoreCell.style.setProperty('--cell-accent', gradeObj ? gradeObj.hex : 'var(--border2)');
+  }
+
+  // ── Cell 1: Ping / loss ──
+  const pingEl  = document.getElementById('wv-ping');
+  const lossEl  = document.getElementById('wu-loss');
+  const unitEl  = document.getElementById('wu-ping-unit');
+  if (pingEl) {
+    pingEl.textContent  = current !== null ? current : '—';
+    pingEl.style.fontSize = valSize + 'px';
+    pingEl.style.color  = latencyColor(current);
+  }
+  if (unitEl) unitEl.style.fontSize = unitSize + 'px';
+  if (lossEl) {
+    lossEl.style.fontSize = unitSize + 'px';
+    if (w >= 55) {
+      lossEl.textContent = loss.toFixed(0) + '% loss';
+      lossEl.style.color = lossColor(loss);
+      lossEl.style.opacity = '1';
+    } else {
+      lossEl.style.opacity = '0';
+    }
+    // cell accent
+    const pingCell = el.querySelector('.np-wcell-ping');
+    if (pingCell) pingCell.style.setProperty('--cell-accent', latencyColor(current));
+  }
+
+  // ── Hide/show labels ──
+  el.querySelectorAll('.np-wlabel').forEach(l => l.style.opacity = labelVis);
+
+  // ── Cell 2 (mode 3): Mini sparkline chart ──
+  if (_widgetMode === 3) {
+    drawWidgetChart();
+  }
+
+  // ── Update tooltip ──
+  const tipScore = score !== null ? `${score}/100 ${gradeObj ? gradeObj.name : ''}` : '—';
+  const tipPing  = current !== null ? `${current}ms` : '—';
+  const tipLoss  = win.length > 0 ? `${loss.toFixed(1)}%` : '—';
+  el.setAttribute('data-tooltip',
+    `Score: ${tipScore}  |  Ping: ${tipPing}  |  Loss: ${tipLoss}`);
+}
+
+// ── Mini sparkline chart inside the widget ───────────────────────────────────
+function drawWidgetChart() {
+  const canvas = document.getElementById('wv-chart');
+  if (!canvas) return;
+
+  // Canvas physical size = cell physical size
+  // The cell is full width, roughly bottom half of widget
+  const cellH = _widgetMode === 3 ? Math.round(_widgetH * 0.42) : _widgetH;
+  const cellW = _widgetW;
+  canvas.width  = cellW;
+  canvas.height = cellH;
+
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, cellW, cellH);
+
+  const data = chartHistory;
+  if (data.length < 2) {
+    ctx.fillStyle = 'rgba(61,74,104,.3)';
+    ctx.font = '6px Share Tech Mono';
+    ctx.textAlign = 'center';
+    ctx.fillText('no data', cellW/2, cellH/2 + 2);
+    return;
+  }
+
+  const valid  = data.filter(v => v !== null);
+  if (valid.length === 0) return;
+  const maxV   = Math.max(...valid) * 1.15 || 100;
+  const padT   = 2, padB = 2;
+  const ph     = cellH - padT - padB;
+  const total  = data.length;
+
+  // Build polyline, break on nulls
+  const segments = [];
+  let cur = [];
+  data.forEach((v, i) => {
+    const x = cellW * i / (total - 1);
+    if (v !== null) {
+      const y = padT + ph - (ph * v / maxV);
+      cur.push([x, Math.max(padT, Math.min(padT + ph, y))]);
+    } else {
+      if (cur.length) { segments.push(cur); cur = []; }
+      // tiny red tick
+      ctx.fillStyle = 'rgba(255,71,87,.5)';
+      ctx.fillRect(x - 1, padT + ph - 5, 2, 5);
+    }
+  });
+  if (cur.length) segments.push(cur);
+
+  segments.forEach(seg => {
+    if (seg.length < 2) return;
+    // area fill
+    const grad = ctx.createLinearGradient(0, padT, 0, padT + ph);
+    grad.addColorStop(0,  'rgba(0,212,255,.25)');
+    grad.addColorStop(1,  'rgba(0,212,255,0)');
+    ctx.beginPath();
+    ctx.moveTo(seg[0][0], padT + ph);
+    seg.forEach(([x,y]) => ctx.lineTo(x, y));
+    ctx.lineTo(seg[seg.length-1][0], padT + ph);
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // line
+    ctx.beginPath();
+    seg.forEach(([x,y], i) => i === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y));
+    ctx.strokeStyle = 'rgba(0,212,255,.9)';
+    ctx.lineWidth   = 1;
+    ctx.lineJoin    = 'round';
+    ctx.shadowColor = 'rgba(0,212,255,.5)';
+    ctx.shadowBlur  = 3;
+    ctx.stroke();
+    ctx.shadowBlur  = 0;
+  });
+
+  // endpoint dot
+  const lastIdx = data.map((v,i)=>v!==null?i:-1).filter(i=>i>=0).pop();
+  if (lastIdx !== undefined) {
+    const x = cellW * lastIdx / (total - 1);
+    const y = padT + ph - (ph * data[lastIdx] / maxV);
+    ctx.beginPath();
+    ctx.arc(x, Math.max(padT, Math.min(padT + ph, y)), 2, 0, Math.PI*2);
+    ctx.fillStyle = '#00d4ff';
+    ctx.shadowColor = '#00d4ff'; ctx.shadowBlur = 5;
+    ctx.fill(); ctx.shadowBlur = 0;
+  }
+}
+
+// ── Hook widget refresh into the existing ping update cycle ─────────────────
+// Monkey-patch updatePingUI so widget always re-renders after each ping
+const _origUpdatePingUI = updatePingUI;
+// We wrap it below AFTER the function is defined — but since we appended this
+// code after the function, we schedule it on next tick to be safe.
+setTimeout(() => {
+  const origFn = window.updatePingUI;
+  if (typeof origFn === 'function') {
+    window.updatePingUI = function() {
+      origFn.apply(this, arguments);
+      renderWidget();
+    };
+  }
+}, 0);
+
+// ── Init widget on page load ─────────────────────────────────────────────────
+(function initWidget() {
+  const el = document.getElementById('np-widget');
+  if (!el) return;
+  el.style.width  = _widgetW + 'px';
+  el.style.height = _widgetH + 'px';
+  buildWidgetDOM();
+  renderWidget();
+})();
+</script>
+</body>
+</html>
