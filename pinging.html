@@ -138,14 +138,14 @@ async function measureLatency() {
 
 function SendToWPF(latency) {
 
-        const colors = latency;
+        const colors = String(latency);
         const payload234 = {
         type: "styleSelected",
         style: "latency", // "softreset" // "ResetDefault",
         colors
     };
 
-   /// console.log("payload234:" , payload234);
+//     console.log("payload234:" , payload234);
     if (window.chrome && window.chrome.webview) {
         chrome.webview.postMessage(payload234);
     }
