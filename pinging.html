@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<link rel="icon" id="favicon" type="image/x-icon" href="/uploads/favpreview.gif">
+<title>Speed Test for your Network Connection - Connection Quality Score | MLApplications - Official page</title>
+ <!-- Meta Description -->
+    
+</head>
+<body>
+  
+<div id="app">
+
+ 
+  <main>
+
+    <!-- ── HERO ROW: Speed test + Ping controls ── -->
+    <div class="hero">
+ 
+      
+  <!-- Ping Controls Card -->
+      <div class="card" style="display:flex;flex-direction:column;gap:16px;">
+        <div class="card-title">Ping Monitor</div>
+        <div class="ping-controls">
+          <select class="host-select" id="host-select">
+            <option value="8.8.8.8">8.8.8.8 — Google DNS</option>
+            <option value="1.1.1.1">1.1.1.1 — Cloudflare</option>
+            <option value="9.9.9.9">9.9.9.9 — Quad9</option>
+            <option value="208.67.222.222">208.67.222.222 — OpenDNS</option>
+          </select>
+          <button class="pill-btn" id="ping-toggle-btn" onclick="togglePing()">▶ Start</button>
+        </div>
+
+        <!-- Live ping value big display 
+        <div style="text-align:center;padding:8px 0;">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.16em;margin-bottom:6px;">LIVE LATENCY</div>
+          <div style="display:flex;align-items:baseline;justify-content:center;gap:4px;">
+            <span id="live-ping-val" style="font-family:var(--cond);font-size:64px;font-weight:900;color:var(--muted);transition:color .3s;line-height:1;">—</span>
+            <span style="font-family:var(--mono);font-size:14px;color:var(--muted);padding-bottom:6px;">ms</span>
+          </div>
+          <div id="live-ping-label" style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.14em;margin-top:4px;">WAITING</div>
+        </div>
+
+        -->
+      </div> 
+    
+    </div>
+  
+
+  </main>
+ 
+
+  <footer>
+    <span>Connection Quality and Speed Test // NETWORK MONITOR</span>
+    <span id="footer-status">IDLE — click START PING or GO to begin</span>
+    <span id="footer-time"></span>
+  </footer>
+
+</div><!-- /#app -->
+
+<script>
+/* ═══════════════════════════════════════════════
+   UTILITIES
+════════════════════════════════════════════════ */
+const $ = id => document.getElementById(id);
+const lerp = (a, b, t) => a + (b - a) * Math.max(0, Math.min(1, t));
+
+function formatTime(date) {
+  return date.toTimeString().slice(0,8);
+}
+function fmtElapsed(ms) {
+  const s = Math.floor(ms / 1000);
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sc = s % 60;
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
+}
+
+/* ═══════════════════════════════════════════════
+   PING STATE
+════════════════════════════════════════════════ */
+let pingRunning    = false;
+let pingTimer      = null;
+let pingRecords    = [];          // {time, latency} latency=null → timeout
+let chartHistory   = [];          // last 60 entries
+const CHART_MAX    = 60;
+const WINDOW_MS    = 5000;
+
+// session stats
+let sessionStart   = null;
+let totalPings     = 0;
+let failedPings    = 0;
+let sessionMinMs   = Infinity;
+let sessionMaxMs   = -Infinity;
+let logLines       = [];
+const MAX_LOG      = 150;
+
+/* ─── WebRTC-based latency measurement ──────────────────────────────────── */
+// We measure round-trip to a public STUN server (Google's) via WebRTC.
+// This is the most reliable cross-origin latency method in browsers.
+async function measureLatency() {
+  return new Promise((resolve) => {
+    const start = performance.now();
+    let done = false;
+    const finish = (latency) => {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      resolve(latency);
+    };
+
+    const pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
+    pc.createDataChannel('');
+    pc.createOffer().then(offer => pc.setLocalDescription(offer));
+
+    pc.onicecandidate = e => {
+      if (e.candidate) {
+        finish(Math.round(performance.now() - start));
+        pc.close();
+      }
+    };
+
+    // fallback: use image ping to a fast CDN
+    const timer = setTimeout(() => {
+      pc.close();
+      const img = new Image();
+      const t0 = performance.now();
+      img.onload = img.onerror = () => finish(Math.round(performance.now() - t0));
+      img.src = 'https://www.google.com/favicon.ico?_=' + Date.now();
+    }, 1500);
+  });
+}
+
+
+
+function SendToWPF(latency) {
+
+        const payload234 = {
+        type: "styleSelected",
+        style: latency // "softreset" // "ResetDefault",
+        //colors
+    };
+
+    if (window.chrome && window.chrome.webview) {
+        chrome.webview.postMessage(payload234);
+    }
+
+
+
+  }
+
+/* ─── Ping loop ──────────────────────────────────────────────────────────── */
+async function doPing() {
+  if (!pingRunning) return;
+
+//  let myms = nulll;
+  let latency = null;
+  try {
+    const ms = await measureLatency();
+    if (ms > 0 && ms < 2000) latency = ms;
+  } catch {}
+
+  const now = new Date();
+  totalPings++;
+  if (latency === null) failedPings++;
+  if (latency !== null) {
+    if (latency < sessionMinMs) sessionMinMs = latency;
+    if (latency > sessionMaxMs) sessionMaxMs = latency;
+  }
+
+  // rolling 5-second window
+  pingRecords.push({ time: now.getTime(), latency });
+  const cutoff = Date.now() - WINDOW_MS;
+  pingRecords = pingRecords.filter(r => r.time >= cutoff);
+
+  // chart history
+  chartHistory.push(latency);
+  if (chartHistory.length > CHART_MAX) chartHistory.shift();
+
+  // log
+  const host = $('host-select').value;
+  const logEntry = latency !== null
+    ? { ok: true,  text: `${formatTime(now)}  ${host}  ${String(latency).padStart(4,' ')}ms` }
+    : { ok: false, text: `${formatTime(now)}  ${host}  TIMEOUT` };
+  logLines.push(logEntry);
+  if (logLines.length > MAX_LOG) logLines.shift();
+
+  //updatePingUI();
+console.log("LATENCY:  ", latency);
+  if (pingRunning) pingTimer = setTimeout(doPing, 900);
+
+SendToWPF(latency);
+}
+ 
+function setMetricCard(id, val, unit, label, color, override) {
+  const vEl = $(`mc-${id}-val`);
+  const sEl = $(`mc-${id}-sub`);
+  const stripe = $(`mc-${id}-stripe`);
+
+  if (val === null || val === undefined) {
+    vEl.textContent = '—';
+    sEl.textContent = 'WAITING';
+    sEl.style.color = 'var(--muted)';
+    stripe.style.background = 'var(--muted2)';
+    return;
+  }
+
+  vEl.textContent = override !== undefined ? override : (Number.isInteger(val) ? val : val.toFixed(1));
+  vEl.style.color = color;
+  sEl.textContent = label;
+  sEl.style.color = color;
+  stripe.style.background = color;
+}
+
+function renderLog() {
+  const body = $('log-body');
+  const fragment = logLines.slice(-60).map(l => {
+    if (l.ok) {
+      const parts = l.text.split(/(\d+ms)/);
+      return `<div class="log-line ok">${escHtml(parts[0])}<span class="log-ms">${escHtml(parts[1] || '')}</span>${escHtml(parts[2] || '')}</div>`;
+    }
+    return `<div class="log-line err">${escHtml(l.text)}</div>`;
+  }).join('');
+  body.innerHTML = fragment;
+  body.scrollTop = body.scrollHeight;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ─── Toggle ping ────────────────────────────────────────────────────────── */
+function togglePing() {
+  if (pingRunning) {
+    pingRunning = false;
+    clearTimeout(pingTimer);
+    $('ping-toggle-btn').textContent = '▶ Start';
+   
+    $('status-text').textContent = 'IDLE';
+    $('footer-status').textContent = 'STOPPED';
+  } else {
+    pingRunning  = true;
+    sessionStart = Date.now();
+    totalPings = failedPings = 0;
+    sessionMinMs = Infinity; sessionMaxMs = -Infinity;
+    pingRecords = []; chartHistory = []; logLines = [];
+  
+   
+    doPing();
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   QUALITY SCORE
+════════════════════════════════════════════════ */
+function calcJitter(latencies) {
+  if (latencies.length < 2) return null;
+  let sum = 0;
+  for (let i = 1; i < latencies.length; i++) sum += Math.abs(latencies[i] - latencies[i-1]);
+  return sum / (latencies.length - 1);
+}
+
+function scoreLatency(ms) {
+  if (ms <= 10)  return 100;
+  if (ms <= 20)  return 95;
+  if (ms <= 40)  return lerp(85, 95,  (40 - ms) / 20);
+  if (ms <= 80)  return lerp(70, 85,  (80 - ms) / 40);
+  if (ms <= 120) return lerp(55, 70,  (120 - ms) / 40);
+  if (ms <= 200) return lerp(35, 55,  (200 - ms) / 80);
+  if (ms <= 350) return lerp(15, 35,  (350 - ms) / 150);
+  return 0;
+}
+function scoreJitter(j) {
+  if (j === null) return 100;
+  if (j < 2)  return 100;
+  if (j < 5)  return lerp(90, 100, (5 - j) / 3);
+  if (j < 10) return lerp(75, 90,  (10 - j) / 5);
+  if (j < 20) return lerp(55, 75,  (20 - j) / 10);
+  if (j < 40) return lerp(30, 55,  (40 - j) / 20);
+  return 0;
+}
+function scoreLoss(pct) {
+  if (pct === 0)    return 100;
+  if (pct < 0.5)   return lerp(90, 100, (0.5 - pct) / 0.5);
+  if (pct < 1.0)   return lerp(75, 90,  (1.0 - pct) / 0.5);
+  if (pct < 2.0)   return lerp(55, 75,  (2.0 - pct) / 1.0);
+  if (pct < 5.0)   return lerp(30, 55,  (5.0 - pct) / 3.0);
+  return 0;
+}
+
+function getGrade(score) {
+  if (score >= 90) return { grade: 'S', name: 'Perfect',   color: 'var(--green)',  hex: '#00e5a0' };
+  if (score >= 75) return { grade: 'A', name: 'Excellent', color: '#38bdf8',       hex: '#38bdf8' };
+  if (score >= 60) return { grade: 'B', name: 'Good',      color: 'var(--accent)', hex: '#00d4ff' };
+  if (score >= 45) return { grade: 'C', name: 'Fair',      color: 'var(--amber)',  hex: '#ffb547' };
+  if (score >= 25) return { grade: 'D', name: 'Poor',      color: 'var(--orange)', hex: '#ff7c3a' };
+  return           { grade: 'F', name: 'Critical',         color: 'var(--red)',    hex: '#ff4757' };
+}
+
+function dots(filled) {
+  return '●'.repeat(filled) + '○'.repeat(5 - filled);
+}
+
+function updateQuality(avg, jitter, loss, hasData) {
+  if (!hasData || avg === null) {
+    $('q-score').textContent = '—';
+    $('q-grade').textContent = '—';
+    $('q-grade-name').textContent = 'No data';
+    $('q-bar').style.width = '0%';
+    ['lat','jit','pkt'].forEach(k => {
+      $(`sd-${k}`).textContent = '○○○○○';
+      $(`sd-${k}`).style.color = '';
+      $(`sv-${k}`).textContent = '—';
+      $(`sv-${k}`).style.color = '';
+    });
+    return;
+  }
+
+  const ls = scoreLatency(avg);
+  const js = scoreJitter(jitter);
+  const ps = scoreLoss(loss);
+  const composite = Math.round(ls * 0.45 + js * 0.30 + ps * 0.25);
+  const g = getGrade(composite);
+
+  $('q-score').textContent = composite;
+  $('q-score').style.color = g.color;
+  $('q-grade').textContent = g.grade;
+  $('q-grade').style.color = g.color;
+  $('q-grade-name').textContent = g.name.toUpperCase();
+  $('q-grade-name').style.color = g.color;
+
+  $('q-bar').style.width = composite + '%';
+  const barGrad = `linear-gradient(90deg, #ff4757 0%, #ffb547 40%, #00e5a0 100%)`;
+  $('q-bar').style.background = barGrad;
+  $('q-bar').style.backgroundSize = '100% 100%';
+  // clip to show only up to score
+  $('q-bar').style.clipPath = `inset(0 ${100 - composite}% 0 0 round 3px)`;
+  $('q-bar').style.width = '100%';
+
+  // sub-score dots
+  const ld = Math.round(ls / 20);
+  const jd = Math.round(js / 20);
+  const pd = Math.round(ps / 20);
+
+  $('sd-lat').textContent = dots(ld); $('sd-lat').style.color = g.hex;
+  $('sd-jit').textContent = dots(jd); $('sd-jit').style.color = g.hex;
+  $('sd-pkt').textContent = dots(pd); $('sd-pkt').style.color = g.hex;
+  $('sv-lat').textContent = Math.round(ls); $('sv-lat').style.color = g.color;
+  $('sv-jit').textContent = Math.round(js); $('sv-jit').style.color = g.color;
+  $('sv-pkt').textContent = Math.round(ps); $('sv-pkt').style.color = g.color;
+}
+
+/* ═══════════════════════════════════════════════
+   LATENCY CHART
+════════════════════════════════════════════════ */
+function drawChart() {
+  const canvas = $('latency-chart');
+  const wrap   = canvas.parentElement;
+  canvas.width  = wrap.clientWidth  || 600;
+  canvas.height = wrap.clientHeight || 180;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const padL = 42, padR = 12, padT = 10, padB = 26;
+  const pw = W - padL - padR, ph = H - padT - padB;
+
+  ctx.clearRect(0, 0, W, H);
+
+  if (chartHistory.length === 0) {
+    ctx.fillStyle = 'rgba(61,74,104,.4)';
+    ctx.font = '11px Share Tech Mono';
+    ctx.textAlign = 'center';
+    ctx.fillText('Start ping monitor to see latency history', W/2, H/2);
+    return;
+  }
+
+  const valid = chartHistory.filter(v => v !== null);
+  const maxVal = valid.length > 0 ? Math.max(...valid) * 1.2 : 200;
+  const minVal = 0;
+
+  // grid lines
+  ctx.strokeStyle = 'rgba(26,32,53,.8)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const val = minVal + (maxVal - minVal) * i / 4;
+    const y   = padT + ph - (ph * (val - minVal) / (maxVal - minVal));
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + pw, y); ctx.stroke();
+    ctx.fillStyle = 'rgba(61,74,104,.6)';
+    ctx.font = '9px Share Tech Mono';
+    ctx.textAlign = 'right';
+    ctx.fillText(Math.round(val), padL - 6, y + 4);
+  }
+
+  // x-axis
+  ctx.strokeStyle = 'rgba(36,45,69,.9)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(padL, padT + ph); ctx.lineTo(padL + pw, padT + ph); ctx.stroke();
+
+  // build segments (split on nulls = packet loss)
+  const segments = [];
+  let cur = [];
+  chartHistory.forEach((v, i) => {
+    const x = padL + pw * i / (CHART_MAX - 1);
+    if (v !== null) {
+      const y = padT + ph - (ph * (v - minVal) / (maxVal - minVal));
+      cur.push([x, Math.max(padT, Math.min(padT + ph, y))]);
+    } else {
+      // draw red loss marker
+      ctx.fillStyle = 'rgba(255,71,87,.5)';
+      ctx.fillRect(x - 2, padT + ph - 14, 4, 14);
+      if (cur.length) { segments.push(cur); cur = []; }
+    }
+  });
+  if (cur.length) segments.push(cur);
+
+  // draw area + line per segment
+  segments.forEach(seg => {
+    if (seg.length < 2) return;
+
+    // area fill
+    const grad = ctx.createLinearGradient(0, padT, 0, padT + ph);
+    grad.addColorStop(0,   'rgba(0,212,255,.18)');
+    grad.addColorStop(1,   'rgba(0,212,255,0)');
+    ctx.beginPath();
+    ctx.moveTo(seg[0][0], padT + ph);
+    seg.forEach(([x,y]) => ctx.lineTo(x, y));
+    ctx.lineTo(seg[seg.length-1][0], padT + ph);
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // line
+    ctx.beginPath();
+    seg.forEach(([x,y], i) => i === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y));
+    ctx.strokeStyle = 'rgba(0,212,255,.85)';
+    ctx.lineWidth   = 1.8;
+    ctx.lineJoin    = 'round';
+    ctx.shadowColor = 'rgba(0,212,255,.4)';
+    ctx.shadowBlur  = 6;
+    ctx.stroke();
+    ctx.shadowBlur  = 0;
+  });
+
+  // dot on last valid point
+  const lastIdx = chartHistory.map((v,i) => v !== null ? i : -1).filter(i => i >= 0).pop();
+  if (lastIdx !== undefined) {
+    const x = padL + pw * lastIdx / (CHART_MAX - 1);
+    const y = padT + ph - (ph * (chartHistory[lastIdx] - minVal) / (maxVal - minVal));
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI*2);
+    ctx.fillStyle = '#00d4ff';
+    ctx.shadowColor = '#00d4ff'; ctx.shadowBlur = 10;
+    ctx.fill(); ctx.shadowBlur = 0;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   GAUGE DRAWING
+════════════════════════════════════════════════ */
+function drawGauge(canvasId, value, maxVal, colorStart, colorEnd) {
+  const canvas = $(canvasId);
+  const W = canvas.width, H = canvas.height;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, W, H);
+
+  const cx = W / 2, cy = H - 8;
+  const r  = Math.min(W, H * 1.8) * 0.46;
+  const startA = Math.PI,      endA = 2 * Math.PI;
+  const pct    = value !== null ? Math.min(value / maxVal, 1) : 0;
+  const fillA  = startA + pct * Math.PI;
+
+  // Track
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, startA, endA);
+  ctx.strokeStyle = 'rgba(26,32,53,1)';
+  ctx.lineWidth = 10;
+  ctx.lineCap = 'round';
+  ctx.stroke();
+
+  if (value !== null && value > 0) {
+    // Gradient fill
+    const grad = ctx.createLinearGradient(cx - r, cy, cx + r, cy);
+    grad.addColorStop(0, colorStart);
+    grad.addColorStop(1, colorEnd);
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, startA, fillA);
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = 10;
+    ctx.lineCap = 'round';
+    ctx.shadowColor = colorEnd;
+    ctx.shadowBlur = 12;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Tick marks
+    for (let i = 0; i <= 10; i++) {
+      const angle = startA + (i / 10) * Math.PI;
+      const inner = r - 14, outer = r - 8;
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(angle) * inner, cy + Math.sin(angle) * inner);
+      ctx.lineTo(cx + Math.cos(angle) * outer, cy + Math.sin(angle) * outer);
+      ctx.strokeStyle = i / 10 <= pct ? 'rgba(255,255,255,.3)' : 'rgba(255,255,255,.08)';
+      ctx.lineWidth = i % 5 === 0 ? 2 : 1;
+      ctx.stroke();
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   BUTTON ARC (progress indicator)
+════════════════════════════════════════════════ */
+let arcProgress = 0;
+let arcAnimate  = null;
+
+function drawBtnArc(pct) {
+  const canvas = $('btn-arc');
+  const W = canvas.width, H = canvas.height;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, W, H);
+  if (pct <= 0) return;
+
+  const cx = W/2, cy = H/2, r = W/2 - 6;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, -Math.PI/2, -Math.PI/2 + pct * 2 * Math.PI);
+  ctx.strokeStyle = pct < 0.5 ? 'rgba(0,212,255,.8)' : 'rgba(0,229,160,.8)';
+  ctx.lineWidth   = 2;
+  ctx.lineCap     = 'round';
+  ctx.shadowColor = pct < 0.5 ? '#00d4ff' : '#00e5a0';
+  ctx.shadowBlur  = 8;
+  ctx.stroke();
+}
+
+/* ═══════════════════════════════════════════════
+   SPEED TEST
+════════════════════════════════════════════════ */
+let speedTestRunning = false;
+
+async function runSpeedTest() {
+  if (speedTestRunning) return;
+  speedTestRunning = true;
+
+  const btn = $('test-btn');
+  btn.classList.add('testing');
+  $('btn-label').textContent  = '...';
+  $('btn-sub').textContent    = 'TESTING';
+  $('test-phase').textContent = 'Initializing...';
+
+  $('dl-num').textContent = '—';
+  $('ul-num').textContent = '—';
+  drawGauge('gauge-dl', 0, 1000, '#00d4ff', '#0099cc');
+  drawGauge('gauge-ul', 0, 1000, '#00e5a0', '#009966');
+
+  arcProgress = 0;
+  drawBtnArc(0);
+
+  try {
+    // ── DOWNLOAD ──
+    $('test-phase').style.color = 'var(--accent)';
+    $('test-phase').textContent = 'Testing download speed...';
+    $('btn-label').textContent  = '↓';
+
+    const dlMbps = await measureDownload((p) => {
+      arcProgress = p * 0.5;
+      drawBtnArc(arcProgress);
+      const live = Math.round(p * 150); // animate gauge during test
+      drawGauge('gauge-dl', live, 1000, '#00d4ff', '#0099cc');
+      $('dl-num').textContent = live;
+    });
+
+    $('dl-num').textContent = dlMbps.toFixed(1);
+    drawGauge('gauge-dl', dlMbps, 1000, '#00d4ff', '#0099cc');
+
+    // ── UPLOAD ──
+    $('test-phase').style.color = 'var(--green)';
+    $('test-phase').textContent = 'Testing upload speed...';
+    $('btn-label').textContent  = '↑';
+
+    const ulMbps = await measureUpload((p) => {
+      arcProgress = 0.5 + p * 0.5;
+      drawBtnArc(arcProgress);
+      const live = Math.round(p * 80);
+      drawGauge('gauge-ul', live, 1000, '#00e5a0', '#009966');
+      $('ul-num').textContent = live;
+    });
+
+    $('ul-num').textContent = ulMbps.toFixed(1);
+    drawGauge('gauge-ul', ulMbps, 1000, '#00e5a0', '#009966');
+
+    // ── DONE ──
+    arcProgress = 1;
+    drawBtnArc(1);
+    btn.classList.remove('testing');
+    btn.classList.add('done');
+    $('btn-label').textContent  = '✓';
+    $('btn-sub').textContent    = 'COMPLETE';
+    $('test-phase').style.color = 'var(--green)';
+    $('test-phase').textContent = `↓ ${dlMbps.toFixed(1)} Mbps  ·  ↑ ${ulMbps.toFixed(1)} Mbps`;
+
+    setTimeout(() => {
+      btn.classList.remove('done');
+      $('btn-label').textContent  = 'GO';
+      $('btn-sub').textContent    = 'RUN AGAIN';
+      $('test-phase').textContent = 'Click to rerun';
+      $('test-phase').style.color = '';
+      drawBtnArc(0);
+    }, 4000);
+
+  } catch(e) {
+    btn.classList.remove('testing','done');
+    $('btn-label').textContent  = '!';
+    $('btn-sub').textContent    = 'ERROR';
+    $('test-phase').style.color = 'var(--red)';
+    $('test-phase').textContent = 'Test failed. Check connection.';
+    drawBtnArc(0);
+    setTimeout(() => {
+      $('btn-label').textContent  = 'GO';
+      $('btn-sub').textContent    = 'RETRY';
+      $('test-phase').textContent = 'Click to retry';
+      $('test-phase').style.color = '';
+    }, 3000);
+  }
+
+  speedTestRunning = false;
+}
+
+async function measureDownload(onProgress) {
+  const urls = [
+    'https://speed.cloudflare.com/__down?bytes=10000000',
+    'https://httpbin.org/bytes/5000000'
+  ];
+  // Try Cloudflare first
+  for (const url of urls) {
+    try {
+      const start = performance.now();
+      const res = await fetch(url + '&_=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) continue;
+      const reader = res.body.getReader();
+      let loaded = 0;
+      const total = parseInt(res.headers.get('content-length') || '10000000');
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        loaded += value.length;
+        onProgress(Math.min(loaded / total, 0.95));
+      }
+      const elapsed = (performance.now() - start) / 1000;
+      onProgress(1);
+      return (loaded * 8) / (elapsed * 1_000_000);
+    } catch {}
+  }
+  throw new Error('Download test failed');
+}
+
+async function measureUpload(onProgress) {
+  const size   = 3_000_000; // 3MB — enough for a browser test
+  const chunk  = new Uint8Array(size);
+  crypto.getRandomValues(chunk.slice(0, Math.min(65536, size))); // fill first 64KB randomly
+
+  const endpoints = [
+    'https://httpbin.org/post',
+    'https://postman-echo.com/post'
+  ];
+
+  for (const url of endpoints) {
+    try {
+      onProgress(0.05);
+      const start  = performance.now();
+
+      // Use XMLHttpRequest for upload progress
+      const mbps = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', url);
+        xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+        xhr.upload.onprogress = e => {
+          if (e.lengthComputable) onProgress(0.05 + (e.loaded / e.total) * 0.9);
+        };
+        xhr.onload = () => {
+          const elapsed = (performance.now() - start) / 1000;
+          onProgress(1);
+          resolve((size * 8) / (elapsed * 1_000_000));
+        };
+        xhr.onerror = xhr.ontimeout = reject;
+        xhr.timeout = 30000;
+        xhr.send(chunk);
+      });
+
+      return mbps;
+    } catch {}
+  }
+  throw new Error('Upload test failed');
+}
+
+/* ═══════════════════════════════════════════════
+   COLOR HELPERS
+════════════════════════════════════════════════ */
+function latencyColor(ms) {
+  if (ms === null || ms === undefined) return 'var(--red)';
+  if (ms < 30)  return 'var(--green)';
+  if (ms < 80)  return 'var(--accent)';
+  if (ms < 150) return 'var(--amber)';
+  return 'var(--red)';
+}
+function latencyLabel(ms) {
+  if (ms === null || ms === undefined) return 'TIMEOUT';
+  if (ms < 30)  return 'EXCELLENT';
+  if (ms < 80)  return 'GOOD';
+  if (ms < 150) return 'FAIR';
+  return 'POOR';
+}
+function jitterColor(j) {
+  if (j === null) return 'var(--muted)';
+  if (j < 5)  return 'var(--green)';
+  if (j < 15) return 'var(--amber)';
+  return 'var(--red)';
+}
+function jitterLabel(j) {
+  if (j === null) return 'NO DATA';
+  if (j < 5)  return 'STABLE';
+  if (j < 15) return 'MODERATE';
+  return 'UNSTABLE';
+}
+function lossColor(pct) {
+  if (pct === 0) return 'var(--green)';
+  if (pct < 1)   return 'var(--amber)';
+  return 'var(--red)';
+}
+function lossLabel(pct) {
+  if (pct === 0) return 'NO LOSS';
+  if (pct < 1)   return 'NEGLIGIBLE';
+  if (pct < 5)   return 'DEGRADED';
+  return 'SEVERE LOSS';
+}
+  
+
+</script>
+</body>
+</html>
