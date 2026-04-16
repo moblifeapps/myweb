@@ -732,7 +732,22 @@ function lossLabel(pct) {
   if (pct < 5)   return 'DEGRADED';
   return 'SEVERE LOSS';
 }
-  
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+console.log('aaaa');
+    try
+    {
+      togglePing();
+       // Shareon.init();
+    }
+    catch (exc) 
+    { 
+console.log('exc:' + exc);  
+
+    }
+  });
 
 </script>
 </body>
