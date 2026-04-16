@@ -145,8 +145,8 @@ function SendToWPF(latency) {
         colors
     };
 
-    const payload555 = { latency };
-//     console.log("payload234:" , payload234);
+    const payload555 = { latency: latency };
+    console.log("payload555:" , payload555);
     if (window.chrome && window.chrome.webview) {
         chrome.webview.postMessage(payload555);
     }
