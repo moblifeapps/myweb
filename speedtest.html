@@ -1837,7 +1837,11 @@ async function runSpeedTest() {
     //const lalalla =  await measureUploadSpeedSimple();
  //   console.log(' sssss: ' + lalalla);
 
-    const ulMbps = await measureUpload((p) => {
+  //   const aaaaaa = await measureUploadSpeedSimple();
+console.log('aaaaaa: ' );
+    const ulMbps = await  measureUpload((p) => {
+
+      
       arcProgress = 0.5 + p * 0.5;
       drawBtnArc(arcProgress);
       const live = Math.round(p * 80);
@@ -1916,7 +1920,9 @@ async function measureDownload(onProgress) {
 
 async function measureUploadSpeedSimple() {
     const uploadBytes = 10_000_000;
-    const url = "https://httpbin.org/post";
+   const url = 'https://lively-fog-26a9.g-karberis.workers.dev/';
+
+//    const url = "https://httpbin.org/post";
 
     const data = new Uint8Array(uploadBytes);
     crypto.getRandomValues(data);
@@ -1927,7 +1933,8 @@ async function measureUploadSpeedSimple() {
         method: "POST",
         body: data,
         headers: {
-            "User-Agent": "NetPulse/1.0"
+          //  "User-Agent": "NetPulse/1.0"
+          "Content-Type": "application/octet-stream"
         }
     });
 
@@ -1939,8 +1946,66 @@ async function measureUploadSpeedSimple() {
 
     return Number(mbps.toFixed(2));
 }
-async function measureUploadaaaaaa(onProgress) {
-  const size = 1_000_000; // 3MB
+
+//async function measureUploadSpeed(progressCallback, signal) {
+async function SKATA_measureUpload(progressCallback) {
+  console.log('eeee');
+    const uploadBytes = 10_000_000; // 10 MB
+//    const url = "https://httpbin.org/post";
+    const url = 'https://lively-fog-26a9.g-karberis.workers.dev/';
+
+
+    // Generate random payload
+    const data = new Uint8Array(uploadBytes);
+    crypto.getRandomValues(data);
+
+    progressCallback?.(0.1);
+
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+   //     xhr.open("POST", url, true);
+  //   const xhr = new XMLHttpRequest();
+        xhr.open('POST', url);
+        xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+       // xhr.setRequestHeader("User-Agent", "NetPulse/1.0");
+
+        const start = performance.now();
+
+        // Upload progress tracking
+        xhr.upload.onprogress = (event) => {
+            if (event.lengthComputable) {
+                const progress = event.loaded / event.total;
+                progressCallback?.(0.1 + progress * 0.9);
+            }
+        };
+
+        xhr.onload = () => {
+            const end = performance.now();
+            const seconds = (end - start) / 1000;
+
+            const mbps = seconds > 0
+                ? (uploadBytes * 8) / (seconds * 1_000_000)
+                : 0;
+
+            resolve(Number(mbps.toFixed(2)));
+        };
+
+        xhr.onerror = () => reject(new Error("Upload failed"));
+        xhr.onabort = () => reject(new Error("Upload aborted"));
+
+        // Support AbortController (like CancellationToken)
+       // if (signal) {
+         //   signal.addEventListener("abort", () => {
+           //     xhr.abort();
+           // });
+        //}
+
+        xhr.send(data);
+    });
+}
+
+async function measureUpload(onProgress) {
+  const size = 10_000_000; // 3MB
   const chunk = new Uint8Array(size);
   crypto.getRandomValues(chunk.slice(0, 65536));
 
@@ -1974,11 +2039,11 @@ const url = 'https://lively-fog-26a9.g-karberis.workers.dev/';
     xhr.send(chunk);
   });
 }
-async function measureUpload(onProgress) {
+async function measureUploadaaaaaaaaa(onProgress) {
 // dika mou
-  const myuploadBytes = 10_000_000; // 3 MB
+ // const myuploadBytes = 10_000_000; // 3 MB
 
-  const size   = 10_000_000; // 3MB — enough for a browser test
+  const size   = 1_000_000; // 3MB — enough for a browser test
   const chunk  = new Uint8Array(size);
   crypto.getRandomValues(chunk.slice(0, Math.min(65536, size))); // fill first 64KB randomly
 
@@ -2016,14 +2081,14 @@ async function measureUpload(onProgress) {
           const myseconds = (myend - start) / 1000;
 
           console.log('myseconds: ' + myseconds);
-          const mymbps = myseconds > 0
-                ? (myuploadBytes * 8) / (myseconds * 1_000_000)
-                : 0;
+      //    const mymbps = myseconds > 0
+      //          ? (myuploadBytes * 8) / (myseconds * 1_000_000)
+      //          : 0;
 
-          console.log('mymbps: ' + mymbps);
+      //    console.log('mymbps: ' + mymbps);
 
-          let paparia = resolve(Number(mymbps.toFixed(2)));
-          console.log('paparia:' + paparia);
+      //    let paparia = resolve(Number(mymbps.toFixed(2)));
+      //    console.log('paparia:' + paparia);
 
           const elapsed = (performance.now() - start) / 1000;
           console.log("elapsed:"  + elapsed);
@@ -2036,7 +2101,10 @@ async function measureUpload(onProgress) {
       });
 
       return mbps;
-    } catch {}
+    } catch (errrrrr) {
+
+      console.log('err:' + errrrrr);
+    }
   }
   throw new Error('Upload test failed');
 }
