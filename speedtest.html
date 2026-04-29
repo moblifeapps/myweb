@@ -1832,6 +1832,11 @@ async function runSpeedTest() {
     $('test-phase').textContent = 'Testing upload speed...';
     $('btn-label').textContent  = '↑';
 
+
+    // dika mou
+    //const lalalla =  await measureUploadSpeedSimple();
+ //   console.log(' sssss: ' + lalalla);
+
     const ulMbps = await measureUpload((p) => {
       arcProgress = 0.5 + p * 0.5;
       drawBtnArc(arcProgress);
@@ -1908,12 +1913,48 @@ async function measureDownload(onProgress) {
   throw new Error('Download test failed');
 }
 
+
+async function measureUploadSpeedSimple() {
+    const uploadBytes = 10_000_000;
+    const url = "https://httpbin.org/post";
+
+    const data = new Uint8Array(uploadBytes);
+    crypto.getRandomValues(data);
+
+    const start = performance.now();
+
+    await fetch(url, {
+        method: "POST",
+        body: data,
+        headers: {
+            "User-Agent": "NetPulse/1.0"
+        }
+    });
+
+    const seconds = (performance.now() - start) / 1000;
+
+    const mbps = seconds > 0
+        ? (uploadBytes * 8) / (seconds * 1_000_000)
+        : 0;
+
+    return Number(mbps.toFixed(2));
+}
+
 async function measureUpload(onProgress) {
+// dika mou
+  const myuploadBytes = 3_000_000; // 3 MB
+
   const size   = 3_000_000; // 3MB — enough for a browser test
   const chunk  = new Uint8Array(size);
   crypto.getRandomValues(chunk.slice(0, Math.min(65536, size))); // fill first 64KB randomly
 
-  const endpoints = [
+
+  // const url = "https://speed.cloudflare.com/__up";
+ const endpoints = [
+    'https://speed.cloudflare.com/__up'
+  ];
+
+  const endpointsOLD = [
     'https://httpbin.org/post',
     'https://postman-echo.com/post'
   ];
@@ -1923,16 +1964,40 @@ async function measureUpload(onProgress) {
       onProgress(0.05);
       const start  = performance.now();
 
+      console.log('1');
       // Use XMLHttpRequest for upload progress
-      const mbps = await new Promise((resolve, reject) => {
+        const mbps = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.open('POST', url);
         xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+       
+        // new
+     ///   xhr.setRequestHeader("User-Agent", "NetPulse/1.0");
+
+
+        console.log('2');
+
         xhr.upload.onprogress = e => {
           if (e.lengthComputable) onProgress(0.05 + (e.loaded / e.total) * 0.9);
         };
         xhr.onload = () => {
+
+// dika mou"
+          const myend = performance.now();
+          const myseconds = (myend - start) / 1000;
+
+          console.log('myseconds: ' + myseconds);
+          const mymbps = myseconds > 0
+                ? (myuploadBytes * 8) / (myseconds * 1_000_000)
+                : 0;
+
+          console.log('mymbps: ' + mymbps);
+
+          let paparia = resolve(Number(mymbps.toFixed(2)));
+          console.log('paparia:' + paparia);
+
           const elapsed = (performance.now() - start) / 1000;
+          console.log("elapsed:"  + elapsed);
           onProgress(1);
           resolve((size * 8) / (elapsed * 1_000_000));
         };
