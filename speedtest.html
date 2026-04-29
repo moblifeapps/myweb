@@ -1976,9 +1976,9 @@ const url = 'https://lively-fog-26a9.g-karberis.workers.dev/';
 }
 async function measureUpload(onProgress) {
 // dika mou
-  const myuploadBytes = 3_000_000; // 3 MB
+  const myuploadBytes = 10_000_000; // 3 MB
 
-  const size   = 3_000_000; // 3MB — enough for a browser test
+  const size   = 10_000_000; // 3MB — enough for a browser test
   const chunk  = new Uint8Array(size);
   crypto.getRandomValues(chunk.slice(0, Math.min(65536, size))); // fill first 64KB randomly
 
