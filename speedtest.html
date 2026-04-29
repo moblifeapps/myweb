@@ -1939,7 +1939,41 @@ async function measureUploadSpeedSimple() {
 
     return Number(mbps.toFixed(2));
 }
+async function measureUploadaaaaaa(onProgress) {
+  const size = 1_000_000; // 3MB
+  const chunk = new Uint8Array(size);
+  crypto.getRandomValues(chunk.slice(0, 65536));
 
+  // Try to find a closer/faster endpoint if possible
+  
+ // const url = 'https://httpbin.org/post'; 
+const url = 'https://lively-fog-26a9.g-karberis.workers.dev/';
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', url);
+    
+    const start = performance.now();
+
+    xhr.upload.onprogress = e => {
+      if (e.lengthComputable) {
+        const percent = e.loaded / e.total;
+        onProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      const durationSeconds = (performance.now() - start) / 1000;
+      // bits / (seconds * 1,000,000) = Mbps
+      const mbps = (size * 8) / (durationSeconds * 1_000_000);
+      
+      onProgress(1);
+      resolve(Number(mbps.toFixed(2)));
+    };
+
+    xhr.onerror = () => reject(new Error('Upload failed'));
+    xhr.send(chunk);
+  });
+}
 async function measureUpload(onProgress) {
 // dika mou
   const myuploadBytes = 3_000_000; // 3 MB
@@ -1949,15 +1983,15 @@ async function measureUpload(onProgress) {
   crypto.getRandomValues(chunk.slice(0, Math.min(65536, size))); // fill first 64KB randomly
 
 
-  // const url = "https://speed.cloudflare.com/__up";
  const endpoints = [
-    'https://speed.cloudflare.com/__up'
+  'https://lively-fog-26a9.g-karberis.workers.dev/'
+
   ];
 
-  const endpointsOLD = [
-    'https://httpbin.org/post',
-    'https://postman-echo.com/post'
-  ];
+//  const endpointsOLD = [
+  //  'https://httpbin.org/post',
+    //'https://postman-echo.com/post'
+ // ];
 
   for (const url of endpoints) {
     try {
@@ -1970,11 +2004,6 @@ async function measureUpload(onProgress) {
         const xhr = new XMLHttpRequest();
         xhr.open('POST', url);
         xhr.setRequestHeader('Content-Type', 'application/octet-stream');
-       
-        // new
-     ///   xhr.setRequestHeader("User-Agent", "NetPulse/1.0");
-
-
         console.log('2');
 
         xhr.upload.onprogress = e => {
