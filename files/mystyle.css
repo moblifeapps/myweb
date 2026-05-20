@@ -189,3 +189,29 @@ footer {
         gap: 20px;
     }
 }
+
+   .privacyLink {   position: fixed;  padding: 0em; color: #444;   height: 60px; bottom: 13px; left: 0%; margin-left: 520px; -webkit-transition: -webkit-transform .3s ease-in-out; -ms-transition: -ms-transform .3s ease-in-out; transition: transform .3s ease-in-out; z-index: 1; }
+
+
+
+ .privacyBottom { padding: 0em; color: #444; position: fixed; width: 80px; height: 80px; bottom: -3px; left: 50%; margin-left: 100px; -webkit-transition: -webkit-transform .3s ease-in-out; -ms-transition: -ms-transform .3s ease-in-out; transition: transform .3s ease-in-out; z-index: 1; }
+ .privacyBottom:hover { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); }
+ .privacyBottom.hidden {
+    display: none;
+}
+
+
+ .scrollToBottom { padding: 0em; color: #444; position: fixed; width: 80px; height: 80px; bottom: -3px; left: 50%; margin-left: 0px; -webkit-transition: -webkit-transform .3s ease-in-out; -ms-transition: -ms-transform .3s ease-in-out; transition: transform .3s ease-in-out; z-index: 1; }
+ .scrollToBottom:hover { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); }
+ .scrollToBottom.hidden {
+    display: none;
+}
+ .scrollToTop { padding: 0em; color: #444; position: fixed; width: 80px; height: 80px; bottom: -3px; left: 50%; margin-left: -100px; -webkit-transition: -webkit-transform .3s ease-in-out; -ms-transition: -ms-transform .3s ease-in-out; transition: transform .3s ease-in-out; z-index: 1; }
+ .scrollToTop:hover { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); }
+
+
+/* Fix fixed ad overflow */
+.stpdwrapper {
+  max-width: 100vw !important;
+  right: 0 !important;
+}

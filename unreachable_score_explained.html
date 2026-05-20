@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>unReachable - Quality Score Explained</title>
+
+    <meta
+        name="description"
+        content="Analyzes how unReachable calculates the Network Quality Score.unReachable is a Windows 11 network quality monitor that provides user with a Quality Score grade for the active network connection of the PC."
+    />
+
+    <meta
+        name="keywords"
+        content="network quality monitor,network quality score explained, internet latency monitor, ping jitter packet loss, Windows 11 widget, taskbar widget, internet connection monitor, network score"
+    />
+
+    <meta name="author" content="unReachable" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="unReachable - Network Quality Score Explained" />
+    <meta
+        property="og:description"
+        content="Track internet quality in real time using latency, jitter and packet loss analysis with beautiful Windows 11 widgets."
+    />
+    <meta property="og:image" content="/upload/unreachable.png" />
+    <meta property="og:url" content="https://mlapplications.com/unreachable_score_explained.html" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="unReachable - Network Quality Score Explained" />
+    <meta
+        name="twitter:description"
+        content="Real-time internet quality monitoring for Windows 11."
+    />
+    <meta name="twitter:image" content="upload/unreachable.png" />
+
+    <link rel="canonical" href="https://mlapplications.com/unreachable_score_explained.html" />
+    <link rel="stylesheet" href="/files/mystyle.css" />
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "unReachable",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Windows 11",
+      "description": "unReachable for Windows 11 - Network Quality Score calculation from latency, jitter and packet loss.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "softwareVersion": "2.1",
+      "downloadUrl": "https://apps.microsoft.com/detail/9NB66SPC84SG",
+      "image": "https://mlapplications.com/upload/unreachable.png"
+    }
+    </script>
+</head>
+
+<body>
+
+    <header class="hero">
+        <nav class="navbar" style="margin-bottom: 10px; margin-top: 20px;">
+            <div class="container" style="margin-bottom: 10px;  width: 100%;">
+               <span style="font-size: large; font-weight:bolder; color: #0078d4; margin-left: 10px;">by:</span>    
+
+				<a href="index.html" class="waves-effect waves-light">
+						<span class="hide-on-small-only"><img src="uploads/logo-big_2.png?123" height="50" id="appicon" style="vertical-align: middle;margin-bottom:10px;margin-right:10px;"></span>
+					 
+				</a>
+				
+				             
+
+                    <hr style="opacity: 0.5; margin-top: 10px; margin-bottom: 10px;"> 
+
+			  </div>
+               </nav>
+             
+            
+    <div  style="display: flex; font-size:xx-large;
+    justify-content: center;  "><span style="color: goldenrod;">un</span>Reachable</div>
+    <div  style="display: flex; font-size:large;
+    justify-content: center;  ">
+    Network<span style="color: #1b8fff; margin-left: 10px;">Quality</span>
+<span style="color: #0078d4; margin-left: 10px;">Monitor </span>    
+<span style="color: #8a94a6; margin-left: 10px;">for Windows 11</span>
+</div>
+    
+        <p style="display: flex;
+    justify-content: center;  ">
+        <img   src="uploads/unreachable.png" style=" width: 200px;">    
+        </p>
+    
+   
+ 
+          <hr style="opacity: 0.5; margin-top: 10px; margin-bottom: 30px;"> 
+
+        <div class="hero-content">
+            <div class="hero-text">
+                
+                <h1>
+                    How unReachable calculates your Network Quality Score ?
+                </h1>
+
+                <p> The goal of unReachable is to provide the user with 1-2 easy eye-catching scores, that don't interrupt him when working on the pc.
+                    To achieve this, unReachable by design takes as little space as possible and the user is free to select among 3 different ways to monitor the quality.
+                </p>
+                <p>
+
+                    unReachable takes into account three different parameters: 
+                    Latency, jitter and packet loss, combines them and gives a simple
+                    network quality score from 0-100.
+                </p>
+
+                <div class="hero-buttons">
+                    <a  href="https://apps.microsoft.com/detail/9NB66SPC84SG?referrer=appbadge&amp;cid=myapppage&amp;mode=full" target="_blank" rel="noopener noreferrer">
+	<img src="https://get.microsoft.com/images/en-us%20light.svg" style="border-radius: 8px; " >
+</a>
+                   
+
+                    <a href="#features" class="secondary-btn">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-image">
+                  <section class="widgets-section">
+     
+
+        <div class="widget-grid">
+
+            <div class="widget-card">
+                <img
+                    src="uploads/unreachable_widget_desktop.png"
+                    alt="Desktop widget screenshot"
+                />
+
+                <h3>Desktop Widget</h3>
+
+               
+            </div>
+
+            <div class="widget-card">
+                <img 
+                    src="uploads/unreachable_widget_taskbar.png"
+                    alt="Taskbar widget screenshot"
+                />
+
+                <h3>Taskbar Widget</h3>
+
+              
+            </div>
+
+            <div class="widget-card">
+                <img
+                    src="uploads/unreachable_widget_win11.png"
+                    alt="Windows widgets screenshot"
+                />
+
+                <h3>Windows Widget</h3>
+
+                
+            </div>
+
+        </div>
+    </section>
+               
+            </div>
+        </div>
+    </header>
+
+    <section class="features" id="features">
+        <h2>Parameters used by unReachable </h2>
+
+        <div class="feature-grid">
+
+            <div class="card">
+                      <img 
+                    src="uploads/unreachable-latency.png"
+                    alt="Latency icon"
+                />
+                <h3>Latency</h3>
+
+                <p>
+                    The time it takes for data to travel from your device to a destination and back. Lower latency means faster response times.
+                </p>
+            </div>
+
+            <div class="card">
+                                <img 
+                    src="uploads/unreachable-jitter.png"
+                    alt="Jitter icon"
+                />
+
+                <h3>Jitter</h3>
+
+                <p>
+                    The variation in latency over time. High jitter can cause unstable connections, delays, or choppy audio/video.
+                </p>
+            </div>
+
+            <div class="card">
+                        <img 
+                    src="uploads/unreachable-packet-loss.png"
+                    alt="Packet Loss icon"
+                />
+                <h3>Packet loss</h3>
+
+                <p>
+                   The percentage of data packets that never reach their destination. Packet loss can result in lag, missing information, or interrupted communication.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+  
+
+<div class="qs-container">
+   <section class="qs-section">
+    <h2>External endpoint for measuring Network Latency</h2>
+     <p>20 May of 2026:<strong> unReachable</strong> in its initial version: <strong>2.1</strong> uses <strong>Cloudflare</strong> as the default external endpoint to test connectivity and measure <em>latency</em>, <em>jitter</em> and <em>packet loss</em>. </p>
+    <br>
+    <p><em>This is something that might change in future app updates !</em></p>
+<br>
+     <p>There are several reasons behind this is:</p>  
+
+<p><strong>1. Global Presence / Nearby Servers</strong><br/>
+Cloudflare operates one of the world's largest edge networks with data centers in hundreds of cities worldwide. Your latency test will usually hit a geographically close server, reducing bias from long-distance routing.</p>
+
+<p><strong>2. High Availability &amp; Stability</strong><br/>
+Cloudflare infrastructure is highly reliable and rarely offline or overloaded. That makes measurements more consistent and reduces false spikes caused by a weak test server.</p>
+
+<p><strong>3. Low Server-Side Processing Delay</strong><br/>
+Cloudflare's edge systems are optimized for extremely fast response times. The measured delay mainly reflects <em>your PC + local network + ISP path</em>, not slow application processing on the remote side.</p>
+
+<p><strong>4. Representative Internet Path</strong><br/>
+Testing against Cloudflare measures latency to a major internet backbone destination rather than just your local router. This gives a realistic indication of <em>real-world internet responsiveness</em>.</p>
+
+<p><strong>5. Excellent ISP Peering</strong><br/>
+Most ISPs maintain direct or optimized peering with Cloudflare. Fewer routing detours generally mean cleaner, more reproducible latency results.</p>
+
+<p><strong>6. Widely Reachable &amp; Firewall-Friendly</strong><br/>
+Cloudflare endpoints (e.g. <em>1.1.1.1</em>) are broadly accessible worldwide and usually not blocked, making them suitable for consumer applications.</p>
+
+<p><strong>7. Consistent Benchmark Across Users</strong><br/>
+If many users measure against the same provider, results become more comparable between different PCs, ISPs, and locations.</p>
+
+<p><strong>Examples:</strong></p>
+
+<p>
+<strong>• Router ping</strong> → measures <em>local network latency</em>.<br/>
+<strong>• Cloudflare (1.1.1.1) ping</strong> → measures <em>end-to-end internet latency</em>, including ISP performance.
+</p>
+ 
+
+<p>This provides a more complete picture of <strong>overall network quality</strong>.</p>
+     
+  </section>
+  <section class="qs-section">
+    <h2>Quality Score System</h2>
+     <p>The final <strong>Quality Score</strong> is a weighted composite of three sub-scores calculated using <em>linear interpolation</em> between thresholds to ensure smooth transitions without hard steps.</p>
+     <p>The three sub-scores comes from the latest values of <strong>Latency, Jitter and Packet-Loss</strong> <em>statistics</em>.</p>
+  </section>
+
+  <hr class="qs-divider">
+
+  <section class="qs-section">
+    <h3>1. Component Weights &amp; Logic</h3>
+    <table class="qs-table">
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Weight</th>
+          <th>Logic / Thresholds</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Latency</strong></td>
+          <td class="qs-highlight">45%</td>
+          <td>&le;10ms = 100 &rarr; &ge;350ms = 0 <span class="qs-note">(Smooth interpolation)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Jitter</strong></td>
+          <td class="qs-highlight">30%</td>
+          <td>&lt;2ms = 100 &rarr; &ge;40ms = 0</td>
+        </tr>
+        <tr>
+          <td><strong>Packet Loss</strong></td>
+          <td class="qs-highlight">25%</td>
+          <td>0% = 100 &rarr; &ge;5% = 0</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <hr class="qs-divider">
+
+  <section class="qs-section">
+    <h3>2. Grading Scale</h3>
+    <table class="qs-table">
+      <thead>
+        <tr>
+          <th>Score</th>
+          <th>Grade</th>
+          <th>Label</th>
+          <th>Visual Color</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="grade-s">
+          <td>90&ndash;100</td>
+          <td><span class="badge">S</span></td>
+          <td>Perfect</td>
+          <td><span class="dot dot-green"></span> Green</td>
+        </tr>
+        <tr class="grade-a">
+          <td>75&ndash;89</td>
+          <td><span class="badge">A</span></td>
+          <td>Excellent</td>
+          <td><span class="dot dot-skyblue"></span> Sky Blue</td>
+        </tr>
+        <tr class="grade-b">
+          <td>60&ndash;74</td>
+          <td><span class="badge">B</span></td>
+          <td>Good</td>
+          <td><span class="dot dot-blue"></span> Blue</td>
+        </tr>
+        <tr class="grade-c">
+          <td>45&ndash;59</td>
+          <td><span class="badge">C</span></td>
+          <td>Fair</td>
+          <td><span class="dot dot-amber"></span> Amber</td>
+        </tr>
+        <tr class="grade-d">
+          <td>25&ndash;44</td>
+          <td><span class="badge">D</span></td>
+          <td>Poor</td>
+          <td><span class="dot dot-orange"></span> Orange</td>
+        </tr>
+        <tr class="grade-f">
+          <td>0&ndash;24</td>
+          <td><span class="badge">F</span></td>
+          <td>Critical</td>
+          <td><span class="dot dot-red"></span> Red</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <hr class="qs-divider">
+
+  <section class="qs-section">
+    <h3>3. the UI Elements</h3>
+    <h4>In all UI's (Desktop, Taskbar or Widget) we have embed most of the ui color-schemes that are described below according to the available space for each: </h4>
+    <br>
+
+    <ul class="qs-list">
+      <li>Large numeric score with a <code>/100</code> suffix, dynamically colored to match the grade.</li>
+      <li>Letter grade badge (S/A/B/C/D/F) featuring a tinted background.</li>
+      <li>Full-width gradient progress bar moving from <span style="color: #ff4d4d;">red</span> &rarr; <span style="color: #ffaa00;">amber</span> &rarr; <span style="color: #2ecc71;">green</span>.</li>
+      <li>Three dot-bars (●●●●●) representing individual per-component sub-scores.</li>
+      <li>A bottom status bar that dynamically updates to display the grade name while monitoring.</li>
+    </ul>
+  </section>
+</div>
+
+
+<style>
+  /* Container & Layout */
+  .qs-container {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: whitesmoke;
+    
+    margin: 20px auto;
+    padding: 20px;
+    background-color: transparent; /* Seamlessly blends into your near-black background */
+  }
+
+  .qs-section {
+    margin-bottom: 15px;
+  }
+
+  /* Typography */
+  .qs-container h2 {
+    color: #ffffff;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    border-left: 4px solid silver;
+    padding-left: 10px;
+  }
+
+  .qs-container h3 {
+    color: silver;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+  }
+
+  .qs-container p {
+    color: whitesmoke;
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+
+  .qs-container strong {
+    color: #ffffff;
+  }
+
+  .qs-note {
+    color: silver;
+    font-size: 0.85rem;
+    font-style: italic;
+    margin-left: 5px;
+  }
+
+  /* Divider line */
+  .qs-divider {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+    margin: 25px 0;
+  }
+
+  /* Tables styling */
+  .qs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.95rem;
+    text-align: left;
+  }
+
+  .qs-table th {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    font-weight: 600;
+    padding: 12px;
+    border-bottom: 2px solid silver;
+  }
+
+  .qs-table td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: whitesmoke;
+  }
+
+  .qs-highlight {
+    color: #ffffff;
+    font-weight: bold;
+  }
+
+  /* UI Lists */
+  .qs-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .qs-list li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    line-height: 1.5;
+    color: whitesmoke;
+  }
+
+  .qs-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: silver;
+    font-weight: bold;
+  }
+
+  .qs-list code {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    color: #ffffff;
+  }
+
+  /* Color Dots & Badges for Grades */
+  .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+  .dot-green { background-color: #2ecc71; }
+  .dot-skyblue { background-color: #5bc0de; }
+  .dot-blue { background-color: #337ab7; }
+  .dot-amber { background-color: #f0ad4e; }
+  .dot-orange { background-color: #f08d49; }
+  .dot-red { background-color: #d9534f; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    font-weight: bold;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+  }
+</style>
+ 
+
+    <section class="cta">
+          <div  style="display: flex; font-size:xx-large;
+    justify-content: center;  ">
+    
+      <h2>Download</h2>
+<h2>
+    <span style="margin-left: 14px; color: goldenrod;">un</span>Reachable today</h2></div>
+    
+    
+        <p>
+            Start monitoring your internet quality in real time on Windows 11.
+        </p>
+
+                          <a  href="https://apps.microsoft.com/detail/9NB66SPC84SG?referrer=appbadge&amp;cid=myapppage&amp;mode=full" target="_blank" rel="noopener noreferrer">
+	<img src="https://get.microsoft.com/images/en-us%20light.svg" style="border-radius: 8px; " >
+</a>
+
+    </section>
+
+    <footer>
+        <p>© 2026 unReachable. All rights reserved.</p>
+    </footer>
+
+      
+<div id="bottom" style="height: 80px;">
+<a href="#" class="no_nu_reward scrollToTop"><img src="uploads/scrollupblue.png" alt="Scroll to Top"></a>
+
+<a href="#" class="no_nu_reward scrollToBottom" id="scrollBottom"><img src="uploads/scrolldownblue.png" alt="Scroll to Top"></a>  
+
+<a href="javascript:googlefc.callbackQueue.push(googlefc.showRevocationMessage)" class="no_nu_reward2 privacyBottom" id="scrollBottom2"><img src="uploads/privacyblue.png" alt="Scroll to Top"></a>  
+ 
+</div>
+<script>
+const btn = document.getElementById("scrollBottom");
+ 
+btn.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: "smooth"
+    });
+});
+ 
+</script>
+</body>
+</html>
