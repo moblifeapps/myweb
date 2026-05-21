@@ -1073,11 +1073,13 @@ footer {
   <main>
 
     <!-- ── HERO ROW: Speed test + Ping controls ── -->
-    <div class="hero">
+    <div class="hero" >
 
       <!-- Speed Test Card -->
-      <div class="card">
-        <div class="card-title">Speed Test</div>
+      <div class="card"  id="capture-target" style="background: linear-gradient(135deg, calc(--bg) 0%, calc(--bg) 100%);">
+        <div class="card-title">Speed Test
+         
+</div>
         <div class="gauge-section">
           <div class="gauges-row">
 
@@ -1123,6 +1125,39 @@ footer {
             </div>
           </div>
         </div>
+      
+         <div class="card-title" id="mysharepanel" style=" text-transform: none; display: none; "> 
+          <img src="uploads/unreachable_myqr.png" style="height: 180px;" />
+          <div style="text-transform: none;">
+            measured with:
+           
+ <div class="container" style="position: relative;left: 10px;color: white; width: 300px;" >
+        <p style="display: flex;
+    justify-content: center;  ">
+        <img   src="uploads/unreachable.png" style=" height: 50px;">    
+        </p>
+         <div  style="display: flex;  font-family: var(--sans);
+         text-transform: none; font-size: 16px; font-weight:bold;  letter-spacing:normal;
+    justify-content: center;  "><span style="color: goldenrod;">un</span>Reachable</div>
+
+     <div  style="display: flex; font-size: 13px; font-weight:normal;  letter-spacing:normal;
+    justify-content: center;  ">
+    Network<span style="color: #1b8fff; margin-left: 10px;">Quality</span>
+<span style="color: #0078d4; margin-left: 10px;">Monitor </span>    
+<span style="color: #8a94a6; margin-left: 10px;">for Windows 11</span>
+   </div>
+   <hr style="opacity: 0.5; margin-top: 10px; margin-bottom: 10px;"> 
+    <span id="footer-time2"></span>
+ </div>
+          </div>
+          
+</div>
+       <button class="ripple-btn" id="shareButton" onclick="shareDivAsImage()">
+<svg style="margin-top: -11px; margin-bottom: -11px;  margin-right: 5px;" fill="#ffffff" viewBox="0 0 30 34" width="30px" height="30px">
+    <path d="M27.11499,0C29.707031,0 31.900024,1.8940125 31.900024,4.2870178 31.900024,6.6790161 29.707031,8.572998 27.11499,8.572998 26.018005,8.572998 25.022034,8.2740173 24.223999,7.6760254L10.268005,16.249023 23.825012,24.623016C24.722046,23.826019 25.819031,23.427002 27.215027,23.427002 29.906006,23.427002 32,25.321014 32,27.713013 32,30.106018 29.807007,32 27.215027,32 24.822021,32 22.828003,30.404999 22.429993,28.312012L7.875,19.438995C7.0780029,20.037018 5.9810181,20.436005 4.7850342,20.436005 2.0930176,20.436005 0,18.542023 0,16.150024 0,13.857025 2.1929932,11.963013 4.7850342,11.963013 5.9810181,11.963013 7.177002,12.361023 7.9750366,13.059021L22.230042,4.2870178C22.330017,1.8940125,24.423035,0,27.11499,0z"></path>
+</svg> 
+Share as image
+</button>
       </div>
 
      
@@ -2037,6 +2072,8 @@ function updateClock() {
   const now = new Date();
   $('nav-time').textContent  = formatTime(now);
   $('footer-time').textContent = now.toLocaleDateString() + '  ' + formatTime(now);
+  $('footer-time2').textContent = $('footer-time').textContent;
+  
 }
 updateClock();
 setInterval(updateClock, 1000);
@@ -2056,5 +2093,103 @@ window.addEventListener('resize', () => {
 
 
 </script>
+ <style>
+        /* Basic styling for demonstration 
+        #capture-target {
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 300px;
+            border-radius: 8px;
+            text-align: center;
+            font-family: sans-serif;
+            margin-bottom: 15px;
+        }*/
+        .btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .ripple-btn {
+          right: 0px;
+          margin-left: 0px;
+    position: relative;
+    overflow: hidden;
+    padding: 1px 2px;
+    border-radius: 7px;
+    border: 3px;
+    border-color: black;
+    width: 183px;
+    height: 50px;
+  background: linear-gradient(
+        0deg,
+        rgba(0, 57, 116, 1)  0%,
+        rgba(0, 57, 116, 1) 50%,
+        rgba(0, 57, 116, 1)  50%,
+        rgba(0, 76, 154, 1)  100%
+
+    )  ; /* var(--accent-soft);*/
+    color: white; /* #020617; */
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.ripple-btn span {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 600ms linear;
+    background: rgba(255, 255, 255, 0.6);
+    pointer-events: none;
+}
+
+    </style>
+    
+    <!-- html2canvas Library -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js"></script>
+    <script>
+     async function shareDivAsImage() {
+
+      const my_share_panel = document.getElementById('mysharepanel');
+   //   my_share_panel.attributes.style.vi
+
+    const my_share_Button = document.getElementById('shareButton');  
+
+
+    const element = document.getElementById('capture-target');
+    
+    try {
+
+        if (my_share_panel) my_share_panel.style.display = 'flex';      // Make extra div visible
+        if (my_share_Button) my_share_Button.style.display = 'none'; // Hide the button from the picture
+
+        // htmlToImage bypasses canvas rendering bugs entirely by generating a direct blob
+        const blob = await htmlToImage.toBlob(element, { cacheBust: true });
+        
+        if (!blob) return;
+
+        const file = new File([blob], 'captured-image.png', { type: 'image/png' });
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({ files: [file], title: 'Shared Image' });
+        } else {
+            const link = document.createElement('a');
+            link.download = 'captured-image.png';
+            link.href = URL.createObjectURL(blob);
+            link.click();
+        }
+    } catch (error) {
+        console.error('Snapshot failed:', error);
+    }
+    finally {
+        // 5. This block ALWAYS runs, resetting the UI even if the code above fails
+        if (my_share_panel) my_share_panel.style.display = 'none';         // Hide extra div again
+        if (my_share_Button) my_share_Button.style.display = 'block';  // Show the button again
+    }
+}
+ </script>
 </body>
 </html>
