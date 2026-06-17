@@ -30,6 +30,9 @@
 
 <script>
 (() => {
+
+
+
   // The PFX/cert is issued for this hostname, and DNS for this subdomain
   // should resolve to 127.0.0.1 so the browser trusts the local server.
   //const WS_URL = "wss://subdomain.mydomain.com:8181/";
@@ -101,8 +104,143 @@
     if (e.key === "Enter") sendBtn.click();
   });
 
-  connect();
+function findWssPort(host, candidates, timeoutMs = 1500) {
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    let remaining = candidates.length;
+
+    candidates.forEach(port => {
+      const url = `wss://${host}:${port}/`;
+      const ws = new WebSocket(url);
+      const timer = setTimeout(() => { ws.close(); }, timeoutMs);
+
+      ws.onopen = () => {
+        clearTimeout(timer);
+        if (!settled) {
+          settled = true;
+          resolve({ port, socket: ws });
+
+          setStatus("connected", "ok");
+          sendBtn.disabled = false;
+          reconnectDelay = 1000; // reset backoff on success
+          log("Connection open.");
+
+        } else {
+          ws.close(); // already found one, discard this connection
+        }
+      };
+      
+      ws.onmessage = (event) => {
+      log(`Received: ${event.data}`);
+
+      const data = JSON.parse(event.data);
+      if (data.type === "imageList") {
+      const gallery = document.getElementById("gallery");
+      data.files.forEach(name => {
+        const img = document.createElement('img');
+        img.src = `https://mywbsck.mlapplications.com:${httpImagePort}/images/${name}`;
+        gallery.appendChild(img);
+      });
+    }};
+      
+
+      ws.onerror = ws.onclose = () => {
+        clearTimeout(timer);
+        remaining--;
+        log("WebSocket error (see console for details).");
+        console.error("WS error", event);
+        
+        if (!settled && remaining === 0) {
+          reject(new Error("No reachable port found"));
+        }
+      };
+   
+      ws.onclose = (event) => {
+      setStatus("disconnected", "bad");
+      sendBtn.disabled = true;
+      log(`Connection closed (code ${event.code}). Reconnecting in ${reconnectDelay / 1000}s…`);
+
+      setTimeout(connect, reconnectDelay);
+      reconnectDelay = Math.min(reconnectDelay * 2, maxReconnectDelay);
+    };
+   
+  });
+})
+   
+}
+
+async function discoverPorts() {
+  const res = await fetch("http://127.0.0.1:49199/");
+  return await res.json();
+}
+
+ // connect();
+  findWssPort("mywbsck.mlapplications.com", [8181, 8281, 8381])
+    .then(({ port, socket }) => {
+      console.log("Connected on port", port);
+      socket.send("give me images");
+      //socket.onmessage = (event) => { /* handle as before */ };
+  })
+  .catch(err => console.error(err));
+
 })();
+
+
+discoverPorts().then(({ wssPort, httpImagePort }) => {
+  const ws = new WebSocket(`wss://mywbsck.mlapplications.com:${wssPort}/`);
+ // ws.onopen = () => ws.send("give me images");
+  
+  ws.onopen = () => {
+        clearTimeout(timer);
+        if (!settled) {
+          settled = true;
+          resolve({ port, socket: ws });
+
+          setStatus("connected", "ok");
+          sendBtn.disabled = false;
+          reconnectDelay = 1000; // reset backoff on success
+          log("Connection open.");
+          ws.send("give me images");
+        } else {
+          ws.close(); // already found one, discard this connection
+        }
+      };
+ 
+  ws.onerror = ws.onclose = () => {
+    //    clearTimeout(timer);
+  //      remaining--;
+        log("WebSocket error (see console for details).");
+        console.error("WS error", event);
+        
+   //     if (!settled && remaining === 0) {
+     //     reject(new Error("No reachable port found"));
+     //   }
+      };    
+  ws.onclose = (event) => {
+      setStatus("disconnected", "bad");
+      sendBtn.disabled = true;
+      log(`Connection closed (code ${event.code}). Reconnecting in ${reconnectDelay / 1000}s…`);
+
+      setTimeout(connect, reconnectDelay);
+      reconnectDelay = Math.min(reconnectDelay * 2, maxReconnectDelay);
+    };
+
+  ws.onmessage = (event) => {
+
+    log(`Received: ${event.data}`);
+    const data = JSON.parse(event.data);
+    if (data.type === "imageList") {
+      const gallery = document.getElementById("gallery");
+      data.files.forEach(name => {
+        const img = document.createElement('img');
+        img.src = `https://mywbsck.mlapplications.com:${httpImagePort}/images/${name}`;
+        gallery.appendChild(img);
+      });
+    
+    }
+  };
+});
+
 </script>
 
 </body>
