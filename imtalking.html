@@ -30,9 +30,7 @@
 
 <script>
 (() => {
-
-
-
+ 
   // The PFX/cert is issued for this hostname, and DNS for this subdomain
   // should resolve to 127.0.0.1 so the browser trusts the local server.
   //const WS_URL = "wss://subdomain.mydomain.com:8181/";
@@ -173,19 +171,7 @@ async function discoverPorts() {
   const res = await fetch("http://127.0.0.1:49199/");
   return await res.json();
 }
-
- // connect();
-  findWssPort("mywbsck.mlapplications.com", [8181, 8281, 8381])
-    .then(({ port, socket }) => {
-      console.log("Connected on port", port);
-      socket.send("give me images");
-      //socket.onmessage = (event) => { /* handle as before */ };
-  })
-  .catch(err => console.error(err));
-
-})();
-
-
+ 
 discoverPorts().then(({ wssPort, httpImagePort }) => {
   const ws = new WebSocket(`wss://mywbsck.mlapplications.com:${wssPort}/`);
  // ws.onopen = () => ws.send("give me images");
@@ -240,7 +226,7 @@ discoverPorts().then(({ wssPort, httpImagePort }) => {
     }
   };
 });
-
+});
 </script>
 
 </body>
