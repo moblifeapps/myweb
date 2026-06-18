@@ -80,7 +80,7 @@
     <script defer type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
  
 	
-	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js" defer></script>
+	<script defer type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js" defer></script>
     
    
  <style>
@@ -3089,12 +3089,17 @@ document.querySelectorAll('.app-carousel').forEach(carousel => {
 });
 </script>
 
- <script defer>
-      $(document).ready(function () {
-      	$(".button-collapse").sideNav();
-      });
+ <script defer type="text/javascript" >
+	document.addEventListener("DOMContentLoaded", function () {
+  $(".button-collapse").sideNav();
+});
+
+
+   //   $(document).ready(function () {
+  //    	$(".button-collapse").sideNav();
+  //    });
     </script>
-	
+
 	</body>
 
  </html>
