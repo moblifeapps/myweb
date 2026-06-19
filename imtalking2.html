@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desktop App Bridge</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 16px; }
+  #status { font-weight: 600; }
+  .ok   { color: #1a7f37; }
+  .bad  { color: #cf222e; }
+  .warn { color: #9a6700; }
+  #log { background:#0d1117; color:#c9d1d9; padding:12px; border-radius:6px; height:240px;
+         overflow-y:auto; font-family: monospace; font-size: 13px; white-space: pre-wrap; }
+  input, button { font-size: 14px; padding: 6px 10px; }
+</style>
+</head>
+<body>
+
+<h2>Desktop App Connection</h2>
+<p>Status: <span id="status" class="warn">connecting…</span></p>
+
+<div>
+  <input id="msgInput" type="text" placeholder="Message to send" style="width: 60%;">
+  <button id="sendBtn" disabled>Send</button>
+</div>
+
+<h3>Log</h3>
+<div id="log"></div>
+<div id="gallery" >
+
+</div>
+<script>
+ console.log('aaaaa');
+   
+ console.log('aaaaasss');
+  // The PFX/cert is issued for this hostname, and DNS for this subdomain
+  // should resolve to 127.0.0.1 so the browser trusts the local server.
+  //const WS_URL = "wss://subdomain.mydomain.com:8181/";
+  //const WS_URL = "wss://myttbplus.mlapplications.com:8181/";
+  const WS_URL = "wss://mywbsck.mlapplications.com:8181/";
+// const APP_URL = "https://myttbplus.mlapplications.com:" + APP_PORT;
+  const APP_TOKEN = "your-random-generated-token";
+  const statusEl = document.getElementById("status");
+  const logEl = document.getElementById("log");
+  const sendBtn = document.getElementById("sendBtn");
+  const msgInput = document.getElementById("msgInput");
+
+  let socket = null;
+  let reconnectDelay = 1000;        // start at 1s
+  const maxReconnectDelay = 15000;  // cap at 15s
+
+  
+console.log('step 1');
+
+  async function discoverPorts() {
+  console.log('step discoverPorts');
+
+  const res = await fetch("http://127.0.0.1:49199/");
+  return await res.json();
+  }
+ 
+  
+console.log('step 1aaaa');
+
+  function log(line) {
+    const time = new Date().toLocaleTimeString();
+    logEl.textContent += `[${time}] ${line}\n`;
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  function setStatus(text, cls) {
+    statusEl.textContent = text;
+    statusEl.className = cls;
+  }
+
+  function connect() {
+    setStatus("connecting…", "warn");
+    log(`Connecting to ${WS_URL}`);
+
+    socket = new WebSocket(WS_URL);
+
+    socket.onopen = () => {
+      setStatus("connected", "ok");
+      sendBtn.disabled = false;
+      reconnectDelay = 1000; // reset backoff on success
+      log("Connection open.");
+    };
+
+    socket.onmessage = (event) => {
+      log(`Received: ${event.data}`);
+    };
+
+    socket.onerror = (event) => {
+      log("WebSocket error (see console for details).");
+      console.error("WS error", event);
+    };
+
+    socket.onclose = (event) => {
+      setStatus("disconnected", "bad");
+      sendBtn.disabled = true;
+      log(`Connection closed (code ${event.code}). Reconnecting in ${reconnectDelay / 1000}s…`);
+
+      setTimeout(connect, reconnectDelay);
+      reconnectDelay = Math.min(reconnectDelay * 2, maxReconnectDelay);
+    };
+  }
+
+  sendBtn.addEventListener("click", () => {
+    if (socket && socket.readyState === WebSocket.OPEN && msgInput.value) {
+      socket.send(msgInput.value);
+      log(`Sent: ${msgInput.value}`);
+      msgInput.value = "";
+    }
+  });
+
+  msgInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") sendBtn.click();
+  });
+/*
+function findWssPort(host, candidates, timeoutMs = 1500) {
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    let remaining = candidates.length;
+
+    candidates.forEach(port => {
+      const url = `wss://${host}:${port}/`;
+      const ws = new WebSocket(url);
+      const timer = setTimeout(() => { ws.close(); }, timeoutMs);
+
+      ws.onopen = () => {
+        clearTimeout(timer);
+        if (!settled) {
+          settled = true;
+          resolve({ port, socket: ws });
+
+          setStatus("connected", "ok");
+          sendBtn.disabled = false;
+          reconnectDelay = 1000; // reset backoff on success
+          log("Connection open.");
+
+        } else {
+          ws.close(); // already found one, discard this connection
+        }
+      };
+      
+      ws.onmessage = (event) => {
+      log(`Received: ${event.data}`);
+
+      const data = JSON.parse(event.data);
+      if (data.type === "imageList") {
+      const gallery = document.getElementById("gallery");
+      data.files.forEach(name => {
+        const img = document.createElement('img');
+        img.src = `https://mywbsck.mlapplications.com:${httpImagePort}/images/${name}`;
+        gallery.appendChild(img);
+      });
+    }};
+      
+
+      ws.onerror = ws.onclose = () => {
+        clearTimeout(timer);
+        remaining--;
+        log("WebSocket error (see console for details).");
+        console.error("WS error", event);
+        
+        if (!settled && remaining === 0) {
+          reject(new Error("No reachable port found"));
+        }
+      };
+   
+      ws.onclose = (event) => {
+      setStatus("disconnected", "bad");
+      sendBtn.disabled = true;
+      log(`Connection closed (code ${event.code}). Reconnecting in ${reconnectDelay / 1000}s…`);
+
+      setTimeout(connect, reconnectDelay);
+      reconnectDelay = Math.min(reconnectDelay * 2, maxReconnectDelay);
+    };
+   
+  });
+})
+   
+} */
+
+
+console.log('step 2222');
+
+discoverPorts().then(({ wssPort, httpImagePort }) => {
+   console.log('step 2');
+  const ws = new WebSocket(`wss://mywbsck.mlapplications.com:${wssPort}/`);
+  ws.onopen = () => {
+     //   clearTimeout(timer);
+       // if (!settled) {
+       //   settled = true;
+       //   resolve({ port, socket: ws });
+
+          setStatus("connected", "ok");
+          sendBtn.disabled = false;
+          reconnectDelay = 1000; // reset backoff on success
+          log("Connection open.");
+          ws.send("givemeimages");
+      //  } else {
+      //    ws.close(); // already found one, discard this connection
+      //  }
+      }; 
+    
+    
+    
+
+    ws.onerror = ws.onclose = () => {
+        //    clearTimeout(timer);
+      //      remaining--;
+            log("WebSocket error (see console for details).");
+            console.error("WS error", event);
+            
+      //     if (!settled && remaining === 0) {
+        //     reject(new Error("No reachable port found"));
+        //   }
+          };    
+    
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.type === "imageList") {
+        const gallery = document.getElementById("gallery");
+        data.files.forEach(name => {
+          const img = document.createElement('img');
+          img.src = `https://mywbsck.mlapplications.com:${httpImagePort}/images/${name}`;
+          gallery.appendChild(img);
+        });
+      }
+    };
+
+    ws.onclose = (event) => {
+    setStatus("disconnected", "bad");
+    sendBtn.disabled = true;
+    log(`Connection closed (code ${event.code}). Reconnecting in ${reconnectDelay / 1000}s…`);
+
+    setTimeout(connect, reconnectDelay);
+    reconnectDelay = Math.min(reconnectDelay * 2, maxReconnectDelay);
+    };
+
+
+});
+
+ 
+</script>
+
+</body>
+</html>
