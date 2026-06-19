@@ -863,23 +863,38 @@ function handleMessage(msg) {
 ═══════════════════════════════════════════════════════════════ */
 function renderImageGrid(images) {
   const grid = document.getElementById('imageGrid');
-  document.getElementById('imgCount').textContent = images.length ? `${images.length} image${images.length>1?'s':''}` : '';
+  document.getElementById('imgCount').textContent =
+    images.length ? `${images.length} image${images.length > 1 ? 's' : ''}` : '';
 
   if (!images.length) {
     grid.innerHTML = '<div class="img-empty">No images found.</div>';
     return;
   }
+
+  // Build HTML with no inline onclick — paths never go through HTML escaping
   grid.innerHTML = images.map(img => `
-    <div class="img-thumb" data-path="${escHtml(img.path)}" data-name="${escHtml(img.name)}"
-         onclick="selectImage(${JSON.stringify(img.path)}, ${JSON.stringify(img.name)})">
+    <div class="img-thumb">
       <img src="${escHtml(img.url)}" alt="${escHtml(img.name)}" loading="lazy"/>
       <div class="img-check">✓</div>
     </div>`).join('');
+
+  // Attach click listeners in JS; raw path/name stored as JS properties on the element
+  const thumbs = grid.querySelectorAll('.img-thumb');
+  thumbs.forEach((el, i) => {
+    el._imgPath = images[i].path;
+    el._imgName = images[i].name;
+    el.addEventListener('click', () => selectImage(el._imgPath, el._imgName));
+  });
+
+  // Re-highlight if an image was already selected (e.g. state restore)
+  if (selImage) highlightThumb(selImage);
 }
 
 function selectImage(path, name) {
-  document.querySelectorAll('.img-thumb.selected').forEach(el => el.classList.remove('selected'));
-  selImage = path; selImageName = name;
+  document.querySelectorAll('.img-thumb.selected')
+          .forEach(el => el.classList.remove('selected'));
+  selImage     = path;
+  selImageName = name;
   highlightThumb(path);
   document.getElementById('imgSelectedLabel').textContent = `Selected: ${name}`;
   updateGenerateBtn();
@@ -887,7 +902,7 @@ function selectImage(path, name) {
 
 function highlightThumb(path) {
   document.querySelectorAll('.img-thumb').forEach(el => {
-    if (el.dataset.path === path) el.classList.add('selected');
+    if (el._imgPath === path) el.classList.add('selected');
   });
 }
 
