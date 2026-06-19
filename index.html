@@ -84,15 +84,29 @@
     .section-alt { background: var(--bg2); }
     hr.divider { border: none; border-top: 1px solid var(--card-border); margin: 40px 0; }
 
+
+     /* myslot placeholder — always reserves 110px at top */
+    .my-slot {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 110px;
+      background: rgba(26,26,46,1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--card-border);
+    }
+    
     /* ── Nav ──────────────────────────────────────────────────── */
     nav {
 		background: rgba(26,26,46,.95);
 /*      background: rgba(26,26,46,0.95);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px); */
+      top: 110px;
+      z-index: 99;
       position: sticky;
-      top: 0;
-      z-index: 100;
       border-bottom: 1px solid var(--card-border);
     }
     .nav-inner {
@@ -404,7 +418,10 @@
 </script>
 </head>
 <body>
-
+<!-- ── my slot placeholder (110px, sticky top:0, same bg as nav) ── -->
+<div class="my-slot" aria-hidden="true">
+  <!-- my unit goes here -->
+</div>
 <!-- ── Navigation ───────────────────────────────────────────────── -->
 <nav>
   <div class="nav-inner">
