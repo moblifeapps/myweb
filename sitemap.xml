@@ -505,20 +505,32 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://mlapplications.com/imtalking.html</loc>
+    <lastmod>2026-06-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
     <loc>https://mlapplications.com/index.html</loc>
-    <lastmod>2026-05-22</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://mlapplications.com/indexnew.html</loc>
-    <lastmod>2026-04-29</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://mlapplications.com/ll-help.html</loc>
     <lastmod>2026-05-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://mlapplications.com/minimal.html</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -578,7 +590,7 @@
   </url>
   <url>
     <loc>https://mlapplications.com/myinterstitial.html</loc>
-    <lastmod>2026-05-01</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -650,7 +662,7 @@
   </url>
   <url>
     <loc>https://mlapplications.com/screenrecplus_4.html</loc>
-    <lastmod>2026-05-01</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
