@@ -695,7 +695,7 @@ async function startDiscovery() {
   }
 
   // We got a response — ports are known
-  const { wssPort: wp, httpPort: hp, state, job } = info;
+  const { wssPort: wp, httpImagePort: hp, state, job } = info;
   wssPort  = wp;
   httpBase = `https://${WS_HOST}:${hp}`;
 
