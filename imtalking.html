@@ -65,7 +65,7 @@ body {
 .ws-dot.error      { background: var(--red);   box-shadow: 0 0 5px var(--red); }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
 
-/* ── SPLASH SCREEN (shown while discovering) ──────────────────── */
+/* ── SPLASH SCREEN ────────────────────────────────────────────── */
 #splash {
   position: fixed; inset: 0; z-index: 200;
   background: var(--bg);
@@ -82,8 +82,6 @@ body {
 }
 .splash-title { font-size: 26px; font-weight: 800; letter-spacing: -.5px; }
 .splash-sub   { font-size: 14px; color: var(--text2); }
-
-/* spinner */
 .spinner {
   width: 32px; height: 32px;
   border: 3px solid var(--border);
@@ -167,9 +165,7 @@ select option { background: var(--surface2); }
 
 /* ── VOICE PICKER ─────────────────────────────────────────────── */
 .voice-picker { position: relative; }
-.voice-input-wrap {
-  display: flex; align-items: center; gap: 0;
-}
+.voice-input-wrap { display: flex; align-items: center; gap: 0; }
 .voice-search {
   flex: 1; background: var(--surface2); border: 1px solid var(--border);
   border-right: none; border-radius: 7px 0 0 7px;
@@ -204,7 +200,6 @@ select option { background: var(--surface2); }
 .voice-dropdown.open { display: block; }
 .voice-dropdown::-webkit-scrollbar { width: 4px; }
 .voice-dropdown::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
 .voice-section-label {
   font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
   color: var(--text3); padding: 8px 12px 4px; position: sticky; top: 0;
@@ -212,8 +207,7 @@ select option { background: var(--surface2); }
 }
 .voice-row {
   display: flex; align-items: center; gap: 0;
-  padding: 0; cursor: pointer;
-  transition: background .13s;
+  padding: 0; cursor: pointer; transition: background .13s;
   border-radius: 6px; margin: 1px 4px;
 }
 .voice-row:hover  { background: var(--surface2); }
@@ -229,8 +223,8 @@ select option { background: var(--surface2); }
   font-size: 15px; color: var(--text3); transition: color .15s, transform .15s;
   flex-shrink: 0; padding: 8px 6px;
 }
-.voice-star:hover        { color: var(--amber); transform: scale(1.2); }
-.voice-star.starred      { color: var(--amber); }
+.voice-star:hover   { color: var(--amber); transform: scale(1.2); }
+.voice-star.starred { color: var(--amber); }
 .voice-no-results {
   text-align: center; padding: 20px; color: var(--text3); font-size: 13px;
 }
@@ -238,8 +232,9 @@ select option { background: var(--surface2); }
 /* ── IMAGE GRID ───────────────────────────────────────────────── */
 .img-toolbar {
   display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 8px; gap: 6px; flex-wrap: wrap;
 }
+.img-toolbar-left { display: flex; align-items: center; gap: 6px; }
 .img-refresh-btn {
   display: flex; align-items: center; gap: 5px;
   background: none; border: 1px dashed var(--border);
@@ -247,15 +242,25 @@ select option { background: var(--surface2); }
   padding: 5px 10px; cursor: pointer; transition: all .17s; font-family: inherit;
 }
 .img-refresh-btn:hover { border-color: var(--accent); color: var(--accent); }
+/* Import to Library button — accent-tinted, more prominent */
+.img-import-btn {
+  display: flex; align-items: center; gap: 5px;
+  background: rgba(91,127,255,.09); border: 1px solid rgba(91,127,255,.35);
+  color: var(--accent); font-size: 11px; font-weight: 600;
+  border-radius: 6px; padding: 5px 11px; cursor: pointer;
+  transition: all .17s; font-family: inherit;
+}
+.img-import-btn:hover {
+  background: rgba(91,127,255,.2); border-color: var(--accent);
+  box-shadow: 0 0 9px rgba(91,127,255,.25);
+}
 .img-count { font-size: 11px; color: var(--text3); }
-
 .image-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(82px,1fr));
   gap: 7px; max-height: 260px; overflow-y: auto;
 }
 .image-grid::-webkit-scrollbar { width: 4px; }
 .image-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
 .img-thumb {
   position: relative; aspect-ratio: 1;
   border: 2px solid var(--border); border-radius: 8px;
@@ -322,7 +327,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 .audio-preview-label { font-size: 10px; color: var(--green); font-weight: 700; letter-spacing: .6px; }
 .audio-preview audio  { width: 100%; height: 30px; }
 
-/* ── PROGRESS ─────────────────────────────────────────────────── */
+/* ── PROGRESS SECTION ─────────────────────────────────────────── */
 .progress-section {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 16px 18px;
@@ -351,12 +356,19 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
   border-radius: var(--radius); padding: 16px 18px;
 }
 .result-card.visible { display: flex; }
+.result-header { display: flex; align-items: center; justify-content: space-between; }
 .result-title { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: .6px; text-transform: uppercase; }
-.result-path  {
+.result-badge {
+  font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+  background: rgba(62,207,130,.12); border: 1px solid rgba(62,207,130,.3);
+  color: var(--green); border-radius: 20px; padding: 2px 10px;
+}
+.result-path {
   font-family: var(--mono); font-size: 11px; color: var(--text2);
   background: var(--surface2); border: 1px solid var(--border);
   border-radius: 6px; padding: 7px 11px; word-break: break-all;
 }
+.result-actions { display: flex; gap: 7px; }
 
 /* ── LOG ──────────────────────────────────────────────────────── */
 .log-section {
@@ -405,6 +417,127 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 }
 .restore-banner.visible { display: flex; }
 .restore-banner strong { font-weight: 700; }
+
+/* ── CROPPER MODAL ────────────────────────────────────────────── */
+#cropperOverlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(10,10,20,.88);
+  backdrop-filter: blur(6px);
+  align-items: center; justify-content: center;
+  animation: cropperFadeIn .2s ease;
+}
+#cropperOverlay.open { display: flex; }
+@keyframes cropperFadeIn { from{opacity:0} to{opacity:1} }
+
+.cropper-modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  width: min(560px, 96vw);
+  max-height: 94vh;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,.7);
+  animation: cropperSlideIn .22s ease;
+}
+@keyframes cropperSlideIn { from{transform:translateY(18px);opacity:0} to{transform:none;opacity:1} }
+
+.cropper-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.cropper-header-left { display: flex; flex-direction: column; gap: 2px; }
+.cropper-title { font-size: 14px; font-weight: 700; }
+.cropper-sub   { font-size: 11px; color: var(--text2); }
+.cropper-close {
+  width: 28px; height: 28px; border-radius: 7px;
+  background: var(--surface2); border: 1px solid var(--border);
+  color: var(--text2); cursor: pointer; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s; flex-shrink: 0;
+}
+.cropper-close:hover { background: rgba(255,95,114,.15); border-color: rgba(255,95,114,.4); color: var(--red); }
+
+.cropper-body {
+  flex: 1; display: flex; flex-direction: column; gap: 12px;
+  padding: 16px 18px; overflow-y: auto; min-height: 0;
+}
+
+/* Drop zone inside modal */
+.cropper-drop {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 32px 20px;
+  text-align: center; cursor: pointer;
+  transition: border-color .2s, background .2s;
+  background: var(--surface2);
+  position: relative;
+}
+.cropper-drop:hover, .cropper-drop.drag-over {
+  border-color: var(--accent); background: var(--accent-glow);
+}
+.cropper-drop input[type=file] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+.cropper-drop-icon  { font-size: 28px; margin-bottom: 8px; }
+.cropper-drop-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+.cropper-drop-sub   { font-size: 11px; color: var(--text3); }
+
+/* Canvas area */
+.cropper-canvas-area { display: none; flex-direction: column; gap: 10px; }
+.cropper-canvas-area.visible { display: flex; }
+
+.cropper-canvas-wrap {
+  position: relative; width: 100%; border-radius: var(--radius);
+  overflow: hidden; cursor: grab;
+  /* checkerboard */
+  background-color: #0a0a14;
+  background-image:
+    linear-gradient(45deg,#12122a 25%,transparent 25%),
+    linear-gradient(-45deg,#12122a 25%,transparent 25%),
+    linear-gradient(45deg,transparent 75%,#12122a 75%),
+    linear-gradient(-45deg,transparent 75%,#12122a 75%);
+  background-size: 16px 16px;
+  background-position: 0 0,0 8px,8px -8px,-8px 0;
+  touch-action: none; user-select: none;
+}
+.cropper-canvas-wrap:active { cursor: grabbing; }
+.cropper-canvas-wrap canvas { display: block; width: 100%; height: 100%; }
+
+.cropper-hint {
+  font-size: 11px; color: var(--text3); text-align: center; line-height: 1.6;
+}
+.cropper-hint span { color: var(--text2); }
+
+.cropper-zoom-row {
+  display: flex; align-items: center; gap: 10px;
+}
+.cropper-zoom-label { font-size: 11px; color: var(--text3); white-space: nowrap; }
+.cropper-zoom-slider { flex: 1; accent-color: var(--accent); cursor: pointer; }
+.cropper-zoom-val { font-size: 12px; font-weight: 600; color: var(--accent); min-width: 40px; text-align: right; }
+
+.cropper-footer {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 13px 18px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0; flex-wrap: wrap;
+}
+.cropper-footer-left  { display: flex; gap: 8px; }
+.cropper-footer-right { display: flex; gap: 8px; }
+
+/* Save status inside modal */
+.cropper-status {
+  display: none; align-items: center; gap: 8px;
+  font-size: 12px; padding: 8px 14px;
+  border-radius: 8px;
+  background: rgba(62,207,130,.07); border: 1px solid rgba(62,207,130,.25);
+  color: var(--green);
+}
+.cropper-status.visible { display: flex; }
+.cropper-status.error   { background: rgba(255,95,114,.07); border-color: rgba(255,95,114,.25); color: var(--red); }
 </style>
 </head>
 <body>
@@ -434,6 +567,74 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 <!-- ── TOAST ──────────────────────────────────────────────────── -->
 <div class="toast-wrap" id="toastWrap"></div>
 
+<!-- ── CROPPER MODAL ──────────────────────────────────────────── -->
+<div id="cropperOverlay" role="dialog" aria-modal="true" aria-label="Import image to library">
+
+  <div class="cropper-modal">
+
+    <!-- Header -->
+    <div class="cropper-header">
+      <div class="cropper-header-left">
+        <div class="cropper-title">🖼️ Import Image to Library</div>
+        <div class="cropper-sub">Crop &amp; position, then save directly to your library</div>
+      </div>
+      <div class="cropper-close" onclick="closeCropper()" title="Close (Esc)">✕</div>
+    </div>
+
+    <!-- Body -->
+    <div class="cropper-body">
+
+      <!-- Drop zone -->
+      <div class="cropper-drop" id="cropperDrop">
+        <input type="file" id="cropperFileInput" accept="image/*"/>
+        <div class="cropper-drop-icon">🖼️</div>
+        <div class="cropper-drop-title">Drop an image here, or click to browse</div>
+        <div class="cropper-drop-sub">JPG · PNG · WebP · BMP — any size</div>
+      </div>
+
+      <!-- Canvas section (hidden until image loaded) -->
+      <div class="cropper-canvas-area" id="cropperCanvasArea">
+
+        <div class="cropper-canvas-wrap" id="cropperWrap">
+          <canvas id="cropperCanvas"></canvas>
+        </div>
+
+        <div class="cropper-hint">
+          <span>Drag</span> to pan &nbsp;·&nbsp;
+          <span>Scroll / pinch</span> to zoom &nbsp;·&nbsp;
+          <span>Corner handles</span> to scale
+        </div>
+
+        <div class="cropper-zoom-row">
+          <span class="cropper-zoom-label">Zoom</span>
+          <input type="range" class="cropper-zoom-slider" id="cropperZoomSlider"
+                 min="0" max="1" step="0.001" value="0.5"/>
+          <span class="cropper-zoom-val" id="cropperZoomVal">1.00×</span>
+        </div>
+
+        <div class="cropper-status" id="cropperStatus"></div>
+
+      </div>
+    </div><!-- /cropper-body -->
+
+    <!-- Footer -->
+    <div class="cropper-footer">
+      <div class="cropper-footer-left">
+        <button class="btn btn-secondary" id="cropperBtnChange" style="display:none"
+                onclick="cropperChangeImage()">Change image</button>
+        <button class="btn btn-secondary" id="cropperBtnReset" style="display:none"
+                onclick="cropperResetView()">↺ Reset</button>
+      </div>
+      <div class="cropper-footer-right">
+        <button class="btn btn-secondary" onclick="closeCropper()">Cancel</button>
+        <button class="btn btn-green" id="cropperBtnSave" disabled
+                onclick="cropperSave()">💾 Save to Library</button>
+      </div>
+    </div>
+
+  </div><!-- /cropper-modal -->
+</div><!-- /cropperOverlay -->
+
 <!-- ── TOPBAR ─────────────────────────────────────────────────── -->
 <div class="topbar">
   <div class="topbar-brand">
@@ -452,10 +653,10 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 <!-- ── MAIN ───────────────────────────────────────────────────── -->
 <div class="main" id="mainUI" style="display:none">
 
-  <!-- LEFT COL -->
+  <!-- ══════════ LEFT COL ══════════ -->
   <div class="left-col">
 
-    <!-- Restore banner (shown if app was already doing something) -->
+    <!-- Restore banner -->
     <div class="restore-banner" id="restoreBanner">
       <span>⚡</span>
       <span id="restoreBannerText">Restoring previous session state…</span>
@@ -493,7 +694,6 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
           </div>
           <div class="voice-dropdown" id="voiceDropdown"></div>
         </div>
-        <!-- hidden value carrier — read by generateTts() like the old select -->
         <input type="hidden" id="ttsVoice" value=""/>
       </div>
       <button class="btn btn-green" id="btnGenerateTts" onclick="generateTts()" disabled>
@@ -528,7 +728,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
         <div>
           <label class="field-label" for="optBatch">Batch Size</label>
           <select id="optBatch">
-            <option value="1" selected>1</option><option value="2">2</option>
+            <option value="1">1</option><option value="2" selected>2</option>
             <option value="4">4</option><option value="8">8</option>
           </select>
         </div>
@@ -552,33 +752,22 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
         </div>
         <div class="full">
           <div class="checks">
-            <label class="check-item"><input type="checkbox" id="optStill"/>    Still mode</label>
-            <label class="check-item"><input type="checkbox" id="optCpu"/>      Use CPU</label>
-            <label class="check-item"><input type="checkbox" id="optNoResize"/> Skip 128 px resize</label>
+            <label class="check-item">
+              <input type="checkbox" id="optStill"/> Still mode
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="optEnhancer" checked/> Enhancer
+            </label>
+            <!--
+              optCpu and optNoResize are intentionally hidden from the user.
+              use_cpu is always sent as true; no_resize always as false.
+            -->
           </div>
         </div>
       </div>
     </div>
 
-  </div><!-- /left-col -->
-
-  <!-- RIGHT COL -->
-  <div class="right-col">
-
-    <!-- Source Image -->
-    <div class="card">
-      <div class="card-label">Source Image</div>
-      <div class="img-toolbar">
-        <button class="img-refresh-btn" onclick="sendMsg({type:'get_images'})">↻ Refresh</button>
-        <span class="img-count" id="imgCount"></span>
-      </div>
-      <div class="image-grid" id="imageGrid">
-        <div class="img-empty">Waiting for image list…</div>
-      </div>
-      <div class="img-selected-label" id="imgSelectedLabel">No image selected</div>
-    </div>
-
-    <!-- Progress -->
+    <!-- ── PROGRESS (below Processing Options) ────────────────── -->
     <div class="progress-section">
       <div class="progress-header">
         <span class="progress-status" id="progressStatus">Ready</span>
@@ -589,7 +778,9 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
       </div>
       <div class="action-row">
         <button class="btn btn-secondary" id="btnOpenFolder" style="display:none"
-                onclick="sendMsg({type:'open_folder'})">📁 Open Folder</button>
+                onclick="doOpenFolder()">📁 Open Folder</button>
+        <button class="btn btn-secondary" id="btnPlayVideo"  style="display:none"
+                onclick="doPlayVideo()">▶ Play</button>
         <button class="btn btn-danger"    id="btnCancel"     style="display:none"
                 onclick="sendMsg({type:'cancel'})">✕ Cancel</button>
         <button class="btn btn-primary"   id="btnGenerate"
@@ -597,17 +788,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
       </div>
     </div>
 
-    <!-- Result -->
-    <div class="result-card" id="resultCard">
-      <div class="result-title">✓ Video Ready</div>
-      <div class="result-path" id="resultPath">—</div>
-      <div style="display:flex;gap:7px">
-        <button class="btn btn-secondary" onclick="sendMsg({type:'open_folder'})">📁 Open Folder</button>
-        <button class="btn btn-secondary" onclick="sendMsg({type:'play_video'})">▶ Play</button>
-      </div>
-    </div>
-
-    <!-- Log -->
+    <!-- ── CONSOLE LOG (directly below progress) ──────────────── -->
     <div class="log-section">
       <div class="log-header" id="logHeader" onclick="toggleLog()">
         <div class="log-header-left">
@@ -620,6 +801,40 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
       </div>
     </div>
 
+  </div><!-- /left-col -->
+
+  <!-- ══════════ RIGHT COL ══════════ -->
+  <div class="right-col">
+
+    <!-- Source Image + Import button -->
+    <div class="card">
+      <div class="card-label">Source Image</div>
+      <div class="img-toolbar">
+        <div class="img-toolbar-left">
+          <button class="img-refresh-btn" onclick="sendMsg({type:'get_images'})">↻ Refresh</button>
+          <button class="img-import-btn"  onclick="doImportToLibrary()">＋ Import to Library</button>
+        </div>
+        <span class="img-count" id="imgCount"></span>
+      </div>
+      <div class="image-grid" id="imageGrid">
+        <div class="img-empty">Waiting for image list…</div>
+      </div>
+      <div class="img-selected-label" id="imgSelectedLabel">No image selected</div>
+    </div>
+
+    <!-- Result card — shown after a successful generation -->
+    <div class="result-card" id="resultCard">
+      <div class="result-header">
+        <div class="result-title">✓ Video Ready</div>
+        <div class="result-badge">Complete</div>
+      </div>
+      <div class="result-path" id="resultPath">—</div>
+      <div class="result-actions">
+        <button class="btn btn-secondary" onclick="doOpenFolder()">📁 Open Folder</button>
+        <button class="btn btn-secondary" onclick="doPlayVideo()">▶ Play</button>
+      </div>
+    </div>
+
   </div><!-- /right-col -->
 </div><!-- /main -->
 
@@ -627,21 +842,22 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 /* ═══════════════════════════════════════════════════════════════
    CONFIG
 ═══════════════════════════════════════════════════════════════ */
-const DISCOVERY_URL   = 'http://127.0.0.1:49199/';   // fixed port Kestrel HTTP beacon
-const WS_HOST         = 'mywbsck.mlapplications.com'; // your subdomain → 127.0.0.1
-const APP_PROTOCOL    = 'imtalking://';               // Windows custom protocol
+const DISCOVERY_URL        = 'http://127.0.0.1:49199/';
+const WS_HOST              = 'mywbsck.mlapplications.com';
+const APP_PROTOCOL         = 'imtalking://';
 const DISCOVERY_TIMEOUT_MS = 3000;
 
 /* ═══════════════════════════════════════════════════════════════
    STATE
 ═══════════════════════════════════════════════════════════════ */
 let ws            = null;
-let httpBase      = '';      // e.g. https://mywbsck.mlapplications.com:PORT
+let httpBase      = '';
 let mode          = 'tts';
 let selImage      = null;
 let selImageName  = '';
 let ttsAudioPath  = null;
 let isRunning     = false;
+let lastVideoPath = null;        // always tracks latest output path
 let reconnectDelay    = 1000;
 const MAX_RECONNECT   = 15000;
 let wssPort       = null;
@@ -661,26 +877,16 @@ function hideSplash() {
   s.classList.add('hidden');
   setTimeout(() => s.style.display = 'none', 380);
 }
-function showNotRunning() {
-  hideSplash();
-  document.getElementById('notRunning').classList.add('visible');
-}
-function hideNotRunning() {
-  document.getElementById('notRunning').classList.remove('visible');
-}
-function showMainUI() {
-  document.getElementById('mainUI').style.display = 'grid';
-}
+function showNotRunning() { hideSplash(); document.getElementById('notRunning').classList.add('visible'); }
+function hideNotRunning() { document.getElementById('notRunning').classList.remove('visible'); }
+function showMainUI()     { document.getElementById('mainUI').style.display = 'grid'; }
 
 /* ═══════════════════════════════════════════════════════════════
-   DISCOVERY  — fetch http://127.0.0.1:49199/
-   WPF must respond with: { wssPort: 8181, httpPort: 8182 }
-   Optionally:            { state: "running"|"idle", ... }
+   DISCOVERY
 ═══════════════════════════════════════════════════════════════ */
 async function startDiscovery() {
   hideNotRunning();
   showSplash('Looking for the desktop app…');
-
   let info;
   try {
     const ctrl = new AbortController();
@@ -689,16 +895,12 @@ async function startDiscovery() {
     clearTimeout(tid);
     info = await res.json();
   } catch(e) {
-    // App not running
     showNotRunning();
     return;
   }
-
-  // We got a response — ports are known
   const { wssPort: wp, httpImagePort: hp, state, job } = info;
   wssPort  = wp;
   httpBase = `https://${WS_HOST}:${hp}`;
-
   splashMsg('Connecting to app…');
   connectWs(wp, state, job);
 }
@@ -710,7 +912,6 @@ function connectWs(port, initialState, initialJob) {
   const url = `wss://${WS_HOST}:${port}/`;
   setWsDot('connecting', 'Connecting…');
   logLine(`Connecting to ${url}`);
-
   ws = new WebSocket(url);
 
   ws.onopen = () => {
@@ -720,13 +921,8 @@ function connectWs(port, initialState, initialJob) {
     hideSplash();
     showMainUI();
     toast('Connected to ImTalking', 'success');
-
-    // Ask for images immediately
     sendMsg({ type: 'get_images' });
-    // Load voice list + favorites from Kestrel
     loadVoicesAndFavorites();
-
-    // Restore state if the app was already doing something
     if (initialState === 'running' && initialJob) {
       restoreRunningState(initialJob);
     } else if (initialState === 'idle' && initialJob) {
@@ -740,9 +936,7 @@ function connectWs(port, initialState, initialJob) {
     handleMessage(msg);
   };
 
-  ws.onerror = () => {
-    logLine('WebSocket error.');
-  };
+  ws.onerror = () => { logLine('WebSocket error.'); };
 
   ws.onclose = (ev) => {
     setWsDot('error', 'Disconnected');
@@ -767,19 +961,32 @@ function setWsDot(state, label) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   OPEN FOLDER / PLAY VIDEO
+   ── Fixed: always pass the stored video_path so WPF knows which
+      file/folder to open, even when called from the result card.
+═══════════════════════════════════════════════════════════════ */
+function doOpenFolder() {
+  if (!sendMsg({ type: 'open_folder', video_path: lastVideoPath })) {
+    toast('Not connected', 'error');
+  }
+}
+
+function doPlayVideo() {
+  if (!lastVideoPath) { toast('No video to play yet', ''); return; }
+  if (!sendMsg({ type: 'play_video', video_path: lastVideoPath })) {
+    toast('Not connected', 'error');
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   IMPORT IMAGE TO LIBRARY  — opens the built-in cropper modal
+═══════════════════════════════════════════════════════════════ */
+function doImportToLibrary() {
+  openCropper();
+}
+
+/* ═══════════════════════════════════════════════════════════════
    STATE RESTORATION
-   WPF sends these fields in the discovery response:
-     state: "running" | "idle"
-     job: {
-       image_path, image_name, image_url,   // what's loaded
-       audio_path,                           // audio used / being used
-       is_tts, tts_text, tts_voice,          // if TTS mode
-       mp3_path, mp3_url,                    // if TTS already generated
-       fps, batch_size, output_size,
-       expression_scale, still, use_cpu, no_resize,
-       progress, stage, status,              // if running
-       video_path                            // if done
-     }
 ═══════════════════════════════════════════════════════════════ */
 function restoreRunningState(job) {
   showRestoreBanner('⚡ A generation is already in progress — resuming view.');
@@ -792,23 +999,20 @@ function restoreIdleState(job) {
   if (job.video_path) {
     showRestoreBanner('🎬 Last session produced a video — shown below.');
     applyJobSettings(job);
+    lastVideoPath = job.video_path;
     setProgress(100, 'Complete', 'Last video ready', false);
     document.getElementById('resultPath').textContent = job.video_path;
     document.getElementById('resultCard').classList.add('visible');
     document.getElementById('btnOpenFolder').style.display = '';
+    document.getElementById('btnPlayVideo').style.display  = '';
   } else {
-    // Just restore the form values silently
     applyJobSettings(job);
   }
 }
 
 function applyJobSettings(job) {
   if (!job) return;
-
-  // Mode
   if (job.is_tts != null) setMode(job.is_tts ? 'tts' : 'audio');
-
-  // TTS fields
   if (job.tts_text)  document.getElementById('ttsText').value  = job.tts_text;
   if (job.tts_voice) restoreVoice(job.tts_voice);
   if (job.mp3_path && job.mp3_url) {
@@ -816,12 +1020,8 @@ function applyJobSettings(job) {
     document.getElementById('audioPlayer').src = job.mp3_url;
     document.getElementById('audioPreview').classList.add('visible');
   }
-
-  // Audio file
   if (!job.is_tts && job.audio_path)
     document.getElementById('audioPath').value = job.audio_path;
-
-  // Options
   if (job.fps)              setSelect('optFps',     String(job.fps));
   if (job.batch_size)       setSelect('optBatch',   String(job.batch_size));
   if (job.output_size)      setSelect('optUpscale', job.output_size);
@@ -831,17 +1031,13 @@ function applyJobSettings(job) {
     document.getElementById('exprVal').textContent  = v;
     document.getElementById('exprDisp').textContent = v;
   }
-  if (job.still     != null) document.getElementById('optStill').checked    = job.still;
-  if (job.use_cpu   != null) document.getElementById('optCpu').checked       = job.use_cpu;
-  if (job.no_resize != null) document.getElementById('optNoResize').checked  = job.no_resize;
-
-  // Selected image — highlight after grid loads
+  if (job.still    != null) document.getElementById('optStill').checked    = job.still;
+  if (job.enhancer != null) document.getElementById('optEnhancer').checked = job.enhancer;
   if (job.image_path) {
     selImage     = job.image_path;
     selImageName = job.image_name || job.image_path;
     document.getElementById('imgSelectedLabel').textContent = `Selected: ${selImageName}`;
   }
-
   updateGenerateBtn();
 }
 
@@ -852,22 +1048,12 @@ function setSelect(id, val) {
 
 /* ═══════════════════════════════════════════════════════════════
    INCOMING MESSAGES FROM WPF
-   ───────────────────────────────────────────────────────────────
-   { type: "images",             images: [{name,path,url}] }
-   { type: "tts_done",           mp3_path, mp3_url }
-   { type: "progress",           value(0-100), stage, status }
-   { type: "progress_indeterminate", stage, status }
-   { type: "log",                text }
-   { type: "done",               video_path }
-   { type: "error",              message }
-   { type: "cancelled" }
 ═══════════════════════════════════════════════════════════════ */
 function handleMessage(msg) {
   switch (msg.type) {
 
     case 'images':
       renderImageGrid(msg.images || []);
-      // Re-highlight if we restored a selected image
       if (selImage) highlightThumb(selImage);
       break;
 
@@ -895,11 +1081,13 @@ function handleMessage(msg) {
       break;
 
     case 'done':
+      lastVideoPath = msg.video_path || null;
       setProgress(100, 'Complete', 'Video generated!', false);
       setRunning(false);
       document.getElementById('resultPath').textContent = msg.video_path || '—';
       document.getElementById('resultCard').classList.add('visible');
       document.getElementById('btnOpenFolder').style.display = '';
+      document.getElementById('btnPlayVideo').style.display  = '';
       toast('Video ready 🎉', 'success');
       logLine(`[DONE] ${msg.video_path}`);
       break;
@@ -918,6 +1106,23 @@ function handleMessage(msg) {
       toast('Generation cancelled', '');
       logLine('[CANCELLED]');
       break;
+
+    // WPF confirms it saved the cropped image
+    case 'image_saved':
+      cropperOnSaved(msg);
+      break;
+
+    // WPF reports a save error
+    case 'image_save_error':
+      cropperOnSaveError(msg);
+      break;
+
+    // WPF (or any client) signals the library changed → refresh grid
+    case 'library_updated':
+      sendMsg({ type: 'get_images' });
+      toast('Image added to library ✓', 'success');
+      logLine('[LIBRARY] New image saved — refreshing grid…');
+      break;
   }
 }
 
@@ -928,34 +1133,26 @@ function renderImageGrid(images) {
   const grid = document.getElementById('imageGrid');
   document.getElementById('imgCount').textContent =
     images.length ? `${images.length} image${images.length > 1 ? 's' : ''}` : '';
-
   if (!images.length) {
     grid.innerHTML = '<div class="img-empty">No images found.</div>';
     return;
   }
-
-  // Build HTML with no inline onclick — paths never go through HTML escaping
   grid.innerHTML = images.map(img => `
     <div class="img-thumb">
       <img src="${escHtml(img.url)}" alt="${escHtml(img.name)}" loading="lazy"/>
       <div class="img-check">✓</div>
     </div>`).join('');
-
-  // Attach click listeners in JS; raw path/name stored as JS properties on the element
   const thumbs = grid.querySelectorAll('.img-thumb');
   thumbs.forEach((el, i) => {
     el._imgPath = images[i].path;
     el._imgName = images[i].name;
     el.addEventListener('click', () => selectImage(el._imgPath, el._imgName));
   });
-
-  // Re-highlight if an image was already selected (e.g. state restore)
   if (selImage) highlightThumb(selImage);
 }
 
 function selectImage(path, name) {
-  document.querySelectorAll('.img-thumb.selected')
-          .forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('.img-thumb.selected').forEach(el => el.classList.remove('selected'));
   selImage     = path;
   selImageName = name;
   highlightThumb(path);
@@ -996,12 +1193,10 @@ function generateTts() {
   const text  = document.getElementById('ttsText').value.trim();
   const voice = document.getElementById('ttsVoice').value;
   if (!text) { toast('Enter some text first', ''); return; }
-
   ttsAudioPath = null;
   document.getElementById('audioPreview').classList.remove('visible');
   document.getElementById('btnGenerateTts').disabled = true;
   document.getElementById('btnGenerateTts').innerHTML = '⏳&nbsp; Generating…';
-
   sendMsg({ type: 'generate_tts', text, voice });
   logLine(`[TTS] Requested voice: ${voice}`);
 }
@@ -1029,6 +1224,11 @@ function startGeneration() {
   hideRestoreBanner();
   document.getElementById('resultCard').classList.remove('visible');
   document.getElementById('progressStatus').style.color = '';
+  document.getElementById('btnOpenFolder').style.display = 'none';
+  document.getElementById('btnPlayVideo').style.display  = 'none';
+  lastVideoPath = null;
+
+  const enhancer = document.getElementById('optEnhancer').checked;
 
   sendMsg({
     type:             'generate',
@@ -1039,19 +1239,20 @@ function startGeneration() {
     output_size:      document.getElementById('optUpscale').value,
     expression_scale: parseFloat(document.getElementById('optExpr').value),
     still:            document.getElementById('optStill').checked,
-    use_cpu:          document.getElementById('optCpu').checked,
-    no_resize:        document.getElementById('optNoResize').checked,
+    use_cpu:          true,      // always true — hidden from user
+    no_resize:        false,     // always false — hidden from user
+    enhancer:         enhancer,  // true → WPF appends --enhancer gfpgan to python args
   });
 
   setRunning(true);
   setProgress(0, 'Starting…', 'Request sent to WPF…', true);
-  logLine('[GENERATE] Request sent');
+  logLine('[GENERATE] Request sent' + (enhancer ? ' (+enhancer gfpgan)' : ''));
 }
 
 function setRunning(r) {
   isRunning = r;
-  document.getElementById('btnCancel').style.display    = r ? '' : 'none';
-  document.getElementById('btnGenerate').disabled = r;
+  document.getElementById('btnCancel').style.display = r ? '' : 'none';
+  document.getElementById('btnGenerate').disabled    = r;
   updateGenerateBtn();
 }
 
@@ -1074,10 +1275,8 @@ function logLine(text) {
   const ts = new Date().toLocaleTimeString('en-GB');
   el.textContent += `[${ts}] ${text}\n`;
   el.scrollTop = el.scrollHeight;
-  // auto-open log
   if (!document.getElementById('logBody').classList.contains('open')) toggleLog();
 }
-
 function toggleLog() {
   const body    = document.getElementById('logBody');
   const chevron = document.getElementById('logChevron');
@@ -1086,27 +1285,24 @@ function toggleLog() {
   chevron.classList.toggle('open', open);
   header.classList.toggle('open', open);
 }
-
 function clearLog() { document.getElementById('logOutput').textContent = ''; }
 
 /* ═══════════════════════════════════════════════════════════════
    RESTORE BANNER
 ═══════════════════════════════════════════════════════════════ */
 function showRestoreBanner(text) {
-  const b = document.getElementById('restoreBanner');
   document.getElementById('restoreBannerText').textContent = text;
-  b.classList.add('visible');
+  document.getElementById('restoreBanner').classList.add('visible');
 }
 function hideRestoreBanner() {
   document.getElementById('restoreBanner').classList.remove('visible');
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   LAUNCH APP (Windows protocol)
+   LAUNCH APP
 ═══════════════════════════════════════════════════════════════ */
 function launchApp() {
   window.location.href = APP_PROTOCOL;
-  // After a short delay, retry discovery — user may have just launched
   setTimeout(startDiscovery, 4000);
 }
 
@@ -1141,51 +1337,32 @@ document.getElementById('audioPath').addEventListener('input', updateGenerateBtn
 
 /* ── BOOT ── */
 startDiscovery();
+
 /* ═══════════════════════════════════════════════════════════════
    VOICE PICKER
-   ─────────────────────────────────────────────────────────────
-   Data flow:
-     1. loadVoicesAndFavorites() fetches:
-          /data/voices.txt    — full 322-line list from WPF
-          /data/favorites.json — ["en-GB-SoniaNeural", …]   from WPF
-     2. User types in #voiceSearch → dropdown filters live
-     3. User clicks a row → selects that voice (writes to hidden #ttsVoice)
-     4. User clicks ★ → toggleFavorite() → POST /data/favorites to WPF
 ═══════════════════════════════════════════════════════════════ */
+let allVoices   = [];
+let favorites   = [];
+let activeVoice = '';
 
-let allVoices   = [];   // [{ name, gender, category, style }]
-let favorites   = [];   // ["en-GB-SoniaNeural", …]  — from WPF
-let activeVoice = '';   // currently selected short-name
-
-// ── Parse voices.txt ────────────────────────────────────────────
 function parseVoices(txt) {
   return txt.split('\n')
-    .map(line => line.trim())
-    .filter(Boolean)
+    .map(line => line.trim()).filter(Boolean)
     .map(line => {
-      const parts = line.split(/\s{2,}/);   // split on 2+ spaces (fixed-width columns)
-      return {
-        name:     parts[0] || '',
-        gender:   parts[1] || '',
-        category: parts[2] || '',
-        style:    parts[3] || ''
-      };
+      const parts = line.split(/\s{2,}/);
+      return { name: parts[0]||'', gender: parts[1]||'', category: parts[2]||'', style: parts[3]||'' };
     })
     .filter(v => v.name);
 }
 
-// ── Fetch voices + favorites from Kestrel ───────────────────────
 async function loadVoicesAndFavorites() {
-  if (!httpBase) return;   // not connected yet — called again after connect
-
+  if (!httpBase) return;
   const search = document.getElementById('voiceSearch');
-
   try {
     const [vRes, fRes] = await Promise.allSettled([
       fetch(`${httpBase}/data/voices.txt`),
       fetch(`${httpBase}/data/favorites.json`)
     ]);
-
     if (vRes.status === 'fulfilled' && vRes.value.ok) {
       const txt = await vRes.value.text();
       allVoices = parseVoices(txt);
@@ -1193,83 +1370,52 @@ async function loadVoicesAndFavorites() {
     } else {
       search.placeholder = 'voices.txt not found';
     }
-
-    if (fRes.status === 'fulfilled' && fRes.value.ok) {
-      favorites = await fRes.value.json();
-    } else {
-      favorites = [];
-    }
-
-    renderDropdown('');   // pre-populate dropdown (closed until focused)
-
+    favorites = (fRes.status === 'fulfilled' && fRes.value.ok) ? await fRes.value.json() : [];
+    renderDropdown('');
   } catch(e) {
     search.placeholder = 'Could not load voices';
     console.warn('[Voices]', e);
   }
 }
 
-// ── Render the dropdown list ─────────────────────────────────────
 function renderDropdown(query) {
-  const dd = document.getElementById('voiceDropdown');
-  const q  = query.toLowerCase().trim();
-
-  const favSet   = new Set(favorites);
-  const matched  = allVoices.filter(v =>
-    !q ||
-    v.name.toLowerCase().includes(q) ||
-    v.gender.toLowerCase().includes(q) ||
-    v.style.toLowerCase().includes(q)
+  const dd  = document.getElementById('voiceDropdown');
+  const q   = query.toLowerCase().trim();
+  const favSet = new Set(favorites);
+  const matched = allVoices.filter(v =>
+    !q || v.name.toLowerCase().includes(q) ||
+    v.gender.toLowerCase().includes(q) || v.style.toLowerCase().includes(q)
   );
-
-  const favMatched   = matched.filter(v => favSet.has(v.name));
+  const favMatched   = matched.filter(v =>  favSet.has(v.name));
   const otherMatched = matched.filter(v => !favSet.has(v.name));
-
   if (!matched.length) {
     dd.innerHTML = '<div class="voice-no-results">No voices match your search</div>';
     return;
   }
-
   let html = '';
-
   if (favMatched.length) {
     html += '<div class="voice-section-label">⭐ Favorites</div>';
     html += favMatched.map(v => voiceRowHtml(v, true)).join('');
   }
-
   if (otherMatched.length) {
     if (favMatched.length) html += '<div class="voice-section-label">All Voices</div>';
     html += otherMatched.map(v => voiceRowHtml(v, false)).join('');
   }
-
   dd.innerHTML = html;
-
-  // Attach events to rows (after innerHTML)
   dd.querySelectorAll('.voice-row').forEach(row => {
     const name = row.dataset.name;
-
-    // Main area → select voice
-    row.querySelector('.voice-row-main').addEventListener('click', e => {
-      e.stopPropagation();
-      pickVoice(name);
-    });
-
-    // Star → toggle favorite
-    row.querySelector('.voice-star').addEventListener('click', e => {
-      e.stopPropagation();
-      toggleFavorite(name);
-    });
+    row.querySelector('.voice-row-main').addEventListener('click', e => { e.stopPropagation(); pickVoice(name); });
+    row.querySelector('.voice-star').addEventListener('click',     e => { e.stopPropagation(); toggleFavorite(name); });
   });
 }
 
 function voiceRowHtml(v, isFav) {
-  const isActive  = v.name === activeVoice ? ' active' : '';
-  const starClass = isFav ? ' starred' : '';
+  const isActive   = v.name === activeVoice ? ' active' : '';
+  const starClass  = isFav ? ' starred' : '';
   const genderIcon = v.gender === 'Female' ? '♀' : '♂';
-  // Extract readable parts from the name e.g. "en-GB-SoniaNeural" → "Sonia · en-GB"
-  const match    = v.name.match(/^([a-z]{2}-[A-Z]{2}(?:-[a-z]+)?)-(.+?)Neural(?:Multilingual)?$/);
-  const locale   = match ? match[1] : v.name;
-  const shortName = match ? match[2] : v.name;
-
+  const match      = v.name.match(/^([a-z]{2}-[A-Z]{2}(?:-[a-z]+)?)-(.+?)Neural(?:Multilingual)?$/);
+  const locale     = match ? match[1] : v.name;
+  const shortName  = match ? match[2] : v.name;
   return `<div class="voice-row${isActive}" data-name="${escHtml(v.name)}">
     <div class="voice-row-main">
       <div class="voice-row-name">${escHtml(shortName)} <span style="color:var(--text3);font-size:11px">${genderIcon}</span></div>
@@ -1279,30 +1425,22 @@ function voiceRowHtml(v, isFav) {
   </div>`;
 }
 
-// ── Pick a voice ────────────────────────────────────────────────
 function pickVoice(name) {
   activeVoice = name;
   document.getElementById('ttsVoice').value = name;
-
-  // Update search box to show selection
-  const v = allVoices.find(x => x.name === name);
+  const v     = allVoices.find(x => x.name === name);
   const match = name.match(/^([a-z]{2}-[A-Z]{2}(?:-[a-z]+)?)-(.+?)Neural/);
   const label = match ? `${match[2]}Neural · ${match[1]}` : name;
   document.getElementById('voiceSearch').value = label;
-
-  // Gender badge
   const badge = document.getElementById('voiceGenderBadge');
   badge.textContent = v?.gender === 'Female' ? '♀' : '♂';
   badge.title       = v?.gender || '';
-
   closeDropdown();
   updateTtsBtn();
 }
 
-// ── Restore a previously selected voice (state restore) ─────────
 function restoreVoice(name) {
   if (!name) return;
-  // Wait until voices are loaded
   const attempt = () => {
     if (!allVoices.length) { setTimeout(attempt, 200); return; }
     pickVoice(name);
@@ -1310,23 +1448,13 @@ function restoreVoice(name) {
   attempt();
 }
 
-// ── Toggle favorite — persisted in WPF via POST ──────────────────
 async function toggleFavorite(name) {
-  if (favorites.includes(name)) {
-    favorites = favorites.filter(f => f !== name);
-  } else {
-    favorites = [name, ...favorites];
-  }
-
-  // Re-render with current query
+  favorites = favorites.includes(name) ? favorites.filter(f => f !== name) : [name, ...favorites];
   renderDropdown(document.getElementById('voiceSearch').value);
-
-  // Persist to WPF
   try {
     await fetch(`${httpBase}/data/favorites`, {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify(favorites)
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(favorites)
     });
   } catch(e) {
     console.warn('[Favorites] save failed:', e);
@@ -1334,24 +1462,14 @@ async function toggleFavorite(name) {
   }
 }
 
-// ── Dropdown open / close ────────────────────────────────────────
 function openDropdown() {
-  const dd = document.getElementById('voiceDropdown');
-  dd.classList.add('open');
+  document.getElementById('voiceDropdown').classList.add('open');
   renderDropdown(document.getElementById('voiceSearch').value);
 }
+function closeDropdown() { document.getElementById('voiceDropdown').classList.remove('open'); }
 
-function closeDropdown() {
-  document.getElementById('voiceDropdown').classList.remove('open');
-}
-
-// ── Wire up search input ────────────────────────────────────────
-document.getElementById('voiceSearch').addEventListener('focus', () => {
-  openDropdown();
-});
-
+document.getElementById('voiceSearch').addEventListener('focus', openDropdown);
 document.getElementById('voiceSearch').addEventListener('input', function() {
-  // Clear active voice when user types a new query
   if (!this.value.trim()) {
     activeVoice = '';
     document.getElementById('ttsVoice').value = '';
@@ -1361,7 +1479,6 @@ document.getElementById('voiceSearch').addEventListener('input', function() {
   openDropdown();
   updateTtsBtn();
 });
-
 document.getElementById('voiceClearBtn').addEventListener('click', () => {
   activeVoice = '';
   document.getElementById('ttsVoice').value    = '';
@@ -1370,41 +1487,400 @@ document.getElementById('voiceClearBtn').addEventListener('click', () => {
   closeDropdown();
   updateTtsBtn();
 });
-
-// Close dropdown when clicking outside the picker
 document.addEventListener('click', e => {
-  if (!document.getElementById('voicePicker').contains(e.target)) {
-    closeDropdown();
-  }
+  if (!document.getElementById('voicePicker').contains(e.target)) closeDropdown();
 });
 
-// Keyboard navigation in dropdown
+/* ═══════════════════════════════════════════════════════════════
+   INLINE CROPPER MODAL
+   ─────────────────────────────────────────────────────────────
+   All drawing is done on a single <canvas> — no blank gaps.
+   Compositing order each frame:
+     1. Image  (at current tx/ty/scale)
+     2. Dim rects (4 around the frame)
+     3. Frame border + rule-of-thirds lines
+     4. Corner handles
+═══════════════════════════════════════════════════════════════ */
+(function() {
+
+  /* ── constants ── */
+  const OUTPUT_SIZE  = 512;
+  const HANDLE_R     = 9;
+  const MIN_ZOOM     = 0.05;
+  const MAX_ZOOM     = 20;
+  const ZOOM_MIN_LOG = Math.log(MIN_ZOOM);
+  const ZOOM_MAX_LOG = Math.log(MAX_ZOOM);
+
+  /* ── elements ── */
+  const overlay   = document.getElementById('cropperOverlay');
+  const cvs       = document.getElementById('cropperCanvas');
+  const ctx       = cvs.getContext('2d');
+  const wrap      = document.getElementById('cropperWrap');
+  const dropZone  = document.getElementById('cropperDrop');
+  const fileInput = document.getElementById('cropperFileInput');
+  const canvasArea= document.getElementById('cropperCanvasArea');
+  const zoomSlider= document.getElementById('cropperZoomSlider');
+  const zoomVal   = document.getElementById('cropperZoomVal');
+  const btnSave   = document.getElementById('cropperBtnSave');
+  const btnChange = document.getElementById('cropperBtnChange');
+  const btnReset  = document.getElementById('cropperBtnReset');
+  const statusEl  = document.getElementById('cropperStatus');
+
+  /* ── state ── */
+  let cImg = null, cImgW = 0, cImgH = 0;
+  let cw = 0, ch = 0;          // canvas pixel size (CSS px × dpr)
+  let frameX = 0, frameY = 0, frameS = 0;  // frame square
+  let tx = 0, ty = 0, sc = 1; // image transform
+
+  let dragging = false, dragX = 0, dragY = 0, txD = 0, tyD = 0;
+  let scCorner = -1, scStart = null, scAtStart = 1, txAtSc = 0, tyAtSc = 0;
+  let lastPinch = null;
+
+  /* ── open / close ── */
+  window.openCropper = function() {
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // reset to drop state
+    resetCropperState();
+    // resize after open (wrap may have 0 size until visible)
+    requestAnimationFrame(() => { resizeCvs(); draw(); });
+  };
+
+  window.closeCropper = function() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  // Close on backdrop click
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeCropper(); });
+  // Close on Escape
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) closeCropper(); });
+
+  function resetCropperState() {
+    cImg = null;
+    dropZone.style.display  = '';
+    canvasArea.classList.remove('visible');
+    btnSave.disabled  = true;
+    btnChange.style.display = 'none';
+    btnReset.style.display  = 'none';
+    setCropperStatus('');
+    fileInput.value = '';
+  }
+
+  /* ── resize canvas to match wrap ── */
+  const ro = new ResizeObserver(resizeCvs);
+  ro.observe(wrap);
+
+  function resizeCvs() {
+    const dpr  = window.devicePixelRatio || 1;
+    const cssW = wrap.clientWidth;
+    if (!cssW) return;
+    wrap.style.height = cssW + 'px';
+    cw = Math.round(cssW * dpr);
+    ch = cw;                          // always square
+    cvs.width  = cw;
+    cvs.height = ch;
+    cvs.style.width  = cssW + 'px';
+    cvs.style.height = cssW + 'px';
+    // frame: 84% of the canvas, centred
+    frameS = cw * 0.84;
+    frameX = (cw - frameS) / 2;
+    frameY = (ch - frameS) / 2;
+    if (cImg) draw();
+  }
+
+  /* ── load image file ── */
+  function loadFile(file) {
+    if (!file || !file.type.startsWith('image/')) { toast('Please pick an image file','error'); return; }
+    const url = URL.createObjectURL(file);
+    const i   = new Image();
+    i.onload  = () => {
+      cImg = i; cImgW = i.naturalWidth; cImgH = i.naturalHeight;
+      URL.revokeObjectURL(url);
+      cropperFitCover();
+      dropZone.style.display  = 'none';
+      canvasArea.classList.add('visible');
+      btnSave.disabled  = false;
+      btnChange.style.display = '';
+      btnReset.style.display  = '';
+      setCropperStatus('');
+      requestAnimationFrame(() => { resizeCvs(); cropperFitCover(); });
+    };
+    i.onerror = () => toast('Could not load image','error');
+    i.src = url;
+  }
+
+  window.cropperChangeImage = function() {
+    cImg = null;
+    dropZone.style.display  = '';
+    canvasArea.classList.remove('visible');
+    btnSave.disabled  = true;
+    btnChange.style.display = 'none';
+    btnReset.style.display  = 'none';
+    setCropperStatus('');
+    fileInput.value = '';
+  };
+
+  window.cropperResetView = function() { if (cImg) cropperFitCover(); };
+
+  function cropperFitCover() {
+    if (!cImg || !frameS) return;
+    const scX = frameS / cImgW, scY = frameS / cImgH;
+    sc = Math.max(scX, scY);
+    tx = frameX + (frameS - cImgW * sc) / 2;
+    ty = frameY + (frameS - cImgH * sc) / 2;
+    syncSlider();
+    draw();
+  }
+
+  /* ── draw ── */
+  function draw() {
+    ctx.clearRect(0, 0, cw, ch);
+    if (!cImg) return;
+
+    // 1 — image
+    ctx.drawImage(cImg, tx, ty, cImgW * sc, cImgH * sc);
+
+    // 2 — dim outside frame
+    ctx.fillStyle = 'rgba(10,10,20,0.72)';
+    ctx.fillRect(0,             0,       cw,            frameY);           // top
+    ctx.fillRect(0,             frameY + frameS, cw, ch - frameY - frameS);// bottom
+    ctx.fillRect(0,             frameY,  frameX,        frameS);           // left
+    ctx.fillRect(frameX+frameS, frameY,  cw-frameX-frameS, frameS);        // right
+
+    // 3 — frame border
+    ctx.strokeStyle = '#5b7fff';
+    ctx.lineWidth   = 2;
+    ctx.strokeRect(frameX, frameY, frameS, frameS);
+
+    // 4 — rule of thirds
+    ctx.strokeStyle = 'rgba(91,127,255,0.32)';
+    ctx.lineWidth   = 1;
+    for (let i = 1; i < 3; i++) {
+      const x = frameX + frameS * i / 3;
+      const y = frameY + frameS * i / 3;
+      ctx.beginPath(); ctx.moveTo(x, frameY); ctx.lineTo(x, frameY+frameS); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(frameX, y); ctx.lineTo(frameX+frameS, y); ctx.stroke();
+    }
+
+    // 5 — corner handles
+    corners().forEach(({x,y}) => {
+      ctx.beginPath(); ctx.arc(x, y, HANDLE_R, 0, Math.PI*2);
+      ctx.fillStyle   = '#5b7fff'; ctx.fill();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.stroke();
+    });
+  }
+
+  function corners() {
+    return [
+      {x: frameX,         y: frameY},
+      {x: frameX+frameS,  y: frameY},
+      {x: frameX+frameS,  y: frameY+frameS},
+      {x: frameX,         y: frameY+frameS},
+    ];
+  }
+
+  function hitCorner(px, py) {
+    return corners().findIndex(({x,y}) => Math.hypot(px-x, py-y) <= HANDLE_R + 7);
+  }
+
+  /* ── pointer helpers ── */
+  function cxy(e) {
+    const dpr = window.devicePixelRatio || 1;
+    const r   = cvs.getBoundingClientRect();
+    const src = e.touches ? e.touches[0] : e;
+    return { x: (src.clientX - r.left) * dpr, y: (src.clientY - r.top) * dpr };
+  }
+
+  /* ── pan ── */
+  cvs.addEventListener('mousedown',  onDown);
+  cvs.addEventListener('touchstart', onDown, {passive:false});
+  window.addEventListener('mousemove',  onMove);
+  window.addEventListener('touchmove',  onMove, {passive:false});
+  window.addEventListener('mouseup',    onUp);
+  window.addEventListener('touchend',   onUp);
+
+  function onDown(e) {
+    if (!cImg) return;
+    e.preventDefault();
+    const p  = cxy(e);
+    const ci = hitCorner(p.x, p.y);
+    if (ci !== -1) {
+      scCorner = ci; scStart = p; scAtStart = sc; txAtSc = tx; tyAtSc = ty;
+    } else {
+      dragging = true; dragX = p.x; dragY = p.y; txD = tx; tyD = ty;
+    }
+  }
+
+  function onMove(e) {
+    if (!cImg) return;
+    if (dragging) {
+      e.preventDefault();
+      const p = cxy(e);
+      tx = txD + (p.x - dragX);
+      ty = tyD + (p.y - dragY);
+      draw();
+    } else if (scCorner !== -1) {
+      e.preventDefault();
+      const p  = cxy(e);
+      const dx = p.x - scStart.x, dy = p.y - scStart.y;
+      let diag;
+      switch(scCorner) {
+        case 0: diag=(-dx-dy)/2; break;
+        case 1: diag=( dx-dy)/2; break;
+        case 2: diag=( dx+dy)/2; break;
+        case 3: diag=(-dx+dy)/2; break;
+      }
+      const sens  = scAtStart / 300;
+      const newSc = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, scAtStart + diag * sens));
+      const ratio = newSc / scAtStart;
+      const ax = (scCorner===0||scCorner===3) ? frameX+frameS : frameX;
+      const ay = (scCorner===0||scCorner===1) ? frameY+frameS : frameY;
+      tx = ax - (ax - txAtSc) * ratio;
+      ty = ay - (ay - tyAtSc) * ratio;
+      sc = newSc;
+      syncSlider(); draw();
+    }
+  }
+
+  function onUp() { dragging = false; scCorner = -1; }
+
+  /* ── wheel zoom ── */
+  cvs.addEventListener('wheel', e => {
+    if (!cImg) return;
+    e.preventDefault();
+    const p      = cxy(e);
+    const factor = e.deltaY < 0 ? 1.09 : 1/1.09;
+    const newSc  = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, sc * factor));
+    const ratio  = newSc / sc;
+    tx = p.x + (tx - p.x) * ratio;
+    ty = p.y + (ty - p.y) * ratio;
+    sc = newSc;
+    syncSlider(); draw();
+  }, {passive:false});
+
+  /* ── pinch zoom ── */
+  cvs.addEventListener('touchstart', e => { if (e.touches.length===2) lastPinch=pinchD(e); }, {passive:true});
+  cvs.addEventListener('touchmove',  e => {
+    if (e.touches.length!==2||!lastPinch) return;
+    e.preventDefault();
+    const d    = pinchD(e);
+    const ratio= d / lastPinch;
+    lastPinch  = d;
+    const dpr  = window.devicePixelRatio||1;
+    const r    = cvs.getBoundingClientRect();
+    const mx   = ((e.touches[0].clientX+e.touches[1].clientX)/2-r.left)*dpr;
+    const my   = ((e.touches[0].clientY+e.touches[1].clientY)/2-r.top)*dpr;
+    const newSc= Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, sc*ratio));
+    const r2   = newSc/sc;
+    tx = mx+(tx-mx)*r2; ty = my+(ty-my)*r2; sc = newSc;
+    syncSlider(); draw();
+  }, {passive:false});
+  cvs.addEventListener('touchend', () => lastPinch = null);
+  function pinchD(e) {
+    const dx=e.touches[0].clientX-e.touches[1].clientX;
+    const dy=e.touches[0].clientY-e.touches[1].clientY;
+    return Math.sqrt(dx*dx+dy*dy);
+  }
+
+  /* ── zoom slider ── */
+  zoomSlider.addEventListener('input', function() {
+    if (!cImg) return;
+    const newSc = Math.exp(ZOOM_MIN_LOG + parseFloat(this.value)*(ZOOM_MAX_LOG-ZOOM_MIN_LOG));
+    const ratio = newSc / sc;
+    const cx = frameX + frameS/2, cy = frameY + frameS/2;
+    tx = cx+(tx-cx)*ratio; ty = cy+(ty-cy)*ratio; sc = newSc;
+    zoomVal.textContent = sc.toFixed(2)+'×';
+    draw();
+  });
+
+  function syncSlider() {
+    zoomSlider.value = (Math.log(sc)-ZOOM_MIN_LOG)/(ZOOM_MAX_LOG-ZOOM_MIN_LOG);
+    zoomVal.textContent = sc.toFixed(2)+'×';
+  }
+
+  /* ── drop zone ── */
+  fileInput.addEventListener('change', function() { if (this.files[0]) loadFile(this.files[0]); });
+  dropZone.addEventListener('dragover',  e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone.addEventListener('dragleave', ()=> dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault(); dropZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+  });
+
+  /* ── SAVE ── */
+  window.cropperSave = function() {
+    if (!cImg) return;
+    if (!ws || ws.readyState !== WebSocket.OPEN) { toast('Not connected to ImTalking','error'); return; }
+
+    // Render frame region → 512×512 offscreen canvas
+    const off  = document.createElement('canvas');
+    off.width  = OUTPUT_SIZE; off.height = OUTPUT_SIZE;
+    const oc   = off.getContext('2d');
+    const scOut= OUTPUT_SIZE / frameS;
+    oc.drawImage(cImg,
+      (tx - frameX) * scOut, (ty - frameY) * scOut,
+      cImgW * sc * scOut,    cImgH * sc * scOut);
+
+    const b64 = off.toDataURL('image/png').split(',')[1];
+
+    btnSave.disabled = true;
+    btnSave.textContent = '⏳ Saving…';
+    setCropperStatus('');
+
+    ws.send(JSON.stringify({ type:'save_library_image', data:b64, format:'png' }));
+    logLine('[LIBRARY] Sending cropped image to WPF…');
+  };
+
+  /* ── WPF reply handlers (called from handleMessage) ── */
+  window.cropperOnSaved = function(msg) {
+    btnSave.disabled = false;
+    btnSave.textContent = '💾 Save to Library';
+    setCropperStatus('✓ Saved: ' + (msg.filename||''), false);
+    toast('Image saved to library ✓','success');
+    logLine('[LIBRARY] Saved → ' + (msg.path||msg.filename||''));
+    // Auto-refresh the image grid
+    sendMsg({ type:'get_images' });
+    // Auto-close after a short moment so user sees the success message
+    setTimeout(closeCropper, 1200);
+  };
+
+  window.cropperOnSaveError = function(msg) {
+    btnSave.disabled = false;
+    btnSave.textContent = '💾 Save to Library';
+    setCropperStatus('Error: ' + (msg.message||'Unknown error'), true);
+    toast('Save failed','error');
+    logLine('[LIBRARY] Save error: ' + (msg.message||''));
+  };
+
+  function setCropperStatus(text, isError) {
+    if (!text) { statusEl.classList.remove('visible','error'); statusEl.textContent=''; return; }
+    statusEl.textContent = text;
+    statusEl.classList.add('visible');
+    statusEl.classList.toggle('error', !!isError);
+  }
+
+})(); // end IIFE
 document.getElementById('voiceSearch').addEventListener('keydown', e => {
   const dd   = document.getElementById('voiceDropdown');
   const rows = [...dd.querySelectorAll('.voice-row')];
   if (!rows.length) return;
-
   const active = dd.querySelector('.voice-row.active');
   let idx = rows.indexOf(active);
-
   if (e.key === 'ArrowDown') {
-    e.preventDefault();
-    idx = Math.min(idx + 1, rows.length - 1);
-    rows.forEach((r,i) => r.classList.toggle('active', i === idx));
+    e.preventDefault(); idx = Math.min(idx+1, rows.length-1);
+    rows.forEach((r,i) => r.classList.toggle('active', i===idx));
     rows[idx].scrollIntoView({ block: 'nearest' });
   } else if (e.key === 'ArrowUp') {
-    e.preventDefault();
-    idx = Math.max(idx - 1, 0);
-    rows.forEach((r,i) => r.classList.toggle('active', i === idx));
+    e.preventDefault(); idx = Math.max(idx-1, 0);
+    rows.forEach((r,i) => r.classList.toggle('active', i===idx));
     rows[idx].scrollIntoView({ block: 'nearest' });
   } else if (e.key === 'Enter') {
-    e.preventDefault();
-    if (active) pickVoice(active.dataset.name);
+    e.preventDefault(); if (active) pickVoice(active.dataset.name);
   } else if (e.key === 'Escape') {
     closeDropdown();
   }
 });
-
 </script>
 </body>
 </html>
