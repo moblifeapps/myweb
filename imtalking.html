@@ -776,13 +776,32 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
         <label class="field-label" for="ttsText">Text to speak</label>
         <textarea id="ttsText" placeholder="Type what you want the avatar to say…"></textarea>
       </div>
-      <div>
-        <label class="field-label" for="ttsPacing">Speech Pacing</label>
-        <select id="ttsPacing">
-          <option value="continuous" selected>Continuous speech</option>
-          <option value="light">Pause: 0.5s at commas · 1.0s at periods</option>
-          <option value="natural">Pause: 1.0s at commas · 2.0s at periods</option>
-        </select>
+      <!-- Pitch + Rate controls — two sliders side by side -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div>
+          <label class="field-label">
+            Pitch Adjustment — <span id="pitchVal" style="color:var(--accent)">0 Hz</span>
+          </label>
+          <div class="slider-row">
+            <input type="range" id="ttsPitch" min="-50" max="50" step="1" value="0"
+                   oninput="document.getElementById('pitchVal').textContent=this.value+' Hz'"/>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:3px">
+            <span>−50 Hz</span><span>0</span><span>+50 Hz</span>
+          </div>
+        </div>
+        <div>
+          <label class="field-label">
+            Speech Rate — <span id="rateVal" style="color:var(--accent)">0%</span>
+          </label>
+          <div class="slider-row">
+            <input type="range" id="ttsRate" min="-50" max="50" step="1" value="0"
+                   oninput="document.getElementById('rateVal').textContent=this.value+'%'"/>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:3px">
+            <span>−50%</span><span>0</span><span>+50%</span>
+          </div>
+        </div>
       </div>
       <div>
         <label class="field-label">Voice</label>
@@ -820,8 +839,8 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
     <div class="card">
       <div class="card-label">Processing Options</div>
       <div class="opts-grid">
-        <div>
-          <label class="field-label" for="optFps">Render FPS</label>
+        <div style="visibility: visible;">
+          <label class="field-label" for="optFps" >Render FPS</label>
           <select id="optFps">
             <option>8</option><option>10</option>
             <option selected>15</option><option>20</option><option>25</option>
@@ -858,7 +877,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
               <input type="checkbox" id="optStill" checked/> Still mode
             </label>
             <label class="check-item">
-              <input type="checkbox" id="optEnhancer" checked/> Enhancer
+              <input type="checkbox" id="optEnhancer" /> Enhancer
             </label>
             <!--
               optCpu and optNoResize are intentionally hidden from the user.
@@ -1365,27 +1384,18 @@ function updateTtsBtn() {
   document.getElementById('btnGenerateTts').disabled = !ok;
 }
 
-function applyPacing(text) {
-  const mode = document.getElementById('ttsPacing').value;
-  if (mode === 'continuous') return text;
-  // Insert SSML-style break hints as edge-tts doesn't support SSML natively,
-  // so we inject silence markers via punctuation repetition (soft pause trick).
-  // For a proper SSML approach WPF would need to pre-process; here we send
-  // the pacing mode to WPF and let it handle it server-side.
-  return text; // WPF reads ttsPacing and handles transformation
-}
-
 function generateTts() {
   const text  = document.getElementById('ttsText').value.trim();
   const voice = document.getElementById('ttsVoice').value;
-  const pacing = document.getElementById('ttsPacing').value;
+  const pitch = parseInt(document.getElementById('ttsPitch').value, 10);
+  const rate  = parseInt(document.getElementById('ttsRate').value,  10);
   if (!text) { toast('Enter some text first', ''); return; }
   ttsAudioPath = null;
   document.getElementById('audioPreview').classList.remove('visible');
   document.getElementById('btnGenerateTts').disabled = true;
   document.getElementById('btnGenerateTts').innerHTML = '⏳&nbsp; Generating…';
-  sendMsg({ type: 'generate_tts', text, voice, pacing });
-  logLine(`[TTS] Requested voice: ${voice} | pacing: ${pacing}`);
+  sendMsg({ type: 'generate_tts', text, voice, pitch, rate });
+  logLine(`[TTS] voice:${voice} pitch:${pitch}Hz rate:${rate}%`);
 }
 
 /* ═══════════════════════════════════════════════════════════════
