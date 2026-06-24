@@ -280,6 +280,29 @@ select option { background: var(--surface2); }
 .img-empty { grid-column: 1/-1; text-align: center; color: var(--text3); font-size: 12px; padding: 20px 0; }
 .img-selected-label { font-size: 11px; color: var(--text3); margin-top: 7px; }
 
+/* Delete button — appears on hover over a thumb */
+.img-delete {
+  position: absolute; top: 4px; left: 4px;
+  width: 17px; height: 17px;
+  background: rgba(255,95,114,.85);
+  border-radius: 50%;
+  display: none; align-items: center; justify-content: center;
+  font-size: 9px; color: #fff; line-height: 1;
+  cursor: pointer; z-index: 2;
+  transition: background .15s, transform .15s;
+}
+.img-delete:hover { background: var(--red); transform: scale(1.15); }
+.img-thumb:hover .img-delete { display: flex; }
+/* Confirm state — thumb gets a red border flash */
+.img-thumb.confirm-delete { border-color: var(--red) !important; }
+.img-thumb.confirm-delete .img-delete {
+  display: flex; background: var(--red);
+  width: 100%; height: 100%; border-radius: 0;
+  font-size: 11px; font-weight: 700;
+  position: absolute; top: 0; left: 0;
+  border-radius: 6px;
+}
+
 /* ── OPTIONS ──────────────────────────────────────────────────── */
 .opts-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 11px; }
 .opts-grid .full { grid-column: 1/-1; }
@@ -1123,6 +1146,17 @@ function handleMessage(msg) {
       toast('Image added to library ✓', 'success');
       logLine('[LIBRARY] New image saved — refreshing grid…');
       break;
+
+    case 'image_deleted':
+      sendMsg({ type: 'get_images' });
+      toast(`Deleted ${msg.filename || 'image'}`, '');
+      logLine(`[LIBRARY] Deleted ${msg.filename}`);
+      break;
+
+    case 'image_delete_error':
+      toast(`Delete failed: ${msg.message}`, 'error');
+      logLine(`[LIBRARY] Delete error: ${msg.message}`);
+      break;
   }
 }
 
@@ -1137,17 +1171,51 @@ function renderImageGrid(images) {
     grid.innerHTML = '<div class="img-empty">No images found.</div>';
     return;
   }
-  grid.innerHTML = images.map(img => `
+  // Build thumbnails — delete button (×) top-left, checkmark top-right
+  grid.innerHTML = images.map(() => `
     <div class="img-thumb">
-      <img src="${escHtml(img.url)}" alt="${escHtml(img.name)}" loading="lazy"/>
+      <div class="img-delete" title="Delete image">×</div>
+      <img loading="lazy"/>
       <div class="img-check">✓</div>
     </div>`).join('');
+
   const thumbs = grid.querySelectorAll('.img-thumb');
   thumbs.forEach((el, i) => {
-    el._imgPath = images[i].path;
-    el._imgName = images[i].name;
-    el.addEventListener('click', () => selectImage(el._imgPath, el._imgName));
+    const img  = images[i];
+    el._imgPath = img.path;
+    el._imgName = img.name;
+
+    // Set src via JS property — avoids any Windows path encoding in HTML attributes
+    el.querySelector('img').src = img.url;
+    el.querySelector('img').alt = img.name;
+
+    // Click on the thumb body → select
+    el.addEventListener('click', (e) => {
+      // Don't select when clicking the delete button
+      if (e.target.classList.contains('img-delete')) return;
+      selectImage(el._imgPath, el._imgName);
+    });
+
+    // Click on delete button → two-step confirm
+    el.querySelector('.img-delete').addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (el.classList.contains('confirm-delete')) {
+        // Second click — confirmed, send delete
+        deleteImage(el._imgPath, el._imgName);
+      } else {
+        // First click — show confirm state
+        el.classList.add('confirm-delete');
+        el.querySelector('.img-delete').textContent = '🗑 Delete?';
+        // Auto-cancel after 3 s if user changes their mind
+        setTimeout(() => {
+          el.classList.remove('confirm-delete');
+          if (el.querySelector('.img-delete'))
+            el.querySelector('.img-delete').textContent = '×';
+        }, 3000);
+      }
+    });
   });
+
   if (selImage) highlightThumb(selImage);
 }
 
@@ -1164,6 +1232,20 @@ function highlightThumb(path) {
   document.querySelectorAll('.img-thumb').forEach(el => {
     if (el._imgPath === path) el.classList.add('selected');
   });
+}
+
+/* ── Delete image ── */
+function deleteImage(path, name) {
+  if (!sendMsg({ type: 'delete_image', image_path: path })) {
+    toast('Not connected', 'error'); return;
+  }
+  logLine(`[LIBRARY] Deleting ${name}…`);
+  // If the deleted image was selected, clear selection
+  if (selImage === path) {
+    selImage = null; selImageName = '';
+    document.getElementById('imgSelectedLabel').textContent = 'No image selected';
+    updateGenerateBtn();
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
