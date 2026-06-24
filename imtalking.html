@@ -112,11 +112,45 @@ body {
 /* ── MAIN LAYOUT ──────────────────────────────────────────────── */
 .main {
   flex: 1; display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 18px; padding: 22px 26px;
-  max-width: 1060px; margin: 0 auto; width: 100%;
+  grid-template-columns: 1fr 300px;
+  grid-template-rows: auto auto auto;
+  column-gap: 18px;
+  padding: 18px 26px 22px;
+  max-width: 1100px; margin: 0 auto; width: 100%;
+  align-items: start;
 }
-.left-col, .right-col { display: flex; flex-direction: column; gap: 13px; }
+
+/* Left column — inputs + options, row 1 */
+.left-col {
+  grid-column: 1; grid-row: 1;
+  display: flex; flex-direction: column; gap: 13px;
+}
+
+/* Right column — image library, row 1, height locked to left col */
+.right-col {
+  grid-column: 2; grid-row: 1;
+  display: flex; flex-direction: column; gap: 13px;
+  /* height is driven by its own content; we cap it via the card */
+}
+/* The image card must not grow beyond the top section */
+.right-col .card {
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+
+/* Divider — full width, row 2 col 1-2 */
+.section-divider {
+  grid-column: 1 / -1; grid-row: 2;
+  height: 1px; background: var(--border);
+  margin: 10px 0 0;
+}
+
+/* Generate section — full width, row 3 */
+.generate-section-wrap {
+  grid-column: 1 / -1; grid-row: 3;
+  display: flex; flex-direction: column; gap: 13px;
+  padding-top: 16px;
+}
 
 /* ── CARD ─────────────────────────────────────────────────────── */
 .card {
@@ -255,9 +289,14 @@ select option { background: var(--surface2); }
   box-shadow: 0 0 9px rgba(91,127,255,.25);
 }
 .img-count { font-size: 11px; color: var(--text3); }
+/* Image grid — 2 columns of large thumbs, aligned to top */
 .image-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(82px,1fr));
-  gap: 7px; max-height: 260px; overflow-y: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  overflow-y: auto;
+  align-content: start;   /* thumbs stack from top, no vertical stretch */
+  max-height: 520px;      /* capped so it never exceeds the top-section height */
 }
 .image-grid::-webkit-scrollbar { width: 4px; }
 .image-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
@@ -350,27 +389,82 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 .audio-preview-label { font-size: 10px; color: var(--green); font-weight: 700; letter-spacing: .6px; }
 .audio-preview audio  { width: 100%; height: 30px; }
 
-/* ── PROGRESS SECTION ─────────────────────────────────────────── */
+/* ── PROGRESS SECTION — premium generate area ─────────────────── */
 .progress-section {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 16px 18px;
-  display: flex; flex-direction: column; gap: 11px;
+  background: linear-gradient(145deg, #181c27 0%, #1a1f30 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px 18px;
+  display: flex; flex-direction: column; gap: 14px;
+  position: relative; overflow: hidden;
 }
-.progress-header { display: flex; justify-content: space-between; align-items: center; }
-.progress-status { font-size: 13px; font-weight: 500; }
-.progress-stage  { font-size: 10px; color: var(--accent); font-weight: 700; letter-spacing: .5px; }
-.progress-bar-track { height: 5px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
+/* subtle top accent line */
+.progress-section::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), #a78bfa, var(--green));
+  opacity: 0.7;
+}
+.progress-header {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;
+}
+.progress-left { display: flex; flex-direction: column; gap: 3px; }
+.progress-status { font-size: 14px; font-weight: 600; }
+.progress-stage  {
+  font-size: 10px; color: var(--accent); font-weight: 700;
+  letter-spacing: .8px; text-transform: uppercase;
+}
+/* Big % counter — right side */
+.progress-pct {
+  font-size: 28px; font-weight: 800; letter-spacing: -1px;
+  color: var(--accent); min-width: 64px; text-align: right;
+  font-variant-numeric: tabular-nums;
+  transition: color .3s;
+  display: none;
+}
+.progress-pct.visible { display: block; }
+
+/* Bar track */
+.progress-bar-track {
+  height: 8px; background: var(--surface2);
+  border-radius: 99px; overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.4);
+}
 .progress-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg,var(--accent),#a78bfa);
-  border-radius: 99px; width: 0%; transition: width .4s ease;
+  background: linear-gradient(90deg, var(--accent) 0%, #a78bfa 60%, var(--green) 100%);
+  background-size: 200% 100%;
+  border-radius: 99px;
+  width: 0%;
+  transition: width .5s cubic-bezier(.4,0,.2,1);
+  position: relative;
 }
+/* shimmer on the bar */
+.progress-bar-fill::after {
+  content: '';
+  position: absolute; top: 0; left: -60%; width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
+  animation: barShimmer 1.8s infinite;
+}
+@keyframes barShimmer { to { left: 160%; } }
+
 .progress-bar-fill.indeterminate {
-  width: 38% !important;
-  animation: indeterminate 1.3s infinite ease-in-out;
+  width: 40% !important;
+  animation: indeterminate 1.4s infinite ease-in-out;
+  background-size: 200% 100%;
+  animation: indeterminate 1.4s infinite ease-in-out, barGradShift 2s infinite linear;
 }
-@keyframes indeterminate { 0%{transform:translateX(-160%)} 100%{transform:translateX(380%)} }
-.action-row { display: flex; gap: 7px; justify-content: flex-end; flex-wrap: wrap; }
+@keyframes indeterminate { 0%{transform:translateX(-160%)} 100%{transform:translateX(350%)} }
+@keyframes barGradShift  { 0%{background-position:0% 0%} 100%{background-position:-200% 0%} }
+
+/* Frame counter line */
+.progress-frames {
+  display: none; font-size: 11px; color: var(--text2);
+  font-variant-numeric: tabular-nums;
+}
+.progress-frames.visible { display: block; }
+.progress-frames strong { color: var(--text); font-weight: 600; }
+
+.action-row { display: flex; gap: 7px; justify-content: flex-end; flex-wrap: wrap; margin-top: 2px; }
 
 /* ── RESULT CARD ──────────────────────────────────────────────── */
 .result-card {
@@ -393,31 +487,8 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 }
 .result-actions { display: flex; gap: 7px; }
 
-/* ── LOG ──────────────────────────────────────────────────────── */
-.log-section {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); overflow: hidden;
-}
-.log-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 9px 15px; border-bottom: 1px solid transparent;
-  cursor: pointer; user-select: none; transition: border-color .2s;
-}
-.log-header.open { border-color: var(--border); }
-.log-header-left { display: flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; color: var(--text2); letter-spacing: .5px; text-transform: uppercase; }
-.log-chevron { font-size: 9px; transition: transform .2s; }
-.log-chevron.open { transform: rotate(90deg); }
-.log-body { display: none; }
-.log-body.open { display: block; }
-#logOutput {
-  font-family: var(--mono); font-size: 11px; color: #7a8fa8;
-  line-height: 1.65; padding: 11px 15px; height: 170px;
-  overflow-y: auto; white-space: pre-wrap; word-break: break-all;
-}
-#logOutput::-webkit-scrollbar { width: 4px; }
-#logOutput::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-.log-clear { background: none; border: none; color: var(--text3); font-size: 11px; cursor: pointer; padding: 2px 6px; border-radius: 4px; transition: color .15s; }
-.log-clear:hover { color: var(--text2); }
+/* ── LOG — hidden from user, still functional internally ─────── */
+.log-section { display: none; }
 
 /* ── TOAST ────────────────────────────────────────────────────── */
 .toast-wrap { position: fixed; bottom: 20px; right: 20px; z-index: 300; display: flex; flex-direction: column; gap: 7px; pointer-events: none; }
@@ -706,6 +777,14 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
         <textarea id="ttsText" placeholder="Type what you want the avatar to say…"></textarea>
       </div>
       <div>
+        <label class="field-label" for="ttsPacing">Speech Pacing</label>
+        <select id="ttsPacing">
+          <option value="continuous" selected>Continuous speech</option>
+          <option value="light">Pause: 0.5s at commas · 1.0s at periods</option>
+          <option value="natural">Pause: 1.0s at commas · 2.0s at periods</option>
+        </select>
+      </div>
+      <div>
         <label class="field-label">Voice</label>
         <div class="voice-picker" id="voicePicker">
           <div class="voice-input-wrap">
@@ -758,8 +837,8 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
         <div>
           <label class="field-label" for="optUpscale">Upscale</label>
           <select id="optUpscale">
-            <option value="None" selected>None</option>
-            <option value="512">512 px</option>
+            <option value="None">None</option>
+            <option value="512" selected>512 px</option>
             <option value="1024">1024 px</option>
           </select>
         </div>
@@ -776,7 +855,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
         <div class="full">
           <div class="checks">
             <label class="check-item">
-              <input type="checkbox" id="optStill"/> Still mode
+              <input type="checkbox" id="optStill" checked/> Still mode
             </label>
             <label class="check-item">
               <input type="checkbox" id="optEnhancer" checked/> Enhancer
@@ -790,14 +869,29 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
       </div>
     </div>
 
-    <!-- ── PROGRESS (below Processing Options) ────────────────── -->
+    <!-- ── PROCESSING OPTIONS closes left-col top section ── -->
+    </div><!-- /left-col -->
+
+    <!-- ── DIVIDER ────────────────────────────────────────────── -->
+    <div class="section-divider"></div>
+
+    <!-- ── GENERATE SECTION (full left-col width, below divider) ── -->
+    <div class="generate-section-wrap">
+
+    <!-- ── PROGRESS ────────────────────────────────────────────── -->
     <div class="progress-section">
       <div class="progress-header">
-        <span class="progress-status" id="progressStatus">Ready</span>
-        <span class="progress-stage"  id="progressStage"></span>
+        <div class="progress-left">
+          <span class="progress-status" id="progressStatus">Ready</span>
+          <span class="progress-stage"  id="progressStage"></span>
+        </div>
+        <span class="progress-pct" id="progressPct">0%</span>
       </div>
       <div class="progress-bar-track">
         <div class="progress-bar-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-frames" id="progressFrames">
+        Frame <strong id="frameCurrent">0</strong> of <strong id="frameTotal">0</strong>
       </div>
       <div class="action-row">
         <button class="btn btn-secondary" id="btnOpenFolder" style="display:none"
@@ -811,7 +905,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
       </div>
     </div>
 
-    <!-- ── CONSOLE LOG (directly below progress) ──────────────── -->
+    <!-- ── CONSOLE LOG (starts collapsed) ─────────────────────── -->
     <div class="log-section">
       <div class="log-header" id="logHeader" onclick="toggleLog()">
         <div class="log-header-left">
@@ -824,12 +918,12 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
       </div>
     </div>
 
-  </div><!-- /left-col -->
+    </div><!-- /generate-section-wrap -->
 
   <!-- ══════════ RIGHT COL ══════════ -->
   <div class="right-col">
 
-    <!-- Source Image + Import button -->
+    <!-- Source Image + Import button — fills all available height -->
     <div class="card">
       <div class="card-label">Source Image</div>
       <div class="img-toolbar">
@@ -1092,7 +1186,7 @@ function handleMessage(msg) {
       break;
 
     case 'progress':
-      setProgress(msg.value, msg.stage, msg.status, false);
+      setProgress(msg.value, msg.stage, msg.status, false, msg.frame_current, msg.frame_total);
       break;
 
     case 'progress_indeterminate':
@@ -1271,16 +1365,27 @@ function updateTtsBtn() {
   document.getElementById('btnGenerateTts').disabled = !ok;
 }
 
+function applyPacing(text) {
+  const mode = document.getElementById('ttsPacing').value;
+  if (mode === 'continuous') return text;
+  // Insert SSML-style break hints as edge-tts doesn't support SSML natively,
+  // so we inject silence markers via punctuation repetition (soft pause trick).
+  // For a proper SSML approach WPF would need to pre-process; here we send
+  // the pacing mode to WPF and let it handle it server-side.
+  return text; // WPF reads ttsPacing and handles transformation
+}
+
 function generateTts() {
   const text  = document.getElementById('ttsText').value.trim();
   const voice = document.getElementById('ttsVoice').value;
+  const pacing = document.getElementById('ttsPacing').value;
   if (!text) { toast('Enter some text first', ''); return; }
   ttsAudioPath = null;
   document.getElementById('audioPreview').classList.remove('visible');
   document.getElementById('btnGenerateTts').disabled = true;
   document.getElementById('btnGenerateTts').innerHTML = '⏳&nbsp; Generating…';
-  sendMsg({ type: 'generate_tts', text, voice });
-  logLine(`[TTS] Requested voice: ${voice}`);
+  sendMsg({ type: 'generate_tts', text, voice, pacing });
+  logLine(`[TTS] Requested voice: ${voice} | pacing: ${pacing}`);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1321,9 +1426,9 @@ function startGeneration() {
     output_size:      document.getElementById('optUpscale').value,
     expression_scale: parseFloat(document.getElementById('optExpr').value),
     still:            document.getElementById('optStill').checked,
-    use_cpu:          true,      // always true — hidden from user
-    no_resize:        false,     // always false — hidden from user
-    enhancer:         enhancer,  // true → WPF appends --enhancer gfpgan to python args
+    use_cpu:          true,
+    no_resize:        false,
+    enhancer:         enhancer,
   });
 
   setRunning(true);
@@ -1341,12 +1446,37 @@ function setRunning(r) {
 /* ═══════════════════════════════════════════════════════════════
    PROGRESS
 ═══════════════════════════════════════════════════════════════ */
-function setProgress(value, stage, status, indeterminate) {
+function setProgress(value, stage, status, indeterminate, frameCurrent, frameTotal) {
   document.getElementById('progressStatus').textContent = status || '';
   document.getElementById('progressStage').textContent  = stage  || '';
-  const fill = document.getElementById('progressFill');
-  fill.classList.toggle('indeterminate', indeterminate);
-  if (!indeterminate) fill.style.width = value + '%';
+  const fill   = document.getElementById('progressFill');
+  const pctEl  = document.getElementById('progressPct');
+  const frEl   = document.getElementById('progressFrames');
+
+  fill.classList.toggle('indeterminate', !!indeterminate);
+
+  if (!indeterminate) {
+    const pct = Math.round(Math.max(0, Math.min(100, value || 0)));
+    fill.style.width = pct + '%';
+    // Show % counter only when actively running
+    if (pct > 0 && pct < 100) {
+      pctEl.textContent = pct + '%';
+      pctEl.classList.add('visible');
+    } else {
+      pctEl.classList.remove('visible');
+    }
+  } else {
+    pctEl.classList.remove('visible');
+  }
+
+  // Frame counter
+  if (frameCurrent && frameTotal) {
+    document.getElementById('frameCurrent').textContent = frameCurrent;
+    document.getElementById('frameTotal').textContent   = frameTotal;
+    frEl.classList.add('visible');
+  } else {
+    frEl.classList.remove('visible');
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1357,7 +1487,7 @@ function logLine(text) {
   const ts = new Date().toLocaleTimeString('en-GB');
   el.textContent += `[${ts}] ${text}\n`;
   el.scrollTop = el.scrollHeight;
-  if (!document.getElementById('logBody').classList.contains('open')) toggleLog();
+  // Log stays collapsed unless user explicitly opens it
 }
 function toggleLog() {
   const body    = document.getElementById('logBody');
