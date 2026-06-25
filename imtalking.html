@@ -423,6 +423,39 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 }
 .progress-pct.visible { display: block; }
 
+/* ── Overall pipeline bar ── */
+.progress-overall-wrap {
+  display: none; flex-direction: column; gap: 5px;
+}
+.progress-overall-wrap.visible { display: flex; }
+.progress-overall-header {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.progress-overall-label {
+  font-size: 10px; color: var(--text3); font-weight: 600;
+  letter-spacing: .6px; text-transform: uppercase;
+}
+.progress-overall-pct {
+  font-size: 11px; font-weight: 700; color: var(--green);
+  font-variant-numeric: tabular-nums;
+}
+.progress-overall-track {
+  height: 4px; background: var(--surface2);
+  border-radius: 99px; overflow: hidden;
+}
+.progress-overall-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), #4ade80);
+  border-radius: 99px; width: 0%;
+  transition: width .6s cubic-bezier(.4,0,.2,1);
+}
+
+/* Segment divider line */
+.progress-segment-divider {
+  display: none; height: 1px; background: var(--border); margin: 0;
+}
+.progress-segment-divider.visible { display: block; }
+
 /* Bar track */
 .progress-bar-track {
   height: 8px; background: var(--surface2);
@@ -839,8 +872,8 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
     <div class="card">
       <div class="card-label">Processing Options</div>
       <div class="opts-grid">
-        <div style="visibility: visible;">
-          <label class="field-label" for="optFps" >Render FPS</label>
+        <div>
+          <label class="field-label" for="optFps">Render FPS</label>
           <select id="optFps">
             <option>8</option><option>10</option>
             <option selected>15</option><option>20</option><option>25</option>
@@ -877,7 +910,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
               <input type="checkbox" id="optStill" checked/> Still mode
             </label>
             <label class="check-item">
-              <input type="checkbox" id="optEnhancer" /> Enhancer
+              <input type="checkbox" id="optEnhancer" checked/> Enhancer
             </label>
             <!--
               optCpu and optNoResize are intentionally hidden from the user.
@@ -906,6 +939,22 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
         </div>
         <span class="progress-pct" id="progressPct">0%</span>
       </div>
+
+      <!-- Overall pipeline bar (shown only during multi-segment batch) -->
+      <div class="progress-overall-wrap" id="overallWrap">
+        <div class="progress-overall-header">
+          <span class="progress-overall-label" id="overallLabel">Overall</span>
+          <span class="progress-overall-pct"   id="overallPct">0%</span>
+        </div>
+        <div class="progress-overall-track">
+          <div class="progress-overall-fill" id="overallFill"></div>
+        </div>
+      </div>
+
+      <!-- Divider between overall and segment bar (visible during batch) -->
+      <div class="progress-segment-divider" id="segmentDivider"></div>
+
+      <!-- Per-segment bar -->
       <div class="progress-bar-track">
         <div class="progress-bar-fill" id="progressFill"></div>
       </div>
@@ -1205,11 +1254,15 @@ function handleMessage(msg) {
       break;
 
     case 'progress':
-      setProgress(msg.value, msg.stage, msg.status, false, msg.frame_current, msg.frame_total);
+      setProgress(msg.value, msg.stage, msg.status, false,
+        msg.frame_current, msg.frame_total,
+        msg.overall_pct,   msg.total_segments);
       break;
 
     case 'progress_indeterminate':
-      setProgress(0, msg.stage, msg.status, true);
+      setProgress(0, msg.stage, msg.status, true,
+        null, null,
+        msg.overall_pct, msg.total_segments);
       break;
 
     case 'log':
@@ -1423,9 +1476,14 @@ function startGeneration() {
   document.getElementById('progressStatus').style.color = '';
   document.getElementById('btnOpenFolder').style.display = 'none';
   document.getElementById('btnPlayVideo').style.display  = 'none';
+  document.getElementById('overallWrap').classList.remove('visible');
+  document.getElementById('segmentDivider').classList.remove('visible');
+  document.getElementById('overallFill').style.width = '0%';
   lastVideoPath = null;
 
   const enhancer = document.getElementById('optEnhancer').checked;
+  const pitch    = parseInt(document.getElementById('ttsPitch').value, 10);
+  const rate     = parseInt(document.getElementById('ttsRate').value,  10);
 
   sendMsg({
     type:             'generate',
@@ -1439,6 +1497,8 @@ function startGeneration() {
     use_cpu:          true,
     no_resize:        false,
     enhancer:         enhancer,
+    pitch:            pitch,
+    rate:             rate,
   });
 
   setRunning(true);
@@ -1456,19 +1516,36 @@ function setRunning(r) {
 /* ═══════════════════════════════════════════════════════════════
    PROGRESS
 ═══════════════════════════════════════════════════════════════ */
-function setProgress(value, stage, status, indeterminate, frameCurrent, frameTotal) {
+function setProgress(value, stage, status, indeterminate, frameCurrent, frameTotal, overallPct, totalSegments) {
   document.getElementById('progressStatus').textContent = status || '';
   document.getElementById('progressStage').textContent  = stage  || '';
-  const fill   = document.getElementById('progressFill');
-  const pctEl  = document.getElementById('progressPct');
-  const frEl   = document.getElementById('progressFrames');
+  const fill        = document.getElementById('progressFill');
+  const pctEl       = document.getElementById('progressPct');
+  const frEl        = document.getElementById('progressFrames');
+  const overallWrap = document.getElementById('overallWrap');
+  const overallFill = document.getElementById('overallFill');
+  const overallPctEl= document.getElementById('overallPct');
+  const overallLbl  = document.getElementById('overallLabel');
+  const divider     = document.getElementById('segmentDivider');
 
+  // ── Overall pipeline bar ──────────────────────────────────────
+  const isBatch = totalSegments > 1;
+  overallWrap.classList.toggle('visible', isBatch);
+  divider.classList.toggle('visible', isBatch);
+
+  if (isBatch && overallPct != null) {
+    const op = Math.round(Math.max(0, Math.min(100, overallPct)));
+    overallFill.style.width  = op + '%';
+    overallPctEl.textContent = op + '%';
+    overallLbl.textContent   = `Pipeline — ${totalSegments} segment${totalSegments > 1 ? 's' : ''}`;
+  }
+
+  // ── Segment bar ───────────────────────────────────────────────
   fill.classList.toggle('indeterminate', !!indeterminate);
 
   if (!indeterminate) {
     const pct = Math.round(Math.max(0, Math.min(100, value || 0)));
     fill.style.width = pct + '%';
-    // Show % counter only when actively running
     if (pct > 0 && pct < 100) {
       pctEl.textContent = pct + '%';
       pctEl.classList.add('visible');
@@ -1479,7 +1556,7 @@ function setProgress(value, stage, status, indeterminate, frameCurrent, frameTot
     pctEl.classList.remove('visible');
   }
 
-  // Frame counter
+  // ── Frame counter ─────────────────────────────────────────────
   if (frameCurrent && frameTotal) {
     document.getElementById('frameCurrent').textContent = frameCurrent;
     document.getElementById('frameTotal').textContent   = frameTotal;
