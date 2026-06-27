@@ -24,18 +24,26 @@
   --mono:        'Cascadia Code','Fira Code','Consolas',monospace;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── APP SHELL ────────────────────────────────────────────────── */
 body {
   font-family: 'Inter','Segoe UI',system-ui,sans-serif;
   background: var(--bg); color: var(--text);
   min-height: 100vh; display: flex; flex-direction: column;
 }
 
+/* Shell sits below the sticky topbar */
+.app-shell {
+  flex: 1; display: flex; flex-direction: row;
+  overflow: hidden; height: calc(100vh - 60px); /* 60px = topbar height */
+}
+
 /* ── TOPBAR ───────────────────────────────────────────────────── */
 .topbar {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 13px 26px;
+  padding: 13px 26px; height: 60px;
   background: var(--surface); border-bottom: 1px solid var(--border);
-  position: sticky; top: 0; z-index: 100;
+  position: sticky; top: 0; z-index: 100; flex-shrink: 0;
 }
 .topbar-brand { display: flex; align-items: center; gap: 11px; }
 .topbar-logo {
@@ -46,8 +54,6 @@ body {
 }
 .topbar-title { font-size: 16px; font-weight: 700; letter-spacing: -.3px; }
 .topbar-sub   { font-size: 11px; color: var(--text2); margin-top: 1px; }
-
-/* WS pill */
 .ws-pill {
   display: flex; align-items: center; gap: 7px;
   font-size: 12px; color: var(--text2);
@@ -57,13 +63,61 @@ body {
 }
 .ws-dot {
   width: 7px; height: 7px; border-radius: 50%;
-  background: var(--text3); flex-shrink: 0;
-  transition: background .3s;
+  background: var(--text3); flex-shrink: 0; transition: background .3s;
 }
 .ws-dot.connected  { background: var(--green); box-shadow: 0 0 5px var(--green); }
 .ws-dot.connecting { background: var(--amber); animation: blink 1s infinite; }
 .ws-dot.error      { background: var(--red);   box-shadow: 0 0 5px var(--red); }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+/* ── SIDEBAR ──────────────────────────────────────────────────── */
+.sidebar {
+  width: 200px; flex-shrink: 0;
+  background: var(--surface); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  height: 100%; overflow: hidden;
+}
+.sidebar-nav {
+  flex: 1; display: flex; flex-direction: column;
+  padding: 14px 8px; gap: 2px;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 8px;
+  font-size: 13px; font-weight: 500; color: var(--text2);
+  cursor: pointer; user-select: none; transition: all .15s;
+  border: 1px solid transparent;
+}
+.nav-item:hover { background: var(--surface2); color: var(--text); }
+.nav-item.active {
+  background: var(--accent-glow); border-color: rgba(91,127,255,.3);
+  color: var(--accent); font-weight: 600;
+}
+.nav-icon  { font-size: 15px; flex-shrink: 0; width: 20px; text-align: center; }
+.nav-label { flex: 1; }
+.nav-badge {
+  font-size: 10px; font-weight: 700; background: var(--accent);
+  color: #fff; border-radius: 20px; padding: 1px 6px; flex-shrink: 0;
+}
+.sidebar-footer {
+  padding: 14px 12px;
+  border-top: 1px solid var(--border);
+  font-size: 10px; color: var(--text3); text-align: center; line-height: 1.6;
+}
+
+/* ── CONTENT AREA ─────────────────────────────────────────────── */
+.content-area {
+  flex: 1; height: 100%; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+
+/* 120px top breathing room inside every tab panel */
+.tab-panel {
+  display: none; flex-direction: column;
+  padding-top: 0;
+  overflow-y: auto; flex: 1;
+}
+.tab-panel.active { display: flex; }
 
 /* ── SPLASH SCREEN ────────────────────────────────────────────── */
 #splash {
@@ -116,7 +170,7 @@ body {
   grid-template-rows: auto auto auto;
   column-gap: 18px;
   padding: 18px 26px 22px;
-  max-width: 1100px; margin: 0 auto; width: 100%;
+  width: 100%;
   align-items: start;
 }
 
@@ -574,7 +628,109 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 .restore-banner.visible { display: flex; }
 .restore-banner strong { font-weight: 700; }
 
-/* ── CROPPER MODAL ────────────────────────────────────────────── */
+/* ── PROJECTS PANEL ───────────────────────────────────────────── */
+.projects-wrap {
+  flex: 1; padding: 0 26px 32px; max-width: 900px; margin: 0 auto; width: 100%;
+}
+.projects-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.projects-title { font-size: 20px; font-weight: 700; }
+.projects-sub   { font-size: 12px; color: var(--text2); margin-top: 3px; }
+.projects-empty {
+  text-align: center; padding: 60px 20px; color: var(--text3); font-size: 14px;
+}
+.projects-empty .pe-icon { font-size: 48px; margin-bottom: 14px; }
+.project-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px 18px;
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 10px; transition: border-color .15s;
+}
+.project-card:hover { border-color: var(--accent); }
+.project-thumb {
+  width: 56px; height: 56px; border-radius: 8px; object-fit: cover;
+  background: var(--surface2); flex-shrink: 0; border: 1px solid var(--border);
+}
+.project-thumb-placeholder {
+  width: 56px; height: 56px; border-radius: 8px;
+  background: var(--surface2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.project-info { flex: 1; min-width: 0; }
+.project-name {
+  font-size: 13px; font-weight: 600; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.project-meta { font-size: 11px; color: var(--text3); margin-top: 3px; }
+.project-text {
+  font-size: 11px; color: var(--text2); margin-top: 4px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.project-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.project-btn {
+  display: flex; align-items: center; gap: 5px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text2); font-size: 11px; font-weight: 600;
+  padding: 6px 11px; cursor: pointer; transition: all .15s; font-family: inherit;
+  white-space: nowrap;
+}
+.project-btn:hover           { border-color: var(--accent); color: var(--text); }
+.project-btn.danger:hover    { border-color: var(--red); color: var(--red); background: rgba(255,95,114,.08); }
+
+/* ── STATIC INFO PANELS ───────────────────────────────────────── */
+.info-wrap {
+  flex: 1; padding: 0 26px 32px; max-width: 760px; margin: 0 auto; width: 100%;
+}
+.info-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.info-sub   { font-size: 13px; color: var(--text2); margin-bottom: 28px; line-height: 1.6; }
+.info-section { margin-bottom: 28px; }
+.info-section h3 {
+  font-size: 13px; font-weight: 700; color: var(--accent);
+  letter-spacing: .6px; text-transform: uppercase; margin-bottom: 10px;
+}
+.info-section p {
+  font-size: 13px; color: var(--text2); line-height: 1.75; margin-bottom: 8px;
+}
+.info-section ul {
+  list-style: none; padding: 0; display: flex; flex-direction: column; gap: 7px;
+}
+.info-section ul li {
+  font-size: 13px; color: var(--text2); line-height: 1.6;
+  padding-left: 16px; position: relative;
+}
+.info-section ul li::before {
+  content: '·'; position: absolute; left: 0; color: var(--accent);
+}
+.info-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px 18px; margin-bottom: 12px;
+}
+.info-card-title { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+.info-card p { font-size: 12px; color: var(--text2); line-height: 1.7; }
+.contact-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 9px; padding: 12px 18px; margin-bottom: 10px;
+  color: var(--text); text-decoration: none; font-size: 13px; font-weight: 500;
+  transition: border-color .15s; width: 100%;
+}
+.contact-link:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── MAIN grid — sits directly inside tab panel ── */
+.tab-panel .main {
+  padding-top: 18px;
+  flex: 1;
+}
+/* Static info panels get breathing room */
+#tab-projects .projects-wrap,
+#tab-help .info-wrap,
+#tab-privacy .info-wrap,
+#tab-contact .info-wrap {
+  padding-top: 48px;
+}
 #cropperOverlay {
   display: none;
   position: fixed; inset: 0; z-index: 300;
@@ -806,17 +962,54 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
   </div>
 </div>
 
-<!-- ── MAIN ───────────────────────────────────────────────────── -->
-<div class="main" id="mainUI" style="display:none">
+<!-- ── APP SHELL (below topbar) ───────────────────────────────── -->
+<div class="app-shell" id="mainUI" style="display:none">
 
-  <!-- ══════════ LEFT COL ══════════ -->
-  <div class="left-col">
-
-    <!-- Restore banner -->
-    <div class="restore-banner" id="restoreBanner">
-      <span>⚡</span>
-      <span id="restoreBannerText">Restoring previous session state…</span>
+  <!-- ── SIDEBAR ──────────────────────────────────────────────── -->
+  <div class="sidebar">
+    <nav class="sidebar-nav">
+      <div class="nav-item active" id="nav-new"      onclick="switchTab('new')">
+        <span class="nav-icon">🎬</span>
+        <span class="nav-label">New Project</span>
+      </div>
+      <div class="nav-item"        id="nav-projects" onclick="switchTab('projects')">
+        <span class="nav-icon">📁</span>
+        <span class="nav-label">Projects</span>
+        <span class="nav-badge" id="projectsBadge" style="display:none">0</span>
+      </div>
+      <div class="nav-item"        id="nav-help"     onclick="switchTab('help')">
+        <span class="nav-icon">📖</span>
+        <span class="nav-label">Help</span>
+      </div>
+      <div class="nav-item"        id="nav-privacy"  onclick="switchTab('privacy')">
+        <span class="nav-icon">🔒</span>
+        <span class="nav-label">Privacy</span>
+      </div>
+      <div class="nav-item"        id="nav-contact"  onclick="switchTab('contact')">
+        <span class="nav-icon">✉️</span>
+        <span class="nav-label">Contact</span>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      v1.0 · mlapplications.com
     </div>
+  </div>
+
+  <!-- ── CONTENT AREA ─────────────────────────────────────────── -->
+  <div class="content-area">
+
+    <!-- ══ TAB: NEW PROJECT ══════════════════════════════════════ -->
+    <div class="tab-panel active" id="tab-new">
+      <div class="main" id="newProjectGrid">
+
+      <!-- Restore banner -->
+      <div class="restore-banner" id="restoreBanner" style="grid-column:1/-1">
+        <span>⚡</span>
+        <span id="restoreBannerText">Restoring previous session state…</span>
+      </div>
+
+    <!-- ══════════ LEFT COL ══════════ -->
+    <div class="left-col">
 
     <!-- Input Mode -->
     <div class="card">
@@ -1051,7 +1244,155 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
     </div>
 
   </div><!-- /right-col -->
-</div><!-- /main -->
+</div><!-- /main #newProjectGrid -->
+</div><!-- /tab-panel #tab-new -->
+
+<!-- ══ TAB: PROJECTS ═════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-projects">
+  <div class="projects-wrap">
+    <div class="projects-header">
+      <div>
+        <div class="projects-title">Projects</div>
+        <div class="projects-sub">Your generation history — stored locally in the desktop app.</div>
+      </div>
+      <button class="btn btn-secondary" onclick="loadProjects()" style="font-size:12px;padding:7px 14px">
+        ↻ Refresh
+      </button>
+    </div>
+    <div id="projectsList">
+      <div class="projects-empty">
+        <div class="pe-icon">📂</div>
+        Click Refresh to load your project history.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TAB: HELP ═════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-help">
+  <div class="info-wrap">
+    <div class="info-title">Help &amp; Examples</div>
+    <div class="info-sub">Everything you need to get the best results from ImTalking.</div>
+
+    <div class="info-section">
+      <h3>Getting Started</h3>
+      <ul>
+        <li>Select a source avatar image from the library on the right, or import your own with <strong>＋ Import to Library</strong>.</li>
+        <li>Type your text in the <strong>Text to Speak</strong> field, pick a voice and click <strong>Generate Speech Audio</strong> to preview it.</li>
+        <li>Hit <strong>Generate Video</strong> — ImTalking will split your text into sentences, render each one and assemble the final video automatically.</li>
+      </ul>
+    </div>
+
+    <div class="info-section">
+      <h3>Tips for Best Quality</h3>
+      <ul>
+        <li>Use a <strong>square, well-lit, front-facing photo</strong> with a clean background. The built-in image cropper (Import to Library) helps you prepare it.</li>
+        <li>Keep individual sentences <strong>short</strong> (under 15 words). ImTalking processes each sentence separately for accurate lip sync.</li>
+        <li>Enable <strong>Enhancer</strong> for sharper results — it applies GFPGAN face restoration to every frame. Takes longer but looks better.</li>
+        <li>Use <strong>Still mode</strong> for a stable head position with minimal random movement.</li>
+        <li>Pitch and Rate sliders adjust the voice before generation — use them subtly (±10–20 range).</li>
+      </ul>
+    </div>
+
+    <div class="info-section">
+      <h3>Processing Options Explained</h3>
+      <div class="info-card">
+        <div class="info-card-title">Batch Size</div>
+        <p>How many video frames are rendered at once. Higher = faster but uses more RAM. Default 2 is safe for most systems.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Upscale</div>
+        <p>Upscales the output to 512×512 px after rendering. Adds clarity without re-rendering. Recommended when Enhancer is off.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Expression Scale</div>
+        <p>Controls how expressive the lip and face movement is. 1.0 is natural. Go higher (1.2–1.5) for more dramatic expressions.</p>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <h3>Pause Behaviour Between Sentences</h3>
+      <p>ImTalking automatically inserts still-frame pauses between sentences based on the punctuation in your text:</p>
+      <ul>
+        <li><strong>Period, Question mark, Exclamation mark</strong> → 1.0 second still pause</li>
+        <li><strong>Comma, Dash</strong> → 0.5 second still pause</li>
+      </ul>
+      <p>This creates a natural rhythm without any extra configuration.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TAB: PRIVACY ══════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-privacy">
+  <div class="info-wrap">
+    <div class="info-title">Privacy</div>
+    <div class="info-sub">ImTalking processes everything locally on your machine. No data is sent to any cloud or external server.</div>
+
+    <div class="info-section">
+      <h3>What Stays on Your Computer</h3>
+      <ul>
+        <li>All avatar images you import are stored in your app's local temp folder.</li>
+        <li>Generated speech audio (MP3) is saved temporarily and deleted after video creation.</li>
+        <li>All rendered videos are saved to <code style="color:var(--accent);font-family:var(--mono);font-size:11px">C:\Users\[you]\Videos\SadTalker\</code> and never leave your device.</li>
+        <li>Project history (text, voice, image, video path) is stored only inside the desktop app's local storage.</li>
+      </ul>
+    </div>
+
+    <div class="info-section">
+      <h3>Network Usage</h3>
+      <ul>
+        <li>ImTalking connects to the internet only to: download TTS voices via Microsoft Edge TTS, and check for SSL certificate updates for the local WebSocket connection.</li>
+        <li>The webpage at mlapplications.com acts as a local UI served to your browser — it communicates exclusively with the desktop app running on your own machine (127.0.0.1).</li>
+        <li>No analytics, no telemetry, no usage tracking of any kind.</li>
+      </ul>
+    </div>
+
+    <div class="info-section">
+      <h3>Face Data</h3>
+      <p>ImTalking uses SadTalker's 3D facial model (3DMM) locally. Face coefficients are extracted on-device and immediately deleted after generation. No biometric data is stored or transmitted.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TAB: CONTACT ══════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-contact">
+  <div class="info-wrap">
+    <div class="info-title">Contact</div>
+    <div class="info-sub">Get in touch, report a bug or request a feature.</div>
+
+    <div class="info-section">
+      <h3>Reach Us</h3>
+      <a class="contact-link" href="https://mlapplications.com" target="_blank">
+        🌐 &nbsp; mlapplications.com — our main website
+      </a>
+      <a class="contact-link" href="mailto:support@mlapplications.com">
+        ✉️ &nbsp; support@mlapplications.com — support &amp; bug reports
+      </a>
+    </div>
+
+    <div class="info-section">
+      <h3>Reporting a Bug</h3>
+      <p>When reporting an issue, please include:</p>
+      <ul>
+        <li>A description of what you were doing when the problem occurred</li>
+        <li>The text you used and the voice selected</li>
+        <li>Whether Enhancer was on or off</li>
+        <li>Any error messages shown on the webpage or in the desktop app</li>
+      </ul>
+    </div>
+
+    <div class="info-section">
+      <h3>About</h3>
+      <div class="info-card">
+        <div class="info-card-title">ImTalking v1.0</div>
+        <p>Built by mlapplications.com · Powered by SadTalker, Edge TTS and GFPGAN · Running entirely on your local machine.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div><!-- /content-area -->
+</div><!-- /app-shell #mainUI -->
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
@@ -1094,7 +1435,25 @@ function hideSplash() {
 }
 function showNotRunning() { hideSplash(); document.getElementById('notRunning').classList.add('visible'); }
 function hideNotRunning() { document.getElementById('notRunning').classList.remove('visible'); }
-function showMainUI()     { document.getElementById('mainUI').style.display = 'grid'; }
+function showMainUI() {
+  document.getElementById('mainUI').style.display = 'flex';
+  if (ws && ws.readyState === WebSocket.OPEN) loadProjects(true);
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(el => el.classList.remove('active'));
+  document.getElementById('nav-' + tab).classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+  if (tab === 'projects') loadProjects();
+}
+
+function loadProjects(badgeOnly) {
+  if (!sendMsg({ type: 'get_projects' })) return;
+  if (!badgeOnly)
+    document.getElementById('projectsList').innerHTML =
+      '<div class="projects-empty"><div class="pe-icon">⏳</div>Loading…</div>';
+}
 
 /* ═══════════════════════════════════════════════════════════════
    DISCOVERY
@@ -1352,6 +1711,22 @@ function handleMessage(msg) {
     case 'image_delete_error':
       toast(`Delete failed: ${msg.message}`, 'error');
       logLine(`[LIBRARY] Delete error: ${msg.message}`);
+      break;
+
+    case 'projects':
+      renderProjects(msg.projects || []);
+      break;
+
+    case 'load_project':
+      // Restore text/voice into the New Project form
+      if (msg.tts_text)  { document.getElementById('ttsText').value = msg.tts_text; updateTtsBtn(); }
+      if (msg.tts_voice) restoreVoice(msg.tts_voice);
+      toast('Settings loaded — pick a new image and generate!', 'success');
+      break;
+
+    case 'project_deleted':
+      toast('Project deleted', '');
+      loadProjects();
       break;
   }
 }
@@ -1671,6 +2046,68 @@ document.getElementById('optExpr').addEventListener('input', function() {
   document.getElementById('exprDisp').textContent = v;
 });
 document.getElementById('audioPath').addEventListener('input', updateGenerateBtn);
+
+/* ═══════════════════════════════════════════════════════════════
+   PROJECTS
+═══════════════════════════════════════════════════════════════ */
+function renderProjects(projects) {
+  const badge = document.getElementById('projectsBadge');
+  if (projects.length > 0) {
+    badge.textContent = projects.length;
+    badge.style.display = '';
+  } else {
+    badge.style.display = 'none';
+  }
+
+  const list = document.getElementById('projectsList');
+  if (!list) return; // badge-only call, panel not visible
+
+  if (!projects.length) {
+    list.innerHTML = `<div class="projects-empty">
+      <div class="pe-icon">🎬</div>
+      No projects yet. Generate your first video to see it here.
+    </div>`;
+    return;
+  }
+
+  list.innerHTML = projects.map(p => `
+    <div class="project-card">
+      <div class="project-thumb-placeholder">🎬</div>
+      <div class="project-info">
+        <div class="project-name">${escHtml(p.name || p.id)}</div>
+        <div class="project-meta">${escHtml(p.date || '')} · ${escHtml(p.voice || '')} · ${escHtml(p.outputSize || '')} </div>
+        <div class="project-text">${escHtml((p.text || '').slice(0, 120))}${(p.text||'').length > 120 ? '…' : ''}</div>
+      </div>
+      <div class="project-actions">
+        <button class="project-btn" onclick="playProject(${JSON.stringify(p.videoPath)})">▶ Play</button>
+        <button class="project-btn" onclick="openProjectFolder(${JSON.stringify(p.videoPath)})">📁</button>
+        <button class="project-btn" onclick="duplicateProject(${JSON.stringify(p.id)})">⧉ Load</button>
+        <button class="project-btn danger" onclick="deleteProject(${JSON.stringify(p.id)})">🗑</button>
+      </div>
+    </div>`).join('');
+}
+
+function playProject(videoPath) {
+  if (!videoPath) { toast('No video path stored', 'error'); return; }
+  sendMsg({ type: 'play_video', video_path: videoPath });
+}
+
+function openProjectFolder(videoPath) {
+  if (!videoPath) { toast('No video path stored', 'error'); return; }
+  sendMsg({ type: 'open_folder', video_path: videoPath });
+}
+
+function duplicateProject(id) {
+  // Load the project's settings back into the New Project form
+  sendMsg({ type: 'load_project', id });
+  switchTab('new');
+  toast('Project settings loaded into New Project', 'success');
+}
+
+function deleteProject(id) {
+  if (!confirm('Delete this project from history?')) return;
+  sendMsg({ type: 'delete_project', id });
+}
 
 /* ── BOOT ── */
 startDiscovery();
