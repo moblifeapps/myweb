@@ -1395,17 +1395,13 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 </div><!-- /app-shell #mainUI -->
 
 <script>
-/* ═══════════════════════════════════════════════════════════════
-   CONFIG
-═══════════════════════════════════════════════════════════════ */
+// - CONFIG -
 const DISCOVERY_URL        = 'http://127.0.0.1:49199/';
 const WS_HOST              = 'mywbsck.mlapplications.com';
 const APP_PROTOCOL         = 'imtalking://';
 const DISCOVERY_TIMEOUT_MS = 3000;
 
-/* ═══════════════════════════════════════════════════════════════
-   STATE
-═══════════════════════════════════════════════════════════════ */
+// - STATE -
 let ws            = null;
 let httpBase      = '';
 let mode          = 'tts';
@@ -1419,9 +1415,7 @@ const MAX_RECONNECT   = 15000;
 let wssPort       = null;
 let reconnectTimer    = null;
 
-/* ═══════════════════════════════════════════════════════════════
-   SPLASH HELPERS
-═══════════════════════════════════════════════════════════════ */
+// - SPLASH HELPERS -
 function showSplash(msg) {
   document.getElementById('splashMsg').textContent = msg || 'Looking for the desktop app…';
   const s = document.getElementById('splash');
@@ -1455,9 +1449,7 @@ function loadProjects(badgeOnly) {
       '<div class="projects-empty"><div class="pe-icon">⏳</div>Loading…</div>';
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   DISCOVERY
-═══════════════════════════════════════════════════════════════ */
+// - DISCOVERY -
 async function startDiscovery() {
   hideNotRunning();
   showSplash('Looking for the desktop app…');
@@ -1479,9 +1471,7 @@ async function startDiscovery() {
   connectWs(wp, state, job);
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   WEBSOCKET
-═══════════════════════════════════════════════════════════════ */
+// - WEBSOCKET -
 function connectWs(port, initialState, initialJob) {
   const url = `wss://${WS_HOST}:${port}/`;
   setWsDot('connecting', 'Connecting…');
@@ -1534,11 +1524,11 @@ function setWsDot(state, label) {
   document.getElementById('wsLabel').textContent = label;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* -
    OPEN FOLDER / PLAY VIDEO
-   ── Fixed: always pass the stored video_path so WPF knows which
+   - Fixed: always pass the stored video_path so WPF knows which
       file/folder to open, even when called from the result card.
-═══════════════════════════════════════════════════════════════ */
+- */
 function doOpenFolder() {
   if (!sendMsg({ type: 'open_folder', video_path: lastVideoPath })) {
     toast('Not connected', 'error');
@@ -1552,16 +1542,12 @@ function doPlayVideo() {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   IMPORT IMAGE TO LIBRARY  — opens the built-in cropper modal
-═══════════════════════════════════════════════════════════════ */
+// - IMPORT IMAGE TO LIBRARY  — opens the built-in cropper modal -
 function doImportToLibrary() {
   openCropper();
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   STATE RESTORATION
-═══════════════════════════════════════════════════════════════ */
+// - STATE RESTORATION -
 function restoreRunningState(job) {
   showRestoreBanner('⚡ A generation is already in progress — resuming view.');
   applyJobSettings(job);
@@ -1620,9 +1606,7 @@ function setSelect(id, val) {
   [...el.options].forEach(o => { if (o.value === val) o.selected = true; });
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   INCOMING MESSAGES FROM WPF
-═══════════════════════════════════════════════════════════════ */
+// - INCOMING MESSAGES FROM WPF -
 function handleMessage(msg) {
   switch (msg.type) {
 
@@ -1731,9 +1715,7 @@ function handleMessage(msg) {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   IMAGE GRID
-═══════════════════════════════════════════════════════════════ */
+// - IMAGE GRID -
 function renderImageGrid(images) {
   const grid = document.getElementById('imageGrid');
   document.getElementById('imgCount').textContent =
@@ -1805,7 +1787,7 @@ function highlightThumb(path) {
   });
 }
 
-/* ── Delete image ── */
+/* - Delete image - */
 function deleteImage(path, name) {
   if (!sendMsg({ type: 'delete_image', image_path: path })) {
     toast('Not connected', 'error'); return;
@@ -1819,9 +1801,7 @@ function deleteImage(path, name) {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   MODE
-═══════════════════════════════════════════════════════════════ */
+// - MODE -
 function setMode(m) {
   mode = m;
   document.getElementById('modeTts').classList.toggle('active',   m === 'tts');
@@ -1831,9 +1811,7 @@ function setMode(m) {
   updateGenerateBtn();
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   TTS
-═══════════════════════════════════════════════════════════════ */
+// - TTS -
 document.getElementById('ttsText').addEventListener('input', updateTtsBtn);
 function updateTtsBtn() {
   const ok = document.getElementById('ttsText').value.trim().length > 0
@@ -1856,9 +1834,7 @@ function generateTts() {
   logLine(`[TTS] voice:${voice} pitch:${pitch}Hz rate:${rate}%`);
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   GENERATE
-═══════════════════════════════════════════════════════════════ */
+// - GENERATE -
 function updateGenerateBtn() {
   updateTtsBtn();
   const hasImage = !!selImage;
@@ -1918,9 +1894,7 @@ function setRunning(r) {
   updateGenerateBtn();
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   PROGRESS
-═══════════════════════════════════════════════════════════════ */
+// - PROGRESS -
 function setProgress(value, stage, status, indeterminate, frameCurrent, frameTotal, overallPct, totalSegments) {
   document.getElementById('progressStatus').textContent = status || '';
   document.getElementById('progressStage').textContent  = stage  || '';
@@ -1935,7 +1909,7 @@ function setProgress(value, stage, status, indeterminate, frameCurrent, frameTot
   const overallSub   = document.getElementById('overallSublabel');
   const divider      = document.getElementById('segmentDivider');
 
-  // ── Overall pipeline bar ──────────────────────────────────────
+  // - Overall pipeline bar -
   const isBatch = totalSegments > 1;
   overallWrap.classList.toggle('visible', isBatch);
   divider.classList.toggle('visible', isBatch);
@@ -1952,7 +1926,7 @@ function setProgress(value, stage, status, indeterminate, frameCurrent, frameTot
     overallDot.classList.toggle('done', done);
   }
 
-  // ── Segment bar ───────────────────────────────────────────────
+  // - Segment bar -
   fill.classList.toggle('indeterminate', !!indeterminate);
 
   if (!indeterminate) {
@@ -1969,7 +1943,7 @@ function setProgress(value, stage, status, indeterminate, frameCurrent, frameTot
     pctEl.classList.remove('visible');
   }
 
-  // ── Frame counter ─────────────────────────────────────────────
+  // - Frame counter -
   if (frameCurrent && frameTotal) {
     document.getElementById('frameCurrent').textContent = frameCurrent;
     document.getElementById('frameTotal').textContent   = frameTotal;
@@ -1979,9 +1953,7 @@ function setProgress(value, stage, status, indeterminate, frameCurrent, frameTot
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   LOG
-═══════════════════════════════════════════════════════════════ */
+// - LOG -
 function logLine(text) {
   const el = document.getElementById('logOutput');
   const ts = new Date().toLocaleTimeString('en-GB');
@@ -1999,9 +1971,7 @@ function toggleLog() {
 }
 function clearLog() { document.getElementById('logOutput').textContent = ''; }
 
-/* ═══════════════════════════════════════════════════════════════
-   RESTORE BANNER
-═══════════════════════════════════════════════════════════════ */
+// - RESTORE BANNER -
 function showRestoreBanner(text) {
   document.getElementById('restoreBannerText').textContent = text;
   document.getElementById('restoreBanner').classList.add('visible');
@@ -2010,17 +1980,13 @@ function hideRestoreBanner() {
   document.getElementById('restoreBanner').classList.remove('visible');
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   LAUNCH APP
-═══════════════════════════════════════════════════════════════ */
+// - LAUNCH APP -
 function launchApp() {
   window.location.href = APP_PROTOCOL;
   setTimeout(startDiscovery, 4000);
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   TOAST
-═══════════════════════════════════════════════════════════════ */
+// - TOAST -
 function toast(msg, type) {
   const el = document.createElement('div');
   el.className = 'toast' + (type ? ' ' + type : '');
@@ -2029,17 +1995,13 @@ function toast(msg, type) {
   setTimeout(() => el.remove(), 3500);
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   UTIL
-═══════════════════════════════════════════════════════════════ */
+// - UTIL -
 function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 function splashMsg(t) { document.getElementById('splashMsg').textContent = t; }
 
-/* ═══════════════════════════════════════════════════════════════
-   WIRE-UPS
-═══════════════════════════════════════════════════════════════ */
+// - WIRE-UPS -
 document.getElementById('optExpr').addEventListener('input', function() {
   const v = parseFloat(this.value).toFixed(1);
   document.getElementById('exprVal').textContent  = v;
@@ -2047,9 +2009,8 @@ document.getElementById('optExpr').addEventListener('input', function() {
 });
 document.getElementById('audioPath').addEventListener('input', updateGenerateBtn);
 
-/* ═══════════════════════════════════════════════════════════════
-   PROJECTS
-═══════════════════════════════════════════════════════════════ */
+// - PROJECTS -
+// ── PROJECTS ─────────────────────────────────────────────────────
 function renderProjects(projects) {
   const badge = document.getElementById('projectsBadge');
   if (projects.length > 0) {
@@ -2060,7 +2021,7 @@ function renderProjects(projects) {
   }
 
   const list = document.getElementById('projectsList');
-  if (!list) return; // badge-only call, panel not visible
+  if (!list) return;
 
   if (!projects.length) {
     list.innerHTML = `<div class="projects-empty">
@@ -2070,21 +2031,38 @@ function renderProjects(projects) {
     return;
   }
 
-  list.innerHTML = projects.map(p => `
+  // Cache projects by index — avoids all escaping/quoting issues with Windows paths
+  window._projectsCache = projects;
+
+  list.innerHTML = projects.map((p, i) => `
     <div class="project-card">
       <div class="project-thumb-placeholder">🎬</div>
       <div class="project-info">
-        <div class="project-name">${escHtml(p.name || p.id)}</div>
-        <div class="project-meta">${escHtml(p.date || '')} · ${escHtml(p.voice || '')} · ${escHtml(p.outputSize || '')} </div>
+        <div class="project-name">${escHtml(p.name || p.id || '—')}</div>
+        <div class="project-meta">${escHtml(p.date || '')} · ${escHtml(p.voice || '')} · ${escHtml(p.outputSize || '')}</div>
         <div class="project-text">${escHtml((p.text || '').slice(0, 120))}${(p.text||'').length > 120 ? '…' : ''}</div>
       </div>
       <div class="project-actions">
-        <button class="project-btn" onclick="playProject(${JSON.stringify(p.videoPath)})">▶ Play</button>
-        <button class="project-btn" onclick="openProjectFolder(${JSON.stringify(p.videoPath)})">📁</button>
-        <button class="project-btn" onclick="duplicateProject(${JSON.stringify(p.id)})">⧉ Load</button>
-        <button class="project-btn danger" onclick="deleteProject(${JSON.stringify(p.id)})">🗑</button>
+        <button class="project-btn"        data-idx="${i}" data-action="play">▶ Play</button>
+        <button class="project-btn"        data-idx="${i}" data-action="folder">📁</button>
+        <button class="project-btn"        data-idx="${i}" data-action="load">⧉ Load</button>
+        <button class="project-btn danger" data-idx="${i}" data-action="delete">🗑</button>
       </div>
     </div>`).join('');
+
+  // Wire all buttons via JS — no inline onclick, no path escaping issues
+  list.querySelectorAll('.project-btn[data-action]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const p = window._projectsCache[parseInt(btn.dataset.idx, 10)];
+      if (!p) return;
+      switch (btn.dataset.action) {
+        case 'play':   playProject(p.videoPath);   break;
+        case 'folder': openProjectFolder(p.videoPath); break;
+        case 'load':   duplicateProject(p.id);     break;
+        case 'delete': deleteProject(p.id, btn);   break;
+      }
+    });
+  });
 }
 
 function playProject(videoPath) {
@@ -2098,23 +2076,35 @@ function openProjectFolder(videoPath) {
 }
 
 function duplicateProject(id) {
-  // Load the project's settings back into the New Project form
   sendMsg({ type: 'load_project', id });
   switchTab('new');
-  toast('Project settings loaded into New Project', 'success');
+  toast('Settings loaded — pick a new image and generate!', 'success');
 }
 
-function deleteProject(id) {
-  if (!confirm('Delete this project from history?')) return;
+function deleteProject(id, btn) {
+  // Two-step confirm: first click turns button red, second click sends delete
+  if (!btn._confirmPending) {
+    btn._confirmPending = true;
+    const orig = btn.textContent;
+    btn.textContent = 'Confirm?';
+    btn.style.background = 'rgba(255,95,114,.2)';
+    btn.style.borderColor = 'var(--red)';
+    btn.style.color = 'var(--red)';
+    setTimeout(() => {
+      btn._confirmPending = false;
+      btn.textContent = orig;
+      btn.removeAttribute('style');
+    }, 3000);
+    return;
+  }
+  btn._confirmPending = false;
   sendMsg({ type: 'delete_project', id });
 }
 
-/* ── BOOT ── */
+/* - BOOT - */
 startDiscovery();
 
-/* ═══════════════════════════════════════════════════════════════
-   VOICE PICKER
-═══════════════════════════════════════════════════════════════ */
+// - VOICE PICKER -
 let allVoices   = [];
 let favorites   = [];
 let activeVoice = '';
@@ -2265,19 +2255,19 @@ document.addEventListener('click', e => {
   if (!document.getElementById('voicePicker').contains(e.target)) closeDropdown();
 });
 
-/* ═══════════════════════════════════════════════════════════════
+/* -
    INLINE CROPPER MODAL
-   ─────────────────────────────────────────────────────────────
+   -
    All drawing is done on a single <canvas> — no blank gaps.
    Compositing order each frame:
      1. Image  (at current tx/ty/scale)
      2. Dim rects (4 around the frame)
      3. Frame border + rule-of-thirds lines
      4. Corner handles
-═══════════════════════════════════════════════════════════════ */
+- */
 (function() {
 
-  /* ── constants ── */
+  /* - constants - */
   const OUTPUT_SIZE  = 512;
   const HANDLE_R     = 9;
   const MIN_ZOOM     = 0.05;
@@ -2285,7 +2275,7 @@ document.addEventListener('click', e => {
   const ZOOM_MIN_LOG = Math.log(MIN_ZOOM);
   const ZOOM_MAX_LOG = Math.log(MAX_ZOOM);
 
-  /* ── elements ── */
+  /* - elements - */
   const overlay   = document.getElementById('cropperOverlay');
   const cvs       = document.getElementById('cropperCanvas');
   const ctx       = cvs.getContext('2d');
@@ -2300,7 +2290,7 @@ document.addEventListener('click', e => {
   const btnReset  = document.getElementById('cropperBtnReset');
   const statusEl  = document.getElementById('cropperStatus');
 
-  /* ── state ── */
+  /* - state - */
   let cImg = null, cImgW = 0, cImgH = 0;
   let cw = 0, ch = 0;          // canvas pixel size (CSS px × dpr)
   let frameX = 0, frameY = 0, frameS = 0;  // frame square
@@ -2310,7 +2300,7 @@ document.addEventListener('click', e => {
   let scCorner = -1, scStart = null, scAtStart = 1, txAtSc = 0, tyAtSc = 0;
   let lastPinch = null;
 
-  /* ── open / close ── */
+  /* - open / close - */
   window.openCropper = function() {
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -2341,7 +2331,7 @@ document.addEventListener('click', e => {
     fileInput.value = '';
   }
 
-  /* ── resize canvas to match wrap ── */
+  /* - resize canvas to match wrap - */
   const ro = new ResizeObserver(resizeCvs);
   ro.observe(wrap);
 
@@ -2363,7 +2353,7 @@ document.addEventListener('click', e => {
     if (cImg) draw();
   }
 
-  /* ── load image file ── */
+  /* - load image file - */
   function loadFile(file) {
     if (!file || !file.type.startsWith('image/')) { toast('Please pick an image file','error'); return; }
     const url = URL.createObjectURL(file);
@@ -2407,7 +2397,7 @@ document.addEventListener('click', e => {
     draw();
   }
 
-  /* ── draw ── */
+  /* - draw - */
   function draw() {
     ctx.clearRect(0, 0, cw, ch);
     if (!cImg) return;
@@ -2458,7 +2448,7 @@ document.addEventListener('click', e => {
     return corners().findIndex(({x,y}) => Math.hypot(px-x, py-y) <= HANDLE_R + 7);
   }
 
-  /* ── pointer helpers ── */
+  /* - pointer helpers - */
   function cxy(e) {
     const dpr = window.devicePixelRatio || 1;
     const r   = cvs.getBoundingClientRect();
@@ -2466,7 +2456,7 @@ document.addEventListener('click', e => {
     return { x: (src.clientX - r.left) * dpr, y: (src.clientY - r.top) * dpr };
   }
 
-  /* ── pan ── */
+  /* - pan - */
   cvs.addEventListener('mousedown',  onDown);
   cvs.addEventListener('touchstart', onDown, {passive:false});
   window.addEventListener('mousemove',  onMove);
@@ -2519,7 +2509,7 @@ document.addEventListener('click', e => {
 
   function onUp() { dragging = false; scCorner = -1; }
 
-  /* ── wheel zoom ── */
+  /* - wheel zoom - */
   cvs.addEventListener('wheel', e => {
     if (!cImg) return;
     e.preventDefault();
@@ -2533,7 +2523,7 @@ document.addEventListener('click', e => {
     syncSlider(); draw();
   }, {passive:false});
 
-  /* ── pinch zoom ── */
+  /* - pinch zoom - */
   cvs.addEventListener('touchstart', e => { if (e.touches.length===2) lastPinch=pinchD(e); }, {passive:true});
   cvs.addEventListener('touchmove',  e => {
     if (e.touches.length!==2||!lastPinch) return;
@@ -2557,7 +2547,7 @@ document.addEventListener('click', e => {
     return Math.sqrt(dx*dx+dy*dy);
   }
 
-  /* ── zoom slider ── */
+  /* - zoom slider - */
   zoomSlider.addEventListener('input', function() {
     if (!cImg) return;
     const newSc = Math.exp(ZOOM_MIN_LOG + parseFloat(this.value)*(ZOOM_MAX_LOG-ZOOM_MIN_LOG));
@@ -2573,7 +2563,7 @@ document.addEventListener('click', e => {
     zoomVal.textContent = sc.toFixed(2)+'×';
   }
 
-  /* ── drop zone ── */
+  /* - drop zone - */
   fileInput.addEventListener('change', function() { if (this.files[0]) loadFile(this.files[0]); });
   dropZone.addEventListener('dragover',  e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
   dropZone.addEventListener('dragleave', ()=> dropZone.classList.remove('drag-over'));
@@ -2582,7 +2572,7 @@ document.addEventListener('click', e => {
     if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
   });
 
-  /* ── SAVE ── */
+  /* - SAVE - */
   window.cropperSave = function() {
     if (!cImg) return;
     if (!ws || ws.readyState !== WebSocket.OPEN) { toast('Not connected to ImTalking','error'); return; }
@@ -2606,7 +2596,7 @@ document.addEventListener('click', e => {
     logLine('[LIBRARY] Sending cropped image to WPF…');
   };
 
-  /* ── WPF reply handlers (called from handleMessage) ── */
+  /* - WPF reply handlers (called from handleMessage) - */
   window.cropperOnSaved = function(msg) {
     btnSave.disabled = false;
     btnSave.textContent = '💾 Save to Library';
