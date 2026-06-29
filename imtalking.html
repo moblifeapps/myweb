@@ -24,21 +24,15 @@
   --mono:        'Cascadia Code','Fira Code','Consolas',monospace;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-/* ── APP SHELL ────────────────────────────────────────────────── */
 body {
   font-family: 'Inter','Segoe UI',system-ui,sans-serif;
   background: var(--bg); color: var(--text);
   min-height: 100vh; display: flex; flex-direction: column;
 }
-
-/* Shell sits below the sticky topbar */
 .app-shell {
   flex: 1; display: flex; flex-direction: row;
-  overflow: hidden; height: calc(100vh - 60px); /* 60px = topbar height */
+  overflow: hidden; height: calc(100vh - 60px);
 }
-
-/* ── TOPBAR ───────────────────────────────────────────────────── */
 .topbar {
   display: flex; align-items: center; justify-content: space-between;
   padding: 13px 26px; height: 60px;
@@ -69,8 +63,6 @@ body {
 .ws-dot.connecting { background: var(--amber); animation: blink 1s infinite; }
 .ws-dot.error      { background: var(--red);   box-shadow: 0 0 5px var(--red); }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
-
-/* ── SIDEBAR ──────────────────────────────────────────────────── */
 .sidebar {
   width: 200px; flex-shrink: 0;
   background: var(--surface); border-right: 1px solid var(--border);
@@ -104,22 +96,16 @@ body {
   border-top: 1px solid var(--border);
   font-size: 10px; color: var(--text3); text-align: center; line-height: 1.6;
 }
-
-/* ── CONTENT AREA ─────────────────────────────────────────────── */
 .content-area {
   flex: 1; height: 100%; overflow: hidden;
   display: flex; flex-direction: column;
 }
-
-/* 120px top breathing room inside every tab panel */
 .tab-panel {
   display: none; flex-direction: column;
   padding-top: 0;
   overflow-y: auto; flex: 1;
 }
 .tab-panel.active { display: flex; }
-
-/* ── SPLASH SCREEN ────────────────────────────────────────────── */
 #splash {
   position: fixed; inset: 0; z-index: 200;
   background: var(--bg);
@@ -144,8 +130,6 @@ body {
   animation: spin .7s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
-
-/* ── NOT-RUNNING PANEL ────────────────────────────────────────── */
 #notRunning {
   position: fixed; inset: 0; z-index: 200;
   background: var(--bg);
@@ -162,8 +146,6 @@ body {
   text-decoration: underline; margin-top: 4px;
 }
 .nr-retry:hover { color: var(--text2); }
-
-/* ── MAIN LAYOUT ──────────────────────────────────────────────── */
 .main {
   flex: 1; display: grid;
   grid-template-columns: 1fr 300px;
@@ -173,40 +155,11 @@ body {
   width: 100%;
   align-items: start;
 }
-
-/* Left column — inputs + options, row 1 */
-.left-col {
-  grid-column: 1; grid-row: 1;
-  display: flex; flex-direction: column; gap: 13px;
-}
-
-/* Right column — image library, row 1, height locked to left col */
-.right-col {
-  grid-column: 2; grid-row: 1;
-  display: flex; flex-direction: column; gap: 13px;
-  /* height is driven by its own content; we cap it via the card */
-}
-/* The image card must not grow beyond the top section */
-.right-col .card {
-  display: flex; flex-direction: column;
-  overflow: hidden;
-}
-
-/* Divider — full width, row 2 col 1-2 */
-.section-divider {
-  grid-column: 1 / -1; grid-row: 2;
-  height: 1px; background: var(--border);
-  margin: 10px 0 0;
-}
-
-/* Generate section — full width, row 3 */
-.generate-section-wrap {
-  grid-column: 1 / -1; grid-row: 3;
-  display: flex; flex-direction: column; gap: 13px;
-  padding-top: 16px;
-}
-
-/* ── CARD ─────────────────────────────────────────────────────── */
+.left-col  { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; gap: 13px; }
+.right-col { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; gap: 13px; }
+.right-col .card { display: flex; flex-direction: column; overflow: hidden; }
+.section-divider { grid-column: 1 / -1; grid-row: 2; height: 1px; background: var(--border); margin: 10px 0 0; }
+.generate-section-wrap { grid-column: 1 / -1; grid-row: 3; display: flex; flex-direction: column; gap: 13px; padding-top: 16px; }
 .card {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 16px 18px;
@@ -215,8 +168,6 @@ body {
   font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
   color: var(--text3); text-transform: uppercase; margin-bottom: 11px;
 }
-
-/* ── MODE TOGGLE ──────────────────────────────────────────────── */
 .mode-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
 .mode-btn {
   display: flex; align-items: center; justify-content: center; gap: 7px;
@@ -227,12 +178,8 @@ body {
 }
 .mode-btn:hover  { border-color: var(--accent); color: var(--text); }
 .mode-btn.active { border-color: var(--accent); background: var(--accent-glow); color: var(--accent); }
-
-/* ── PANELS ───────────────────────────────────────────────────── */
 .panel { display: none; flex-direction: column; gap: 11px; }
 .panel.visible { display: flex; }
-
-/* ── FORM ─────────────────────────────────────────────────────── */
 label.field-label {
   display: block; font-size: 10px; font-weight: 700;
   letter-spacing: .8px; color: var(--text2);
@@ -250,8 +197,6 @@ textarea:focus, input[type=text]:focus, select:focus {
 textarea { resize: vertical; min-height: 76px; line-height: 1.5; }
 select { cursor: pointer; }
 select option { background: var(--surface2); }
-
-/* ── VOICE PICKER ─────────────────────────────────────────────── */
 .voice-picker { position: relative; }
 .voice-input-wrap { display: flex; align-items: center; gap: 0; }
 .voice-search {
@@ -300,9 +245,7 @@ select option { background: var(--surface2); }
 }
 .voice-row:hover  { background: var(--surface2); }
 .voice-row.active { background: var(--accent-glow); }
-.voice-row-main {
-  flex: 1; padding: 8px 10px; display: flex; flex-direction: column; gap: 1px;
-}
+.voice-row-main { flex: 1; padding: 8px 10px; display: flex; flex-direction: column; gap: 1px; }
 .voice-row-name   { font-size: 13px; font-weight: 500; color: var(--text); }
 .voice-row-meta   { font-size: 10px; color: var(--text3); }
 .voice-row-meta em { font-style: normal; color: var(--text2); }
@@ -313,11 +256,7 @@ select option { background: var(--surface2); }
 }
 .voice-star:hover   { color: var(--amber); transform: scale(1.2); }
 .voice-star.starred { color: var(--amber); }
-.voice-no-results {
-  text-align: center; padding: 20px; color: var(--text3); font-size: 13px;
-}
-
-/* ── IMAGE GRID ───────────────────────────────────────────────── */
+.voice-no-results { text-align: center; padding: 20px; color: var(--text3); font-size: 13px; }
 .img-toolbar {
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 8px; gap: 6px; flex-wrap: wrap;
@@ -330,7 +269,6 @@ select option { background: var(--surface2); }
   padding: 5px 10px; cursor: pointer; transition: all .17s; font-family: inherit;
 }
 .img-refresh-btn:hover { border-color: var(--accent); color: var(--accent); }
-/* Import to Library button — accent-tinted, more prominent */
 .img-import-btn {
   display: flex; align-items: center; gap: 5px;
   background: rgba(91,127,255,.09); border: 1px solid rgba(91,127,255,.35);
@@ -338,27 +276,18 @@ select option { background: var(--surface2); }
   border-radius: 6px; padding: 5px 11px; cursor: pointer;
   transition: all .17s; font-family: inherit;
 }
-.img-import-btn:hover {
-  background: rgba(91,127,255,.2); border-color: var(--accent);
-  box-shadow: 0 0 9px rgba(91,127,255,.25);
-}
+.img-import-btn:hover { background: rgba(91,127,255,.2); border-color: var(--accent); box-shadow: 0 0 9px rgba(91,127,255,.25); }
 .img-count { font-size: 11px; color: var(--text3); }
-/* Image grid — 2 columns of large thumbs, aligned to top */
 .image-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  overflow-y: auto;
-  align-content: start;   /* thumbs stack from top, no vertical stretch */
-  max-height: 520px;      /* capped so it never exceeds the top-section height */
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  overflow-y: auto; align-content: start; max-height: 520px;
 }
 .image-grid::-webkit-scrollbar { width: 4px; }
 .image-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 .img-thumb {
   position: relative; aspect-ratio: 1;
   border: 2px solid var(--border); border-radius: 8px;
-  overflow: hidden; cursor: pointer;
-  transition: border-color .17s, transform .14s;
+  overflow: hidden; cursor: pointer; transition: border-color .17s, transform .14s;
 }
 .img-thumb:hover { border-color: var(--accent); transform: scale(1.04); }
 .img-thumb.selected { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
@@ -372,31 +301,20 @@ select option { background: var(--surface2); }
 .img-thumb.selected .img-check { display: flex; }
 .img-empty { grid-column: 1/-1; text-align: center; color: var(--text3); font-size: 12px; padding: 20px 0; }
 .img-selected-label { font-size: 11px; color: var(--text3); margin-top: 7px; }
-
-/* Delete button — appears on hover over a thumb */
 .img-delete {
   position: absolute; top: 4px; left: 4px;
-  width: 17px; height: 17px;
-  background: rgba(255,95,114,.85);
-  border-radius: 50%;
-  display: none; align-items: center; justify-content: center;
-  font-size: 9px; color: #fff; line-height: 1;
-  cursor: pointer; z-index: 2;
+  width: 17px; height: 17px; background: rgba(255,95,114,.85);
+  border-radius: 50%; display: none; align-items: center; justify-content: center;
+  font-size: 9px; color: #fff; line-height: 1; cursor: pointer; z-index: 2;
   transition: background .15s, transform .15s;
 }
 .img-delete:hover { background: var(--red); transform: scale(1.15); }
 .img-thumb:hover .img-delete { display: flex; }
-/* Confirm state — thumb gets a red border flash */
 .img-thumb.confirm-delete { border-color: var(--red) !important; }
 .img-thumb.confirm-delete .img-delete {
-  display: flex; background: var(--red);
-  width: 100%; height: 100%; border-radius: 0;
-  font-size: 11px; font-weight: 700;
-  position: absolute; top: 0; left: 0;
-  border-radius: 6px;
+  display: flex; background: var(--red); width: 100%; height: 100%; border-radius: 0;
+  font-size: 11px; font-weight: 700; position: absolute; top: 0; left: 0; border-radius: 6px;
 }
-
-/* ── OPTIONS ──────────────────────────────────────────────────── */
 .opts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
 .opts-grid .full { grid-column: 1/-1; }
 .slider-row { display: flex; align-items: center; gap: 10px; }
@@ -409,14 +327,10 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 }
 .check-item input[type=checkbox] { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; }
 .check-item:hover { color: var(--text); }
-
-/* ── BUTTONS ──────────────────────────────────────────────────── */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  border-radius: 8px; border: none;
-  font-size: 13px; font-weight: 600;
-  padding: 9px 18px; cursor: pointer;
-  transition: all .17s; font-family: inherit; white-space: nowrap;
+  border-radius: 8px; border: none; font-size: 13px; font-weight: 600;
+  padding: 9px 18px; cursor: pointer; transition: all .17s; font-family: inherit; white-space: nowrap;
 }
 .btn-primary  { background: var(--accent); color: #fff; }
 .btn-primary:hover:not(:disabled)  { background: #7090ff; box-shadow: 0 0 14px rgba(91,127,255,.4); }
@@ -432,8 +346,6 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
   color: #fff; font-size: 14px; padding: 13px 32px; border-radius: 10px;
 }
 .btn-launch:hover { filter: brightness(1.1); box-shadow: 0 0 20px rgba(91,127,255,.45); }
-
-/* ── AUDIO PREVIEW ────────────────────────────────────────────── */
 .audio-preview {
   display: none; flex-direction: column; gap: 7px;
   background: rgba(62,207,130,.07); border: 1px solid rgba(62,207,130,.2);
@@ -442,419 +354,144 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 .audio-preview.visible { display: flex; }
 .audio-preview-label { font-size: 10px; color: var(--green); font-weight: 700; letter-spacing: .6px; }
 .audio-preview audio  { width: 100%; height: 30px; }
-
-/* ── PROGRESS SECTION — premium generate area ─────────────────── */
 .progress-section {
   background: linear-gradient(145deg, #181c27 0%, #1a1f30 100%);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px 22px 18px;
-  display: flex; flex-direction: column; gap: 14px;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px 22px 18px; display: flex; flex-direction: column; gap: 14px;
   position: relative; overflow: hidden;
 }
-/* subtle top accent line */
 .progress-section::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--accent), #a78bfa, var(--green));
-  opacity: 0.7;
+  background: linear-gradient(90deg, var(--accent), #a78bfa, var(--green)); opacity: 0.7;
 }
-.progress-header {
-  display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;
-}
+.progress-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
 .progress-left { display: flex; flex-direction: column; gap: 3px; }
 .progress-status { font-size: 14px; font-weight: 600; }
-.progress-stage  {
-  font-size: 10px; color: var(--accent); font-weight: 700;
-  letter-spacing: .8px; text-transform: uppercase;
-}
-/* Big % counter — right side */
-.progress-pct {
-  font-size: 28px; font-weight: 800; letter-spacing: -1px;
-  color: var(--accent); min-width: 64px; text-align: right;
-  font-variant-numeric: tabular-nums;
-  transition: color .3s;
-  display: none;
-}
+.progress-stage  { font-size: 10px; color: var(--accent); font-weight: 700; letter-spacing: .8px; text-transform: uppercase; }
+.progress-pct { font-size: 28px; font-weight: 800; letter-spacing: -1px; color: var(--accent); min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; transition: color .3s; display: none; }
 .progress-pct.visible { display: block; }
-
-/* ── Overall pipeline bar — MOST PROMINENT element ────────────── */
 .progress-overall-wrap {
   display: none; flex-direction: column; gap: 8px;
-  background: rgba(62,207,130,.06);
-  border: 1px solid rgba(62,207,130,.25);
-  border-radius: 10px;
-  padding: 12px 16px;
+  background: rgba(62,207,130,.06); border: 1px solid rgba(62,207,130,.25);
+  border-radius: 10px; padding: 12px 16px;
 }
 .progress-overall-wrap.visible { display: flex; }
-.progress-overall-header {
-  display: flex; justify-content: space-between; align-items: center;
-}
-.progress-overall-label {
-  font-size: 11px; color: var(--green); font-weight: 700;
-  letter-spacing: .8px; text-transform: uppercase;
-  display: flex; align-items: center; gap: 8px;
-}
-.progress-overall-dot {
-  width: 9px; height: 9px; border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 8px var(--green);
-  flex-shrink: 0;
-  animation: overallPulse 1.6s infinite;
-}
+.progress-overall-header { display: flex; justify-content: space-between; align-items: center; }
+.progress-overall-label { font-size: 11px; color: var(--green); font-weight: 700; letter-spacing: .8px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+.progress-overall-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); flex-shrink: 0; animation: overallPulse 1.6s infinite; }
 .progress-overall-dot.done { animation: none; background: var(--green); }
 @keyframes overallPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.75)} }
-.progress-overall-pct {
-  font-size: 24px; font-weight: 800; color: var(--green);
-  font-variant-numeric: tabular-nums; letter-spacing: -0.5px;
-  text-shadow: 0 0 12px rgba(62,207,130,.4);
-}
-.progress-overall-track {
-  height: 12px; background: rgba(62,207,130,.08);
-  border-radius: 99px; overflow: hidden;
-  border: 1px solid rgba(62,207,130,.2);
-  box-shadow: inset 0 1px 4px rgba(0,0,0,.4);
-}
-.progress-overall-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #16a34a, #22c55e, #4ade80, #22c55e);
-  background-size: 300% 100%;
-  border-radius: 99px; width: 0%;
-  transition: width .7s cubic-bezier(.4,0,.2,1);
-  box-shadow: 0 0 10px rgba(62,207,130,.6), 0 0 20px rgba(62,207,130,.25);
-  animation: overallShimmer 2s infinite linear;
-}
+.progress-overall-pct { font-size: 24px; font-weight: 800; color: var(--green); font-variant-numeric: tabular-nums; letter-spacing: -0.5px; text-shadow: 0 0 12px rgba(62,207,130,.4); }
+.progress-overall-track { height: 12px; background: rgba(62,207,130,.08); border-radius: 99px; overflow: hidden; border: 1px solid rgba(62,207,130,.2); box-shadow: inset 0 1px 4px rgba(0,0,0,.4); }
+.progress-overall-fill { height: 100%; background: linear-gradient(90deg, #16a34a, #22c55e, #4ade80, #22c55e); background-size: 300% 100%; border-radius: 99px; width: 0%; transition: width .7s cubic-bezier(.4,0,.2,1); box-shadow: 0 0 10px rgba(62,207,130,.6), 0 0 20px rgba(62,207,130,.25); animation: overallShimmer 2s infinite linear; }
 .progress-overall-fill.done { animation: none; }
-@keyframes overallShimmer {
-  0%   { background-position: 0% 0%; }
-  100% { background-position: -300% 0%; }
-}
-.progress-overall-sublabel {
-  font-size: 10px; color: rgba(62,207,130,.6);
-  font-weight: 500; letter-spacing: .3px;
-}
-
-/* Segment divider line */
-.progress-segment-divider {
-  display: none; height: 1px; background: var(--border); margin: 2px 0;
-}
+@keyframes overallShimmer { 0%{background-position:0% 0%} 100%{background-position:-300% 0%} }
+.progress-overall-sublabel { font-size: 10px; color: rgba(62,207,130,.6); font-weight: 500; letter-spacing: .3px; }
+.progress-segment-divider { display: none; height: 1px; background: var(--border); margin: 2px 0; }
 .progress-segment-divider.visible { display: block; }
-
-/* Bar track */
-.progress-bar-track {
-  height: 8px; background: var(--surface2);
-  border-radius: 99px; overflow: hidden;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,.4);
-}
-.progress-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent) 0%, #a78bfa 60%, var(--green) 100%);
-  background-size: 200% 100%;
-  border-radius: 99px;
-  width: 0%;
-  transition: width .5s cubic-bezier(.4,0,.2,1);
-  position: relative;
-}
-/* shimmer on the bar */
-.progress-bar-fill::after {
-  content: '';
-  position: absolute; top: 0; left: -60%; width: 60%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
-  animation: barShimmer 1.8s infinite;
-}
+.progress-bar-track { height: 8px; background: var(--surface2); border-radius: 99px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,.4); }
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent) 0%, #a78bfa 60%, var(--green) 100%); background-size: 200% 100%; border-radius: 99px; width: 0%; transition: width .5s cubic-bezier(.4,0,.2,1); position: relative; }
+.progress-bar-fill::after { content: ''; position: absolute; top: 0; left: -60%; width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent); animation: barShimmer 1.8s infinite; }
 @keyframes barShimmer { to { left: 160%; } }
-
-.progress-bar-fill.indeterminate {
-  width: 40% !important;
-  animation: indeterminate 1.4s infinite ease-in-out;
-  background-size: 200% 100%;
-  animation: indeterminate 1.4s infinite ease-in-out, barGradShift 2s infinite linear;
-}
+.progress-bar-fill.indeterminate { width: 40% !important; animation: indeterminate 1.4s infinite ease-in-out, barGradShift 2s infinite linear; }
 @keyframes indeterminate { 0%{transform:translateX(-160%)} 100%{transform:translateX(350%)} }
 @keyframes barGradShift  { 0%{background-position:0% 0%} 100%{background-position:-200% 0%} }
-
-/* Frame counter line */
-.progress-frames {
-  display: none; font-size: 11px; color: var(--text2);
-  font-variant-numeric: tabular-nums;
-}
+.progress-frames { display: none; font-size: 11px; color: var(--text2); font-variant-numeric: tabular-nums; }
 .progress-frames.visible { display: block; }
 .progress-frames strong { color: var(--text); font-weight: 600; }
-
 .action-row { display: flex; gap: 7px; justify-content: flex-end; flex-wrap: wrap; margin-top: 2px; }
-
-/* ── RESULT CARD ──────────────────────────────────────────────── */
-.result-card {
-  display: none; flex-direction: column; gap: 11px;
-  background: rgba(91,127,255,.06); border: 1px solid rgba(91,127,255,.25);
-  border-radius: var(--radius); padding: 16px 18px;
-}
+.result-card { display: none; flex-direction: column; gap: 11px; background: rgba(91,127,255,.06); border: 1px solid rgba(91,127,255,.25); border-radius: var(--radius); padding: 16px 18px; }
 .result-card.visible { display: flex; }
 .result-header { display: flex; align-items: center; justify-content: space-between; }
 .result-title { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: .6px; text-transform: uppercase; }
-.result-badge {
-  font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
-  background: rgba(62,207,130,.12); border: 1px solid rgba(62,207,130,.3);
-  color: var(--green); border-radius: 20px; padding: 2px 10px;
-}
-.result-path {
-  font-family: var(--mono); font-size: 11px; color: var(--text2);
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: 6px; padding: 7px 11px; word-break: break-all;
-}
+.result-badge { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; background: rgba(62,207,130,.12); border: 1px solid rgba(62,207,130,.3); color: var(--green); border-radius: 20px; padding: 2px 10px; }
+.result-path { font-family: var(--mono); font-size: 11px; color: var(--text2); background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 7px 11px; word-break: break-all; }
 .result-actions { display: flex; gap: 7px; }
-
-/* ── LOG — hidden from user, still functional internally ─────── */
 .log-section { display: none; }
-
-/* ── TOAST ────────────────────────────────────────────────────── */
 .toast-wrap { position: fixed; bottom: 20px; right: 20px; z-index: 300; display: flex; flex-direction: column; gap: 7px; pointer-events: none; }
-.toast {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 9px; padding: 11px 16px; font-size: 13px; color: var(--text);
-  box-shadow: 0 6px 28px rgba(0,0,0,.4);
-  animation: toastIn .22s ease; pointer-events: all; max-width: 300px;
-}
+.toast { background: var(--surface); border: 1px solid var(--border); border-radius: 9px; padding: 11px 16px; font-size: 13px; color: var(--text); box-shadow: 0 6px 28px rgba(0,0,0,.4); animation: toastIn .22s ease; pointer-events: all; max-width: 300px; }
 .toast.success { border-color: rgba(62,207,130,.4); }
 .toast.error   { border-color: rgba(255,95,114,.4); }
 @keyframes toastIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
-
-/* ── RESTORE BANNER ───────────────────────────────────────────── */
-.restore-banner {
-  display: none; align-items: center; gap: 10px;
-  background: rgba(245,166,35,.08); border: 1px solid rgba(245,166,35,.3);
-  border-radius: 9px; padding: 11px 16px; margin-bottom: 4px;
-  font-size: 13px; color: var(--amber);
-}
+.restore-banner { display: none; align-items: center; gap: 10px; background: rgba(245,166,35,.08); border: 1px solid rgba(245,166,35,.3); border-radius: 9px; padding: 11px 16px; margin-bottom: 4px; font-size: 13px; color: var(--amber); }
 .restore-banner.visible { display: flex; }
 .restore-banner strong { font-weight: 700; }
-
-/* ── PROJECTS PANEL ───────────────────────────────────────────── */
-.projects-wrap {
-  flex: 1; padding: 0 26px 32px; max-width: 900px; margin: 0 auto; width: 100%;
-}
-.projects-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 20px;
-}
+.projects-wrap { flex: 1; padding: 0 26px 32px; max-width: 900px; margin: 0 auto; width: 100%; }
+.projects-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
 .projects-title { font-size: 20px; font-weight: 700; }
 .projects-sub   { font-size: 12px; color: var(--text2); margin-top: 3px; }
-.projects-empty {
-  text-align: center; padding: 60px 20px; color: var(--text3); font-size: 14px;
-}
+.projects-empty { text-align: center; padding: 60px 20px; color: var(--text3); font-size: 14px; }
 .projects-empty .pe-icon { font-size: 48px; margin-bottom: 14px; }
-.project-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 16px 18px;
-  display: flex; align-items: center; gap: 16px;
-  margin-bottom: 10px; transition: border-color .15s;
-}
+.project-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; display: flex; align-items: center; gap: 16px; margin-bottom: 10px; transition: border-color .15s; }
 .project-card:hover { border-color: var(--accent); }
-.project-thumb {
-  width: 56px; height: 56px; border-radius: 8px; object-fit: cover;
-  background: var(--surface2); flex-shrink: 0; border: 1px solid var(--border);
-}
-.project-thumb-placeholder {
-  width: 56px; height: 56px; border-radius: 8px;
-  background: var(--surface2); border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; flex-shrink: 0;
-}
+.project-thumb { width: 56px; height: 56px; border-radius: 8px; object-fit: cover; background: var(--surface2); flex-shrink: 0; border: 1px solid var(--border); }
+.project-thumb-placeholder { width: 56px; height: 56px; border-radius: 8px; background: var(--surface2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
 .project-info { flex: 1; min-width: 0; }
-.project-name {
-  font-size: 13px; font-weight: 600; color: var(--text);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
+.project-name { font-size: 13px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .project-meta { font-size: 11px; color: var(--text3); margin-top: 3px; }
-.project-text {
-  font-size: 11px; color: var(--text2); margin-top: 4px;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
+.project-text { font-size: 11px; color: var(--text2); margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .project-actions { display: flex; gap: 6px; flex-shrink: 0; }
-.project-btn {
-  display: flex; align-items: center; gap: 5px;
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: 7px; color: var(--text2); font-size: 11px; font-weight: 600;
-  padding: 6px 11px; cursor: pointer; transition: all .15s; font-family: inherit;
-  white-space: nowrap;
-}
-.project-btn:hover           { border-color: var(--accent); color: var(--text); }
-.project-btn.danger:hover    { border-color: var(--red); color: var(--red); background: rgba(255,95,114,.08); }
-
-/* ── STATIC INFO PANELS ───────────────────────────────────────── */
-.info-wrap {
-  flex: 1; padding: 0 26px 32px; max-width: 760px; margin: 0 auto; width: 100%;
-}
+.project-btn { display: flex; align-items: center; gap: 5px; background: var(--surface2); border: 1px solid var(--border); border-radius: 7px; color: var(--text2); font-size: 11px; font-weight: 600; padding: 6px 11px; cursor: pointer; transition: all .15s; font-family: inherit; white-space: nowrap; }
+.project-btn:hover        { border-color: var(--accent); color: var(--text); }
+.project-btn.danger:hover { border-color: var(--red); color: var(--red); background: rgba(255,95,114,.08); }
+.info-wrap { flex: 1; padding: 0 26px 32px; max-width: 760px; margin: 0 auto; width: 100%; }
 .info-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
 .info-sub   { font-size: 13px; color: var(--text2); margin-bottom: 28px; line-height: 1.6; }
 .info-section { margin-bottom: 28px; }
-.info-section h3 {
-  font-size: 13px; font-weight: 700; color: var(--accent);
-  letter-spacing: .6px; text-transform: uppercase; margin-bottom: 10px;
-}
-.info-section p {
-  font-size: 13px; color: var(--text2); line-height: 1.75; margin-bottom: 8px;
-}
-.info-section ul {
-  list-style: none; padding: 0; display: flex; flex-direction: column; gap: 7px;
-}
-.info-section ul li {
-  font-size: 13px; color: var(--text2); line-height: 1.6;
-  padding-left: 16px; position: relative;
-}
-.info-section ul li::before {
-  content: '·'; position: absolute; left: 0; color: var(--accent);
-}
-.info-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 16px 18px; margin-bottom: 12px;
-}
+.info-section h3 { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .6px; text-transform: uppercase; margin-bottom: 10px; }
+.info-section p  { font-size: 13px; color: var(--text2); line-height: 1.75; margin-bottom: 8px; }
+.info-section ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+.info-section ul li { font-size: 13px; color: var(--text2); line-height: 1.6; padding-left: 16px; position: relative; }
+.info-section ul li::before { content: '·'; position: absolute; left: 0; color: var(--accent); }
+.info-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 12px; }
 .info-card-title { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
 .info-card p { font-size: 12px; color: var(--text2); line-height: 1.7; }
-.contact-link {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 9px; padding: 12px 18px; margin-bottom: 10px;
-  color: var(--text); text-decoration: none; font-size: 13px; font-weight: 500;
-  transition: border-color .15s; width: 100%;
-}
+.contact-link { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 9px; padding: 12px 18px; margin-bottom: 10px; color: var(--text); text-decoration: none; font-size: 13px; font-weight: 500; transition: border-color .15s; width: 100%; }
 .contact-link:hover { border-color: var(--accent); color: var(--accent); }
-
-/* ── MAIN grid — sits directly inside tab panel ── */
-.tab-panel .main {
-  padding-top: 18px;
-  flex: 1;
-}
-/* Static info panels get breathing room */
+.tab-panel .main { padding-top: 18px; flex: 1; }
 #tab-projects .projects-wrap,
 #tab-help .info-wrap,
 #tab-privacy .info-wrap,
-#tab-contact .info-wrap {
-  padding-top: 48px;
-}
-#cropperOverlay {
-  display: none;
-  position: fixed; inset: 0; z-index: 300;
-  background: rgba(10,10,20,.88);
-  backdrop-filter: blur(6px);
-  align-items: center; justify-content: center;
-  animation: cropperFadeIn .2s ease;
-}
+#tab-contact .info-wrap { padding-top: 48px; }
+#cropperOverlay { display: none; position: fixed; inset: 0; z-index: 300; background: rgba(10,10,20,.88); backdrop-filter: blur(6px); align-items: center; justify-content: center; animation: cropperFadeIn .2s ease; }
 #cropperOverlay.open { display: flex; }
 @keyframes cropperFadeIn { from{opacity:0} to{opacity:1} }
-
-.cropper-modal {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  width: min(560px, 96vw);
-  max-height: 94vh;
-  display: flex; flex-direction: column;
-  overflow: hidden;
-  box-shadow: 0 24px 80px rgba(0,0,0,.7);
-  animation: cropperSlideIn .22s ease;
-}
+.cropper-modal { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; width: min(560px, 96vw); max-height: 94vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 24px 80px rgba(0,0,0,.7); animation: cropperSlideIn .22s ease; }
 @keyframes cropperSlideIn { from{transform:translateY(18px);opacity:0} to{transform:none;opacity:1} }
-
-.cropper-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-}
+.cropper-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
 .cropper-header-left { display: flex; flex-direction: column; gap: 2px; }
 .cropper-title { font-size: 14px; font-weight: 700; }
 .cropper-sub   { font-size: 11px; color: var(--text2); }
-.cropper-close {
-  width: 28px; height: 28px; border-radius: 7px;
-  background: var(--surface2); border: 1px solid var(--border);
-  color: var(--text2); cursor: pointer; font-size: 16px;
-  display: flex; align-items: center; justify-content: center;
-  transition: all .15s; flex-shrink: 0;
-}
+.cropper-close { width: 28px; height: 28px; border-radius: 7px; background: var(--surface2); border: 1px solid var(--border); color: var(--text2); cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: all .15s; flex-shrink: 0; }
 .cropper-close:hover { background: rgba(255,95,114,.15); border-color: rgba(255,95,114,.4); color: var(--red); }
-
-.cropper-body {
-  flex: 1; display: flex; flex-direction: column; gap: 12px;
-  padding: 16px 18px; overflow-y: auto; min-height: 0;
-}
-
-/* Drop zone inside modal */
-.cropper-drop {
-  border: 2px dashed var(--border);
-  border-radius: var(--radius);
-  padding: 32px 20px;
-  text-align: center; cursor: pointer;
-  transition: border-color .2s, background .2s;
-  background: var(--surface2);
-  position: relative;
-}
-.cropper-drop:hover, .cropper-drop.drag-over {
-  border-color: var(--accent); background: var(--accent-glow);
-}
-.cropper-drop input[type=file] {
-  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
-}
+.cropper-body { flex: 1; display: flex; flex-direction: column; gap: 12px; padding: 16px 18px; overflow-y: auto; min-height: 0; }
+.cropper-drop { border: 2px dashed var(--border); border-radius: var(--radius); padding: 32px 20px; text-align: center; cursor: pointer; transition: border-color .2s, background .2s; background: var(--surface2); position: relative; }
+.cropper-drop:hover, .cropper-drop.drag-over { border-color: var(--accent); background: var(--accent-glow); }
+.cropper-drop input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
 .cropper-drop-icon  { font-size: 28px; margin-bottom: 8px; }
 .cropper-drop-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
 .cropper-drop-sub   { font-size: 11px; color: var(--text3); }
-
-/* Canvas area */
 .cropper-canvas-area { display: none; flex-direction: column; gap: 10px; }
 .cropper-canvas-area.visible { display: flex; }
-
-.cropper-canvas-wrap {
-  position: relative; width: 100%; border-radius: var(--radius);
-  overflow: hidden; cursor: grab;
-  /* checkerboard */
-  background-color: #0a0a14;
-  background-image:
-    linear-gradient(45deg,#12122a 25%,transparent 25%),
-    linear-gradient(-45deg,#12122a 25%,transparent 25%),
-    linear-gradient(45deg,transparent 75%,#12122a 75%),
-    linear-gradient(-45deg,transparent 75%,#12122a 75%);
-  background-size: 16px 16px;
-  background-position: 0 0,0 8px,8px -8px,-8px 0;
-  touch-action: none; user-select: none;
-}
+.cropper-canvas-wrap { position: relative; width: 100%; border-radius: var(--radius); overflow: hidden; cursor: grab; background-color: #0a0a14; background-image: linear-gradient(45deg,#12122a 25%,transparent 25%), linear-gradient(-45deg,#12122a 25%,transparent 25%), linear-gradient(45deg,transparent 75%,#12122a 75%), linear-gradient(-45deg,transparent 75%,#12122a 75%); background-size: 16px 16px; background-position: 0 0,0 8px,8px -8px,-8px 0; touch-action: none; user-select: none; }
 .cropper-canvas-wrap:active { cursor: grabbing; }
 .cropper-canvas-wrap canvas { display: block; width: 100%; height: 100%; }
-
-.cropper-hint {
-  font-size: 11px; color: var(--text3); text-align: center; line-height: 1.6;
-}
+.cropper-hint { font-size: 11px; color: var(--text3); text-align: center; line-height: 1.6; }
 .cropper-hint span { color: var(--text2); }
-
-.cropper-zoom-row {
-  display: flex; align-items: center; gap: 10px;
-}
+.cropper-zoom-row { display: flex; align-items: center; gap: 10px; }
 .cropper-zoom-label { font-size: 11px; color: var(--text3); white-space: nowrap; }
 .cropper-zoom-slider { flex: 1; accent-color: var(--accent); cursor: pointer; }
 .cropper-zoom-val { font-size: 12px; font-weight: 600; color: var(--accent); min-width: 40px; text-align: right; }
-
-.cropper-footer {
-  display: flex; align-items: center; justify-content: space-between; gap: 8px;
-  padding: 13px 18px;
-  border-top: 1px solid var(--border);
-  flex-shrink: 0; flex-wrap: wrap;
-}
+.cropper-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 13px 18px; border-top: 1px solid var(--border); flex-shrink: 0; flex-wrap: wrap; }
 .cropper-footer-left  { display: flex; gap: 8px; }
 .cropper-footer-right { display: flex; gap: 8px; }
-
-/* Save status inside modal */
-.cropper-status {
-  display: none; align-items: center; gap: 8px;
-  font-size: 12px; padding: 8px 14px;
-  border-radius: 8px;
-  background: rgba(62,207,130,.07); border: 1px solid rgba(62,207,130,.25);
-  color: var(--green);
-}
+.cropper-status { display: none; align-items: center; gap: 8px; font-size: 12px; padding: 8px 14px; border-radius: 8px; background: rgba(62,207,130,.07); border: 1px solid rgba(62,207,130,.25); color: var(--green); }
 .cropper-status.visible { display: flex; }
 .cropper-status.error   { background: rgba(255,95,114,.07); border-color: rgba(255,95,114,.25); color: var(--red); }
 </style>
 </head>
 <body>
 
-<!-- ── SPLASH ─────────────────────────────────────────────────── -->
 <div id="splash">
   <div class="splash-logo">🎬</div>
   <div style="text-align:center">
@@ -864,27 +501,18 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
   <div class="spinner"></div>
 </div>
 
-<!-- ── NOT RUNNING ────────────────────────────────────────────── -->
 <div id="notRunning">
   <div class="nr-icon">🖥️</div>
   <div class="nr-title">ImTalking is not running</div>
-  <div class="nr-sub">
-    The desktop app wasn't found. Launch it first, then return here —
-    or click below to start it automatically.
-  </div>
+  <div class="nr-sub">The desktop app wasn't found. Launch it first, then return here — or click below to start it automatically.</div>
   <button class="btn btn-launch" onclick="launchApp()">🚀  Launch ImTalking</button>
   <span class="nr-retry" onclick="startDiscovery()">Try again manually</span>
 </div>
 
-<!-- ── TOAST ──────────────────────────────────────────────────── -->
 <div class="toast-wrap" id="toastWrap"></div>
 
-<!-- ── CROPPER MODAL ──────────────────────────────────────────── -->
 <div id="cropperOverlay" role="dialog" aria-modal="true" aria-label="Import image to library">
-
   <div class="cropper-modal">
-
-    <!-- Header -->
     <div class="cropper-header">
       <div class="cropper-header-left">
         <div class="cropper-title">🖼️ Import Image to Library</div>
@@ -892,68 +520,45 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
       </div>
       <div class="cropper-close" onclick="closeCropper()" title="Close (Esc)">✕</div>
     </div>
-
-    <!-- Body -->
     <div class="cropper-body">
-
-      <!-- Drop zone -->
       <div class="cropper-drop" id="cropperDrop">
         <input type="file" id="cropperFileInput" accept="image/*"/>
         <div class="cropper-drop-icon">🖼️</div>
         <div class="cropper-drop-title">Drop an image here, or click to browse</div>
         <div class="cropper-drop-sub">JPG · PNG · WebP · BMP — any size</div>
       </div>
-
-      <!-- Canvas section (hidden until image loaded) -->
       <div class="cropper-canvas-area" id="cropperCanvasArea">
-
         <div class="cropper-canvas-wrap" id="cropperWrap">
           <canvas id="cropperCanvas"></canvas>
         </div>
-
-        <div class="cropper-hint">
-          <span>Drag</span> to pan &nbsp;·&nbsp;
-          <span>Scroll / pinch</span> to zoom &nbsp;·&nbsp;
-          <span>Corner handles</span> to scale
-        </div>
-
+        <div class="cropper-hint"><span>Drag</span> to pan &nbsp;·&nbsp; <span>Scroll / pinch</span> to zoom &nbsp;·&nbsp; <span>Corner handles</span> to scale</div>
         <div class="cropper-zoom-row">
           <span class="cropper-zoom-label">Zoom</span>
-          <input type="range" class="cropper-zoom-slider" id="cropperZoomSlider"
-                 min="0" max="1" step="0.001" value="0.5"/>
+          <input type="range" class="cropper-zoom-slider" id="cropperZoomSlider" min="0" max="1" step="0.001" value="0.5"/>
           <span class="cropper-zoom-val" id="cropperZoomVal">1.00×</span>
         </div>
-
         <div class="cropper-status" id="cropperStatus"></div>
-
       </div>
-    </div><!-- /cropper-body -->
-
-    <!-- Footer -->
+    </div>
     <div class="cropper-footer">
       <div class="cropper-footer-left">
-        <button class="btn btn-secondary" id="cropperBtnChange" style="display:none"
-                onclick="cropperChangeImage()">Change image</button>
-        <button class="btn btn-secondary" id="cropperBtnReset" style="display:none"
-                onclick="cropperResetView()">↺ Reset</button>
+        <button class="btn btn-secondary" id="cropperBtnChange" style="display:none" onclick="cropperChangeImage()">Change image</button>
+        <button class="btn btn-secondary" id="cropperBtnReset"  style="display:none" onclick="cropperResetView()">↺ Reset</button>
       </div>
       <div class="cropper-footer-right">
         <button class="btn btn-secondary" onclick="closeCropper()">Cancel</button>
-        <button class="btn btn-green" id="cropperBtnSave" disabled
-                onclick="cropperSave()">💾 Save to Library</button>
+        <button class="btn btn-green" id="cropperBtnSave" disabled onclick="cropperSave()">💾 Save to Library</button>
       </div>
     </div>
+  </div>
+</div>
 
-  </div><!-- /cropper-modal -->
-</div><!-- /cropperOverlay -->
-
-<!-- ── TOPBAR ─────────────────────────────────────────────────── -->
 <div class="topbar">
   <div class="topbar-brand">
     <div class="topbar-logo">🎬</div>
     <div>
       <div class="topbar-title">ImTalking</div>
-      <div class="topbar-sub">Talking Head Generator</div>
+      <div class="topbar-sub" id="topbarSub">Talking Head Generator</div>
     </div>
   </div>
   <div class="ws-pill">
@@ -962,446 +567,237 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
   </div>
 </div>
 
-<!-- ── APP SHELL (below topbar) ───────────────────────────────── -->
 <div class="app-shell" id="mainUI" style="display:none">
-
-  <!-- ── SIDEBAR ──────────────────────────────────────────────── -->
   <div class="sidebar">
     <nav class="sidebar-nav">
-      <div class="nav-item active" id="nav-new"      onclick="switchTab('new')">
-        <span class="nav-icon">🎬</span>
-        <span class="nav-label">New Project</span>
-      </div>
-      <div class="nav-item"        id="nav-projects" onclick="switchTab('projects')">
-        <span class="nav-icon">📁</span>
-        <span class="nav-label">Projects</span>
-        <span class="nav-badge" id="projectsBadge" style="display:none">0</span>
-      </div>
-      <div class="nav-item"        id="nav-help"     onclick="switchTab('help')">
-        <span class="nav-icon">📖</span>
-        <span class="nav-label">Help</span>
-      </div>
-      <div class="nav-item"        id="nav-privacy"  onclick="switchTab('privacy')">
-        <span class="nav-icon">🔒</span>
-        <span class="nav-label">Privacy</span>
-      </div>
-      <div class="nav-item"        id="nav-contact"  onclick="switchTab('contact')">
-        <span class="nav-icon">✉️</span>
-        <span class="nav-label">Contact</span>
-      </div>
+      <div class="nav-item active" id="nav-new"      onclick="switchTab('new')">      <span class="nav-icon">🎬</span><span class="nav-label">New Project</span></div>
+      <div class="nav-item"        id="nav-projects" onclick="switchTab('projects')"> <span class="nav-icon">📁</span><span class="nav-label">Projects</span><span class="nav-badge" id="projectsBadge" style="display:none">0</span></div>
+      <div class="nav-item"        id="nav-help"     onclick="switchTab('help')">     <span class="nav-icon">📖</span><span class="nav-label">Help</span></div>
+      <div class="nav-item"        id="nav-privacy"  onclick="switchTab('privacy')">  <span class="nav-icon">🔒</span><span class="nav-label">Privacy</span></div>
+      <div class="nav-item"        id="nav-contact"  onclick="switchTab('contact')">  <span class="nav-icon">✉️</span><span class="nav-label">Contact</span></div>
     </nav>
-    <div class="sidebar-footer">
-      v1.0 · mlapplications.com
-    </div>
+    <div class="sidebar-footer">v1.0 · mlapplications.com</div>
   </div>
 
-  <!-- ── CONTENT AREA ─────────────────────────────────────────── -->
   <div class="content-area">
 
-    <!-- ══ TAB: NEW PROJECT ══════════════════════════════════════ -->
     <div class="tab-panel active" id="tab-new">
       <div class="main" id="newProjectGrid">
-
-      <!-- Restore banner -->
-      <div class="restore-banner" id="restoreBanner" style="grid-column:1/-1">
-        <span>⚡</span>
-        <span id="restoreBannerText">Restoring previous session state…</span>
-      </div>
-
-    <!-- ══════════ LEFT COL ══════════ -->
-    <div class="left-col">
-
-    <!-- Input Mode -->
-    <div class="card">
-      <div class="card-label">Input Mode</div>
-      <div class="mode-toggle">
-        <div class="mode-btn active" id="modeTts"   onclick="setMode('tts')">
-          <span>🎤</span> Text to Speech
+        <div class="restore-banner" id="restoreBanner" style="grid-column:1/-1">
+          <span>⚡</span><span id="restoreBannerText">Restoring previous session state…</span>
         </div>
-        <div class="mode-btn" id="modeAudio" onclick="setMode('audio')">
-          <span>🎵</span> Audio File
-        </div>
-      </div>
-    </div>
 
-    <!-- TTS Panel -->
-    <div class="card panel visible" id="panelTts">
-      <div class="card-label">Text to Speech</div>
-      <div>
-        <label class="field-label" for="ttsText">Text to speak</label>
-        <textarea id="ttsText" placeholder="Type what you want the avatar to say…"></textarea>
-      </div>
-      <!-- Pitch + Rate controls — two sliders side by side -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-        <div>
-          <label class="field-label">
-            Pitch Adjustment — <span id="pitchVal" style="color:var(--accent)">0 Hz</span>
-          </label>
-          <div class="slider-row">
-            <input type="range" id="ttsPitch" min="-50" max="50" step="1" value="0"
-                   oninput="document.getElementById('pitchVal').textContent=this.value+' Hz'"/>
+        <div class="left-col">
+          <div class="card">
+            <div class="card-label">Input Mode</div>
+            <div class="mode-toggle">
+              <div class="mode-btn active" id="modeTts"   onclick="setMode('tts')">  <span>🎤</span> Text to Speech</div>
+              <div class="mode-btn"        id="modeAudio" onclick="setMode('audio')"><span>🎵</span> Audio File</div>
+            </div>
           </div>
-          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:3px">
-            <span>−50 Hz</span><span>0</span><span>+50 Hz</span>
+
+          <div class="card panel visible" id="panelTts">
+            <div class="card-label">Text to Speech</div>
+            <div>
+              <label class="field-label" for="ttsText">Text to speak</label>
+              <textarea id="ttsText" placeholder="Type what you want the avatar to say…"></textarea>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div>
+                <label class="field-label">Pitch Adjustment — <span id="pitchVal" style="color:var(--accent)">0 Hz</span></label>
+                <div class="slider-row"><input type="range" id="ttsPitch" min="-50" max="50" step="1" value="0" oninput="document.getElementById('pitchVal').textContent=this.value+' Hz'"/></div>
+                <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:3px"><span>−50 Hz</span><span>0</span><span>+50 Hz</span></div>
+              </div>
+              <div>
+                <label class="field-label">Speech Rate — <span id="rateVal" style="color:var(--accent)">0%</span></label>
+                <div class="slider-row"><input type="range" id="ttsRate" min="-50" max="50" step="1" value="0" oninput="document.getElementById('rateVal').textContent=this.value+'%'"/></div>
+                <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:3px"><span>−50%</span><span>0</span><span>+50%</span></div>
+              </div>
+            </div>
+            <div>
+              <label class="field-label">Voice</label>
+              <div class="voice-picker" id="voicePicker">
+                <div class="voice-input-wrap">
+                  <input class="voice-search" id="voiceSearch" type="text" placeholder="Search voices… (loading)" autocomplete="off" spellcheck="false"/>
+                  <div class="voice-gender-badge" id="voiceGenderBadge" title="Gender"></div>
+                  <div class="voice-clear-btn" id="voiceClearBtn" title="Clear">✕</div>
+                </div>
+                <div class="voice-dropdown" id="voiceDropdown"></div>
+              </div>
+              <input type="hidden" id="ttsVoice" value=""/>
+            </div>
+            <button class="btn btn-green" id="btnGenerateTts" onclick="generateTts()" disabled>🔊  Generate Speech Audio</button>
+            <div class="audio-preview" id="audioPreview">
+              <div class="audio-preview-label">✓ SPEECH READY</div>
+              <audio controls id="audioPlayer"></audio>
+            </div>
           </div>
-        </div>
-        <div>
-          <label class="field-label">
-            Speech Rate — <span id="rateVal" style="color:var(--accent)">0%</span>
-          </label>
-          <div class="slider-row">
-            <input type="range" id="ttsRate" min="-50" max="50" step="1" value="0"
-                   oninput="document.getElementById('rateVal').textContent=this.value+'%'"/>
+
+          <div class="card panel" id="panelAudio">
+            <div class="card-label">Audio File</div>
+            <div>
+              <label class="field-label" for="audioPath">File path</label>
+              <input type="text" id="audioPath" placeholder="e.g. C:\Users\George\audio.mp3"/>
+            </div>
           </div>
-          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:3px">
-            <span>−50%</span><span>0</span><span>+50%</span>
+
+          <div class="card">
+            <div class="card-label">Processing Options</div>
+            <div class="opts-grid">
+              <input type="hidden" id="optFps" value="15"/>
+              <div>
+                <label class="field-label" for="optBatch">Batch Size</label>
+                <select id="optBatch"><option value="1">1</option><option value="2" selected>2</option><option value="4">4</option><option value="8">8</option></select>
+              </div>
+              <div>
+                <label class="field-label" for="optUpscale">Upscale</label>
+                <select id="optUpscale"><option value="None">None</option><option value="512" selected>512 px</option><option value="1024">1024 px</option></select>
+              </div>
+              <div class="full">
+                <label class="field-label">Expression Scale — <span id="exprVal" style="color:var(--accent)">1.0</span></label>
+                <div class="slider-row">
+                  <input type="range" id="optExpr" min="0.5" max="2.0" step="0.1" value="1.0" oninput="document.getElementById('exprVal').textContent=parseFloat(this.value).toFixed(1)"/>
+                  <span class="slider-val" id="exprDisp">1.0</span>
+                </div>
+              </div>
+              <div class="full">
+                <div class="checks">
+                  <label class="check-item"><input type="checkbox" id="optStill" checked/> Still mode</label>
+                  <label class="check-item"><input type="checkbox" id="optEnhancer" checked/> Enhancer</label>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div>
-        <label class="field-label">Voice</label>
-        <div class="voice-picker" id="voicePicker">
-          <div class="voice-input-wrap">
-            <input class="voice-search" id="voiceSearch" type="text"
-                   placeholder="Search voices… (loading)"
-                   autocomplete="off" spellcheck="false"/>
-            <div class="voice-gender-badge" id="voiceGenderBadge" title="Gender"></div>
-            <div class="voice-clear-btn" id="voiceClearBtn" title="Clear">✕</div>
+        </div><!-- /left-col -->
+
+        <div class="section-divider"></div>
+
+        <div class="generate-section-wrap">
+          <div class="progress-section">
+            <div class="progress-overall-wrap" id="overallWrap">
+              <div class="progress-overall-header">
+                <span class="progress-overall-label"><span class="progress-overall-dot" id="overallDot"></span><span id="overallLabel">Overall Pipeline</span></span>
+                <span class="progress-overall-pct" id="overallPct">0%</span>
+              </div>
+              <div class="progress-overall-track"><div class="progress-overall-fill" id="overallFill"></div></div>
+              <div class="progress-overall-sublabel" id="overallSublabel"></div>
+            </div>
+            <div class="progress-segment-divider" id="segmentDivider"></div>
+            <div class="progress-header">
+              <div class="progress-left">
+                <span class="progress-status" id="progressStatus">Ready</span>
+                <span class="progress-stage"  id="progressStage"></span>
+              </div>
+              <span class="progress-pct" id="progressPct">0%</span>
+            </div>
+            <div class="progress-bar-track"><div class="progress-bar-fill" id="progressFill"></div></div>
+            <div class="progress-frames" id="progressFrames">Frame <strong id="frameCurrent">0</strong> of <strong id="frameTotal">0</strong></div>
+            <div class="action-row">
+              <button class="btn btn-secondary" id="btnOpenFolder" style="display:none" onclick="doOpenFolder()">📁 Open Folder</button>
+              <button class="btn btn-secondary" id="btnPlayVideo"  style="display:none" onclick="doPlayVideo()">▶ Play</button>
+              <button class="btn btn-danger"    id="btnCancel"     style="display:none" onclick="sendMsg({type:'cancel'})">✕ Cancel</button>
+              <button class="btn btn-primary"   id="btnGenerate"   onclick="startGeneration()">🎬 Generate Video</button>
+            </div>
           </div>
-          <div class="voice-dropdown" id="voiceDropdown"></div>
-        </div>
-        <input type="hidden" id="ttsVoice" value=""/>
-      </div>
-      <button class="btn btn-green" id="btnGenerateTts" onclick="generateTts()" disabled>
-        🔊  Generate Speech Audio
-      </button>
-      <div class="audio-preview" id="audioPreview">
-        <div class="audio-preview-label">✓ SPEECH READY</div>
-        <audio controls id="audioPlayer"></audio>
-      </div>
-    </div>
-
-    <!-- Audio File Panel -->
-    <div class="card panel" id="panelAudio">
-      <div class="card-label">Audio File</div>
-      <div>
-        <label class="field-label" for="audioPath">File path</label>
-        <input type="text" id="audioPath" placeholder="e.g. C:\Users\George\audio.mp3"/>
-      </div>
-    </div>
-
-    <!-- Processing Options -->
-    <div class="card">
-      <div class="card-label">Processing Options</div>
-      <div class="opts-grid">
-        <!-- FPS hidden — always 15, not shown to user -->
-        <input type="hidden" id="optFps" value="15"/>
-        <div>
-          <label class="field-label" for="optBatch">Batch Size</label>
-          <select id="optBatch">
-            <option value="1">1</option><option value="2" selected>2</option>
-            <option value="4">4</option><option value="8">8</option>
-          </select>
-        </div>
-        <div>
-          <label class="field-label" for="optUpscale">Upscale</label>
-          <select id="optUpscale">
-            <option value="None">None</option>
-            <option value="512" selected>512 px</option>
-            <option value="1024">1024 px</option>
-          </select>
-        </div>
-        <div class="full">
-          <label class="field-label">
-            Expression Scale — <span id="exprVal" style="color:var(--accent)">1.0</span>
-          </label>
-          <div class="slider-row">
-            <input type="range" id="optExpr" min="0.5" max="2.0" step="0.1" value="1.0"
-              oninput="document.getElementById('exprVal').textContent=parseFloat(this.value).toFixed(1)"/>
-            <span class="slider-val" id="exprDisp">1.0</span>
+          <div class="log-section">
+            <div class="log-header" id="logHeader" onclick="toggleLog()">
+              <div class="log-header-left"><span class="log-chevron" id="logChevron">▶</span> Console Log</div>
+              <button class="log-clear" onclick="event.stopPropagation();clearLog()">Clear</button>
+            </div>
+            <div class="log-body" id="logBody"><div id="logOutput"></div></div>
           </div>
-        </div>
-        <div class="full">
-          <div class="checks">
-            <label class="check-item">
-              <input type="checkbox" id="optStill" checked/> Still mode
-            </label>
-            <label class="check-item">
-              <input type="checkbox" id="optEnhancer" checked/> Enhancer
-            </label>
-            <!--
-              optCpu and optNoResize are intentionally hidden from the user.
-              use_cpu is always sent as true; no_resize always as false.
-            -->
+        </div><!-- /generate-section-wrap -->
+
+        <div class="right-col">
+          <div class="card">
+            <div class="card-label">Source Image</div>
+            <div class="img-toolbar">
+              <div class="img-toolbar-left">
+                <button class="img-refresh-btn" onclick="sendMsg({type:'get_images'})">↻ Refresh</button>
+                <button class="img-import-btn"  onclick="doImportToLibrary()">＋ Import to Library</button>
+              </div>
+              <span class="img-count" id="imgCount"></span>
+            </div>
+            <div class="image-grid" id="imageGrid"><div class="img-empty">Waiting for image list…</div></div>
+            <div class="img-selected-label" id="imgSelectedLabel">No image selected</div>
           </div>
+          <div class="result-card" id="resultCard">
+            <div class="result-header">
+              <div class="result-title">✓ Video Ready</div>
+              <div class="result-badge">Complete</div>
+            </div>
+            <div class="result-path" id="resultPath">—</div>
+            <div class="result-actions">
+              <button class="btn btn-secondary" onclick="doOpenFolder()">📁 Open Folder</button>
+              <button class="btn btn-secondary" onclick="doPlayVideo()">▶ Play</button>
+            </div>
+          </div>
+        </div><!-- /right-col -->
+
+      </div><!-- /main -->
+    </div><!-- /tab-new -->
+
+    <div class="tab-panel" id="tab-projects">
+      <div class="projects-wrap">
+        <div class="projects-header">
+          <div><div class="projects-title">Projects</div><div class="projects-sub">Your generation history — stored locally in the desktop app.</div></div>
+          <button class="btn btn-secondary" onclick="loadProjects()" style="font-size:12px;padding:7px 14px">↻ Refresh</button>
         </div>
+        <div id="projectsList"><div class="projects-empty"><div class="pe-icon">📂</div>Click Refresh to load your project history.</div></div>
       </div>
     </div>
 
-    <!-- ── PROCESSING OPTIONS closes left-col top section ── -->
-    </div><!-- /left-col -->
-
-    <!-- ── DIVIDER ────────────────────────────────────────────── -->
-    <div class="section-divider"></div>
-
-    <!-- ── GENERATE SECTION (full left-col width, below divider) ── -->
-    <div class="generate-section-wrap">
-
-    <!-- ── PROGRESS ────────────────────────────────────────────── -->
-    <div class="progress-section">
-
-      <!-- Overall pipeline bar — shown first, most prominent (batch only) -->
-      <div class="progress-overall-wrap" id="overallWrap">
-        <div class="progress-overall-header">
-          <span class="progress-overall-label">
-            <span class="progress-overall-dot" id="overallDot"></span>
-            <span id="overallLabel">Overall Pipeline</span>
-          </span>
-          <span class="progress-overall-pct" id="overallPct">0%</span>
-        </div>
-        <div class="progress-overall-track">
-          <div class="progress-overall-fill" id="overallFill"></div>
-        </div>
-        <div class="progress-overall-sublabel" id="overallSublabel"></div>
-      </div>
-
-      <!-- Divider between overall and segment detail (visible during batch) -->
-      <div class="progress-segment-divider" id="segmentDivider"></div>
-
-      <!-- Segment status + big % counter -->
-      <div class="progress-header">
-        <div class="progress-left">
-          <span class="progress-status" id="progressStatus">Ready</span>
-          <span class="progress-stage"  id="progressStage"></span>
-        </div>
-        <span class="progress-pct" id="progressPct">0%</span>
-      </div>
-
-      <!-- Per-segment bar -->
-      <div class="progress-bar-track">
-        <div class="progress-bar-fill" id="progressFill"></div>
-      </div>
-      <div class="progress-frames" id="progressFrames">
-        Frame <strong id="frameCurrent">0</strong> of <strong id="frameTotal">0</strong>
-      </div>
-      <div class="action-row">
-        <button class="btn btn-secondary" id="btnOpenFolder" style="display:none"
-                onclick="doOpenFolder()">📁 Open Folder</button>
-        <button class="btn btn-secondary" id="btnPlayVideo"  style="display:none"
-                onclick="doPlayVideo()">▶ Play</button>
-        <button class="btn btn-danger"    id="btnCancel"     style="display:none"
-                onclick="sendMsg({type:'cancel'})">✕ Cancel</button>
-        <button class="btn btn-primary"   id="btnGenerate"
-                onclick="startGeneration()">🎬 Generate Video</button>
+    <div class="tab-panel" id="tab-help">
+      <div class="info-wrap">
+        <div class="info-title">Help &amp; Examples</div>
+        <div class="info-sub">Everything you need to get the best results from ImTalking.</div>
+        <div class="info-section"><h3>Getting Started</h3><ul><li>Select a source avatar image from the library on the right, or import your own with <strong>＋ Import to Library</strong>.</li><li>Type your text in the <strong>Text to Speak</strong> field, pick a voice and click <strong>Generate Speech Audio</strong> to preview it.</li><li>Hit <strong>Generate Video</strong> — ImTalking will split your text into sentences, render each one and assemble the final video automatically.</li></ul></div>
+        <div class="info-section"><h3>Tips for Best Quality</h3><ul><li>Use a <strong>square, well-lit, front-facing photo</strong> with a clean background.</li><li>Keep individual sentences <strong>short</strong> (under 15 words).</li><li>Enable <strong>Enhancer</strong> for sharper results — it applies GFPGAN face restoration to every frame.</li><li>Use <strong>Still mode</strong> for a stable head position with minimal random movement.</li><li>Pitch and Rate sliders adjust the voice before generation — use them subtly (±10–20 range).</li></ul></div>
+        <div class="info-section"><h3>Processing Options Explained</h3><div class="info-card"><div class="info-card-title">Batch Size</div><p>How many video frames are rendered at once. Higher = faster but uses more RAM. Default 2 is safe for most systems.</p></div><div class="info-card"><div class="info-card-title">Upscale</div><p>Upscales the output to 512×512 px after rendering. Adds clarity without re-rendering. Recommended when Enhancer is off.</p></div><div class="info-card"><div class="info-card-title">Expression Scale</div><p>Controls how expressive the lip and face movement is. 1.0 is natural. Go higher (1.2–1.5) for more dramatic expressions.</p></div></div>
+        <div class="info-section"><h3>Pause Behaviour Between Sentences</h3><p>ImTalking automatically inserts still-frame pauses between sentences based on the punctuation in your text:</p><ul><li><strong>Period, Question mark, Exclamation mark</strong> → 1.0 second still pause</li><li><strong>Comma, Dash</strong> → 0.5 second still pause</li></ul></div>
       </div>
     </div>
 
-    <!-- ── CONSOLE LOG (starts collapsed) ─────────────────────── -->
-    <div class="log-section">
-      <div class="log-header" id="logHeader" onclick="toggleLog()">
-        <div class="log-header-left">
-          <span class="log-chevron" id="logChevron">▶</span> Console Log
-        </div>
-        <button class="log-clear" onclick="event.stopPropagation();clearLog()">Clear</button>
-      </div>
-      <div class="log-body" id="logBody">
-        <div id="logOutput"></div>
+    <div class="tab-panel" id="tab-privacy">
+      <div class="info-wrap">
+        <div class="info-title">Privacy</div>
+        <div class="info-sub">ImTalking processes everything locally on your machine. No data is sent to any cloud or external server.</div>
+        <div class="info-section"><h3>What Stays on Your Computer</h3><ul><li>All avatar images you import are stored in your app's local temp folder.</li><li>Generated speech audio (MP3) is saved temporarily and deleted after video creation.</li><li>All rendered videos are saved to <code style="color:var(--accent);font-family:var(--mono);font-size:11px">C:\Users\[you]\Videos\SadTalker\</code> and never leave your device.</li><li>Project history is stored only inside the desktop app's local storage.</li></ul></div>
+        <div class="info-section"><h3>Network Usage</h3><ul><li>ImTalking connects to the internet only to: download TTS voices via Microsoft Edge TTS, and check for SSL certificate updates for the local WebSocket connection.</li><li>The webpage communicates exclusively with the desktop app running on your own machine (127.0.0.1).</li><li>No analytics, no telemetry, no usage tracking of any kind.</li></ul></div>
+        <div class="info-section"><h3>Face Data</h3><p>ImTalking uses SadTalker's 3D facial model (3DMM) locally. Face coefficients are extracted on-device and immediately deleted after generation. No biometric data is stored or transmitted.</p></div>
       </div>
     </div>
 
-    </div><!-- /generate-section-wrap -->
-
-  <!-- ══════════ RIGHT COL ══════════ -->
-  <div class="right-col">
-
-    <!-- Source Image + Import button — fills all available height -->
-    <div class="card">
-      <div class="card-label">Source Image</div>
-      <div class="img-toolbar">
-        <div class="img-toolbar-left">
-          <button class="img-refresh-btn" onclick="sendMsg({type:'get_images'})">↻ Refresh</button>
-          <button class="img-import-btn"  onclick="doImportToLibrary()">＋ Import to Library</button>
-        </div>
-        <span class="img-count" id="imgCount"></span>
-      </div>
-      <div class="image-grid" id="imageGrid">
-        <div class="img-empty">Waiting for image list…</div>
-      </div>
-      <div class="img-selected-label" id="imgSelectedLabel">No image selected</div>
-    </div>
-
-    <!-- Result card — shown after a successful generation -->
-    <div class="result-card" id="resultCard">
-      <div class="result-header">
-        <div class="result-title">✓ Video Ready</div>
-        <div class="result-badge">Complete</div>
-      </div>
-      <div class="result-path" id="resultPath">—</div>
-      <div class="result-actions">
-        <button class="btn btn-secondary" onclick="doOpenFolder()">📁 Open Folder</button>
-        <button class="btn btn-secondary" onclick="doPlayVideo()">▶ Play</button>
+    <div class="tab-panel" id="tab-contact">
+      <div class="info-wrap">
+        <div class="info-title">Contact</div>
+        <div class="info-sub">Get in touch, report a bug or request a feature.</div>
+        <div class="info-section"><h3>Reach Us</h3><a class="contact-link" href="https://mlapplications.com" target="_blank">🌐 &nbsp; mlapplications.com — our main website</a><a class="contact-link" href="mailto:support@mlapplications.com">✉️ &nbsp; support@mlapplications.com — support &amp; bug reports</a></div>
+        <div class="info-section"><h3>About</h3><div class="info-card"><div class="info-card-title">ImTalking v1.0</div><p>Built by mlapplications.com · Powered by SadTalker, Edge TTS and GFPGAN · Running entirely on your local machine.</p></div></div>
       </div>
     </div>
-
-  </div><!-- /right-col -->
-</div><!-- /main #newProjectGrid -->
-</div><!-- /tab-panel #tab-new -->
-
-<!-- ══ TAB: PROJECTS ═════════════════════════════════════════ -->
-<div class="tab-panel" id="tab-projects">
-  <div class="projects-wrap">
-    <div class="projects-header">
-      <div>
-        <div class="projects-title">Projects</div>
-        <div class="projects-sub">Your generation history — stored locally in the desktop app.</div>
-      </div>
-      <button class="btn btn-secondary" onclick="loadProjects()" style="font-size:12px;padding:7px 14px">
-        ↻ Refresh
-      </button>
-    </div>
-    <div id="projectsList">
-      <div class="projects-empty">
-        <div class="pe-icon">📂</div>
-        Click Refresh to load your project history.
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══ TAB: HELP ═════════════════════════════════════════════ -->
-<div class="tab-panel" id="tab-help">
-  <div class="info-wrap">
-    <div class="info-title">Help &amp; Examples</div>
-    <div class="info-sub">Everything you need to get the best results from ImTalking.</div>
-
-    <div class="info-section">
-      <h3>Getting Started</h3>
-      <ul>
-        <li>Select a source avatar image from the library on the right, or import your own with <strong>＋ Import to Library</strong>.</li>
-        <li>Type your text in the <strong>Text to Speak</strong> field, pick a voice and click <strong>Generate Speech Audio</strong> to preview it.</li>
-        <li>Hit <strong>Generate Video</strong> — ImTalking will split your text into sentences, render each one and assemble the final video automatically.</li>
-      </ul>
-    </div>
-
-    <div class="info-section">
-      <h3>Tips for Best Quality</h3>
-      <ul>
-        <li>Use a <strong>square, well-lit, front-facing photo</strong> with a clean background. The built-in image cropper (Import to Library) helps you prepare it.</li>
-        <li>Keep individual sentences <strong>short</strong> (under 15 words). ImTalking processes each sentence separately for accurate lip sync.</li>
-        <li>Enable <strong>Enhancer</strong> for sharper results — it applies GFPGAN face restoration to every frame. Takes longer but looks better.</li>
-        <li>Use <strong>Still mode</strong> for a stable head position with minimal random movement.</li>
-        <li>Pitch and Rate sliders adjust the voice before generation — use them subtly (±10–20 range).</li>
-      </ul>
-    </div>
-
-    <div class="info-section">
-      <h3>Processing Options Explained</h3>
-      <div class="info-card">
-        <div class="info-card-title">Batch Size</div>
-        <p>How many video frames are rendered at once. Higher = faster but uses more RAM. Default 2 is safe for most systems.</p>
-      </div>
-      <div class="info-card">
-        <div class="info-card-title">Upscale</div>
-        <p>Upscales the output to 512×512 px after rendering. Adds clarity without re-rendering. Recommended when Enhancer is off.</p>
-      </div>
-      <div class="info-card">
-        <div class="info-card-title">Expression Scale</div>
-        <p>Controls how expressive the lip and face movement is. 1.0 is natural. Go higher (1.2–1.5) for more dramatic expressions.</p>
-      </div>
-    </div>
-
-    <div class="info-section">
-      <h3>Pause Behaviour Between Sentences</h3>
-      <p>ImTalking automatically inserts still-frame pauses between sentences based on the punctuation in your text:</p>
-      <ul>
-        <li><strong>Period, Question mark, Exclamation mark</strong> → 1.0 second still pause</li>
-        <li><strong>Comma, Dash</strong> → 0.5 second still pause</li>
-      </ul>
-      <p>This creates a natural rhythm without any extra configuration.</p>
-    </div>
-  </div>
-</div>
-
-<!-- ══ TAB: PRIVACY ══════════════════════════════════════════ -->
-<div class="tab-panel" id="tab-privacy">
-  <div class="info-wrap">
-    <div class="info-title">Privacy</div>
-    <div class="info-sub">ImTalking processes everything locally on your machine. No data is sent to any cloud or external server.</div>
-
-    <div class="info-section">
-      <h3>What Stays on Your Computer</h3>
-      <ul>
-        <li>All avatar images you import are stored in your app's local temp folder.</li>
-        <li>Generated speech audio (MP3) is saved temporarily and deleted after video creation.</li>
-        <li>All rendered videos are saved to <code style="color:var(--accent);font-family:var(--mono);font-size:11px">C:\Users\[you]\Videos\SadTalker\</code> and never leave your device.</li>
-        <li>Project history (text, voice, image, video path) is stored only inside the desktop app's local storage.</li>
-      </ul>
-    </div>
-
-    <div class="info-section">
-      <h3>Network Usage</h3>
-      <ul>
-        <li>ImTalking connects to the internet only to: download TTS voices via Microsoft Edge TTS, and check for SSL certificate updates for the local WebSocket connection.</li>
-        <li>The webpage at mlapplications.com acts as a local UI served to your browser — it communicates exclusively with the desktop app running on your own machine (127.0.0.1).</li>
-        <li>No analytics, no telemetry, no usage tracking of any kind.</li>
-      </ul>
-    </div>
-
-    <div class="info-section">
-      <h3>Face Data</h3>
-      <p>ImTalking uses SadTalker's 3D facial model (3DMM) locally. Face coefficients are extracted on-device and immediately deleted after generation. No biometric data is stored or transmitted.</p>
-    </div>
-  </div>
-</div>
-
-<!-- ══ TAB: CONTACT ══════════════════════════════════════════ -->
-<div class="tab-panel" id="tab-contact">
-  <div class="info-wrap">
-    <div class="info-title">Contact</div>
-    <div class="info-sub">Get in touch, report a bug or request a feature.</div>
-
-    <div class="info-section">
-      <h3>Reach Us</h3>
-      <a class="contact-link" href="https://mlapplications.com" target="_blank">
-        🌐 &nbsp; mlapplications.com — our main website
-      </a>
-      <a class="contact-link" href="mailto:support@mlapplications.com">
-        ✉️ &nbsp; support@mlapplications.com — support &amp; bug reports
-      </a>
-    </div>
-
-    <div class="info-section">
-      <h3>Reporting a Bug</h3>
-      <p>When reporting an issue, please include:</p>
-      <ul>
-        <li>A description of what you were doing when the problem occurred</li>
-        <li>The text you used and the voice selected</li>
-        <li>Whether Enhancer was on or off</li>
-        <li>Any error messages shown on the webpage or in the desktop app</li>
-      </ul>
-    </div>
-
-    <div class="info-section">
-      <h3>About</h3>
-      <div class="info-card">
-        <div class="info-card-title">ImTalking v1.0</div>
-        <p>Built by mlapplications.com · Powered by SadTalker, Edge TTS and GFPGAN · Running entirely on your local machine.</p>
-      </div>
-    </div>
-  </div>
-</div>
 
   </div><!-- /content-area -->
-</div><!-- /app-shell #mainUI -->
+</div><!-- /app-shell -->
 
 <script>
-// - CONFIG -
+// ════════════════════════════════════════════════════════════════════
+//  CONFIG
+// ════════════════════════════════════════════════════════════════════
 const DISCOVERY_URL        = 'http://127.0.0.1:49199/';
 const WS_HOST              = 'mywbsck.mlapplications.com';
 const APP_PROTOCOL         = 'imtalking://';
 const DISCOVERY_TIMEOUT_MS = 3000;
 
-// - STATE -
+// ── Detect desktop (WebView2) vs browser mode ───────────────────────
+// WebView2 window navigates to: imtalking.html?mode=desktop
+// Browser opens:                imtalking.html          (no param)
+const _urlParams = new URLSearchParams(window.location.search);
+const IS_DESKTOP = _urlParams.get('mode') === 'desktop';
+
+// ════════════════════════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════════════════════════
 let ws            = null;
 let httpBase      = '';
 let mode          = 'tts';
@@ -1409,18 +805,20 @@ let selImage      = null;
 let selImageName  = '';
 let ttsAudioPath  = null;
 let isRunning     = false;
-let lastVideoPath = null;        // always tracks latest output path
+let lastVideoPath = null;
 let reconnectDelay    = 1000;
 const MAX_RECONNECT   = 15000;
 let wssPort       = null;
+let wsLocalPort   = null;   // plain ws:// port for WebView2 desktop mode
 let reconnectTimer    = null;
 
-// - SPLASH HELPERS -
+// ════════════════════════════════════════════════════════════════════
+//  SPLASH
+// ════════════════════════════════════════════════════════════════════
 function showSplash(msg) {
   document.getElementById('splashMsg').textContent = msg || 'Looking for the desktop app…';
   const s = document.getElementById('splash');
-  s.classList.remove('hidden');
-  s.style.display = 'flex';
+  s.classList.remove('hidden'); s.style.display = 'flex';
 }
 function hideSplash() {
   const s = document.getElementById('splash');
@@ -1441,7 +839,6 @@ function switchTab(tab) {
   document.getElementById('tab-' + tab).classList.add('active');
   if (tab === 'projects') loadProjects();
 }
-
 function loadProjects(badgeOnly) {
   if (!sendMsg({ type: 'get_projects' })) return;
   if (!badgeOnly)
@@ -1449,37 +846,51 @@ function loadProjects(badgeOnly) {
       '<div class="projects-empty"><div class="pe-icon">⏳</div>Loading…</div>';
 }
 
-// - DISCOVERY -
+// ════════════════════════════════════════════════════════════════════
+//  DISCOVERY
+// ════════════════════════════════════════════════════════════════════
 async function startDiscovery() {
   hideNotRunning();
   showSplash('Looking for the desktop app…');
   let info;
   try {
     const ctrl = new AbortController();
-    const tid   = setTimeout(() => ctrl.abort(), DISCOVERY_TIMEOUT_MS);
-    const res   = await fetch(DISCOVERY_URL, { signal: ctrl.signal });
+    const tid  = setTimeout(() => ctrl.abort(), DISCOVERY_TIMEOUT_MS);
+    const res  = await fetch(DISCOVERY_URL, { signal: ctrl.signal });
     clearTimeout(tid);
     info = await res.json();
   } catch(e) {
     showNotRunning();
     return;
   }
-  const { wssPort: wp, httpImagePort: hp, state, job } = info;
-  wssPort  = wp;
-  httpBase = `https://${WS_HOST}:${hp}`;
+  // Beacon returns: { wssPort, wsLocalPort, httpImagePort, state, job }
+  const { wssPort: wp, wsLocalPort: wlp, httpImagePort: hp, state, job } = info;
+  wssPort     = wp;
+  wsLocalPort = wlp;
+  httpBase    = `https://${WS_HOST}:${hp}`;
   splashMsg('Connecting to app…');
-  connectWs(wp, state, job);
+  connectWs(state, job);
 }
 
-// - WEBSOCKET -
-function connectWs(port, initialState, initialJob) {
-  const url = `wss://${WS_HOST}:${port}/`;
-  setWsDot('connecting', 'Connecting…');
-  logLine(`Connecting to ${url}`);
+// ════════════════════════════════════════════════════════════════════
+//  WEBSOCKET
+//  IS_DESKTOP=true  → ws://127.0.0.1:<wsLocalPort>   (no TLS, offline-capable)
+//  IS_DESKTOP=false → wss://mywbsck.mlapplications.com:<wssPort>  (browser)
+// ════════════════════════════════════════════════════════════════════
+function buildWsUrl() {
+  return IS_DESKTOP
+    ? `ws://127.0.0.1:${wsLocalPort}/`
+    : `wss://${WS_HOST}:${wssPort}/`;
+}
+
+function connectWs(initialState, initialJob) {
+  const url = buildWsUrl();
+  setWsDot('connecting', IS_DESKTOP ? 'Desktop…' : 'Connecting…');
+  logLine(`[WS] ${IS_DESKTOP ? 'Desktop' : 'Browser'} → ${url}`);
   ws = new WebSocket(url);
 
   ws.onopen = () => {
-    setWsDot('connected', 'Connected');
+    setWsDot('connected', IS_DESKTOP ? 'Desktop' : 'Connected');
     reconnectDelay = 1000;
     logLine('WebSocket open.');
     hideSplash();
@@ -1497,6 +908,13 @@ function connectWs(port, initialState, initialJob) {
   ws.onmessage = (ev) => {
     let msg;
     try { msg = JSON.parse(ev.data); } catch { return; }
+    // state_restore is pushed by the local WS server immediately on connect
+    // so the desktop WebView2 window can resume the last session
+    if (msg.type === 'state_restore') {
+      if (msg.state === 'running' && msg.job) restoreRunningState(msg.job);
+      else if (msg.job) restoreIdleState(msg.job);
+      return;
+    }
     handleMessage(msg);
   };
 
@@ -1506,7 +924,7 @@ function connectWs(port, initialState, initialJob) {
     setWsDot('error', 'Disconnected');
     logLine(`Connection closed (${ev.code}). Reconnecting in ${reconnectDelay/1000}s…`);
     reconnectTimer = setTimeout(() => {
-      if (wssPort) connectWs(wssPort);
+      if (wssPort || wsLocalPort) connectWs();
     }, reconnectDelay);
     reconnectDelay = Math.min(reconnectDelay * 2, MAX_RECONNECT);
   };
@@ -1514,47 +932,35 @@ function connectWs(port, initialState, initialJob) {
 
 function sendMsg(obj) {
   if (!ws || ws.readyState !== WebSocket.OPEN) return false;
-  ws.send(JSON.stringify(obj));
-  return true;
+  ws.send(JSON.stringify(obj)); return true;
 }
-
 function setWsDot(state, label) {
   const d = document.getElementById('wsDot');
   d.className = 'ws-dot' + (state ? ' ' + state : '');
   document.getElementById('wsLabel').textContent = label;
 }
 
-/* -
-   OPEN FOLDER / PLAY VIDEO
-   - Fixed: always pass the stored video_path so WPF knows which
-      file/folder to open, even when called from the result card.
-- */
+// ════════════════════════════════════════════════════════════════════
+//  OPEN FOLDER / PLAY VIDEO
+// ════════════════════════════════════════════════════════════════════
 function doOpenFolder() {
-  if (!sendMsg({ type: 'open_folder', video_path: lastVideoPath })) {
-    toast('Not connected', 'error');
-  }
+  if (!sendMsg({ type: 'open_folder', video_path: lastVideoPath })) toast('Not connected', 'error');
 }
-
 function doPlayVideo() {
   if (!lastVideoPath) { toast('No video to play yet', ''); return; }
-  if (!sendMsg({ type: 'play_video', video_path: lastVideoPath })) {
-    toast('Not connected', 'error');
-  }
+  if (!sendMsg({ type: 'play_video', video_path: lastVideoPath })) toast('Not connected', 'error');
 }
+function doImportToLibrary() { openCropper(); }
 
-// - IMPORT IMAGE TO LIBRARY  — opens the built-in cropper modal -
-function doImportToLibrary() {
-  openCropper();
-}
-
-// - STATE RESTORATION -
+// ════════════════════════════════════════════════════════════════════
+//  STATE RESTORATION
+// ════════════════════════════════════════════════════════════════════
 function restoreRunningState(job) {
   showRestoreBanner('⚡ A generation is already in progress — resuming view.');
   applyJobSettings(job);
   setRunning(true);
   setProgress(job.progress || 0, job.stage || 'Running…', job.status || 'In progress…', job.progress == null);
 }
-
 function restoreIdleState(job) {
   if (job.video_path) {
     showRestoreBanner('🎬 Last session produced a video — shown below.');
@@ -1569,7 +975,6 @@ function restoreIdleState(job) {
     applyJobSettings(job);
   }
 }
-
 function applyJobSettings(job) {
   if (!job) return;
   if (job.is_tts != null) setMode(job.is_tts ? 'tts' : 'audio');
@@ -1580,8 +985,7 @@ function applyJobSettings(job) {
     document.getElementById('audioPlayer').src = job.mp3_url;
     document.getElementById('audioPreview').classList.add('visible');
   }
-  if (!job.is_tts && job.audio_path)
-    document.getElementById('audioPath').value = job.audio_path;
+  if (!job.is_tts && job.audio_path) document.getElementById('audioPath').value = job.audio_path;
   if (job.fps)              setSelect('optFps',     String(job.fps));
   if (job.batch_size)       setSelect('optBatch',   String(job.batch_size));
   if (job.output_size)      setSelect('optUpscale', job.output_size);
@@ -1594,27 +998,25 @@ function applyJobSettings(job) {
   if (job.still    != null) document.getElementById('optStill').checked    = job.still;
   if (job.enhancer != null) document.getElementById('optEnhancer').checked = job.enhancer;
   if (job.image_path) {
-    selImage     = job.image_path;
-    selImageName = job.image_name || job.image_path;
+    selImage = job.image_path; selImageName = job.image_name || job.image_path;
     document.getElementById('imgSelectedLabel').textContent = `Selected: ${selImageName}`;
   }
   updateGenerateBtn();
 }
-
 function setSelect(id, val) {
   const el = document.getElementById(id);
   [...el.options].forEach(o => { if (o.value === val) o.selected = true; });
 }
 
-// - INCOMING MESSAGES FROM WPF -
+// ════════════════════════════════════════════════════════════════════
+//  INCOMING MESSAGES
+// ════════════════════════════════════════════════════════════════════
 function handleMessage(msg) {
   switch (msg.type) {
-
     case 'images':
       renderImageGrid(msg.images || []);
       if (selImage) highlightThumb(selImage);
       break;
-
     case 'tts_done':
       ttsAudioPath = msg.mp3_path;
       document.getElementById('audioPlayer').src = msg.mp3_url || '';
@@ -1625,23 +1027,15 @@ function handleMessage(msg) {
       toast('Speech audio ready ✓', 'success');
       updateGenerateBtn();
       break;
-
     case 'progress':
-      setProgress(msg.value, msg.stage, msg.status, false,
-        msg.frame_current, msg.frame_total,
-        msg.overall_pct,   msg.total_segments);
+      setProgress(msg.value, msg.stage, msg.status, false, msg.frame_current, msg.frame_total, msg.overall_pct, msg.total_segments);
       break;
-
     case 'progress_indeterminate':
-      setProgress(0, msg.stage, msg.status, true,
-        null, null,
-        msg.overall_pct, msg.total_segments);
+      setProgress(0, msg.stage, msg.status, true, null, null, msg.overall_pct, msg.total_segments);
       break;
-
     case 'log':
       logLine(msg.text);
       break;
-
     case 'done':
       lastVideoPath = msg.video_path || null;
       setProgress(100, 'Complete', 'Video generated!', false);
@@ -1653,7 +1047,6 @@ function handleMessage(msg) {
       toast('Video ready 🎉', 'success');
       logLine(`[DONE] ${msg.video_path}`);
       break;
-
     case 'error':
       setRunning(false);
       setProgress(0, '', msg.message || 'Error', false);
@@ -1661,53 +1054,36 @@ function handleMessage(msg) {
       toast(`Error: ${msg.message}`, 'error');
       logLine(`[ERROR] ${msg.message}`);
       break;
-
     case 'cancelled':
       setRunning(false);
       setProgress(0, '', 'Cancelled', false);
       toast('Generation cancelled', '');
       logLine('[CANCELLED]');
       break;
-
-    // WPF confirms it saved the cropped image
-    case 'image_saved':
-      cropperOnSaved(msg);
-      break;
-
-    // WPF reports a save error
-    case 'image_save_error':
-      cropperOnSaveError(msg);
-      break;
-
-    // WPF (or any client) signals the library changed → refresh grid
+    case 'image_saved':      cropperOnSaved(msg);      break;
+    case 'image_save_error': cropperOnSaveError(msg);  break;
     case 'library_updated':
       sendMsg({ type: 'get_images' });
       toast('Image added to library ✓', 'success');
       logLine('[LIBRARY] New image saved — refreshing grid…');
       break;
-
     case 'image_deleted':
       sendMsg({ type: 'get_images' });
       toast(`Deleted ${msg.filename || 'image'}`, '');
       logLine(`[LIBRARY] Deleted ${msg.filename}`);
       break;
-
     case 'image_delete_error':
       toast(`Delete failed: ${msg.message}`, 'error');
       logLine(`[LIBRARY] Delete error: ${msg.message}`);
       break;
-
     case 'projects':
       renderProjects(msg.projects || []);
       break;
-
     case 'load_project':
-      // Restore text/voice into the New Project form
       if (msg.tts_text)  { document.getElementById('ttsText').value = msg.tts_text; updateTtsBtn(); }
       if (msg.tts_voice) restoreVoice(msg.tts_voice);
       toast('Settings loaded — pick a new image and generate!', 'success');
       break;
-
     case 'project_deleted':
       toast('Project deleted', '');
       loadProjects();
@@ -1715,85 +1091,59 @@ function handleMessage(msg) {
   }
 }
 
-// - IMAGE GRID -
+// ════════════════════════════════════════════════════════════════════
+//  IMAGE GRID
+// ════════════════════════════════════════════════════════════════════
 function renderImageGrid(images) {
   const grid = document.getElementById('imageGrid');
   document.getElementById('imgCount').textContent =
     images.length ? `${images.length} image${images.length > 1 ? 's' : ''}` : '';
-  if (!images.length) {
-    grid.innerHTML = '<div class="img-empty">No images found.</div>';
-    return;
-  }
-  // Build thumbnails — delete button (×) top-left, checkmark top-right
+  if (!images.length) { grid.innerHTML = '<div class="img-empty">No images found.</div>'; return; }
   grid.innerHTML = images.map(() => `
     <div class="img-thumb">
       <div class="img-delete" title="Delete image">×</div>
       <img loading="lazy"/>
       <div class="img-check">✓</div>
     </div>`).join('');
-
   const thumbs = grid.querySelectorAll('.img-thumb');
   thumbs.forEach((el, i) => {
-    const img  = images[i];
-    el._imgPath = img.path;
-    el._imgName = img.name;
-
-    // Set src via JS property — avoids any Windows path encoding in HTML attributes
+    const img = images[i];
+    el._imgPath = img.path; el._imgName = img.name;
     el.querySelector('img').src = img.url;
     el.querySelector('img').alt = img.name;
-
-    // Click on the thumb body → select
     el.addEventListener('click', (e) => {
-      // Don't select when clicking the delete button
       if (e.target.classList.contains('img-delete')) return;
       selectImage(el._imgPath, el._imgName);
     });
-
-    // Click on delete button → two-step confirm
     el.querySelector('.img-delete').addEventListener('click', (e) => {
       e.stopPropagation();
       if (el.classList.contains('confirm-delete')) {
-        // Second click — confirmed, send delete
         deleteImage(el._imgPath, el._imgName);
       } else {
-        // First click — show confirm state
         el.classList.add('confirm-delete');
         el.querySelector('.img-delete').textContent = '🗑 Delete?';
-        // Auto-cancel after 3 s if user changes their mind
         setTimeout(() => {
           el.classList.remove('confirm-delete');
-          if (el.querySelector('.img-delete'))
-            el.querySelector('.img-delete').textContent = '×';
+          if (el.querySelector('.img-delete')) el.querySelector('.img-delete').textContent = '×';
         }, 3000);
       }
     });
   });
-
   if (selImage) highlightThumb(selImage);
 }
-
 function selectImage(path, name) {
   document.querySelectorAll('.img-thumb.selected').forEach(el => el.classList.remove('selected'));
-  selImage     = path;
-  selImageName = name;
+  selImage = path; selImageName = name;
   highlightThumb(path);
   document.getElementById('imgSelectedLabel').textContent = `Selected: ${name}`;
   updateGenerateBtn();
 }
-
 function highlightThumb(path) {
-  document.querySelectorAll('.img-thumb').forEach(el => {
-    if (el._imgPath === path) el.classList.add('selected');
-  });
+  document.querySelectorAll('.img-thumb').forEach(el => { if (el._imgPath === path) el.classList.add('selected'); });
 }
-
-/* - Delete image - */
 function deleteImage(path, name) {
-  if (!sendMsg({ type: 'delete_image', image_path: path })) {
-    toast('Not connected', 'error'); return;
-  }
+  if (!sendMsg({ type: 'delete_image', image_path: path })) { toast('Not connected', 'error'); return; }
   logLine(`[LIBRARY] Deleting ${name}…`);
-  // If the deleted image was selected, clear selection
   if (selImage === path) {
     selImage = null; selImageName = '';
     document.getElementById('imgSelectedLabel').textContent = 'No image selected';
@@ -1801,7 +1151,9 @@ function deleteImage(path, name) {
   }
 }
 
-// - MODE -
+// ════════════════════════════════════════════════════════════════════
+//  MODE / TTS / GENERATE
+// ════════════════════════════════════════════════════════════════════
 function setMode(m) {
   mode = m;
   document.getElementById('modeTts').classList.toggle('active',   m === 'tts');
@@ -1810,8 +1162,6 @@ function setMode(m) {
   document.getElementById('panelAudio').classList.toggle('visible', m === 'audio');
   updateGenerateBtn();
 }
-
-// - TTS -
 document.getElementById('ttsText').addEventListener('input', updateTtsBtn);
 function updateTtsBtn() {
   const ok = document.getElementById('ttsText').value.trim().length > 0
@@ -1819,7 +1169,6 @@ function updateTtsBtn() {
              && ws && ws.readyState === WebSocket.OPEN;
   document.getElementById('btnGenerateTts').disabled = !ok;
 }
-
 function generateTts() {
   const text  = document.getElementById('ttsText').value.trim();
   const voice = document.getElementById('ttsVoice').value;
@@ -1833,8 +1182,6 @@ function generateTts() {
   sendMsg({ type: 'generate_tts', text, voice, pitch, rate });
   logLine(`[TTS] voice:${voice} pitch:${pitch}Hz rate:${rate}%`);
 }
-
-// - GENERATE -
 function updateGenerateBtn() {
   updateTtsBtn();
   const hasImage = !!selImage;
@@ -1844,14 +1191,12 @@ function updateGenerateBtn() {
   const connected = ws && ws.readyState === WebSocket.OPEN;
   document.getElementById('btnGenerate').disabled = !hasImage || !hasAudio || !connected || isRunning;
 }
-
 function startGeneration() {
   if (!selImage) { toast('Select a source image first', ''); return; }
   const audioPath = mode === 'tts'
     ? ttsAudioPath
     : document.getElementById('audioPath').value.trim();
   if (!audioPath) { toast(mode==='tts' ? 'Generate speech audio first' : 'Enter audio file path', ''); return; }
-
   hideRestoreBanner();
   document.getElementById('resultCard').classList.remove('visible');
   document.getElementById('progressStatus').style.color = '';
@@ -1861,46 +1206,37 @@ function startGeneration() {
   document.getElementById('segmentDivider').classList.remove('visible');
   document.getElementById('overallFill').style.width = '0%';
   lastVideoPath = null;
-
   const enhancer = document.getElementById('optEnhancer').checked;
   const pitch    = parseInt(document.getElementById('ttsPitch').value, 10);
   const rate     = parseInt(document.getElementById('ttsRate').value,  10);
-
   sendMsg({
-    type:             'generate',
-    image_path:       selImage,
-    audio_path:       audioPath,
-    fps:              15,                // always 15 — hidden from user
-    batch_size:       parseInt(document.getElementById('optBatch').value),
-    output_size:      document.getElementById('optUpscale').value,
+    type: 'generate', image_path: selImage, audio_path: audioPath,
+    fps: 15, batch_size: parseInt(document.getElementById('optBatch').value),
+    output_size: document.getElementById('optUpscale').value,
     expression_scale: parseFloat(document.getElementById('optExpr').value),
-    still:            document.getElementById('optStill').checked,
-    use_cpu:          true,
-    no_resize:        false,
-    enhancer:         enhancer,
-    pitch:            pitch,
-    rate:             rate,
+    still: document.getElementById('optStill').checked,
+    use_cpu: true, no_resize: false, enhancer, pitch, rate,
   });
-
   setRunning(true);
   setProgress(0, 'Starting…', 'Request sent to WPF…', true);
   logLine('[GENERATE] Request sent' + (enhancer ? ' (+enhancer gfpgan)' : ''));
 }
-
 function setRunning(r) {
   isRunning = r;
-  document.getElementById('btnCancel').style.display = r ? '' : 'none';
-  document.getElementById('btnGenerate').disabled    = r;
+  document.getElementById('btnCancel').style.display  = r ? '' : 'none';
+  document.getElementById('btnGenerate').disabled     = r;
   updateGenerateBtn();
 }
 
-// - PROGRESS -
+// ════════════════════════════════════════════════════════════════════
+//  PROGRESS
+// ════════════════════════════════════════════════════════════════════
 function setProgress(value, stage, status, indeterminate, frameCurrent, frameTotal, overallPct, totalSegments) {
   document.getElementById('progressStatus').textContent = status || '';
   document.getElementById('progressStage').textContent  = stage  || '';
-  const fill         = document.getElementById('progressFill');
-  const pctEl        = document.getElementById('progressPct');
-  const frEl         = document.getElementById('progressFrames');
+  const fill = document.getElementById('progressFill');
+  const pctEl = document.getElementById('progressPct');
+  const frEl  = document.getElementById('progressFrames');
   const overallWrap  = document.getElementById('overallWrap');
   const overallFill  = document.getElementById('overallFill');
   const overallPctEl = document.getElementById('overallPct');
@@ -1908,85 +1244,59 @@ function setProgress(value, stage, status, indeterminate, frameCurrent, frameTot
   const overallDot   = document.getElementById('overallDot');
   const overallSub   = document.getElementById('overallSublabel');
   const divider      = document.getElementById('segmentDivider');
-
-  // - Overall pipeline bar -
   const isBatch = totalSegments > 1;
   overallWrap.classList.toggle('visible', isBatch);
   divider.classList.toggle('visible', isBatch);
-
   if (isBatch && overallPct != null) {
-    const op   = Math.round(Math.max(0, Math.min(100, overallPct)));
+    const op = Math.round(Math.max(0, Math.min(100, overallPct)));
     const done = op >= 100;
     overallFill.style.width  = op + '%';
     overallPctEl.textContent = op + '%';
     overallLbl.textContent   = `Pipeline · ${totalSegments} segments`;
     overallSub.textContent   = stage || '';
-    // Stop shimmer + pulse when done
     overallFill.classList.toggle('done', done);
     overallDot.classList.toggle('done', done);
   }
-
-  // - Segment bar -
   fill.classList.toggle('indeterminate', !!indeterminate);
-
   if (!indeterminate) {
     const pct = Math.round(Math.max(0, Math.min(100, value || 0)));
     fill.style.width = pct + '%';
-    if (pct > 0 && pct < 100) {
-      pctEl.textContent = pct + '%';
-      pctEl.classList.add('visible');
-    } else {
-      pctEl.classList.remove('visible');
-    }
+    if (pct > 0 && pct < 100) { pctEl.textContent = pct + '%'; pctEl.classList.add('visible'); }
+    else { pctEl.classList.remove('visible'); }
   } else {
-    // During enhancer (GFPGAN) there's no tqdm — show stage clearly
     pctEl.classList.remove('visible');
   }
-
-  // - Frame counter -
   if (frameCurrent && frameTotal) {
     document.getElementById('frameCurrent').textContent = frameCurrent;
     document.getElementById('frameTotal').textContent   = frameTotal;
     frEl.classList.add('visible');
-  } else {
-    frEl.classList.remove('visible');
-  }
+  } else { frEl.classList.remove('visible'); }
 }
 
-// - LOG -
+// ════════════════════════════════════════════════════════════════════
+//  LOG / UTIL
+// ════════════════════════════════════════════════════════════════════
 function logLine(text) {
   const el = document.getElementById('logOutput');
   const ts = new Date().toLocaleTimeString('en-GB');
   el.textContent += `[${ts}] ${text}\n`;
   el.scrollTop = el.scrollHeight;
-  // Log stays collapsed unless user explicitly opens it
 }
 function toggleLog() {
-  const body    = document.getElementById('logBody');
+  const body = document.getElementById('logBody');
   const chevron = document.getElementById('logChevron');
   const header  = document.getElementById('logHeader');
-  const open    = body.classList.toggle('open');
+  const open = body.classList.toggle('open');
   chevron.classList.toggle('open', open);
   header.classList.toggle('open', open);
 }
 function clearLog() { document.getElementById('logOutput').textContent = ''; }
-
-// - RESTORE BANNER -
 function showRestoreBanner(text) {
   document.getElementById('restoreBannerText').textContent = text;
   document.getElementById('restoreBanner').classList.add('visible');
 }
-function hideRestoreBanner() {
-  document.getElementById('restoreBanner').classList.remove('visible');
-}
-
-// - LAUNCH APP -
-function launchApp() {
-  window.location.href = APP_PROTOCOL;
-  setTimeout(startDiscovery, 4000);
-}
-
-// - TOAST -
+function hideRestoreBanner() { document.getElementById('restoreBanner').classList.remove('visible'); }
+function launchApp() { window.location.href = APP_PROTOCOL; setTimeout(startDiscovery, 4000); }
 function toast(msg, type) {
   const el = document.createElement('div');
   el.className = 'toast' + (type ? ' ' + type : '');
@@ -1994,14 +1304,10 @@ function toast(msg, type) {
   document.getElementById('toastWrap').appendChild(el);
   setTimeout(() => el.remove(), 3500);
 }
-
-// - UTIL -
 function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 function splashMsg(t) { document.getElementById('splashMsg').textContent = t; }
-
-// - WIRE-UPS -
 document.getElementById('optExpr').addEventListener('input', function() {
   const v = parseFloat(this.value).toFixed(1);
   document.getElementById('exprVal').textContent  = v;
@@ -2009,31 +1315,20 @@ document.getElementById('optExpr').addEventListener('input', function() {
 });
 document.getElementById('audioPath').addEventListener('input', updateGenerateBtn);
 
-// - PROJECTS -
-// ── PROJECTS ─────────────────────────────────────────────────────
+// ════════════════════════════════════════════════════════════════════
+//  PROJECTS
+// ════════════════════════════════════════════════════════════════════
 function renderProjects(projects) {
   const badge = document.getElementById('projectsBadge');
-  if (projects.length > 0) {
-    badge.textContent = projects.length;
-    badge.style.display = '';
-  } else {
-    badge.style.display = 'none';
-  }
-
+  if (projects.length > 0) { badge.textContent = projects.length; badge.style.display = ''; }
+  else { badge.style.display = 'none'; }
   const list = document.getElementById('projectsList');
   if (!list) return;
-
   if (!projects.length) {
-    list.innerHTML = `<div class="projects-empty">
-      <div class="pe-icon">🎬</div>
-      No projects yet. Generate your first video to see it here.
-    </div>`;
+    list.innerHTML = `<div class="projects-empty"><div class="pe-icon">🎬</div>No projects yet. Generate your first video to see it here.</div>`;
     return;
   }
-
-  // Cache projects by index — avoids all escaping/quoting issues with Windows paths
   window._projectsCache = projects;
-
   list.innerHTML = projects.map((p, i) => `
     <div class="project-card">
       <div class="project-thumb-placeholder">🎬</div>
@@ -2049,76 +1344,69 @@ function renderProjects(projects) {
         <button class="project-btn danger" data-idx="${i}" data-action="delete">🗑</button>
       </div>
     </div>`).join('');
-
-  // Wire all buttons via JS — no inline onclick, no path escaping issues
   list.querySelectorAll('.project-btn[data-action]').forEach(btn => {
     btn.addEventListener('click', () => {
       const p = window._projectsCache[parseInt(btn.dataset.idx, 10)];
       if (!p) return;
       switch (btn.dataset.action) {
-        case 'play':   playProject(p.videoPath);   break;
+        case 'play':   playProject(p.videoPath); break;
         case 'folder': openProjectFolder(p.videoPath); break;
-        case 'load':   duplicateProject(p.id);     break;
-        case 'delete': deleteProject(p.id, btn);   break;
+        case 'load':   duplicateProject(p.id); break;
+        case 'delete': deleteProject(p.id, btn); break;
       }
     });
   });
 }
-
 function playProject(videoPath) {
   if (!videoPath) { toast('No video path stored', 'error'); return; }
   sendMsg({ type: 'play_video', video_path: videoPath });
 }
-
 function openProjectFolder(videoPath) {
   if (!videoPath) { toast('No video path stored', 'error'); return; }
   sendMsg({ type: 'open_folder', video_path: videoPath });
 }
-
 function duplicateProject(id) {
   sendMsg({ type: 'load_project', id });
   switchTab('new');
   toast('Settings loaded — pick a new image and generate!', 'success');
 }
-
 function deleteProject(id, btn) {
-  // Two-step confirm: first click turns button red, second click sends delete
   if (!btn._confirmPending) {
     btn._confirmPending = true;
     const orig = btn.textContent;
     btn.textContent = 'Confirm?';
     btn.style.background = 'rgba(255,95,114,.2)';
-    btn.style.borderColor = 'var(--red)';
-    btn.style.color = 'var(--red)';
-    setTimeout(() => {
-      btn._confirmPending = false;
-      btn.textContent = orig;
-      btn.removeAttribute('style');
-    }, 3000);
+    btn.style.borderColor = 'var(--red)'; btn.style.color = 'var(--red)';
+    setTimeout(() => { btn._confirmPending = false; btn.textContent = orig; btn.removeAttribute('style'); }, 3000);
     return;
   }
   btn._confirmPending = false;
   sendMsg({ type: 'delete_project', id });
 }
 
-/* - BOOT - */
+// ════════════════════════════════════════════════════════════════════
+//  BOOT
+// ════════════════════════════════════════════════════════════════════
+// Mark topbar with mode so user can tell at a glance
+if (IS_DESKTOP) {
+  document.getElementById('topbarSub').textContent = 'Desktop Edition';
+}
 startDiscovery();
 
-// - VOICE PICKER -
+// ════════════════════════════════════════════════════════════════════
+//  VOICE PICKER
+// ════════════════════════════════════════════════════════════════════
 let allVoices   = [];
 let favorites   = [];
 let activeVoice = '';
 
 function parseVoices(txt) {
-  return txt.split('\n')
-    .map(line => line.trim()).filter(Boolean)
+  return txt.split('\n').map(l => l.trim()).filter(Boolean)
     .map(line => {
       const parts = line.split(/\s{2,}/);
       return { name: parts[0]||'', gender: parts[1]||'', category: parts[2]||'', style: parts[3]||'' };
-    })
-    .filter(v => v.name);
+    }).filter(v => v.name);
 }
-
 async function loadVoicesAndFavorites() {
   if (!httpBase) return;
   const search = document.getElementById('voiceSearch');
@@ -2131,40 +1419,23 @@ async function loadVoicesAndFavorites() {
       const txt = await vRes.value.text();
       allVoices = parseVoices(txt);
       search.placeholder = `Search ${allVoices.length} voices…`;
-    } else {
-      search.placeholder = 'voices.txt not found';
-    }
+    } else { search.placeholder = 'voices.txt not found'; }
     favorites = (fRes.status === 'fulfilled' && fRes.value.ok) ? await fRes.value.json() : [];
     renderDropdown('');
-  } catch(e) {
-    search.placeholder = 'Could not load voices';
-    console.warn('[Voices]', e);
-  }
+  } catch(e) { search.placeholder = 'Could not load voices'; console.warn('[Voices]', e); }
 }
-
 function renderDropdown(query) {
-  const dd  = document.getElementById('voiceDropdown');
-  const q   = query.toLowerCase().trim();
+  const dd = document.getElementById('voiceDropdown');
+  const q  = query.toLowerCase().trim();
   const favSet = new Set(favorites);
   const matched = allVoices.filter(v =>
-    !q || v.name.toLowerCase().includes(q) ||
-    v.gender.toLowerCase().includes(q) || v.style.toLowerCase().includes(q)
-  );
+    !q || v.name.toLowerCase().includes(q) || v.gender.toLowerCase().includes(q) || v.style.toLowerCase().includes(q));
   const favMatched   = matched.filter(v =>  favSet.has(v.name));
   const otherMatched = matched.filter(v => !favSet.has(v.name));
-  if (!matched.length) {
-    dd.innerHTML = '<div class="voice-no-results">No voices match your search</div>';
-    return;
-  }
+  if (!matched.length) { dd.innerHTML = '<div class="voice-no-results">No voices match your search</div>'; return; }
   let html = '';
-  if (favMatched.length) {
-    html += '<div class="voice-section-label">⭐ Favorites</div>';
-    html += favMatched.map(v => voiceRowHtml(v, true)).join('');
-  }
-  if (otherMatched.length) {
-    if (favMatched.length) html += '<div class="voice-section-label">All Voices</div>';
-    html += otherMatched.map(v => voiceRowHtml(v, false)).join('');
-  }
+  if (favMatched.length)   { html += '<div class="voice-section-label">⭐ Favorites</div>'; html += favMatched.map(v => voiceRowHtml(v, true)).join(''); }
+  if (otherMatched.length) { if (favMatched.length) html += '<div class="voice-section-label">All Voices</div>'; html += otherMatched.map(v => voiceRowHtml(v, false)).join(''); }
   dd.innerHTML = html;
   dd.querySelectorAll('.voice-row').forEach(row => {
     const name = row.dataset.name;
@@ -2172,14 +1443,13 @@ function renderDropdown(query) {
     row.querySelector('.voice-star').addEventListener('click',     e => { e.stopPropagation(); toggleFavorite(name); });
   });
 }
-
 function voiceRowHtml(v, isFav) {
-  const isActive   = v.name === activeVoice ? ' active' : '';
-  const starClass  = isFav ? ' starred' : '';
-  const genderIcon = v.gender === 'Female' ? '♀' : '♂';
-  const match      = v.name.match(/^([a-z]{2}-[A-Z]{2}(?:-[a-z]+)?)-(.+?)Neural(?:Multilingual)?$/);
-  const locale     = match ? match[1] : v.name;
-  const shortName  = match ? match[2] : v.name;
+  const isActive  = v.name === activeVoice ? ' active' : '';
+  const starClass = isFav ? ' starred' : '';
+  const genderIcon= v.gender === 'Female' ? '♀' : '♂';
+  const match     = v.name.match(/^([a-z]{2}-[A-Z]{2}(?:-[a-z]+)?)-(.+?)Neural(?:Multilingual)?$/);
+  const locale    = match ? match[1] : v.name;
+  const shortName = match ? match[2] : v.name;
   return `<div class="voice-row${isActive}" data-name="${escHtml(v.name)}">
     <div class="voice-row-main">
       <div class="voice-row-name">${escHtml(shortName)} <span style="color:var(--text3);font-size:11px">${genderIcon}</span></div>
@@ -2188,7 +1458,6 @@ function voiceRowHtml(v, isFav) {
     <div class="voice-star${starClass}" title="Toggle favorite">★</div>
   </div>`;
 }
-
 function pickVoice(name) {
   activeVoice = name;
   document.getElementById('ttsVoice').value = name;
@@ -2198,76 +1467,54 @@ function pickVoice(name) {
   document.getElementById('voiceSearch').value = label;
   const badge = document.getElementById('voiceGenderBadge');
   badge.textContent = v?.gender === 'Female' ? '♀' : '♂';
-  badge.title       = v?.gender || '';
-  closeDropdown();
-  updateTtsBtn();
+  badge.title = v?.gender || '';
+  closeDropdown(); updateTtsBtn();
 }
-
 function restoreVoice(name) {
   if (!name) return;
-  const attempt = () => {
-    if (!allVoices.length) { setTimeout(attempt, 200); return; }
-    pickVoice(name);
-  };
+  const attempt = () => { if (!allVoices.length) { setTimeout(attempt, 200); return; } pickVoice(name); };
   attempt();
 }
-
 async function toggleFavorite(name) {
   favorites = favorites.includes(name) ? favorites.filter(f => f !== name) : [name, ...favorites];
   renderDropdown(document.getElementById('voiceSearch').value);
   try {
     await fetch(`${httpBase}/data/favorites`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(favorites)
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(favorites)
     });
-  } catch(e) {
-    console.warn('[Favorites] save failed:', e);
-    toast('Could not save favorite to app', 'error');
-  }
+  } catch(e) { console.warn('[Favorites] save failed:', e); toast('Could not save favorite to app', 'error'); }
 }
-
-function openDropdown() {
-  document.getElementById('voiceDropdown').classList.add('open');
-  renderDropdown(document.getElementById('voiceSearch').value);
-}
+function openDropdown()  { document.getElementById('voiceDropdown').classList.add('open'); renderDropdown(document.getElementById('voiceSearch').value); }
 function closeDropdown() { document.getElementById('voiceDropdown').classList.remove('open'); }
-
 document.getElementById('voiceSearch').addEventListener('focus', openDropdown);
 document.getElementById('voiceSearch').addEventListener('input', function() {
-  if (!this.value.trim()) {
-    activeVoice = '';
-    document.getElementById('ttsVoice').value = '';
-    document.getElementById('voiceGenderBadge').textContent = '';
-  }
-  renderDropdown(this.value);
-  openDropdown();
-  updateTtsBtn();
+  if (!this.value.trim()) { activeVoice = ''; document.getElementById('ttsVoice').value = ''; document.getElementById('voiceGenderBadge').textContent = ''; }
+  renderDropdown(this.value); openDropdown(); updateTtsBtn();
 });
 document.getElementById('voiceClearBtn').addEventListener('click', () => {
   activeVoice = '';
   document.getElementById('ttsVoice').value    = '';
   document.getElementById('voiceSearch').value = '';
   document.getElementById('voiceGenderBadge').textContent = '';
-  closeDropdown();
-  updateTtsBtn();
+  closeDropdown(); updateTtsBtn();
 });
-document.addEventListener('click', e => {
-  if (!document.getElementById('voicePicker').contains(e.target)) closeDropdown();
+document.addEventListener('click', e => { if (!document.getElementById('voicePicker').contains(e.target)) closeDropdown(); });
+document.getElementById('voiceSearch').addEventListener('keydown', e => {
+  const dd   = document.getElementById('voiceDropdown');
+  const rows = [...dd.querySelectorAll('.voice-row')];
+  if (!rows.length) return;
+  const active = dd.querySelector('.voice-row.active');
+  let idx = rows.indexOf(active);
+  if      (e.key === 'ArrowDown')  { e.preventDefault(); idx = Math.min(idx+1, rows.length-1); rows.forEach((r,i) => r.classList.toggle('active', i===idx)); rows[idx].scrollIntoView({ block:'nearest' }); }
+  else if (e.key === 'ArrowUp')    { e.preventDefault(); idx = Math.max(idx-1, 0); rows.forEach((r,i) => r.classList.toggle('active', i===idx)); rows[idx].scrollIntoView({ block:'nearest' }); }
+  else if (e.key === 'Enter')      { e.preventDefault(); if (active) pickVoice(active.dataset.name); }
+  else if (e.key === 'Escape')     { closeDropdown(); }
 });
 
-/* -
-   INLINE CROPPER MODAL
-   -
-   All drawing is done on a single <canvas> — no blank gaps.
-   Compositing order each frame:
-     1. Image  (at current tx/ty/scale)
-     2. Dim rects (4 around the frame)
-     3. Frame border + rule-of-thirds lines
-     4. Corner handles
-- */
+// ════════════════════════════════════════════════════════════════════
+//  INLINE CROPPER MODAL
+// ════════════════════════════════════════════════════════════════════
 (function() {
-
-  /* - constants - */
   const OUTPUT_SIZE  = 512;
   const HANDLE_R     = 9;
   const MIN_ZOOM     = 0.05;
@@ -2275,7 +1522,6 @@ document.addEventListener('click', e => {
   const ZOOM_MIN_LOG = Math.log(MIN_ZOOM);
   const ZOOM_MAX_LOG = Math.log(MAX_ZOOM);
 
-  /* - elements - */
   const overlay   = document.getElementById('cropperOverlay');
   const cvs       = document.getElementById('cropperCanvas');
   const ctx       = cvs.getContext('2d');
@@ -2290,48 +1536,38 @@ document.addEventListener('click', e => {
   const btnReset  = document.getElementById('cropperBtnReset');
   const statusEl  = document.getElementById('cropperStatus');
 
-  /* - state - */
   let cImg = null, cImgW = 0, cImgH = 0;
-  let cw = 0, ch = 0;          // canvas pixel size (CSS px × dpr)
-  let frameX = 0, frameY = 0, frameS = 0;  // frame square
-  let tx = 0, ty = 0, sc = 1; // image transform
-
+  let cw = 0, ch = 0;
+  let frameX = 0, frameY = 0, frameS = 0;
+  let tx = 0, ty = 0, sc = 1;
   let dragging = false, dragX = 0, dragY = 0, txD = 0, tyD = 0;
   let scCorner = -1, scStart = null, scAtStart = 1, txAtSc = 0, tyAtSc = 0;
   let lastPinch = null;
 
-  /* - open / close - */
   window.openCropper = function() {
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
-    // reset to drop state
     resetCropperState();
-    // resize after open (wrap may have 0 size until visible)
     requestAnimationFrame(() => { resizeCvs(); draw(); });
   };
-
   window.closeCropper = function() {
     overlay.classList.remove('open');
     document.body.style.overflow = '';
   };
-
-  // Close on backdrop click
   overlay.addEventListener('click', e => { if (e.target === overlay) closeCropper(); });
-  // Close on Escape
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) closeCropper(); });
 
   function resetCropperState() {
     cImg = null;
-    dropZone.style.display  = '';
+    dropZone.style.display = '';
     canvasArea.classList.remove('visible');
-    btnSave.disabled  = true;
+    btnSave.disabled = true;
     btnChange.style.display = 'none';
     btnReset.style.display  = 'none';
     setCropperStatus('');
     fileInput.value = '';
   }
 
-  /* - resize canvas to match wrap - */
   const ro = new ResizeObserver(resizeCvs);
   ro.observe(wrap);
 
@@ -2340,20 +1576,15 @@ document.addEventListener('click', e => {
     const cssW = wrap.clientWidth;
     if (!cssW) return;
     wrap.style.height = cssW + 'px';
-    cw = Math.round(cssW * dpr);
-    ch = cw;                          // always square
-    cvs.width  = cw;
-    cvs.height = ch;
-    cvs.style.width  = cssW + 'px';
-    cvs.style.height = cssW + 'px';
-    // frame: 84% of the canvas, centred
+    cw = Math.round(cssW * dpr); ch = cw;
+    cvs.width = cw; cvs.height = ch;
+    cvs.style.width = cssW + 'px'; cvs.style.height = cssW + 'px';
     frameS = cw * 0.84;
     frameX = (cw - frameS) / 2;
     frameY = (ch - frameS) / 2;
     if (cImg) draw();
   }
 
-  /* - load image file - */
   function loadFile(file) {
     if (!file || !file.type.startsWith('image/')) { toast('Please pick an image file','error'); return; }
     const url = URL.createObjectURL(file);
@@ -2362,9 +1593,9 @@ document.addEventListener('click', e => {
       cImg = i; cImgW = i.naturalWidth; cImgH = i.naturalHeight;
       URL.revokeObjectURL(url);
       cropperFitCover();
-      dropZone.style.display  = 'none';
+      dropZone.style.display = 'none';
       canvasArea.classList.add('visible');
-      btnSave.disabled  = false;
+      btnSave.disabled = false;
       btnChange.style.display = '';
       btnReset.style.display  = '';
       setCropperStatus('');
@@ -2375,16 +1606,11 @@ document.addEventListener('click', e => {
   }
 
   window.cropperChangeImage = function() {
-    cImg = null;
-    dropZone.style.display  = '';
+    cImg = null; dropZone.style.display = '';
     canvasArea.classList.remove('visible');
-    btnSave.disabled  = true;
-    btnChange.style.display = 'none';
-    btnReset.style.display  = 'none';
-    setCropperStatus('');
-    fileInput.value = '';
+    btnSave.disabled = true; btnChange.style.display = 'none'; btnReset.style.display = 'none';
+    setCropperStatus(''); fileInput.value = '';
   };
-
   window.cropperResetView = function() { if (cImg) cropperFitCover(); };
 
   function cropperFitCover() {
@@ -2393,62 +1619,44 @@ document.addEventListener('click', e => {
     sc = Math.max(scX, scY);
     tx = frameX + (frameS - cImgW * sc) / 2;
     ty = frameY + (frameS - cImgH * sc) / 2;
-    syncSlider();
-    draw();
+    syncSlider(); draw();
   }
 
-  /* - draw - */
   function draw() {
     ctx.clearRect(0, 0, cw, ch);
     if (!cImg) return;
-
-    // 1 — image
     ctx.drawImage(cImg, tx, ty, cImgW * sc, cImgH * sc);
-
-    // 2 — dim outside frame
     ctx.fillStyle = 'rgba(10,10,20,0.72)';
-    ctx.fillRect(0,             0,       cw,            frameY);           // top
-    ctx.fillRect(0,             frameY + frameS, cw, ch - frameY - frameS);// bottom
-    ctx.fillRect(0,             frameY,  frameX,        frameS);           // left
-    ctx.fillRect(frameX+frameS, frameY,  cw-frameX-frameS, frameS);        // right
-
-    // 3 — frame border
-    ctx.strokeStyle = '#5b7fff';
-    ctx.lineWidth   = 2;
+    ctx.fillRect(0, 0, cw, frameY);
+    ctx.fillRect(0, frameY + frameS, cw, ch - frameY - frameS);
+    ctx.fillRect(0, frameY, frameX, frameS);
+    ctx.fillRect(frameX+frameS, frameY, cw-frameX-frameS, frameS);
+    ctx.strokeStyle = '#5b7fff'; ctx.lineWidth = 2;
     ctx.strokeRect(frameX, frameY, frameS, frameS);
-
-    // 4 — rule of thirds
-    ctx.strokeStyle = 'rgba(91,127,255,0.32)';
-    ctx.lineWidth   = 1;
+    ctx.strokeStyle = 'rgba(91,127,255,0.32)'; ctx.lineWidth = 1;
     for (let i = 1; i < 3; i++) {
-      const x = frameX + frameS * i / 3;
-      const y = frameY + frameS * i / 3;
+      const x = frameX + frameS * i / 3, y = frameY + frameS * i / 3;
       ctx.beginPath(); ctx.moveTo(x, frameY); ctx.lineTo(x, frameY+frameS); ctx.stroke();
       ctx.beginPath(); ctx.moveTo(frameX, y); ctx.lineTo(frameX+frameS, y); ctx.stroke();
     }
-
-    // 5 — corner handles
     corners().forEach(({x,y}) => {
       ctx.beginPath(); ctx.arc(x, y, HANDLE_R, 0, Math.PI*2);
-      ctx.fillStyle   = '#5b7fff'; ctx.fill();
+      ctx.fillStyle = '#5b7fff'; ctx.fill();
       ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.stroke();
     });
   }
 
   function corners() {
     return [
-      {x: frameX,         y: frameY},
-      {x: frameX+frameS,  y: frameY},
-      {x: frameX+frameS,  y: frameY+frameS},
-      {x: frameX,         y: frameY+frameS},
+      {x:frameX,        y:frameY},
+      {x:frameX+frameS, y:frameY},
+      {x:frameX+frameS, y:frameY+frameS},
+      {x:frameX,        y:frameY+frameS},
     ];
   }
-
   function hitCorner(px, py) {
     return corners().findIndex(({x,y}) => Math.hypot(px-x, py-y) <= HANDLE_R + 7);
   }
-
-  /* - pointer helpers - */
   function cxy(e) {
     const dpr = window.devicePixelRatio || 1;
     const r   = cvs.getBoundingClientRect();
@@ -2456,7 +1664,6 @@ document.addEventListener('click', e => {
     return { x: (src.clientX - r.left) * dpr, y: (src.clientY - r.top) * dpr };
   }
 
-  /* - pan - */
   cvs.addEventListener('mousedown',  onDown);
   cvs.addEventListener('touchstart', onDown, {passive:false});
   window.addEventListener('mousemove',  onMove);
@@ -2465,105 +1672,68 @@ document.addEventListener('click', e => {
   window.addEventListener('touchend',   onUp);
 
   function onDown(e) {
-    if (!cImg) return;
-    e.preventDefault();
-    const p  = cxy(e);
-    const ci = hitCorner(p.x, p.y);
-    if (ci !== -1) {
-      scCorner = ci; scStart = p; scAtStart = sc; txAtSc = tx; tyAtSc = ty;
-    } else {
-      dragging = true; dragX = p.x; dragY = p.y; txD = tx; tyD = ty;
-    }
+    if (!cImg) return; e.preventDefault();
+    const p = cxy(e), ci = hitCorner(p.x, p.y);
+    if (ci !== -1) { scCorner = ci; scStart = p; scAtStart = sc; txAtSc = tx; tyAtSc = ty; }
+    else { dragging = true; dragX = p.x; dragY = p.y; txD = tx; tyD = ty; }
   }
-
   function onMove(e) {
     if (!cImg) return;
-    if (dragging) {
+    if (dragging) { e.preventDefault(); const p = cxy(e); tx = txD + (p.x - dragX); ty = tyD + (p.y - dragY); draw(); }
+    else if (scCorner !== -1) {
       e.preventDefault();
-      const p = cxy(e);
-      tx = txD + (p.x - dragX);
-      ty = tyD + (p.y - dragY);
-      draw();
-    } else if (scCorner !== -1) {
-      e.preventDefault();
-      const p  = cxy(e);
-      const dx = p.x - scStart.x, dy = p.y - scStart.y;
+      const p = cxy(e), dx = p.x - scStart.x, dy = p.y - scStart.y;
       let diag;
-      switch(scCorner) {
-        case 0: diag=(-dx-dy)/2; break;
-        case 1: diag=( dx-dy)/2; break;
-        case 2: diag=( dx+dy)/2; break;
-        case 3: diag=(-dx+dy)/2; break;
-      }
+      switch(scCorner) { case 0: diag=(-dx-dy)/2; break; case 1: diag=(dx-dy)/2; break; case 2: diag=(dx+dy)/2; break; case 3: diag=(-dx+dy)/2; break; }
       const sens  = scAtStart / 300;
       const newSc = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, scAtStart + diag * sens));
       const ratio = newSc / scAtStart;
       const ax = (scCorner===0||scCorner===3) ? frameX+frameS : frameX;
       const ay = (scCorner===0||scCorner===1) ? frameY+frameS : frameY;
-      tx = ax - (ax - txAtSc) * ratio;
-      ty = ay - (ay - tyAtSc) * ratio;
-      sc = newSc;
+      tx = ax - (ax - txAtSc) * ratio; ty = ay - (ay - tyAtSc) * ratio; sc = newSc;
       syncSlider(); draw();
     }
   }
-
   function onUp() { dragging = false; scCorner = -1; }
 
-  /* - wheel zoom - */
   cvs.addEventListener('wheel', e => {
-    if (!cImg) return;
-    e.preventDefault();
-    const p      = cxy(e);
-    const factor = e.deltaY < 0 ? 1.09 : 1/1.09;
-    const newSc  = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, sc * factor));
-    const ratio  = newSc / sc;
-    tx = p.x + (tx - p.x) * ratio;
-    ty = p.y + (ty - p.y) * ratio;
-    sc = newSc;
+    if (!cImg) return; e.preventDefault();
+    const p = cxy(e), factor = e.deltaY < 0 ? 1.09 : 1/1.09;
+    const newSc = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, sc * factor));
+    const ratio = newSc / sc;
+    tx = p.x + (tx - p.x) * ratio; ty = p.y + (ty - p.y) * ratio; sc = newSc;
     syncSlider(); draw();
   }, {passive:false});
 
-  /* - pinch zoom - */
   cvs.addEventListener('touchstart', e => { if (e.touches.length===2) lastPinch=pinchD(e); }, {passive:true});
   cvs.addEventListener('touchmove',  e => {
-    if (e.touches.length!==2||!lastPinch) return;
-    e.preventDefault();
-    const d    = pinchD(e);
-    const ratio= d / lastPinch;
-    lastPinch  = d;
-    const dpr  = window.devicePixelRatio||1;
-    const r    = cvs.getBoundingClientRect();
-    const mx   = ((e.touches[0].clientX+e.touches[1].clientX)/2-r.left)*dpr;
-    const my   = ((e.touches[0].clientY+e.touches[1].clientY)/2-r.top)*dpr;
-    const newSc= Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, sc*ratio));
-    const r2   = newSc/sc;
+    if (e.touches.length!==2||!lastPinch) return; e.preventDefault();
+    const d = pinchD(e), ratio = d / lastPinch; lastPinch = d;
+    const dpr = window.devicePixelRatio||1, r = cvs.getBoundingClientRect();
+    const mx = ((e.touches[0].clientX+e.touches[1].clientX)/2-r.left)*dpr;
+    const my = ((e.touches[0].clientY+e.touches[1].clientY)/2-r.top)*dpr;
+    const newSc = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, sc*ratio)), r2 = newSc/sc;
     tx = mx+(tx-mx)*r2; ty = my+(ty-my)*r2; sc = newSc;
     syncSlider(); draw();
   }, {passive:false});
   cvs.addEventListener('touchend', () => lastPinch = null);
   function pinchD(e) {
-    const dx=e.touches[0].clientX-e.touches[1].clientX;
-    const dy=e.touches[0].clientY-e.touches[1].clientY;
+    const dx=e.touches[0].clientX-e.touches[1].clientX, dy=e.touches[0].clientY-e.touches[1].clientY;
     return Math.sqrt(dx*dx+dy*dy);
   }
 
-  /* - zoom slider - */
   zoomSlider.addEventListener('input', function() {
     if (!cImg) return;
     const newSc = Math.exp(ZOOM_MIN_LOG + parseFloat(this.value)*(ZOOM_MAX_LOG-ZOOM_MIN_LOG));
-    const ratio = newSc / sc;
-    const cx = frameX + frameS/2, cy = frameY + frameS/2;
+    const ratio = newSc / sc, cx = frameX + frameS/2, cy = frameY + frameS/2;
     tx = cx+(tx-cx)*ratio; ty = cy+(ty-cy)*ratio; sc = newSc;
-    zoomVal.textContent = sc.toFixed(2)+'×';
-    draw();
+    zoomVal.textContent = sc.toFixed(2)+'×'; draw();
   });
-
   function syncSlider() {
     zoomSlider.value = (Math.log(sc)-ZOOM_MIN_LOG)/(ZOOM_MAX_LOG-ZOOM_MIN_LOG);
     zoomVal.textContent = sc.toFixed(2)+'×';
   }
 
-  /* - drop zone - */
   fileInput.addEventListener('change', function() { if (this.files[0]) loadFile(this.files[0]); });
   dropZone.addEventListener('dragover',  e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
   dropZone.addEventListener('dragleave', ()=> dropZone.classList.remove('drag-over'));
@@ -2572,46 +1742,31 @@ document.addEventListener('click', e => {
     if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
   });
 
-  /* - SAVE - */
   window.cropperSave = function() {
     if (!cImg) return;
     if (!ws || ws.readyState !== WebSocket.OPEN) { toast('Not connected to ImTalking','error'); return; }
-
-    // Render frame region → 512×512 offscreen canvas
-    const off  = document.createElement('canvas');
-    off.width  = OUTPUT_SIZE; off.height = OUTPUT_SIZE;
-    const oc   = off.getContext('2d');
-    const scOut= OUTPUT_SIZE / frameS;
-    oc.drawImage(cImg,
-      (tx - frameX) * scOut, (ty - frameY) * scOut,
-      cImgW * sc * scOut,    cImgH * sc * scOut);
-
+    const off = document.createElement('canvas');
+    off.width = OUTPUT_SIZE; off.height = OUTPUT_SIZE;
+    const oc  = off.getContext('2d');
+    const scOut = OUTPUT_SIZE / frameS;
+    oc.drawImage(cImg, (tx-frameX)*scOut, (ty-frameY)*scOut, cImgW*sc*scOut, cImgH*sc*scOut);
     const b64 = off.toDataURL('image/png').split(',')[1];
-
-    btnSave.disabled = true;
-    btnSave.textContent = '⏳ Saving…';
+    btnSave.disabled = true; btnSave.textContent = '⏳ Saving…';
     setCropperStatus('');
-
     ws.send(JSON.stringify({ type:'save_library_image', data:b64, format:'png' }));
     logLine('[LIBRARY] Sending cropped image to WPF…');
   };
 
-  /* - WPF reply handlers (called from handleMessage) - */
   window.cropperOnSaved = function(msg) {
-    btnSave.disabled = false;
-    btnSave.textContent = '💾 Save to Library';
+    btnSave.disabled = false; btnSave.textContent = '💾 Save to Library';
     setCropperStatus('✓ Saved: ' + (msg.filename||''), false);
     toast('Image saved to library ✓','success');
     logLine('[LIBRARY] Saved → ' + (msg.path||msg.filename||''));
-    // Auto-refresh the image grid
     sendMsg({ type:'get_images' });
-    // Auto-close after a short moment so user sees the success message
     setTimeout(closeCropper, 1200);
   };
-
   window.cropperOnSaveError = function(msg) {
-    btnSave.disabled = false;
-    btnSave.textContent = '💾 Save to Library';
+    btnSave.disabled = false; btnSave.textContent = '💾 Save to Library';
     setCropperStatus('Error: ' + (msg.message||'Unknown error'), true);
     toast('Save failed','error');
     logLine('[LIBRARY] Save error: ' + (msg.message||''));
@@ -2623,28 +1778,7 @@ document.addEventListener('click', e => {
     statusEl.classList.add('visible');
     statusEl.classList.toggle('error', !!isError);
   }
-
-})(); // end IIFE
-document.getElementById('voiceSearch').addEventListener('keydown', e => {
-  const dd   = document.getElementById('voiceDropdown');
-  const rows = [...dd.querySelectorAll('.voice-row')];
-  if (!rows.length) return;
-  const active = dd.querySelector('.voice-row.active');
-  let idx = rows.indexOf(active);
-  if (e.key === 'ArrowDown') {
-    e.preventDefault(); idx = Math.min(idx+1, rows.length-1);
-    rows.forEach((r,i) => r.classList.toggle('active', i===idx));
-    rows[idx].scrollIntoView({ block: 'nearest' });
-  } else if (e.key === 'ArrowUp') {
-    e.preventDefault(); idx = Math.max(idx-1, 0);
-    rows.forEach((r,i) => r.classList.toggle('active', i===idx));
-    rows[idx].scrollIntoView({ block: 'nearest' });
-  } else if (e.key === 'Enter') {
-    e.preventDefault(); if (active) pickVoice(active.dataset.name);
-  } else if (e.key === 'Escape') {
-    closeDropdown();
-  }
-});
+})();
 </script>
 </body>
 </html>
