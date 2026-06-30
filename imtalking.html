@@ -120,7 +120,8 @@ body {
 }
 #splash.hidden { opacity: 0; pointer-events: none; }
 .splash-logo {
-  width: 64px; height: 64px;
+  width: 123px; height: 123px;
+ /* width: 64px; height: 64px;*/
   background: linear-gradient(135deg,var(--accent),#a78bfa);
   border-radius: 18px; display: flex; align-items: center;
   justify-content: center; font-size: 34px;
@@ -544,12 +545,13 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 
 <div id="splash">
   <div class="splash-logo">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  <img src="uploads/imtalkingsmaller.webp" alt="ImTalking" width="123" height="123"/>
+    <!--<svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
       <path d="M9 18.5c-3.5-.7-6-3.5-6-7A7.5 7.5 0 0 1 10.5 4h3A7.5 7.5 0 0 1 21 11.5c0 3.5-2.5 6.3-6 7l-1 2.5-1.2-2.3c-.6.1-1.2.1-1.8 0L9 18.5Z"/>
       <path d="M9.5 11.5c.6 1 1.6 1.6 2.5 1.6s1.9-.6 2.5-1.6"/>
       <circle cx="9.5" cy="9" r=".6" fill="currentColor" stroke="none"/>
       <circle cx="14.5" cy="9" r=".6" fill="currentColor" stroke="none"/>
-    </svg>
+    </svg> -->
   </div>
   <div style="text-align:center">
     <div class="splash-title">ImTalking</div>
@@ -559,7 +561,9 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 </div>
 
 <div id="notRunning">
-  <div class="nr-icon">🖥️</div>
+  <div class="nr-icon">
+     <img src="uploads/imtalkingsmaller.webp" alt="ImTalking" width="123" height="123"/>
+  </div>
   <div class="nr-title">ImTalking is not running</div>
   <div class="nr-sub">The desktop app wasn't found. Launch it first, then return here — or click below to start it automatically.</div>
   <button class="btn btn-launch" onclick="launchApp()">🚀  Launch ImTalking</button>
