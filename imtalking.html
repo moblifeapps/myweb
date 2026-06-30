@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,32 +32,32 @@ body {
 }
 .app-shell {
   flex: 1; display: flex; flex-direction: row;
-  overflow: hidden; height: calc(100vh - 60px);
+  overflow: hidden; height: calc(100vh - 120px);
 }
 .topbar {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 13px 26px; height: 60px;
+  padding: 0 34px; height: 120px;
   background: var(--surface); border-bottom: 1px solid var(--border);
   position: sticky; top: 0; z-index: 100; flex-shrink: 0;
 }
-.topbar-brand { display: flex; align-items: center; gap: 11px; }
+.topbar-brand { display: flex; align-items: center; gap: 18px; }
 .topbar-logo {
-  width: 33px; height: 33px;
-  background: linear-gradient(135deg,var(--accent),#a78bfa);
-  border-radius: 8px; display: flex; align-items: center;
-  justify-content: center; font-size: 17px;
+  width: 96px; height: 96px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
 }
-.topbar-title { font-size: 16px; font-weight: 700; letter-spacing: -.3px; }
-.topbar-sub   { font-size: 11px; color: var(--text2); margin-top: 1px; }
+.topbar-logo svg { width: 100%; height: 100%; display: block; }
+.topbar-title { font-size: 30px; font-weight: 800; letter-spacing: -.6px; line-height: 1.15; }
+.topbar-sub   { font-size: 16px; color: var(--text2); margin-top: 2px; }
 .ws-pill {
-  display: flex; align-items: center; gap: 7px;
-  font-size: 12px; color: var(--text2);
+  display: flex; align-items: center; gap: 10px;
+  font-size: 15px; color: var(--text2);
   background: var(--surface2); border: 1px solid var(--border);
-  border-radius: 20px; padding: 5px 13px;
+  border-radius: 24px; padding: 9px 20px;
   transition: border-color .2s;
 }
 .ws-dot {
-  width: 7px; height: 7px; border-radius: 50%;
+  width: 10px; height: 10px; border-radius: 50%;
   background: var(--text3); flex-shrink: 0; transition: background .3s;
 }
 .ws-dot.connected  { background: var(--green); box-shadow: 0 0 5px var(--green); }
@@ -85,7 +86,11 @@ body {
   background: var(--accent-glow); border-color: rgba(91,127,255,.3);
   color: var(--accent); font-weight: 600;
 }
-.nav-icon  { font-size: 15px; flex-shrink: 0; width: 20px; text-align: center; }
+.nav-icon  {
+  flex-shrink: 0; width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-icon svg { width: 17px; height: 17px; stroke: currentColor; }
 .nav-label { flex: 1; }
 .nav-badge {
   font-size: 10px; font-weight: 700; background: var(--accent);
@@ -120,6 +125,7 @@ body {
   border-radius: 18px; display: flex; align-items: center;
   justify-content: center; font-size: 34px;
 }
+.splash-logo svg { width: 34px; height: 34px; stroke: #fff; }
 .splash-title { font-size: 26px; font-weight: 800; letter-spacing: -.5px; }
 .splash-sub   { font-size: 14px; color: var(--text2); }
 .spinner {
@@ -163,10 +169,32 @@ body {
 .card {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 16px 18px;
+  position: relative;
 }
 .card-label {
   font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
   color: var(--text3); text-transform: uppercase; margin-bottom: 11px;
+}
+
+/* ── STEP BADGE — numbered circle marking workflow order ─────────── */
+.card-label-row {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 11px;
+}
+.card-label-row .card-label { margin-bottom: 0; }
+.step-badge {
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #a78bfa);
+  color: #fff;
+  font-size: 12px; font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 0 0 3px rgba(91,127,255,.12), 0 2px 8px rgba(91,127,255,.35);
+}
+.step-badge.step-final {
+  background: linear-gradient(135deg, var(--green), #22c55e);
+  box-shadow: 0 0 0 3px rgba(62,207,130,.12), 0 2px 8px rgba(62,207,130,.35);
 }
 .mode-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
 .mode-btn {
@@ -354,6 +382,28 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 .audio-preview.visible { display: flex; }
 .audio-preview-label { font-size: 10px; color: var(--green); font-weight: 700; letter-spacing: .6px; }
 .audio-preview audio  { width: 100%; height: 30px; }
+
+/* ── AUDIO FILE PICK ROW (Audio File mode) ───────────────────────── */
+.audiofile-pick-row { display: flex; gap: 8px; align-items: stretch; }
+.audiofile-pick-btn {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  flex: 1;
+  background: var(--surface2); border: 1px dashed var(--border);
+  border-radius: 8px; color: var(--text2);
+  font-size: 13px; font-weight: 600; font-family: inherit;
+  padding: 10px 14px; cursor: pointer; transition: all .17s;
+}
+.audiofile-pick-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+.audiofile-pick-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+.audiofile-name {
+  display: none; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--text2);
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 7px; padding: 8px 11px; margin-top: 4px;
+  word-break: break-all;
+}
+.audiofile-name.visible { display: flex; }
+.audiofile-name svg { width: 14px; height: 14px; flex-shrink: 0; color: var(--green); }
 .progress-section {
   background: linear-gradient(145deg, #181c27 0%, #1a1f30 100%);
   border: 1px solid var(--border); border-radius: var(--radius);
@@ -493,7 +543,14 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 <body>
 
 <div id="splash">
-  <div class="splash-logo">🎬</div>
+  <div class="splash-logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 18.5c-3.5-.7-6-3.5-6-7A7.5 7.5 0 0 1 10.5 4h3A7.5 7.5 0 0 1 21 11.5c0 3.5-2.5 6.3-6 7l-1 2.5-1.2-2.3c-.6.1-1.2.1-1.8 0L9 18.5Z"/>
+      <path d="M9.5 11.5c.6 1 1.6 1.6 2.5 1.6s1.9-.6 2.5-1.6"/>
+      <circle cx="9.5" cy="9" r=".6" fill="currentColor" stroke="none"/>
+      <circle cx="14.5" cy="9" r=".6" fill="currentColor" stroke="none"/>
+    </svg>
+  </div>
   <div style="text-align:center">
     <div class="splash-title">ImTalking</div>
     <div class="splash-sub" id="splashMsg">Looking for the desktop app…</div>
@@ -555,7 +612,9 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 
 <div class="topbar">
   <div class="topbar-brand">
-    <div class="topbar-logo">🎬</div>
+    <div class="topbar-logo">
+      <img src="uploads/imtalkingsmaller.webp" alt="ImTalking" width="96" height="96"/>
+    </div>
     <div>
       <div class="topbar-title">ImTalking</div>
       <div class="topbar-sub" id="topbarSub">Talking Head Generator</div>
@@ -570,11 +629,27 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 <div class="app-shell" id="mainUI" style="display:none">
   <div class="sidebar">
     <nav class="sidebar-nav">
-      <div class="nav-item active" id="nav-new"      onclick="switchTab('new')">      <span class="nav-icon">🎬</span><span class="nav-label">New Project</span></div>
-      <div class="nav-item"        id="nav-projects" onclick="switchTab('projects')"> <span class="nav-icon">📁</span><span class="nav-label">Projects</span><span class="nav-badge" id="projectsBadge" style="display:none">0</span></div>
-      <div class="nav-item"        id="nav-help"     onclick="switchTab('help')">     <span class="nav-icon">📖</span><span class="nav-label">Help</span></div>
-      <div class="nav-item"        id="nav-privacy"  onclick="switchTab('privacy')">  <span class="nav-icon">🔒</span><span class="nav-label">Privacy</span></div>
-      <div class="nav-item"        id="nav-contact"  onclick="switchTab('contact')">  <span class="nav-icon">✉️</span><span class="nav-label">Contact</span></div>
+      <div class="nav-item active" id="nav-new"      onclick="switchTab('new')">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4 6 12l-2 6 6-2 8-8"/><path d="M14 4l4 4M10 16l-4 4"/><path d="M16 6l2 2"/></svg></span>
+        <span class="nav-label">New Project</span>
+      </div>
+      <div class="nav-item"        id="nav-projects" onclick="switchTab('projects')">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a1 1 0 0 1 1-1h4l2 2h10a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7Z"/></svg></span>
+        <span class="nav-label">Projects</span>
+        <span class="nav-badge" id="projectsBadge" style="display:none">0</span>
+      </div>
+      <div class="nav-item"        id="nav-help"     onclick="switchTab('help')">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.5 2.5 0 0 1 4.8 1c0 1.5-2.3 1.8-2.3 3.4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg></span>
+        <span class="nav-label">Help</span>
+      </div>
+      <div class="nav-item"        id="nav-privacy"  onclick="switchTab('privacy')">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+        <span class="nav-label">Privacy</span>
+      </div>
+      <div class="nav-item"        id="nav-contact"  onclick="switchTab('contact')">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg></span>
+        <span class="nav-label">Contact</span>
+      </div>
     </nav>
     <div class="sidebar-footer">v1.0 · mlapplications.com</div>
   </div>
@@ -589,7 +664,10 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 
         <div class="left-col">
           <div class="card">
-            <div class="card-label">Input Mode</div>
+            <div class="card-label-row">
+              <span class="step-badge">1</span>
+              <div class="card-label">Input Mode</div>
+            </div>
             <div class="mode-toggle">
               <div class="mode-btn active" id="modeTts"   onclick="setMode('tts')">  <span>🎤</span> Text to Speech</div>
               <div class="mode-btn"        id="modeAudio" onclick="setMode('audio')"><span>🎵</span> Audio File</div>
@@ -597,7 +675,10 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
           </div>
 
           <div class="card panel visible" id="panelTts">
-            <div class="card-label">Text to Speech</div>
+            <div class="card-label-row">
+              <span class="step-badge">2</span>
+              <div class="card-label">Text to Speech</div>
+            </div>
             <div>
               <label class="field-label" for="ttsText">Text to speak</label>
               <textarea id="ttsText" placeholder="Type what you want the avatar to say…"></textarea>
@@ -634,15 +715,36 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
           </div>
 
           <div class="card panel" id="panelAudio">
-            <div class="card-label">Audio File</div>
-            <div>
-              <label class="field-label" for="audioPath">File path</label>
-              <input type="text" id="audioPath" placeholder="e.g. C:\Users\George\audio.mp3"/>
+            <div class="card-label-row">
+              <span class="step-badge">2</span>
+              <div class="card-label">Audio File</div>
             </div>
+            <div>
+              <label class="field-label">Choose audio file</label>
+              <div class="audiofile-pick-row">
+                <button type="button" class="audiofile-pick-btn" onclick="pickAudioFile()">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l9-2v12"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                  Browse for MP3 / WAV…
+                </button>
+              </div>
+              <div class="audiofile-name" id="audiofileName">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                <span id="audiofileNameText"></span>
+              </div>
+            </div>
+            <div class="audio-preview" id="audioFilePreview">
+              <div class="audio-preview-label">▶ PREVIEW</div>
+              <audio controls id="audioFilePlayer"></audio>
+            </div>
+            <!-- Hidden field retains the path for the generate payload -->
+            <input type="text" id="audioPath" style="display:none"/>
           </div>
 
           <div class="card">
-            <div class="card-label">Processing Options</div>
+            <div class="card-label-row">
+              <span class="step-badge">3</span>
+              <div class="card-label">Processing Options</div>
+            </div>
             <div class="opts-grid">
               <input type="hidden" id="optFps" value="15"/>
               <div>
@@ -674,6 +776,10 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 
         <div class="generate-section-wrap">
           <div class="progress-section">
+            <div class="card-label-row" style="margin-bottom:-2px">
+              <span class="step-badge step-final">5</span>
+              <div class="card-label">Generate</div>
+            </div>
             <div class="progress-overall-wrap" id="overallWrap">
               <div class="progress-overall-header">
                 <span class="progress-overall-label"><span class="progress-overall-dot" id="overallDot"></span><span id="overallLabel">Overall Pipeline</span></span>
@@ -710,7 +816,10 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 
         <div class="right-col">
           <div class="card">
-            <div class="card-label">Source Image</div>
+            <div class="card-label-row">
+              <span class="step-badge">4</span>
+              <div class="card-label">Source Image</div>
+            </div>
             <div class="img-toolbar">
               <div class="img-toolbar-left">
                 <button class="img-refresh-btn" onclick="sendMsg({type:'get_images'})">↻ Refresh</button>
@@ -952,6 +1061,37 @@ function doPlayVideo() {
 }
 function doImportToLibrary() { openCropper(); }
 
+/* ── AUDIO FILE PICKER ─────────────────────────────────────────────
+   WPF owns the filesystem, so we ask it to open a native file dialog
+   and report back the chosen path (and a playable URL) over WS.
+   ────────────────────────────────────────────────────────────────── */
+function pickAudioFile() {
+  if (!sendMsg({ type: 'pick_audio_file' })) {
+    toast('Not connected', 'error');
+    return;
+  }
+  logLine('[AUDIO] Requesting file picker from WPF…');
+}
+
+function onAudioFilePicked(msg) {
+  // msg: { type:'audio_file_picked', path, url, filename }
+  if (!msg.path) return; // user cancelled the dialog
+  document.getElementById('audioPath').value = msg.path;
+
+  const nameEl = document.getElementById('audiofileName');
+  document.getElementById('audiofileNameText').textContent = msg.filename || msg.path;
+  nameEl.classList.add('visible');
+
+  if (msg.url) {
+    const player = document.getElementById('audioFilePlayer');
+    player.src = msg.url;
+    document.getElementById('audioFilePreview').classList.add('visible');
+  }
+
+  logLine(`[AUDIO] Selected → ${msg.path}`);
+  updateGenerateBtn();
+}
+
 // ════════════════════════════════════════════════════════════════════
 //  STATE RESTORATION
 // ════════════════════════════════════════════════════════════════════
@@ -985,7 +1125,16 @@ function applyJobSettings(job) {
     document.getElementById('audioPlayer').src = job.mp3_url;
     document.getElementById('audioPreview').classList.add('visible');
   }
-  if (!job.is_tts && job.audio_path) document.getElementById('audioPath').value = job.audio_path;
+  if (!job.is_tts && job.audio_path) {
+    document.getElementById('audioPath').value = job.audio_path;
+    const nameEl = document.getElementById('audiofileName');
+    document.getElementById('audiofileNameText').textContent = job.audio_name || job.audio_path;
+    nameEl.classList.add('visible');
+    if (job.audio_url) {
+      document.getElementById('audioFilePlayer').src = job.audio_url;
+      document.getElementById('audioFilePreview').classList.add('visible');
+    }
+  }
   if (job.fps)              setSelect('optFps',     String(job.fps));
   if (job.batch_size)       setSelect('optBatch',   String(job.batch_size));
   if (job.output_size)      setSelect('optUpscale', job.output_size);
@@ -1062,6 +1211,7 @@ function handleMessage(msg) {
       break;
     case 'image_saved':      cropperOnSaved(msg);      break;
     case 'image_save_error': cropperOnSaveError(msg);  break;
+    case 'audio_file_picked': onAudioFilePicked(msg);  break;
     case 'library_updated':
       sendMsg({ type: 'get_images' });
       toast('Image added to library ✓', 'success');
@@ -1196,7 +1346,7 @@ function startGeneration() {
   const audioPath = mode === 'tts'
     ? ttsAudioPath
     : document.getElementById('audioPath').value.trim();
-  if (!audioPath) { toast(mode==='tts' ? 'Generate speech audio first' : 'Enter audio file path', ''); return; }
+  if (!audioPath) { toast(mode==='tts' ? 'Generate speech audio first' : 'Choose an audio file first', ''); return; }
   hideRestoreBanner();
   document.getElementById('resultCard').classList.remove('visible');
   document.getElementById('progressStatus').style.color = '';
@@ -1313,7 +1463,8 @@ document.getElementById('optExpr').addEventListener('input', function() {
   document.getElementById('exprVal').textContent  = v;
   document.getElementById('exprDisp').textContent = v;
 });
-document.getElementById('audioPath').addEventListener('input', updateGenerateBtn);
+// audioPath is now set programmatically by pickAudioFile() / onAudioFilePicked();
+// updateGenerateBtn() is already called from onAudioFilePicked, so no input listener needed here.
 
 // ════════════════════════════════════════════════════════════════════
 //  PROJECTS
