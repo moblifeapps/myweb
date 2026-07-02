@@ -46,18 +46,18 @@ body {
   flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
 }
-.topbar-logo svg { width: 100%; height: 100%; display: block; }
+.topbar-logo img { width: 96px; height: 96px; display: block; }
 .topbar-title { font-size: 30px; font-weight: 800; letter-spacing: -.6px; line-height: 1.15; }
 .topbar-sub   { font-size: 16px; color: var(--text2); margin-top: 2px; }
 .ws-pill {
-  display: flex; align-items: center; gap: 10px;
-  font-size: 15px; color: var(--text2);
+  display: flex; align-items: center; gap: 12px;
+  font-size: 18px; font-weight: 600; color: var(--text2);
   background: var(--surface2); border: 1px solid var(--border);
-  border-radius: 24px; padding: 9px 20px;
+  border-radius: 28px; padding: 11px 24px;
   transition: border-color .2s;
 }
 .ws-dot {
-  width: 10px; height: 10px; border-radius: 50%;
+  width: 13px; height: 13px; border-radius: 50%;
   background: var(--text3); flex-shrink: 0; transition: background .3s;
 }
 .ws-dot.connected  { background: var(--green); box-shadow: 0 0 5px var(--green); }
@@ -99,7 +99,7 @@ body {
 .sidebar-footer {
   padding: 14px 12px;
   border-top: 1px solid var(--border);
-  font-size: 10px; color: var(--text3); text-align: center; line-height: 1.6;
+  font-size: 13px; color: var(--text2); text-align: center; line-height: 1.6;
 }
 .content-area {
   flex: 1; height: 100%; overflow: hidden;
@@ -121,12 +121,8 @@ body {
 #splash.hidden { opacity: 0; pointer-events: none; }
 .splash-logo {
   width: 123px; height: 123px;
- /* width: 64px; height: 64px;
-  background: linear-gradient(135deg,var(--accent),#a78bfa);
-  border-radius: 18px; display: flex; align-items: center;
-  justify-content: center; font-size: 34px;*/
 }
-.splash-logo svg { width: 34px; height: 34px; stroke: #fff; }
+.splash-logo img { width: 123px; height: 123px; display: block; }
 .splash-title { font-size: 26px; font-weight: 800; letter-spacing: -.5px; }
 .splash-sub   { font-size: 14px; color: var(--text2); }
 .spinner {
@@ -145,7 +141,7 @@ body {
   text-align: center; padding: 24px;
 }
 #notRunning.visible { display: flex; }
-.nr-icon   { font-size: 52px; }
+.nr-icon   { display: flex; align-items: center; justify-content: center; font-size: 52px; }
 .nr-title  { font-size: 22px; font-weight: 700; }
 .nr-sub    { font-size: 14px; color: var(--text2); max-width: 380px; line-height: 1.6; }
 .nr-retry  {
@@ -155,16 +151,23 @@ body {
 .nr-retry:hover { color: var(--text2); }
 .main {
   flex: 1; display: grid;
-  grid-template-columns: 1fr 300px;
-  grid-template-rows: auto auto auto;
+  grid-template-columns: 320px 1fr;
+  grid-template-rows: auto auto;
   column-gap: 18px;
   padding: 18px 26px 22px;
   width: 100%;
   align-items: start;
 }
+/* Source image — LEFT column, full height of top section */
 .left-col  { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; gap: 13px; }
+/* Form cards — RIGHT column, stacked */
 .right-col { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; gap: 13px; }
 .right-col .card { display: flex; flex-direction: column; overflow: hidden; }
+/* Panels inside right-col must still respect visibility toggle —
+   override the flex forced above when the panel is not active */
+.right-col .card.panel         { display: none; }
+.right-col .card.panel.visible { display: flex; }
+/* Generate section — full width below both columns */
 .section-divider { grid-column: 1 / -1; grid-row: 2; height: 1px; background: var(--border); margin: 10px 0 0; }
 .generate-section-wrap { grid-column: 1 / -1; grid-row: 3; display: flex; flex-direction: column; gap: 13px; padding-top: 16px; }
 .card {
@@ -172,24 +175,49 @@ body {
   border-radius: var(--radius); padding: 16px 18px;
   position: relative;
 }
+/* Processing Options gets a muted, lower-contrast treatment —
+   it matters but isn't the primary focus of the user's attention */
+.card.card-muted {
+  background: rgba(12,14,20,.85);
+  border-color: rgba(91,127,255,.25);
+  border-width: 1px;
+}
+.card.card-muted .card-label,
+.card.card-muted label.field-label,
+.card.card-muted .check-item {
+  color: var(--text3);
+}
+.card.card-muted select,
+.card.card-muted input[type=range] {
+  opacity: .65;
+}
+.card.card-muted input[type=range] { accent-color: var(--text3); }
+.card.card-muted .slider-val { color: var(--text3); }
+.card.card-muted:hover {
+  border-color: rgba(91,127,255,.45);
+  transition: border-color .2s;
+}
+.card.card-muted:hover select,
+.card.card-muted:hover input[type=range] { opacity: 1; transition: opacity .2s; }
+.card.card-muted:hover .card-label,
+.card.card-muted:hover label.field-label,
+.card.card-muted:hover .check-item,
+.card.card-muted:hover .slider-val { color: var(--text2); transition: color .2s; }
 .card-label {
   font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
   color: var(--text3); text-transform: uppercase; margin-bottom: 11px;
 }
 
-/* ── STEP BADGE — numbered circle marking workflow order ─────────── */
+/* ── STEP BADGE ───────────────────────────────────────────────────── */
 .card-label-row {
   display: flex; align-items: center; gap: 10px; margin-bottom: 11px;
 }
 .card-label-row .card-label { margin-bottom: 0; }
 .step-badge {
   display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  width: 26px; height: 26px;
-  border-radius: 50%;
+  flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
   background: linear-gradient(135deg, var(--accent), #a78bfa);
-  color: #fff;
-  font-size: 12px; font-weight: 800;
+  color: #fff; font-size: 12px; font-weight: 800;
   font-variant-numeric: tabular-nums;
   box-shadow: 0 0 0 3px rgba(91,127,255,.12), 0 2px 8px rgba(91,127,255,.35);
 }
@@ -309,7 +337,7 @@ select option { background: var(--surface2); }
 .img-count { font-size: 11px; color: var(--text3); }
 .image-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-  overflow-y: auto; align-content: start; max-height: 520px;
+  overflow-y: auto; align-content: start; max-height: 680px;
 }
 .image-grid::-webkit-scrollbar { width: 4px; }
 .image-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
@@ -384,12 +412,11 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 .audio-preview-label { font-size: 10px; color: var(--green); font-weight: 700; letter-spacing: .6px; }
 .audio-preview audio  { width: 100%; height: 30px; }
 
-/* ── AUDIO FILE PICK ROW (Audio File mode) ───────────────────────── */
+/* ── AUDIO FILE PICK ROW ─────────────────────────────────────────── */
 .audiofile-pick-row { display: flex; gap: 8px; align-items: stretch; }
 .audiofile-pick-btn {
   display: flex; align-items: center; justify-content: center; gap: 7px;
-  flex: 1;
-  background: var(--surface2); border: 1px dashed var(--border);
+  flex: 1; background: var(--surface2); border: 1px dashed var(--border);
   border-radius: 8px; color: var(--text2);
   font-size: 13px; font-weight: 600; font-family: inherit;
   padding: 10px 14px; cursor: pointer; transition: all .17s;
@@ -405,15 +432,64 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 }
 .audiofile-name.visible { display: flex; }
 .audiofile-name svg { width: 14px; height: 14px; flex-shrink: 0; color: var(--green); }
+
+/* ── BATCH QUEUE PANEL ───────────────────────────────────────────── */
+.queue-panel {
+  display: none; flex-direction: column; gap: 8px;
+  background: rgba(91,127,255,.05); border: 1px solid rgba(91,127,255,.2);
+  border-radius: 10px; padding: 12px 14px;
+}
+.queue-panel.visible { display: flex; }
+.queue-panel-header { display: flex; align-items: center; justify-content: space-between; }
+.queue-panel-title {
+  font-size: 11px; font-weight: 700; color: var(--accent);
+  letter-spacing: .6px; text-transform: uppercase;
+  display: flex; align-items: center; gap: 7px;
+}
+.queue-count-badge {
+  font-size: 10px; font-weight: 700; background: var(--accent);
+  color: #fff; border-radius: 20px; padding: 1px 7px;
+}
+.queue-clear-btn {
+  font-size: 11px; color: var(--text3); background: none; border: none;
+  cursor: pointer; font-family: inherit; text-decoration: underline; transition: color .15s;
+}
+.queue-clear-btn:hover { color: var(--red); }
+.queue-list { display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; }
+.queue-list::-webkit-scrollbar { width: 4px; }
+.queue-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.queue-item {
+  display: flex; align-items: center; gap: 9px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 7px; padding: 7px 10px;
+}
+.queue-item-num {
+  flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text3); font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.queue-item-label {
+  flex: 1; min-width: 0; font-size: 12px; color: var(--text2);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.queue-item-remove {
+  flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%;
+  background: none; border: none; color: var(--text3);
+  cursor: pointer; font-size: 13px; line-height: 1;
+  display: flex; align-items: center; justify-content: center; transition: all .15s;
+}
+.queue-item-remove:hover { background: rgba(255,95,114,.15); color: var(--red); }
 .progress-section {
-  background: linear-gradient(145deg, #181c27 0%, #1a1f30 100%);
-  border: 1px solid var(--border); border-radius: var(--radius);
+  background: linear-gradient(145deg, #1e2438 0%, #1a2040 100%);
+  border: 1px solid rgba(91,127,255,.35); border-radius: var(--radius);
   padding: 20px 22px 18px; display: flex; flex-direction: column; gap: 14px;
   position: relative; overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(91,127,255,.08), 0 4px 24px rgba(0,0,0,.35);
 }
 .progress-section::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--accent), #a78bfa, var(--green)); opacity: 0.7;
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), #a78bfa, var(--green)); opacity: 1;
 }
 .progress-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
 .progress-left { display: flex; flex-direction: column; gap: 3px; }
@@ -467,59 +543,6 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 .restore-banner { display: none; align-items: center; gap: 10px; background: rgba(245,166,35,.08); border: 1px solid rgba(245,166,35,.3); border-radius: 9px; padding: 11px 16px; margin-bottom: 4px; font-size: 13px; color: var(--amber); }
 .restore-banner.visible { display: flex; }
 .restore-banner strong { font-weight: 700; }
-
-/* ── BATCH QUEUE PANEL ────────────────────────────────────────────── */
-.queue-panel {
-  display: none; flex-direction: column; gap: 8px;
-  background: rgba(91,127,255,.05); border: 1px solid rgba(91,127,255,.2);
-  border-radius: 10px; padding: 12px 14px;
-}
-.queue-panel.visible { display: flex; }
-.queue-panel-header {
-  display: flex; align-items: center; justify-content: space-between;
-}
-.queue-panel-title {
-  font-size: 11px; font-weight: 700; color: var(--accent);
-  letter-spacing: .6px; text-transform: uppercase;
-  display: flex; align-items: center; gap: 7px;
-}
-.queue-count-badge {
-  font-size: 10px; font-weight: 700; background: var(--accent);
-  color: #fff; border-radius: 20px; padding: 1px 7px;
-}
-.queue-clear-btn {
-  font-size: 11px; color: var(--text3); background: none; border: none;
-  cursor: pointer; font-family: inherit; text-decoration: underline;
-  transition: color .15s;
-}
-.queue-clear-btn:hover { color: var(--red); }
-.queue-list { display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; }
-.queue-list::-webkit-scrollbar { width: 4px; }
-.queue-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-.queue-item {
-  display: flex; align-items: center; gap: 9px;
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: 7px; padding: 7px 10px;
-}
-.queue-item-num {
-  flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%;
-  background: var(--surface); border: 1px solid var(--border);
-  color: var(--text3); font-size: 10px; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-}
-.queue-item-label {
-  flex: 1; min-width: 0; font-size: 12px; color: var(--text2);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.queue-item-remove {
-  flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%;
-  background: none; border: none; color: var(--text3);
-  cursor: pointer; font-size: 13px; line-height: 1;
-  display: flex; align-items: center; justify-content: center;
-  transition: all .15s;
-}
-.queue-item-remove:hover { background: rgba(255,95,114,.15); color: var(--red); }
-
 .projects-wrap { flex: 1; padding: 0 26px 32px; max-width: 900px; margin: 0 auto; width: 100%; }
 .projects-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
 .projects-title { font-size: 20px; font-weight: 700; }
@@ -598,13 +621,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 
 <div id="splash">
   <div class="splash-logo">
-  <img src="uploads/imtalkingsmaller.webp" alt="ImTalking" width="123" height="123"/>
-    <!--<svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M9 18.5c-3.5-.7-6-3.5-6-7A7.5 7.5 0 0 1 10.5 4h3A7.5 7.5 0 0 1 21 11.5c0 3.5-2.5 6.3-6 7l-1 2.5-1.2-2.3c-.6.1-1.2.1-1.8 0L9 18.5Z"/>
-      <path d="M9.5 11.5c.6 1 1.6 1.6 2.5 1.6s1.9-.6 2.5-1.6"/>
-      <circle cx="9.5" cy="9" r=".6" fill="currentColor" stroke="none"/>
-      <circle cx="14.5" cy="9" r=".6" fill="currentColor" stroke="none"/>
-    </svg> -->
+    <img src="uploads/imtalkinglogo.webp" alt="ImTalking" width="123" height="123"/>
   </div>
   <div style="text-align:center">
     <div class="splash-title">ImTalking</div>
@@ -615,7 +632,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 
 <div id="notRunning">
   <div class="nr-icon">
-     <img src="uploads/imtalkingsmaller.webp" alt="ImTalking" width="123" height="123"/>
+    <img src="uploads/imtalkinglogo.webp" alt="ImTalking" width="96" height="96"/>
   </div>
   <div class="nr-title">ImTalking is not running</div>
   <div class="nr-sub">The desktop app wasn't found. Launch it first, then return here — or click below to start it automatically.</div>
@@ -670,7 +687,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 <div class="topbar">
   <div class="topbar-brand">
     <div class="topbar-logo">
-      <img src="uploads/imtalkingsmaller.webp" alt="ImTalking" width="96" height="96"/>
+      <img src="uploads/imtalkinglogo.webp" alt="ImTalking" width="96" height="96"/>
     </div>
     <div>
       <div class="topbar-title">ImTalking</div>
@@ -690,20 +707,20 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4 6 12l-2 6 6-2 8-8"/><path d="M14 4l4 4M10 16l-4 4"/><path d="M16 6l2 2"/></svg></span>
         <span class="nav-label">New Project</span>
       </div>
-      <div class="nav-item"        id="nav-projects" onclick="switchTab('projects')">
+      <div class="nav-item" id="nav-projects" onclick="switchTab('projects')">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a1 1 0 0 1 1-1h4l2 2h10a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7Z"/></svg></span>
         <span class="nav-label">Projects</span>
         <span class="nav-badge" id="projectsBadge" style="display:none">0</span>
       </div>
-      <div class="nav-item"        id="nav-help"     onclick="switchTab('help')">
+      <div class="nav-item" id="nav-help" onclick="switchTab('help')">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.5 2.5 0 0 1 4.8 1c0 1.5-2.3 1.8-2.3 3.4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg></span>
         <span class="nav-label">Help</span>
       </div>
-      <div class="nav-item"        id="nav-privacy"  onclick="switchTab('privacy')">
+      <div class="nav-item" id="nav-privacy" onclick="switchTab('privacy')">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
         <span class="nav-label">Privacy</span>
       </div>
-      <div class="nav-item"        id="nav-contact"  onclick="switchTab('contact')">
+      <div class="nav-item" id="nav-contact" onclick="switchTab('contact')">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg></span>
         <span class="nav-label">Contact</span>
       </div>
@@ -719,10 +736,41 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
           <span>⚡</span><span id="restoreBannerText">Restoring previous session state…</span>
         </div>
 
+        <!-- LEFT COL: Source Image — the primary asset the user picks first -->
         <div class="left-col">
           <div class="card">
             <div class="card-label-row">
               <span class="step-badge">1</span>
+              <div class="card-label">Source Image</div>
+            </div>
+            <div class="img-toolbar">
+              <div class="img-toolbar-left">
+                <button class="img-refresh-btn" onclick="sendMsg({type:'get_images'})">↻ Refresh</button>
+                <button class="img-import-btn"  onclick="doImportToLibrary()">＋ Import to Library</button>
+              </div>
+              <span class="img-count" id="imgCount"></span>
+            </div>
+            <div class="image-grid" id="imageGrid"><div class="img-empty">Waiting for image list…</div></div>
+            <div class="img-selected-label" id="imgSelectedLabel">No image selected</div>
+          </div>
+          <div class="result-card" id="resultCard">
+            <div class="result-header">
+              <div class="result-title">✓ Video Ready</div>
+              <div class="result-badge">Complete</div>
+            </div>
+            <div class="result-path" id="resultPath">—</div>
+            <div class="result-actions">
+              <button class="btn btn-secondary" onclick="doOpenFolder()">📁 Open Folder</button>
+              <button class="btn btn-secondary" onclick="doPlayVideo()">▶ Play</button>
+            </div>
+          </div>
+        </div><!-- /left-col -->
+
+        <!-- RIGHT COL: Input Mode → TTS/Audio → Processing Options, stacked -->
+        <div class="right-col">
+          <div class="card">
+            <div class="card-label-row">
+              <span class="step-badge">2</span>
               <div class="card-label">Input Mode</div>
             </div>
             <div class="mode-toggle">
@@ -733,7 +781,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 
           <div class="card panel visible" id="panelTts">
             <div class="card-label-row">
-              <span class="step-badge">2</span>
+              <span class="step-badge">3</span>
               <div class="card-label">Text to Speech</div>
             </div>
             <div>
@@ -773,7 +821,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 
           <div class="card panel" id="panelAudio">
             <div class="card-label-row">
-              <span class="step-badge">2</span>
+              <span class="step-badge">3</span>
               <div class="card-label">Audio File</div>
             </div>
             <div>
@@ -793,13 +841,13 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
               <div class="audio-preview-label">▶ PREVIEW</div>
               <audio controls id="audioFilePlayer"></audio>
             </div>
-            <!-- Hidden field retains the path for the generate payload -->
             <input type="text" id="audioPath" style="display:none"/>
           </div>
 
-          <div class="card">
+          <!-- Processing Options: card-muted — secondary importance to the user -->
+          <div class="card card-muted">
             <div class="card-label-row">
-              <span class="step-badge">3</span>
+              <span class="step-badge">4</span>
               <div class="card-label">Processing Options</div>
             </div>
             <div class="opts-grid">
@@ -822,12 +870,12 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
               <div class="full">
                 <div class="checks">
                   <label class="check-item"><input type="checkbox" id="optStill" checked/> Still mode</label>
-                  <label class="check-item"><input type="checkbox" id="optEnhancer" checked/> Enhancer</label>
+                  <label class="check-item"><input type="checkbox" id="optEnhancer"/> Enhancer</label>
                 </div>
               </div>
             </div>
           </div>
-        </div><!-- /left-col -->
+        </div><!-- /right-col -->
 
         <div class="section-divider"></div>
 
@@ -868,7 +916,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
                 <span class="queue-panel-title">
                   ⏳ Queued <span class="queue-count-badge" id="queueCountBadge">0</span>
                 </span>
-                <button class="queue-clear-btn" id="queueClearBtn" onclick="clearQueue()">Clear all</button>
+                <button class="queue-clear-btn" onclick="clearQueue()">Clear all</button>
               </div>
               <div class="queue-list" id="queueList"></div>
             </div>
@@ -881,35 +929,6 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
             <div class="log-body" id="logBody"><div id="logOutput"></div></div>
           </div>
         </div><!-- /generate-section-wrap -->
-
-        <div class="right-col">
-          <div class="card">
-            <div class="card-label-row">
-              <span class="step-badge">4</span>
-              <div class="card-label">Source Image</div>
-            </div>
-            <div class="img-toolbar">
-              <div class="img-toolbar-left">
-                <button class="img-refresh-btn" onclick="sendMsg({type:'get_images'})">↻ Refresh</button>
-                <button class="img-import-btn"  onclick="doImportToLibrary()">＋ Import to Library</button>
-              </div>
-              <span class="img-count" id="imgCount"></span>
-            </div>
-            <div class="image-grid" id="imageGrid"><div class="img-empty">Waiting for image list…</div></div>
-            <div class="img-selected-label" id="imgSelectedLabel">No image selected</div>
-          </div>
-          <div class="result-card" id="resultCard">
-            <div class="result-header">
-              <div class="result-title">✓ Video Ready</div>
-              <div class="result-badge">Complete</div>
-            </div>
-            <div class="result-path" id="resultPath">—</div>
-            <div class="result-actions">
-              <button class="btn btn-secondary" onclick="doOpenFolder()">📁 Open Folder</button>
-              <button class="btn btn-secondary" onclick="doPlayVideo()">▶ Play</button>
-            </div>
-          </div>
-        </div><!-- /right-col -->
 
       </div><!-- /main -->
     </div><!-- /tab-new -->
@@ -1131,73 +1150,46 @@ function doPlayVideo() {
 }
 function doImportToLibrary() { openCropper(); }
 
-/* ── AUDIO FILE PICKER ─────────────────────────────────────────────
-   WPF owns the filesystem, so we ask it to open a native file dialog
-   and report back the chosen path (and a playable URL) over WS.
-   ────────────────────────────────────────────────────────────────── */
 function pickAudioFile() {
-  if (!sendMsg({ type: 'pick_audio_file' })) {
-    toast('Not connected', 'error');
-    return;
-  }
+  if (!sendMsg({ type: 'pick_audio_file' })) { toast('Not connected', 'error'); return; }
   logLine('[AUDIO] Requesting file picker from WPF…');
 }
 
 function onAudioFilePicked(msg) {
-  // msg: { type:'audio_file_picked', path, url, filename }
-  if (!msg.path) return; // user cancelled the dialog
+  if (!msg.path) return;
   document.getElementById('audioPath').value = msg.path;
-
   const nameEl = document.getElementById('audiofileName');
   document.getElementById('audiofileNameText').textContent = msg.filename || msg.path;
   nameEl.classList.add('visible');
-
   if (msg.url) {
-    const player = document.getElementById('audioFilePlayer');
-    player.src = msg.url;
+    document.getElementById('audioFilePlayer').src = msg.url;
     document.getElementById('audioFilePreview').classList.add('visible');
   }
-
   logLine(`[AUDIO] Selected → ${msg.path}`);
   updateGenerateBtn();
 }
 
-/* ── BATCH QUEUE ──────────────────────────────────────────────────
-   The backend silently queues every "generate" click that arrives
-   while a job is already running (1a behavior). It broadcasts
-   'queue_update' to all connected clients whenever the pending list
-   changes, so every open window/tab stays in sync automatically.
-   ────────────────────────────────────────────────────────────────── */
 function renderQueue(pending, count) {
   queuePendingCount = count;
-
   const panel = document.getElementById('queuePanel');
   const badge = document.getElementById('queueCountBadge');
   const list  = document.getElementById('queueList');
-
   badge.textContent = count;
   panel.classList.toggle('visible', count > 0);
-
   list.innerHTML = pending.map((item, i) => {
     const label = item.is_tts
       ? (item.tts_text ? item.tts_text.slice(0, 60) + (item.tts_text.length > 60 ? '…' : '') : 'Text to speech')
       : (item.audio_name || 'Audio file');
     const imgPart = item.image_name ? ` · ${item.image_name}` : '';
-    return `
-      <div class="queue-item">
-        <span class="queue-item-num">${i + 1}</span>
-        <span class="queue-item-label">${escHtml(label + imgPart)}</span>
-        <button class="queue-item-remove" data-id="${item.id}" title="Remove from queue">✕</button>
-      </div>`;
+    return `<div class="queue-item">
+      <span class="queue-item-num">${i + 1}</span>
+      <span class="queue-item-label">${escHtml(label + imgPart)}</span>
+      <button class="queue-item-remove" data-id="${item.id}" title="Remove">✕</button>
+    </div>`;
   }).join('');
-
   list.querySelectorAll('.queue-item-remove').forEach(btn => {
-    btn.addEventListener('click', () => removeFromQueue(btn.dataset.id));
+    btn.addEventListener('click', () => sendMsg({ type: 'remove_from_queue', id: btn.dataset.id }));
   });
-}
-
-function removeFromQueue(id) {
-  sendMsg({ type: 'remove_from_queue', id });
 }
 
 function clearQueue() {
@@ -1301,11 +1293,6 @@ function handleMessage(msg) {
     case 'done':
       lastVideoPath = msg.video_path || null;
       setProgress(100, 'Complete', 'Video generated!', false);
-      // Only fully clear "running" UI if the queue is empty — if there are
-      // more items pending, the backend is about to start the next one
-      // automatically and will send a fresh progress update momentarily.
-      // queuePendingCount is kept current via the queue_update messages
-      // the backend broadcasts on every enqueue/dequeue/remove.
       setRunning(queuePendingCount > 0);
       document.getElementById('resultPath').textContent = msg.video_path || '—';
       document.getElementById('resultCard').classList.add('visible');
@@ -1460,9 +1447,7 @@ function updateGenerateBtn() {
     ? !!ttsAudioPath
     : document.getElementById('audioPath').value.trim().length > 0;
   const connected = ws && ws.readyState === WebSocket.OPEN;
-  // Generate stays enabled even while a job is running — clicking it again
-  // auto-queues the next one (1a behavior). Only block on missing
-  // inputs / no connection.
+  // Generate stays enabled while running — subsequent clicks auto-queue
   document.getElementById('btnGenerate').disabled = !hasImage || !hasAudio || !connected;
 }
 function startGeneration() {
@@ -1486,8 +1471,6 @@ function startGeneration() {
   });
 
   if (!isRunning) {
-    // Nothing running yet — this job starts immediately, reset the
-    // progress UI to a fresh "starting" state.
     hideRestoreBanner();
     document.getElementById('resultCard').classList.remove('visible');
     document.getElementById('progressStatus').style.color = '';
@@ -1501,15 +1484,13 @@ function startGeneration() {
     setProgress(0, 'Starting…', 'Request sent to WPF…', true);
     logLine('[GENERATE] Request sent' + (enhancer ? ' (+enhancer gfpgan)' : ''));
   } else {
-    // Something is already running — this one was silently added to the
-    // queue. Don't touch the in-progress UI; just confirm with a toast.
     toast('Added to queue — will start automatically', 'success');
     logLine('[GENERATE] Queued' + (enhancer ? ' (+enhancer gfpgan)' : ''));
   }
 }
 function setRunning(r) {
   isRunning = r;
-  document.getElementById('btnCancel').style.display  = r ? '' : 'none';
+  document.getElementById('btnCancel').style.display = r ? '' : 'none';
   updateGenerateBtn();
 }
 
@@ -1598,8 +1579,7 @@ document.getElementById('optExpr').addEventListener('input', function() {
   document.getElementById('exprVal').textContent  = v;
   document.getElementById('exprDisp').textContent = v;
 });
-// audioPath is now set programmatically by pickAudioFile() / onAudioFilePicked();
-// updateGenerateBtn() is already called from onAudioFilePicked, so no input listener needed here.
+// audioPath is set programmatically by onAudioFilePicked() — no input listener needed.
 
 // ════════════════════════════════════════════════════════════════════
 //  PROJECTS
@@ -1678,6 +1658,35 @@ if (IS_DESKTOP) {
   document.getElementById('topbarSub').textContent = 'Desktop Edition';
 }
 startDiscovery();
+
+// ── GLOBAL LINK INTERCEPTOR ────────────────────────────────────────
+// Every <a href> in the page — Contact links, Help links, etc. —
+// is intercepted and sent to WPF as an open_url message so WPF opens
+// the URL in the user's default browser rather than navigating the
+// WebView2 window away from the app UI. Works for both browser and
+// desktop modes (in browser mode the WS message achieves the same
+// effect as the default target="_blank" behavior).
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href]');
+  if (!a) return;
+  const href = a.getAttribute('href');
+  if (!href || href.startsWith('#')) return;   // ignore hash anchors
+
+  e.preventDefault();
+  e.stopPropagation();
+
+  if (sendMsg({ type: 'open_url', url: href })) {
+    // WPF will open it in the default browser
+    return;
+  }
+
+  // Fallback if WS isn't connected yet: open normally in a new tab
+  if (href.startsWith('mailto:')) {
+    window.location.href = href;
+  } else {
+    window.open(href, '_blank', 'noopener,noreferrer');
+  }
+}, true); // capture phase so it fires before any inline onclick
 
 // ════════════════════════════════════════════════════════════════════
 //  VOICE PICKER
