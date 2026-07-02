@@ -120,11 +120,10 @@ body {
 }
 #splash.hidden { opacity: 0; pointer-events: none; }
 .splash-logo {
-  width: 123px; height: 123px;
- /* width: 64px; height: 64px;
+  width: 64px; height: 64px;
   background: linear-gradient(135deg,var(--accent),#a78bfa);
   border-radius: 18px; display: flex; align-items: center;
-  justify-content: center; font-size: 34px;*/
+  justify-content: center; font-size: 34px;
 }
 .splash-logo svg { width: 34px; height: 34px; stroke: #fff; }
 .splash-title { font-size: 26px; font-weight: 800; letter-spacing: -.5px; }
@@ -467,6 +466,59 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 .restore-banner { display: none; align-items: center; gap: 10px; background: rgba(245,166,35,.08); border: 1px solid rgba(245,166,35,.3); border-radius: 9px; padding: 11px 16px; margin-bottom: 4px; font-size: 13px; color: var(--amber); }
 .restore-banner.visible { display: flex; }
 .restore-banner strong { font-weight: 700; }
+
+/* ── BATCH QUEUE PANEL ────────────────────────────────────────────── */
+.queue-panel {
+  display: none; flex-direction: column; gap: 8px;
+  background: rgba(91,127,255,.05); border: 1px solid rgba(91,127,255,.2);
+  border-radius: 10px; padding: 12px 14px;
+}
+.queue-panel.visible { display: flex; }
+.queue-panel-header {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.queue-panel-title {
+  font-size: 11px; font-weight: 700; color: var(--accent);
+  letter-spacing: .6px; text-transform: uppercase;
+  display: flex; align-items: center; gap: 7px;
+}
+.queue-count-badge {
+  font-size: 10px; font-weight: 700; background: var(--accent);
+  color: #fff; border-radius: 20px; padding: 1px 7px;
+}
+.queue-clear-btn {
+  font-size: 11px; color: var(--text3); background: none; border: none;
+  cursor: pointer; font-family: inherit; text-decoration: underline;
+  transition: color .15s;
+}
+.queue-clear-btn:hover { color: var(--red); }
+.queue-list { display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; }
+.queue-list::-webkit-scrollbar { width: 4px; }
+.queue-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.queue-item {
+  display: flex; align-items: center; gap: 9px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 7px; padding: 7px 10px;
+}
+.queue-item-num {
+  flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text3); font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.queue-item-label {
+  flex: 1; min-width: 0; font-size: 12px; color: var(--text2);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.queue-item-remove {
+  flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%;
+  background: none; border: none; color: var(--text3);
+  cursor: pointer; font-size: 13px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+}
+.queue-item-remove:hover { background: rgba(255,95,114,.15); color: var(--red); }
+
 .projects-wrap { flex: 1; padding: 0 26px 32px; max-width: 900px; margin: 0 auto; width: 100%; }
 .projects-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
 .projects-title { font-size: 20px; font-weight: 700; }
@@ -545,13 +597,12 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 
 <div id="splash">
   <div class="splash-logo">
-  <img src="uploads/imtalkingsmaller.webp" alt="ImTalking" width="123" height="123"/>
-    <!--<svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
       <path d="M9 18.5c-3.5-.7-6-3.5-6-7A7.5 7.5 0 0 1 10.5 4h3A7.5 7.5 0 0 1 21 11.5c0 3.5-2.5 6.3-6 7l-1 2.5-1.2-2.3c-.6.1-1.2.1-1.8 0L9 18.5Z"/>
       <path d="M9.5 11.5c.6 1 1.6 1.6 2.5 1.6s1.9-.6 2.5-1.6"/>
       <circle cx="9.5" cy="9" r=".6" fill="currentColor" stroke="none"/>
       <circle cx="14.5" cy="9" r=".6" fill="currentColor" stroke="none"/>
-    </svg> -->
+    </svg>
   </div>
   <div style="text-align:center">
     <div class="splash-title">ImTalking</div>
@@ -561,9 +612,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 </div>
 
 <div id="notRunning">
-  <div class="nr-icon">
-     <img src="uploads/imtalkingsmaller.webp" alt="ImTalking" width="123" height="123"/>
-  </div>
+  <div class="nr-icon">🖥️</div>
   <div class="nr-title">ImTalking is not running</div>
   <div class="nr-sub">The desktop app wasn't found. Launch it first, then return here — or click below to start it automatically.</div>
   <button class="btn btn-launch" onclick="launchApp()">🚀  Launch ImTalking</button>
@@ -617,7 +666,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 <div class="topbar">
   <div class="topbar-brand">
     <div class="topbar-logo">
-      <img src="uploads/imtalkingsmaller.webp" alt="ImTalking" width="96" height="96"/>
+      <img src="assets/imtalkinglogo.svg" alt="ImTalking" width="96" height="96"/>
     </div>
     <div>
       <div class="topbar-title">ImTalking</div>
@@ -808,6 +857,17 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
               <button class="btn btn-danger"    id="btnCancel"     style="display:none" onclick="sendMsg({type:'cancel'})">✕ Cancel</button>
               <button class="btn btn-primary"   id="btnGenerate"   onclick="startGeneration()">🎬 Generate Video</button>
             </div>
+
+            <!-- Batch queue — shows items waiting behind the one currently running -->
+            <div class="queue-panel" id="queuePanel">
+              <div class="queue-panel-header">
+                <span class="queue-panel-title">
+                  ⏳ Queued <span class="queue-count-badge" id="queueCountBadge">0</span>
+                </span>
+                <button class="queue-clear-btn" id="queueClearBtn" onclick="clearQueue()">Clear all</button>
+              </div>
+              <div class="queue-list" id="queueList"></div>
+            </div>
           </div>
           <div class="log-section">
             <div class="log-header" id="logHeader" onclick="toggleLog()">
@@ -924,6 +984,7 @@ const MAX_RECONNECT   = 15000;
 let wssPort       = null;
 let wsLocalPort   = null;   // plain ws:// port for WebView2 desktop mode
 let reconnectTimer    = null;
+let queuePendingCount = 0;  // kept in sync via 'queue_update' broadcasts
 
 // ════════════════════════════════════════════════════════════════════
 //  SPLASH
@@ -1010,6 +1071,7 @@ function connectWs(initialState, initialJob) {
     showMainUI();
     toast('Connected to ImTalking', 'success');
     sendMsg({ type: 'get_images' });
+    sendMsg({ type: 'get_queue' });
     loadVoicesAndFavorites();
     if (initialState === 'running' && initialJob) {
       restoreRunningState(initialJob);
@@ -1094,6 +1156,49 @@ function onAudioFilePicked(msg) {
 
   logLine(`[AUDIO] Selected → ${msg.path}`);
   updateGenerateBtn();
+}
+
+/* ── BATCH QUEUE ──────────────────────────────────────────────────
+   The backend silently queues every "generate" click that arrives
+   while a job is already running (1a behavior). It broadcasts
+   'queue_update' to all connected clients whenever the pending list
+   changes, so every open window/tab stays in sync automatically.
+   ────────────────────────────────────────────────────────────────── */
+function renderQueue(pending, count) {
+  queuePendingCount = count;
+
+  const panel = document.getElementById('queuePanel');
+  const badge = document.getElementById('queueCountBadge');
+  const list  = document.getElementById('queueList');
+
+  badge.textContent = count;
+  panel.classList.toggle('visible', count > 0);
+
+  list.innerHTML = pending.map((item, i) => {
+    const label = item.is_tts
+      ? (item.tts_text ? item.tts_text.slice(0, 60) + (item.tts_text.length > 60 ? '…' : '') : 'Text to speech')
+      : (item.audio_name || 'Audio file');
+    const imgPart = item.image_name ? ` · ${item.image_name}` : '';
+    return `
+      <div class="queue-item">
+        <span class="queue-item-num">${i + 1}</span>
+        <span class="queue-item-label">${escHtml(label + imgPart)}</span>
+        <button class="queue-item-remove" data-id="${item.id}" title="Remove from queue">✕</button>
+      </div>`;
+  }).join('');
+
+  list.querySelectorAll('.queue-item-remove').forEach(btn => {
+    btn.addEventListener('click', () => removeFromQueue(btn.dataset.id));
+  });
+}
+
+function removeFromQueue(id) {
+  sendMsg({ type: 'remove_from_queue', id });
+}
+
+function clearQueue() {
+  sendMsg({ type: 'clear_queue' });
+  toast('Queue cleared', '');
 }
 
 // ════════════════════════════════════════════════════════════════════
@@ -1192,13 +1297,21 @@ function handleMessage(msg) {
     case 'done':
       lastVideoPath = msg.video_path || null;
       setProgress(100, 'Complete', 'Video generated!', false);
-      setRunning(false);
+      // Only fully clear "running" UI if the queue is empty — if there are
+      // more items pending, the backend is about to start the next one
+      // automatically and will send a fresh progress update momentarily.
+      // queuePendingCount is kept current via the queue_update messages
+      // the backend broadcasts on every enqueue/dequeue/remove.
+      setRunning(queuePendingCount > 0);
       document.getElementById('resultPath').textContent = msg.video_path || '—';
       document.getElementById('resultCard').classList.add('visible');
       document.getElementById('btnOpenFolder').style.display = '';
       document.getElementById('btnPlayVideo').style.display  = '';
       toast('Video ready 🎉', 'success');
       logLine(`[DONE] ${msg.video_path}`);
+      break;
+    case 'queue_update':
+      renderQueue(msg.pending || [], msg.pending_count || 0);
       break;
     case 'error':
       setRunning(false);
@@ -1343,7 +1456,10 @@ function updateGenerateBtn() {
     ? !!ttsAudioPath
     : document.getElementById('audioPath').value.trim().length > 0;
   const connected = ws && ws.readyState === WebSocket.OPEN;
-  document.getElementById('btnGenerate').disabled = !hasImage || !hasAudio || !connected || isRunning;
+  // Generate stays enabled even while a job is running — clicking it again
+  // auto-queues the next one (1a behavior). Only block on missing
+  // inputs / no connection.
+  document.getElementById('btnGenerate').disabled = !hasImage || !hasAudio || !connected;
 }
 function startGeneration() {
   if (!selImage) { toast('Select a source image first', ''); return; }
@@ -1351,18 +1467,11 @@ function startGeneration() {
     ? ttsAudioPath
     : document.getElementById('audioPath').value.trim();
   if (!audioPath) { toast(mode==='tts' ? 'Generate speech audio first' : 'Choose an audio file first', ''); return; }
-  hideRestoreBanner();
-  document.getElementById('resultCard').classList.remove('visible');
-  document.getElementById('progressStatus').style.color = '';
-  document.getElementById('btnOpenFolder').style.display = 'none';
-  document.getElementById('btnPlayVideo').style.display  = 'none';
-  document.getElementById('overallWrap').classList.remove('visible');
-  document.getElementById('segmentDivider').classList.remove('visible');
-  document.getElementById('overallFill').style.width = '0%';
-  lastVideoPath = null;
+
   const enhancer = document.getElementById('optEnhancer').checked;
   const pitch    = parseInt(document.getElementById('ttsPitch').value, 10);
   const rate     = parseInt(document.getElementById('ttsRate').value,  10);
+
   sendMsg({
     type: 'generate', image_path: selImage, audio_path: audioPath,
     fps: 15, batch_size: parseInt(document.getElementById('optBatch').value),
@@ -1371,14 +1480,32 @@ function startGeneration() {
     still: document.getElementById('optStill').checked,
     use_cpu: true, no_resize: false, enhancer, pitch, rate,
   });
-  setRunning(true);
-  setProgress(0, 'Starting…', 'Request sent to WPF…', true);
-  logLine('[GENERATE] Request sent' + (enhancer ? ' (+enhancer gfpgan)' : ''));
+
+  if (!isRunning) {
+    // Nothing running yet — this job starts immediately, reset the
+    // progress UI to a fresh "starting" state.
+    hideRestoreBanner();
+    document.getElementById('resultCard').classList.remove('visible');
+    document.getElementById('progressStatus').style.color = '';
+    document.getElementById('btnOpenFolder').style.display = 'none';
+    document.getElementById('btnPlayVideo').style.display  = 'none';
+    document.getElementById('overallWrap').classList.remove('visible');
+    document.getElementById('segmentDivider').classList.remove('visible');
+    document.getElementById('overallFill').style.width = '0%';
+    lastVideoPath = null;
+    setRunning(true);
+    setProgress(0, 'Starting…', 'Request sent to WPF…', true);
+    logLine('[GENERATE] Request sent' + (enhancer ? ' (+enhancer gfpgan)' : ''));
+  } else {
+    // Something is already running — this one was silently added to the
+    // queue. Don't touch the in-progress UI; just confirm with a toast.
+    toast('Added to queue — will start automatically', 'success');
+    logLine('[GENERATE] Queued' + (enhancer ? ' (+enhancer gfpgan)' : ''));
+  }
 }
 function setRunning(r) {
   isRunning = r;
   document.getElementById('btnCancel').style.display  = r ? '' : 'none';
-  document.getElementById('btnGenerate').disabled     = r;
   updateGenerateBtn();
 }
 
