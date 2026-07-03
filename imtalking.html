@@ -2095,6 +2095,7 @@ document.getElementById('voiceSearch').addEventListener('keydown', e => {
     logLine('[LIBRARY] Save error: ' + (msg.message||''));
   };
 
+  
   function setCropperStatus(text, isError) {
     if (!text) { statusEl.classList.remove('visible','error'); statusEl.textContent=''; return; }
     statusEl.textContent = text;
