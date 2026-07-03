@@ -162,9 +162,8 @@ body {
 .left-col  { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; gap: 13px; }
 /* Form cards — RIGHT column, stacked */
 .right-col { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; gap: 13px; }
-.right-col .card { display: flex; flex-direction: column; overflow: hidden; }
-/* Panels inside right-col must still respect visibility toggle —
-   override the flex forced above when the panel is not active */
+.right-col .card { display: flex; flex-direction: column; }
+/* Panels inside right-col must still respect visibility toggle */
 .right-col .card.panel         { display: none; }
 .right-col .card.panel.visible { display: flex; }
 /* Generate section — full width below both columns */
@@ -281,11 +280,12 @@ select option { background: var(--surface2); }
 }
 .voice-clear-btn:hover { color: var(--text); }
 .voice-dropdown {
-  display: none; position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+  display: none; position: fixed;
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 9px; z-index: 500;
+  border-radius: 9px; z-index: 1000;
   max-height: 280px; overflow-y: auto;
   box-shadow: 0 8px 32px rgba(0,0,0,.5);
+  min-width: 200px;
 }
 .voice-dropdown.open { display: block; }
 .voice-dropdown::-webkit-scrollbar { width: 4px; }
@@ -621,7 +621,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 
 <div id="splash">
   <div class="splash-logo">
-    <img src="uploads/imtalkingsmaller.webp" alt="ImTalking" width="123" height="123"/>
+    <img src="uploads/imtalkinglogo.webp" alt="ImTalking" width="123" height="123"/>
   </div>
   <div style="text-align:center">
     <div class="splash-title">ImTalking</div>
@@ -632,7 +632,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 
 <div id="notRunning">
   <div class="nr-icon">
-    <img src="uploads/imtalkingsmaller.webp" alt="ImTalking" width="96" height="96"/>
+    <img src="uploads/imtalkinglogo.webp" alt="ImTalking" width="96" height="96"/>
   </div>
   <div class="nr-title">ImTalking is not running</div>
   <div class="nr-sub">The desktop app wasn't found. Launch it first, then return here — or click below to start it automatically.</div>
@@ -687,7 +687,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 <div class="topbar">
   <div class="topbar-brand">
     <div class="topbar-logo">
-      <img src="uploads/imtalkingsmaller.webp" alt="ImTalking" width="96" height="96"/>
+      <img src="uploads/imtalkinglogo.webp" alt="ImTalking" width="96" height="96"/>
     </div>
     <div>
       <div class="topbar-title">ImTalking</div>
@@ -1779,7 +1779,20 @@ async function toggleFavorite(name) {
     });
   } catch(e) { console.warn('[Favorites] save failed:', e); toast('Could not save favorite to app', 'error'); }
 }
-function openDropdown()  { document.getElementById('voiceDropdown').classList.add('open'); renderDropdown(document.getElementById('voiceSearch').value); }
+function openDropdown() {
+  const dd    = document.getElementById('voiceDropdown');
+  const input = document.getElementById('voiceSearch');
+  const wrap  = document.getElementById('voicePicker');
+
+  // Position the fixed dropdown exactly under the voice input wrap
+  const rect = wrap.getBoundingClientRect();
+  dd.style.top   = (rect.bottom + 4) + 'px';
+  dd.style.left  =  rect.left + 'px';
+  dd.style.width =  rect.width + 'px';
+
+  dd.classList.add('open');
+  renderDropdown(input.value);
+}
 function closeDropdown() { document.getElementById('voiceDropdown').classList.remove('open'); }
 document.getElementById('voiceSearch').addEventListener('focus', openDropdown);
 document.getElementById('voiceSearch').addEventListener('input', function() {
@@ -1794,6 +1807,21 @@ document.getElementById('voiceClearBtn').addEventListener('click', () => {
   closeDropdown(); updateTtsBtn();
 });
 document.addEventListener('click', e => { if (!document.getElementById('voicePicker').contains(e.target)) closeDropdown(); });
+
+// Reposition the fixed dropdown if the user scrolls or resizes
+// (since it's position:fixed it won't move with the page otherwise)
+function repositionDropdown() {
+  const dd = document.getElementById('voiceDropdown');
+  if (!dd.classList.contains('open')) return;
+  const rect = document.getElementById('voicePicker').getBoundingClientRect();
+  dd.style.top   = (rect.bottom + 4) + 'px';
+  dd.style.left  =  rect.left + 'px';
+  dd.style.width =  rect.width + 'px';
+}
+document.querySelector('.tab-panel.active, .content-area')?.addEventListener('scroll', repositionDropdown);
+window.addEventListener('resize', repositionDropdown);
+// Also reposition on any scroll inside the content area
+document.getElementById('tab-new')?.addEventListener('scroll', repositionDropdown);
 document.getElementById('voiceSearch').addEventListener('keydown', e => {
   const dd   = document.getElementById('voiceDropdown');
   const rows = [...dd.querySelectorAll('.voice-row')];
