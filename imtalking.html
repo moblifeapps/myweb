@@ -480,6 +480,61 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
   display: flex; align-items: center; justify-content: center; transition: all .15s;
 }
 .queue-item-remove:hover { background: rgba(255,95,114,.15); color: var(--red); }
+
+/* ── PRO / LOCK STYLES ───────────────────────────────────────────── */
+/* Lock badge shown next to locked labels */
+.pro-lock {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 700; letter-spacing: .4px;
+  color: var(--amber); background: rgba(245,166,35,.12);
+  border: 1px solid rgba(245,166,35,.3);
+  border-radius: 20px; padding: 2px 8px;
+  vertical-align: middle; margin-left: 6px;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  user-select: none;
+}
+.pro-lock:hover { background: rgba(245,166,35,.22); border-color: var(--amber); }
+.pro-lock svg  { width: 10px; height: 10px; stroke: var(--amber); flex-shrink: 0; }
+
+/* Disabled/locked control appearance */
+.pro-locked {
+  opacity: .38 !important;
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+}
+.pro-locked-wrap {
+  position: relative;
+}
+/* Clickable overlay on locked controls */
+.pro-locked-overlay {
+  position: absolute; inset: 0; z-index: 10;
+  cursor: pointer; border-radius: inherit;
+}
+
+/* Upgrade banner — shown in free mode inside the generate section */
+.upgrade-banner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap;
+  background: linear-gradient(135deg, rgba(245,166,35,.08), rgba(245,166,35,.04));
+  border: 1px solid rgba(245,166,35,.3);
+  border-radius: 10px; padding: 12px 16px;
+}
+.upgrade-banner-left { display: flex; flex-direction: column; gap: 3px; }
+.upgrade-banner-title {
+  font-size: 13px; font-weight: 700; color: var(--amber);
+  display: flex; align-items: center; gap: 7px;
+}
+.upgrade-banner-sub { font-size: 11px; color: var(--text2); line-height: 1.5; }
+.btn-upgrade {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: linear-gradient(135deg, #f5a623, #f59b0a);
+  color: #000; font-size: 13px; font-weight: 700;
+  border: none; border-radius: 8px; padding: 9px 18px;
+  cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  transition: filter .17s; font-family: inherit;
+}
+.btn-upgrade:hover { filter: brightness(1.1); }
+.btn-upgrade svg { width: 14px; height: 14px; stroke: #000; }
 .progress-section {
   background: linear-gradient(145deg, #1e2438 0%, #1a2040 100%);
   border: 1px solid rgba(91,127,255,.35); border-radius: var(--radius);
@@ -857,8 +912,18 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
                 <select id="optBatch"><option value="1">1</option><option value="2" selected>2</option><option value="4">4</option><option value="8">8</option></select>
               </div>
               <div>
-                <label class="field-label" for="optUpscale">Upscale</label>
-                <select id="optUpscale"><option value="None">None</option><option value="512" selected>512 px</option><option value="1024">1024 px</option></select>
+                <label class="field-label" for="optUpscale">
+                  Upscale
+                  <span class="pro-lock" id="upscaleLock" onclick="onProFeatureClick('1024×1024 Upscaling')" title="Pro feature" style="display:none">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                    PRO
+                  </span>
+                </label>
+                <select id="optUpscale">
+                  <option value="None">None</option>
+                  <option value="512" selected>512 px</option>
+                  <option value="1024" id="opt1024">1024 px</option>
+                </select>
               </div>
               <div class="full">
                 <label class="field-label">Expression Scale — <span id="exprVal" style="color:var(--accent)">1.0</span></label>
@@ -870,7 +935,13 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
               <div class="full">
                 <div class="checks">
                   <label class="check-item"><input type="checkbox" id="optStill" checked/> Still mode</label>
-                  <label class="check-item"><input type="checkbox" id="optEnhancer"/> Enhancer</label>
+                  <div class="pro-locked-wrap" id="enhancerWrap">
+                    <label class="check-item"><input type="checkbox" id="optEnhancer"/> Enhancer</label>
+                    <span class="pro-lock" id="enhancerLock" onclick="onProFeatureClick('GFPGAN Face Enhancement')" title="Pro feature">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                      PRO
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -919,6 +990,23 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
                 <button class="queue-clear-btn" onclick="clearQueue()">Clear all</button>
               </div>
               <div class="queue-list" id="queueList"></div>
+            </div>
+
+            <!-- Upgrade banner — visible only in free mode -->
+            <div class="upgrade-banner" id="upgradeBanner" style="display:none">
+              <div class="upgrade-banner-left">
+                <div class="upgrade-banner-title">
+                  <svg viewBox="0 0 24 24" fill="none" width="15" height="15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  Upgrade to ImTalking Pro
+                </div>
+                <div class="upgrade-banner-sub">
+                  Unlock GFPGAN enhancement · Batch queue · 1024px export · PowerPoint integration
+                </div>
+              </div>
+              <button class="btn-upgrade" onclick="openStoreUpgrade()">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                Get Pro — $9.99
+              </button>
             </div>
           </div>
           <div class="log-section">
@@ -990,6 +1078,10 @@ const DISCOVERY_TIMEOUT_MS = 3000;
 // Browser opens:                imtalking.html          (no param)
 const _urlParams = new URLSearchParams(window.location.search);
 const IS_DESKTOP = _urlParams.get('mode') === 'desktop';
+
+// License state — WPF passes ?pro=1 when StoreService.IsPro is true.
+// Default false = free tier, features locked until confirmed by WPF.
+const IS_PRO = _urlParams.get('pro') === '1';
 
 // ════════════════════════════════════════════════════════════════════
 //  STATE
@@ -1320,6 +1412,17 @@ function handleMessage(msg) {
     case 'image_saved':      cropperOnSaved(msg);      break;
     case 'image_save_error': cropperOnSaveError(msg);  break;
     case 'audio_file_picked': onAudioFilePicked(msg);  break;
+
+    // WPF sends this back after a successful purchase to reload the page
+    // with ?pro=1 so all features unlock without the user restarting the app.
+    case 'license_updated':
+      if (msg.is_pro) {
+        // Reload with pro=1 to apply full pro state
+        const url = new URL(window.location.href);
+        url.searchParams.set('pro', '1');
+        window.location.replace(url.toString());
+      }
+      break;
     case 'library_updated':
       sendMsg({ type: 'get_images' });
       toast('Image added to library ✓', 'success');
@@ -1457,6 +1560,13 @@ function startGeneration() {
     : document.getElementById('audioPath').value.trim();
   if (!audioPath) { toast(mode==='tts' ? 'Generate speech audio first' : 'Choose an audio file first', ''); return; }
 
+  // Free users can only run one job at a time — gate batch queue here
+  // before the WS message is sent so nothing reaches the C# backend.
+  if (isRunning && !IS_PRO) {
+    onProFeatureClick('Batch Queue Processing');
+    return;
+  }
+
   const enhancer = document.getElementById('optEnhancer').checked;
   const pitch    = parseInt(document.getElementById('ttsPitch').value, 10);
   const rate     = parseInt(document.getElementById('ttsRate').value,  10);
@@ -1484,6 +1594,7 @@ function startGeneration() {
     setProgress(0, 'Starting…', 'Request sent to WPF…', true);
     logLine('[GENERATE] Request sent' + (enhancer ? ' (+enhancer gfpgan)' : ''));
   } else {
+    // Pro users only reach here — job silently queued
     toast('Added to queue — will start automatically', 'success');
     logLine('[GENERATE] Queued' + (enhancer ? ' (+enhancer gfpgan)' : ''));
   }
@@ -1658,6 +1769,87 @@ if (IS_DESKTOP) {
   document.getElementById('topbarSub').textContent = 'Desktop Edition';
 }
 startDiscovery();
+
+// ════════════════════════════════════════════════════════════════════
+//  PRO / FREE FEATURE GATING
+//  IS_PRO is set from ?pro=1 URL param passed by WPF based on
+//  StoreService.IsPro at navigation time.
+// ════════════════════════════════════════════════════════════════════
+
+function applyLicenseState() {
+  if (IS_PRO) {
+    applyProState();
+  } else {
+    applyFreeState();
+  }
+}
+
+function applyProState() {
+  // Everything enabled — ensure no lock artifacts are visible
+  document.getElementById('enhancerLock').style.display  = 'none';
+  document.getElementById('upscaleLock').style.display   = 'none';
+  document.getElementById('upgradeBanner').style.display = 'none';
+
+  // Enhancer checkbox fully enabled
+  const enhancerInput = document.getElementById('optEnhancer');
+  enhancerInput.disabled = false;
+  document.getElementById('enhancerWrap').classList.remove('pro-locked-wrap-active');
+
+  // 1024 option visible and selectable
+  document.getElementById('opt1024').style.display = '';
+
+  // Topbar subtitle hint
+  if (IS_DESKTOP)
+    document.getElementById('topbarSub').textContent = 'Desktop Edition — Pro';
+}
+
+function applyFreeState() {
+  // ── Enhancer — locked ─────────────────────────────────────────────
+  const enhancerInput = document.getElementById('optEnhancer');
+  enhancerInput.checked  = false;
+  enhancerInput.disabled = true;
+  enhancerInput.closest('label')?.classList.add('pro-locked');
+  document.getElementById('enhancerLock').style.display = 'inline-flex';
+
+  // ── 1024px upscale — hide option, lock badge on label ────────────
+  const opt1024 = document.getElementById('opt1024');
+  opt1024.style.display = 'none';
+  // If somehow 1024 was selected, reset to 512
+  const upscaleSelect = document.getElementById('optUpscale');
+  if (upscaleSelect.value === '1024') upscaleSelect.value = '512';
+  document.getElementById('upscaleLock').style.display = 'inline-flex';
+
+  // ── Upgrade banner ────────────────────────────────────────────────
+  document.getElementById('upgradeBanner').style.display = 'flex';
+
+  // ── Topbar hint ───────────────────────────────────────────────────
+  if (IS_DESKTOP)
+    document.getElementById('topbarSub').textContent = 'Desktop Edition — Free';
+}
+
+// Called when the user clicks on any lock badge
+function onProFeatureClick(featureName) {
+  const msg = `${featureName} is an ImTalking Pro feature.\n\n` +
+    'ImTalking Pro unlocks:\n' +
+    '  • GFPGAN face enhancement\n' +
+    '  • Batch queue processing\n' +
+    '  • 1024×1024 px video upscaling\n' +
+    '  • PowerPoint video embedding\n\n' +
+    'One-time purchase — no subscription, no expiry.\n\n' +
+    'Open the Microsoft Store to upgrade?';
+
+  // Send to WPF which will show the native Store purchase dialog
+  // (same as clicking the upgrade banner button)
+  sendMsg({ type: 'upgrade_prompt', feature: featureName });
+}
+
+// Called by the upgrade banner button
+function openStoreUpgrade() {
+  sendMsg({ type: 'upgrade_prompt', feature: 'ImTalking Pro' });
+}
+
+// Apply license state as soon as the page loads
+applyLicenseState();
 
 // ── GLOBAL LINK INTERCEPTOR ────────────────────────────────────────
 // Every <a href> in the page — Contact links, Help links, etc. —
@@ -2095,7 +2287,6 @@ document.getElementById('voiceSearch').addEventListener('keydown', e => {
     logLine('[LIBRARY] Save error: ' + (msg.message||''));
   };
 
-  
   function setCropperStatus(text, isError) {
     if (!text) { statusEl.classList.remove('visible','error'); statusEl.textContent=''; return; }
     statusEl.textContent = text;
