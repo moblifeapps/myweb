@@ -1439,9 +1439,11 @@ function handleMessage(msg) {
     case 'asset_cached':
       if (msg.url && msg.local_url) {
         _adsList.forEach(ad => {
-          if (ad.image === msg.url) ad._localImage = msg.local_url;
+          if (ad._remoteUrl === msg.url || ad.image === msg.url)
+            ad._localImage = msg.local_url;
         });
-        if (_adsList[_adIndex]?.image === msg.url)
+        const cur = _adsList[_adIndex];
+        if (cur && (cur._remoteUrl === msg.url || cur.image === msg.url))
           document.getElementById('ad-image').src = msg.local_url;
       }
       break;
@@ -1840,10 +1842,20 @@ async function initDesktopAds() {
 
     // Pre-cache ad images locally via WPF so they load from app.local
     // instead of hitting the network on every display.
-    // WPF stores them in wwwroot/adimages/ and replies with the local path.
+    // Image paths in myapps.json may be relative (e.g. "uploads/img.webp")
+    // — resolve them against the mlapplications.com base URL before sending.
+    const AD_BASE = 'https://mlapplications.com/';
     for (const ad of _adsList) {
       if (ad.image) {
-        sendMsg({ type: 'cache_remote_asset', url: ad.image, folder: 'adimages' });
+        // Resolve relative path to absolute URL
+        const absUrl = ad.image.startsWith('http')
+          ? ad.image
+          : AD_BASE + ad.image.replace(/^\//, '');
+        ad._remoteUrl = absUrl;
+        // Derive the subfolder from the path (e.g. "uploads/img.webp" → folder "uploads")
+        const parts  = ad.image.replace(/^\//, '').split('/');
+        const folder = parts.length > 1 ? parts[0] : 'uploads';
+        sendMsg({ type: 'cache_remote_asset', url: absUrl, folder: folder });
       }
     }
 
