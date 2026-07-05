@@ -50,10 +50,11 @@
 }
 .ad-text-box {
   flex-grow: 1; position: relative; height: 22px; overflow: hidden;
+  min-width: 0;
 }
 .ad-feature-text {
   position: absolute; top: 0; left: 0;
-  font-size: 13px; font-weight: 600; white-space: nowrap;
+  font-size: 14px; font-weight: 600; white-space: nowrap;
   color: var(--text); opacity: 0;
   animation: adCycleText 9s infinite ease-in-out;
 }
@@ -77,14 +78,15 @@
 .ad-cta {
   background-color: var(--accent-color);
   display: flex; flex-direction: column; justify-content: center;
-  align-items: flex-start; padding: 4px 14px; border-radius: 4px;
+  align-items: flex-start; padding: 6px 18px; border-radius: 4px;
   transition: background-color 0.3s, transform 0.2s; flex-shrink: 0;
+  min-width: 140px;
 }
 #desktop-ad-banner:hover .ad-cta {
   background-color: var(--hover-color); transform: translateY(-1px);
 }
-.ad-cta .sub  { font-size: 9px; text-transform: uppercase; opacity: .75; letter-spacing: .5px; }
-.ad-cta .main { font-size: 12px; font-weight: 700; margin-top: -1px; }
+.ad-cta .sub  { font-size: 10px; text-transform: uppercase; opacity: .75; letter-spacing: .5px; white-space: nowrap; }
+.ad-cta .main { font-size: 14px; font-weight: 700; margin-top: 1px; white-space: nowrap; }
 .ad-close {
   position: absolute; top: 4px; right: 10px;
   background: transparent; border: none; color: var(--text3);
@@ -804,11 +806,11 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
         <span class="nav-label">Projects</span>
         <span class="nav-badge" id="projectsBadge" style="display:none">0</span>
       </div>
-      <div class="nav-item" id="nav-help" onclick="switchTab('help')">
+      <div class="nav-item" id="nav-help" onclick="sendMsg({type:'open_url', url:HELP_URL})">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.5 2.5 0 0 1 4.8 1c0 1.5-2.3 1.8-2.3 3.4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg></span>
         <span class="nav-label">Help</span>
       </div>
-      <div class="nav-item" id="nav-privacy" onclick="switchTab('privacy')">
+      <div class="nav-item" id="nav-privacy" onclick="sendMsg({type:'open_url', url:PRIVACY_URL})">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
         <span class="nav-label">Privacy</span>
       </div>
@@ -817,7 +819,10 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
         <span class="nav-label">Contact</span>
       </div>
     </nav>
-    <div class="sidebar-footer">v1.0 · mlapplications.com</div>
+    <div class="sidebar-footer" onclick="sendMsg({type:'open_url', url:WEBSITE_URL})" style="cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;">
+      <img src="https://mlapplications.com/uploads/logo-big_2.webp" alt="mlapplications" style="width:20px; height:20px; border-radius:4px; object-fit:contain; flex-shrink:0;"/>
+      <span>v1.0 · mlapplications.com</span>
+    </div>
   </div>
 
   <div class="content-area">
@@ -1086,6 +1091,12 @@ const DISCOVERY_TIMEOUT_MS = 3000;
 // Browser opens:                imtalking.html          (no param)
 const _urlParams = new URLSearchParams(window.location.search);
 const IS_DESKTOP = _urlParams.get('mode') === 'desktop';
+
+// ── URLs sent from WPF on connect via 'init_urls' message ──────────
+// Fallback values used in browser mode or before WPF sends the URLs.
+let HELP_URL    = 'https://mlapplications.com/hlp_unreachable.html';
+let PRIVACY_URL = 'https://mlapplications.com/unreachable_privacy.html';
+let WEBSITE_URL = 'https://mlapplications.com/';
 
 // ════════════════════════════════════════════════════════════════════
 //  STATE
@@ -1416,6 +1427,24 @@ function handleMessage(msg) {
     case 'image_saved':      cropperOnSaved(msg);      break;
     case 'image_save_error': cropperOnSaveError(msg);  break;
     case 'audio_file_picked': onAudioFilePicked(msg);  break;
+
+    // WPF sends the real URI values from App.xaml.cs static fields
+    case 'init_urls':
+      if (msg.help_url)    HELP_URL    = msg.help_url;
+      if (msg.privacy_url) PRIVACY_URL = msg.privacy_url;
+      if (msg.website_url) WEBSITE_URL = msg.website_url;
+      break;
+
+    // WPF cached a remote asset locally — update any ad that uses it
+    case 'asset_cached':
+      if (msg.url && msg.local_url) {
+        _adsList.forEach(ad => {
+          if (ad.image === msg.url) ad._localImage = msg.local_url;
+        });
+        if (_adsList[_adIndex]?.image === msg.url)
+          document.getElementById('ad-image').src = msg.local_url;
+      }
+      break;
     case 'library_updated':
       sendMsg({ type: 'get_images' });
       toast('Image added to library ✓', 'success');
@@ -1789,8 +1818,16 @@ function displayAd(index) {
   document.getElementById('ad-text1').innerText = ad.title1 || '';
   document.getElementById('ad-text2').innerText = ad.title2 || '';
   document.getElementById('ad-text3').innerText = ad.title3 || '';
-  document.getElementById('ad-image').src       = ad.image  || '';
   document.getElementById('ad-link').href       = ad.link   || '#';
+
+  // Image: if we cached it locally use app.local path, otherwise use remote URL
+  // (WPF downloads them on startup via the cache_remote_asset message)
+  const imgEl = document.getElementById('ad-image');
+  if (ad._localImage) {
+    imgEl.src = ad._localImage;
+  } else if (ad.image) {
+    imgEl.src = ad.image;
+  }
 }
 
 async function initDesktopAds() {
@@ -1801,11 +1838,20 @@ async function initDesktopAds() {
     _adsList = await res.json();
     if (!Array.isArray(_adsList) || _adsList.length === 0) return;
 
+    // Pre-cache ad images locally via WPF so they load from app.local
+    // instead of hitting the network on every display.
+    // WPF stores them in wwwroot/adimages/ and replies with the local path.
+    for (const ad of _adsList) {
+      if (ad.image) {
+        sendMsg({ type: 'cache_remote_asset', url: ad.image, folder: 'adimages' });
+      }
+    }
+
     // Show the banner and adjust app-shell height
     document.getElementById('desktop-ad-banner').style.display = 'block';
     document.documentElement.style.setProperty('--ad-height', AD_HEIGHT + 'px');
 
-    // Display first ad immediately
+    // Display first ad immediately (uses remote URL until cache reply arrives)
     displayAd(0);
 
     // Rotate every 30 seconds if more than one ad
