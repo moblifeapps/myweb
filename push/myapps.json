@@ -1,0 +1,24 @@
+[
+  {
+    "title1": "unReachable — Network Quality Score",
+    "title2": "Monitor latency, jitter and packet loss with",
+    "title3": "a simple network quality score from 0–100",
+    "image":  "uploads/unreachable.webp",
+    "link":   "https://www.microsoft.com/store/apps/9NB66SPC84SG",
+    "bgGradient":  "linear-gradient(135deg, #0f0f14, #1c1c24)",
+    "accentColor": "#5b7fff",
+    "hoverColor":  "#7090ff"
+  },
+  {
+    "title1": "Transparent Taskbar+ Lite",
+    "title2": "Create transparent, gradient or MacOs dock-style taskbars",
+    "title3": "with zero registry changes. 100% free!",
+    "image":  "uploads/ttbicon.webp",
+    "link":   "https://www.microsoft.com/store/apps/9p7hb1kdttt8",
+    "bgGradient":  "linear-gradient(135deg, #0f1117, #1a2040)",
+    "accentColor": "#3ecf82",
+    "hoverColor":  "#22c55e"
+  }
+]
+   
+ 
