@@ -1565,38 +1565,15 @@ function onPermissionModalContinue() {
 // ── DISCOVERY ─────────────────────────────────────────────────────
 
 async function startDiscovery() {
-  // Desktop edition never needs the permission modal — it uses plain
-  // ws://127.0.0.1 and the page is loaded locally, not from a public domain.
+  // Desktop edition uses ws://127.0.0.1 — no PNA permission needed.
+  // Browser edition: PNA is handled server-side via the
+  // Access-Control-Allow-Private-Network header on Kestrel — the browser
+  // no longer shows a permission dialog, so no pre-prompt modal needed.
   if (IS_DESKTOP) {
     _startDiscoveryInternal();
     return;
   }
-
-  // Check if we've already successfully connected before (skip modal)
-  const alreadyAllowed = (() => {
-    try { return localStorage.getItem('pna_allowed') === '1'; } catch { return false; }
-  })();
-
-  if (alreadyAllowed) {
-    _startDiscoveryInternal();
-    return;
-  }
-
-  // Check if modal has been shown this session already
-  const modalShown = (() => {
-    try { return localStorage.getItem('pna_modal_shown') === '1'; } catch { return false; }
-  })();
-
-  if (modalShown) {
-    // Modal was shown but user hasn't connected yet — go straight to discovery
-    _startDiscoveryInternal();
-    return;
-  }
-
-  // First visit — show the pre-prompt modal
-  hideSplash();
-  document.getElementById('permissionModal').classList.add('visible');
-  // Execution continues in onPermissionModalContinue()
+  _startDiscoveryInternal();
 }
 
 async function _startDiscoveryInternal() {
@@ -1611,29 +1588,14 @@ async function _startDiscoveryInternal() {
     clearTimeout(tid);
     info = await res.json();
   } catch(e) {
-    // Fetch failed — could be: app not running, OR permission was blocked.
-    // Distinguish by checking if the browser shows the blocked icon.
-    // We can't directly detect the block, but if the modal was just shown
-    // (pna_modal_shown) and this is the first attempt, assume block.
-    const modalJustShown = (() => {
-      try { return localStorage.getItem('pna_modal_shown') === '1'; } catch { return false; }
-    })();
-    const neverAllowed = (() => {
-      try { return localStorage.getItem('pna_allowed') !== '1'; } catch { return true; }
-    })();
-
-    if (!IS_DESKTOP && modalJustShown && neverAllowed) {
-      // Likely blocked — show the recovery screen
-      showBlockedHelp();
-      return;
-    }
+    // Fetch failed — app is not running (PNA permission is no longer
+    // an issue since it's handled by the server-side header).
     showNotRunning();
     return;
   }
 
-  // Success — mark as allowed so we skip the modal next time
+  // Success
   try { localStorage.setItem('pna_allowed', '1'); } catch {}
-  try { localStorage.removeItem('pna_modal_shown'); } catch {}
 
   const { wssPort: wp, wsLocalPort: wlp, httpImagePort: hp, state, job } = info;
   wssPort     = wp;
