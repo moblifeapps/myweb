@@ -308,6 +308,76 @@ html.light-theme .nav-group { background: rgba(0,0,0,.04); }
   text-decoration: underline; margin-top: 4px;
 }
 .nr-retry:hover { color: var(--text2); }
+
+/* ── PRIVATE NETWORK PERMISSION MODAL ───────────────────────────── */
+#permissionModal {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,.72); backdrop-filter: blur(6px);
+  display: none; align-items: center; justify-content: center;
+  padding: 24px;
+}
+#permissionModal.visible { display: flex; }
+.perm-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 32px 28px;
+  max-width: 480px; width: 100%;
+  display: flex; flex-direction: column; gap: 18px;
+  box-shadow: 0 24px 80px rgba(0,0,0,.6);
+  animation: permSlideIn .22s ease;
+}
+@keyframes permSlideIn { from{transform:translateY(16px);opacity:0} to{transform:none;opacity:1} }
+.perm-icon { font-size: 44px; text-align: center; }
+.perm-title { font-size: 20px; font-weight: 700; text-align: center; }
+.perm-body  { font-size: 14px; color: var(--text2); line-height: 1.7; text-align: center; }
+.perm-body strong { color: var(--text); font-weight: 600; }
+.perm-prompt-preview {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px 16px;
+  font-size: 13px; color: var(--text2); text-align: left; line-height: 1.6;
+}
+.perm-prompt-preview .perm-allow {
+  display: inline-block; background: var(--accent); color: #fff;
+  font-size: 12px; font-weight: 700; border-radius: 5px;
+  padding: 2px 10px; margin: 0 2px; vertical-align: middle;
+}
+.perm-prompt-preview .perm-block {
+  display: inline-block; background: var(--surface); color: var(--text2);
+  border: 1px solid var(--border); font-size: 12px; font-weight: 700;
+  border-radius: 5px; padding: 2px 10px; margin: 0 2px; vertical-align: middle;
+}
+.perm-actions { display: flex; gap: 10px; justify-content: center; }
+
+/* ── BLOCKED HELP SCREEN ─────────────────────────────────────────── */
+#blockedHelp {
+  position: fixed; inset: 0; z-index: 200;
+  background: var(--bg);
+  display: none; flex-direction: column;
+  align-items: center; justify-content: center; gap: 16px;
+  text-align: center; padding: 32px;
+}
+#blockedHelp.visible { display: flex; }
+.blocked-title { font-size: 22px; font-weight: 700; }
+.blocked-sub   { font-size: 14px; color: var(--text2); max-width: 460px; line-height: 1.7; }
+.blocked-steps {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px 24px;
+  max-width: 460px; width: 100%; text-align: left;
+}
+.blocked-steps ol { padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
+.blocked-steps li { font-size: 13px; color: var(--text2); line-height: 1.6; }
+.blocked-steps li strong { color: var(--text); }
+.blocked-steps .blocked-url {
+  font-family: var(--mono); font-size: 11px; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: 4px;
+  padding: 2px 7px; word-break: break-all; display: inline-block; margin-top: 3px;
+}
+.blocked-browser-tabs { display: flex; gap: 8px; justify-content: center; }
+.blocked-browser-tab {
+  font-size: 12px; font-weight: 600; padding: 5px 14px;
+  border-radius: 20px; cursor: pointer; transition: all .15s;
+  border: 1px solid var(--border); color: var(--text2); background: var(--surface);
+}
+.blocked-browser-tab.active { background: var(--accent-glow); border-color: var(--accent); color: var(--accent); }
 .main {
   flex: 1; display: grid;
   grid-template-columns: 320px 1fr;
@@ -800,6 +870,56 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
   <div class="spinner"></div>
 </div>
 
+<!-- ── PRIVATE NETWORK PERMISSION MODAL ─────────────────────────── -->
+<!-- Shown on first visit before startDiscovery() so the user knows  -->
+<!-- what the browser permission prompt is for and what to click.    -->
+<div id="permissionModal">
+  <div class="perm-card">
+    <div class="perm-icon">🔌</div>
+    <div class="perm-title">One-time permission needed</div>
+    <div class="perm-body">
+      ImTalking communicates with the desktop app running on your PC.<br/>
+      Your browser will ask for permission to connect to it —
+      <strong>click Allow</strong> to continue.
+    </div>
+    <div class="perm-prompt-preview">
+      Your browser will show a prompt like this:<br/><br/>
+      <em>"mlapplications.com wants to access devices and services on your local network"</em><br/><br/>
+      👉 Click <span class="perm-allow">Allow</span> to connect.
+      If you click <span class="perm-block">Block</span> the app won't work.
+    </div>
+    <div class="perm-actions">
+      <button class="btn btn-primary" onclick="onPermissionModalContinue()" style="padding:11px 32px;font-size:14px;">
+        Got it — Continue
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── BLOCKED HELP SCREEN ───────────────────────────────────────── -->
+<!-- Shown when the permission was blocked or the beacon failed      -->
+<!-- after a previous block. Gives step-by-step recovery per browser.-->
+<div id="blockedHelp">
+  <div style="font-size:48px">🚫</div>
+  <div class="blocked-title">Local network access was blocked</div>
+  <div class="blocked-sub">
+    ImTalking needs permission to connect to the desktop app on your PC.
+    Follow these steps to re-enable it in your browser:
+  </div>
+  <div class="blocked-browser-tabs">
+    <div class="blocked-browser-tab active" id="tab-chrome" onclick="showBrowserSteps('chrome')">Chrome</div>
+    <div class="blocked-browser-tab"        id="tab-edge"   onclick="showBrowserSteps('edge')">Edge</div>
+    <div class="blocked-browser-tab"        id="tab-opera"  onclick="showBrowserSteps('opera')">Opera</div>
+  </div>
+  <div class="blocked-steps">
+    <ol id="blockedStepsList"></ol>
+  </div>
+  <button class="btn btn-primary" onclick="retryAfterUnblock()" style="margin-top:4px">
+    ✓ I've allowed it — Try again
+  </button>
+  <span class="nr-retry" onclick="retryAfterUnblock()">Skip and try anyway</span>
+</div>
+
 <div id="notRunning">
   <div class="nr-icon">
     <img src="uploads/imtalkinglogo.webp" alt="ImTalking" width="96" height="96"/>
@@ -886,8 +1006,6 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
         <div id="ad-text2" class="ad-feature-text t2"></div>
         <div id="ad-text3" class="ad-feature-text t3"></div>
       </div>
-
-      
       <!-- Col 3: Microsoft Store badge 186px -->
       <div class="ad-store-badge">
         <img src="https://get.microsoft.com/images/en-us%20dark.svg"
@@ -896,7 +1014,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
     </div>
   </a>
 </div>
- 
+
 <!-- WEB_ONLY_START -->
 <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
 <div data-ad="mlapplications.com_sticky_mobile_custom_top" data-devices="m:1,t:0,d:0" class="demand-supply"></div>
@@ -1366,10 +1484,124 @@ function loadProjects(badgeOnly) {
 }
 
 // ════════════════════════════════════════════════════════════════════
-//  DISCOVERY
+//  PRIVATE NETWORK PERMISSION HANDLING
+//
+//  Chrome/Edge 94+ require explicit user permission for a public HTTPS
+//  page to connect to localhost. We show a pre-prompt modal on first
+//  visit so the user knows what Allow does, then detect if they blocked
+//  it and show recovery steps.
+//
+//  Storage keys (localStorage):
+//    pna_allowed  — "1" once the user has successfully connected at
+//                   least once (skip the modal on subsequent visits)
+//    pna_browser  — last browser tab shown in the blocked help screen
 // ════════════════════════════════════════════════════════════════════
-async function startDiscovery() {
+
+const BROWSER_STEPS = {
+  chrome: [
+    'Click the <strong>lock / info icon</strong> (🔒) in the address bar.',
+    'Select <strong>Site settings</strong>.',
+    'Find <strong>"Local network devices"</strong> and change it to <strong>Allow</strong>.',
+    'Click <strong>"I\'ve allowed it — Try again"</strong> below.',
+  ],
+  edge: [
+    'Click the <strong>lock icon</strong> in the address bar.',
+    'Click <strong>Permissions for this site</strong>.',
+    'Find <strong>"Local network devices"</strong> and set it to <strong>Allow</strong>.',
+    'Click <strong>"I\'ve allowed it — Try again"</strong> below.',
+  ],
+  opera: [
+    'Click the <strong>lock icon</strong> in the address bar.',
+    'Select <strong>Site settings</strong>.',
+    'Find <strong>"Local network devices"</strong> and change it to <strong>Allow</strong>.',
+    'Click <strong>"I\'ve allowed it — Try again"</strong> below.',
+  ],
+};
+
+// Detect the likely browser from the user agent
+function detectBrowser() {
+  const ua = navigator.userAgent.toLowerCase();
+  if (ua.includes('edg/'))  return 'edge';
+  if (ua.includes('opr/') || ua.includes('opera')) return 'opera';
+  return 'chrome'; // default / Chrome / Chromium
+}
+
+function showBrowserSteps(browser) {
+  // Update tab highlight
+  ['chrome','edge','opera'].forEach(b => {
+    document.getElementById('tab-' + b)?.classList.toggle('active', b === browser);
+  });
+  // Render steps
+  const steps = BROWSER_STEPS[browser] || BROWSER_STEPS.chrome;
+  document.getElementById('blockedStepsList').innerHTML =
+    steps.map(s => `<li>${s}</li>`).join('');
+  try { localStorage.setItem('pna_browser', browser); } catch {}
+}
+
+function showBlockedHelp() {
+  hideSplash();
   hideNotRunning();
+  document.getElementById('permissionModal').classList.remove('visible');
+  document.getElementById('blockedHelp').classList.add('visible');
+  // Auto-select the right browser tab
+  const saved = (() => { try { return localStorage.getItem('pna_browser'); } catch { return null; } })();
+  showBrowserSteps(saved || detectBrowser());
+}
+
+function retryAfterUnblock() {
+  document.getElementById('blockedHelp').classList.remove('visible');
+  // Clear the blocked flag so the modal doesn't reappear
+  try { localStorage.removeItem('pna_allowed'); } catch {}
+  startDiscovery();
+}
+
+function onPermissionModalContinue() {
+  document.getElementById('permissionModal').classList.remove('visible');
+  // Mark that we've shown the modal — don't show again until blocked
+  try { localStorage.setItem('pna_modal_shown', '1'); } catch {}
+  _startDiscoveryInternal();
+}
+
+// ── DISCOVERY ─────────────────────────────────────────────────────
+
+async function startDiscovery() {
+  // Desktop edition never needs the permission modal — it uses plain
+  // ws://127.0.0.1 and the page is loaded locally, not from a public domain.
+  if (IS_DESKTOP) {
+    _startDiscoveryInternal();
+    return;
+  }
+
+  // Check if we've already successfully connected before (skip modal)
+  const alreadyAllowed = (() => {
+    try { return localStorage.getItem('pna_allowed') === '1'; } catch { return false; }
+  })();
+
+  if (alreadyAllowed) {
+    _startDiscoveryInternal();
+    return;
+  }
+
+  // Check if modal has been shown this session already
+  const modalShown = (() => {
+    try { return localStorage.getItem('pna_modal_shown') === '1'; } catch { return false; }
+  })();
+
+  if (modalShown) {
+    // Modal was shown but user hasn't connected yet — go straight to discovery
+    _startDiscoveryInternal();
+    return;
+  }
+
+  // First visit — show the pre-prompt modal
+  hideSplash();
+  document.getElementById('permissionModal').classList.add('visible');
+  // Execution continues in onPermissionModalContinue()
+}
+
+async function _startDiscoveryInternal() {
+  hideNotRunning();
+  document.getElementById('blockedHelp').classList.remove('visible');
   showSplash('Looking for the desktop app…');
   let info;
   try {
@@ -1379,10 +1611,30 @@ async function startDiscovery() {
     clearTimeout(tid);
     info = await res.json();
   } catch(e) {
+    // Fetch failed — could be: app not running, OR permission was blocked.
+    // Distinguish by checking if the browser shows the blocked icon.
+    // We can't directly detect the block, but if the modal was just shown
+    // (pna_modal_shown) and this is the first attempt, assume block.
+    const modalJustShown = (() => {
+      try { return localStorage.getItem('pna_modal_shown') === '1'; } catch { return false; }
+    })();
+    const neverAllowed = (() => {
+      try { return localStorage.getItem('pna_allowed') !== '1'; } catch { return true; }
+    })();
+
+    if (!IS_DESKTOP && modalJustShown && neverAllowed) {
+      // Likely blocked — show the recovery screen
+      showBlockedHelp();
+      return;
+    }
     showNotRunning();
     return;
   }
-  // Beacon returns: { wssPort, wsLocalPort, httpImagePort, state, job }
+
+  // Success — mark as allowed so we skip the modal next time
+  try { localStorage.setItem('pna_allowed', '1'); } catch {}
+  try { localStorage.removeItem('pna_modal_shown'); } catch {}
+
   const { wssPort: wp, wsLocalPort: wlp, httpImagePort: hp, state, job } = info;
   wssPort     = wp;
   wsLocalPort = wlp;
@@ -1399,7 +1651,7 @@ async function startDiscovery() {
 function buildWsUrl() {
   return IS_DESKTOP
     ? `ws://127.0.0.1:${wsLocalPort}/`
-    : `wss://${WS_HOST}:${wssPort}/`;
+    : `wss://${WS_HOST}:${wssPort}/ws`;
 }
 
 function connectWs(initialState, initialJob) {
@@ -1914,7 +2166,7 @@ function showRestoreBanner(text) {
   document.getElementById('restoreBanner').classList.add('visible');
 }
 function hideRestoreBanner() { document.getElementById('restoreBanner').classList.remove('visible'); }
-function launchApp() { window.location.href = APP_PROTOCOL; setTimeout(startDiscovery, 4000); }
+function launchApp() { window.location.href = APP_PROTOCOL; setTimeout(_startDiscoveryInternal, 4000); }
 function toast(msg, type) {
   const el = document.createElement('div');
   el.className = 'toast' + (type ? ' ' + type : '');
