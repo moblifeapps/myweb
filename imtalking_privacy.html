@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ImTalking Privacy Policy</title>
+<meta name="description" content="ImTalking's privacy policy: your photos, text, voice choices and generated videos are stored only on your own computer. The browser is used only to control the app and stores no cookies or personal data."/>
+<meta name="keywords" content="ImTalking privacy, ImTalking privacy policy, local video generation privacy, SadTalker privacy"/>
+<meta name="author" content="mlapplications.com"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="ImTalking Privacy Policy"/>
+<meta property="og:description" content="Everything you create in ImTalking stays on your own computer. Here's exactly what stays local, what leaves your machine, and why."/>
+<meta property="og:image" content="https://mlapplications.com/uploads/imtalkinglogo.webp"/>
+<meta property="og:url" content="https://mlapplications.com/imtalking_privacy.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ImTalking Privacy Policy"/>
+<meta name="twitter:description" content="Everything you create in ImTalking stays on your own computer."/>
+<link rel="canonical" href="https://mlapplications.com/imtalking_privacy.html"/>
+<style>
+:root {
+  --bg:          #0f1117;
+  --surface:     #181c27;
+  --surface2:    #1e2333;
+  --border:      #2a3148;
+  --accent:      #5b7fff;
+  --accent-glow: rgba(91,127,255,.18);
+  --green:       #3ecf82;
+  --text:        #e2e8f0;
+  --text2:       #8a94a8;
+  --text3:       #4e5a72;
+  --radius:      10px;
+  --mono:        'Cascadia Code','Fira Code','Consolas',monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter','Segoe UI',system-ui,sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh;
+}
+a { color: inherit; }
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 34px; height: 96px;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+}
+.topbar-brand { display: flex; align-items: center; gap: 16px; text-decoration: none; }
+.topbar-logo img { width: 64px; height: 64px; display: block; }
+.topbar-title { font-size: 22px; font-weight: 800; letter-spacing: -.5px; line-height: 1.15; }
+.topbar-sub   { font-size: 13px; color: var(--text2); margin-top: 2px; }
+.btn-store img { width: 160px; height: auto; display: block; border-radius: 6px; }
+
+.page-shell { display: flex; align-items: flex-start; max-width: 1180px; margin: 0 auto; }
+.sidebar {
+  width: 220px; flex-shrink: 0;
+  position: sticky; top: 96px;
+  padding: 24px 12px; display: flex; flex-direction: column; gap: 2px;
+  height: calc(100vh - 96px); overflow-y: auto;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 8px;
+  font-size: 13px; font-weight: 500; color: var(--text2);
+  text-decoration: none; transition: all .15s; border: 1px solid transparent;
+}
+.nav-item:hover { background: var(--surface2); color: var(--text); }
+.nav-item.active {
+  background: var(--accent-glow); border-color: rgba(91,127,255,.3);
+  color: var(--accent); font-weight: 600;
+}
+.nav-icon { flex-shrink: 0; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; }
+.nav-icon svg { width: 17px; height: 17px; stroke: currentColor; }
+.nav-divider { height: 1px; background: var(--border); margin: 10px 4px; }
+.subnav { display: flex; flex-direction: column; gap: 1px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
+.subnav-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); padding: 0 12px 8px; }
+.subnav a { font-size: 12.5px; color: var(--text2); text-decoration: none; padding: 6px 12px; border-radius: 6px; }
+.subnav a:hover { background: var(--surface2); color: var(--text); }
+.sidebar-footer {
+  margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px; text-decoration: none;
+  color: var(--text2); font-size: 11px; padding: 12px 8px 0;
+}
+.sidebar-footer img { width: 28px; height: 28px; border-radius: 6px; object-fit: contain; }
+.sidebar-footer:hover { color: var(--text); }
+
+main { flex: 1; padding: 40px 40px 80px; max-width: 760px; }
+.page-title { font-size: 30px; font-weight: 800; letter-spacing: -.6px; margin-bottom: 8px; }
+.page-updated { font-size: 12px; color: var(--text3); margin-bottom: 12px; }
+.page-lede  { font-size: 15px; color: var(--text2); line-height: 1.7; margin-bottom: 44px; max-width: 640px; }
+
+.info-section { margin-bottom: 34px; scroll-margin-top: 112px; }
+.info-section h2 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+.info-section p  { font-size: 13.5px; color: var(--text2); line-height: 1.75; margin-bottom: 10px; }
+.info-section ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 7px; margin: 10px 0; }
+.info-section ul li { font-size: 13.5px; color: var(--text2); line-height: 1.6; padding-left: 16px; position: relative; }
+.info-section ul li::before { content: '·'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+.info-section strong { color: var(--text); font-weight: 600; }
+.info-section code { color: var(--accent); font-family: var(--mono); font-size: 12px; }
+.info-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+.info-card-title { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+.info-card p { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin: 0; }
+.callout-good {
+  background: rgba(62,207,130,.08); border: 1px solid rgba(62,207,130,.25); border-radius: var(--radius);
+  padding: 14px 16px; margin-top: 10px; font-size: 13px; color: var(--text2); line-height: 1.65;
+}
+.callout-good strong { color: var(--green); }
+
+footer { text-align: center; padding: 28px; color: var(--text3); font-size: 12px; border-top: 1px solid var(--border); }
+footer a { color: var(--text2); }
+
+@media (max-width: 820px) {
+  .page-shell { flex-direction: column; }
+  .sidebar {
+    position: static; width: 100%; height: auto; flex-direction: row;
+    overflow-x: auto; padding: 12px 16px; border-bottom: 1px solid var(--border);
+  }
+  .sidebar-footer, .subnav { display: none; }
+  main { padding: 28px 20px 60px; }
+  .topbar { padding: 0 18px; }
+  .btn-store { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="topbar-brand" href="imtalking_how_to.html">
+    <div class="topbar-logo"><img src="uploads/imtalkinglogo.webp" alt="ImTalking logo" width="64" height="64"/></div>
+    <div>
+      <div class="topbar-title">ImTalking</div>
+      <div class="topbar-sub">Privacy Policy</div>
+    </div>
+  </a>
+  <a class="btn-store" href="https://apps.microsoft.com/detail/9P2FHF89K1T2?referrer=appbadge&cid=privacy&mode=full" target="_blank" rel="noopener">
+    <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft"/>
+  </a>
+</header>
+
+<div class="page-shell">
+  <nav class="sidebar" aria-label="ImTalking documentation">
+    <a class="nav-item" href="imtalking_how_to.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+      <span>How-To Guide</span>
+    </a>
+    <a class="nav-item" href="imtalking_videos_samples.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m22 8-5 4 5 4V8Z"/></svg></span>
+      <span>Video Samples</span>
+    </a>
+    <a class="nav-item" href="imtalking_help.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.5 2.5 0 0 1 4.8 1c0 1.5-2.3 1.8-2.3 3.4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg></span>
+      <span>Help &amp; Reference</span>
+    </a>
+    <a class="nav-item" href="imtalking_tips_and_tricks.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 2.6-1.4 4.9-3.5 6.2V17a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1.8A7 7 0 0 1 12 2z"/><path d="M9 21h6"/><path d="M9 18h6"/></svg></span>
+      <span>Tips &amp; Tricks</span>
+    </a>
+
+    <div class="nav-divider"></div>
+
+    <a class="nav-item active" href="imtalking_privacy.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+      <span>Privacy</span>
+    </a>
+    <a class="nav-item" href="imtalking_contactus.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg></span>
+      <span>Contact</span>
+    </a>
+
+    <div class="nav-divider"></div>
+    <a class="nav-item" href="imtalking://">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4 6 12l-2 6 6-2 8-8"/><path d="M14 4l4 4M10 16l-4 4"/></svg></span>
+      <span>Open the App</span>
+    </a>
+
+    <div class="subnav">
+      <div class="subnav-label">On this page</div>
+      <a href="#overview">What ImTalking does</a>
+      <a href="#local-storage">Everything stays local</a>
+      <a href="#browser-role">The browser's role</a>
+      <a href="#network">Network activity</a>
+      <a href="#tts-service">Text-to-Speech &amp; Microsoft</a>
+      <a href="#face-data">Face data</a>
+      <a href="#your-choices">Your settings</a>
+      <a href="#changes">Changes to this policy</a>
+    </div>
+
+    <a class="sidebar-footer" href="https://mlapplications.com/">
+      <img src="https://mlapplications.com/uploads/logo-big_2.webp" alt="mlapplications"/>
+      <span>mlapplications.com</span>
+    </a>
+  </nav>
+
+  <main>
+    <h1 class="page-title">Privacy Policy</h1>
+    <div class="page-updated">Last updated: July 2026</div>
+    <p class="page-lede">The short version: ImTalking runs on your own PC. Your photos, your text, your voice choices and your finished videos are stored on your hard drive — not on our servers, because we don't have any that hold your content. Below is exactly what that means in practice.</p>
+
+    <div class="info-section" id="overview">
+      <h2>What ImTalking does</h2>
+      <p>ImTalking is a Windows desktop application that turns a still photo into a talking-avatar video. You provide a photo and either type text (converted to speech) or supply your own audio file; ImTalking animates the photo's face to match that audio and renders a video.</p>
+      <p>The generation itself — face animation, lip-sync, and video rendering — runs entirely on your computer using SadTalker and GFPGAN. The page you're using right now to control the app (whether it's open in a browser or inside the app's own window) is only a remote control for the desktop program running on your PC — it is not where your content lives.</p>
+    </div>
+
+    <div class="info-section" id="local-storage">
+      <h2>Everything stays on your computer</h2>
+      <p>Every piece of content you create or import in ImTalking is stored locally, on your own hard drive, inside the desktop application's own data folders:</p>
+      <ul>
+        <li><strong>Avatar photos</strong> you import are saved to the app's local image library on your PC.</li>
+        <li><strong>Generated speech audio</strong> is written to a temporary local file during processing and deleted once the video is complete.</li>
+        <li><strong>Audio files you supply</strong> yourself (Audio File mode) are read directly from wherever you picked them on your PC and are never copied anywhere else.</li>
+        <li><strong>Finished videos</strong> are saved to <code>C:\Users\[you]\Videos\ImTalking\</code> and stay there until you move or delete them yourself.</li>
+        <li><strong>Your project history</strong> — the list of past generations shown in the Projects tab, along with the settings used for each — is stored in the desktop app's local data folder.</li>
+        <li><strong>Your favorited voices</strong> are saved locally by the desktop app the moment you star them.</li>
+      </ul>
+      <div class="callout-good"><strong>None of the above is ever uploaded, synced, or transmitted to us or anyone else.</strong> It exists only on the machine where ImTalking is installed, for as long as you choose to keep it.</div>
+    </div>
+
+    <div class="info-section" id="browser-role">
+      <h2>What the browser does — and doesn't do</h2>
+      <p>ImTalking's interface can be opened either inside the desktop app's own window, or in a regular web browser pointed at this website. Either way, the page you see is only a control surface: it sends your clicks and typing to the desktop app over a connection that stays on your own computer, and displays whatever the desktop app sends back.</p>
+      <p><strong>The browser does not store your content or your choices.</strong> No cookies are used anywhere on this page. The only thing the browser remembers locally is a couple of small technical flags — for example, whether you've already granted the one-time connection permission your browser may ask for the first time you visit — so you're not asked again on your next visit. Those flags contain no personal data, no text, no images, and no video: just a "yes, this was set up before" marker.</p>
+      <p>If you close the browser tab, or open ImTalking on a different computer, nothing about your photos, scripts, voice choices, or videos is lost or exposed — because none of it was ever stored in the browser to begin with.</p>
+    </div>
+
+    <div class="info-section" id="network">
+      <h2>Network activity</h2>
+      <p>ImTalking's connection to the internet is limited to a small, specific set of purposes:</p>
+      <ul>
+        <li>The page you're viewing communicates with the desktop app running on your own machine (<code>127.0.0.1</code>) — even when the connection uses an <code>mlapplications.com</code> address for its security certificate, it always connects to your own computer, never to a remote server.</li>
+        <li>Text-to-Speech requests are sent to Microsoft's Edge TTS cloud service to generate the spoken audio — see the next section for details.</li>
+        <li>A one-time, periodic check downloads a security certificate needed for this local connection to work.</li>
+        <li>The desktop app may check for a small promotional file listing other mlapplications.com apps, shown in an optional banner — this contains no personal data about you.</li>
+      </ul>
+      <p>ImTalking includes <strong>no analytics and no usage tracking</strong> of any kind. We don't know what you generate, how often you use the app, or what's in your videos.</p>
+    </div>
+
+    <div class="info-section" id="tts-service">
+      <h2>Text-to-Speech &amp; Microsoft Edge</h2>
+      <p>This is the one place where content you type does leave your computer, and we want to be specific about it rather than bury it: when you use <strong>Text to Speech</strong> mode, the text you enter is sent to Microsoft's Edge TTS cloud service in order to generate the spoken audio, using the same technology built into Microsoft Edge. This exchange is governed by Microsoft's own privacy practices, not ours.</p>
+      <p>If you'd rather nothing you type ever leaves your computer, use <strong>Audio File</strong> mode instead and supply your own recording — in that mode, no text or audio is sent anywhere.</p>
+    </div>
+
+    <div class="info-section" id="face-data">
+      <h2>Face data</h2>
+      <p>ImTalking uses SadTalker's 3D facial model (3DMM) to animate your source photo. This face-coefficient extraction happens entirely on your device — the coefficients are used immediately to render your video and are then discarded. No biometric data, face model, or facial coefficients are stored after generation, and none are ever transmitted anywhere.</p>
+    </div>
+
+    <div class="info-section" id="your-choices">
+      <h2>Your settings and favorites</h2>
+      <p>Pitch and rate adjustments, processing options (Enhance/GFPGAN, Upscale, Expression Scale, Still mode), and your starred favorite voices are all saved locally by the desktop app so they're remembered between sessions. You can clear or reset any of this at any time from within the app, since it's simply a file on your own computer.</p>
+    </div>
+
+    <div class="info-section" id="changes">
+      <h2>Changes to this policy</h2>
+      <p>If this policy changes, we'll update this page and revise the "Last updated" date above. Since ImTalking doesn't collect contact information from you, we can't notify you directly — checking back here is the way to stay current.</p>
+      <p>Questions about any of this? <a href="imtalking_contactus.html" style="color:var(--accent)">Get in touch</a>.</p>
+    </div>
+  </main>
+</div>
+
+<footer>© 2026 ImTalking · <a href="https://mlapplications.com/">mlapplications.com</a></footer>
+
+</body>
+</html>
