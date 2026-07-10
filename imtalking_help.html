@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ImTalking Help &amp; Reference</title>
+<meta name="description" content="Reference guide for ImTalking: what every Processing Option does, how sentence pauses work, where your videos are saved, and how your data stays private."/>
+<meta name="keywords" content="ImTalking help, ImTalking FAQ, GFPGAN explained, upscale explained, expression scale"/>
+<meta name="author" content="mlapplications.com"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="ImTalking Help &amp; Reference"/>
+<meta property="og:description" content="Everything each ImTalking setting does, where your files live, and how privacy works."/>
+<meta property="og:image" content="https://mlapplications.com/uploads/imtalkinglogo.webp"/>
+<meta property="og:url" content="https://mlapplications.com/imtalking_help.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ImTalking Help &amp; Reference"/>
+<meta name="twitter:description" content="Everything each ImTalking setting does, where your files live, and how privacy works."/>
+<link rel="canonical" href="https://mlapplications.com/imtalking_help.html"/>
+<style>
+:root {
+  --bg:          #0f1117;
+  --surface:     #181c27;
+  --surface2:    #1e2333;
+  --border:      #2a3148;
+  --accent:      #5b7fff;
+  --accent-glow: rgba(91,127,255,.18);
+  --green:       #3ecf82;
+  --text:        #e2e8f0;
+  --text2:       #8a94a8;
+  --text3:       #4e5a72;
+  --radius:      10px;
+  --mono:        'Cascadia Code','Fira Code','Consolas',monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter','Segoe UI',system-ui,sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh;
+}
+a { color: inherit; }
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 34px; height: 96px;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+}
+.topbar-brand { display: flex; align-items: center; gap: 16px; text-decoration: none; }
+.topbar-logo img { width: 64px; height: 64px; display: block; }
+.topbar-title { font-size: 22px; font-weight: 800; letter-spacing: -.5px; line-height: 1.15; }
+.topbar-sub   { font-size: 13px; color: var(--text2); margin-top: 2px; }
+.btn-store img { width: 160px; height: auto; display: block; border-radius: 6px; }
+
+.page-shell { display: flex; align-items: flex-start; max-width: 1180px; margin: 0 auto; }
+.sidebar {
+  width: 220px; flex-shrink: 0;
+  position: sticky; top: 96px;
+  padding: 24px 12px; display: flex; flex-direction: column; gap: 2px;
+  height: calc(100vh - 96px); overflow-y: auto;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 8px;
+  font-size: 13px; font-weight: 500; color: var(--text2);
+  text-decoration: none; transition: all .15s; border: 1px solid transparent;
+}
+.nav-item:hover { background: var(--surface2); color: var(--text); }
+.nav-item.active {
+  background: var(--accent-glow); border-color: rgba(91,127,255,.3);
+  color: var(--accent); font-weight: 600;
+}
+.nav-icon { flex-shrink: 0; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; }
+.nav-icon svg { width: 17px; height: 17px; stroke: currentColor; }
+.nav-divider { height: 1px; background: var(--border); margin: 10px 4px; }
+.sidebar-footer {
+  margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px; text-decoration: none;
+  color: var(--text2); font-size: 11px; padding: 12px 8px 0;
+}
+.sidebar-footer img { width: 28px; height: 28px; border-radius: 6px; object-fit: contain; }
+.sidebar-footer:hover { color: var(--text); }
+
+/* second-level "on this page" nav */
+.subnav { display: flex; flex-direction: column; gap: 1px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
+.subnav-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); padding: 0 12px 8px; }
+.subnav a { font-size: 12.5px; color: var(--text2); text-decoration: none; padding: 6px 12px; border-radius: 6px; }
+.subnav a:hover { background: var(--surface2); color: var(--text); }
+
+main { flex: 1; padding: 40px 40px 80px; max-width: 760px; }
+.page-title { font-size: 30px; font-weight: 800; letter-spacing: -.6px; margin-bottom: 10px; }
+.page-lede  { font-size: 15px; color: var(--text2); line-height: 1.7; margin-bottom: 44px; max-width: 640px; }
+
+.info-section { margin-bottom: 40px; scroll-margin-top: 112px; }
+.info-section h2 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+.info-section .section-sub { font-size: 13px; color: var(--text2); margin-bottom: 16px; line-height: 1.6; }
+.info-section p  { font-size: 13.5px; color: var(--text2); line-height: 1.75; margin-bottom: 8px; }
+.info-section ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 7px; margin: 8px 0; }
+.info-section ul li { font-size: 13.5px; color: var(--text2); line-height: 1.6; padding-left: 16px; position: relative; }
+.info-section ul li::before { content: '·'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+.info-section strong { color: var(--text); font-weight: 600; }
+.info-section code { color: var(--accent); font-family: var(--mono); font-size: 12px; }
+
+.info-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+.info-card-title { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+.info-card p { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin: 0; }
+
+.faq-item { border-bottom: 1px solid var(--border); padding: 16px 0; }
+.faq-item:last-child { border-bottom: none; }
+.faq-q { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+.faq-a { font-size: 13.5px; color: var(--text2); line-height: 1.7; }
+
+footer { text-align: center; padding: 28px; color: var(--text3); font-size: 12px; border-top: 1px solid var(--border); }
+footer a { color: var(--text2); }
+
+@media (max-width: 820px) {
+  .page-shell { flex-direction: column; }
+  .sidebar {
+    position: static; width: 100%; height: auto; flex-direction: row;
+    overflow-x: auto; padding: 12px 16px; border-bottom: 1px solid var(--border);
+  }
+  .sidebar-footer, .nav-divider, .subnav { display: none; }
+  main { padding: 28px 20px 60px; }
+  .topbar { padding: 0 18px; }
+  .btn-store { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="topbar-brand" href="imtalking_how_to.html">
+    <div class="topbar-logo"><img src="uploads/imtalkinglogo.webp" alt="ImTalking logo" width="64" height="64"/></div>
+    <div>
+      <div class="topbar-title">ImTalking</div>
+      <div class="topbar-sub">Help &amp; Reference</div>
+    </div>
+  </a>
+  <a class="btn-store" href="https://apps.microsoft.com/detail/9P2FHF89K1T2?referrer=appbadge&cid=help&mode=full" target="_blank" rel="noopener">
+    <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft"/>
+  </a>
+</header>
+
+<div class="page-shell">
+  <nav class="sidebar" aria-label="ImTalking documentation">
+    <a class="nav-item" href="imtalking_how_to.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+      <span>How-To Guide</span>
+    </a>
+    <a class="nav-item" href="imtalking_videos_samples.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m22 8-5 4 5 4V8Z"/></svg></span>
+      <span>Video Samples</span>
+    </a>
+    <a class="nav-item active" href="imtalking_help.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.5 2.5 0 0 1 4.8 1c0 1.5-2.3 1.8-2.3 3.4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg></span>
+      <span>Help &amp; Reference</span>
+    </a>
+    <div class="nav-divider"></div>
+    <a class="nav-item" href="imtalking://">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4 6 12l-2 6 6-2 8-8"/><path d="M14 4l4 4M10 16l-4 4"/></svg></span>
+      <span>Open the App</span>
+    </a>
+
+    <div class="subnav">
+      <div class="subnav-label">On this page</div>
+      <a href="#processing-options">Processing Options</a>
+      <a href="#pause-behaviour">Sentence Pauses</a>
+      <a href="#library">Your Library</a>
+      <a href="#privacy">Privacy &amp; Data</a>
+      <a href="#faq">FAQ</a>
+    </div>
+
+    <a class="sidebar-footer" href="https://mlapplications.com/">
+      <img src="https://mlapplications.com/uploads/logo-big_2.webp" alt="mlapplications"/>
+      <span>mlapplications.com</span>
+    </a>
+  </nav>
+
+  <main>
+    <h1 class="page-title">Help &amp; Reference</h1>
+    <p class="page-lede">What every option does, where your files go, and how ImTalking handles your data.</p>
+
+    <div class="info-section" id="processing-options">
+      <h2>Processing Options Explained</h2>
+      <div class="info-card">
+        <div class="info-card-title">Batch Size</div>
+        <p>How many video frames are rendered at once. Higher = faster, but uses more RAM. The default of 2 is safe for most systems.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Upscale</div>
+        <p>Upscales the output to a higher resolution after rendering, adding clarity without re-rendering. Most useful when Enhance is off.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Expression Scale</div>
+        <p>Controls how expressive the lip and face movement is. 1.0 is natural; 1.2–1.5 gives more dramatic expressions.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Enhance — using GFPGAN</div>
+        <p>Applies GFPGAN face restoration to every frame for a noticeably sharper result. Adds processing time.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Still Mode</div>
+        <p>Keeps the head stable with minimal random movement — ideal for presentation-style videos.</p>
+      </div>
+    </div>
+
+    <div class="info-section" id="pause-behaviour">
+      <h2>Pause Behaviour Between Sentences</h2>
+      <p>ImTalking automatically inserts still-frame pauses between sentences based on punctuation:</p>
+      <ul>
+        <li><strong>Period, question mark, exclamation mark</strong> → 1.0 second still pause</li>
+        <li><strong>Comma, dash</strong> → 0.5 second still pause</li>
+      </ul>
+    </div>
+
+    <div class="info-section" id="library">
+      <h2>Accessing Your Video Library</h2>
+      <p>Every video you generate is saved automatically and listed in the <strong>Projects</strong> tab inside the app, along with the settings used to create it. Click <strong>Refresh</strong> there to load your history, or use <strong>Open Folder</strong> after any generation to jump straight to the file on disk.</p>
+      <p>Generated videos are saved locally to <code>C:\Users\[you]\Videos\SadTalker\</code> and never uploaded anywhere.</p>
+    </div>
+
+    <div class="info-section" id="privacy">
+      <h2>Privacy &amp; Data</h2>
+      <div class="section-sub">ImTalking processes everything locally on your machine. No data is sent to any cloud or external server.</div>
+      <ul>
+        <li>Imported photos are stored in the app's local library folder.</li>
+        <li>Generated speech audio is saved temporarily and deleted after the video is created.</li>
+        <li>Face data is extracted on-device using SadTalker's 3D facial model and discarded immediately after generation — nothing biometric is stored or transmitted.</li>
+        <li>The only network activity is downloading TTS voices via Microsoft Edge TTS and checking for certificate updates for the local connection — no analytics, no telemetry.</li>
+      </ul>
+    </div>
+
+    <div class="info-section" id="faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <div class="faq-q">Does ImTalking need an internet connection?</div>
+        <div class="faq-a">Only briefly, to fetch a Text-to-Speech voice the first time you use it. Generation itself — the face animation and rendering — runs entirely on your own PC.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I use my own recorded voice instead of Text-to-Speech?</div>
+        <div class="faq-a">Yes — switch to <strong>Audio File</strong> mode and pick any MP3 or WAV. See the <a href="imtalking_how_to.html#audio-file">How-To guide</a> for the exact steps.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Why does my video look soft or blurry?</div>
+        <div class="faq-a">Try enabling <strong>Enhance — using GFPGAN</strong> and using a higher-resolution, well-lit source photo. See <a href="imtalking_videos_samples.html">Video Samples</a> for a side-by-side comparison.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is ImTalking really free?</div>
+        <div class="faq-a">Yes — the full app, with no feature restrictions.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer>© 2026 ImTalking · <a href="https://mlapplications.com/">mlapplications.com</a></footer>
+
+</body>
+</html>

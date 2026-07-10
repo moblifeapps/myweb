@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>How ImTalking Works — Step-by-Step Guide</title>
+<meta name="description" content="Learn how to turn a photo into a talking avatar video with ImTalking: import an image, choose Text-to-Speech or an audio file, and generate — all running locally on your PC."/>
+<meta name="keywords" content="ImTalking how to, talking avatar tutorial, text to speech video, SadTalker Windows app"/>
+<meta name="author" content="mlapplications.com"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="How ImTalking Works — Step-by-Step Guide"/>
+<meta property="og:description" content="Turn a photo into a talking avatar video in four steps — locally, on your own PC."/>
+<meta property="og:image" content="https://mlapplications.com/uploads/imtalkinglogo.webp"/>
+<meta property="og:url" content="https://mlapplications.com/imtalking_how_to.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="How ImTalking Works"/>
+<meta name="twitter:description" content="Turn a photo into a talking avatar video in four steps — locally, on your own PC."/>
+<link rel="canonical" href="https://mlapplications.com/imtalking_how_to.html"/>
+<style>
+:root {
+  --bg:          #0f1117;
+  --surface:     #181c27;
+  --surface2:    #1e2333;
+  --border:      #2a3148;
+  --accent:      #5b7fff;
+  --accent-glow: rgba(91,127,255,.18);
+  --green:       #3ecf82;
+  --text:        #e2e8f0;
+  --text2:       #8a94a8;
+  --text3:       #4e5a72;
+  --radius:      10px;
+  --mono:        'Cascadia Code','Fira Code','Consolas',monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter','Segoe UI',system-ui,sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh;
+}
+a { color: inherit; }
+
+/* ── TOPBAR ───────────────────────────────────────────────────── */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 34px; height: 96px;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+}
+.topbar-brand { display: flex; align-items: center; gap: 16px; text-decoration: none; }
+.topbar-logo img { width: 64px; height: 64px; display: block; }
+.topbar-title { font-size: 22px; font-weight: 800; letter-spacing: -.5px; line-height: 1.15; }
+.topbar-sub   { font-size: 13px; color: var(--text2); margin-top: 2px; }
+.btn-store img { width: 160px; height: auto; display: block; border-radius: 6px; }
+
+/* ── PAGE SHELL ───────────────────────────────────────────────── */
+.page-shell { display: flex; align-items: flex-start; max-width: 1180px; margin: 0 auto; }
+.sidebar {
+  width: 220px; flex-shrink: 0;
+  position: sticky; top: 96px;
+  padding: 24px 12px; display: flex; flex-direction: column; gap: 2px;
+  height: calc(100vh - 96px); overflow-y: auto;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 8px;
+  font-size: 13px; font-weight: 500; color: var(--text2);
+  text-decoration: none; transition: all .15s; border: 1px solid transparent;
+}
+.nav-item:hover { background: var(--surface2); color: var(--text); }
+.nav-item.active {
+  background: var(--accent-glow); border-color: rgba(91,127,255,.3);
+  color: var(--accent); font-weight: 600;
+}
+.nav-icon { flex-shrink: 0; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; }
+.nav-icon svg { width: 17px; height: 17px; stroke: currentColor; }
+.nav-divider { height: 1px; background: var(--border); margin: 10px 4px; }
+.sidebar-footer {
+  margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px; text-decoration: none;
+  color: var(--text2); font-size: 11px; padding: 12px 8px 0;
+}
+.sidebar-footer img { width: 28px; height: 28px; border-radius: 6px; object-fit: contain; }
+.sidebar-footer:hover { color: var(--text); }
+
+/* ── MAIN CONTENT ─────────────────────────────────────────────── */
+main { flex: 1; padding: 40px 40px 80px; max-width: 780px; }
+.page-title { font-size: 30px; font-weight: 800; letter-spacing: -.6px; margin-bottom: 10px; }
+.page-lede  { font-size: 15px; color: var(--text2); line-height: 1.7; margin-bottom: 44px; max-width: 640px; }
+
+.step {
+  display: flex; gap: 18px; margin-bottom: 40px; scroll-margin-top: 112px;
+}
+.step-badge {
+  flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--accent), #a78bfa);
+  color: #fff; font-size: 14px; font-weight: 800;
+  box-shadow: 0 0 0 3px rgba(91,127,255,.12), 0 2px 8px rgba(91,127,255,.35);
+}
+.step-body h2 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.step-body p  { font-size: 14px; color: var(--text2); line-height: 1.75; margin-bottom: 10px; }
+.step-body ul { list-style: none; display: flex; flex-direction: column; gap: 7px; margin: 12px 0; }
+.step-body ul li { font-size: 13.5px; color: var(--text2); line-height: 1.6; padding-left: 16px; position: relative; }
+.step-body ul li::before { content: '·'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+.step-body strong { color: var(--text); font-weight: 600; }
+
+.sub-step { margin-top: 18px; padding-left: 20px; border-left: 2px solid var(--border); }
+.sub-step h3 { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+
+.callout {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 14px 16px; margin-top: 14px; font-size: 13px; color: var(--text2); line-height: 1.65;
+}
+.callout strong { color: var(--accent); }
+
+.next-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 56px; }
+.next-link {
+  flex: 1; min-width: 220px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px 18px; text-decoration: none; color: var(--text);
+  transition: border-color .15s;
+}
+.next-link:hover { border-color: var(--accent); }
+.next-link .nl-label { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: .6px; font-weight: 700; margin-bottom: 4px; }
+.next-link .nl-title { font-size: 14px; font-weight: 600; }
+
+footer { text-align: center; padding: 28px; color: var(--text3); font-size: 12px; border-top: 1px solid var(--border); }
+footer a { color: var(--text2); }
+
+@media (max-width: 820px) {
+  .page-shell { flex-direction: column; }
+  .sidebar {
+    position: static; width: 100%; height: auto; flex-direction: row;
+    overflow-x: auto; padding: 12px 16px; border-bottom: 1px solid var(--border);
+  }
+  .sidebar-footer, .nav-divider { display: none; }
+  main { padding: 28px 20px 60px; }
+  .topbar { padding: 0 18px; }
+  .btn-store { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="topbar-brand" href="imtalking_how_to.html">
+    <div class="topbar-logo"><img src="uploads/imtalkinglogo.webp" alt="ImTalking logo" width="64" height="64"/></div>
+    <div>
+      <div class="topbar-title">ImTalking</div>
+      <div class="topbar-sub">How-To Guide</div>
+    </div>
+  </a>
+  <a class="btn-store" href="https://apps.microsoft.com/detail/9P2FHF89K1T2?referrer=appbadge&cid=howto&mode=full" target="_blank" rel="noopener">
+    <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft"/>
+  </a>
+</header>
+
+<div class="page-shell">
+  <nav class="sidebar" aria-label="ImTalking documentation">
+    <a class="nav-item active" href="imtalking_how_to.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+      <span>How-To Guide</span>
+    </a>
+    <a class="nav-item" href="imtalking_videos_samples.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m22 8-5 4 5 4V8Z"/></svg></span>
+      <span>Video Samples</span>
+    </a>
+    <a class="nav-item" href="imtalking_help.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.5 2.5 0 0 1 4.8 1c0 1.5-2.3 1.8-2.3 3.4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg></span>
+      <span>Help &amp; Reference</span>
+    </a>
+    <div class="nav-divider"></div>
+    <a class="nav-item" href="imtalking://">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4 6 12l-2 6 6-2 8-8"/><path d="M14 4l4 4M10 16l-4 4"/></svg></span>
+      <span>Open the App</span>
+    </a>
+    <a class="sidebar-footer" href="https://mlapplications.com/">
+      <img src="https://mlapplications.com/uploads/logo-big_2.webp" alt="mlapplications"/>
+      <span>mlapplications.com</span>
+    </a>
+  </nav>
+
+  <main>
+    <h1 class="page-title">How ImTalking Works</h1>
+    <p class="page-lede">Four steps, all running locally on your PC — nothing you make here ever leaves your machine. Here's exactly how to go from a still photo to a finished talking-avatar video.</p>
+
+    <div class="step" id="import-library">
+      <div class="step-badge">1</div>
+      <div class="step-body">
+        <h2>Pick or import a source photo</h2>
+        <p>Your library shows every photo you've imported. Click one to select it, or bring in a new photo with <strong>＋ Import to Library</strong>.</p>
+        <ul>
+          <li>Use a <strong>square, well-lit, front-facing</strong> photo with a clean background — this is the single biggest factor in output quality.</li>
+          <li>The importer lets you <strong>drag to reposition</strong>, <strong>scroll or pinch to zoom</strong>, and drag the corner handles to fine-tune the crop before saving.</li>
+          <li>Once saved, the photo appears in your library instantly and is ready to select.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step" id="choosing-input-mode">
+      <div class="step-badge">2</div>
+      <div class="step-body">
+        <h2>Choose how the avatar will speak</h2>
+        <p>ImTalking supports two input modes — pick whichever fits what you're making:</p>
+        <ul>
+          <li><strong>Text to Speech</strong> — type what you want said and ImTalking generates the voice for you. Best when you don't have a recording, or want to iterate quickly on wording.</li>
+          <li><strong>Audio File</strong> — bring your own MP3 or WAV. Best when you already have a voiceover, narration, or a specific recorded performance you want lip-synced.</li>
+        </ul>
+
+        <div class="sub-step" id="text-to-speech">
+          <h3>Using Text to Speech</h3>
+          <p>Type your script, search the voice picker for a voice you like, and click <strong>Generate Speech Audio</strong> to preview it before rendering the video.</p>
+          <ul>
+            <li>Keep individual sentences <strong>under 15 words</strong> — ImTalking splits your text by sentence and renders each one separately, so shorter sentences render more predictably.</li>
+            <li>Use the <strong>Pitch</strong> and <strong>Rate</strong> sliders for subtle tone changes — small adjustments (±10–20) sound natural; large ones can sound artificial.</li>
+            <li>Star your favourite voices so they surface at the top of the picker next time.</li>
+          </ul>
+        </div>
+
+        <div class="sub-step" id="audio-file">
+          <h3>Using an Audio File</h3>
+          <p>Click <strong>Browse for MP3 / WAV…</strong>, choose your file, and preview it with the built-in player before generating. There's nothing else to configure — ImTalking handles the rest.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-badge">3</div>
+      <div class="step-body">
+        <h2>Fine-tune Processing Options</h2>
+        <p>Sensible defaults are already selected, so this step is optional — but a few settings are worth knowing about:</p>
+        <ul>
+          <li><strong>Enhance – using GFPGAN</strong> applies face restoration to every frame for a sharper result, at the cost of extra processing time.</li>
+          <li><strong>Still mode</strong> keeps the head stable with minimal random movement — good for presentation-style videos.</li>
+          <li><strong>Expression Scale</strong> controls how animated the face is; 1.0 is natural, 1.2–1.5 is more expressive.</li>
+        </ul>
+        <div class="callout">Not sure what a setting actually looks like? <strong><a href="imtalking_videos_samples.html">See side-by-side video samples →</a></strong></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-badge">4</div>
+      <div class="step-body">
+        <h2>Generate your video</h2>
+        <p>Click <strong>Generate Video</strong>. You'll see frame-by-frame progress as ImTalking renders each sentence and assembles the final clip.</p>
+        <ul>
+          <li>Click <strong>Generate Video</strong> again while a job is running to queue another — it starts automatically once the current one finishes.</li>
+          <li>The queue keeps going even if you close the window — you'll get a Windows notification when each video is ready.</li>
+          <li>Every finished video is saved locally and shows up in your <strong>Projects</strong> tab for quick access later.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="next-links">
+      <a class="next-link" href="imtalking_videos_samples.html">
+        <div class="nl-label">See it in action</div>
+        <div class="nl-title">Video Samples →</div>
+      </a>
+      <a class="next-link" href="imtalking_help.html">
+        <div class="nl-label">Go deeper</div>
+        <div class="nl-title">Help &amp; Reference →</div>
+      </a>
+    </div>
+  </main>
+</div>
+
+<footer>© 2026 ImTalking · <a href="https://mlapplications.com/">mlapplications.com</a></footer>
+
+</body>
+</html>

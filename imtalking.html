@@ -455,6 +455,23 @@ html.light-theme .card.card-muted { opacity: 1; }
   background: linear-gradient(135deg, var(--green), #22c55e);
   box-shadow: 0 0 0 3px rgba(62,207,130,.12), 0 2px 8px rgba(62,207,130,.35);
 }
+
+/* ── GUIDED STEP COMPLETION ───────────────────────────────────────── */
+/* Applied to steps 1 (Source Image) and 3 (TTS / Audio) once their
+   requirement is met. Steps 2 and 4 always have valid defaults, so
+   they intentionally never get this treatment — green stays a
+   meaningful "you provided this" signal, not decoration. */
+.card.step-complete { border-color: var(--green); transition: border-color .25s ease; }
+.step-badge.done {
+  background: linear-gradient(135deg, var(--green), #22c55e);
+  box-shadow: 0 0 0 3px rgba(62,207,130,.12), 0 2px 8px rgba(62,207,130,.35);
+  transition: background .25s ease, box-shadow .25s ease;
+}
+@keyframes readyPulse {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(91,127,255,.08), 0 4px 24px rgba(0,0,0,.15); }
+  50%      { box-shadow: 0 0 0 4px rgba(62,207,130,.4), 0 4px 28px rgba(62,207,130,.28); }
+}
+.progress-section.ready-pulse { animation: readyPulse .85s ease-in-out 2; }
 .mode-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
 .mode-btn {
   display: flex; align-items: center; justify-content: center; gap: 7px;
@@ -1096,9 +1113,9 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 
         <!-- LEFT COL: Source Image — the primary asset the user picks first -->
         <div class="left-col">
-          <div class="card">
+          <div class="card" id="cardStep1">
             <div class="card-label-row">
-              <span class="step-badge">1</span>
+              <span class="step-badge" id="stepBadge1">1</span>
               <div class="card-label">Source Image</div>
             </div>
             <div class="img-toolbar">
@@ -1139,7 +1156,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 
           <div class="card panel visible" id="panelTts">
             <div class="card-label-row">
-              <span class="step-badge">3</span>
+              <span class="step-badge" id="stepBadge3tts">3</span>
               <div class="card-label">Text to Speech</div>
             </div>
             <div>
@@ -1179,7 +1196,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 
           <div class="card panel" id="panelAudio">
             <div class="card-label-row">
-              <span class="step-badge">3</span>
+              <span class="step-badge" id="stepBadge3audio">3</span>
               <div class="card-label">Audio File</div>
             </div>
             <div>
@@ -1232,7 +1249,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
               <div class="full">
                 <div class="checks">
                   <label class="check-item"><input type="checkbox" id="optStill" checked/> Still mode</label>
-                  <label class="check-item"><input type="checkbox" id="optEnhancer"/> Enhancer</label>
+                  <label class="check-item"><input type="checkbox" id="optEnhancer"/> Enhance - using GFPGAN</label>
                 </div>
               </div>
             </div>
@@ -1241,8 +1258,8 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 
         <div class="section-divider"></div>
 
-        <div class="generate-section-wrap">
-          <div class="progress-section">
+        <div class="generate-section-wrap" id="generateSection">
+          <div class="progress-section" id="progressSectionCard">
             <div class="card-label-row" style="margin-bottom:-2px">
               <span class="step-badge step-final">5</span>
               <div class="card-label">Generate</div>
@@ -1446,6 +1463,7 @@ let wssPort       = null;
 let wsLocalPort   = null;   // plain ws:// port for WebView2 desktop mode
 let reconnectTimer    = null;
 let queuePendingCount = 0;  // kept in sync via 'queue_update' broadcasts
+let generateReadyShown = false; // guided scroll+pulse fires once per page session
 
 // ════════════════════════════════════════════════════════════════════
 //  SPLASH
@@ -1465,6 +1483,7 @@ function hideNotRunning() { document.getElementById('notRunning').classList.remo
 function showMainUI() {
   document.getElementById('mainUI').style.display = 'flex';
   if (ws && ws.readyState === WebSocket.OPEN) loadProjects(true);
+  updateGenerateBtn();
 }
 
 function switchTab(tab) {
@@ -2012,8 +2031,39 @@ function updateGenerateBtn() {
     ? !!ttsAudioPath
     : document.getElementById('audioPath').value.trim().length > 0;
   const connected = ws && ws.readyState === WebSocket.OPEN;
+
+  // ── Step 1 — Source Image ──────────────────────────────────────
+  document.getElementById('cardStep1').classList.toggle('step-complete', hasImage);
+  document.getElementById('stepBadge1').textContent = hasImage ? '✓' : '1';
+  document.getElementById('stepBadge1').classList.toggle('done', hasImage);
+
+  // ── Step 3 — TTS / Audio (only the active panel can be "done") ──
+  const ttsDone   = mode === 'tts'   && hasAudio;
+  const audioDone = mode === 'audio' && hasAudio;
+  document.getElementById('panelTts').classList.toggle('step-complete', ttsDone);
+  document.getElementById('panelAudio').classList.toggle('step-complete', audioDone);
+  document.getElementById('stepBadge3tts').textContent = ttsDone ? '✓' : '3';
+  document.getElementById('stepBadge3tts').classList.toggle('done', ttsDone);
+  document.getElementById('stepBadge3audio').textContent = audioDone ? '✓' : '3';
+  document.getElementById('stepBadge3audio').classList.toggle('done', audioDone);
+
+  // ── Step 5 — Generate ────────────────────────────────────────────
   // Generate stays enabled while running — subsequent clicks auto-queue
-  document.getElementById('btnGenerate').disabled = !hasImage || !hasAudio || !connected;
+  const btnGenerate = document.getElementById('btnGenerate');
+  const wasDisabled = btnGenerate.disabled;
+  const nowReady    = hasImage && hasAudio && connected;
+  btnGenerate.disabled = !nowReady;
+
+  // First time everything lines up this session: draw the eye to
+  // Generate without stealing keyboard focus from whatever the user
+  // is doing (e.g. still adjusting a slider).
+  if (nowReady && wasDisabled && !generateReadyShown) {
+    generateReadyShown = true;
+    document.getElementById('generateSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const card = document.getElementById('progressSectionCard');
+    card.classList.add('ready-pulse');
+    card.addEventListener('animationend', () => card.classList.remove('ready-pulse'), { once: true });
+  }
 }
 function startGeneration() {
   if (!selImage) { toast('Select a source image first', ''); return; }
