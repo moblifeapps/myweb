@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1058,8 +1056,16 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 
       <div class="nav-divider"></div>
 
-      <!-- GROUP 2: Help & Tips — tinted background -->
+      <!-- GROUP 2: How-To / Samples / Help & Tips — tinted background -->
       <div class="nav-group">
+        <div class="nav-item" id="nav-howto" onclick="sendMsg({type:'open_url', url:HOWTO_URL})">
+          <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+          <span class="nav-label">How To ..</span>
+        </div>
+        <div class="nav-item" id="nav-samples" onclick="sendMsg({type:'open_url', url:SAMPLES_URL})">
+          <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m22 8-5 4 5 4V8Z"/></svg></span>
+          <span class="nav-label">Video Samples</span>
+        </div>
         <div class="nav-item" id="nav-help" onclick="sendMsg({type:'open_url', url:HELP_URL})">
           <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.5 2.5 0 0 1 4.8 1c0 1.5-2.3 1.8-2.3 3.4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg></span>
           <span class="nav-label">Help</span>
@@ -1440,11 +1446,13 @@ const IS_DESKTOP = _urlParams.get('mode') === 'desktop'
 
 // ── URLs sent from WPF on connect via 'init_urls' message ──────────
 // Fallback values used in browser mode or before WPF sends the URLs.
-let HELP_URL    = 'https://mlapplications.com/hlp_unreachable.html';
+let HELP_URL    = 'https://mlapplications.com/imtalking_help.html';
 let PRIVACY_URL = 'https://mlapplications.com/unreachable_privacy.html';
 let WEBSITE_URL = 'https://mlapplications.com/';
 let RATEUS_URL  = 'ms-windows-store://review/?ProductId=9P2FHF89K1T2';
-let TIPS_URL    = 'https://mlapplications.com/';
+let TIPS_URL    = 'https://mlapplications.com/imtalking_tips_and_tricks.html';
+let HOWTO_URL   = 'https://mlapplications.com/imtalking_how_to.html';
+let SAMPLES_URL = 'https://mlapplications.com/imtalking_videos_samples.html';
 
 // ════════════════════════════════════════════════════════════════════
 //  STATE
@@ -1883,6 +1891,8 @@ function handleMessage(msg) {
       if (msg.website_url) WEBSITE_URL = msg.website_url;
       if (msg.rateus_url)  RATEUS_URL  = msg.rateus_url;
       if (msg.tips_url)    TIPS_URL    = msg.tips_url;
+      if (msg.howto_url)   HOWTO_URL   = msg.howto_url;
+      if (msg.samples_url) SAMPLES_URL = msg.samples_url;
       // Apply the stored theme (Dark/Light) from WPF settings
       if (msg.theme) applyTheme(msg.theme === 'Light');
       // Restore autostart toggle state from WPF settings

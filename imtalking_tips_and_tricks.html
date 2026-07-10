@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ImTalking Tips &amp; Tricks</title>
+<meta name="description" content="Practical tips for ImTalking: when to use GFPGAN enhancement, how to set Expression Scale, recommended pitch and speech rate ranges, and why to split long scripts into several shorter videos."/>
+<meta name="keywords" content="ImTalking tips, GFPGAN quality, expression scale, edge-tts pitch rate, SadTalker tips"/>
+<meta name="author" content="mlapplications.com"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="ImTalking Tips &amp; Tricks"/>
+<meta property="og:description" content="Practical, tested guidance for getting the best results out of ImTalking."/>
+<meta property="og:image" content="https://mlapplications.com/uploads/imtalkinglogo.webp"/>
+<meta property="og:url" content="https://mlapplications.com/imtalking_tips_and_tricks.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ImTalking Tips &amp; Tricks"/>
+<meta name="twitter:description" content="Practical, tested guidance for getting the best results out of ImTalking."/>
+<link rel="canonical" href="https://mlapplications.com/imtalking_tips_and_tricks.html"/>
+<style>
+:root {
+  --bg:          #0f1117;
+  --surface:     #181c27;
+  --surface2:    #1e2333;
+  --border:      #2a3148;
+  --accent:      #5b7fff;
+  --accent-glow: rgba(91,127,255,.18);
+  --green:       #3ecf82;
+  --amber:       #f5a623;
+  --text:        #e2e8f0;
+  --text2:       #8a94a8;
+  --text3:       #4e5a72;
+  --radius:      10px;
+  --mono:        'Cascadia Code','Fira Code','Consolas',monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter','Segoe UI',system-ui,sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh;
+}
+a { color: inherit; }
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 34px; height: 96px;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+}
+.topbar-brand { display: flex; align-items: center; gap: 16px; text-decoration: none; }
+.topbar-logo img { width: 64px; height: 64px; display: block; }
+.topbar-title { font-size: 22px; font-weight: 800; letter-spacing: -.5px; line-height: 1.15; }
+.topbar-sub   { font-size: 13px; color: var(--text2); margin-top: 2px; }
+.btn-store img { width: 160px; height: auto; display: block; border-radius: 6px; }
+
+.page-shell { display: flex; align-items: flex-start; max-width: 1180px; margin: 0 auto; }
+.sidebar {
+  width: 220px; flex-shrink: 0;
+  position: sticky; top: 96px;
+  padding: 24px 12px; display: flex; flex-direction: column; gap: 2px;
+  height: calc(100vh - 96px); overflow-y: auto;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 8px;
+  font-size: 13px; font-weight: 500; color: var(--text2);
+  text-decoration: none; transition: all .15s; border: 1px solid transparent;
+}
+.nav-item:hover { background: var(--surface2); color: var(--text); }
+.nav-item.active {
+  background: var(--accent-glow); border-color: rgba(91,127,255,.3);
+  color: var(--accent); font-weight: 600;
+}
+.nav-icon { flex-shrink: 0; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; }
+.nav-icon svg { width: 17px; height: 17px; stroke: currentColor; }
+.nav-divider { height: 1px; background: var(--border); margin: 10px 4px; }
+.subnav { display: flex; flex-direction: column; gap: 1px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
+.subnav-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); padding: 0 12px 8px; }
+.subnav a { font-size: 12.5px; color: var(--text2); text-decoration: none; padding: 6px 12px; border-radius: 6px; }
+.subnav a:hover { background: var(--surface2); color: var(--text); }
+.sidebar-footer {
+  margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px; text-decoration: none;
+  color: var(--text2); font-size: 11px; padding: 12px 8px 0;
+}
+.sidebar-footer img { width: 28px; height: 28px; border-radius: 6px; object-fit: contain; }
+.sidebar-footer:hover { color: var(--text); }
+
+main { flex: 1; padding: 40px 40px 80px; max-width: 780px; }
+.page-title { font-size: 30px; font-weight: 800; letter-spacing: -.6px; margin-bottom: 10px; }
+.page-lede  { font-size: 15px; color: var(--text2); line-height: 1.7; margin-bottom: 44px; max-width: 640px; }
+
+.tip-section { margin-bottom: 44px; scroll-margin-top: 112px; }
+.tip-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.tip-icon {
+  flex-shrink: 0; width: 30px; height: 30px; border-radius: 8px;
+  background: var(--accent-glow); display: flex; align-items: center; justify-content: center;
+}
+.tip-icon svg { width: 16px; height: 16px; stroke: var(--accent); }
+.tip-heading h2 { font-size: 17px; font-weight: 700; }
+.tip-section p { font-size: 13.5px; color: var(--text2); line-height: 1.75; margin-bottom: 10px; }
+.tip-section strong { color: var(--text); font-weight: 600; }
+.tip-section ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 7px; margin: 10px 0; }
+.tip-section ul li { font-size: 13.5px; color: var(--text2); line-height: 1.6; padding-left: 16px; position: relative; }
+.tip-section ul li::before { content: '·'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+/* trade-off bar (GFPGAN) */
+.tradeoff { display: flex; gap: 12px; margin: 14px 0; }
+.tradeoff-card { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+.tradeoff-card .to-label { font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--text3); margin-bottom: 6px; }
+.tradeoff-card .to-value { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.tradeoff-card.on .to-value  { color: var(--green); }
+.tradeoff-card.off .to-value { color: var(--text2); }
+.tradeoff-card .to-note { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+/* expression scale gauge */
+.scale-gauge { margin: 18px 0 10px; }
+.scale-track { position: relative; height: 8px; border-radius: 4px;
+  background: linear-gradient(90deg, var(--surface2), var(--accent-glow), var(--surface2)); }
+.scale-marks { display: flex; justify-content: space-between; margin-top: 10px; }
+.scale-mark { text-align: center; font-size: 12px; flex: 1; }
+.scale-mark .sm-val { font-weight: 700; color: var(--text); font-family: var(--mono); font-size: 13px; }
+.scale-mark .sm-label { color: var(--text2); font-size: 11.5px; margin-top: 2px; }
+.scale-dot {
+  position: absolute; top: 50%; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--accent); border: 2px solid var(--bg); transform: translate(-50%,-50%);
+}
+
+/* audio param cards */
+.param-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+.param-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; }
+.param-card h3 { font-size: 13.5px; font-weight: 700; margin-bottom: 6px; }
+.param-card .param-range { font-family: var(--mono); font-size: 12px; color: var(--accent); margin-bottom: 8px; }
+.param-card p { font-size: 12.5px; color: var(--text2); line-height: 1.65; margin: 0; }
+
+.callout-good {
+  background: rgba(62,207,130,.08); border: 1px solid rgba(62,207,130,.25); border-radius: var(--radius);
+  padding: 14px 16px; margin-top: 14px; font-size: 13px; color: var(--text2); line-height: 1.65;
+}
+.callout-good strong { color: var(--green); }
+
+footer { text-align: center; padding: 28px; color: var(--text3); font-size: 12px; border-top: 1px solid var(--border); }
+footer a { color: var(--text2); }
+
+@media (max-width: 820px) {
+  .page-shell { flex-direction: column; }
+  .sidebar {
+    position: static; width: 100%; height: auto; flex-direction: row;
+    overflow-x: auto; padding: 12px 16px; border-bottom: 1px solid var(--border);
+  }
+  .sidebar-footer, .subnav { display: none; }
+  main { padding: 28px 20px 60px; }
+  .topbar { padding: 0 18px; }
+  .btn-store { display: none; }
+  .tradeoff, .param-grid { flex-direction: column; grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="topbar-brand" href="imtalking_how_to.html">
+    <div class="topbar-logo"><img src="uploads/imtalkinglogo.webp" alt="ImTalking logo" width="64" height="64"/></div>
+    <div>
+      <div class="topbar-title">ImTalking</div>
+      <div class="topbar-sub">Tips &amp; Tricks</div>
+    </div>
+  </a>
+  <a class="btn-store" href="https://apps.microsoft.com/detail/9P2FHF89K1T2?referrer=appbadge&cid=tips&mode=full" target="_blank" rel="noopener">
+    <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft"/>
+  </a>
+</header>
+
+<div class="page-shell">
+  <nav class="sidebar" aria-label="ImTalking documentation">
+    <a class="nav-item" href="imtalking_how_to.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+      <span>How-To Guide</span>
+    </a>
+    <a class="nav-item" href="imtalking_videos_samples.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m22 8-5 4 5 4V8Z"/></svg></span>
+      <span>Video Samples</span>
+    </a>
+    <a class="nav-item" href="imtalking_help.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.5 2.5 0 0 1 4.8 1c0 1.5-2.3 1.8-2.3 3.4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg></span>
+      <span>Help &amp; Reference</span>
+    </a>
+    <a class="nav-item active" href="imtalking_tips_and_tricks.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 2.6-1.4 4.9-3.5 6.2V17a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1.8A7 7 0 0 1 12 2z"/><path d="M9 21h6"/><path d="M9 18h6"/></svg></span>
+      <span>Tips &amp; Tricks</span>
+    </a>
+    <div class="nav-divider"></div>
+    <a class="nav-item" href="imtalking://">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4 6 12l-2 6 6-2 8-8"/><path d="M14 4l4 4M10 16l-4 4"/></svg></span>
+      <span>Open the App</span>
+    </a>
+
+    <div class="subnav">
+      <div class="subnav-label">On this page</div>
+      <a href="#gfpgan">Enhance / GFPGAN</a>
+      <a href="#expression">Expression Scale</a>
+      <a href="#voice-params">Pitch &amp; Rate</a>
+      <a href="#long-scripts">Long Scripts</a>
+    </div>
+
+    <a class="sidebar-footer" href="https://mlapplications.com/">
+      <img src="https://mlapplications.com/uploads/logo-big_2.webp" alt="mlapplications"/>
+      <span>mlapplications.com</span>
+    </a>
+  </nav>
+
+  <main>
+    <h1 class="page-title">Tips &amp; Tricks</h1>
+    <p class="page-lede">A few things worth knowing before you spend render time — none of it is required, but each one changes the result in a specific way.</p>
+
+    <div class="tip-section" id="gfpgan">
+      <div class="tip-heading">
+        <div class="tip-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg></div>
+        <h2>Enhance — using GFPGAN: quality vs. speed</h2>
+      </div>
+      <p>GFPGAN runs a dedicated face-restoration pass over every single frame. It's the difference-maker for sharpness — but that extra pass takes real time, so it isn't free.</p>
+      <div class="tradeoff">
+        <div class="tradeoff-card off">
+          <div class="to-label">Enhance off</div>
+          <div class="to-value">Faster renders</div>
+          <div class="to-note">Good for previewing wording, timing and voice choice quickly.</div>
+        </div>
+        <div class="tradeoff-card on">
+          <div class="to-label">Enhance on</div>
+          <div class="to-value">Sharper, cleaner face</div>
+          <div class="to-note">Noticeably longer render time — best saved for your final export.</div>
+        </div>
+      </div>
+      <p>A practical workflow: leave Enhance <strong>off</strong> while you're iterating, then turn it <strong>on</strong> for the take you're actually going to keep.</p>
+    </div>
+
+    <div class="tip-section" id="expression">
+      <div class="tip-heading">
+        <div class="tip-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div>
+        <h2>Don't overdo Expression Scale</h2>
+      </div>
+      <p>This slider controls how much the face and head move. It's easy to push too far — here's what each end actually looks like:</p>
+      <div class="scale-gauge">
+        <div class="scale-track"></div>
+        <div class="scale-marks">
+          <div class="scale-mark"><div class="sm-val">0.7</div><div class="sm-label">Mostly still</div></div>
+          <div class="scale-mark"><div class="sm-val">1.0</div><div class="sm-label">Natural (default)</div></div>
+          <div class="scale-mark"><div class="sm-val">1.2</div><div class="sm-label">A lot of movement</div></div>
+        </div>
+      </div>
+      <ul>
+        <li><strong>0.7</strong> keeps the head close to still — useful for a calm, composed presentation feel.</li>
+        <li><strong>1.0</strong> is the natural default and the right starting point for most videos.</li>
+        <li><strong>1.2</strong> already moves the head a lot — treat anything above this as a deliberate, expressive choice rather than a default.</li>
+      </ul>
+    </div>
+
+    <div class="tip-section" id="voice-params">
+      <div class="tip-heading">
+        <div class="tip-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V5a4 4 0 0 0-4-4Z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v4"/></svg></div>
+        <h2>Pitch &amp; Speech Rate — how far to push them</h2>
+      </div>
+      <p>ImTalking's voice comes from Microsoft's Edge TTS engine, which takes pitch as a shift in Hz and rate as a percentage change from the voice's natural speed — that's exactly what the two sliders control. Because both are relative to each voice's own baseline, the same number can feel bigger on some voices than others, so treat the ranges below as a starting point, not a rule.</p>
+      <div class="param-grid">
+        <div class="param-card">
+          <h3>Pitch</h3>
+          <div class="param-range">±10–20 Hz</div>
+          <p>Reads as natural intonation variation. Pushing toward the ±50 Hz limit starts to sound artificial, since it's a large shift relative to most voices' baseline pitch.</p>
+        </div>
+        <div class="param-card">
+          <h3>Speech Rate</h3>
+          <div class="param-range">±10–20%</div>
+          <p>Slows down dense text or adds energy without drawing attention to itself. Near the ±50% extremes, speech starts to sound rushed or unnaturally slow.</p>
+        </div>
+      </div>
+      <p>Both sliders go to ±50 mainly to leave room for deliberate effect — for standard narration, small adjustments almost always sound better than large ones.</p>
+    </div>
+
+    <div class="tip-section" id="long-scripts">
+      <div class="tip-heading">
+        <div class="tip-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+        <h2>For long scripts, generate several short videos instead of one long one</h2>
+      </div>
+      <p>If you have a large amount of text, it's tempting to paste it all in and generate one long video. In practice, splitting it into smaller chunks — a paragraph or a few sentences at a time — and generating each as its own independent video usually works out better:</p>
+      <ul>
+        <li>Each render finishes faster, so you can check the result and move on instead of waiting on one long job.</li>
+        <li>If one section needs a re-take (wrong emphasis, a mispronounced word), you only re-render that piece — not the whole thing.</li>
+        <li>Shorter, independent clips are easier to review, reorder, or drop into a video editor afterward if you want to combine them with transitions, titles, or music.</li>
+      </ul>
+      <div class="callout-good"><strong>Rule of thumb:</strong> if your script has more than a handful of sentences, split it at natural breaks — topic changes, paragraph breaks — and queue each part as its own generation.</div>
+    </div>
+  </main>
+</div>
+
+<footer>© 2026 ImTalking · <a href="https://mlapplications.com/">mlapplications.com</a></footer>
+
+</body>
+</html>
