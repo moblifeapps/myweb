@@ -1902,6 +1902,14 @@ function handleMessage(msg) {
       }
       break;
 
+    // WPF broadcasts this when the theme is changed from *another*
+    // window (not this page's own Settings tab) — e.g. a tray menu
+    // or a separate settings window — so every connected client
+    // (this page, and any other open browser tab) stays in sync.
+    case 'theme_changed':
+      if (msg.theme) applyTheme(msg.theme === 'Light');
+      break;
+
     // WPF cached a remote asset locally — update any ad that uses it
     case 'asset_cached':
       if (msg.url && msg.local_url) {
