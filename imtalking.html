@@ -503,66 +503,50 @@ textarea:focus, input[type=text]:focus, select:focus {
 textarea { resize: vertical; min-height: 76px; line-height: 1.5; }
 select { cursor: pointer; }
 select option { background: var(--surface2); }
-.voice-picker { position: relative; }
-.voice-input-wrap { display: flex; align-items: center; gap: 0; }
-.voice-search {
-  flex: 1; background: var(--surface2); border: 1px solid var(--border);
-  border-right: none; border-radius: 7px 0 0 7px;
-  color: var(--text); font-size: 13px; font-family: inherit;
-  padding: 8px 11px; outline: none; transition: border-color .17s;
+.voice-lang-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a94a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center; background-size: 16px;
+  padding-right: 32px;
 }
-.voice-search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
-.voice-search::placeholder { color: var(--text3); }
-.voice-gender-badge {
-  display: flex; align-items: center; justify-content: center;
-  width: 30px; height: 36px;
-  background: var(--surface2); border: 1px solid var(--border);
-  border-left: none; border-right: none;
-  font-size: 13px; flex-shrink: 0;
+html.light-theme .voice-lang-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a5278' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
 }
-.voice-clear-btn {
-  display: flex; align-items: center; justify-content: center;
-  width: 30px; height: 36px;
-  background: var(--surface2); border: 1px solid var(--border);
-  border-left: none; border-radius: 0 7px 7px 0;
-  color: var(--text3); cursor: pointer; font-size: 14px;
-  transition: color .15s; flex-shrink: 0;
-}
-.voice-clear-btn:hover { color: var(--text); }
-.voice-dropdown {
-  display: none; position: fixed;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 9px; z-index: 1000;
+.voice-list {
   max-height: 280px; overflow-y: auto;
-  box-shadow: 0 8px 32px rgba(0,0,0,.5);
-  min-width: 200px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 9px; padding: 4px;
 }
-.voice-dropdown.open { display: block; }
-.voice-dropdown::-webkit-scrollbar { width: 4px; }
-.voice-dropdown::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-.voice-section-label {
+.voice-list::-webkit-scrollbar { width: 4px; }
+.voice-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.voice-list-section-label {
   font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
-  color: var(--text3); padding: 8px 12px 4px; position: sticky; top: 0;
-  background: var(--surface); z-index: 1;
+  color: var(--text3); padding: 8px 10px 4px;
 }
-.voice-row {
-  display: flex; align-items: center; gap: 0;
-  padding: 0; cursor: pointer; transition: background .13s;
-  border-radius: 6px; margin: 1px 4px;
+.voice-list-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 10px; border-radius: 7px; margin-bottom: 2px;
+  cursor: pointer; transition: background .13s; border: 1px solid transparent;
 }
-.voice-row:hover  { background: var(--surface2); }
-.voice-row.active { background: var(--accent-glow); }
-.voice-row-main { flex: 1; padding: 8px 10px; display: flex; flex-direction: column; gap: 1px; }
-.voice-row-name   { font-size: 13px; font-weight: 500; color: var(--text); }
-.voice-row-meta   { font-size: 10px; color: var(--text3); }
-.voice-row-meta em { font-style: normal; color: var(--text2); }
-.voice-star {
-  width: 32px; height: 100%; display: flex; align-items: center; justify-content: center;
-  font-size: 15px; color: var(--text3); transition: color .15s, transform .15s;
-  flex-shrink: 0; padding: 8px 6px;
+.voice-list-row:hover  { background: var(--surface); }
+.voice-list-row.active { background: var(--accent-glow); border-color: rgba(91,127,255,.35); }
+.voice-list-gender { flex-shrink: 0; width: 14px; text-align: center; font-size: 13px; color: var(--text3); }
+.voice-list-row.active .voice-list-gender { color: var(--accent); }
+.voice-list-label { flex: 1; font-size: 13px; font-weight: 500; color: var(--text); }
+.voice-list-star {
+  flex-shrink: 0; font-size: 14px; color: var(--text3); padding: 2px;
+  transition: color .15s, transform .15s;
 }
-.voice-star:hover   { color: var(--amber); transform: scale(1.2); }
-.voice-star.starred { color: var(--amber); }
+.voice-list-star:hover   { color: var(--amber); transform: scale(1.15); }
+.voice-list-star.starred { color: var(--amber); }
+.voice-play-btn {
+  flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text2); cursor: pointer; transition: all .15s;
+}
+.voice-play-btn:hover   { border-color: var(--accent); color: var(--accent); }
+.voice-play-btn.playing { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+.voice-play-btn svg { width: 12px; height: 12px; }
 .voice-no-results { text-align: center; padding: 20px; color: var(--text3); font-size: 13px; }
 .img-toolbar {
   display: flex; align-items: center; justify-content: space-between;
@@ -1177,16 +1161,21 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
               </div>
             </div>
             <div>
-              <label class="field-label">Voice</label>
-              <div class="voice-picker" id="voicePicker">
-                <div class="voice-input-wrap">
-                  <input class="voice-search" id="voiceSearch" type="text" placeholder="Search voices… (loading)" autocomplete="off" spellcheck="false"/>
-                  <div class="voice-gender-badge" id="voiceGenderBadge" title="Gender"></div>
-                  <div class="voice-clear-btn" id="voiceClearBtn" title="Clear">✕</div>
-                </div>
-                <div class="voice-dropdown" id="voiceDropdown"></div>
+              <label class="field-label">Language</label>
+              <select class="voice-lang-select" id="voiceLangSelect" onchange="onLanguageChange()"><option>Loading…</option></select>
+            </div>
+            <div>
+              <label class="field-label">Gender</label>
+              <div class="mode-toggle">
+                <div class="mode-btn" id="genderMale" onclick="setVoiceGender('Male')">Male</div>
+                <div class="mode-btn active" id="genderFemale" onclick="setVoiceGender('Female')">Female</div>
               </div>
+            </div>
+            <div>
+              <label class="field-label">Voice</label>
+              <div class="voice-list" id="voiceList"><div class="voice-no-results">Loading voices…</div></div>
               <input type="hidden" id="ttsVoice" value=""/>
+              <audio id="voicePreviewAudio" preload="none" style="display:none"></audio>
             </div>
             <button class="btn btn-green" id="btnGenerateTts" onclick="generateTts()" disabled>🔊  Generate Speech Audio</button>
             <div class="audio-preview" id="audioPreview">
@@ -2478,10 +2467,25 @@ document.addEventListener('click', e => {
 
 // ════════════════════════════════════════════════════════════════════
 //  VOICE PICKER
+//  Language dropdown → Gender toggle → Voice list (rows with a
+//  favorite star and a preview Play button). Language/region display
+//  names are derived from the locale embedded in each voice's short
+//  name (e.g. "el-GR-AthinaNeural") via Intl.DisplayNames rather than
+//  a hand-maintained lookup table, so it stays correct as voices are
+//  added without needing to touch this file.
 // ════════════════════════════════════════════════════════════════════
-let allVoices   = [];
-let favorites   = [];
-let activeVoice = '';
+let allVoices      = [];
+let favorites      = [];
+let activeVoice    = '';
+let currentLangCode = '';
+let currentGender   = 'Female';
+let currentlyPlayingBtn = null;
+
+const PLAY_ICON  = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+const PAUSE_ICON = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>';
+
+const _langDisplay   = (() => { try { return new Intl.DisplayNames(['en'], { type: 'language' }); } catch { return null; } })();
+const _regionDisplay = (() => { try { return new Intl.DisplayNames(['en'], { type: 'region'   }); } catch { return null; } })();
 
 function parseVoices(txt) {
   return txt.split('\n').map(l => l.trim()).filter(Boolean)
@@ -2490,9 +2494,23 @@ function parseVoices(txt) {
       return { name: parts[0]||'', gender: parts[1]||'', category: parts[2]||'', style: parts[3]||'' };
     }).filter(v => v.name);
 }
+
+// Adds languageCode / languageName / regionName / shortName / label
+// (e.g. "Chinese - China - Xiaoxiao") derived from the voice name.
+function enrichVoice(v) {
+  const m = v.name.match(/^([a-z]{2,3})-([A-Z]{2})(?:-[a-z]+)?-(.+?)Neural(?:Multilingual)?$/);
+  if (!m) return { ...v, languageCode: '', languageName: v.name, regionName: '', shortName: v.name, label: v.name };
+  const [, langCode, regionCode, shortName] = m;
+  let languageName = langCode, regionName = regionCode;
+  try { if (_langDisplay)   languageName = _langDisplay.of(langCode)     || langCode;   } catch {}
+  try { if (_regionDisplay) regionName   = _regionDisplay.of(regionCode) || regionCode; } catch {}
+  return { ...v, languageCode: langCode, languageName, regionName, shortName,
+           label: `${languageName} - ${regionName} - ${shortName}` };
+}
+
 async function loadVoicesAndFavorites() {
   if (!httpBase) return;
-  const search = document.getElementById('voiceSearch');
+  const list = document.getElementById('voiceList');
   try {
     const [vRes, fRes] = await Promise.allSettled([
       fetch(`${httpBase}/data/voices.txt`),
@@ -2500,127 +2518,130 @@ async function loadVoicesAndFavorites() {
     ]);
     if (vRes.status === 'fulfilled' && vRes.value.ok) {
       const txt = await vRes.value.text();
-      allVoices = parseVoices(txt);
-      search.placeholder = `Search ${allVoices.length} voices…`;
-    } else { search.placeholder = 'voices.txt not found'; }
+      allVoices = parseVoices(txt).map(enrichVoice);
+      buildLanguageOptions();
+    } else { list.innerHTML = '<div class="voice-no-results">voices.txt not found</div>'; }
     favorites = (fRes.status === 'fulfilled' && fRes.value.ok) ? await fRes.value.json() : [];
-    renderDropdown('');
-  } catch(e) { search.placeholder = 'Could not load voices'; console.warn('[Voices]', e); }
+    renderVoiceList();
+  } catch(e) { list.innerHTML = '<div class="voice-no-results">Could not load voices</div>'; console.warn('[Voices]', e); }
 }
-function renderDropdown(query) {
-  const dd = document.getElementById('voiceDropdown');
-  const q  = query.toLowerCase().trim();
-  const favSet = new Set(favorites);
-  const matched = allVoices.filter(v =>
-    !q || v.name.toLowerCase().includes(q) || v.gender.toLowerCase().includes(q) || v.style.toLowerCase().includes(q));
+
+function buildLanguageOptions() {
+  const seen = new Map(); // langCode -> languageName
+  allVoices.forEach(v => { if (v.languageCode && !seen.has(v.languageCode)) seen.set(v.languageCode, v.languageName); });
+  const langs = [...seen.entries()].sort((a, b) => a[1].localeCompare(b[1]));
+  const sel = document.getElementById('voiceLangSelect');
+  sel.innerHTML = langs.map(([code, name]) => `<option value="${escHtml(code)}">${escHtml(name)}</option>`).join('');
+  if (langs.length && !currentLangCode) { currentLangCode = langs[0][0]; }
+  sel.value = currentLangCode;
+}
+
+function onLanguageChange() {
+  currentLangCode = document.getElementById('voiceLangSelect').value;
+  renderVoiceList();
+}
+
+function setVoiceGender(g) {
+  currentGender = g;
+  document.getElementById('genderMale').classList.toggle('active', g === 'Male');
+  document.getElementById('genderFemale').classList.toggle('active', g === 'Female');
+  renderVoiceList();
+}
+
+function renderVoiceList() {
+  stopVoicePreview();
+  const list = document.getElementById('voiceList');
+  if (!allVoices.length) { list.innerHTML = '<div class="voice-no-results">Loading voices…</div>'; return; }
+  const favSet   = new Set(favorites);
+  const matched  = allVoices.filter(v => v.languageCode === currentLangCode && v.gender === currentGender);
+  if (!matched.length) { list.innerHTML = '<div class="voice-no-results">No voices for this language/gender</div>'; return; }
   const favMatched   = matched.filter(v =>  favSet.has(v.name));
   const otherMatched = matched.filter(v => !favSet.has(v.name));
-  if (!matched.length) { dd.innerHTML = '<div class="voice-no-results">No voices match your search</div>'; return; }
   let html = '';
-  if (favMatched.length)   { html += '<div class="voice-section-label">⭐ Favorites</div>'; html += favMatched.map(v => voiceRowHtml(v, true)).join(''); }
-  if (otherMatched.length) { if (favMatched.length) html += '<div class="voice-section-label">All Voices</div>'; html += otherMatched.map(v => voiceRowHtml(v, false)).join(''); }
-  dd.innerHTML = html;
-  dd.querySelectorAll('.voice-row').forEach(row => {
+  if (favMatched.length)   { html += '<div class="voice-list-section-label">⭐ Favorites</div>'; html += favMatched.map(voiceListRowHtml).join(''); }
+  if (otherMatched.length) { if (favMatched.length) html += '<div class="voice-list-section-label">All Voices</div>'; html += otherMatched.map(voiceListRowHtml).join(''); }
+  list.innerHTML = html;
+  list.querySelectorAll('.voice-list-row').forEach(row => {
     const name = row.dataset.name;
-    row.querySelector('.voice-row-main').addEventListener('click', e => { e.stopPropagation(); pickVoice(name); });
-    row.querySelector('.voice-star').addEventListener('click',     e => { e.stopPropagation(); toggleFavorite(name); });
+    row.addEventListener('click', () => pickVoice(name));
+    row.querySelector('.voice-list-star').addEventListener('click', e => { e.stopPropagation(); toggleFavorite(name); });
+    row.querySelector('.voice-play-btn').addEventListener('click',  e => { e.stopPropagation(); playVoicePreview(name, row.querySelector('.voice-play-btn')); });
   });
 }
-function voiceRowHtml(v, isFav) {
+
+function voiceListRowHtml(v) {
   const isActive  = v.name === activeVoice ? ' active' : '';
-  const starClass = isFav ? ' starred' : '';
-  const genderIcon= v.gender === 'Female' ? '♀' : '♂';
-  const match     = v.name.match(/^([a-z]{2}-[A-Z]{2}(?:-[a-z]+)?)-(.+?)Neural(?:Multilingual)?$/);
-  const locale    = match ? match[1] : v.name;
-  const shortName = match ? match[2] : v.name;
-  return `<div class="voice-row${isActive}" data-name="${escHtml(v.name)}">
-    <div class="voice-row-main">
-      <div class="voice-row-name">${escHtml(shortName)} <span style="color:var(--text3);font-size:11px">${genderIcon}</span></div>
-      <div class="voice-row-meta"><em>${escHtml(locale)}</em> · ${escHtml(v.style)}</div>
-    </div>
-    <div class="voice-star${starClass}" title="Toggle favorite">★</div>
+  const starClass = favorites.includes(v.name) ? ' starred' : '';
+  const genderIcon = v.gender === 'Female' ? '♀' : '♂';
+  return `<div class="voice-list-row${isActive}" data-name="${escHtml(v.name)}">
+    <span class="voice-list-gender">${genderIcon}</span>
+    <span class="voice-list-label">${escHtml(v.label)}</span>
+    <span class="voice-list-star${starClass}" title="Toggle favorite">★</span>
+    <span class="voice-play-btn" title="Preview voice">${PLAY_ICON}</span>
   </div>`;
 }
+
 function pickVoice(name) {
+  const v = allVoices.find(x => x.name === name);
+  if (!v) return;
   activeVoice = name;
   document.getElementById('ttsVoice').value = name;
-  const v     = allVoices.find(x => x.name === name);
-  const match = name.match(/^([a-z]{2}-[A-Z]{2}(?:-[a-z]+)?)-(.+?)Neural/);
-  const label = match ? `${match[2]}Neural · ${match[1]}` : name;
-  document.getElementById('voiceSearch').value = label;
-  const badge = document.getElementById('voiceGenderBadge');
-  badge.textContent = v?.gender === 'Female' ? '♀' : '♂';
-  badge.title = v?.gender || '';
-  closeDropdown(); updateTtsBtn();
+  currentLangCode = v.languageCode || currentLangCode;
+  currentGender   = v.gender || currentGender;
+  document.getElementById('voiceLangSelect').value = currentLangCode;
+  document.getElementById('genderMale').classList.toggle('active', currentGender === 'Male');
+  document.getElementById('genderFemale').classList.toggle('active', currentGender === 'Female');
+  renderVoiceList();
+  updateTtsBtn();
 }
+
 function restoreVoice(name) {
   if (!name) return;
   const attempt = () => { if (!allVoices.length) { setTimeout(attempt, 200); return; } pickVoice(name); };
   attempt();
 }
+
 async function toggleFavorite(name) {
   favorites = favorites.includes(name) ? favorites.filter(f => f !== name) : [name, ...favorites];
-  renderDropdown(document.getElementById('voiceSearch').value);
+  renderVoiceList();
   try {
     await fetch(`${httpBase}/data/favorites`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(favorites)
     });
   } catch(e) { console.warn('[Favorites] save failed:', e); toast('Could not save favorite to app', 'error'); }
 }
-function openDropdown() {
-  const dd    = document.getElementById('voiceDropdown');
-  const input = document.getElementById('voiceSearch');
-  const wrap  = document.getElementById('voicePicker');
 
-  // Position the fixed dropdown exactly under the voice input wrap
-  const rect = wrap.getBoundingClientRect();
-  dd.style.top   = (rect.bottom + 4) + 'px';
-  dd.style.left  =  rect.left + 'px';
-  dd.style.width =  rect.width + 'px';
-
-  dd.classList.add('open');
-  renderDropdown(input.value);
+// ── VOICE PREVIEW PLAYBACK ──────────────────────────────────────────
+// Samples are hosted at a predictable URL per voice, e.g. for
+// "el-GR-AthinaNeural" → https://mlapplications.com/voice_samples/sample_el-GR-AthinaNeural.mp3
+function playVoicePreview(name, btnEl) {
+  const audio = document.getElementById('voicePreviewAudio');
+  if (currentlyPlayingBtn === btnEl) { stopVoicePreview(); return; }
+  stopVoicePreview();
+  audio.src = `https://mlapplications.com/voice_samples/sample_${name}.mp3`;
+  audio.play().catch(() => {
+    toast('Preview not available for this voice', 'error');
+    stopVoicePreview();
+  });
+  btnEl.classList.add('playing');
+  btnEl.innerHTML = PAUSE_ICON;
+  currentlyPlayingBtn = btnEl;
 }
-function closeDropdown() { document.getElementById('voiceDropdown').classList.remove('open'); }
-document.getElementById('voiceSearch').addEventListener('focus', openDropdown);
-document.getElementById('voiceSearch').addEventListener('input', function() {
-  if (!this.value.trim()) { activeVoice = ''; document.getElementById('ttsVoice').value = ''; document.getElementById('voiceGenderBadge').textContent = ''; }
-  renderDropdown(this.value); openDropdown(); updateTtsBtn();
-});
-document.getElementById('voiceClearBtn').addEventListener('click', () => {
-  activeVoice = '';
-  document.getElementById('ttsVoice').value    = '';
-  document.getElementById('voiceSearch').value = '';
-  document.getElementById('voiceGenderBadge').textContent = '';
-  closeDropdown(); updateTtsBtn();
-});
-document.addEventListener('click', e => { if (!document.getElementById('voicePicker').contains(e.target)) closeDropdown(); });
-
-// Reposition the fixed dropdown if the user scrolls or resizes
-// (since it's position:fixed it won't move with the page otherwise)
-function repositionDropdown() {
-  const dd = document.getElementById('voiceDropdown');
-  if (!dd.classList.contains('open')) return;
-  const rect = document.getElementById('voicePicker').getBoundingClientRect();
-  dd.style.top   = (rect.bottom + 4) + 'px';
-  dd.style.left  =  rect.left + 'px';
-  dd.style.width =  rect.width + 'px';
+function stopVoicePreview() {
+  const audio = document.getElementById('voicePreviewAudio');
+  audio.pause();
+  if (currentlyPlayingBtn) {
+    currentlyPlayingBtn.classList.remove('playing');
+    currentlyPlayingBtn.innerHTML = PLAY_ICON;
+    currentlyPlayingBtn = null;
+  }
 }
-document.querySelector('.tab-panel.active, .content-area')?.addEventListener('scroll', repositionDropdown);
-window.addEventListener('resize', repositionDropdown);
-// Also reposition on any scroll inside the content area
-document.getElementById('tab-new')?.addEventListener('scroll', repositionDropdown);
-document.getElementById('voiceSearch').addEventListener('keydown', e => {
-  const dd   = document.getElementById('voiceDropdown');
-  const rows = [...dd.querySelectorAll('.voice-row')];
-  if (!rows.length) return;
-  const active = dd.querySelector('.voice-row.active');
-  let idx = rows.indexOf(active);
-  if      (e.key === 'ArrowDown')  { e.preventDefault(); idx = Math.min(idx+1, rows.length-1); rows.forEach((r,i) => r.classList.toggle('active', i===idx)); rows[idx].scrollIntoView({ block:'nearest' }); }
-  else if (e.key === 'ArrowUp')    { e.preventDefault(); idx = Math.max(idx-1, 0); rows.forEach((r,i) => r.classList.toggle('active', i===idx)); rows[idx].scrollIntoView({ block:'nearest' }); }
-  else if (e.key === 'Enter')      { e.preventDefault(); if (active) pickVoice(active.dataset.name); }
-  else if (e.key === 'Escape')     { closeDropdown(); }
+document.getElementById('voicePreviewAudio').addEventListener('ended', stopVoicePreview);
+document.getElementById('voicePreviewAudio').addEventListener('error', () => {
+  if (currentlyPlayingBtn) toast('Preview not available for this voice', 'error');
+  stopVoicePreview();
 });
+
 
 // ════════════════════════════════════════════════════════════════════
 //  INLINE CROPPER MODAL
