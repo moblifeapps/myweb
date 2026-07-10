@@ -345,30 +345,34 @@ html.light-theme .nav-group { background: rgba(0,0,0,.04); }
 }
 .perm-actions { display: flex; gap: 10px; justify-content: center; }
 
-/* ── BLOCKED HELP SCREEN ─────────────────────────────────────────── */
-#blockedHelp {
-  position: fixed; inset: 0; z-index: 200;
-  background: var(--bg);
-  display: none; flex-direction: column;
-  align-items: center; justify-content: center; gap: 16px;
-  text-align: center; padding: 32px;
+/* ── NOT-RUNNING: BLOCKED-BY-BROWSER DISCLOSURE ─────────────────── */
+/* Folded into the notRunning screen instead of a separate auto-shown
+   screen, since fetch() can't tell us WHY discovery failed — blocked
+   permission and "app isn't running" throw the same generic error. */
+.nr-blocked-toggle {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12.5px; color: var(--text2); cursor: pointer;
+  padding: 8px 16px; border-radius: 20px;
+  border: 1px solid var(--border); background: var(--surface);
+  transition: all .15s; margin-top: 2px;
 }
-#blockedHelp.visible { display: flex; }
-.blocked-title { font-size: 22px; font-weight: 700; }
-.blocked-sub   { font-size: 14px; color: var(--text2); max-width: 460px; line-height: 1.7; }
-.blocked-steps {
+.nr-blocked-toggle:hover { border-color: var(--accent); color: var(--text); }
+.nr-blocked-chevron { font-size: 10px; transition: transform .2s; }
+.nr-blocked-chevron.open { transform: rotate(180deg); }
+.nr-blocked-panel {
+  display: none; width: 100%; max-width: 460px;
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 12px; padding: 20px 24px;
-  max-width: 460px; width: 100%; text-align: left;
+  border-radius: var(--radius); padding: 18px 20px;
+  text-align: left; margin-top: 2px;
 }
-.blocked-steps ol { padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
-.blocked-steps li { font-size: 13px; color: var(--text2); line-height: 1.6; }
-.blocked-steps li strong { color: var(--text); }
-.blocked-steps .blocked-url {
-  font-family: var(--mono); font-size: 11px; background: var(--surface2);
-  border: 1px solid var(--border); border-radius: 4px;
-  padding: 2px 7px; word-break: break-all; display: inline-block; margin-top: 3px;
-}
+.nr-blocked-panel.open { display: flex; flex-direction: column; gap: 14px; }
+.nr-blocked-intro { font-size: 12.5px; color: var(--text2); line-height: 1.6; }
+.blocked-step-card { display: flex; gap: 14px; align-items: center; }
+.blocked-step-visual { flex-shrink: 0; width: 84px; height: 50px; }
+.blocked-step-visual svg { width: 100%; height: 100%; display: block; }
+.blocked-step-text { font-size: 12.5px; color: var(--text2); line-height: 1.55; }
+.blocked-step-text strong { color: var(--text); }
+.nr-blocked-panel .btn { align-self: flex-start; margin-top: 2px; }
 .blocked-browser-tabs { display: flex; gap: 8px; justify-content: center; }
 .blocked-browser-tab {
   font-size: 12px; font-weight: 600; padding: 5px 14px;
@@ -891,17 +895,17 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 <div id="permissionModal">
   <div class="perm-card">
     <div class="perm-icon">🔌</div>
-    <div class="perm-title">One-time permission needed</div>
+    <div class="perm-title">Connecting to your desktop app</div>
     <div class="perm-body">
-      ImTalking communicates with the desktop app running on your PC.<br/>
-      Your browser will ask for permission to connect to it —
-      <strong>click Allow</strong> to continue.
+      ImTalking is about to connect to the desktop app running on your PC.<br/>
+      Some browsers show a one-time permission prompt for this —
+      <strong>click Allow</strong> if you see one.
     </div>
     <div class="perm-prompt-preview">
-      Your browser will show a prompt like this:<br/><br/>
+      If your browser asks, it'll look something like this:<br/><br/>
       <em>"mlapplications.com wants to access devices and services on your local network"</em><br/><br/>
-      👉 Click <span class="perm-allow">Allow</span> to connect.
-      If you click <span class="perm-block">Block</span> the app won't work.
+      👉 Click <span class="perm-allow">Allow</span> to continue.
+      Clicking <span class="perm-block">Block</span> will stop ImTalking from working.
     </div>
     <div class="perm-actions">
       <button class="btn btn-primary" onclick="onPermissionModalContinue()" style="padding:11px 32px;font-size:14px;">
@@ -909,30 +913,6 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
       </button>
     </div>
   </div>
-</div>
-
-<!-- ── BLOCKED HELP SCREEN ───────────────────────────────────────── -->
-<!-- Shown when the permission was blocked or the beacon failed      -->
-<!-- after a previous block. Gives step-by-step recovery per browser.-->
-<div id="blockedHelp">
-  <div style="font-size:48px">🚫</div>
-  <div class="blocked-title">Local network access was blocked</div>
-  <div class="blocked-sub">
-    ImTalking needs permission to connect to the desktop app on your PC.
-    Follow these steps to re-enable it in your browser:
-  </div>
-  <div class="blocked-browser-tabs">
-    <div class="blocked-browser-tab active" id="tab-chrome" onclick="showBrowserSteps('chrome')">Chrome</div>
-    <div class="blocked-browser-tab"        id="tab-edge"   onclick="showBrowserSteps('edge')">Edge</div>
-    <div class="blocked-browser-tab"        id="tab-opera"  onclick="showBrowserSteps('opera')">Opera</div>
-  </div>
-  <div class="blocked-steps">
-    <ol id="blockedStepsList"></ol>
-  </div>
-  <button class="btn btn-primary" onclick="retryAfterUnblock()" style="margin-top:4px">
-    ✓ I've allowed it — Try again
-  </button>
-  <span class="nr-retry" onclick="retryAfterUnblock()">Skip and try anyway</span>
 </div>
 
 <div id="notRunning">
@@ -943,6 +923,21 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
   <div class="nr-sub">The desktop app wasn't found. Launch it first, then return here — or click below to start it automatically.</div>
   <button class="btn btn-launch" onclick="launchApp()">🚀  Launch ImTalking</button>
   <span class="nr-retry" onclick="startDiscovery()">Try again manually</span>
+
+  <div class="nr-blocked-toggle" onclick="toggleBlockedHelp()">
+    <span>🔒 Blocked by your browser instead? Show me how to fix it</span>
+    <span class="nr-blocked-chevron" id="nrBlockedChevron">▾</span>
+  </div>
+  <div class="nr-blocked-panel" id="nrBlockedPanel">
+    <div class="nr-blocked-intro">If your browser blocked ImTalking from reaching apps on your PC, allow it manually:</div>
+    <div class="blocked-browser-tabs">
+      <div class="blocked-browser-tab active" id="tab-chrome" onclick="showBrowserSteps('chrome')">Chrome</div>
+      <div class="blocked-browser-tab"        id="tab-edge"   onclick="showBrowserSteps('edge')">Edge</div>
+      <div class="blocked-browser-tab"        id="tab-opera"  onclick="showBrowserSteps('opera')">Opera</div>
+    </div>
+    <div id="blockedStepsList"></div>
+    <button class="btn btn-primary" onclick="retryAfterUnblock()">✓ I've allowed it — Try again</button>
+  </div>
 </div>
 
 <div class="toast-wrap" id="toastWrap"></div>
@@ -1513,35 +1508,64 @@ function loadProjects(badgeOnly) {
 // ════════════════════════════════════════════════════════════════════
 //  PRIVATE NETWORK PERMISSION HANDLING
 //
-//  Chrome/Edge 94+ require explicit user permission for a public HTTPS
-//  page to connect to localhost. We show a pre-prompt modal on first
-//  visit so the user knows what Allow does, then detect if they blocked
-//  it and show recovery steps.
+//  Chrome/Edge can require explicit user permission for a public HTTPS
+//  page to connect to localhost. Both the control endpoint and the
+//  Kestrel/WSS server now send the Access-Control-Allow-Private-Network
+//  header, so in practice this usually no longer triggers a prompt —
+//  but we still prime first-time visitors with permissionModal as a
+//  safety net, since browser behavior here isn't fully guaranteed.
+//
+//  fetch() can't tell us WHETHER a later discovery failure was a
+//  blocked permission or the app genuinely not running — both throw
+//  the same generic error — so instead of trying to auto-detect that
+//  case, the recovery steps live as a collapsible section right inside
+//  the "not running" screen, and the user picks whichever applies.
 //
 //  Storage keys (localStorage):
-//    pna_allowed  — "1" once the user has successfully connected at
-//                   least once (skip the modal on subsequent visits)
-//    pna_browser  — last browser tab shown in the blocked help screen
+//    pna_allowed     — "1" once the user has successfully connected at
+//                      least once (skip the priming modal from then on)
+//    pna_modal_shown — "1" once the priming modal has been shown, even
+//                      if the connection then failed (don't nag on retry —
+//                      the notRunning disclosure takes over from here)
+//    pna_browser     — last browser tab shown in the recovery steps
 // ════════════════════════════════════════════════════════════════════
+
+// Two schematic diagrams (not real screenshots — browser UI changes
+// too often for those to stay accurate) shared across all three
+// browsers, since the underlying steps are the same shape everywhere:
+// find the lock icon, then flip "Local network devices" to Allow.
+const STEP_VISUAL_LOCK = `<svg viewBox="0 0 100 56" xmlns="http://www.w3.org/2000/svg">
+  <rect x="4" y="20" width="92" height="20" rx="10" fill="none" stroke="var(--border)" stroke-width="1.5"/>
+  <circle cx="18" cy="30" r="10" fill="var(--accent-glow)" stroke="var(--accent)" stroke-width="1.5"/>
+  <path d="M14 27v-2a4 4 0 0 1 8 0v2" fill="none" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round"/>
+  <rect x="13" y="27" width="10" height="8" rx="1.5" fill="var(--accent)"/>
+  <rect x="38" y="28" width="48" height="4" rx="2" fill="var(--border)"/>
+</svg>`;
+const STEP_VISUAL_TOGGLE = `<svg viewBox="0 0 100 56" xmlns="http://www.w3.org/2000/svg">
+  <rect x="4" y="4" width="92" height="48" rx="8" fill="none" stroke="var(--border)" stroke-width="1.5"/>
+  <rect x="12" y="14" width="50" height="5" rx="2.5" fill="var(--text3)"/>
+  <rect x="12" y="24" width="34" height="4" rx="2" fill="var(--border)"/>
+  <rect x="12" y="36" width="26" height="13" rx="6.5" fill="var(--border)"/>
+  <circle cx="18.5" cy="42.5" r="5" fill="var(--text3)"/>
+  <path d="M44 42h10" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+  <path d="M52 39l4 3-4 3" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="62" y="36" width="26" height="13" rx="6.5" fill="var(--accent)"/>
+  <circle cx="81.5" cy="42.5" r="5" fill="#fff"/>
+</svg>`;
+const STEP_VISUALS = [STEP_VISUAL_LOCK, STEP_VISUAL_TOGGLE];
 
 const BROWSER_STEPS = {
   chrome: [
-    'Click the <strong>lock / info icon</strong> (🔒) in the address bar.',
-    'Select <strong>Site settings</strong>.',
-    'Find <strong>"Local network devices"</strong> and change it to <strong>Allow</strong>.',
-    'Click <strong>"I\'ve allowed it — Try again"</strong> below.',
+    'Click the <strong>lock icon</strong> in the address bar, then <strong>Site settings</strong>.',
+    'Find <strong>"Local network devices"</strong> and set it to <strong>Allow</strong>.',
   ],
   edge: [
-    'Click the <strong>lock icon</strong> in the address bar.',
-    'Click <strong>Permissions for this site</strong>.',
+    'Click the <strong>lock icon</strong> in the address bar, then <strong>Permissions for this site</strong>.',
     'Find <strong>"Local network devices"</strong> and set it to <strong>Allow</strong>.',
-    'Click <strong>"I\'ve allowed it — Try again"</strong> below.',
   ],
   opera: [
-    'Click the <strong>lock icon</strong> in the address bar.',
-    'Select <strong>Site settings</strong>.',
-    'Find <strong>"Local network devices"</strong> and change it to <strong>Allow</strong>.',
-    'Click <strong>"I\'ve allowed it — Try again"</strong> below.',
+    'Click the <strong>lock icon</strong> in the address bar, then <strong>Site settings</strong>.',
+    'Find <strong>"Local network devices"</strong> and set it to <strong>Allow</strong>.',
   ],
 };
 
@@ -1558,33 +1582,39 @@ function showBrowserSteps(browser) {
   ['chrome','edge','opera'].forEach(b => {
     document.getElementById('tab-' + b)?.classList.toggle('active', b === browser);
   });
-  // Render steps
+  // Render step cards (schematic diagram + text)
   const steps = BROWSER_STEPS[browser] || BROWSER_STEPS.chrome;
-  document.getElementById('blockedStepsList').innerHTML =
-    steps.map(s => `<li>${s}</li>`).join('');
+  document.getElementById('blockedStepsList').innerHTML = steps.map((s, i) => `
+    <div class="blocked-step-card">
+      <div class="blocked-step-visual">${STEP_VISUALS[i] || STEP_VISUALS[0]}</div>
+      <div class="blocked-step-text">${i + 1}. ${s}</div>
+    </div>`).join('');
   try { localStorage.setItem('pna_browser', browser); } catch {}
 }
 
-function showBlockedHelp() {
-  hideSplash();
-  hideNotRunning();
-  document.getElementById('permissionModal').classList.remove('visible');
-  document.getElementById('blockedHelp').classList.add('visible');
-  // Auto-select the right browser tab
-  const saved = (() => { try { return localStorage.getItem('pna_browser'); } catch { return null; } })();
-  showBrowserSteps(saved || detectBrowser());
+function toggleBlockedHelp() {
+  const panel   = document.getElementById('nrBlockedPanel');
+  const chevron = document.getElementById('nrBlockedChevron');
+  const opening = !panel.classList.contains('open');
+  panel.classList.toggle('open', opening);
+  chevron.classList.toggle('open', opening);
+  if (opening) {
+    const saved = (() => { try { return localStorage.getItem('pna_browser'); } catch { return null; } })();
+    showBrowserSteps(saved || detectBrowser());
+  }
 }
 
 function retryAfterUnblock() {
-  document.getElementById('blockedHelp').classList.remove('visible');
-  // Clear the blocked flag so the modal doesn't reappear
+  // Clear the blocked flag so any future first-run priming can re-check
   try { localStorage.removeItem('pna_allowed'); } catch {}
   startDiscovery();
 }
 
 function onPermissionModalContinue() {
   document.getElementById('permissionModal').classList.remove('visible');
-  // Mark that we've shown the modal — don't show again until blocked
+  // Mark that we've primed the user — don't show the modal again on
+  // future visits, successful or not (the notRunning screen's own
+  // "Blocked by your browser?" disclosure covers the retry case).
   try { localStorage.setItem('pna_modal_shown', '1'); } catch {}
   _startDiscoveryInternal();
 }
@@ -1592,20 +1622,36 @@ function onPermissionModalContinue() {
 // ── DISCOVERY ─────────────────────────────────────────────────────
 
 async function startDiscovery() {
-  // Desktop edition uses ws://127.0.0.1 — no PNA permission needed.
-  // Browser edition: PNA is handled server-side via the
-  // Access-Control-Allow-Private-Network header on Kestrel — the browser
-  // no longer shows a permission dialog, so no pre-prompt modal needed.
+  // Desktop edition (WebView2) never touches a browser permission UI.
   if (IS_DESKTOP) {
     _startDiscoveryInternal();
     return;
   }
+
+  // Browser edition: both the discovery control endpoint and the main
+  // Kestrel/WSS server now send the Access-Control-Allow-Private-Network
+  // header, so in practice Chrome/Edge usually won't show a permission
+  // prompt at all anymore. We can't guarantee that across every browser
+  // and version though, so on a genuinely first visit we still prime
+  // the user with the modal as a safety net — it just no longer claims
+  // a prompt is guaranteed to appear.
+  const alreadyConnected  = (() => { try { return localStorage.getItem('pna_allowed')    === '1'; } catch { return false; } })();
+  const modalAlreadyShown = (() => { try { return localStorage.getItem('pna_modal_shown') === '1'; } catch { return false; } })();
+
+  if (!alreadyConnected && !modalAlreadyShown) {
+    hideSplash();
+    document.getElementById('permissionModal').classList.add('visible');
+    return; // onPermissionModalContinue() carries on to _startDiscoveryInternal()
+  }
+
   _startDiscoveryInternal();
 }
 
 async function _startDiscoveryInternal() {
   hideNotRunning();
-  document.getElementById('blockedHelp').classList.remove('visible');
+  // Collapse the recovery disclosure too, in case this is a retry
+  document.getElementById('nrBlockedPanel')?.classList.remove('open');
+  document.getElementById('nrBlockedChevron')?.classList.remove('open');
   showSplash('Looking for the desktop app…');
   let info;
   try {
