@@ -1642,6 +1642,19 @@ async function _startDiscoveryInternal() {
   document.getElementById('nrBlockedPanel')?.classList.remove('open');
   document.getElementById('nrBlockedChevron')?.classList.remove('open');
   showSplash('Looking for the desktop app…');
+
+  // Desktop edition: WPF injects port values directly into the page
+  // so we can skip the beacon fetch entirely and connect immediately.
+  if (IS_DESKTOP && window.__WS_LOCAL_PORT) {
+    wsLocalPort = window.__WS_LOCAL_PORT;
+    wssPort     = window.__WS_LOCAL_PORT;
+    // Use the injected httpBase (Kestrel) for images/audio/data endpoints
+    httpBase    = window.__HTTP_BASE || `https://mywbsck.mlapplications.com:${window.__HTTP_IMAGE_PORT}`;
+    splashMsg('Connecting to app…');
+    connectWs(null, null);
+    return;
+  }
+
   let info;
   try {
     const ctrl = new AbortController();
