@@ -151,10 +151,10 @@ footer a:hover{color:var(--text)}
   <!-- ENHANCE -->
   <div class="section">
     <div class="section-header">
-      <h2>Enhance — GFPGAN on vs. off</h2>
+      <h2>Enhance &mdash; GFPGAN on vs. off</h2>
       <p>GFPGAN face restoration runs on every frame for a sharper result, at the cost of extra render time.</p>
     </div>
-        <div class="video-grid cols-2">
+    <div class="video-grid cols-2">
       <div class="video-card">
         <div class="video-wrap">
           <video id="v-enhance-off" src="https://mlapplications.com/video_samples/enhance_off.mp4"
@@ -180,7 +180,7 @@ footer a:hover{color:var(--text)}
           </button>
         </div>
         <div class="video-caption">
-          <span class="video-badge badge-default">Enhance off — default look</span>
+          <span class="video-badge badge-default">Enhance off &mdash; default look</span>
           <h3>Without GFPGAN</h3>
           <p>Faster rendering, slightly softer facial detail.</p>
         </div>
@@ -210,7 +210,7 @@ footer a:hover{color:var(--text)}
           </button>
         </div>
         <div class="video-caption">
-          <span class="video-badge badge-enhanced">Enhance on — sharper</span>
+          <span class="video-badge badge-enhanced">Enhance on &mdash; sharper</span>
           <h3>With GFPGAN</h3>
           <p>Each frame is passed through face restoration. Noticeably crisper.</p>
         </div>
@@ -240,7 +240,7 @@ footer a:hover{color:var(--text)}
           </button>
         </div>
         <div class="video-caption">
-          <span class="video-badge badge-default">Enhance off — second example</span>
+          <span class="video-badge badge-default">Enhance off &mdash; second example</span>
           <h3>Without GFPGAN (avatar 2)</h3>
           <p>Another avatar showing baseline output without face restoration.</p>
         </div>
@@ -270,114 +270,21 @@ footer a:hover{color:var(--text)}
           </button>
         </div>
         <div class="video-caption">
-          <span class="video-badge badge-enhanced">Enhance on — second example</span>
+          <span class="video-badge badge-enhanced">Enhance on &mdash; second example</span>
           <h3>With GFPGAN (avatar 2)</h3>
-          <p>The same avatar with GFPGAN — sharper skin texture and eye detail.</p>
+          <p>The same avatar with GFPGAN &mdash; sharper skin texture and eye detail.</p>
         </div>
       </div>
-    </div>
-        </div>
-        <div class="video-controls">
-          <button class="ctrl-btn" onclick="togglePlay('v-enhance-off')" aria-label="Play/pause">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-enhance-off" d="M8 5v14l11-7z"/></svg>
-          </button>
-          <span class="ctrl-time" id="time-enhance-off">0:00</span>
-          <button class="ctrl-btn ctrl-loop on" id="loop-enhance-off" onclick="toggleLoop('v-enhance-off','loop-enhance-off')" title="Loop">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-          </button>
-          <button class="ctrl-btn ctrl-mute" id="mute-enhance-off" onclick="toggleMute('v-enhance-off')" title="Mute">
-            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
-            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
-          </button>
-        </div>
-        <div class="video-caption">
-          <span class="video-badge badge-default">Enhance off — default look</span>
-          <h3>Without GFPGAN</h3>
-          <p>Faster rendering, slightly softer facial detail.</p>
-        </div>
-      </div>
-      
     </div>
   </div>
 
   <!-- UPSCALE -->
   <div class="section">
     <div class="section-header">
-      <h2>Upscale — 512 px vs. 1024 px</h2>
+      <h2>Upscale &mdash; 512 px vs. 1024 px</h2>
       <p>Upscaling adds clarity after rendering without re-running the model. 512 px is the recommended sweet spot for most uses.</p>
     </div>
     <div class="video-grid cols-2">
-
-  <!-- STILL MODE -->
-  <div class="section">
-    <div class="section-header">
-      <h2>Still mode — on vs. off</h2>
-      <p>Still mode keeps the head stable with minimal drift — good for presentation-style videos.</p>
-    </div>
-    <div class="video-grid cols-2">
-      <div class="video-card">
-        <div class="video-wrap">
-          <video id="v-still-on" src="https://mlapplications.com/video_samples/still_on.mp4"
-            preload="metadata" loop playsinline></video>
-          <div class="video-overlay" onclick="togglePlay('v-still-on')">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-          <div class="video-progress" onclick="seekVideo(event,'v-still-on')">
-            <div class="video-progress-bar" id="bar-still-on"></div>
-          </div>
-        </div>
-        <div class="video-controls">
-          <button class="ctrl-btn" onclick="togglePlay('v-still-on')" aria-label="Play/pause">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-still-on" d="M8 5v14l11-7z"/></svg>
-          </button>
-          <span class="ctrl-time" id="time-still-on">0:00</span>
-          <button class="ctrl-btn ctrl-loop on" id="loop-still-on" onclick="toggleLoop('v-still-on','loop-still-on')" title="Loop">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-          </button>
-          <button class="ctrl-btn ctrl-mute" id="mute-still-on" onclick="toggleMute('v-still-on')" title="Mute">
-            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
-            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
-          </button>
-        </div>
-        <div class="video-caption">
-          <span class="video-badge badge-stable">Still mode on — stable</span>
-          <h3>Still mode on</h3>
-          <p>Head stays mostly fixed. Ideal for explainers and slides.</p>
-        </div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrap">
-          <video id="v-still-off" src="https://mlapplications.com/video_samples/still_off.mp4"
-            preload="metadata" loop playsinline></video>
-          <div class="video-overlay" onclick="togglePlay('v-still-off')">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-          <div class="video-progress" onclick="seekVideo(event,'v-still-off')">
-            <div class="video-progress-bar" id="bar-still-off"></div>
-          </div>
-        </div>
-        <div class="video-controls">
-          <button class="ctrl-btn" onclick="togglePlay('v-still-off')" aria-label="Play/pause">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-still-off" d="M8 5v14l11-7z"/></svg>
-          </button>
-          <span class="ctrl-time" id="time-still-off">0:00</span>
-          <button class="ctrl-btn ctrl-loop on" id="loop-still-off" onclick="toggleLoop('v-still-off','loop-still-off')" title="Loop">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-          </button>
-          <button class="ctrl-btn ctrl-mute" id="mute-still-off" onclick="toggleMute('v-still-off')" title="Mute">
-            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
-            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
-          </button>
-        </div>
-        <div class="video-caption">
-          <span class="video-badge badge-natural">Still mode off — natural drift</span>
-          <h3>Still mode off</h3>
-          <p>More natural head motion. Better for conversational avatars.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-        <div class="video-grid cols-2">
       <div class="video-card">
         <div class="video-wrap">
           <video id="v-upscale-512" src="https://mlapplications.com/video_samples/upscale_512.mp4"
@@ -403,7 +310,7 @@ footer a:hover{color:var(--text)}
           </button>
         </div>
         <div class="video-caption">
-          <span class="video-badge badge-rec">Upscale: 512 px — recommended</span>
+          <span class="video-badge badge-rec">Upscale: 512 px &mdash; recommended</span>
           <h3>512 px upscale</h3>
           <p>Good balance of quality and file size. Recommended for most uses.</p>
         </div>
@@ -433,7 +340,7 @@ footer a:hover{color:var(--text)}
           </button>
         </div>
         <div class="video-caption">
-          <span class="video-badge badge-sharp">Upscale: 1024 px — sharpest</span>
+          <span class="video-badge badge-sharp">Upscale: 1024 px &mdash; sharpest</span>
           <h3>1024 px upscale</h3>
           <p>Maximum clarity, larger file. Best for presentations and high-res exports.</p>
         </div>
@@ -441,20 +348,81 @@ footer a:hover{color:var(--text)}
     </div>
   </div>
 
-2>Still mode — on vs. off</h2>
-      <p>Still mode keeps the head stable with minimal drift — good for presentation-style videos.</p>
+  <!-- STILL MODE -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Still mode &mdash; on vs. off</h2>
+      <p>Still mode keeps the head stable with minimal drift &mdash; good for presentation-style videos.</p>
     </div>
     <div class="video-grid cols-2">
-      
-      
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-still-on" src="https://mlapplications.com/video_samples/still_on.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-still-on')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-still-on')">
+            <div class="video-progress-bar" id="bar-still-on"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-still-on')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-still-on" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-still-on">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-still-on" onclick="toggleLoop('v-still-on','loop-still-on')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-still-on" onclick="toggleMute('v-still-on')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-stable">Still mode on &mdash; stable</span>
+          <h3>Still mode on</h3>
+          <p>Head stays mostly fixed. Ideal for explainers and slides.</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-still-off" src="https://mlapplications.com/video_samples/still_off.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-still-off')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-still-off')">
+            <div class="video-progress-bar" id="bar-still-off"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-still-off')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-still-off" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-still-off">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-still-off" onclick="toggleLoop('v-still-off','loop-still-off')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-still-off" onclick="toggleMute('v-still-off')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-natural">Still mode off &mdash; natural drift</span>
+          <h3>Still mode off</h3>
+          <p>More natural head motion. Better for conversational avatars.</p>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- EXPRESSION SCALE -->
   <div class="section">
     <div class="section-header">
-      <h2>Expression scale — 0.7 vs. 1.2</h2>
-      <p>Controls how animated the face is. The default of 1.0 is the most natural — lower values are subtler, higher values are more dramatic.</p>
+      <h2>Expression scale &mdash; 0.7 vs. 1.2</h2>
+      <p>Controls how animated the face is. The default of 1.0 is the most natural &mdash; lower values are subtler, higher values are more dramatic.</p>
     </div>
     <div class="video-grid cols-2">
       <div class="video-card">
@@ -482,7 +450,7 @@ footer a:hover{color:var(--text)}
           </button>
         </div>
         <div class="video-caption">
-          <span class="video-badge badge-natural">Expression 0.7 — subtle</span>
+          <span class="video-badge badge-natural">Expression 0.7 &mdash; subtle</span>
           <h3>Expression scale 0.7</h3>
           <p>More restrained movement. Good for calm, measured delivery. The default of 1.0 sits between these two and is the most natural-looking.</p>
         </div>
@@ -512,7 +480,7 @@ footer a:hover{color:var(--text)}
           </button>
         </div>
         <div class="video-caption">
-          <span class="video-badge badge-expressive">Expression 1.2 — expressive</span>
+          <span class="video-badge badge-expressive">Expression 1.2 &mdash; expressive</span>
           <h3>Expression scale 1.2</h3>
           <p>More pronounced mouth movement. Works well for energetic or enthusiastic speech.</p>
         </div>
