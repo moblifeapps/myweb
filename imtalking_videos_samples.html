@@ -6,260 +6,593 @@
 <title>ImTalking Video Samples — Compare Settings Side-by-Side</title>
 <meta name="description" content="See what ImTalking's Processing Options actually look like — GFPGAN enhancement, upscale levels, still mode and expression scale, compared side-by-side."/>
 <meta name="keywords" content="ImTalking samples, GFPGAN comparison, talking avatar examples, SadTalker samples"/>
-<meta name="author" content="mlapplications.com"/>
-<meta property="og:type" content="website"/>
 <meta property="og:title" content="ImTalking Video Samples — Compare Settings Side-by-Side"/>
 <meta property="og:description" content="See exactly what each ImTalking setting looks like before you generate."/>
 <meta property="og:image" content="https://mlapplications.com/uploads/imtalkinglogo.webp"/>
+<meta property="og:type" content="website"/>
 <meta property="og:url" content="https://mlapplications.com/imtalking_videos_samples.html"/>
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="ImTalking Video Samples"/>
 <meta name="twitter:description" content="See exactly what each ImTalking setting looks like before you generate."/>
 <link rel="canonical" href="https://mlapplications.com/imtalking_videos_samples.html"/>
 <style>
-:root {
-  --bg:          #0f1117;
-  --surface:     #181c27;
-  --surface2:    #1e2333;
-  --border:      #2a3148;
-  --accent:      #5b7fff;
-  --accent-glow: rgba(91,127,255,.18);
-  --green:       #3ecf82;
-  --text:        #e2e8f0;
-  --text2:       #8a94a8;
-  --text3:       #4e5a72;
-  --radius:      10px;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0e0f11;--surface:#18191d;--surface2:#21222a;--border:#2a2b35;
+  --text:#e8e9f0;--text2:#9899a8;--text3:#5a5b6a;
+  --accent:#5b7fff;--green:#3ecf8e;--amber:#f5a623;
+  --radius:10px;--font:system-ui,-apple-system,sans-serif;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Inter','Segoe UI',system-ui,sans-serif;
-  background: var(--bg); color: var(--text);
-  min-height: 100vh;
-}
-a { color: inherit; }
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.6;min-height:100vh}
 
-.topbar {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 34px; height: 96px;
-  background: var(--surface); border-bottom: 1px solid var(--border);
-  position: sticky; top: 0; z-index: 100;
-}
-.topbar-brand { display: flex; align-items: center; gap: 16px; text-decoration: none; }
-.topbar-logo img { width: 64px; height: 64px; display: block; }
-.topbar-title { font-size: 22px; font-weight: 800; letter-spacing: -.5px; line-height: 1.15; }
-.topbar-sub   { font-size: 13px; color: var(--text2); margin-top: 2px; }
-.btn-store img { width: 160px; height: auto; display: block; border-radius: 6px; }
+/* ── NAV ── */
+.topnav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);font-weight:700;font-size:17px}
+.nav-brand img{width:36px;height:36px;border-radius:8px}
+.nav-links{display:flex;gap:4px}
+.nav-links a{color:var(--text2);text-decoration:none;padding:6px 12px;border-radius:6px;font-size:13px;transition:color .15s,background .15s}
+.nav-links a:hover{color:var(--text);background:var(--surface2)}
+.nav-links a.active{color:var(--accent)}
+.nav-badge img{height:28px;opacity:.9;transition:opacity .15s}
+.nav-badge img:hover{opacity:1}
 
-.page-shell { display: flex; align-items: flex-start; max-width: 1180px; margin: 0 auto; }
-.sidebar {
-  width: 220px; flex-shrink: 0;
-  position: sticky; top: 96px;
-  padding: 24px 12px; display: flex; flex-direction: column; gap: 2px;
-  height: calc(100vh - 96px); overflow-y: auto;
-}
-.nav-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 12px; border-radius: 8px;
-  font-size: 13px; font-weight: 500; color: var(--text2);
-  text-decoration: none; transition: all .15s; border: 1px solid transparent;
-}
-.nav-item:hover { background: var(--surface2); color: var(--text); }
-.nav-item.active {
-  background: var(--accent-glow); border-color: rgba(91,127,255,.3);
-  color: var(--accent); font-weight: 600;
-}
-.nav-icon { flex-shrink: 0; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; }
-.nav-icon svg { width: 17px; height: 17px; stroke: currentColor; }
-.nav-divider { height: 1px; background: var(--border); margin: 10px 4px; }
-.sidebar-footer {
-  margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border);
-  display: flex; align-items: center; gap: 10px; text-decoration: none;
-  color: var(--text2); font-size: 11px; padding: 12px 8px 0;
-}
-.sidebar-footer img { width: 28px; height: 28px; border-radius: 6px; object-fit: contain; }
-.sidebar-footer:hover { color: var(--text); }
+/* ── HERO ── */
+.hero{text-align:center;padding:56px 24px 40px;max-width:700px;margin:0 auto}
+.hero h1{font-size:28px;font-weight:700;margin-bottom:12px;letter-spacing:-.3px}
+.hero p{color:var(--text2);font-size:15px;max-width:540px;margin:0 auto}
 
-main { flex: 1; padding: 40px 40px 80px; }
-.page-title { font-size: 30px; font-weight: 800; letter-spacing: -.6px; margin-bottom: 10px; }
-.page-lede  { font-size: 15px; color: var(--text2); line-height: 1.7; margin-bottom: 12px; max-width: 640px; }
-.status-note {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
-  padding: 7px 14px; font-size: 12px; color: var(--text2); margin-bottom: 44px;
-}
-.status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber, #f5a623); flex-shrink: 0; }
+/* ── SECTIONS ── */
+.sections{max-width:1000px;margin:0 auto;padding:0 24px 80px}
+.section{margin-bottom:64px}
+.section-header{margin-bottom:24px}
+.section-header h2{font-size:18px;font-weight:600;margin-bottom:6px}
+.section-header p{color:var(--text2);font-size:14px}
 
-.compare-group { margin-bottom: 52px; }
-.compare-heading { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-.compare-sub { font-size: 13px; color: var(--text2); margin-bottom: 18px; line-height: 1.6; }
-.sample-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+/* ── VIDEO GRID ── */
+.video-grid{display:grid;gap:20px}
+.video-grid.cols-2{grid-template-columns:repeat(2,1fr)}
+.video-grid.cols-3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:640px){
+  .video-grid.cols-2,.video-grid.cols-3{grid-template-columns:1fr}
+  .topnav{padding:12px 16px}
+  .nav-links{display:none}
+}
 
-.sample-card {
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-  overflow: hidden;
-}
-.sample-media {
-  aspect-ratio: 16 / 10; background: var(--surface2);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 8px; color: var(--text3);
-}
-.sample-media svg { width: 34px; height: 34px; stroke: var(--text3); }
-.sample-media span { font-size: 12px; font-weight: 500; }
-.sample-caption {
-  padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px;
-}
-.sample-tag {
-  font-size: 11px; font-weight: 700; letter-spacing: .3px;
-  padding: 3px 9px; border-radius: 20px;
-}
-.sample-tag.on  { background: rgba(62,207,130,.15); color: var(--green); }
-.sample-tag.off { background: rgba(138,148,168,.15); color: var(--text2); }
-.sample-title { font-size: 12.5px; color: var(--text2); }
+/* ── VIDEO CARD ── */
+.video-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.video-wrap{position:relative;background:#000;aspect-ratio:1/1}
+.video-wrap video{width:100%;height:100%;object-fit:cover;display:block}
 
-footer { text-align: center; padding: 28px; color: var(--text3); font-size: 12px; border-top: 1px solid var(--border); }
-footer a { color: var(--text2); }
-
-@media (max-width: 820px) {
-  .page-shell { flex-direction: column; }
-  .sidebar {
-    position: static; width: 100%; height: auto; flex-direction: row;
-    overflow-x: auto; padding: 12px 16px; border-bottom: 1px solid var(--border);
-  }
-  .sidebar-footer, .nav-divider { display: none; }
-  main { padding: 28px 20px 60px; }
-  .topbar { padding: 0 18px; }
-  .btn-store { display: none; }
+/* Play/pause overlay */
+.video-overlay{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.35);opacity:0;transition:opacity .2s;cursor:pointer;
 }
+.video-wrap:hover .video-overlay{opacity:1}
+.video-overlay svg{width:44px;height:44px;color:#fff;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+
+/* Progress bar */
+.video-progress{
+  position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:rgba(255,255,255,.15);cursor:pointer;
+}
+.video-progress-bar{height:100%;background:var(--accent);width:0%;transition:width .1s linear;pointer-events:none}
+
+/* Controls row */
+.video-controls{
+  display:flex;align-items:center;gap:8px;padding:8px 12px;
+  background:var(--surface2);border-top:1px solid var(--border);
+}
+.ctrl-btn{
+  background:none;border:none;color:var(--text2);cursor:pointer;
+  padding:4px;border-radius:4px;display:flex;align-items:center;transition:color .15s;
+}
+.ctrl-btn:hover{color:var(--text)}
+.ctrl-btn svg{width:16px;height:16px}
+.ctrl-time{font-size:11px;color:var(--text3);font-variant-numeric:tabular-nums;margin-left:2px}
+.ctrl-loop{margin-left:auto}
+.ctrl-loop.on{color:var(--accent)}
+.ctrl-mute.muted{color:var(--amber)}
+
+/* Caption */
+.video-caption{padding:12px 14px}
+.video-badge{
+  display:inline-block;font-size:10px;font-weight:700;letter-spacing:.8px;
+  text-transform:uppercase;padding:3px 8px;border-radius:4px;margin-bottom:6px;
+}
+.badge-default{background:rgba(90,91,106,.25);color:var(--text2)}
+.badge-enhanced{background:rgba(62,207,142,.15);color:var(--green)}
+.badge-rec{background:rgba(91,127,255,.18);color:var(--accent)}
+.badge-sharp{background:rgba(245,166,35,.15);color:var(--amber)}
+.badge-stable{background:rgba(62,207,142,.12);color:var(--green)}
+.badge-natural{background:rgba(90,91,106,.2);color:var(--text2)}
+.badge-expressive{background:rgba(245,166,35,.12);color:var(--amber)}
+.video-caption h3{font-size:13px;font-weight:600;margin-bottom:2px}
+.video-caption p{font-size:12px;color:var(--text3);line-height:1.4}
+
+/* placeholder while no video */
+.video-placeholder{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  aspect-ratio:1/1;background:var(--surface2);color:var(--text3);font-size:13px;gap:8px;
+}
+.video-placeholder svg{width:32px;height:32px;opacity:.35}
+
+/* ── FOOTER ── */
+footer{text-align:center;padding:32px 24px;border-top:1px solid var(--border);color:var(--text3);font-size:13px}
+footer a{color:var(--text2);text-decoration:none}
+footer a:hover{color:var(--text)}
 </style>
 </head>
 <body>
 
-<header class="topbar">
-  <a class="topbar-brand" href="imtalking_how_to.html">
-    <div class="topbar-logo"><img src="uploads/imtalkinglogo.webp" alt="ImTalking logo" width="64" height="64"/></div>
-    <div>
-      <div class="topbar-title">ImTalking</div>
-      <div class="topbar-sub">Video Samples</div>
-    </div>
+<nav class="topnav">
+  <a class="nav-brand" href="https://mlapplications.com/imtalking_how_to.html">
+    <img src="https://mlapplications.com/uploads/imtalkinglogo.webp" alt="ImTalking"/>
+    ImTalking
   </a>
-  <a class="btn-store" href="https://apps.microsoft.com/detail/9P2FHF89K1T2?referrer=appbadge&cid=samples&mode=full" target="_blank" rel="noopener">
+  <div class="nav-links">
+    <a href="https://mlapplications.com/imtalking_how_to.html">How-To Guide</a>
+    <a href="https://mlapplications.com/imtalking_videos_samples.html" class="active">Video Samples</a>
+    <a href="https://mlapplications.com/imtalking_help.html">Help &amp; Reference</a>
+    <a href="https://mlapplications.com/imtalking_tips_and_tricks.html">Tips &amp; Tricks</a>
+  </div>
+  <a class="nav-badge" href="https://apps.microsoft.com/detail/9P2FHF89K1T2?referrer=appbadge&cid=samples&mode=full" target="_blank" rel="noopener">
     <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft"/>
   </a>
-</header>
+</nav>
 
-<div class="page-shell">
-  <nav class="sidebar" aria-label="ImTalking documentation">
-    <a class="nav-item" href="imtalking_how_to.html">
-      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
-      <span>How-To Guide</span>
-    </a>
-    <a class="nav-item active" href="imtalking_videos_samples.html">
-      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m22 8-5 4 5 4V8Z"/></svg></span>
-      <span>Video Samples</span>
-    </a>
-    <a class="nav-item" href="imtalking_help.html">
-      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.5 2.5 0 0 1 4.8 1c0 1.5-2.3 1.8-2.3 3.4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg></span>
-      <span>Help &amp; Reference</span>
-    </a>
-    <a class="nav-item" href="imtalking_tips_and_tricks.html">
-      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 2.6-1.4 4.9-3.5 6.2V17a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1.8A7 7 0 0 1 12 2z"/><path d="M9 21h6"/><path d="M9 18h6"/></svg></span>
-      <span>Tips &amp; Tricks</span>
-    </a>
-
-    <div class="nav-divider"></div>
-
-    <a class="nav-item" href="imtalking_privacy.html">
-      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
-      <span>Privacy</span>
-    </a>
-    <a class="nav-item" href="imtalking_contactus.html">
-      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg></span>
-      <span>Contact</span>
-    </a>
-
-    <div class="nav-divider"></div>
-    <a class="nav-item" href="imtalking://">
-      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4 6 12l-2 6 6-2 8-8"/><path d="M14 4l4 4M10 16l-4 4"/></svg></span>
-      <span>Open the App</span>
-    </a>
-    <a class="sidebar-footer" href="https://mlapplications.com/">
-      <img src="https://mlapplications.com/uploads/logo-big_2.webp" alt="mlapplications"/>
-      <span>mlapplications.com</span>
-    </a>
-  </nav>
-
-  <main>
-    <h1 class="page-title">Video Samples</h1>
-    <p class="page-lede">Every Processing Option changes the output in a different way. Rather than guessing, compare them side-by-side before you spend render time on your own video.</p>
-    <div class="status-note"><span class="status-dot"></span> Samples are being recorded — this page shows the final layout, videos are being added soon.</div>
-
-    <div class="compare-group">
-      <div class="compare-heading">Enhance — GFPGAN On vs. Off</div>
-      <div class="compare-sub">GFPGAN face restoration runs on every frame for a sharper result, at the cost of extra render time.</div>
-      <div class="sample-row">
-        <div class="sample-card">
-          <div class="sample-media"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 4-4 5 5 4-4 5 5"/></svg><span>Sample coming soon</span></div>
-          <div class="sample-caption"><span class="sample-title">Enhance off</span><span class="sample-tag off">DEFAULT LOOK</span></div>
-        </div>
-        <div class="sample-card">
-          <div class="sample-media"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 4-4 5 5 4-4 5 5"/></svg><span>Sample coming soon</span></div>
-          <div class="sample-caption"><span class="sample-title">Enhance — GFPGAN</span><span class="sample-tag on">SHARPER</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="compare-group">
-      <div class="compare-heading">Upscale — None vs. 512px vs. 1024px</div>
-      <div class="compare-sub">Upscaling adds clarity after rendering without re-running the model. Most useful when Enhance is off.</div>
-      <div class="sample-row">
-        <div class="sample-card">
-          <div class="sample-media"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 4-4 5 5 4-4 5 5"/></svg><span>Sample coming soon</span></div>
-          <div class="sample-caption"><span class="sample-title">Upscale: None</span><span class="sample-tag off">BASE</span></div>
-        </div>
-        <div class="sample-card">
-          <div class="sample-media"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 4-4 5 5 4-4 5 5"/></svg><span>Sample coming soon</span></div>
-          <div class="sample-caption"><span class="sample-title">Upscale: 512px</span><span class="sample-tag off">RECOMMENDED</span></div>
-        </div>
-        <div class="sample-card">
-          <div class="sample-media"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 4-4 5 5 4-4 5 5"/></svg><span>Sample coming soon</span></div>
-          <div class="sample-caption"><span class="sample-title">Upscale: 1024px</span><span class="sample-tag on">SHARPEST</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="compare-group">
-      <div class="compare-heading">Still Mode — On vs. Off</div>
-      <div class="compare-sub">Still mode keeps the head stable with minimal drift — good for presentation-style videos.</div>
-      <div class="sample-row">
-        <div class="sample-card">
-          <div class="sample-media"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 4-4 5 5 4-4 5 5"/></svg><span>Sample coming soon</span></div>
-          <div class="sample-caption"><span class="sample-title">Still mode on</span><span class="sample-tag on">STABLE</span></div>
-        </div>
-        <div class="sample-card">
-          <div class="sample-media"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 4-4 5 5 4-4 5 5"/></svg><span>Sample coming soon</span></div>
-          <div class="sample-caption"><span class="sample-title">Still mode off</span><span class="sample-tag off">NATURAL DRIFT</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="compare-group">
-      <div class="compare-heading">Expression Scale — 1.0 vs. 1.5</div>
-      <div class="compare-sub">Controls how animated the face is. 1.0 is natural; higher values are more dramatic.</div>
-      <div class="sample-row">
-        <div class="sample-card">
-          <div class="sample-media"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 4-4 5 5 4-4 5 5"/></svg><span>Sample coming soon</span></div>
-          <div class="sample-caption"><span class="sample-title">Expression 1.0</span><span class="sample-tag off">NATURAL</span></div>
-        </div>
-        <div class="sample-card">
-          <div class="sample-media"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 4-4 5 5 4-4 5 5"/></svg><span>Sample coming soon</span></div>
-          <div class="sample-caption"><span class="sample-title">Expression 1.5</span><span class="sample-tag on">EXPRESSIVE</span></div>
-        </div>
-      </div>
-    </div>
-  </main>
+<div class="hero">
+  <h1>Video Samples</h1>
+  <p>Every Processing Option changes the output in a different way. Compare them side-by-side before you spend render time on your own video.</p>
 </div>
 
-<footer>© 2026 ImTalking · <a href="https://mlapplications.com/">mlapplications.com</a></footer>
+<div class="sections">
 
+  <!-- ENHANCE -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Enhance — GFPGAN on vs. off</h2>
+      <p>GFPGAN face restoration runs on every frame for a sharper result, at the cost of extra render time.</p>
+    </div>
+        <div class="video-grid cols-2">
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-enhance-off" src="https://mlapplications.com/video_samples/enhance_off.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-enhance-off')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-enhance-off')">
+            <div class="video-progress-bar" id="bar-enhance-off"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-enhance-off')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-enhance-off" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-enhance-off">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-enhance-off" onclick="toggleLoop('v-enhance-off','loop-enhance-off')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-enhance-off" onclick="toggleMute('v-enhance-off')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-default">Enhance off — default look</span>
+          <h3>Without GFPGAN</h3>
+          <p>Faster rendering, slightly softer facial detail.</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-enhance-on" src="https://mlapplications.com/video_samples/enhance_on.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-enhance-on')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-enhance-on')">
+            <div class="video-progress-bar" id="bar-enhance-on"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-enhance-on')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-enhance-on" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-enhance-on">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-enhance-on" onclick="toggleLoop('v-enhance-on','loop-enhance-on')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-enhance-on" onclick="toggleMute('v-enhance-on')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-enhanced">Enhance on — sharper</span>
+          <h3>With GFPGAN</h3>
+          <p>Each frame is passed through face restoration. Noticeably crisper.</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-enhance-off2" src="https://mlapplications.com/video_samples/enhance_off2.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-enhance-off2')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-enhance-off2')">
+            <div class="video-progress-bar" id="bar-enhance-off2"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-enhance-off2')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-enhance-off2" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-enhance-off2">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-enhance-off2" onclick="toggleLoop('v-enhance-off2','loop-enhance-off2')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-enhance-off2" onclick="toggleMute('v-enhance-off2')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-default">Enhance off — second example</span>
+          <h3>Without GFPGAN (avatar 2)</h3>
+          <p>Another avatar showing baseline output without face restoration.</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-enhance-on2" src="https://mlapplications.com/video_samples/enhance_on2.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-enhance-on2')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-enhance-on2')">
+            <div class="video-progress-bar" id="bar-enhance-on2"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-enhance-on2')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-enhance-on2" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-enhance-on2">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-enhance-on2" onclick="toggleLoop('v-enhance-on2','loop-enhance-on2')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-enhance-on2" onclick="toggleMute('v-enhance-on2')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-enhanced">Enhance on — second example</span>
+          <h3>With GFPGAN (avatar 2)</h3>
+          <p>The same avatar with GFPGAN — sharper skin texture and eye detail.</p>
+        </div>
+      </div>
+    </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-enhance-off')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-enhance-off" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-enhance-off">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-enhance-off" onclick="toggleLoop('v-enhance-off','loop-enhance-off')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-enhance-off" onclick="toggleMute('v-enhance-off')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-default">Enhance off — default look</span>
+          <h3>Without GFPGAN</h3>
+          <p>Faster rendering, slightly softer facial detail.</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- UPSCALE -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Upscale — 512 px vs. 1024 px</h2>
+      <p>Upscaling adds clarity after rendering without re-running the model. 512 px is the recommended sweet spot for most uses.</p>
+    </div>
+    <div class="video-grid cols-2">
+
+  <!-- STILL MODE -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Still mode — on vs. off</h2>
+      <p>Still mode keeps the head stable with minimal drift — good for presentation-style videos.</p>
+    </div>
+    <div class="video-grid cols-2">
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-still-on" src="https://mlapplications.com/video_samples/still_on.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-still-on')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-still-on')">
+            <div class="video-progress-bar" id="bar-still-on"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-still-on')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-still-on" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-still-on">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-still-on" onclick="toggleLoop('v-still-on','loop-still-on')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-still-on" onclick="toggleMute('v-still-on')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-stable">Still mode on — stable</span>
+          <h3>Still mode on</h3>
+          <p>Head stays mostly fixed. Ideal for explainers and slides.</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-still-off" src="https://mlapplications.com/video_samples/still_off.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-still-off')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-still-off')">
+            <div class="video-progress-bar" id="bar-still-off"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-still-off')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-still-off" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-still-off">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-still-off" onclick="toggleLoop('v-still-off','loop-still-off')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-still-off" onclick="toggleMute('v-still-off')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-natural">Still mode off — natural drift</span>
+          <h3>Still mode off</h3>
+          <p>More natural head motion. Better for conversational avatars.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+        <div class="video-grid cols-2">
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-upscale-512" src="https://mlapplications.com/video_samples/upscale_512.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-upscale-512')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-upscale-512')">
+            <div class="video-progress-bar" id="bar-upscale-512"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-upscale-512')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-upscale-512" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-upscale-512">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-upscale-512" onclick="toggleLoop('v-upscale-512','loop-upscale-512')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-upscale-512" onclick="toggleMute('v-upscale-512')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-rec">Upscale: 512 px — recommended</span>
+          <h3>512 px upscale</h3>
+          <p>Good balance of quality and file size. Recommended for most uses.</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-upscale-1024" src="https://mlapplications.com/video_samples/upscale_1024.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-upscale-1024')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-upscale-1024')">
+            <div class="video-progress-bar" id="bar-upscale-1024"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-upscale-1024')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-upscale-1024" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-upscale-1024">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-upscale-1024" onclick="toggleLoop('v-upscale-1024','loop-upscale-1024')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-upscale-1024" onclick="toggleMute('v-upscale-1024')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-sharp">Upscale: 1024 px — sharpest</span>
+          <h3>1024 px upscale</h3>
+          <p>Maximum clarity, larger file. Best for presentations and high-res exports.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+2>Still mode — on vs. off</h2>
+      <p>Still mode keeps the head stable with minimal drift — good for presentation-style videos.</p>
+    </div>
+    <div class="video-grid cols-2">
+      
+      
+    </div>
+  </div>
+
+  <!-- EXPRESSION SCALE -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Expression scale — 0.7 vs. 1.2</h2>
+      <p>Controls how animated the face is. The default of 1.0 is the most natural — lower values are subtler, higher values are more dramatic.</p>
+    </div>
+    <div class="video-grid cols-2">
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-expr-07" src="https://mlapplications.com/video_samples/expr_07.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-expr-07')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-expr-07')">
+            <div class="video-progress-bar" id="bar-expr-07"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-expr-07')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-expr-07" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-expr-07">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-expr-07" onclick="toggleLoop('v-expr-07','loop-expr-07')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-expr-07" onclick="toggleMute('v-expr-07')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-natural">Expression 0.7 — subtle</span>
+          <h3>Expression scale 0.7</h3>
+          <p>More restrained movement. Good for calm, measured delivery. The default of 1.0 sits between these two and is the most natural-looking.</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-expr-12" src="https://mlapplications.com/video_samples/expr_12.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-expr-12')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-expr-12')">
+            <div class="video-progress-bar" id="bar-expr-12"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-expr-12')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-expr-12" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-expr-12">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-expr-12" onclick="toggleLoop('v-expr-12','loop-expr-12')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-expr-12" onclick="toggleMute('v-expr-12')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-expressive">Expression 1.2 — expressive</span>
+          <h3>Expression scale 1.2</h3>
+          <p>More pronounced mouth movement. Works well for energetic or enthusiastic speech.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /sections -->
+
+<footer>
+  <p>© 2026 ImTalking · <a href="https://mlapplications.com/">mlapplications.com</a> ·
+  <a href="https://mlapplications.com/imtalking_privacy.html">Privacy</a> ·
+  <a href="https://mlapplications.com/imtalking_contactus.html">Contact</a></p>
+</footer>
+
+<script>
+const PLAY_PATH  = 'M8 5v14l11-7z';
+const PAUSE_PATH = 'M6 19h4V5H6v14zm8-14v14h4V5h-4z';
+
+function fmt(t) {
+  const m = Math.floor(t / 60), s = Math.floor(t % 60);
+  return m + ':' + String(s).padStart(2, '0');
+}
+
+function bindVideo(id) {
+  const v = document.getElementById(id);
+  if (!v) return;
+  const bar    = document.getElementById('bar-' + id.slice(2));
+  const timeEl = document.getElementById('time-' + id.slice(2));
+  const pbIcon = document.getElementById('pbicon-' + id.slice(2));
+
+  v.addEventListener('timeupdate', () => {
+    if (!v.duration) return;
+    if (bar)    bar.style.width = (v.currentTime / v.duration * 100) + '%';
+    if (timeEl) timeEl.textContent = fmt(v.currentTime);
+  });
+  v.addEventListener('play',  () => { if (pbIcon) pbIcon.setAttribute('d', PAUSE_PATH); });
+  v.addEventListener('pause', () => { if (pbIcon) pbIcon.setAttribute('d', PLAY_PATH); });
+  v.addEventListener('ended', () => { if (pbIcon) pbIcon.setAttribute('d', PLAY_PATH); });
+
+  // No auto-play — user starts each video manually
+}
+
+function togglePlay(id) {
+  const v = document.getElementById(id);
+  if (!v) return;
+  v.paused ? v.play().catch(()=>{}) : v.pause();
+}
+
+function seekVideo(e, id) {
+  const v = document.getElementById(id);
+  if (!v || !v.duration) return;
+  const rect = e.currentTarget.getBoundingClientRect();
+  v.currentTime = ((e.clientX - rect.left) / rect.width) * v.duration;
+}
+
+function toggleLoop(vid, btnId) {
+  const v = document.getElementById(vid);
+  const b = document.getElementById(btnId);
+  if (!v || !b) return;
+  v.loop = !v.loop;
+  b.classList.toggle('on', v.loop);
+}
+
+// Bind all videos
+function toggleMute(id) {
+  const v = document.getElementById(id);
+  const btn = document.getElementById('mute-' + id.slice(2));
+  if (!v || !btn) return;
+  v.muted = !v.muted;
+  btn.classList.toggle('muted', v.muted);
+  btn.title = v.muted ? 'Unmute' : 'Mute';
+  btn.querySelector('.icon-vol').style.display  = v.muted ? 'none' : 'inline';
+  btn.querySelector('.icon-mute').style.display = v.muted ? 'inline' : 'none';
+}
+
+['v-enhance-off','v-enhance-on','v-enhance-off2','v-enhance-on2',
+ 'v-upscale-512','v-upscale-1024',
+ 'v-still-on','v-still-off',
+ 'v-expr-07','v-expr-12'].forEach(bindVideo);
+</script>
 </body>
 </html>
