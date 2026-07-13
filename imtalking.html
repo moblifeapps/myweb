@@ -532,53 +532,22 @@ html.light-theme .voice-lang-select {
 .voice-list-gender { flex-shrink: 0; width: 14px; text-align: center; font-size: 13px; color: var(--text3); }
 .voice-list-row.active .voice-list-gender { color: var(--accent); }
 .voice-list-label { flex: 1; font-size: 13px; font-weight: 500; color: var(--text); }
-/* Bigger star and play buttons */
 .voice-list-star {
-  flex-shrink: 0; font-size: 18px; color: var(--text3); padding: 4px 6px;
-  transition: color .15s, transform .15s; line-height: 1;
+  flex-shrink: 0; font-size: 14px; color: var(--text3); padding: 2px;
+  transition: color .15s, transform .15s;
 }
 .voice-list-star:hover   { color: var(--amber); transform: scale(1.15); }
 .voice-list-star.starred { color: var(--amber); }
 .voice-play-btn {
-  flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%;
+  flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   background: var(--surface); border: 1px solid var(--border);
   color: var(--text2); cursor: pointer; transition: all .15s;
 }
 .voice-play-btn:hover   { border-color: var(--accent); color: var(--accent); }
 .voice-play-btn.playing { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
-.voice-play-btn svg { width: 15px; height: 15px; }
+.voice-play-btn svg { width: 12px; height: 12px; }
 .voice-no-results { text-align: center; padding: 20px; color: var(--text3); font-size: 13px; }
-
-/* ── VOICE DROPDOWN (collapsed selected voice + expandable list) ── */
-.voice-dropdown {
-  position: relative;
-}
-.voice-selected-btn {
-  display: flex; align-items: center; gap: 10px;
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: 9px; padding: 10px 14px;
-  cursor: pointer; transition: border-color .15s; user-select: none;
-}
-.voice-selected-btn:hover { border-color: var(--accent); }
-.voice-selected-btn.open  { border-color: var(--accent); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
-.voice-selected-icon { font-size: 14px; color: var(--text3); flex-shrink: 0; }
-.voice-selected-label { flex: 1; font-size: 13px; font-weight: 500; color: var(--text); }
-.voice-selected-chevron {
-  flex-shrink: 0; width: 16px; height: 16px; color: var(--text3);
-  transition: transform .2s;
-}
-.voice-selected-btn.open .voice-selected-chevron { transform: rotate(180deg); }
-.voice-dropdown-panel {
-  display: none; position: absolute; left: 0; right: 0; top: 100%; z-index: 50;
-  background: var(--surface2); border: 1px solid var(--accent);
-  border-top: none; border-radius: 0 0 9px 9px;
-  max-height: 260px; overflow-y: auto;
-  box-shadow: 0 8px 24px rgba(0,0,0,.35);
-}
-.voice-dropdown-panel.open { display: block; }
-.voice-dropdown-panel::-webkit-scrollbar { width: 4px; }
-.voice-dropdown-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 .img-toolbar {
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 8px; gap: 6px; flex-wrap: wrap;
@@ -1050,7 +1019,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
     <nav class="sidebar-nav">
 
       <!-- GROUP 1: Core navigation — no group bg, top of list -->
-      <div class="nav-item active" id="nav-new" onclick="switchTab('new')">
+      <div class="nav-item active" id="nav-new" onclick="switchTab('new'); clearProjectState()">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4 6 12l-2 6 6-2 8-8"/><path d="M14 4l4 4M10 16l-4 4"/><path d="M16 6l2 2"/></svg></span>
         <span class="nav-label">New Project</span>
       </div>
@@ -1159,9 +1128,9 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 
         <!-- RIGHT COL: Input Mode → TTS/Audio → Processing Options, stacked -->
         <div class="right-col">
-          <div class="card step-complete" id="cardStep2">
+          <div class="card">
             <div class="card-label-row">
-              <span class="step-badge done" id="stepBadge2">✓</span>
+              <span class="step-badge">2</span>
               <div class="card-label">Input Mode</div>
             </div>
             <div class="mode-toggle">
@@ -1204,16 +1173,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
             </div>
             <div>
               <label class="field-label">Voice</label>
-              <div class="voice-dropdown" id="voiceDropdown">
-                <div class="voice-selected-btn" id="voiceSelectedBtn" onclick="toggleVoiceDropdown()">
-                  <span class="voice-selected-icon">🎤</span>
-                  <span class="voice-selected-label" id="voiceSelectedLabel">Select a voice…</span>
-                  <svg class="voice-selected-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
-                <div class="voice-dropdown-panel" id="voiceDropdownPanel">
-                  <div class="voice-list" id="voiceList"><div class="voice-no-results">Loading voices…</div></div>
-                </div>
-              </div>
+              <div class="voice-list" id="voiceList"><div class="voice-no-results">Loading voices…</div></div>
               <input type="hidden" id="ttsVoice" value=""/>
               <audio id="voicePreviewAudio" preload="none" style="display:none"></audio>
             </div>
@@ -1250,9 +1210,9 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
           </div>
 
           <!-- Processing Options: card-muted — secondary importance to the user -->
-          <div class="card card-muted" id="cardStep4">
+          <div class="card card-muted">
             <div class="card-label-row">
-              <span class="step-badge" id="stepBadge4">4</span>
+              <span class="step-badge">4</span>
               <div class="card-label">Processing Options</div>
             </div>
             <div class="opts-grid">
@@ -1291,7 +1251,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
         <div class="generate-section-wrap" id="generateSection">
           <div class="progress-section" id="progressSectionCard">
             <div class="card-label-row" style="margin-bottom:-2px">
-              <span class="step-badge step-final" id="stepBadge5">5</span>
+              <span class="step-badge step-final">5</span>
               <div class="card-label">Generate</div>
             </div>
             <div class="progress-overall-wrap" id="overallWrap">
@@ -1313,6 +1273,7 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
             <div class="progress-bar-track"><div class="progress-bar-fill" id="progressFill"></div></div>
             <div class="progress-frames" id="progressFrames">Frame <strong id="frameCurrent">0</strong> of <strong id="frameTotal">0</strong></div>
             <div class="action-row">
+              <button class="btn btn-secondary" id="btnNewProject" onclick="clearProjectState()" title="Clear all fields and start fresh">✦ New Project</button>
               <button class="btn btn-secondary" id="btnOpenFolder" style="display:none" onclick="doOpenFolder()">📁 Open Folder</button>
               <button class="btn btn-secondary" id="btnPlayVideo"  style="display:none" onclick="doPlayVideo()">▶ Play</button>
               <button class="btn btn-danger"    id="btnCancel"     style="display:none" onclick="sendMsg({type:'cancel'})">✕ Cancel</button>
@@ -1495,7 +1456,51 @@ let wssPort       = null;
 let wsLocalPort   = null;   // plain ws:// port for WebView2 desktop mode
 let reconnectTimer    = null;
 let queuePendingCount = 0;  // kept in sync via 'queue_update' broadcasts
-let generateReadyShown = false; // guided scroll+pulse fires once per page session
+let generateReadyShown = false;
+let userHasEdited     = false;   // true once user types in the textarea this session
+
+// ── Clear state / New Project ──────────────────────────────────────────
+function clearProjectState() {
+  // Text & voice
+  document.getElementById('ttsText').value = '';
+  document.getElementById('ttsVoice').value = '';
+  activeVoice = '';
+  document.getElementById('voiceSelectedLabel').textContent = 'Select a voice…';
+  closeVoiceDropdown();
+
+  // Audio
+  ttsAudioPath = null;
+  document.getElementById('audioPlayer').src = '';
+  document.getElementById('audioPreview').classList.remove('visible');
+  document.getElementById('audioPath').value = '';
+  document.getElementById('audiofileName').classList.remove('visible');
+  document.getElementById('audioFilePlayer').src = '';
+  document.getElementById('audioFilePreview').classList.remove('visible');
+
+  // Image selection
+  selImage = null; selImageName = '';
+  document.querySelectorAll('.img-thumb.selected').forEach(el => el.classList.remove('selected'));
+  document.getElementById('imgSelectedLabel').textContent = 'No image selected';
+
+  // Result card
+  document.getElementById('resultCard').classList.remove('visible');
+  document.getElementById('btnOpenFolder').style.display = 'none';
+  document.getElementById('btnPlayVideo').style.display  = 'none';
+  lastVideoPath = null;
+
+  // Progress
+  setProgress(0, '', 'Ready', false);
+  document.getElementById('progressStatus').style.color = '';
+  document.getElementById('overallWrap').classList.remove('visible');
+  document.getElementById('segmentDivider').classList.remove('visible');
+
+  // Reset flags
+  userHasEdited     = false;
+  generateReadyShown = false;
+  hideRestoreBanner();
+  updateGenerateBtn();
+  toast('Ready for a new project', 'success');
+} // guided scroll+pulse fires once per page session
 
 // ════════════════════════════════════════════════════════════════════
 //  SPLASH
@@ -1874,14 +1879,22 @@ function restoreIdleState(job) {
 function applyJobSettings(job) {
   if (!job) return;
   if (job.is_tts != null) setMode(job.is_tts ? 'tts' : 'audio');
-  if (job.tts_text)  document.getElementById('ttsText').value  = job.tts_text;
-  if (job.tts_voice) restoreVoice(job.tts_voice);
-  if (job.mp3_path && job.mp3_url) {
+
+  // Only restore text/audio/voice if the user hasn't already started
+  // editing this session — prevents WS reconnects from stomping new input.
+  const textEl = document.getElementById('ttsText');
+  const userTypedSomething = userHasEdited || textEl.value.trim().length > 0;
+
+  if (job.tts_text && !userTypedSomething)
+    textEl.value = job.tts_text;
+  if (job.tts_voice && !userTypedSomething)
+    restoreVoice(job.tts_voice);
+  if (job.mp3_path && job.mp3_url && !userTypedSomething) {
     ttsAudioPath = job.mp3_path;
     document.getElementById('audioPlayer').src = job.mp3_url;
     document.getElementById('audioPreview').classList.add('visible');
   }
-  if (!job.is_tts && job.audio_path) {
+  if (!job.is_tts && job.audio_path && !userTypedSomething) {
     document.getElementById('audioPath').value = job.audio_path;
     const nameEl = document.getElementById('audiofileName');
     document.getElementById('audiofileNameText').textContent = job.audio_name || job.audio_path;
@@ -2110,7 +2123,10 @@ function setMode(m) {
   document.getElementById('panelAudio').classList.toggle('visible', m === 'audio');
   updateGenerateBtn();
 }
-document.getElementById('ttsText').addEventListener('input', updateTtsBtn);
+document.getElementById('ttsText').addEventListener('input', () => {
+  userHasEdited = true;
+  updateTtsBtn();
+});
 function updateTtsBtn() {
   const ok = document.getElementById('ttsText').value.trim().length > 0
              && document.getElementById('ttsVoice').value.length > 0
@@ -2143,12 +2159,6 @@ function updateGenerateBtn() {
   document.getElementById('stepBadge1').textContent = hasImage ? '✓' : '1';
   document.getElementById('stepBadge1').classList.toggle('done', hasImage);
 
-  // ── Step 2 — Input Mode (always complete — a mode is always selected) ──
-  // Stays green permanently since the user always has a mode active.
-  document.getElementById('cardStep2').classList.add('step-complete');
-  document.getElementById('stepBadge2').textContent = '✓';
-  document.getElementById('stepBadge2').classList.add('done');
-
   // ── Step 3 — TTS / Audio (only the active panel can be "done") ──
   const ttsDone   = mode === 'tts'   && hasAudio;
   const audioDone = mode === 'audio' && hasAudio;
@@ -2159,22 +2169,16 @@ function updateGenerateBtn() {
   document.getElementById('stepBadge3audio').textContent = audioDone ? '✓' : '3';
   document.getElementById('stepBadge3audio').classList.toggle('done', audioDone);
 
-  // ── Step 4 — Processing Options (always complete — has defaults) ──
-  document.getElementById('cardStep4').classList.add('step-complete');
-  document.getElementById('stepBadge4').textContent = '✓';
-  document.getElementById('stepBadge4').classList.add('done');
-
   // ── Step 5 — Generate ────────────────────────────────────────────
+  // Generate stays enabled while running — subsequent clicks auto-queue
   const btnGenerate = document.getElementById('btnGenerate');
   const wasDisabled = btnGenerate.disabled;
   const nowReady    = hasImage && hasAudio && connected;
   btnGenerate.disabled = !nowReady;
 
-  // Green border on section 5 when ready
-  document.getElementById('progressSectionCard').classList.toggle('step-complete', nowReady);
-  document.getElementById('stepBadge5')?.classList.toggle('done', nowReady);
-
-  // First time everything lines up: scroll to generate section and pulse
+  // First time everything lines up this session: draw the eye to
+  // Generate without stealing keyboard focus from whatever the user
+  // is doing (e.g. still adjusting a slider).
   if (nowReady && wasDisabled && !generateReadyShown) {
     generateReadyShown = true;
     document.getElementById('generateSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -2224,7 +2228,8 @@ function startGeneration() {
 }
 function setRunning(r) {
   isRunning = r;
-  document.getElementById('btnCancel').style.display = r ? '' : 'none';
+  document.getElementById('btnCancel').style.display    = r ? '' : 'none';
+  document.getElementById('btnNewProject').style.display = r ? 'none' : '';
   updateGenerateBtn();
 }
 
@@ -2597,11 +2602,7 @@ function buildLanguageOptions() {
   const langs = [...seen.entries()].sort((a, b) => a[1].localeCompare(b[1]));
   const sel = document.getElementById('voiceLangSelect');
   sel.innerHTML = langs.map(([code, name]) => `<option value="${escHtml(code)}">${escHtml(name)}</option>`).join('');
-  // Default to English (en) if not already set
-  if (!currentLangCode) {
-    const enEntry = langs.find(([code]) => code === 'en');
-    currentLangCode = enEntry ? enEntry[0] : (langs[0]?.[0] ?? '');
-  }
+  if (langs.length && !currentLangCode) { currentLangCode = langs[0][0]; }
   sel.value = currentLangCode;
 }
 
@@ -2660,35 +2661,9 @@ function pickVoice(name) {
   document.getElementById('voiceLangSelect').value = currentLangCode;
   document.getElementById('genderMale').classList.toggle('active', currentGender === 'Male');
   document.getElementById('genderFemale').classList.toggle('active', currentGender === 'Female');
-  // Update the dropdown selected label
-  const genderIcon = v.gender === 'Female' ? '♀' : '♂';
-  const label = document.getElementById('voiceSelectedLabel');
-  if (label) label.textContent = `${genderIcon}  ${v.label || v.shortName || name}`;
-  // Close the dropdown
-  closeVoiceDropdown();
   renderVoiceList();
   updateTtsBtn();
 }
-
-function toggleVoiceDropdown() {
-  const btn   = document.getElementById('voiceSelectedBtn');
-  const panel = document.getElementById('voiceDropdownPanel');
-  const isOpen = panel.classList.contains('open');
-  if (isOpen) { closeVoiceDropdown(); } else { openVoiceDropdown(); }
-}
-function openVoiceDropdown() {
-  document.getElementById('voiceSelectedBtn').classList.add('open');
-  document.getElementById('voiceDropdownPanel').classList.add('open');
-}
-function closeVoiceDropdown() {
-  document.getElementById('voiceSelectedBtn').classList.remove('open');
-  document.getElementById('voiceDropdownPanel').classList.remove('open');
-}
-// Close dropdown when clicking outside
-document.addEventListener('click', e => {
-  const drop = document.getElementById('voiceDropdown');
-  if (drop && !drop.contains(e.target)) closeVoiceDropdown();
-});
 
 function restoreVoice(name) {
   if (!name) return;
