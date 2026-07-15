@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -255,6 +254,76 @@
     }
     .btn-readmore:hover { background: rgba(74,158,255,.12); border-color: var(--accent2); }
 
+    /* ── Featured App Card (full width) ──────────────────────────── */
+    .app-card-featured {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, rgba(74,158,255,.08), rgba(233,69,96,.06)), var(--card-bg);
+      border: 1px solid rgba(74,158,255,.35);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      position: relative;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .app-card-featured:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.4);
+    }
+    .app-card-featured-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 2;
+      background: var(--accent);
+      color: var(--white);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 999px;
+    }
+    .app-card-featured-media {
+      flex: 0 0 44%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: rgba(0,0,0,.2);
+    }
+    .app-card-featured-media img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
+    .app-card-featured-media.single { grid-template-columns: 1fr; }
+    .app-card-featured-body {
+      flex: 1;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      justify-content: center;
+    }
+    .app-card-featured-header { display: flex; align-items: center; gap: 14px; }
+    .app-card-featured-header img { width: 52px; height: 52px; object-fit: contain; border-radius: 10px; }
+    .app-card-featured-header h3 { font-size: 1.4rem; font-weight: 700; color: var(--white); }
+    .app-card-featured-body > p.tagline { color: var(--accent2); font-size: 0.85rem; font-weight: 600; letter-spacing: .02em; }
+    .app-card-featured-body > p.desc { font-size: 0.95rem; color: var(--text-dim); line-height: 1.65; }
+    .app-card-featured-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 4px 0; }
+    .app-card-featured-list li { font-size: 0.875rem; color: var(--text); display: flex; align-items: flex-start; gap: 8px; }
+    .app-card-featured-list li::before { content: "✓"; color: var(--accent2); font-weight: 700; flex-shrink: 0; }
+    .app-card-featured .app-card-actions { margin-top: 8px; }
+
+    @media (max-width: 760px) {
+      .app-card-featured { flex-direction: column; }
+      .app-card-featured-media { flex: none; }
+      .app-card-featured-media img { height: 130px; }
+      .app-card-featured-body { padding: 24px; }
+    }
+
     /* ── Section headings ─────────────────────────────────────── */
     .section-title {
       font-size: clamp(1.2rem, 2.5vw, 1.6rem);
@@ -489,6 +558,35 @@
     <p class="section-desc">All apps are 100% free, no ads, no registry changes — available on the Microsoft Store.</p>
 
     <div class="apps-grid">
+
+      <!-- ImTalking — Featured -->
+      <div class="app-card-featured">
+        <span class="app-card-featured-badge">New</span>
+        <div class="app-card-featured-media">
+          <img src="uploads/imtalking_screen1-800.webp" alt="ImTalking talking avatar generator screenshot 1" loading="lazy" width="800" height="600">
+          <img src="uploads/imtalking_screen2-800.webp" alt="ImTalking talking avatar generator screenshot 2" loading="lazy" width="800" height="600">
+        </div>
+        <div class="app-card-featured-body">
+          <div class="app-card-featured-header">
+            <img src="uploads/imtalkinglogo.webp" alt="ImTalking icon" loading="lazy" width="52" height="52">
+            <h3>ImTalking — AI Talking Avatar Video Generator</h3>
+          </div>
+          <p class="tagline">Turn a single photo and your script into a talking video — in minutes, on your own PC.</p>
+          <p class="desc">ImTalking brings your photos to life with realistic AI-driven lip-sync and natural speech, entirely on your Windows machine. Pick a face, type or paste your script, choose a voice, and generate a polished talking-avatar video with no cloud upload and no subscription required.</p>
+          <ul class="app-card-featured-list">
+            <li>Realistic lip-sync powered by on-device AI models</li>
+            <li>Dozens of natural-sounding voices &amp; languages via Edge TTS</li>
+            <li>Guided, five-step workflow — no editing experience needed</li>
+            <li>100% free, no ads, no registry changes</li>
+          </ul>
+          <div class="app-card-actions">
+            <a href="https://apps.microsoft.com/detail/9P2FHF89K1T2?referrer=appbadge&cid=myhomepg&mode=full" target="_blank" rel="noopener">
+              <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft" height="38">
+            </a>
+            <a class="btn-readmore" href="https://mlapplications.com/imtalking_application.html">Read more ›</a>
+          </div>
+        </div>
+      </div>
 
       <!-- unReachable -->
       <div class="app-card">
