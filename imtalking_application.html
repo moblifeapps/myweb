@@ -127,6 +127,79 @@ body {
 a { color: inherit; }
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
 
+
+    /* ── Featured App Card (full width) ──────────────────────────── */
+    .app-card-featured {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, rgba(74,158,255,.08), rgba(233,69,96,.06)), var(--card-bg);
+      border: 1px solid rgba(74,158,255,.35);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      position: relative;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .app-card-featured:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.4);
+    }
+    .app-card-featured-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 2;
+      background: var(--accent);
+      color: var(--white);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 999px;
+    }
+    .app-card-featured-media {
+      flex: 0 0 44%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: rgba(0,0,0,.2);
+    }
+    .app-card-featured-media img {
+      width: 100%;
+      height: auto;
+      max-height: 450px;
+      object-fit: contain;
+      display: block;
+    }
+    .app-card-featured-media.single { grid-template-columns: 1fr; }
+    .app-card-featured-body {
+      flex: 1;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      justify-content: center;
+    }
+    .app-card-featured-header { display: flex; align-items: center; gap: 14px; }
+    .app-card-featured-header img { width: 52px; height: 52px; object-fit: contain; border-radius: 10px; }
+    .app-card-featured-header h3 { font-size: 1.4rem; font-weight: 700; color: var(--white); }
+    .app-card-featured-body > p.tagline { color: var(--accent2); font-size: 0.85rem; font-weight: 600; letter-spacing: .02em; }
+    .app-card-featured-body > p.desc { font-size: 0.95rem; color: var(--text-dim); line-height: 1.65; }
+    .app-card-featured-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 4px 0; }
+    .app-card-featured-list li { font-size: 0.875rem; color: var(--text); display: flex; align-items: flex-start; gap: 8px; }
+    .app-card-featured-list li::before { content: "✓"; color: var(--accent2); font-weight: 700; flex-shrink: 0; }
+    .app-card-featured .app-card-actions { margin-top: 8px; }
+
+    @media (max-width: 760px) {
+      .app-card-featured { flex-direction: column; }
+      .app-card-featured-media { flex: none; }
+      .app-card-featured-media img { max-height: 240px; }
+      .app-card-featured-body { padding: 24px; }
+    }
+
+
 /* ── NAV ─────────────────────────────────────────────────────────── */
 .topnav {
   position: sticky; top: 0; z-index: 100;
@@ -442,12 +515,40 @@ footer { border-top: 1px solid var(--border); margin-top: 60px; padding: 40px 32
     <p>A closer look at the workflow — from picking a voice to watching a batch render.</p>
   </div>
   <div class="shot-grid">
-    <div class="shot-card"><div class="shot-media"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 4-4 5 5 4-4 5 5"/></svg><span>Screenshot coming soon</span></div><div class="shot-caption">The guided step-by-step workflow</div></div>
-    <div class="shot-card"><div class="shot-media"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 4-4 5 5 4-4 5 5"/></svg><span>Screenshot coming soon</span></div><div class="shot-caption">Browsing 320+ voices with instant preview</div></div>
-    <div class="shot-card"><div class="shot-media"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 4-4 5 5 4-4 5 5"/></svg><span>Screenshot coming soon</span></div><div class="shot-caption">GFPGAN enhancement, before and after</div></div>
-    <div class="shot-card"><div class="shot-media"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 4-4 5 5 4-4 5 5"/></svg><span>Screenshot coming soon</span></div><div class="shot-caption">Batch queue rendering multiple videos</div></div>
-    <div class="shot-card"><div class="shot-media"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 4-4 5 5 4-4 5 5"/></svg><span>Screenshot coming soon</span></div><div class="shot-caption">A native Windows completion notification</div></div>
-    <div class="shot-card"><div class="shot-media"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 4-4 5 5 4-4 5 5"/></svg><span>Screenshot coming soon</span></div><div class="shot-caption">Your Projects library</div></div>
+    <div class="shot-card"><div class="shot-media">
+     <div class="app-card-featured-media single">
+          <img src="/imtalking_screenshots/Screenshot_workflow.webp" alt="The guided step-by-step workflow" loading="lazy" width="800" height="600">
+        </div>
+    </div><div class="shot-caption">The guided step-by-step workflow</div></div>
+    <div class="shot-card"><div class="shot-media">
+   <div class="app-card-featured-media single">
+          <img src="/imtalking_screenshots/Screenshot_Voices.webp" alt="Browsing 320+ voices with instant preview" loading="lazy" width="800" height="600">
+        </div>
+     
+    </div><div class="shot-caption">Browsing 320+ voices with instant preview</div></div>
+    <div class="shot-card"><div class="shot-media">
+   <div class="app-card-featured-media single">
+          <img src="/imtalking_screenshots/Screenshot_GFPGAN.webp" alt="GFPGAN enhancement, before and after" loading="lazy" width="800" height="600">
+        </div>
+    
+    </div><div class="shot-caption">GFPGAN enhancement, before and after</div></div>
+    <div class="shot-card"><div class="shot-media">
+   <div class="app-card-featured-media single">
+          <img src="/imtalking_screenshots/Screenshot_Batch.webp" alt="Batch queue rendering multiple videos" loading="lazy" width="800" height="600">
+        </div>
+    </div><div class="shot-caption">Batch queue rendering multiple videos</div></div>
+    <div class="shot-card"><div class="shot-media">
+      
+      <div class="app-card-featured-media single">
+          <img src="/imtalking_screenshots/Screenshot_popup.webp" alt="ImTalking talking avatar generator screenshot" loading="lazy" width="800" height="600">
+        </div>
+      
+</div><div class="shot-caption">A native Windows completion notification</div></div>
+    <div class="shot-card"><div class="shot-media">
+   <div class="app-card-featured-media single">
+          <img src="/imtalking_screenshots/Screenshot_Project_List.webp" alt="Browsing 320+ voices with instant preview" loading="lazy" width="800" height="600">
+        </div>
+    </div><div class="shot-caption">Your Projects library</div></div>
   </div>
 </section>
 
