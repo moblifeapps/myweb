@@ -294,8 +294,9 @@
     }
     .app-card-featured-media img {
       width: 100%;
-      height: 160px;
-      object-fit: cover;
+      height: auto;
+      max-height: 450px;
+      object-fit: contain;
       display: block;
     }
     .app-card-featured-media.single { grid-template-columns: 1fr; }
@@ -320,7 +321,7 @@
     @media (max-width: 760px) {
       .app-card-featured { flex-direction: column; }
       .app-card-featured-media { flex: none; }
-      .app-card-featured-media img { height: 130px; }
+      .app-card-featured-media img { max-height: 240px; }
       .app-card-featured-body { padding: 24px; }
     }
 
@@ -494,18 +495,18 @@
 <!-- ── Navigation ───────────────────────────────────────────────── -->
 <nav>
   <div class="nav-inner">
-    <a class="nav-logo" href="https://mlapplications.com/index.html" aria-label="MLApplications Home">
-      <img src="https://mlapplications.com/uploads/logo-big_2.webp" alt="MLApplications logo" width="140" height="44" loading="eager">
+    <a class="nav-logo" href="/index.html" aria-label="MLApplications Home">
+      <img src="/uploads/logo-big_2.webp" alt="MLApplications logo" width="140" height="44" loading="eager">
     </a>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
     <ul class="nav-links" id="navLinks">
-      <li><a href="https://mlapplications.com/store-apps.html">Store Apps</a></li>
-      <li><a href="https://mlapplications.com/helpcenter.html">Help Center</a></li>
-      <li><a href="https://mlapplications.com/howto.html">How-To</a></li>
-      <li><a href="https://mlapplications.com/articles.html">Learn 3D</a></li>
-      <li><a href="https://mlapplications.com/opinion--blog.html">Blog</a></li>
-      <li><a href="https://mlapplications.com/about-us.html">About Us</a></li>
-      <li><a href="https://mlapplications.com/contact.html">Contact</a></li>
+      <li><a href="/store-apps.html">Store Apps</a></li>
+      <li><a href="/helpcenter.html">Help Center</a></li>
+      <li><a href="/howto.html">How-To</a></li>
+      <li><a href="/articles.html">Learn 3D</a></li>
+      <li><a href="/opinion--blog.html">Blog</a></li>
+      <li><a href="/about-us.html">About Us</a></li>
+      <li><a href="/contact.html">Contact</a></li>
     </ul>
   </div>
 </nav>
@@ -523,7 +524,7 @@
 	
     <div class="quote-row">
       <div class="quote-card">
-        <img src="https://mlapplications.com/uploads/man-with-bulb-01-3_1.webp" alt="M.i.L. philosophy" loading="lazy" width="80" height="80">
+        <img src="/uploads/man-with-bulb-01-3_1.webp" alt="M.i.L. philosophy" loading="lazy" width="80" height="80">
         <div>
           <p><em>"...Here in <strong>M.i.L.</strong> we don't develop apps in the usual way. For each app, we build a new experience..."</em></p>
         </div>
@@ -533,7 +534,7 @@
           <p><em>"...as you set out for Ithaka, hope your road is a long one, full of adventure, full of discovery..."</em></p>
           <p class="attr">— C.P. Cavafy</p>
         </div>
-        <img src="https://mlapplications.com/uploads/man-flying-2_1.webp" alt="Journey" loading="lazy" width="80" height="80">
+        <img src="/uploads/man-flying-2_1.webp" alt="Journey" loading="lazy" width="80" height="80">
       </div>
     </div>
 </section>
@@ -545,8 +546,8 @@
 <!-- ── Store Apps Banner ─────────────────────────────────────────── -->
 <section class="section">
   <div class="container" style="text-align:center;">
-    <a class="banner-link" href="https://mlapplications.com/store-apps.html">
-      <img src="https://mlapplications.com/uploads/storeapps-orig-2-orig_orig.webp" alt="Store Apps" loading="lazy" width="860" height="auto">
+    <a class="banner-link" href="/store-apps.html">
+      <img src="/uploads/storeapps-orig-2-orig_orig.webp" alt="Store Apps" loading="lazy" width="860" height="auto">
     </a>
   </div>
 </section>
@@ -562,13 +563,12 @@
       <!-- ImTalking — Featured -->
       <div class="app-card-featured">
         <span class="app-card-featured-badge">New</span>
-        <div class="app-card-featured-media">
-          <img src="uploads/imtalking_screen1-800.webp" alt="ImTalking talking avatar generator screenshot 1" loading="lazy" width="800" height="600">
-          <img src="uploads/imtalking_screen2-800.webp" alt="ImTalking talking avatar generator screenshot 2" loading="lazy" width="800" height="600">
+        <div class="app-card-featured-media single">
+          <img src="/uploads/imtalking_screen1-800.webp" alt="ImTalking talking avatar generator screenshot" loading="lazy" width="800" height="600">
         </div>
         <div class="app-card-featured-body">
           <div class="app-card-featured-header">
-            <img src="uploads/imtalkinglogo.webp" alt="ImTalking icon" loading="lazy" width="52" height="52">
+            <img src="/uploads/imtalking_icon.webp" alt="ImTalking icon" loading="lazy" width="52" height="52">
             <h3>ImTalking — AI Talking Avatar Video Generator</h3>
           </div>
           <p class="tagline">Turn a single photo and your script into a talking video — in minutes, on your own PC.</p>
@@ -583,7 +583,7 @@
             <a href="https://apps.microsoft.com/detail/9P2FHF89K1T2?referrer=appbadge&cid=myhomepg&mode=full" target="_blank" rel="noopener">
               <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft" height="38">
             </a>
-            <a class="btn-readmore" href="https://mlapplications.com/imtalking_application.html">Read more ›</a>
+            <a class="btn-readmore" href="/imtalking_application.html">Read more ›</a>
           </div>
         </div>
       </div>
@@ -591,11 +591,11 @@
       <!-- unReachable -->
       <div class="app-card">
         <div class="app-card-screen">
-          <img src="https://mlapplications.com/uploads/unreachable_screen_home-800.webp" alt="unReachable screenshot" loading="lazy" width="800" height="500">
+          <img src="/uploads/unreachable_screen_home-800.webp" alt="unReachable screenshot" loading="lazy" width="800" height="500">
         </div>
         <div class="app-card-body">
           <div class="app-card-header">
-            <img src="https://mlapplications.com/uploads/unreachable.webp" alt="unReachable icon" loading="lazy" width="44" height="44">
+            <img src="/uploads/unreachable.webp" alt="unReachable icon" loading="lazy" width="44" height="44">
             <h3>unReachable — Network Quality Score</h3>
           </div>
           <p>Monitor latency, jitter and packet loss with a simple network quality score from 0–100. Always visible. Lightweight. Free!</p>
@@ -603,7 +603,7 @@
             <a href="https://apps.microsoft.com/detail/9NB66SPC84SG?referrer=appbadge&cid=myhomepg&mode=full" target="_blank" rel="noopener">
               <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft" height="38">
             </a>
-            <a class="btn-readmore" href="https://mlapplications.com/unreachable_application.html">Read more ›</a>
+            <a class="btn-readmore" href="/unreachable_application.html">Read more ›</a>
           </div>
         </div>
       </div>
@@ -611,11 +611,11 @@
       <!-- Transparent Taskbar+ -->
       <div class="app-card">
         <div class="app-card-screen">
-          <img src="https://mlapplications.com/uploads/ttbplus_screen1-800.webp" alt="Transparent Taskbar+ screenshot" loading="lazy" width="800" height="500">
+          <img src="/uploads/ttbplus_screen1-800.webp" alt="Transparent Taskbar+ screenshot" loading="lazy" width="800" height="500">
         </div>
         <div class="app-card-body">
           <div class="app-card-header">
-            <img src="https://mlapplications.com/uploads/ttbicon.webp" alt="Transparent Taskbar+ icon" loading="lazy" width="44" height="44">
+            <img src="/uploads/ttbicon.webp" alt="Transparent Taskbar+ icon" loading="lazy" width="44" height="44">
             <h3>Transparent Taskbar+ Lite</h3>
           </div>
           <p>Transform your desktop. Create stunning transparent, gradient, or "MacOs dock-style" taskbars with zero registry changes. 100% free!</p>
@@ -623,7 +623,7 @@
             <a href="https://apps.microsoft.com/detail/9p7hb1kdttt8?referrer=appbadge&cid=myhomepg&mode=full" target="_blank" rel="noopener">
               <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft" height="38">
             </a>
-            <a class="btn-readmore" href="https://mlapplications.com/transparent_taskbar_windows.html">Read more ›</a>
+            <a class="btn-readmore" href="/transparent_taskbar_windows.html">Read more ›</a>
           </div>
         </div>
       </div>
@@ -631,11 +631,11 @@
       <!-- Desktop Live Wallpaper+ -->
       <div class="app-card">
         <div class="app-card-screen">
-          <img src="https://mlapplications.com/uploads/dlw_screen1-800.webp" alt="Desktop Live Wallpaper+ screenshot" loading="lazy" width="800" height="500">
+          <img src="/uploads/dlw_screen1-800.webp" alt="Desktop Live Wallpaper+ screenshot" loading="lazy" width="800" height="500">
         </div>
         <div class="app-card-body">
           <div class="app-card-header">
-            <img src="https://mlapplications.com/uploads/dlw_icon.webp" alt="Desktop Live Wallpaper+ icon" loading="lazy" width="44" height="44">
+            <img src="/uploads/dlw_icon.webp" alt="Desktop Live Wallpaper+ icon" loading="lazy" width="44" height="44">
             <h3>Desktop Live Wallpaper+</h3>
           </div>
           <p>Apply a beautiful Live Timeline of your favorite photos &amp; videos directly into your Win11 Desktop. You are the Creator &amp; the Producer.</p>
@@ -643,7 +643,7 @@
             <a href="https://apps.microsoft.com/detail/9p8twlc0gzd4?referrer=appbadge&cid=myhomepg&mode=full" target="_blank" rel="noopener">
               <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft" height="38">
             </a>
-            <a class="btn-readmore" href="https://mlapplications.com/appdesktopliveplus.html">Read more ›</a>
+            <a class="btn-readmore" href="/appdesktopliveplus.html">Read more ›</a>
           </div>
         </div>
       </div>
@@ -651,11 +651,11 @@
       <!-- Screen Recorder+ -->
       <div class="app-card">
         <div class="app-card-screen">
-          <img src="https://mlapplications.com/uploads/screenrec_screen1-800.webp" alt="Screen Recorder+ screenshot" loading="lazy" width="800" height="500">
+          <img src="/uploads/screenrec_screen1-800.webp" alt="Screen Recorder+ screenshot" loading="lazy" width="800" height="500">
         </div>
         <div class="app-card-body">
           <div class="app-card-header">
-            <img src="https://mlapplications.com/uploads/screenrecorderplusicon300x300-orig_1.webp" alt="Screen Recorder+ icon" loading="lazy" width="44" height="44">
+            <img src="/uploads/screenrecorderplusicon300x300-orig_1.webp" alt="Screen Recorder+ icon" loading="lazy" width="44" height="44">
             <h3>Screen Recorder+</h3>
           </div>
           <p>Record any screen activity with sound on your Windows 10 device, with or without the mouse pointer! You are free to record/capture.</p>
@@ -663,7 +663,7 @@
             <a href="https://apps.microsoft.com/detail/9nhq77f5dhvp?referrer=appbadge&cid=myhomepg&mode=full" target="_blank" rel="noopener">
               <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft" height="38">
             </a>
-            <a class="btn-readmore" href="https://mlapplications.com/screenrecplus_1.html">Read more ›</a>
+            <a class="btn-readmore" href="/screenrecplus_1.html">Read more ›</a>
           </div>
         </div>
       </div>
@@ -671,11 +671,11 @@
       <!-- DVD Player+ -->
       <div class="app-card">
         <div class="app-card-screen">
-          <img src="https://mlapplications.com/uploads/dvdplayer_screen1-800.webp" alt="DVD Player+ screenshot" loading="lazy" width="800" height="500">
+          <img src="/uploads/dvdplayer_screen1-800.webp" alt="DVD Player+ screenshot" loading="lazy" width="800" height="500">
         </div>
         <div class="app-card-body">
           <div class="app-card-header">
-            <img src="https://mlapplications.com/uploads/dvdplayer-new-logo-phone-letters_orig.webp" alt="DVD Player+ icon" loading="lazy" width="44" height="44">
+            <img src="/uploads/dvdplayer-new-logo-phone-letters_orig.webp" alt="DVD Player+ icon" loading="lazy" width="44" height="44">
             <h3>DVD Player+</h3>
           </div>
           <p>Play DVD and Blu-Ray on Windows with full menu navigation, subtitles, and chapter control.</p>
@@ -683,7 +683,7 @@
             <a href="https://apps.microsoft.com/detail/9nblggh4q76z?referrer=appbadge&cid=myhomepg&mode=full" target="_blank" rel="noopener">
               <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft" height="38">
             </a>
-            <a class="btn-readmore" href="https://mlapplications.com/Best_DVD_Player_for_Windows_2025.html">Read more ›</a>
+            <a class="btn-readmore" href="/Best_DVD_Player_for_Windows_2025.html">Read more ›</a>
           </div>
         </div>
       </div>
@@ -703,7 +703,7 @@
         <div>
           <h4>Article: How to check if a DVD disc is playable or not</h4>
           <p>Is your DVD movie not playing? Don't panic. Follow these steps and examine by yourself what's going on.</p>
-          <a class="article-link" href="https://mlapplications.com/howto-check-dvd.html">Check DVD disc ›</a>
+          <a class="article-link" href="/howto-check-dvd.html">Check DVD disc ›</a>
         </div>
       </div>
       <div class="article-item">
@@ -711,7 +711,7 @@
         <div>
           <h4>Review: Best DVD and Blu-Ray Player software for Windows 11 in 2025</h4>
           <p>We compared the top and most known DVD player applications globally. An honest comparison for Windows 10 &amp; 11 users.</p>
-          <a class="article-link" href="https://mlapplications.com/Best_10_DVD_Players_for_Windows_2025_review_and_comparison.html">DVD Players review ›</a>
+          <a class="article-link" href="/Best_10_DVD_Players_for_Windows_2025_review_and_comparison.html">DVD Players review ›</a>
         </div>
       </div>
       <div class="article-item">
@@ -719,7 +719,7 @@
         <div>
           <h4>Opinion: The Best Free DVD Player for Windows 11</h4>
           <p>Our unbiased opinion why you need a dedicated player for playback of your optical discs in 2025.</p>
-          <a class="article-link" href="https://mlapplications.com/Best_DVD_Player_for_Windows_2025.html">The Best DVD Player 2025 ›</a>
+          <a class="article-link" href="/Best_DVD_Player_for_Windows_2025.html">The Best DVD Player 2025 ›</a>
         </div>
       </div>
     </div>
@@ -729,19 +729,19 @@
 <!-- ── Help Center ────────────────────────────────────────────────── -->
 <section class="section section-alt">
   <div class="container">
-    <a href="https://mlapplications.com/helpcenter.html">
-      <img src="https://mlapplications.com/uploads/letters-helpcenter-2_orig.webp" alt="Help Center" loading="lazy" style="border-radius:var(--radius);max-width:600px;margin-bottom:28px;" width="600">
+    <a href="/helpcenter.html">
+      <img src="/uploads/letters-helpcenter-2_orig.webp" alt="Help Center" loading="lazy" style="border-radius:var(--radius);max-width:600px;margin-bottom:28px;" width="600">
     </a>
     <div class="feature-row">
       <video class="feature-video" autoplay muted loop playsinline preload="none" aria-label="Help Center preview">
-        <source src="https://mlapplications.com/uploads/newhelpcenter.webm" type="video/webm">
+        <source src="/uploads/newhelpcenter.webm" type="video/webm">
       </video>
       <div class="feature-body">
         <ul>
           <li>The dedicated Help Center, with full On-Line Help Guides for all our apps.</li>
           <li>Every guide contains useful info, tips and tricks and examples to get 100% of the features.</li>
         </ul>
-        <a class="btn-primary" href="https://mlapplications.com/helpcenter.html">Help Center ›</a>
+        <a class="btn-primary" href="/helpcenter.html">Help Center ›</a>
       </div>
     </div>
   </div>
@@ -750,12 +750,12 @@
 <!-- ── How-To ─────────────────────────────────────────────────────── -->
 <section class="section">
   <div class="container">
-    <a href="https://mlapplications.com/howto.html">
-      <img src="https://mlapplications.com/uploads/how-to-5_orig.webp" alt="How-To Guides" loading="lazy" style="border-radius:var(--radius);max-width:600px;margin-bottom:28px;" width="600">
+    <a href="/howto.html">
+      <img src="/uploads/how-to-5_orig.webp" alt="How-To Guides" loading="lazy" style="border-radius:var(--radius);max-width:600px;margin-bottom:28px;" width="600">
     </a>
     <div class="feature-row">
       <video class="feature-video" autoplay muted loop playsinline preload="none" aria-label="How-To preview">
-        <source src="https://mlapplications.com/uploads/howto.webm" type="video/webm">
+        <source src="/uploads/howto.webm" type="video/webm">
       </video>
       <div class="feature-body">
         <ul>
@@ -763,7 +763,7 @@
           <li>Wondering how to rotate a video or convert a video format with one click? We show you how.</li>
           <li>We use 100% free apps!</li>
         </ul>
-        <a class="btn-primary" href="https://mlapplications.com/howto.html">Let's Go ›</a>
+        <a class="btn-primary" href="/howto.html">Let's Go ›</a>
       </div>
     </div>
   </div>
@@ -772,12 +772,12 @@
 <!-- ── Learn 3D ────────────────────────────────────────────────────── -->
 <section class="section section-alt">
   <div class="container">
-    <a href="https://mlapplications.com/articles.html">
-      <img src="https://mlapplications.com/uploads/letters-learning-2_orig.webp" alt="Learn 3D Articles" loading="lazy" style="border-radius:var(--radius);max-width:600px;margin-bottom:28px;" width="600">
+    <a href="/articles.html">
+      <img src="/uploads/letters-learning-2_orig.webp" alt="Learn 3D Articles" loading="lazy" style="border-radius:var(--radius);max-width:600px;margin-bottom:28px;" width="600">
     </a>
     <div class="feature-row">
       <video class="feature-video" autoplay muted loop playsinline preload="none" aria-label="Learn 3D preview">
-        <source src="https://mlapplications.com/uploads/newreading.webm" type="video/webm">
+        <source src="/uploads/newreading.webm" type="video/webm">
       </video>
       <div class="feature-body">
         <ul>
@@ -785,7 +785,7 @@
           <li>Interesting articles about Human Vision and how 3D technology works.</li>
           <li>Learn how to capture your own 3D photos. Find 3D videos on YouTube and Flickr!</li>
         </ul>
-        <a class="btn-primary" href="https://mlapplications.com/articles.html">Start Reading ›</a>
+        <a class="btn-primary" href="/articles.html">Start Reading ›</a>
       </div>
     </div>
   </div>
@@ -794,12 +794,12 @@
 <!-- ── About Us ───────────────────────────────────────────────────── -->
 <section class="section">
   <div class="container">
-    <a href="https://mlapplications.com/about-us.html">
-      <img src="https://mlapplications.com/uploads/aboutus-2_orig.webp" alt="About Us" loading="lazy" style="border-radius:var(--radius);max-width:600px;margin-bottom:28px;" width="600">
+    <a href="/about-us.html">
+      <img src="/uploads/aboutus-2_orig.webp" alt="About Us" loading="lazy" style="border-radius:var(--radius);max-width:600px;margin-bottom:28px;" width="600">
     </a>
     <div class="feature-row">
       <video class="feature-video" autoplay muted loop playsinline preload="none" aria-label="About Us preview">
-        <source src="https://mlapplications.com/uploads/newabout.webm" type="video/webm">
+        <source src="/uploads/newabout.webm" type="video/webm">
       </video>
       <div class="feature-body">
         <ul>
@@ -807,7 +807,7 @@
           <li>Read how we started and what our primary target is when developing.</li>
           <li>No, it's not the money!</li>
         </ul>
-        <a class="btn-primary" href="https://mlapplications.com/about-us.html">Read more ›</a>
+        <a class="btn-primary" href="/about-us.html">Read more ›</a>
       </div>
     </div>
   </div>
@@ -819,12 +819,12 @@
     <h2 class="section-title">Contact <span>Support</span></h2>
     <div class="contact-box">
       <video class="feature-video" autoplay muted loop playsinline preload="none" aria-label="Contact us preview">
-        <source src="https://mlapplications.com/uploads/contactus.webm" type="video/webm">
+        <source src="/uploads/contactus.webm" type="video/webm">
       </video>
       <div>
         <h3>Get in touch</h3>
         <p>If you find any problem, please don't hesitate to contact us. We will get back to you as soon as possible.</p>
-        <a class="btn-primary" href="https://mlapplications.com/contact.html">Contact us ›</a>
+        <a class="btn-primary" href="/contact.html">Contact us ›</a>
       </div>
     </div>
   </div>
@@ -835,14 +835,14 @@
   <div class="footer-inner">
     <span class="footer-copy">© 2025 ML Applications</span>
     <div class="footer-links">
-      <a href="https://mlapplications.com/mlapplications_privacy.html">Privacy Policy</a>
-      <a href="https://mlapplications.com/mlapplications_terms_of_service.html">Terms of Service</a>
-      <a href="https://mlapplications.com/mlapplications_cookies.html">Cookie Policy</a>
+      <a href="/mlapplications_privacy.html">Privacy Policy</a>
+      <a href="/mlapplications_terms_of_service.html">Terms of Service</a>
+      <a href="/mlapplications_cookies.html">Cookie Policy</a>
     </div>
     <div class="footer-scroll">
-      <a href="#" aria-label="Scroll to top"><img src="https://mlapplications.com/uploads/scrollupblue.webp" alt="" width="32" height="32"></a>
+      <a href="#" aria-label="Scroll to top"><img src="/uploads/scrollupblue.webp" alt="" width="32" height="32"></a>
       <a href="javascript:googlefc.callbackQueue.push(googlefc.showRevocationMessage)" aria-label="Manage cookie consent">
-        <img src="https://mlapplications.com/uploads/privacyblue.webp" alt="Cookie settings" width="32" height="32">
+        <img src="/uploads/privacyblue.webp" alt="Cookie settings" width="32" height="32">
       </a>
     </div>
   </div>
@@ -850,7 +850,7 @@
 
 <!-- Scroll-to-top FAB -->
 <a class="scroll-btn" id="scrollTop" href="#" aria-label="Scroll to top">
-  <img src="https://mlapplications.com/uploads/scrollupblue.webp" alt="" width="40" height="40" loading="lazy">
+  <img src="/uploads/scrollupblue.webp" alt="" width="40" height="40" loading="lazy">
 </a>
 
 <script>
@@ -877,6 +877,6 @@
 </script>
 
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7710644763832143" crossorigin="anonymous"></script>
+<!-- old adsense code -->
 </body>
 </html>
