@@ -3106,7 +3106,7 @@ bindRestart("softresetbutton");
 */
         let APP_PORT = 5001;
 
-         APP_PORT = window.appParams.prt;
+         APP_PORT = window.appParams.prt || 5001;
          console.log('APP_PORT: ' + APP_PORT );
 //        const APP_URL = "https://myttbplus.mlapplications.com:5001";
         const APP_URL = "https://myttbplus.mlapplications.com:" + APP_PORT;
