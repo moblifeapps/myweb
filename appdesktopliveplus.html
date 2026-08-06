@@ -664,7 +664,24 @@ img {margin-bottom: -8px;}
     googletag.cmd.push(function() {
       // Standard page setup
       googletag.defineOutOfPageSlot('/423204242/Eretria_Offerwall_Rewarded_AdX_code', 'div-gpt-ad-1785318971408-0').addService(googletag.pubads());
- 	  googletag.pubads().enableSingleRequest();
+ 	  
+	  googletag.defineOutOfPageSlot('/423204242/my_bottom_anchor_desktop_code', googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR).addService(googletag.pubads());
+	 
+	 // 'div-gpt-ad-1786005940439-0' ??
+	 /*
+	 googletag.defineSlot('/423204242/my_bottom_anchor_desktop_code', [MISSING_WIDTH, MISSING_HEIGHT], 'div-gpt-ad-1786005940439-0').addService(googletag.pubads());
+    googletag.pubads().collapseEmptyDivs();
+    googletag.enableServices();
+  });
+</script>
+and <!-- /423204242/my_bottom_anchor_desktop_code -->
+<div id='div-gpt-ad-1786005940439-0'>
+  <script>
+    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1786005940439-0'); });
+  </script>
+</div> on body
+	 */
+	  //googletag.pubads().enableSingleRequest();
     
     // Διόρθωση του warning της κονσόλας για το collapse
     googletag.setConfig({
