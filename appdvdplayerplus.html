@@ -211,16 +211,32 @@ img {margin-bottom: -8px;}
 <!-- Standard GPT script required for GAM & Privacy/Messaging tools -->
    
   <script>
-    window.googletag = window.googletag || {cmd: []};
-    googletag.cmd.push(function() {
-      // Standard page setup
-      googletag.defineOutOfPageSlot('/423204242/Eretria_Offerwall_Rewarded_AdX_code', 'div-gpt-ad-1785318971408-0').addService(googletag.pubads());
-    googletag.pubads().collapseEmptyDivs();
-    googletag.pubads().enableAsyncRendering(); 
-    googletag.enableServices();
-
+  window.googletag = window.googletag || {cmd: []};
+  googletag.cmd.push(function() {
+    
+ 
+    googletag.defineOutOfPageSlot('/423204242/Eretria_Offerwall_Rewarded_AdX_code', 'div-gpt-ad-1785318971408-0').addService(googletag.pubads());
+    var anchorSlot = googletag.defineOutOfPageSlot(
+      '/423204242/my_bottom_anchor_desktop_code', 
+      googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
+    );
+    
+    if (anchorSlot) {
+      anchorSlot.addService(googletag.pubads());
+    }
+    //googletag.pubads().enableSingleRequest();
+    googletag.setConfig({
+      collapseDivs: 'collapseBeforeAdFetch'
     });
-  </script>
+    
+    googletag.enableServices();
+    
+  
+    if (anchorSlot) {
+      googletag.display(anchorSlot);
+    }
+  });
+</script>
 
 <link rel="preload" as="script" href="https://live.demand.supply/up.js"><script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 

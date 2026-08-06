@@ -23,7 +23,7 @@ gpt.js?network-code=<account_network_code></account_network_code>
   window.googletag = window.googletag || {cmd: []};
   googletag.cmd.push(function() {
     googletag.defineSlot('/423204242/Offerwall-Ad-Unit-55ed268fe6c55d56', [1, 1], 'div-gpt-ad-1784893783776-0').addService(googletag.pubads());
-    googletag.pubads().enableSingleRequest();
+    //googletag.pubads().enableSingleRequest();
   googletag.pubads().collapseEmptyDivs();
     googletag.pubads().enableAsyncRendering(); 
     googletag.enableServices();
@@ -47,16 +47,32 @@ gpt.js?network-code=<account_network_code></account_network_code>
 <!-- Standard GPT script required for GAM & Privacy/Messaging tools -->
  <!--  
   <script>
-    window.googletag = window.googletag || {cmd: []};
-    googletag.cmd.push(function() {
-      // Standard page setup
-      googletag.defineOutOfPageSlot('/423204242/Eretria_Offerwall_Rewarded_AdX_code', 'div-gpt-ad-1785318971408-0').addService(googletag.pubads());
-    googletag.pubads().collapseEmptyDivs();
-    googletag.pubads().enableAsyncRendering(); 
-    googletag.enableServices();
-
+  window.googletag = window.googletag || {cmd: []};
+  googletag.cmd.push(function() {
+    
+ 
+    googletag.defineOutOfPageSlot('/423204242/Eretria_Offerwall_Rewarded_AdX_code', 'div-gpt-ad-1785318971408-0').addService(googletag.pubads());
+    var anchorSlot = googletag.defineOutOfPageSlot(
+      '/423204242/my_bottom_anchor_desktop_code', 
+      googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
+    );
+    
+    if (anchorSlot) {
+      anchorSlot.addService(googletag.pubads());
+    }
+    //googletag.pubads().enableSingleRequest();
+    googletag.setConfig({
+      collapseDivs: 'collapseBeforeAdFetch'
     });
-  </script> -->
+    
+    googletag.enableServices();
+    
+  
+    if (anchorSlot) {
+      googletag.display(anchorSlot);
+    }
+  });
+</script> -->
 
 
 
@@ -135,7 +151,7 @@ gpt.js?network-code=<account_network_code></account_network_code>
   window.googletag = window.googletag || {cmd: []};
   googletag.cmd.push(function() {
  //   googletag.defineOutOfPageSlot('/423204242/myOfferwallAdUnit231225', 'div-gpt-ad-1768378600726-0').addService(googletag.pubads());
- //   googletag.pubads().enableSingleRequest();
+ //   //googletag.pubads().enableSingleRequest();
   googletag.pubads().collapseEmptyDivs();
     googletag.pubads().enableAsyncRendering(); 
     googletag.enableServices();
