@@ -664,9 +664,13 @@ img {margin-bottom: -8px;}
     googletag.cmd.push(function() {
       // Standard page setup
       googletag.defineOutOfPageSlot('/423204242/Eretria_Offerwall_Rewarded_AdX_code', 'div-gpt-ad-1785318971408-0').addService(googletag.pubads());
-    googletag.pubads().collapseEmptyDivs();
-    googletag.pubads().enableAsyncRendering(); 
-    googletag.enableServices();
+ 	  googletag.pubads().enableSingleRequest();
+    
+    // Διόρθωση του warning της κονσόλας για το collapse
+    googletag.setConfig({
+      collapseDivs: 'collapseBeforeAdFetch'
+    });
+	googletag.enableServices();
 
     });
   </script>
@@ -4009,7 +4013,10 @@ btn.addEventListener("click", function (e) {
 
 	
 <!-- old --adsense-- code -->
- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7710644763832143" crossorigin="anonymous"></script>
+<!-- 
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7710644763832143" crossorigin="anonymous"></script>
+-->
+
 <!--<div data-ad="mlapplications.com_sticky_video_myvid" data-devices="m:1,t:1,d:1"   class="demand-supply"></div>-->
 
 <!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code -->
