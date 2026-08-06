@@ -112,7 +112,10 @@ def hasMetaRobotsNoindex(f) :
     googletag.cmd.push(function() {
       // Standard page setup
       googletag.defineOutOfPageSlot('/423204242/Eretria_Offerwall_Rewarded_AdX_code', 'div-gpt-ad-1785318971408-0').addService(googletag.pubads());
-      googletag.enableServices();
+    googletag.pubads().collapseEmptyDivs();
+    googletag.pubads().enableAsyncRendering(); 
+    googletag.enableServices();
+
     });
   </script>
 
