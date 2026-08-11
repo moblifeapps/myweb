@@ -668,14 +668,14 @@ img {margin-bottom: -8px;}
     googletag.defineOutOfPageSlot('/423204242/Eretria_Offerwall_Rewarded_AdX_code', 'div-gpt-ad-1785318971408-0').addService(googletag.pubads());
     
     // 2. Δήλωση του Anchor Slot
-    var anchorSlot = googletag.defineOutOfPageSlot(
-      '/423204242/my_bottom_anchor_desktop_code', 
-      googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
-    );
+    //var anchorSlot = googletag.defineOutOfPageSlot(
+//      '/423204242/my_bottom_anchor_desktop_code', 
+//      googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
+//    );
     
-    if (anchorSlot) {
-      anchorSlot.addService(googletag.pubads());
-    }
+//    if (anchorSlot) {
+//      anchorSlot.addService(googletag.pubads());
+//    }
     
     // Ρυθμίσεις για τη σωστή διαχείριση των κενών θέσεων
     //googletag.pubads().enableSingleRequest();
@@ -683,12 +683,15 @@ img {margin-bottom: -8px;}
       collapseDivs: 'collapseBeforeAdFetch'
     });
     
-    googletag.enableServices();
+    	googletag.setConfig({
+  lazyLoad: {}
+});
+googletag.enableServices();
     
     // 3. ΕΞΑΝΑΓΚΑΣΜΟΣ ΕΜΦΑΝΙΣΗΣ (Απαραίτητο για να γίνει το Ad Fetch: 1)
-    if (anchorSlot) {
-      googletag.display(anchorSlot);
-    }
+    ///if (anchorSlot) {
+//      googletag.display(anchorSlot);
+//    }
   });
 </script>
 

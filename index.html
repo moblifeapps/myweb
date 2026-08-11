@@ -15,7 +15,10 @@
   
   googletag.pubads().collapseEmptyDivs();
     googletag.pubads().enableAsyncRendering(); 
-    googletag.enableServices();
+    	googletag.setConfig({
+  lazyLoad: {}
+});
+googletag.enableServices();
 
   });
 </script> 

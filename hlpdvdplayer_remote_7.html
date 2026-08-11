@@ -560,25 +560,28 @@ _W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":
     
  
     googletag.defineOutOfPageSlot('/423204242/Eretria_Offerwall_Rewarded_AdX_code', 'div-gpt-ad-1785318971408-0').addService(googletag.pubads());
-    var anchorSlot = googletag.defineOutOfPageSlot(
-      '/423204242/my_bottom_anchor_desktop_code', 
-      googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
-    );
+    //var anchorSlot = googletag.defineOutOfPageSlot(
+//      '/423204242/my_bottom_anchor_desktop_code', 
+//      googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
+//    );
     
-    if (anchorSlot) {
-      anchorSlot.addService(googletag.pubads());
-    }
+//    if (anchorSlot) {
+//      anchorSlot.addService(googletag.pubads());
+//    }
     //googletag.pubads().enableSingleRequest();
     googletag.setConfig({
       collapseDivs: 'collapseBeforeAdFetch'
     });
     
-    googletag.enableServices();
+    	googletag.setConfig({
+  lazyLoad: {}
+});
+googletag.enableServices();
     
   
-    if (anchorSlot) {
-      googletag.display(anchorSlot);
-    }
+    ///if (anchorSlot) {
+//      googletag.display(anchorSlot);
+//    }
   });
 </script>
 

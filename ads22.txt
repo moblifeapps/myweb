@@ -3,6 +3,9 @@
 
 #adsense
 google.com,pub-7710644763832143,DIRECT,f08c47fec0942fa0
+#adx
+google.com, pub-8459711748481573, DIRECT, f08c47fec0942fa0
+
 #sulvo
 demand.supply, jB2xpWimmjFXqkctM, DIRECT
 relabe.com, jB2xpWimmjFXqkctM, DIRECT
