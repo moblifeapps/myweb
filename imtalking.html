@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -168,7 +167,7 @@ body {
   overflow: hidden; height: calc(100vh - 120px - var(--ad-height));
 }
 .topbar {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
   padding: 0 34px; height: 120px;
   background: var(--surface); border-bottom: 1px solid var(--border);
   position: sticky; top: 0; z-index: 100; flex-shrink: 0;
@@ -685,6 +684,21 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
 .btn-danger:hover:not(:disabled) { background: rgba(255,95,114,.2); }
 .btn-green    { background: rgba(62,207,130,.1); border: 1px solid rgba(62,207,130,.3); color: var(--green); width: 100%; }
 .btn-green:hover:not(:disabled) { background: rgba(62,207,130,.2); }
+
+/* ── AI disclosure + report content ─────────────────────────────── */
+.ai-disclosure { display: flex; flex-direction: column; gap: 2px; font-size: 12px; line-height: 1.35; color: var(--text2); max-width: 420px; }
+.ai-disclosure .ai-disclosure-line1 { font-weight: 600; color: var(--text); }
+.ai-disclosure .ai-disclosure-line2 { color: var(--text2); }
+.btn-report {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border-radius: 99px; border: none;
+  font-size: 13px; font-weight: 700; color: #fff; cursor: pointer;
+  background: linear-gradient(135deg, #ff5f6d, #ffc371);
+  box-shadow: 0 2px 10px rgba(255,95,109,.35);
+  white-space: nowrap; text-decoration: none;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn-report:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(255,95,109,.5); }
 .btn:disabled { opacity: .4; cursor: not-allowed; }
 .btn-launch {
   background: linear-gradient(135deg,var(--accent),#a78bfa);
@@ -1033,6 +1047,13 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
       
     </div>
   </div>
+
+  <div class="ai-disclosure">
+    <div class="ai-disclosure-line1">Disclosure: ImTalking uses live generative AI models to synthesize facial movements and video content based on user inputs</div>
+    <div class="ai-disclosure-line2">ToS - You must have rights/consent for any photo you animate</div>
+  </div>
+  <a class="btn-report" href="mailto:mil.applications@hotmail.com?subject=ImTalking%20-%20Report%20AI%20content" title="Report inappropriate AI-generated content">🚩 Report inappropriate content</a>
+
   <div class="ws-pill">
     <div class="ws-dot" id="wsDot"></div>
     <span id="wsLabel">Discovering…</span>
@@ -1443,6 +1464,19 @@ input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
               <div class="settings-row-label">ImTalking</div>
               <div class="settings-row-sub">Version 3.1 · Built by mlapplications.com</div>
             </div>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3>Content &amp; Safety</h3>
+          <div class="settings-row">
+            <div class="settings-row-left">
+              <div class="ai-disclosure">
+                <div class="ai-disclosure-line1">Disclosure: ImTalking uses live generative AI models to synthesize facial movements and video content based on user inputs</div>
+                <div class="ai-disclosure-line2">ToS - You must have rights/consent for any photo you animate</div>
+              </div>
+            </div>
+            <a class="btn-report" href="mailto:mil.applications@hotmail.com?subject=ImTalking%20-%20Report%20AI%20content" title="Report inappropriate AI-generated content">🚩 Report inappropriate content</a>
           </div>
         </div>
       </div>

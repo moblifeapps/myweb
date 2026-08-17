@@ -145,6 +145,20 @@ main { flex: 1; padding: 40px 40px 80px; max-width: 760px; }
 }
 .callout-good strong { color: var(--green); }
 
+.ai-disclosure-box { display: flex; flex-direction: column; gap: 4px; font-size: 13.5px; line-height: 1.6; }
+.ai-disclosure-box .ai-disclosure-line1 { font-weight: 600; color: var(--text); }
+.ai-disclosure-box .ai-disclosure-line2 { color: var(--text2); }
+.btn-report {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 16px; border-radius: 99px; border: none;
+  font-size: 13px; font-weight: 700; color: #fff; cursor: pointer;
+  background: linear-gradient(135deg, #ff5f6d, #ffc371);
+  box-shadow: 0 2px 10px rgba(255,95,109,.35);
+  white-space: nowrap; text-decoration: none; margin-top: 12px;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn-report:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(255,95,109,.5); }
+
 footer { text-align: center; padding: 28px; color: var(--text3); font-size: 12px; border-top: 1px solid var(--border); }
 footer a { color: var(--text2); }
 
@@ -247,6 +261,15 @@ footer a { color: var(--text2); }
     <h1 class="page-title">Privacy Policy</h1>
     <div class="page-updated">Last updated: July 2026</div>
     <p class="page-lede">The short version: ImTalking runs on your own PC. Your photos, your text, your voice choices and your finished videos are stored on your hard drive — not on our servers, because we don't have any that hold your content. Below is exactly what that means in practice.</p>
+
+    <div class="info-section" id="ai-disclosure">
+      <h2>Generative AI Disclosure</h2>
+      <div class="ai-disclosure-box">
+        <div class="ai-disclosure-line1">Disclosure: ImTalking uses live generative AI models to synthesize facial movements and video content based on user inputs</div>
+        <div class="ai-disclosure-line2">ToS - You must have rights/consent for any photo you animate</div>
+      </div>
+      <a class="btn-report" href="mailto:mil.applications@hotmail.com?subject=ImTalking%20-%20Report%20AI%20content" title="Report inappropriate AI-generated content">🚩 Report inappropriate content</a>
+    </div>
 
     <div class="info-section" id="overview">
       <h2>What ImTalking does</h2>
