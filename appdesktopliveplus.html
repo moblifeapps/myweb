@@ -28,36 +28,40 @@ googletag.enableServices();
 -->
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
 <script>
-  window.googletag = window.googletag || {cmd: []};
+ window.googletag = window.googletag || {cmd: []};
+
+  // Declare global variables in window scope so body script can access them
+  window.offerwallSlot = null;
+  window.sideRailSlot = null;
+
   googletag.cmd.push(function() {
     
-    // 1. Define Offerwall/Rewarded OOP Slot
-    const offerwallSlot = googletag.defineOutOfPageSlot(
+    // 1. Define Offerwall / Rewarded Slot
+    window.offerwallSlot = googletag.defineOutOfPageSlot(
       '/423204242/Eretria_Offerwall_Rewarded_AdX_code',
       googletag.enums.OutOfPageFormat.REWARDED
     );
-    if (offerwallSlot) {
-      offerwallSlot.addService(googletag.pubads());
+    if (window.offerwallSlot) {
+      window.offerwallSlot.addService(googletag.pubads());
     }
 
-// 2. Right-Only Side Rail Slot
-    const sideRailSlot = googletag.defineOutOfPageSlot(
-      '/423204242/my_Adx_SideRail_AdUnit_Name', // <--- Replace with your exact side rail ad unit code
+    // 2. Define Right Side Rail Slot
+    window.sideRailSlot = googletag.defineOutOfPageSlot(
+      '/423204242/my_Adx_SideRail_AdUnit_Name',
       googletag.enums.OutOfPageFormat.SIDE_RAIL
     );
 
-    if (sideRailSlot) {
-      sideRailSlot.setConfig({
-        sideRail: {
-          position: 'right' // Forces GPT to display strictly on the right side
-        }
+    if (window.sideRailSlot) {
+      // Modern GPT targeting syntax
+      window.sideRailSlot.setConfig({
+        targeting: { position: 'right' }
       });
-      sideRailSlot.addService(googletag.pubads());
+      window.sideRailSlot.addService(googletag.pubads());
     }
 
-    // 2. Global GAM Configurations
-    googletag.pubads().collapseEmptyDivs();
+    // 3. Modernized Global Settings
     googletag.setConfig({
+      collapseDiv: 'collapseBeforeAdFetch', // Replaces deprecated collapseEmptyDivs
       lazyLoad: {
         fetchMarginPercent: 100,
         renderMarginPercent: 50,
@@ -4108,16 +4112,18 @@ btn.addEventListener("click", function (e) {
     googletag.cmd.push(function() { googletag.display('div-gpt-ad-1785318971408-0'); });
   </script>
 </div>-->
-
 <script>
   googletag.cmd.push(function() { 
-    // Trigger Offerwall Overlay
-    googletag.display('/423204242/Eretria_Offerwall_Rewarded_AdX_code'); 
+    // Pass slot objects directly to display()
+    if (window.offerwallSlot) {
+      googletag.display(window.offerwallSlot);
+    }
     
-    // Trigger Right Side Rail Overlay
-    googletag.display('/423204242/my_Adx_SideRail_AdUnit_Name'); 
+    if (window.sideRailSlot) {
+      googletag.display(window.sideRailSlot);
+    }
   });
-</script>
+</script> 
 
 </body>
 
