@@ -27,10 +27,10 @@ googletag.enableServices();
 </script> 
 -->
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
-<script>
- window.googletag = window.googletag || {cmd: []};
 
-  // Declare global variables in window scope so body script can access them
+<script>
+  window.googletag = window.googletag || {cmd: []};
+
   window.offerwallSlot = null;
   window.sideRailSlot = null;
 
@@ -41,38 +41,39 @@ googletag.enableServices();
       '/423204242/Eretria_Offerwall_Rewarded_AdX_code',
       googletag.enums.OutOfPageFormat.REWARDED
     );
+
     if (window.offerwallSlot) {
       window.offerwallSlot.addService(googletag.pubads());
     }
 
-	// 2. REQUIRED LISTENER for GAM Offerwall
-  googletag.pubads().addEventListener('rewardedSlotReady', function(evt) {
-    // Automatically trigger GAM's offerwall UI as soon as it preloads
-    evt.makeRewardedVisible();
-  });
+    // 2. Event Listeners for Rewarded / Offerwall
+    googletag.pubads().addEventListener('rewardedSlotReady', function(evt) {
+      evt.makeRewardedVisible();
+    });
 
-  // 3. Optional: Grant access/reward when completed
-  googletag.pubads().addEventListener('rewardedSlotGranted', function(evt) {
-    console.log('Offerwall completed / Reward granted');
-  });
+    googletag.pubads().addEventListener('rewardedSlotGranted', function(evt) {
+      console.log('Offerwall completed / Reward granted');
+    });
   
-    // 2. Define Right Side Rail Slot
+    // 3. Define Right Side Rail Slot
+    // Note: Side Rail formats automatically handle 160x600 and 300x600 creative sizes from GAM
     window.sideRailSlot = googletag.defineOutOfPageSlot(
-      '/423204242/my_Adx_SideRail_AdUnit_Name',
+      '/423204242/my_siderail_code_adx',
       googletag.enums.OutOfPageFormat.SIDE_RAIL
     );
 
     if (window.sideRailSlot) {
-      // Modern GPT targeting syntax
       window.sideRailSlot.setConfig({
         targeting: { position: 'right' }
       });
       window.sideRailSlot.addService(googletag.pubads());
     }
 
-    // 3. Modernized Global Settings
+    // 4. Global PubAds Settings (Fixes collapseDiv warning)
+    googletag.pubads().collapseEmptyDivs(true); // Replaces invalid setConfig collapseDiv
+
+    // 5. Component Configuration
     googletag.setConfig({
-      collapseDiv: 'collapseBeforeAdFetch', // Replaces deprecated collapseEmptyDivs
       lazyLoad: {
         fetchMarginPercent: 100,
         renderMarginPercent: 50,
