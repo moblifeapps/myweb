@@ -44,6 +44,17 @@ googletag.enableServices();
       window.offerwallSlot.addService(googletag.pubads());
     }
 
+// 2. REQUIRED LISTENER for GAM Offerwall
+  googletag.pubads().addEventListener('rewardedSlotReady', function(evt) {
+    // Automatically trigger GAM's offerwall UI as soon as it preloads
+    evt.makeRewardedVisible();
+  });
+
+  // 3. Optional: Grant access/reward when completed
+  googletag.pubads().addEventListener('rewardedSlotGranted', function(evt) {
+    console.log('Offerwall completed / Reward granted');
+  });
+
     // 2. Define Right Side Rail Slot
     window.sideRailSlot = googletag.defineOutOfPageSlot(
       '/423204242/my_Adx_SideRail_AdUnit_Name',
