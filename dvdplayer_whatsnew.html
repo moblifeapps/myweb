@@ -111,9 +111,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     googletag.pubads().collapseEmptyDivs();
   googletag.pubads().collapseEmptyDivs();
     googletag.pubads().enableAsyncRendering(); 
-    	googletag.setConfig({
-  lazyLoad: {}
-});
+    	 
 googletag.enableServices();
 
   });
@@ -247,7 +245,7 @@ img {margin-bottom: -8px;}
 </script>
 
 <!--<script type="text/javascript" async="async" src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=44890869"></script>-->
-<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242" crossorigin="anonymous"></script>
+<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
 
 <!-- Standard GPT script required for GAM & Privacy/Messaging tools -->
    
@@ -256,7 +254,19 @@ img {margin-bottom: -8px;}
   googletag.cmd.push(function() {
     
  
-    googletag.defineOutOfPageSlot('/423204242/Eretria_Offerwall_Rewarded_AdX_code', 'div-gpt-ad-1785318971408-0').addService(googletag.pubads());
+     const slot = googletag.defineOutOfPageSlot(
+      '/423204242/my_siderail_code_adx',
+      googletag.enums.OutOfPageFormat.RIGHT_SIDE_RAIL
+    );
+// 2. Only add service if the browser supports Side Rails (slot !== null)
+    if (slot) {
+      window.sideRailSlot = slot.addService(googletag.pubads());
+    } 
+
+    // 4. Global PubAds Settings (Fixes collapseDiv warning)
+    googletag.pubads().collapseEmptyDivs(true); // Replaces invalid setConfig collapseDiv
+
+
     //var anchorSlot = googletag.defineOutOfPageSlot(
 //      '/423204242/my_bottom_anchor_desktop_code', 
 //      googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
@@ -266,13 +276,9 @@ img {margin-bottom: -8px;}
 //      anchorSlot.addService(googletag.pubads());
 //    }
     //googletag.pubads().enableSingleRequest();
-    googletag.setConfig({
-      collapseDivs: 'collapseBeforeAdFetch'
-    });
+     
     
-    	googletag.setConfig({
-  lazyLoad: {}
-});
+    	 
 googletag.enableServices();
     
   
@@ -3388,11 +3394,18 @@ try
 <!--<div data-ad="mlapplications.com_sticky_video_myvid" data-devices="m:1,t:1,d:1"   class="demand-supply"></div>-->
 
 <!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code -->
-<div id='div-gpt-ad-1785318971408-0'>
-  <script>
-    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1785318971408-0'); });
-  </script>
-</div>
+<script>
+  googletag.cmd.push(function() { 
+    // Pass slot objects directly to display()
+ //   if (window.offerwallSlot) {
+   //   googletag.display(window.offerwallSlot);
+  //  }
+    // Only call display if the slot was successfully created
+    if (window.sideRailSlot) {
+      googletag.display(window.sideRailSlot);
+    } 
+  });
+</script> 
 </body>
 
  </html>
