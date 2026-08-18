@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <meta name="sulvo-onboarding-verification" content="9w-F1WVfBeBO7aIgzvClW8Ro3o-ilLIziXWw3FVIBvk">
-
+<!--
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242" crossorigin="anonymous"></script>
-
+-->
 <!-- Standard GPT script required for GAM & Privacy/Messaging tools -->
-  
+  <!--
 <script>
   window.googletag = window.googletag || {cmd: []};
   googletag.cmd.push(function() {
@@ -22,9 +22,50 @@ googletag.enableServices();
 
   });
 </script> 
- 
- 
+-->
+<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
+<script>
+  window.googletag = window.googletag || {cmd: []};
+  googletag.cmd.push(function() {
+    
+    // 1. Define Offerwall/Rewarded OOP Slot
+    const offerwallSlot = googletag.defineOutOfPageSlot(
+      '/423204242/Eretria_Offerwall_Rewarded_AdX_code',
+      googletag.enums.OutOfPageFormat.REWARDED
+    );
+    if (offerwallSlot) {
+      offerwallSlot.addService(googletag.pubads());
+    }
 
+    
+// 2. Right-Only Side Rail Slot
+    const sideRailSlot = googletag.defineOutOfPageSlot(
+      '/423204242/my_Adx_SideRail_AdUnit_Name', // <--- Replace with your exact side rail ad unit code
+      googletag.enums.OutOfPageFormat.SIDE_RAIL
+    );
+
+    if (sideRailSlot) {
+      sideRailSlot.setConfig({
+        sideRail: {
+          position: 'right' // Forces GPT to display strictly on the right side
+        }
+      });
+      sideRailSlot.addService(googletag.pubads());
+    }
+
+    // 2. Global GAM Configurations
+    googletag.pubads().collapseEmptyDivs();
+    googletag.setConfig({
+      lazyLoad: {
+        fetchMarginPercent: 100,
+        renderMarginPercent: 50,
+        mobileScaling: 2.0
+      }
+    });
+
+    googletag.enableServices();
+  });
+</script>
 
 <link rel="preload" as="script" href="https://live.demand.supply/up.js"><script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
@@ -918,12 +959,23 @@ googletag.enableServices();
 <!-- old --adsense-- code -->
 <!--<div data-ad="mlapplications.com_sticky_video_myvid" data-devices="m:1,t:1,d:1"   class="demand-supply"></div>-->
 
-<!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code -->
+<!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code 
 <div id='div-gpt-ad-1785318971408-0'>
   <script>
     googletag.cmd.push(function() { googletag.display('div-gpt-ad-1785318971408-0'); });
   </script>
-</div>
+</div>-->
+
+<script>
+  googletag.cmd.push(function() { 
+    // Trigger Offerwall Overlay
+    googletag.display('/423204242/Eretria_Offerwall_Rewarded_AdX_code'); 
+    
+    // Trigger Right Side Rail Overlay
+    googletag.display('/423204242/my_Adx_SideRail_AdUnit_Name'); 
+  });
+</script>
+
 </body>
 
 </html>
