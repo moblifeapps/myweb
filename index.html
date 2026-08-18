@@ -27,32 +27,33 @@ googletag.enableServices();
 -->
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
 
+
 <script>
   window.googletag = window.googletag || {cmd: []};
 
-  window.offerwallSlot = null;
+//  window.offerwallSlot = null;
   window.sideRailSlot = null;
 
   googletag.cmd.push(function() {
     
     // 1. Define Offerwall / Rewarded Slot
-    window.offerwallSlot = googletag.defineOutOfPageSlot(
-      '/423204242/Eretria_Offerwall_Rewarded_AdX_code',
-      googletag.enums.OutOfPageFormat.REWARDED
-    );
+ //   window.offerwallSlot = googletag.defineOutOfPageSlot(
+ //     '/423204242/Eretria_Offerwall_Rewarded_AdX_code',
+ //     googletag.enums.OutOfPageFormat.REWARDED
+ //   );
 
-    if (window.offerwallSlot) {
-      window.offerwallSlot.addService(googletag.pubads());
-    }
+  //  if (window.offerwallSlot) {
+  //    window.offerwallSlot.addService(googletag.pubads());
+  //  }
 
     // 2. Event Listeners for Rewarded / Offerwall
-    googletag.pubads().addEventListener('rewardedSlotReady', function(evt) {
-      evt.makeRewardedVisible();
-    });
+  //  googletag.pubads().addEventListener('rewardedSlotReady', function(evt) {
+  //    evt.makeRewardedVisible();
+  //  });
 
-    googletag.pubads().addEventListener('rewardedSlotGranted', function(evt) {
-      console.log('Offerwall completed / Reward granted');
-    });
+  //  googletag.pubads().addEventListener('rewardedSlotGranted', function(evt) {
+  //    console.log('Offerwall completed / Reward granted');
+  //  });
   
     // 3. Define Right Side Rail Slot
     // Note: Side Rail formats automatically handle 160x600 and 300x600 creative sizes from GAM
@@ -985,9 +986,9 @@ googletag.enableServices();
 <script>
   googletag.cmd.push(function() { 
     // Pass slot objects directly to display()
-    if (window.offerwallSlot) {
-      googletag.display(window.offerwallSlot);
-    }
+ //   if (window.offerwallSlot) {
+   //   googletag.display(window.offerwallSlot);
+  //  }
     
     if (window.sideRailSlot) {
       googletag.display(window.sideRailSlot);
