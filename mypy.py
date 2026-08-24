@@ -112,14 +112,14 @@ def hasMetaRobotsNoindex(f) :
   googletag.cmd.push(function() {
     
  
-     const slot = googletag.defineOutOfPageSlot(
-      '/423204242/my_siderail_code_adx',
-      googletag.enums.OutOfPageFormat.RIGHT_SIDE_RAIL
-    );
+     //const slot = googletag.defineOutOfPageSlot(
+//      '/423204242/my_siderail_code_adx',
+//      googletag.enums.OutOfPageFormat.RIGHT_SIDE_RAIL
+//    );
 // 2. Only add service if the browser supports Side Rails (slot !== null)
-    if (slot) {
-      window.sideRailSlot = slot.addService(googletag.pubads());
-    } 
+    //if (slot) {
+//      window.sideRailSlot = slot.addService(googletag.pubads());
+//    } 
 
     // 4. Global PubAds Settings (Fixes collapseDiv warning)
     googletag.pubads().collapseEmptyDivs(true); // Replaces invalid setConfig collapseDiv
