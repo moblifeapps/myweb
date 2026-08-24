@@ -162,6 +162,7 @@ googletag.enableServices();
 </script> 
  
   
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7710644763832143" crossorigin="anonymous"></script>
 </head>", contents, flags=re.I)
             if not m :
                 m = re.search("<body>", contents, flags=re.I)
