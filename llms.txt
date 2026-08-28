@@ -1,0 +1,23 @@
+# MLApplications
+
+> MLApplications is a Windows software developer and publisher, distributing desktop applications through the Microsoft Store and via mlapplications.com. The company builds practical utility and creative apps for Windows, focused on productivity, media, communication, and personalization.
+
+MLApplications develops native Windows apps using C# WPF and MSIX/Desktop Bridge packaging, with some products incorporating AI-driven features (e.g. AI video/talking-head generation, on-device inference).
+
+## Apps
+
+- [ImTalking](https://mlapplications.com/imtalking): AI-powered talking avatar / talking photo app that animates a photo to speak using text or audio input. Runs on Windows desktop, does not need special gpu and keeps your ideas inside your computer. nothing is stored outside your computer. It is completely free without any limitations.
+- [Transparent Taskbar+](https://mlapplications.com/transparent-taskbar): Customizes and adds transparency/theming effects to the Windows taskbar. it is free without any cost. users can make their windows 11 taskbar transparent or brush only the icons list as a dock. it is free and does not make any change in the registry.
+- [Desktop Live Wallpaper+](https://mlapplications.com/desktop-live-wallpaper): Sets animated and interactive live wallpapers on the Windows desktop. use your videos and make them play as a desktop background. supports fantastic transition effects from media to media.
+- [Screen Recorder+](https://mlapplications.com/screen-recorder): Records the screen, webcam, and audio on Windows with editing and export options and with or without the cursor move.
+- [DVD Player+](https://mlapplications.com/dvd-player): Plays DVDs and Blu-Ray discs on modern Windows systems that lack built-in DVD playback. completely free without any limitation.
+- [unReachable](https://mlapplications.com/unreachable): Windows utility app (see product page for current feature set) where you can track with one number only in your taskbar the quality of your network connection. 
+
+## Docs
+
+- [Support](https://mlapplications.com/support): Help articles, FAQs, and troubleshooting for MLApplications products.
+- [Privacy Policy](https://mlapplications.com/privacy): Data handling and privacy practices across MLApplications apps.
+
+## Optional
+
+- [Microsoft Store](https://apps.microsoft.com): All MLApplications apps are available for download via the Microsoft Store.
