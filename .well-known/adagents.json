@@ -1,0 +1,51 @@
+{
+  "$schema": "https://adcontextprotocol.org/schemas/adagents.json",
+  "version": "1.0",
+  "publisher": {
+    "name": "mil.applications@hotmail.com",
+    "contact": "mil.applications@hotmail.com"
+  },
+  "properties": [
+    {
+	  "property_id": "mlapplications_web",
+      "property_type": "website",
+      "type": "web",
+      "domain": "mlapplications.com"
+    }
+  ],
+  "authorized_agents": [
+    {
+      "name": "Sulvo",
+      "url": "https://sulvo.com",
+      "role": "sales",
+      "notes": "Direct sales agent"
+    },
+	{
+      "agent_id": "google_adx_direct",
+      "name": "Google AdX Direct Account",
+      "url": "https://adx.google.com/agent",
+      "delegation_type": "direct",
+      "authorization_type": "property_ids",
+      "property_ids": ["mlapplications_web"],
+      "seller_id": "pub-8459711748481573"
+    },
+	{
+      "agent_id": "google_adsense_agent",
+      "name": "Google AdSense Agent",
+      "url": "https://adsense.google.com/agent",
+      "authorized_for": "Authorized to manage and serve display and contextually targeted ad inventory via Google AdSense.",
+      "delegation_type": "direct",
+      "authorization_type": "property_ids",
+      "property_ids": [
+        "mlapplications_web"
+      ],
+      "seller_id": "pub-7710644763832143"
+    }
+  ],
+  "last_updated": "2026-09-07",
+  "generated_by": {
+    "name": "Sulvo",
+    "url": "https://sulvo.com",
+    "tool": "adagents.json studio"
+  }
+}
