@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
+
+
+
+<!-- In your <head> -->
+<link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-ads/7.0.0/videojs.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/videojs-ima/2.11.0/videojs.ima.css" rel="stylesheet" />
+
+
+<!-- Standard GPT script required for GAM & Privacy/Messaging tools -->
+   
+  <script>
+  window.googletag = window.googletag || {cmd: []};
+  googletag.cmd.push(function() {
+    
+ 
+     //const slot = googletag.defineOutOfPageSlot(
+//      '/423204242/my_siderail_code_adx',
+//      googletag.enums.OutOfPageFormat.RIGHT_SIDE_RAIL
+//    );
+// 2. Only add service if the browser supports Side Rails (slot !== null)
+    //if (slot) {
+//      window.sideRailSlot = slot.addService(googletag.pubads());
+//    } 
+
+    // 4. Global PubAds Settings (Fixes collapseDiv warning)
+    googletag.pubads().collapseEmptyDivs(true); // Replaces invalid setConfig collapseDiv
+
+
+    //var anchorSlot = googletag.defineOutOfPageSlot(
+//      '/423204242/my_bottom_anchor_desktop_code', 
+//      googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
+//    );
+    
+//    if (anchorSlot) {
+//      anchorSlot.addService(googletag.pubads());
+//    }
+    //googletag.pubads().enableSingleRequest();
+     
+    
+    	 
+googletag.enableServices();
+    
+  
+    ///if (anchorSlot) {
+//      googletag.display(anchorSlot);
+//    }
+  });
+</script>
+
+<link rel="preload" as="script" href="https://live.demand.supply/up.js"><script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
+
+
+
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ImTalking Video Samples — Compare Settings Side-by-Side</title>
+<meta name="description" content="See what ImTalking's Processing Options actually look like — GFPGAN enhancement, upscale levels, still mode and expression scale, compared side-by-side."/>
+<meta name="keywords" content="ImTalking samples, GFPGAN comparison, talking avatar examples, SadTalker samples"/>
+<meta property="og:title" content="ImTalking Video Samples — Compare Settings Side-by-Side"/>
+<meta property="og:description" content="See exactly what each ImTalking setting looks like before you generate."/>
+<meta property="og:image" content="https://mlapplications.com/uploads/imtalkinglogo.webp"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://mlapplications.com/imtalking_videos_samples.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ImTalking Video Samples"/>
+<meta name="twitter:description" content="See exactly what each ImTalking setting looks like before you generate."/>
+<link rel="canonical" href="https://mlapplications.com/imtalking_videos_samples.html"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0e0f11;--surface:#18191d;--surface2:#21222a;--border:#2a2b35;
+  --text:#e8e9f0;--text2:#9899a8;--text3:#5a5b6a;
+  --accent:#5b7fff;--green:#3ecf8e;--amber:#f5a623;
+  --radius:10px;--font:system-ui,-apple-system,sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.6;min-height:100vh}
+
+/* ── NAV ── */
+.topnav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);font-weight:700;font-size:17px}
+.nav-brand img{width:36px;height:36px;border-radius:8px}
+.nav-links{display:flex;gap:4px}
+.nav-links a{color:var(--text2);text-decoration:none;padding:6px 12px;border-radius:6px;font-size:13px;transition:color .15s,background .15s}
+.nav-links a:hover{color:var(--text);background:var(--surface2)}
+.nav-links a.active{color:var(--accent)}
+.nav-badge img{height:28px;opacity:.9;transition:opacity .15s}
+.nav-badge img:hover{opacity:1}
+
+/* ── HERO ── */
+.hero{text-align:center;padding:56px 24px 40px;max-width:700px;margin:0 auto}
+.hero h1{font-size:28px;font-weight:700;margin-bottom:12px;letter-spacing:-.3px}
+.hero p{color:var(--text2);font-size:15px;max-width:540px;margin:0 auto}
+
+/* ── SECTIONS ── */
+.sections{max-width:1000px;margin:0 auto;padding:0 24px 80px}
+.section{margin-bottom:64px}
+.section-header{margin-bottom:24px}
+.section-header h2{font-size:18px;font-weight:600;margin-bottom:6px}
+.section-header p{color:var(--text2);font-size:14px}
+
+/* ── VIDEO GRID ── */
+.video-grid{display:grid;gap:20px}
+.video-grid.cols-2{grid-template-columns:repeat(2,1fr)}
+.video-grid.cols-3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:640px){
+  .video-grid.cols-2,.video-grid.cols-3{grid-template-columns:1fr}
+  .topnav{padding:12px 16px}
+  .nav-links{display:none}
+}
+
+/* ── VIDEO CARD ── */
+.video-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.video-wrap{position:relative;background:#000;aspect-ratio:1/1}
+.video-wrap video{width:100%;height:100%;object-fit:cover;display:block}
+
+/* Play/pause overlay */
+.video-overlay{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.35);opacity:0;transition:opacity .2s;cursor:pointer;
+}
+.video-wrap:hover .video-overlay{opacity:1}
+.video-overlay svg{width:44px;height:44px;color:#fff;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+
+/* Progress bar */
+.video-progress{
+  position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:rgba(255,255,255,.15);cursor:pointer;
+}
+.video-progress-bar{height:100%;background:var(--accent);width:0%;transition:width .1s linear;pointer-events:none}
+
+/* Controls row */
+.video-controls{
+  display:flex;align-items:center;gap:8px;padding:8px 12px;
+  background:var(--surface2);border-top:1px solid var(--border);
+}
+.ctrl-btn{
+  background:none;border:none;color:var(--text2);cursor:pointer;
+  padding:4px;border-radius:4px;display:flex;align-items:center;transition:color .15s;
+}
+.ctrl-btn:hover{color:var(--text)}
+.ctrl-btn svg{width:16px;height:16px}
+.ctrl-time{font-size:11px;color:var(--text3);font-variant-numeric:tabular-nums;margin-left:2px}
+.ctrl-loop{margin-left:auto}
+.ctrl-loop.on{color:var(--accent)}
+.ctrl-mute.muted{color:var(--amber)}
+
+/* Caption */
+.video-caption{padding:12px 14px}
+.video-badge{
+  display:inline-block;font-size:10px;font-weight:700;letter-spacing:.8px;
+  text-transform:uppercase;padding:3px 8px;border-radius:4px;margin-bottom:6px;
+}
+.badge-default{background:rgba(90,91,106,.25);color:var(--text2)}
+.badge-enhanced{background:rgba(62,207,142,.15);color:var(--green)}
+.badge-rec{background:rgba(91,127,255,.18);color:var(--accent)}
+.badge-sharp{background:rgba(245,166,35,.15);color:var(--amber)}
+.badge-stable{background:rgba(62,207,142,.12);color:var(--green)}
+.badge-natural{background:rgba(90,91,106,.2);color:var(--text2)}
+.badge-expressive{background:rgba(245,166,35,.12);color:var(--amber)}
+.video-caption h3{font-size:13px;font-weight:600;margin-bottom:2px}
+.video-caption p{font-size:12px;color:var(--text3);line-height:1.4}
+
+/* placeholder while no video */
+.video-placeholder{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  aspect-ratio:1/1;background:var(--surface2);color:var(--text3);font-size:13px;gap:8px;
+}
+.video-placeholder svg{width:32px;height:32px;opacity:.35}
+
+/* ── FOOTER ── */
+footer{text-align:center;padding:32px 24px;border-top:1px solid var(--border);color:var(--text3);font-size:13px}
+footer a{color:var(--text2);text-decoration:none}
+footer a:hover{color:var(--text)}
+</style>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-87MTDXTF59');
+</script>
+
+<!--<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7710644763832143" crossorigin="anonymous"></script>-->
+</head>
+<body>
+
+<nav class="topnav">
+  <a class="nav-brand" href="https://mlapplications.com/imtalking_how_to.html">
+    <img src="https://mlapplications.com/uploads/imtalkinglogo.webp" alt="ImTalking"/>
+    ImTalking
+  </a>
+  <div class="nav-links">
+    <a href="https://mlapplications.com/imtalking_how_to.html">How-To Guide</a>
+    <a href="https://mlapplications.com/imtalking_videos_samples.html" class="active">Video Samples</a>
+    <a href="https://mlapplications.com/imtalking_help.html">Help &amp; Reference</a>
+    <a href="https://mlapplications.com/imtalking_tips_and_tricks.html">Tips &amp; Tricks</a>
+  </div>
+  <a class="nav-badge" href="https://apps.microsoft.com/detail/9P2FHF89K1T2?referrer=appbadge&cid=samples&mode=full" target="_blank" rel="noopener">
+    <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft"/>
+  </a>
+</nav>
+
+
+
+<div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
+<!-- old mobile sticky top code -->
+
+
+<div class="hero">
+  <h1>Video Samples</h1>
+  <p>Every Processing Option changes the output in a different way. Compare them side-by-side before you spend render time on your own video.</p>
+</div>
+
+<div class="sections">
+
+  <!-- ENHANCE -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Enhance &mdash; GFPGAN on vs. off</h2>
+      <p>GFPGAN face restoration runs on every frame for a sharper result, at the cost of extra render time.</p>
+    </div>
+    <div class="video-grid cols-2">
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-enhance-off" src="https://mlapplications.com/video_samples/enhance_off.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-enhance-off')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-enhance-off')">
+            <div class="video-progress-bar" id="bar-enhance-off"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-enhance-off')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-enhance-off" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-enhance-off">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-enhance-off" onclick="toggleLoop('v-enhance-off','loop-enhance-off')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-enhance-off" onclick="toggleMute('v-enhance-off')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-default">Enhance off &mdash; default look</span>
+          <h3>Without GFPGAN</h3>
+          <p>Faster rendering, slightly softer facial detail.</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-enhance-on" src="https://mlapplications.com/video_samples/enhance_on.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-enhance-on')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-enhance-on')">
+            <div class="video-progress-bar" id="bar-enhance-on"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-enhance-on')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-enhance-on" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-enhance-on">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-enhance-on" onclick="toggleLoop('v-enhance-on','loop-enhance-on')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-enhance-on" onclick="toggleMute('v-enhance-on')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-enhanced">Enhance on &mdash; sharper</span>
+          <h3>With GFPGAN</h3>
+          <p>Each frame is passed through face restoration. Noticeably crisper.</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-enhance-off2" src="https://mlapplications.com/video_samples/enhance_off2.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-enhance-off2')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-enhance-off2')">
+            <div class="video-progress-bar" id="bar-enhance-off2"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-enhance-off2')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-enhance-off2" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-enhance-off2">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-enhance-off2" onclick="toggleLoop('v-enhance-off2','loop-enhance-off2')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-enhance-off2" onclick="toggleMute('v-enhance-off2')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-default">Enhance off &mdash; second example</span>
+          <h3>Without GFPGAN (avatar 2)</h3>
+          <p>Another avatar showing baseline output without face restoration.</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-enhance-on2" src="https://mlapplications.com/video_samples/enhance_on2.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-enhance-on2')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-enhance-on2')">
+            <div class="video-progress-bar" id="bar-enhance-on2"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-enhance-on2')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-enhance-on2" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-enhance-on2">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-enhance-on2" onclick="toggleLoop('v-enhance-on2','loop-enhance-on2')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-enhance-on2" onclick="toggleMute('v-enhance-on2')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-enhanced">Enhance on &mdash; second example</span>
+          <h3>With GFPGAN (avatar 2)</h3>
+          <p>The same avatar with GFPGAN &mdash; sharper skin texture and eye detail.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UPSCALE -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Upscale &mdash; 512 px vs. 1024 px</h2>
+      <p>Upscaling adds clarity after rendering without re-running the model. 512 px is the recommended sweet spot for most uses.</p>
+    </div>
+    <div class="video-grid cols-2">
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-upscale-512" src="https://mlapplications.com/video_samples/upscale_512.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-upscale-512')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-upscale-512')">
+            <div class="video-progress-bar" id="bar-upscale-512"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-upscale-512')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-upscale-512" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-upscale-512">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-upscale-512" onclick="toggleLoop('v-upscale-512','loop-upscale-512')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-upscale-512" onclick="toggleMute('v-upscale-512')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-rec">Upscale: 512 px &mdash; recommended</span>
+          <h3>512 px upscale</h3>
+          <p>Good balance of quality and file size. Recommended for most uses.</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-upscale-1024" src="https://mlapplications.com/video_samples/upscale_1024.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-upscale-1024')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-upscale-1024')">
+            <div class="video-progress-bar" id="bar-upscale-1024"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-upscale-1024')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-upscale-1024" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-upscale-1024">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-upscale-1024" onclick="toggleLoop('v-upscale-1024','loop-upscale-1024')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-upscale-1024" onclick="toggleMute('v-upscale-1024')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-sharp">Upscale: 1024 px &mdash; sharpest</span>
+          <h3>1024 px upscale</h3>
+          <p>Maximum clarity, larger file. Best for presentations and high-res exports.</p>
+        </div>
+      </div>  
+    </div>
+  </div>
+
+  <!-- STILL MODE -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Still mode &mdash; on vs. off</h2>
+      <p>Still mode keeps the head stable with minimal drift &mdash; good for presentation-style videos.</p>
+    </div>
+    <div class="video-grid cols-2">
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-still-on" src="https://mlapplications.com/video_samples/still_on.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-still-on')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-still-on')">
+            <div class="video-progress-bar" id="bar-still-on"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-still-on')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-still-on" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-still-on">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-still-on" onclick="toggleLoop('v-still-on','loop-still-on')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-still-on" onclick="toggleMute('v-still-on')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-stable">Still mode on &mdash; stable</span>
+          <h3>Still mode on</h3>
+          <p>Head stays mostly fixed. Ideal for explainers and slides.</p>
+        </div>
+      </div>
+
+      <div class="video-card">
+  <div class="video-wrap">
+    <!-- Video.js Container -->
+    <video
+      id="v-still-off"
+      class="video-js vjs-default-skin vjs-big-play-centered"
+      controls
+      preload="auto"
+      playsinline
+      poster="YOUR_POSTER_IMAGE.jpg">
+      <source src="https://mlapplications.com/video_samples/still_off.mp4" type="video/mp4" />
+    </video>
+  </div>
+  
+  <div class="video-caption">
+    <span class="video-badge badge-natural">Still mode off &mdash; natural drift</span>
+    <h3>Still mode off</h3>
+    <p>More natural head motion. Better for conversational avatars.</p>
+  </div>
+</div>
+
+<!--      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-still-off" src="https://mlapplications.com/video_samples/still_off.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-still-off')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-still-off')">
+            <div class="video-progress-bar" id="bar-still-off"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-still-off')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-still-off" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-still-off">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-still-off" onclick="toggleLoop('v-still-off','loop-still-off')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-still-off" onclick="toggleMute('v-still-off')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-natural">Still mode off &mdash; natural drift</span>
+          <h3>Still mode off</h3>
+          <p>More natural head motion. Better for conversational avatars.</p>
+        </div>
+      </div> -->
+    </div>
+  </div>
+
+  <!-- EXPRESSION SCALE -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Expression scale &mdash; 0.7 vs. 1.2</h2>
+      <p>Controls how animated the face is. The default of 1.0 is the most natural &mdash; lower values are subtler, higher values are more dramatic.</p>
+    </div>
+    <div class="video-grid cols-2">
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-expr-07" src="https://mlapplications.com/video_samples/expr_07.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-expr-07')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-expr-07')">
+            <div class="video-progress-bar" id="bar-expr-07"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-expr-07')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-expr-07" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-expr-07">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-expr-07" onclick="toggleLoop('v-expr-07','loop-expr-07')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-expr-07" onclick="toggleMute('v-expr-07')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-natural">Expression 0.7 &mdash; subtle</span>
+          <h3>Expression scale 0.7</h3>
+          <p>More restrained movement. Good for calm, measured delivery. The default of 1.0 sits between these two and is the most natural-looking.</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-wrap">
+          <video id="v-expr-12" src="https://mlapplications.com/video_samples/expr_12.mp4"
+            preload="metadata" loop playsinline></video>
+          <div class="video-overlay" onclick="togglePlay('v-expr-12')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-progress" onclick="seekVideo(event,'v-expr-12')">
+            <div class="video-progress-bar" id="bar-expr-12"></div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn" onclick="togglePlay('v-expr-12')" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-expr-12" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time" id="time-expr-12">0:00</span>
+          <button class="ctrl-btn ctrl-loop on" id="loop-expr-12" onclick="toggleLoop('v-expr-12','loop-expr-12')" title="Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+          <button class="ctrl-btn ctrl-mute" id="mute-expr-12" onclick="toggleMute('v-expr-12')" title="Mute">
+            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+        </div>
+        <div class="video-caption">
+          <span class="video-badge badge-expressive">Expression 1.2 &mdash; expressive</span>
+          <h3>Expression scale 1.2</h3>
+          <p>More pronounced mouth movement. Works well for energetic or enthusiastic speech.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /sections -->
+
+<footer>
+  <p>© 2026 ImTalking · <a href="https://mlapplications.com/">mlapplications.com</a> ·
+  <a href="https://mlapplications.com/imtalking_privacy.html">Privacy</a> ·
+  <a href="https://mlapplications.com/imtalking_contactus.html">Contact</a></p>
+</footer>
+
+<script>
+const PLAY_PATH  = 'M8 5v14l11-7z';
+const PAUSE_PATH = 'M6 19h4V5H6v14zm8-14v14h4V5h-4z';
+
+function fmt(t) {
+  const m = Math.floor(t / 60), s = Math.floor(t % 60);
+  return m + ':' + String(s).padStart(2, '0');
+}
+
+function bindVideo(id) {
+  const v = document.getElementById(id);
+  if (!v) return;
+  const bar    = document.getElementById('bar-' + id.slice(2));
+  const timeEl = document.getElementById('time-' + id.slice(2));
+  const pbIcon = document.getElementById('pbicon-' + id.slice(2));
+
+  v.addEventListener('timeupdate', () => {
+    if (!v.duration) return;
+    if (bar)    bar.style.width = (v.currentTime / v.duration * 100) + '%';
+    if (timeEl) timeEl.textContent = fmt(v.currentTime);
+  });
+  v.addEventListener('play',  () => { if (pbIcon) pbIcon.setAttribute('d', PAUSE_PATH); });
+  v.addEventListener('pause', () => { if (pbIcon) pbIcon.setAttribute('d', PLAY_PATH); });
+  v.addEventListener('ended', () => { if (pbIcon) pbIcon.setAttribute('d', PLAY_PATH); });
+
+  // No auto-play — user starts each video manually
+}
+
+function togglePlay(id) {
+  const v = document.getElementById(id);
+  if (!v) return;
+  v.paused ? v.play().catch(()=>{}) : v.pause();
+}
+
+function seekVideo(e, id) {
+  const v = document.getElementById(id);
+  if (!v || !v.duration) return;
+  const rect = e.currentTarget.getBoundingClientRect();
+  v.currentTime = ((e.clientX - rect.left) / rect.width) * v.duration;
+}
+
+function toggleLoop(vid, btnId) {
+  const v = document.getElementById(vid);
+  const b = document.getElementById(btnId);
+  if (!v || !b) return;
+  v.loop = !v.loop;
+  b.classList.toggle('on', v.loop);
+}
+
+// Bind all videos
+function toggleMute(id) {
+  const v = document.getElementById(id);
+  const btn = document.getElementById('mute-' + id.slice(2));
+  if (!v || !btn) return;
+  v.muted = !v.muted;
+  btn.classList.toggle('muted', v.muted);
+  btn.title = v.muted ? 'Unmute' : 'Mute';
+  btn.querySelector('.icon-vol').style.display  = v.muted ? 'none' : 'inline';
+  btn.querySelector('.icon-mute').style.display = v.muted ? 'inline' : 'none';
+}
+
+['v-enhance-off','v-enhance-on','v-enhance-off2','v-enhance-on2',
+ 'v-upscale-512','v-upscale-1024',
+ 'v-still-on','v-still-off',
+ 'v-expr-07','v-expr-12'].forEach(bindVideo);
+</script>
+
+<!-- old --adsense-- code -->
+<!--<div data-ad="mlapplications.com_sticky_video_myvid" data-devices="m:1,t:1,d:1"   class="demand-supply"></div>-->
+
+
+<!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code -->
+<script>
+//  googletag.cmd.push(function() { 
+    // Pass slot objects directly to display()
+ //   if (window.offerwallSlot) {
+   //   googletag.display(window.offerwallSlot);
+  //  }
+    // Only call display if the slot was successfully created
+//    if (window.sideRailSlot) {
+//      googletag.display(window.sideRailSlot);
+//    } 
+//  });
+</script> 
+
+<!-- Before closing </body> -->
+<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+<script src="//imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-ads/7.0.0/videojs.ads.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-ima/2.11.0/videojs.ima.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // 1. Initialize the Video.js player
+  var player = videojs('v-still-off', {
+    fluid: true,
+    responsive: true
+  });
+
+  // 2. Configure the Google IMA plugin options
+  var options = {
+    id: 'v-still-off',
+    adTagUrl: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/423204242/myvidcode&description_url=https%3A%2F%2Fmlapplications.com%2Fimtalking_videos_samples.html&tfcd=0&npa=0&sz=640x480&gdfp_req=1&unviewed_position_start=1&output=vast&env=vp&impl=s&correlator=',
+    showControlsForAds: true
+  };
+
+  // 3. Initialize IMA plugin
+  player.ima(options);
+
+  // 4. User interaction trigger for ad container initialization
+  var startEvent = 'click';
+  if (navigator.userAgent.match(/iPhone|iPad|Android/i)) {
+    startEvent = 'touchend';
+  }
+
+  player.one(startEvent, function() {
+    player.ima.initializeAdDisplayContainer();
+  });
+});
+</script>
+
+</body>
+
+</html>
