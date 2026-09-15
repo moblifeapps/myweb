@@ -7,7 +7,8 @@
 <!-- Stylesheets in your <head> -->
 <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-ads/7.5.2/videojs.ads.min.css" rel="stylesheet" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/videojs-ima/2.11.0/videojs.ima.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/videojs-ima/2.11.0/videojs.ima.css" rel="stylesheet" />  
+
 
 <!-- Standard GPT script required for GAM & Privacy/Messaging tools -->
    
@@ -673,34 +674,39 @@ function toggleMute(id) {
 //  });
 </script> 
  
-<!-- Scripts right before closing </body> -->
+
+<!-- Core Video.js -->
 <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+
+<!-- Google IMA SDK -->
 <script src="//imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+
+<!-- Contads & IMA Plugins -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-ads/7.5.2/videojs.ads.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-ima/2.11.0/videojs.ima.min.js"></script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var player = videojs('v-still-off', {
-      fluid: true,
-      responsive: true
-    });
+  // Ensure DOM and plugins are fully parsed
+  window.addEventListener('load', function() {
+    var player = videojs('v-still-off');
 
     var options = {
       id: 'v-still-off',
-      adTagUrl: 'YOUR_COPIED_GAM_VAST_TAG_URL_HERE',
-      showControlsForAds: true
+      adTagUrl: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/423204242/myvidcode&description_url=https%3A%2F%2Fmlapplications.com%2Fimtalking_videos_samples22.html&tfcd=0&npa=0&sz=640x480&gdfp_req=1&unviewed_position_start=1&output=vast&env=vp&impl=s&correlator='
     };
 
-    // This will now successfully register because the script loaded properly
-    player.ima(options);
-
-    player.one('click', function() {
-      player.ima.initializeAdDisplayContainer();
-    });
+    // Initialize IMA safely
+    if (typeof player.ima === 'function') {
+      player.ima(options);
+      player.one('click', function() {
+        player.ima.initializeAdDisplayContainer();
+      });
+    } else {
+      console.error('IMA plugin failed to bind to player instance.');
+    }
   });
 </script>
-
+ 
 </body>
 
 </html>
