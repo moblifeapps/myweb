@@ -213,9 +213,13 @@ body { background: var(--bg); color: var(--text); }
     // app.js's ws.onopen/onclose don't call back into this page directly, so this just reflects
     // ws.readyState on a short interval - simple and avoids threading a UI callback through the
     // transport shim for what's purely a cosmetic indicator.
-    setInterval(() => {
+    let wsStatusInterval = setInterval(() => {
       const dot = document.getElementById('wsDot');
       const text = document.getElementById('wsStatusText');
+      if (!dot || !text) {
+        clearInterval(wsStatusInterval); // body was replaced (e.g. "app not found" fallback) - nothing left to update
+        return;
+      }
       if (typeof ws !== 'undefined' && ws && ws.readyState === WebSocket.OPEN) {
         dot.className = 'ws-dot connected';
         text.textContent = 'Connected';
