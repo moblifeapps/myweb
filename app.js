@@ -332,7 +332,7 @@ function renderJobCard(job) {
     : `<div class="job-thumb job-thumb-placeholder"></div>`;
 
   return `
-    <div class="job-card">
+    <div class="job-card${isActive ? ' job-card-active' : ''}">
       <div class="job-card-row">
         ${thumb}
         <div class="job-card-body">
@@ -341,7 +341,7 @@ function renderJobCard(job) {
             <div class="job-status ${statusClass}">${job.status}</div>
           </div>
           ${metaParts.length ? `<div class="job-source-meta">${metaParts.join(' &middot; ')}</div>` : ''}
-          <div class="progress-bar-outer">
+          <div class="progress-bar-outer${isActive ? ' progress-bar-active' : ''}">
             <div class="progress-bar-inner" style="width:${job.progressPercent || 0}%"></div>
           </div>
           <div class="job-meta">${job.statusDetail ? job.statusDetail : (job.progressPercent || 0) + '%'}${job.targetHeight ? ' &middot; target ' + job.targetHeight + 'p' : ' &middot; native 4x'}</div>
