@@ -696,11 +696,16 @@ function toggleMute(id) {
   window.addEventListener('load', function() {
     var player = videojs('v-still-off');
 
-    var options = {
+    var options2 = {
       id: 'v-still-off',
       adTagUrl: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/423204242/myvidcode&description_url=https%3A%2F%2Fmlapplications.com%2Fimtalking_videos_samples22.html&tfcd=0&npa=0&sz=640x480&gdfp_req=1&unviewed_position_start=1&output=vast&env=vp&impl=s&correlator='
     };
-
+var options = {
+  id: 'v-still-off',
+  // Use Google's safe test tag temporarily
+  adTagUrl: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/21775744923/external/single_ad_samples&sz=640x480&cust_params=sample_ct%3Dlinear&ciu_szs=300x264%2C728x90&gdfp_req=1&output=vast&unviewed_position_start=1&env=vp&impl=s&correlator=',
+  showControlsForAds: true
+};
     // Initialize IMA safely
     if (typeof player.ima === 'function') {
       player.ima(options);

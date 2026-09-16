@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Video Upscaler+</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── THEME TOKENS ─────────────────────────────────────────────────
+   Same variable names/values as mlapplications.com's other apps, so this page's look stays
+   consistent with the rest of the product family. html.light-theme overrides everything below. */
+:root {
+  --bg:          #0f1117;
+  --surface:     #181c27;
+  --surface2:    #1e2333;
+  --border:      #2a3148;
+  --accent:      #5b7fff;
+  --accent-glow: rgba(91,127,255,.18);
+  --green:       #3ecf82;
+  --red:         #ff5f72;
+  --amber:       #f5a623;
+  --text:        #e2e8f0;
+  --text2:       #8a94a8;
+  --text3:       #4e5a72;
+  --radius:      10px;
+}
+html.light-theme {
+  --bg:          #f0f2f8;
+  --surface:     #ffffff;
+  --surface2:    #e8ecf4;
+  --border:      #d0d5e8;
+  --accent:      #4a6ef5;
+  --accent-glow: rgba(74,110,245,.14);
+  --green:       #16a34a;
+  --red:         #dc2626;
+  --amber:       #d97706;
+  --text:        #1a1f35;
+  --text2:       #4a5278;
+  --text3:       #8891b0;
+}
+
+body { background: var(--bg); color: var(--text); }
+.sidebar { background: var(--surface); border-right: 1px solid var(--border); }
+.sidebar-brand { color: var(--text); }
+.nav-item { color: var(--text2); }
+.nav-item:hover { background: var(--surface2); color: var(--text); }
+.nav-item.active { background: var(--surface2); color: var(--text); border-left-color: var(--accent); }
+.sidebar-divider { border-bottom-color: var(--border); }
+.add-video-card { background: var(--surface); }
+
+/* ── Connection status pill, sits at the bottom of the sidebar ── */
+.ws-pill {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 12px; color: var(--text2);
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 20px; padding: 8px 14px; margin: 12px 16px 0;
+}
+.ws-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--text3); flex-shrink: 0; transition: background .3s; }
+.ws-dot.connected { background: var(--green); box-shadow: 0 0 5px var(--green); }
+.ws-dot.connecting { background: var(--amber); animation: wsBlink 1s infinite; }
+.ws-dot.error { background: var(--red); box-shadow: 0 0 5px var(--red); }
+@keyframes wsBlink { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+/* ── Theme toggle ── */
+.theme-toggle {
+  display: flex; align-items: center; gap: 8px;
+  margin: 8px 16px 0; padding: 8px 14px;
+  background: transparent; border: 1px solid var(--border); border-radius: 20px;
+  color: var(--text2); font-size: 12px; cursor: pointer;
+}
+.theme-toggle:hover { color: var(--text); border-color: var(--accent); }
+</style>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- ===================== SIDEBAR ===================== -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <img src="https://mlapplications.com/uploads/aivideoupscaler_icon.png" alt="AI Video Upscaler+" style="width:28px;height:28px;vertical-align:middle;margin-right:8px;border-radius:6px;">
+        AI Video Upscaler+
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-view="queue">
+          <span class="nav-icon">&#9654;</span> Upscale
+        </button>
+        <button class="nav-item" data-view="history">
+          <span class="nav-icon">&#128337;</span> History
+        </button>
+      </nav>
+
+      <div class="sidebar-divider"></div>
+
+      <nav class="sidebar-nav sidebar-nav-external">
+        <button class="nav-item" data-external="settings">
+          <span class="nav-icon">&#9881;</span> Settings
+        </button>
+        <button class="nav-item" data-external="help">
+          <span class="nav-icon">&#10067;</span> Help
+        </button>
+        <button class="nav-item" data-external="privacy">
+          <span class="nav-icon">&#128274;</span> Privacy
+        </button>
+      </nav>
+
+      <div style="flex:1"></div>
+
+      <button class="theme-toggle" id="themeToggleBtn">
+        <span id="themeToggleIcon">&#9728;</span> <span id="themeToggleLabel">Light theme</span>
+      </button>
+
+      <div class="ws-pill">
+        <span class="ws-dot" id="wsDot"></span>
+        <span id="wsStatusText">Connecting...</span>
+      </div>
+    </aside>
+
+    <!-- ===================== MAIN CONTENT ===================== -->
+    <main>
+      <!-- ===================== QUEUE VIEW ===================== -->
+      <section id="view-queue" class="view active">
+        <div class="add-video-card">
+          <button id="selectVideoBtn" class="primary-btn">+ Add Video</button>
+
+          <div id="videoLoadingInfo" class="pending-loading hidden">Reading video info...</div>
+
+          <!-- ===================== PREVIEW PANEL: thumbnail + edit summary, shown first ===================== -->
+          <div id="previewPanel" class="preview-panel hidden">
+            <div class="source-info-card">
+              <img id="previewThumb" class="source-thumb" src="" alt="">
+              <div class="source-info-text">
+                <div class="pending-filename" id="previewFilename"></div>
+                <div class="source-details" id="previewDetails"></div>
+              </div>
+            </div>
+
+            <div class="preview-controls">
+              <button id="openEditorBtn" class="secondary-btn">Trim / Rotate</button>
+              <span id="editSummary" class="rotation-label">No edits</span>
+            </div>
+
+            <div class="pending-actions">
+              <button id="continueToSettingsBtn" class="primary-btn">Continue</button>
+              <button id="cancelPreviewBtn" class="secondary-btn">Cancel</button>
+            </div>
+          </div>
+
+          <div id="pendingSettings" class="pending-settings hidden">
+            <div class="source-info-card">
+              <img id="pendingThumb" class="source-thumb" src="" alt="">
+              <div class="source-info-text">
+                <div class="pending-filename" id="pendingFilename"></div>
+                <div class="source-details" id="sourceDetails"></div>
+              </div>
+            </div>
+
+            <label>Output resolution</label>
+            <select id="targetHeightSelect">
+              <option value="0">Native 4x of source</option>
+              <option value="720">720p</option>
+              <option value="1080" selected>1080p</option>
+              <option value="1440">1440p (2K)</option>
+              <option value="2160">2160p (4K)</option>
+              <option value="4320">4320p (8K)</option>
+            </select>
+
+            <label>Face restoration strength: <span id="strengthValue">80%</span></label>
+            <input type="range" id="strengthSlider" min="0" max="100" value="80">
+
+            <label>Frame rate</label>
+            <select id="targetFpsSelect">
+              <option value="0" selected>Keep source frame rate</option>
+              <option value="45">Interpolate to 45 fps</option>
+              <option value="60">Interpolate to 60 fps</option>
+            </select>
+
+            <div class="pending-actions">
+              <button id="addToQueueBtn" class="primary-btn">Add to Queue</button>
+              <button id="cancelAddBtn" class="secondary-btn">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="queueList" class="job-list"></div>
+        <div id="queueEmpty" class="empty-state">No videos queued yet.</div>
+      </section>
+
+      <!-- ===================== HISTORY VIEW ===================== -->
+      <section id="view-history" class="view">
+        <div id="historyList" class="job-list"></div>
+        <div id="historyEmpty" class="empty-state">No completed videos yet.</div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    // ── Theme toggle ──────────────────────────────────────────────
+    function applyTheme(light) {
+      document.documentElement.classList.toggle('light-theme', light);
+      document.getElementById('themeToggleIcon').textContent = light ? '\u{1F319}' : '\u2600';
+      document.getElementById('themeToggleLabel').textContent = light ? 'Dark theme' : 'Light theme';
+      try { localStorage.setItem('theme', light ? 'light' : 'dark'); } catch {}
+    }
+    document.getElementById('themeToggleBtn').addEventListener('click', () => {
+      applyTheme(!document.documentElement.classList.contains('light-theme'));
+    });
+    try {
+      applyTheme(localStorage.getItem('theme') === 'light');
+    } catch {}
+
+    // ── Connection status pill, driven by the WebSocket lifecycle in app.js ──
+    // app.js's ws.onopen/onclose don't call back into this page directly, so this just reflects
+    // ws.readyState on a short interval - simple and avoids threading a UI callback through the
+    // transport shim for what's purely a cosmetic indicator.
+    setInterval(() => {
+      const dot = document.getElementById('wsDot');
+      const text = document.getElementById('wsStatusText');
+      if (typeof ws !== 'undefined' && ws && ws.readyState === WebSocket.OPEN) {
+        dot.className = 'ws-dot connected';
+        text.textContent = 'Connected';
+      } else if (typeof ws !== 'undefined' && ws && ws.readyState === WebSocket.CONNECTING) {
+        dot.className = 'ws-dot connecting';
+        text.textContent = 'Connecting...';
+      } else {
+        dot.className = 'ws-dot error';
+        text.textContent = 'Disconnected';
+      }
+    }, 500);
+  </script>
+</body>
+</html>
