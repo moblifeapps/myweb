@@ -68,7 +68,16 @@ if (IS_DESKTOP) {
 } else {
   fetch(DISCOVERY_URL, { cache: 'no-store' })
     .then(r => r.json())
-    .then(data => connectWs(data.wssPort, true))
+    .then(data => {
+      if (!data.wssAvailable) {
+        document.body.innerHTML = '<div style="padding:60px 20px;text-align:center;color:#a0a0a8;' +
+          'font-family:Segoe UI,sans-serif">AI Video Upscaler+ is running, but browser mode isn\'t ' +
+          'available right now (it couldn\'t obtain its security certificate - this usually clears up ' +
+          'once it has a working internet connection). You can still use the app window in the meantime.</div>';
+        return;
+      }
+      connectWs(data.wssPort, true);
+    })
     .catch(() => {
       document.body.innerHTML = '<div style="padding:60px 20px;text-align:center;color:#a0a0a8;' +
         'font-family:Segoe UI,sans-serif">Could not find AI Video Upscaler+ running on this PC.<br>' +
