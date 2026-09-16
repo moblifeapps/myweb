@@ -12,7 +12,7 @@ const DISCOVERY_URL = 'http://127.0.0.1:49299/';
 const WS_HOST = 'mywbsck.mlapplications.com';
 
 function postToHost(action, payload) {
-  const msg = Object.assign({ type: action }, payload || {});
+  const msg = { type: action, payload: payload || {} };
   if (wsReady && ws && ws.readyState === WebSocket.OPEN) {
     ws.send(JSON.stringify(msg));
   } else {
@@ -32,8 +32,7 @@ function connectWs(port, secure) {
   ws.onmessage = (e) => {
     let msg;
     try { msg = JSON.parse(e.data); } catch { return; }
-    const { type, ...payload } = msg;
-    dispatchFromHost(type, payload);
+    dispatchFromHost(msg.type, msg.payload);
   };
 
   ws.onclose = () => {
@@ -112,6 +111,11 @@ let trimStartSeconds = 0;
 let trimEndSeconds = 0; // 0 means "not set / to the end"
 
 document.getElementById('selectVideoBtn').addEventListener('click', () => {
+  if (!wsReady) {
+    alert('Not connected to AI Video Upscaler+ yet. Please wait a moment and try again - ' +
+      'if this persists, make sure the app is running.');
+    return;
+  }
   postToHost('selectVideo');
 });
 
