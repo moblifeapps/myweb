@@ -1,3 +1,15 @@
+// ---------- Icon-labeled stat items (resolution/fps/codec/size/duration) ----------
+const STAT_ICONS = {
+  resolution: '<svg viewBox="0 0 16 16"><path d="M2 2h5v1.5H3.5V7H2V2zm12 0v5h-1.5V3.5H9V2h5zM2 14V9h1.5v3.5H7V14H2zm12 0H9v-1.5h3.5V9H14v5z"/></svg>',
+  fps: '<svg viewBox="0 0 16 16"><path d="M6 4l6 4-6 4V4z"/></svg>',
+  codec: '<svg viewBox="0 0 16 16"><rect x="1.2" y="3" width="13.6" height="10" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><line x1="4.3" y1="3" x2="4.3" y2="13" stroke="currentColor" stroke-width="1.3"/><line x1="11.7" y1="3" x2="11.7" y2="13" stroke="currentColor" stroke-width="1.3"/></svg>',
+  size: '<svg viewBox="0 0 16 16"><path d="M2 2h9l3 3v9H2V2zm2 2v3h6V4H4zm0 5v5h8V9H4z"/></svg>',
+  duration: '<svg viewBox="0 0 16 16"><circle cx="8" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 5v3.5l2.5 1.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>'
+};
+function statItem(iconKey, text) {
+  return `<span class="stat-item">${STAT_ICONS[iconKey] || ''}${text}</span>`;
+}
+
 // ---------- Transport: WebSocket, works identically in the app's own WebView2 window and a
 // regular browser tab pointed at the public site. Desktop mode connects straight to a local plain
 // ws:// port passed via query string; browser mode first asks a fixed discovery beacon for the
@@ -53,7 +65,12 @@ function dispatchFromHost(action, payload) {
     case 'jobRemoved': onJobRemoved(payload); break;
     case 'historyEntryRemoved': onHistoryData_refresh(); break;
     case 'trimRotateResult': onTrimRotateResult(payload); break;
-    case 'init_urls': break; // reserved - Settings/Help/Privacy links are still the hardcoded ones below for now
+    case 'autostartState': {
+      const toggle = document.getElementById('settingsAutostartToggle');
+      if (toggle) toggle.checked = !!payload.enabled;
+      break;
+    }
+    case 'init_urls': break; // reserved - Help/Tips/Privacy links are still the hardcoded ones below for now
     case 'error':
       document.getElementById('selectVideoBtn').disabled = false;
       document.getElementById('videoLoadingInfo').classList.add('hidden');
@@ -96,12 +113,13 @@ document.querySelectorAll('.nav-item[data-view]').forEach(btn => {
   });
 });
 
-// Settings/Help/Privacy open in the user's actual default browser, not as in-app views - same
-// pattern as ImTalking's external page links, just pointing at ai_videoupscaler_* instead of
-// imtalking_* on the website. The C# host launches the real browser; this page never navigates.
+// Help/Tips/Privacy open in the user's actual default browser, not as in-app views - same pattern
+// as ImTalking's external page links, just pointing at ai_videoupscaler_* instead of imtalking_* on
+// the website. Settings is an in-app view now (see view-settings), not an external link. The C# host
+// launches the real browser for these; this page never navigates.
 const externalPageUrls = {
-  settings: 'https://mlapplications.com/ai_videoupscaler_settings.html',
   help: 'https://mlapplications.com/ai_videoupscaler_help.html',
+  tips: 'https://mlapplications.com/ai_videoupscaler_tips.html',
   privacy: 'https://mlapplications.com/ai_videoupscaler_privacy.html'
 };
 
@@ -159,12 +177,12 @@ function onVideoSelected(payload) {
   }
 
   const details = [];
-  if (payload.width && payload.height) details.push(`${payload.width}\u00d7${payload.height}`);
-  if (payload.fps) details.push(`${Math.round(payload.fps)} fps`);
-  if (payload.codec) details.push(payload.codec.toUpperCase());
-  if (payload.duration) details.push(formatDuration(payload.duration));
-  if (payload.fileSizeBytes) details.push(formatBytes(payload.fileSizeBytes));
-  document.getElementById('previewDetails').textContent = details.join(' \u00b7 ');
+  if (payload.width && payload.height) details.push(statItem('resolution', `${payload.width}\u00d7${payload.height}`));
+  if (payload.fps) details.push(statItem('fps', `${Math.round(payload.fps)} fps`));
+  if (payload.codec) details.push(statItem('codec', payload.codec.toUpperCase()));
+  if (payload.duration) details.push(statItem('duration', formatDuration(payload.duration)));
+  if (payload.fileSizeBytes) details.push(statItem('size', formatBytes(payload.fileSizeBytes)));
+  document.getElementById('previewDetails').innerHTML = details.join('');
 
   updateEditSummary();
   document.getElementById('previewPanel').classList.remove('hidden');
@@ -209,14 +227,14 @@ document.getElementById('continueToSettingsBtn').addEventListener('click', () =>
   }
 
   const details = [];
-  if (pendingVideoInfo.width && pendingVideoInfo.height) details.push(`${pendingVideoInfo.width}\u00d7${pendingVideoInfo.height}`);
-  if (pendingVideoInfo.fps) details.push(`${Math.round(pendingVideoInfo.fps)} fps`);
-  if (pendingVideoInfo.codec) details.push(pendingVideoInfo.codec.toUpperCase());
-  if (pendingVideoInfo.duration) details.push(formatDuration(pendingVideoInfo.duration));
-  if (pendingVideoInfo.fileSizeBytes) details.push(formatBytes(pendingVideoInfo.fileSizeBytes));
-  if (previewRotation) details.push(`rotate ${previewRotation}\u00b0`);
-  if (trimEndSeconds > trimStartSeconds) details.push(`trimmed to ${formatDuration(trimEndSeconds - trimStartSeconds)}`);
-  document.getElementById('sourceDetails').textContent = details.join(' \u00b7 ');
+  if (pendingVideoInfo.width && pendingVideoInfo.height) details.push(statItem('resolution', `${pendingVideoInfo.width}\u00d7${pendingVideoInfo.height}`));
+  if (pendingVideoInfo.fps) details.push(statItem('fps', `${Math.round(pendingVideoInfo.fps)} fps`));
+  if (pendingVideoInfo.codec) details.push(statItem('codec', pendingVideoInfo.codec.toUpperCase()));
+  if (pendingVideoInfo.duration) details.push(statItem('duration', formatDuration(pendingVideoInfo.duration)));
+  if (pendingVideoInfo.fileSizeBytes) details.push(statItem('size', formatBytes(pendingVideoInfo.fileSizeBytes)));
+  if (previewRotation) details.push(`<span class="stat-item">rotate ${previewRotation}\u00b0</span>`);
+  if (trimEndSeconds > trimStartSeconds) details.push(`<span class="stat-item">trimmed to ${formatDuration(trimEndSeconds - trimStartSeconds)}</span>`);
+  document.getElementById('sourceDetails').innerHTML = details.join('');
 
   document.getElementById('pendingSettings').classList.remove('hidden');
 });
@@ -322,10 +340,23 @@ function renderJobCard(job) {
   const statusClass = 'status-' + job.status.toLowerCase();
 
   const metaParts = [];
-  if (job.sourceWidth && job.sourceHeight) metaParts.push(`${job.sourceWidth}\u00d7${job.sourceHeight}`);
-  if (job.sourceFps) metaParts.push(`${Math.round(job.sourceFps)} fps`);
-  if (job.sourceCodec) metaParts.push(job.sourceCodec.toUpperCase());
-  if (job.fileSizeBytes) metaParts.push(formatBytes(job.fileSizeBytes));
+  if (job.sourceWidth && job.sourceHeight) metaParts.push(statItem('resolution', `${job.sourceWidth}\u00d7${job.sourceHeight}`));
+  if (job.sourceFps) metaParts.push(statItem('fps', `${Math.round(job.sourceFps)} fps`));
+  if (job.sourceCodec) metaParts.push(statItem('codec', job.sourceCodec.toUpperCase()));
+  if (job.fileSizeBytes) metaParts.push(statItem('size', formatBytes(job.fileSizeBytes)));
+
+  // Pulled out into its own round badge at the top of the card rather than buried at the end of a
+  // long detail line, where it's easy to miss - see the ETA badge markup below.
+  let etaText = null;
+  let detailText = job.statusDetail || '';
+  const etaMatch = detailText.match(/ETA\s+(.+)$/i);
+  if (etaMatch) {
+    etaText = etaMatch[1].trim();
+    detailText = detailText.replace(/\s*\u00b7?\s*ETA\s+.+$/i, '');
+  }
+  const etaBadge = (isActive && etaText)
+    ? `<div class="eta-badge"><div class="eta-badge-value">${etaText}</div><div class="eta-badge-label">ETA</div></div>`
+    : '';
 
   const thumb = job.thumbnailDataUri
     ? `<img class="job-thumb" src="${job.thumbnailDataUri}" alt="">`
@@ -338,13 +369,16 @@ function renderJobCard(job) {
         <div class="job-card-body">
           <div class="job-card-top">
             <div class="job-name">${name}</div>
-            <div class="job-status ${statusClass}">${job.status}</div>
+            <div class="job-status-group">
+              ${etaBadge}
+              <div class="job-status ${statusClass}">${job.status}</div>
+            </div>
           </div>
-          ${metaParts.length ? `<div class="job-source-meta">${metaParts.join(' &middot; ')}</div>` : ''}
+          ${metaParts.length ? `<div class="job-source-meta">${metaParts.join('')}</div>` : ''}
           <div class="progress-bar-outer${isActive ? ' progress-bar-active' : ''}">
             <div class="progress-bar-inner" style="width:${job.progressPercent || 0}%"></div>
           </div>
-          <div class="job-meta">${job.statusDetail ? job.statusDetail : (job.progressPercent || 0) + '%'}${job.targetHeight ? ' &middot; target ' + job.targetHeight + 'p' : ' &middot; native 4x'}</div>
+          <div class="job-meta">${detailText ? detailText : (job.progressPercent || 0) + '%'}${job.targetHeight ? ' &middot; target ' + job.targetHeight + 'p' : ' &middot; native 4x'}</div>
           ${job.errorMessage ? `<div class="job-error">${job.errorMessage}</div>` : ''}
           <div class="job-actions">
             ${isActive ? `<button class="cancel-btn" id="cancel-${job.id}">Cancel</button>` : ''}

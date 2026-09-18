@@ -8,7 +8,8 @@
 <style>
 /* ── THEME TOKENS ─────────────────────────────────────────────────
    Same variable names/values as mlapplications.com's other apps, so this page's look stays
-   consistent with the rest of the product family. html.light-theme overrides everything below. */
+   consistent with the rest of the product family. Every component's actual color usage lives in
+   style.css via var(...) - this block only ever needs to define the tokens themselves. */
 :root {
   --bg:          #0f1117;
   --surface:     #181c27;
@@ -39,45 +40,28 @@ html.light-theme {
   --text3:       #8891b0;
 }
 
-body { background: var(--bg); color: var(--text); }
-.sidebar { background: var(--surface); border-right: 1px solid var(--border); }
-.sidebar-brand { color: var(--text); }
-.nav-item { color: var(--text2); }
-.nav-item:hover { background: var(--surface2); color: var(--text); }
-.nav-item.active { background: var(--surface2); color: var(--text); border-left-color: var(--accent); }
-.sidebar-divider { border-bottom-color: var(--border); }
-.add-video-card { background: var(--surface); }
-
 /* ── Connection status pill, sits at the bottom of the sidebar ── */
 .ws-pill {
   display: flex; align-items: center; gap: 10px;
   font-size: 12px; color: var(--text2);
   background: var(--surface2); border: 1px solid var(--border);
-  border-radius: 20px; padding: 8px 14px; margin: 12px 16px 0;
+  border-radius: 20px; padding: 8px 14px; margin: 0 20px 12px;
 }
 .ws-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--text3); flex-shrink: 0; transition: background .3s; }
 .ws-dot.connected { background: var(--green); box-shadow: 0 0 5px var(--green); }
 .ws-dot.connecting { background: var(--amber); animation: wsBlink 1s infinite; }
 .ws-dot.error { background: var(--red); box-shadow: 0 0 5px var(--red); }
 @keyframes wsBlink { 0%,100%{opacity:1} 50%{opacity:.25} }
-
-/* ── Theme toggle ── */
-.theme-toggle {
-  display: flex; align-items: center; gap: 8px;
-  margin: 8px 16px 0; padding: 8px 14px;
-  background: transparent; border: 1px solid var(--border); border-radius: 20px;
-  color: var(--text2); font-size: 12px; cursor: pointer;
-}
-.theme-toggle:hover { color: var(--text); border-color: var(--accent); }
 </style>
 </head>
 <body>
   <div class="app-layout">
     <!-- ===================== SIDEBAR ===================== -->
     <aside class="sidebar">
-      <div class="sidebar-brand">
-        <img src="https://mlapplications.com/uploads/aivideoupscaler_icon.png" alt="AI Video Upscaler+" style="width:28px;height:28px;vertical-align:middle;margin-right:8px;border-radius:6px;">
-        AI Video Upscaler+
+      <div class="sidebar-brand-block">
+        <img class="sidebar-brand-icon" src="https://mlapplications.com/uploads/aivideoupscaler_icon.png" alt="AI Video Upscaler+">
+        <div class="sidebar-brand-title">AI Video Upscaler+</div>
+        <div class="sidebar-brand-subtitle">Upscale &amp; Enhance</div>
       </div>
 
       <nav class="sidebar-nav">
@@ -91,12 +75,20 @@ body { background: var(--bg); color: var(--text); }
 
       <div class="sidebar-divider"></div>
 
-      <nav class="sidebar-nav sidebar-nav-external">
-        <button class="nav-item" data-external="settings">
+      <nav class="sidebar-nav">
+        <button class="nav-item" data-view="settings">
           <span class="nav-icon">&#9881;</span> Settings
         </button>
+      </nav>
+
+      <div class="sidebar-divider"></div>
+
+      <nav class="sidebar-nav sidebar-nav-external">
         <button class="nav-item" data-external="help">
           <span class="nav-icon">&#10067;</span> Help
+        </button>
+        <button class="nav-item" data-external="tips">
+          <span class="nav-icon">&#128161;</span> Tips &amp; Tricks
         </button>
         <button class="nav-item" data-external="privacy">
           <span class="nav-icon">&#128274;</span> Privacy
@@ -105,14 +97,12 @@ body { background: var(--bg); color: var(--text); }
 
       <div style="flex:1"></div>
 
-      <button class="theme-toggle" id="themeToggleBtn">
-        <span id="themeToggleIcon">&#9728;</span> <span id="themeToggleLabel">Light theme</span>
-      </button>
-
       <div class="ws-pill">
         <span class="ws-dot" id="wsDot"></span>
         <span id="wsStatusText">Connecting...</span>
       </div>
+
+      <div class="sidebar-footer">v1.0 &middot; mlapplications.com</div>
     </aside>
 
     <!-- ===================== MAIN CONTENT ===================== -->
@@ -190,24 +180,86 @@ body { background: var(--bg); color: var(--text); }
         <div id="historyList" class="job-list"></div>
         <div id="historyEmpty" class="empty-state">No completed videos yet.</div>
       </section>
+
+      <!-- ===================== SETTINGS VIEW ===================== -->
+      <section id="view-settings" class="view">
+        <div class="settings-section">
+          <div class="settings-section-title">Appearance</div>
+          <div class="settings-card">
+            <div>
+              <div class="settings-card-title">Light Theme</div>
+              <div class="settings-card-desc">Switch between dark and light interface</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="settingsThemeToggle">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-section-title">System</div>
+          <div class="settings-card">
+            <div>
+              <div class="settings-card-title">Start with Windows</div>
+              <div class="settings-card-desc">Launch AI Video Upscaler+ automatically when you log in</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="settingsAutostartToggle">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-section-title">About</div>
+          <div class="settings-card">
+            <div>
+              <div class="settings-card-title">AI Video Upscaler+</div>
+              <div class="settings-card-desc">Version 1.0 &middot; Built by mlapplications.com</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-section-title">Content &amp; Safety</div>
+          <div class="settings-disclosure">
+            <strong>Disclosure:</strong> AI Video Upscaler+ uses AI models (including face restoration)
+            to enhance and upscale your own existing video files - it does not generate new video content
+            or synthesize footage of people who weren't already in the original video.<br><br>
+            You must have the rights to any video you process. For questions or concerns, contact us at
+            mil.applications [at] hotmail.com.
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 
   <script src="app.js"></script>
   <script>
-    // ── Theme toggle ──────────────────────────────────────────────
+    // ── Theme (driven from the Settings view's toggle now, not a standalone sidebar button) ──
     function applyTheme(light) {
       document.documentElement.classList.toggle('light-theme', light);
-      document.getElementById('themeToggleIcon').textContent = light ? '\u{1F319}' : '\u2600';
-      document.getElementById('themeToggleLabel').textContent = light ? 'Dark theme' : 'Light theme';
+      const toggle = document.getElementById('settingsThemeToggle');
+      if (toggle) toggle.checked = light;
       try { localStorage.setItem('theme', light ? 'light' : 'dark'); } catch {}
     }
-    document.getElementById('themeToggleBtn').addEventListener('click', () => {
-      applyTheme(!document.documentElement.classList.contains('light-theme'));
+    document.getElementById('settingsThemeToggle').addEventListener('change', (e) => {
+      applyTheme(e.target.checked);
     });
     try {
       applyTheme(localStorage.getItem('theme') === 'light');
     } catch {}
+
+    // ── Autostart toggle - reflects the real Windows registry state via the WPF host ──
+    document.getElementById('settingsAutostartToggle').addEventListener('change', (e) => {
+      postToHost('setAutostart', { enabled: e.target.checked });
+    });
+
+    // ── Settings nav item loads current autostart state each time it's opened ──
+    document.querySelector('.nav-item[data-view="settings"]').addEventListener('click', () => {
+      postToHost('getAutostartState');
+    });
 
     // ── Connection status pill, driven by the WebSocket lifecycle in app.js ──
     // app.js's ws.onopen/onclose don't call back into this page directly, so this just reflects
