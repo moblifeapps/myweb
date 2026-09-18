@@ -1,15 +1,16 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Video Upscaler+</title>
-<link rel="stylesheet" href="style.css">
 <style>
-/* ── THEME TOKENS ─────────────────────────────────────────────────
-   Same variable names/values as mlapplications.com's other apps, so this page's look stays
-   consistent with the rest of the product family. Every component's actual color usage lives in
-   style.css via var(...) - this block only ever needs to define the tokens themselves. */
+/* ══════════════════════════════════════════════════════════════════
+   THEME TOKENS - same variable names/values as mlapplications.com's other apps.
+   html.light-theme overrides everything below; every component uses var(...) so both themes
+   actually apply everywhere, not just in a few hand-picked places.
+   ══════════════════════════════════════════════════════════════════ */
 :root {
   --bg:          #0f1117;
   --surface:     #181c27;
@@ -40,249 +41,1080 @@ html.light-theme {
   --text3:       #8891b0;
 }
 
-/* ── Connection status pill, sits at the bottom of the sidebar ── */
-.ws-pill {
-  display: flex; align-items: center; gap: 10px;
-  font-size: 12px; color: var(--text2);
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app-shell { display: flex; flex-direction: column; height: 100vh; }
+
+/* TOP BAR - logo+title left, disclosure center, connection status right (matches ImTalking) */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 12px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.topbar-brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.topbar-brand img { width: 40px; height: 40px; border-radius: 9px; }
+.topbar-brand-title { font-size: 17px; font-weight: 700; color: var(--text); line-height: 1.15; }
+.topbar-brand-subtitle { font-size: 11px; color: var(--text2); }
+.topbar-disclosure {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.5;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.topbar-disclosure strong { color: var(--text); }
+.topbar-status {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--text2);
   background: var(--surface2); border: 1px solid var(--border);
-  border-radius: 20px; padding: 8px 14px; margin: 0 20px 12px;
+  border-radius: 20px; padding: 7px 16px; flex-shrink: 0; white-space: nowrap;
 }
 .ws-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--text3); flex-shrink: 0; transition: background .3s; }
 .ws-dot.connected { background: var(--green); box-shadow: 0 0 5px var(--green); }
 .ws-dot.connecting { background: var(--amber); animation: wsBlink 1s infinite; }
 .ws-dot.error { background: var(--red); box-shadow: 0 0 5px var(--red); }
 @keyframes wsBlink { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+.app-layout { display: flex; flex: 1; min-height: 0; }
+
+/* SIDEBAR */
+.sidebar {
+  width: 230px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+  overflow-y: auto;
+}
+
+.sidebar-nav { display: flex; flex-direction: column; gap: 2px; }
+.sidebar-divider { border-bottom: 1px solid var(--border); margin: 12px 20px; }
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
+  border: none;
+  border-left: 3px solid transparent;
+  color: var(--text2);
+  text-align: left;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 100%;
+}
+.nav-item:hover { background: var(--surface2); color: var(--text); }
+.nav-item.active { background: var(--surface2); color: var(--text); border-left-color: var(--accent); padding-left: 17px; }
+.nav-icon { font-size: 15px; width: 18px; text-align: center; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
+.nav-icon svg { width: 16px; height: 16px; display: block; }
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 16px 20px 4px;
+  text-align: center;
+}
+.sidebar-footer-logo { width: 22px; height: 22px; border-radius: 5px; opacity: 0.85; }
+.sidebar-footer-link {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  text-decoration: none; color: var(--text3); font-size: 11px; cursor: pointer;
+  background: none; border: none; font-family: inherit;
+}
+.sidebar-footer-link:hover { color: var(--text2); }
+
+main { flex: 1; padding: 24px; overflow-y: auto; }
+
+.view { display: none; }
+.view.active { display: block; }
+
+/* QUEUE / ADD VIDEO */
+.add-video-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.primary-btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.primary-btn:hover { filter: brightness(1.1); }
+
+.secondary-btn {
+  background: var(--surface2);
+  color: var(--text2);
+  border: 1px solid var(--border);
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.secondary-btn:hover { color: var(--text); border-color: var(--accent); }
+
+.pending-loading { margin-top: 12px; font-size: 13px; color: var(--text2); }
+.pending-loading.hidden { display: none; }
+
+.source-info-card {
+  display: flex; gap: 12px; align-items: center;
+  margin-top: 12px; padding: 10px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+}
+.source-thumb { width: 100px; height: 68px; border-radius: 6px; object-fit: cover; flex-shrink: 0; }
+.source-thumb.hidden { display: none; }
+.source-info-text { min-width: 0; }
+
+.source-details, .job-source-meta {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 4px 14px; font-size: 12px; color: var(--text2); margin-top: 6px;
+}
+.stat-item { display: inline-flex; align-items: center; gap: 5px; }
+.stat-item svg { width: 13px; height: 13px; flex-shrink: 0; opacity: 0.85; }
+
+.preview-panel { margin-top: 12px; }
+.preview-panel.hidden { display: none; }
+.preview-controls { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+.rotation-label { font-size: 13px; color: var(--text2); }
+.preview-panel label { display: block; font-size: 13px; color: var(--text2); margin: 14px 0 6px; }
+.preview-panel input[type="range"] { width: 100%; }
+
+.pending-settings { margin-top: 16px; }
+.pending-settings.hidden { display: none; }
+.pending-filename { font-size: 13px; color: var(--text2); margin-bottom: 4px; word-break: break-all; }
+.pending-settings label { display: block; font-size: 13px; color: var(--text2); margin: 12px 0 6px; }
+.pending-settings select, .pending-settings input[type="range"] { width: 100%; }
+
+select {
+  background: var(--bg); color: var(--text);
+  border: 1px solid var(--border); border-radius: 6px; padding: 8px;
+}
+
+.pending-actions { margin-top: 16px; display: flex; gap: 10px; }
+
+/* JOB CARDS */
+.job-list { display: flex; flex-direction: column; gap: 10px; }
+
+.job-card {
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.job-card-active {
+  background: linear-gradient(135deg, var(--surface2) 0%, var(--surface) 40%, var(--surface2) 100%);
+  background-size: 200% 200%;
+  border-color: var(--accent);
+  box-shadow: 0 0 16px var(--accent-glow);
+  animation: cardSheen 6s ease-in-out infinite;
+}
+@keyframes cardSheen { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+
+.job-card-row { display: flex; gap: 14px; }
+.job-thumb { width: 96px; height: 64px; border-radius: 6px; object-fit: cover; flex-shrink: 0; background: var(--bg); }
+.job-thumb-placeholder { background: linear-gradient(135deg, var(--surface2), var(--bg)); }
+.job-card-body { flex: 1; min-width: 0; }
+.job-actions { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+.job-card-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.job-name { font-size: 14px; font-weight: 600; word-break: break-all; }
+.job-status-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+.job-status {
+  font-size: 12px; padding: 3px 10px; border-radius: 12px;
+  text-transform: capitalize; white-space: nowrap;
+}
+.status-queued { background: var(--text3); color: white; }
+.status-extracting, .status-processing, .status-encoding { background: var(--accent); color: white; }
+.status-completed { background: var(--green); color: white; }
+.status-failed { background: var(--red); color: white; }
+.status-cancelled { background: var(--text3); color: white; }
+
+.eta-badge {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--surface2); border: 2px solid var(--accent); flex-shrink: 0; line-height: 1.05;
+}
+.eta-badge-value { font-size: 11px; font-weight: 700; color: var(--text); }
+.eta-badge-label { font-size: 8px; color: var(--text2); text-transform: uppercase; letter-spacing: .03em; }
+
+.progress-bar-outer {
+  margin-top: 10px; height: 10px; background: var(--surface2); border-radius: 5px;
+  overflow: hidden; position: relative; box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
+}
+.progress-bar-inner {
+  height: 100%; border-radius: 5px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 70%, white) 0%, var(--accent) 45%, color-mix(in srgb, var(--accent) 80%, black) 100%);
+  transition: width 0.3s ease; position: relative; overflow: hidden;
+}
+.progress-bar-active .progress-bar-inner::after {
+  content: ''; position: absolute; top: 0; left: -60%; width: 40%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: progressShimmer 1.6s linear infinite;
+}
+@keyframes progressShimmer { 0%{left:-60%} 100%{left:140%} }
+
+.job-meta { margin-top: 8px; font-size: 12px; color: var(--text2); }
+.job-error { margin-top: 8px; font-size: 12px; color: var(--red); }
+
+/* Glossy icon action buttons (Cancel / Clear / Play / Open Folder) - a subtle vertical gradient
+   rather than a flat fill, and a small SVG icon in a color matching the button's text. */
+.icon-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface2) 60%, white) 0%, var(--surface2) 55%, color-mix(in srgb, var(--surface2) 80%, black) 100%);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  border-radius: 6px;
+  padding: 6px 13px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color .2s ease, color .2s ease;
+}
+.icon-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+.icon-btn:hover { color: var(--text); border-color: var(--accent); }
+.icon-btn.danger:hover { color: var(--red); border-color: var(--red); }
+.icon-btn.accent {
+  color: var(--accent); border-color: var(--accent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 22%, var(--surface2)) 0%, var(--surface2) 70%);
+}
+
+.empty-state { color: var(--text3); font-size: 14px; text-align: center; padding: 40px 0; }
+.empty-state.hidden { display: none; }
+
+/* SETTINGS VIEW */
+.settings-header { margin-bottom: 24px; }
+.settings-header h1 { font-size: 24px; margin: 0 0 4px; }
+.settings-header p { font-size: 13px; color: var(--text2); margin: 0; }
+
+.settings-section { margin-bottom: 28px; }
+.settings-section-title {
+  font-size: 11px; font-weight: 700; color: var(--accent);
+  text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px;
+}
+
+.settings-card {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px 18px; margin-bottom: 10px;
+}
+.settings-card-title { font-size: 14px; font-weight: 600; color: var(--text); }
+.settings-card-desc { font-size: 12px; color: var(--text2); margin-top: 2px; }
+
+.toggle-switch { position: relative; width: 46px; height: 26px; flex-shrink: 0; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute; inset: 0; cursor: pointer;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 26px; transition: background .2s ease;
+}
+.toggle-slider::before {
+  content: ''; position: absolute; height: 18px; width: 18px;
+  left: 3px; top: 3px; background: white; border-radius: 50%; transition: transform .2s ease;
+}
+.toggle-switch input:checked + .toggle-slider { background: var(--accent); }
+.toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+.settings-disclosure {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px 18px; font-size: 12px; color: var(--text2); line-height: 1.6;
+}
+.settings-disclosure strong { color: var(--text); }
+
+/* CONTACT VIEW */
+.contact-card {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px 18px; margin-bottom: 10px;
+  text-decoration: none; color: var(--text); cursor: pointer;
+}
+.contact-card:hover { border-color: var(--accent); }
+.contact-card-icon {
+  width: 34px; height: 34px; border-radius: 8px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--accent-glow); color: var(--accent);
+}
+.contact-card-icon svg { width: 17px; height: 17px; }
+.contact-card-text { font-size: 14px; font-weight: 600; }
 </style>
 </head>
 <body>
-  <div class="app-layout">
-    <!-- ===================== SIDEBAR ===================== -->
-    <aside class="sidebar">
-      <div class="sidebar-brand-block">
-        <img class="sidebar-brand-icon" src="https://mlapplications.com/uploads/aivideoupscaler_icon.png" alt="AI Video Upscaler+">
-        <div class="sidebar-brand-title">AI Video Upscaler+</div>
-        <div class="sidebar-brand-subtitle">Upscale &amp; Enhance</div>
+  <div class="app-shell">
+    <div class="topbar">
+      <div class="topbar-brand">
+        <img src="https://mlapplications.com/uploads/aivideoupscaler_icon.png" alt="AI Video Upscaler+">
+        <div>
+          <div class="topbar-brand-title">AI Video Upscaler+</div>
+          <div class="topbar-brand-subtitle">Upscale &amp; Enhance</div>
+        </div>
       </div>
-
-      <nav class="sidebar-nav">
-        <button class="nav-item active" data-view="queue">
-          <span class="nav-icon">&#9654;</span> Upscale
-        </button>
-        <button class="nav-item" data-view="history">
-          <span class="nav-icon">&#128337;</span> History
-        </button>
-      </nav>
-
-      <div class="sidebar-divider"></div>
-
-      <nav class="sidebar-nav">
-        <button class="nav-item" data-view="settings">
-          <span class="nav-icon">&#9881;</span> Settings
-        </button>
-      </nav>
-
-      <div class="sidebar-divider"></div>
-
-      <nav class="sidebar-nav sidebar-nav-external">
-        <button class="nav-item" data-external="help">
-          <span class="nav-icon">&#10067;</span> Help
-        </button>
-        <button class="nav-item" data-external="tips">
-          <span class="nav-icon">&#128161;</span> Tips &amp; Tricks
-        </button>
-        <button class="nav-item" data-external="privacy">
-          <span class="nav-icon">&#128274;</span> Privacy
-        </button>
-      </nav>
-
-      <div style="flex:1"></div>
-
-      <div class="ws-pill">
+      <div class="topbar-disclosure">
+        <strong>Disclosure:</strong> AI Video Upscaler+ uses AI models (including face restoration) to enhance your own existing video files - it does not generate new footage or synthesize people who weren't already in the original video.
+      </div>
+      <div class="topbar-status">
         <span class="ws-dot" id="wsDot"></span>
         <span id="wsStatusText">Connecting...</span>
       </div>
+    </div>
 
-      <div class="sidebar-footer">v1.0 &middot; mlapplications.com</div>
-    </aside>
+    <div class="app-layout">
+      <aside class="sidebar">
+        <nav class="sidebar-nav">
+          <button class="nav-item active" data-view="queue">
+            <span class="nav-icon"><svg viewBox="-15 -15 115 115" fill="currentColor"><path d="m -2.0586,51.9066 c 1.625,0 2.9414,-1.3164 2.9414,-2.9414 v -0.14453 c 0,-1.9453 1.582,-3.5312 3.5312,-3.5312 h 0.92188 c 1.625,0 2.9414,-1.3164 2.9414,-2.9414 0,-1.625 -1.3164,-2.9414 -2.9414,-2.9414 H 4.414 c -5.1875,0 -9.4102,4.2227 -9.4102,9.4102 v 0.14453 c 0,1.625 1.3164,2.9414 2.9414,2.9414 z m 38.8242,9.402 c -1.625,0 -2.9414,1.3164 -2.9414,2.9414 v 10.457 c 0,0.14453 -0.0078,0.28906 -0.02344,0.42969 -0.19141,1.6133 0.95703,3.0781 2.5703,3.2695 0.11719,0.01563 0.23828,0.01953 0.35156,0.01953 1.4688,0 2.7383,-1.0977 2.918,-2.5938 0.04297,-0.37109 0.06641,-0.75 0.06641,-1.125 v -10.457 c 0,-1.625 -1.3164,-2.9414 -2.9414,-2.9414 z m -35.8828,8.254 v -11.234 c 0,-1.625 -1.3164,-2.9414 -2.9414,-2.9414 -1.625,0 -2.9414,1.3164 -2.9414,2.9414 v 11.234 c 0,1.625 1.3164,2.9414 2.9414,2.9414 1.625,0 2.9414,-1.3164 2.9414,-2.9414 z m 29.4378,8.672 h -0.04297 -11.219 c -1.625,0 -2.9414,1.3164 -2.9414,2.9414 0,1.625 1.3164,2.9414 2.9414,2.9414 h 11.234 0.04687 c 1.6172,-0.01172 2.9219,-1.3242 2.9219,-2.9414 0,-1.6172 -1.3164,-2.9414 -2.9414,-2.9414 z m -20.621,0 H 4.4144 c -1.1094,0 -2.1328,-0.50781 -2.8086,-1.3906 -0.98828,-1.2891 -2.832,-1.5352 -4.125,-0.54688 -1.2891,0.98828 -1.5352,2.832 -0.55078,4.1211 1.7969,2.3516 4.5234,3.6992 7.4805,3.6992 h 5.2852 c 1.625,0 2.9414,-1.3164 2.9414,-2.9414 0,-1.625 -1.3164,-2.9414 -2.9414,-2.9414 z M 75.7926,-10 h -41.523 c -1.6055,0 -3.1484,0.28516 -4.5742,0.8125 -5.1406,1.8789 -8.8125,6.8125 -8.8125,12.602 v 36 h -6.1875 c -1.625,0 -2.9414,1.3164 -2.9414,2.9414 0,1.625 1.3164,2.9414 2.9414,2.9414 h 6.2031 c 0.24609,7.1875 6.1523,12.941 13.398,12.941 h 41.406 c 5.7891,0 10.727,-3.6719 12.602,-8.8125 C 88.82794,48 89.117,46.457 89.117,44.8516 V 3.3246 c 0,-7.3477 -5.9766,-13.324 -13.324,-13.324 z m -30.125,47.992 c -0.56641,0.57031 -1.3125,0.85938 -2.0586,0.85938 -0.74609,0 -1.4922,-0.28516 -2.0664,-0.85938 -1.1367,-1.1367 -1.1367,-2.9844 0,-4.125 l 21.414,-21.414 h -12.855 c -1.6094,0 -2.9141,-1.3047 -2.9141,-2.9141 0,-1.6094 1.3047,-2.9141 2.9141,-2.9141 h 19.766 c 1.6094,0 2.9141,1.3047 2.9141,2.9141 v 20.027 c 0,1.6094 -1.3047,2.9141 -2.9141,2.9141 -1.6094,0 -2.9141,-1.3047 -2.9141,-2.9141 v -12.859 z"/></svg></span> Upscale
+          </button>
+          <button class="nav-item" data-view="history">
+            <span class="nav-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,12.227335 C 70.86012,12.227335 87.772665,29.13988 87.772665,50 87.772665,70.86012 70.86012,87.772665 50,87.772665 29.13988,87.772665 12.227335,70.86012 12.227335,50 12.227335,29.13988 29.13988,12.227335 50,12.227335 Z m 0,7.556789 C 33.313032,19.784124 19.784124,33.313032 19.784124,50 19.784124,66.686968 33.313032,80.215876 50,80.215876 66.686968,80.215876 80.215876,66.686968 80.215876,50 80.215876,33.313032 66.686968,19.784124 50,19.784124 Z m -14.490988,30.670411 9.424556,9.424556 c 1.373756,1.373757 3.602445,1.373757 4.976202,0 6.750355,-6.750355 7.871467,-8.019219 14.590241,-14.804538 1.36699,-1.373757 1.360222,-3.595678 -0.01353,-4.962667 -1.373757,-1.36699 -3.595678,-1.360222 -4.962667,0.01353 L 47.416029,52.409149 40.485214,45.478333 c -1.373757,-1.373756 -3.602446,-1.373756 -4.976202,0 -1.373757,1.373757 -1.373757,3.602446 0,4.976202 z M 48.417586,22.44479 v 2.986624 c 0,0.874106 0.708308,1.582414 1.582414,1.582414 0.874106,0 1.582414,-0.708308 1.582414,-1.582414 V 22.44479 c 0,-0.874106 -0.708308,-1.582414 -1.582414,-1.582414 -0.874106,0.0011 -1.582414,0.709436 -1.582414,1.582414 z m 19.947666,6.952246 -2.112517,2.112517 c -0.618078,0.618078 -0.618078,1.619634 0,2.237712 0.618078,0.618078 1.619634,0.618078 2.237712,0 l 2.112517,-2.112517 c 0.618078,-0.618078 0.618078,-1.619634 0,-2.237712 -0.618078,-0.618078 -1.619634,-0.618078 -2.237712,0 z m 2.237712,38.968216 -2.112517,-2.112517 c -0.618078,-0.618078 -1.619634,-0.618078 -2.237712,0 -0.618078,0.618078 -0.618078,1.619634 0,2.237712 l 2.112517,2.112517 c 0.618078,0.618078 1.619634,0.618078 2.237712,0 0.61695,-0.618078 0.61695,-1.619634 0,-2.237712 z m -38.968216,2.237712 2.112517,-2.112517 c 0.618078,-0.618078 0.618078,-1.619634 0,-2.237712 -0.618078,-0.618078 -1.619634,-0.618078 -2.237712,0 l -2.112517,2.112517 c -0.618078,0.618078 -0.618078,1.619634 0,2.237712 0.618078,0.618078 1.619634,0.618078 2.237712,0 z m -2.237712,-38.968216 2.112517,2.112517 c 0.618078,0.618078 1.619634,0.618078 2.237712,0 0.618078,-0.618078 0.618078,-1.619634 0,-2.237712 l -2.112517,-2.112517 c -0.618078,-0.618078 -1.619634,-0.618078 -2.237712,0 -0.618078,0.618078 -0.618078,1.619634 0,2.237712 z M 77.55521,48.417586 h -2.986624 c -0.874106,0 -1.582414,0.708308 -1.582414,1.582414 0,0.874106 0.708308,1.582414 1.582414,1.582414 h 2.986624 c 0.874106,0 1.582414,-0.708308 1.582414,-1.582414 -0.0011,-0.874106 -0.709436,-1.582414 -1.582414,-1.582414 z M 51.582414,77.55521 v -2.986624 c 0,-0.874106 -0.708308,-1.582414 -1.582414,-1.582414 -0.874106,0 -1.582414,0.708308 -1.582414,1.582414 v 2.986624 c 0,0.874106 0.708308,1.582414 1.582414,1.582414 0.874106,-0.0011 1.582414,-0.709436 1.582414,-1.582414 z M 22.44479,51.582414 h 2.986624 c 0.874106,0 1.582414,-0.708308 1.582414,-1.582414 0,-0.874106 -0.708308,-1.582414 -1.582414,-1.582414 H 22.44479 c -0.874106,0 -1.582414,0.708308 -1.582414,1.582414 0.0011,0.874106 0.709436,1.582414 1.582414,1.582414 z M 18.395705,5.1544066 15.949336,13.728542 c -0.251517,0.884257 0.261668,1.805734 1.145925,2.057251 0.172565,0.0485 0.345131,0.0688 0.51544,0.06316 l 8.792944,0.315807 c 0.916966,0.03271 1.686179,-0.684623 1.718888,-1.601589 0.03271,-0.916965 -0.684623,-1.686178 -1.601588,-1.718887 l -4.553247,-0.163542 c 0.177077,-0.13309 0.355281,-0.265052 0.533486,-0.395886 1.315107,-0.959825 2.700142,-1.862128 4.148339,-2.700142 C 30.134669,7.566939 33.908552,5.9856524 37.895604,4.9175511 41.749566,3.884414 45.807674,3.3340091 50,3.3340091 c 12.887144,0 24.553924,5.2232069 32.998353,13.6676369 8.44443,8.444429 13.667637,20.111209 13.667637,32.998353 0,12.887144 -5.223207,24.553924 -13.667637,32.998353 C 74.552796,91.442782 62.887144,96.66599 50,96.66599 37.112856,96.66599 25.446076,91.442782 17.001647,82.998352 8.557217,74.553924 3.3340101,62.887144 3.3340101,50 c 0,-5.279601 0.8741061,-10.349417 2.4835893,-15.071846 C 7.489116,30.026392 9.951276,25.494575 13.052943,21.48271 13.613498,20.756356 13.479281,19.713068 12.752927,19.152512 12.026573,18.591956 10.983285,18.726174 10.422729,19.452528 7.096614,23.755386 4.4562496,28.61316 2.6663057,33.862309 0.9383953,38.929868 0,44.35835 0,50 0,63.806366 5.5965352,76.306648 14.64438,85.354492 23.693352,94.403465 36.193634,100 50,100 63.806366,100 76.306648,94.403465 85.354492,85.35562 94.403465,76.306648 100,63.806366 100,50 100,36.193634 94.403465,23.693352 85.35562,14.645508 76.306648,5.5965352 63.806366,0 50,0 45.522321,0 41.175475,0.5910085 37.03616,1.7008414 32.769394,2.8433827 28.72482,4.5397126 24.982518,6.707496 23.491462,7.571451 22.028603,8.525637 20.600708,9.564413 L 21.598881,6.0657328 C 21.850398,5.1814757 21.337213,4.2599986 20.452956,4.0084816 19.568699,3.7569647 18.647222,4.2701496 18.395705,5.1544066 Z"/></svg></span> Projects
+          </button>
+          <button class="nav-item" data-view="settings">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></span> Settings
+          </button>
+        </nav>
 
-    <!-- ===================== MAIN CONTENT ===================== -->
-    <main>
-      <!-- ===================== QUEUE VIEW ===================== -->
-      <section id="view-queue" class="view active">
-        <div class="add-video-card">
-          <button id="selectVideoBtn" class="primary-btn">+ Add Video</button>
+        <div class="sidebar-divider"></div>
 
-          <div id="videoLoadingInfo" class="pending-loading hidden">Reading video info...</div>
+        <nav class="sidebar-nav">
+          <button class="nav-item" data-external="howto">
+            <span class="nav-icon">&#128214;</span> How To ..
+          </button>
+          <button class="nav-item" data-external="videosamples">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="15" height="14" rx="2"></rect><path d="m22 8-5 4 5 4V8Z"></path></svg></span> Video Samples
+          </button>
+          <button class="nav-item" data-external="help">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9.3a2.5 2.5 0 0 1 4.8 1c0 1.5-2.3 1.8-2.3 3.4"></path><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"></circle></svg></span> Help
+          </button>
+          <button class="nav-item" data-external="tips">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 2.6-1.4 4.9-3.5 6.2V17a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1.8A7 7 0 0 1 12 2z"></path><path d="M9 21h6"></path><path d="M9 18h6"></path></svg></span> Tips &amp; Tricks
+          </button>
+        </nav>
 
-          <!-- ===================== PREVIEW PANEL: thumbnail + edit summary, shown first ===================== -->
-          <div id="previewPanel" class="preview-panel hidden">
-            <div class="source-info-card">
-              <img id="previewThumb" class="source-thumb" src="" alt="">
-              <div class="source-info-text">
-                <div class="pending-filename" id="previewFilename"></div>
-                <div class="source-details" id="previewDetails"></div>
+        <div class="sidebar-divider"></div>
+
+        <nav class="sidebar-nav">
+          <button class="nav-item" data-external="rateus">
+            <span class="nav-icon">&#11088;</span> Rate Us
+          </button>
+        </nav>
+
+        <div class="sidebar-divider"></div>
+
+        <nav class="sidebar-nav">
+          <button class="nav-item" data-external="privacy">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1.5"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg></span> Privacy
+          </button>
+          <button class="nav-item" data-view="contact">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1.5"></rect><path d="m4 7 8 6 8-6"></path></svg></span> Contact
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <button class="sidebar-footer-link" id="mlappsFooterLink">
+            <img class="sidebar-footer-logo" src="https://mlapplications.com/uploads/aivideoupscaler_icon.png" alt="mlapplications.com">
+            v2.1 &middot; mlapplications.com
+          </button>
+        </div>
+      </aside>
+
+      <main>
+        <section id="view-queue" class="view active">
+          <div class="add-video-card">
+            <button id="selectVideoBtn" class="primary-btn">+ Add Video</button>
+
+            <div id="videoLoadingInfo" class="pending-loading hidden">Reading video info...</div>
+
+            <div id="previewPanel" class="preview-panel hidden">
+              <div class="source-info-card">
+                <img id="previewThumb" class="source-thumb" src="" alt="">
+                <div class="source-info-text">
+                  <div class="pending-filename" id="previewFilename"></div>
+                  <div class="source-details" id="previewDetails"></div>
+                </div>
+              </div>
+
+              <div class="preview-controls">
+                <button id="openEditorBtn" class="secondary-btn">Trim / Rotate</button>
+                <span id="editSummary" class="rotation-label">No edits</span>
+              </div>
+
+              <div class="pending-actions">
+                <button id="continueToSettingsBtn" class="primary-btn">Continue</button>
+                <button id="cancelPreviewBtn" class="secondary-btn">Cancel</button>
               </div>
             </div>
 
-            <div class="preview-controls">
-              <button id="openEditorBtn" class="secondary-btn">Trim / Rotate</button>
-              <span id="editSummary" class="rotation-label">No edits</span>
-            </div>
+            <div id="pendingSettings" class="pending-settings hidden">
+              <div class="source-info-card">
+                <img id="pendingThumb" class="source-thumb" src="" alt="">
+                <div class="source-info-text">
+                  <div class="pending-filename" id="pendingFilename"></div>
+                  <div class="source-details" id="sourceDetails"></div>
+                </div>
+              </div>
 
-            <div class="pending-actions">
-              <button id="continueToSettingsBtn" class="primary-btn">Continue</button>
-              <button id="cancelPreviewBtn" class="secondary-btn">Cancel</button>
-            </div>
-          </div>
+              <label>Output resolution</label>
+              <select id="targetHeightSelect">
+                <option value="0">Native 4x of source</option>
+                <option value="720">720p</option>
+                <option value="1080" selected>1080p</option>
+                <option value="1440">1440p (2K)</option>
+                <option value="2160">2160p (4K)</option>
+                <option value="4320">4320p (8K)</option>
+              </select>
 
-          <div id="pendingSettings" class="pending-settings hidden">
-            <div class="source-info-card">
-              <img id="pendingThumb" class="source-thumb" src="" alt="">
-              <div class="source-info-text">
-                <div class="pending-filename" id="pendingFilename"></div>
-                <div class="source-details" id="sourceDetails"></div>
+              <label>Face restoration strength: <span id="strengthValue">80%</span></label>
+              <input type="range" id="strengthSlider" min="0" max="100" value="80">
+
+              <label>Frame rate</label>
+              <select id="targetFpsSelect">
+                <option value="0" selected>Keep source frame rate</option>
+                <option value="45">Interpolate to 45 fps</option>
+                <option value="60">Interpolate to 60 fps</option>
+              </select>
+
+              <div class="pending-actions">
+                <button id="addToQueueBtn" class="primary-btn">Add to Queue</button>
+                <button id="cancelAddBtn" class="secondary-btn">Cancel</button>
               </div>
             </div>
+          </div>
 
-            <label>Output resolution</label>
-            <select id="targetHeightSelect">
-              <option value="0">Native 4x of source</option>
-              <option value="720">720p</option>
-              <option value="1080" selected>1080p</option>
-              <option value="1440">1440p (2K)</option>
-              <option value="2160">2160p (4K)</option>
-              <option value="4320">4320p (8K)</option>
-            </select>
+          <div id="queueList" class="job-list"></div>
+          <div id="queueEmpty" class="empty-state">No videos queued yet.</div>
+        </section>
 
-            <label>Face restoration strength: <span id="strengthValue">80%</span></label>
-            <input type="range" id="strengthSlider" min="0" max="100" value="80">
+        <section id="view-history" class="view">
+          <div id="historyList" class="job-list"></div>
+          <div id="historyEmpty" class="empty-state">No completed videos yet.</div>
+        </section>
 
-            <label>Frame rate</label>
-            <select id="targetFpsSelect">
-              <option value="0" selected>Keep source frame rate</option>
-              <option value="45">Interpolate to 45 fps</option>
-              <option value="60">Interpolate to 60 fps</option>
-            </select>
+        <section id="view-settings" class="view">
+          <div class="settings-header">
+            <h1>Settings</h1>
+            <p>Customize your AI Video Upscaler+ experience.</p>
+          </div>
 
-            <div class="pending-actions">
-              <button id="addToQueueBtn" class="primary-btn">Add to Queue</button>
-              <button id="cancelAddBtn" class="secondary-btn">Cancel</button>
+          <div class="settings-section">
+            <div class="settings-section-title">Appearance</div>
+            <div class="settings-card">
+              <div>
+                <div class="settings-card-title">Light Theme</div>
+                <div class="settings-card-desc">Switch between dark and light interface</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="settingsThemeToggle">
+                <span class="toggle-slider"></span>
+              </label>
             </div>
           </div>
-        </div>
 
-        <div id="queueList" class="job-list"></div>
-        <div id="queueEmpty" class="empty-state">No videos queued yet.</div>
-      </section>
-
-      <!-- ===================== HISTORY VIEW ===================== -->
-      <section id="view-history" class="view">
-        <div id="historyList" class="job-list"></div>
-        <div id="historyEmpty" class="empty-state">No completed videos yet.</div>
-      </section>
-
-      <!-- ===================== SETTINGS VIEW ===================== -->
-      <section id="view-settings" class="view">
-        <div class="settings-section">
-          <div class="settings-section-title">Appearance</div>
-          <div class="settings-card">
-            <div>
-              <div class="settings-card-title">Light Theme</div>
-              <div class="settings-card-desc">Switch between dark and light interface</div>
-            </div>
-            <label class="toggle-switch">
-              <input type="checkbox" id="settingsThemeToggle">
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-        </div>
-
-        <div class="settings-section">
-          <div class="settings-section-title">System</div>
-          <div class="settings-card">
-            <div>
-              <div class="settings-card-title">Start with Windows</div>
-              <div class="settings-card-desc">Launch AI Video Upscaler+ automatically when you log in</div>
-            </div>
-            <label class="toggle-switch">
-              <input type="checkbox" id="settingsAutostartToggle">
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-        </div>
-
-        <div class="settings-section">
-          <div class="settings-section-title">About</div>
-          <div class="settings-card">
-            <div>
-              <div class="settings-card-title">AI Video Upscaler+</div>
-              <div class="settings-card-desc">Version 1.0 &middot; Built by mlapplications.com</div>
+          <div class="settings-section">
+            <div class="settings-section-title">System</div>
+            <div class="settings-card">
+              <div>
+                <div class="settings-card-title">Start with Windows</div>
+                <div class="settings-card-desc">Launch AI Video Upscaler+ automatically when you log in</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="settingsAutostartToggle">
+                <span class="toggle-slider"></span>
+              </label>
             </div>
           </div>
-        </div>
 
-        <div class="settings-section">
-          <div class="settings-section-title">Content &amp; Safety</div>
-          <div class="settings-disclosure">
-            <strong>Disclosure:</strong> AI Video Upscaler+ uses AI models (including face restoration)
-            to enhance and upscale your own existing video files - it does not generate new video content
-            or synthesize footage of people who weren't already in the original video.<br><br>
-            You must have the rights to any video you process. For questions or concerns, contact us at
-            mil.applications [at] hotmail.com.
+          <div class="settings-section">
+            <div class="settings-section-title">About</div>
+            <div class="settings-card">
+              <div>
+                <div class="settings-card-title">AI Video Upscaler+</div>
+                <div class="settings-card-desc">Version 2.1 &middot; Built by mlapplications.com</div>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
+
+          <div class="settings-section">
+            <div class="settings-section-title">Content &amp; Safety</div>
+            <div class="settings-disclosure">
+              <strong>Disclosure:</strong> AI Video Upscaler+ uses AI models (including face restoration)
+              to enhance and upscale your own existing video files - it does not generate new video content
+              or synthesize footage of people who weren't already in the original video.<br><br>
+              You must have the rights to any video you process. For questions or concerns, contact us at
+              mil.applications [at] hotmail.com.
+            </div>
+          </div>
+        </section>
+
+        <section id="view-contact" class="view">
+          <div class="settings-header">
+            <h1>Contact</h1>
+            <p>Get in touch, report a bug or request a feature.</p>
+          </div>
+
+          <div class="settings-section">
+            <div class="settings-section-title">Reach Us</div>
+            <a class="contact-card" href="https://mlapplications.com" target="_blank" rel="noopener">
+              <div class="contact-card-icon"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm5.9 6.5h-2.42a10.9 10.9 0 00-.9-3.8 5.52 5.52 0 013.32 3.8zM8 2.53c.6.77 1.36 2.1 1.56 3.97H6.44c.2-1.87.96-3.2 1.56-3.97zM2.1 7.5a5.52 5.52 0 013.32-3.8 10.9 10.9 0 00-.9 3.8H2.1zm0 1h2.42c.1 1.4.42 2.7.9 3.8A5.52 5.52 0 012.1 8.5zm3.42 0h3.16c-.2 1.87-.96 3.2-1.56 3.97C6.66 11.7 5.9 10.37 5.7 8.5H5.52zm4.9 3.8c.48-1.1.8-2.4.9-3.8h2.42a5.52 5.52 0 01-3.32 3.8z"/></svg></div>
+              <div class="contact-card-text">mlapplications.com &mdash; our main website</div>
+            </a>
+            <button class="contact-card" id="contactEmailBtn" style="width:100%;border:1px solid var(--border);font-family:inherit;">
+              <div class="contact-card-icon"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 4a1 1 0 011-1h10a1 1 0 011 1v8a1 1 0 01-1 1H3a1 1 0 01-1-1V4zm1.2.2L8 8l4.8-3.8H3.2z"/></svg></div>
+              <div class="contact-card-text">mil.applications@hotmail.com &mdash; support &amp; bug reports</div>
+            </button>
+          </div>
+
+          <div class="settings-section">
+            <div class="settings-section-title">About</div>
+            <div class="settings-card">
+              <div>
+                <div class="settings-card-title">AI Video Upscaler+ v2.1</div>
+                <div class="settings-card-desc">Built by mlapplications.com &middot; Powered by Real-ESRGAN, SCRFD and GFPGAN &middot; Running entirely on your local machine.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
   </div>
 
-  <script src="app.js"></script>
-  <script>
-    // ── Theme (driven from the Settings view's toggle now, not a standalone sidebar button) ──
-    function applyTheme(light) {
-      document.documentElement.classList.toggle('light-theme', light);
-      const toggle = document.getElementById('settingsThemeToggle');
-      if (toggle) toggle.checked = light;
-      try { localStorage.setItem('theme', light ? 'light' : 'dark'); } catch {}
+<script>
+const STAT_ICONS = {
+  resolution: '<svg viewBox="0 0 16 16"><path d="M2 2h5v1.5H3.5V7H2V2zm12 0v5h-1.5V3.5H9V2h5zM2 14V9h1.5v3.5H7V14H2zm12 0H9v-1.5h3.5V9H14v5z"/></svg>',
+  fps: '<svg viewBox="0 0 16 16"><path d="M6 4l6 4-6 4V4z"/></svg>',
+  codec: '<svg viewBox="0 0 16 16"><rect x="1.2" y="3" width="13.6" height="10" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><line x1="4.3" y1="3" x2="4.3" y2="13" stroke="currentColor" stroke-width="1.3"/><line x1="11.7" y1="3" x2="11.7" y2="13" stroke="currentColor" stroke-width="1.3"/></svg>',
+  size: '<svg viewBox="0 0 16 16"><path d="M2 2h9l3 3v9H2V2zm2 2v3h6V4H4zm0 5v5h8V9H4z"/></svg>',
+  duration: '<svg viewBox="0 0 16 16"><circle cx="8" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 5v3.5l2.5 1.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>'
+};
+function statItem(iconKey, text) {
+  return `<span class="stat-item">${STAT_ICONS[iconKey] || ''}${text}</span>`;
+}
+
+const ACTION_ICONS = {
+  cancel: '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm3 9.3L9.3 12 8 10.7 6.7 12 5 10.3 6.3 9 5 7.7 6.7 6 8 7.3 9.3 6 11 7.7 9.7 9 11 10.3z"/></svg>',
+  clear: '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M6 2h4v1h4v1.5H2V3h4V2zm-2 4h8l-.6 8.1a1 1 0 01-1 .9H6.6a1 1 0 01-1-.9L4 6z"/></svg>',
+  play: '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3l8 5-8 5V3z"/></svg>',
+  folder: '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 4a1 1 0 011-1h3.5l1.5 1.5H13a1 1 0 011 1V12a1 1 0 01-1 1H3a1 1 0 01-1-1V4z"/></svg>'
+};
+
+let ws = null;
+let wsReady = false;
+const pendingMessages = [];
+
+const _urlParams = new URLSearchParams(window.location.search);
+const IS_DESKTOP = _urlParams.get('mode') === 'desktop' || window.__FORCE_DESKTOP === true;
+const DISCOVERY_URL = 'http://127.0.0.1:49299/';
+const WS_HOST = 'mywbsck.mlapplications.com';
+
+function postToHost(action, payload) {
+  const msg = { type: action, payload: payload || {} };
+  if (wsReady && ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify(msg));
+  } else {
+    pendingMessages.push(msg);
+  }
+}
+
+function connectWs(port, secure) {
+  const url = secure ? `wss://${WS_HOST}:${port}/ws` : `ws://127.0.0.1:${port}/ws`;
+  ws = new WebSocket(url);
+
+  ws.onopen = () => {
+    wsReady = true;
+    while (pendingMessages.length) ws.send(JSON.stringify(pendingMessages.shift()));
+  };
+
+  ws.onmessage = (e) => {
+    let msg;
+    try { msg = JSON.parse(e.data); } catch { return; }
+    dispatchFromHost(msg.type, msg.payload);
+  };
+
+  ws.onclose = () => {
+    wsReady = false;
+    setTimeout(() => connectWs(port, secure), 2000);
+  };
+
+  ws.onerror = () => {};
+}
+
+function dispatchFromHost(action, payload) {
+  switch (action) {
+    case 'videoSelecting': onVideoSelecting(payload); break;
+    case 'videoSelected': onVideoSelected(payload); break;
+    case 'jobUpdated': onJobUpdated(payload); break;
+    case 'queueData': onQueueData(payload); break;
+    case 'historyData': onHistoryData(payload); break;
+    case 'jobRemoved': onJobRemoved(payload); break;
+    case 'historyEntryRemoved': onHistoryData_refresh(); break;
+    case 'trimRotateResult': onTrimRotateResult(payload); break;
+    case 'autostartState': {
+      const toggle = document.getElementById('settingsAutostartToggle');
+      if (toggle) toggle.checked = !!payload.enabled;
+      break;
     }
-    document.getElementById('settingsThemeToggle').addEventListener('change', (e) => {
-      applyTheme(e.target.checked);
-    });
-    try {
-      applyTheme(localStorage.getItem('theme') === 'light');
-    } catch {}
+    case 'init_urls': break;
+    case 'error':
+      document.getElementById('selectVideoBtn').disabled = false;
+      document.getElementById('videoLoadingInfo').classList.add('hidden');
+      alert(payload.message);
+      break;
+  }
+}
 
-    // ── Autostart toggle - reflects the real Windows registry state via the WPF host ──
-    document.getElementById('settingsAutostartToggle').addEventListener('change', (e) => {
-      postToHost('setAutostart', { enabled: e.target.checked });
-    });
-
-    // ── Settings nav item loads current autostart state each time it's opened ──
-    document.querySelector('.nav-item[data-view="settings"]').addEventListener('click', () => {
-      postToHost('getAutostartState');
-    });
-
-    // ── Connection status pill, driven by the WebSocket lifecycle in app.js ──
-    // app.js's ws.onopen/onclose don't call back into this page directly, so this just reflects
-    // ws.readyState on a short interval - simple and avoids threading a UI callback through the
-    // transport shim for what's purely a cosmetic indicator.
-    let wsStatusInterval = setInterval(() => {
-      const dot = document.getElementById('wsDot');
-      const text = document.getElementById('wsStatusText');
-      if (!dot || !text) {
-        clearInterval(wsStatusInterval); // body was replaced (e.g. "app not found" fallback) - nothing left to update
+if (IS_DESKTOP) {
+  const wsport = _urlParams.get('wsport') || window.__WS_LOCAL_PORT;
+  connectWs(wsport, false);
+} else {
+  fetch(DISCOVERY_URL, { cache: 'no-store' })
+    .then(r => r.json())
+    .then(data => {
+      if (!data.wssAvailable) {
+        document.body.innerHTML = '<div style="padding:60px 20px;text-align:center;color:#a0a0a8;' +
+          'font-family:Segoe UI,sans-serif">AI Video Upscaler+ is running, but browser mode isn\'t ' +
+          'available right now (it couldn\'t obtain its security certificate - this usually clears up ' +
+          'once it has a working internet connection). You can still use the app window in the meantime.</div>';
         return;
       }
-      if (typeof ws !== 'undefined' && ws && ws.readyState === WebSocket.OPEN) {
-        dot.className = 'ws-dot connected';
-        text.textContent = 'Connected';
-      } else if (typeof ws !== 'undefined' && ws && ws.readyState === WebSocket.CONNECTING) {
-        dot.className = 'ws-dot connecting';
-        text.textContent = 'Connecting...';
-      } else {
-        dot.className = 'ws-dot error';
-        text.textContent = 'Disconnected';
-      }
-    }, 500);
-  </script>
+      connectWs(data.wssPort, true);
+    })
+    .catch(() => {
+      document.body.innerHTML = `
+        <div style="padding:60px 20px;text-align:center;color:#a0a0a8;font-family:Segoe UI,sans-serif;max-width:480px;margin:0 auto;">
+          <h2 style="color:#e2e8f0;font-size:20px;margin-bottom:12px;">Could not find AI Video Upscaler+ running on this PC</h2>
+          <p style="margin-bottom:24px;">If the app is installed, click below to launch it, then try again. If not, you can get it from the Microsoft Store.</p>
+          <button id="launchAppBtn" style="background:#5b7fff;color:white;border:none;padding:12px 24px;border-radius:8px;font-size:14px;cursor:pointer;margin:0 8px 12px;">Open AI Video Upscaler+</button>
+          <br>
+          <a href="https://apps.microsoft.com/detail/9P54F81N7R30?referrer=appbadge&cid=browserfallback&mode=full" target="_blank" rel="noopener" style="display:inline-block;background:#1e2333;color:#e2e8f0;border:1px solid #2a3148;padding:12px 24px;border-radius:8px;font-size:14px;text-decoration:none;margin:0 8px 12px;">Get it from Microsoft Store</a>
+          <br>
+          <button id="retryConnectBtn" style="background:transparent;color:#8a94a8;border:1px solid #2a3148;padding:10px 20px;border-radius:8px;font-size:13px;cursor:pointer;margin-top:8px;">I've opened it - try again</button>
+        </div>`;
+
+      // Protocol activation - requires the desktop app to have registered "aivideoupscalerplus"
+      // as a URI scheme handler (see App.xaml.cs). If the app isn't installed at all, Windows will
+      // typically show its own "no app found for this link" prompt rather than doing anything silently.
+      document.getElementById('launchAppBtn').addEventListener('click', () => {
+        window.location.href = 'aivideoupscalerplus://';
+      });
+      document.getElementById('retryConnectBtn').addEventListener('click', () => {
+        window.location.reload();
+      });
+    });
+}
+
+document.querySelectorAll('.nav-item[data-view]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('view-' + btn.dataset.view).classList.add('active');
+    if (btn.dataset.view === 'history') postToHost('getHistory');
+    if (btn.dataset.view === 'settings') postToHost('getAutostartState');
+  });
+});
+
+const externalPageUrls = {
+  howto: 'https://mlapplications.com/ai_videoupscaler_plus_how_to.html',
+  videosamples: 'https://mlapplications.com/ai_videoupscaler_plus_videos_samples.html',
+  help: 'https://mlapplications.com/ai_videoupscaler_plus_help.html?utm_source=notifyapp&utm_medium=banner&utm_campaign=fromapp&utm_term=gethelp',
+  tips: 'https://mlapplications.com/ai_videoupscaler_plus_tips_and_tricks.html',
+  privacy: 'https://mlapplications.com/ai_videoupscaler_plus_privacy.html?utm_source=notifyapp&utm_medium=banner&utm_campaign=from_imtalking&utm_term=privacy',
+  rateus: 'ms-windows-store://review/?ProductId=9P54F81N7R30'
+};
+
+document.querySelectorAll('.nav-item[data-external]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const url = externalPageUrls[btn.dataset.external];
+    if (url) postToHost('openExternalUrl', { url });
+  });
+});
+
+document.getElementById('mlappsFooterLink').addEventListener('click', () => {
+  postToHost('openExternalUrl', { url: 'https://mlapplications.com' });
+});
+
+document.getElementById('contactEmailBtn').addEventListener('click', () => {
+  postToHost('openExternalUrl', { url: 'mailto:mil.applications@hotmail.com' });
+});
+
+function applyTheme(light) {
+  document.documentElement.classList.toggle('light-theme', light);
+  const toggle = document.getElementById('settingsThemeToggle');
+  if (toggle) toggle.checked = light;
+  try { localStorage.setItem('theme', light ? 'light' : 'dark'); } catch {}
+}
+document.getElementById('settingsThemeToggle').addEventListener('change', (e) => {
+  applyTheme(e.target.checked);
+});
+try { applyTheme(localStorage.getItem('theme') === 'light'); } catch {}
+
+document.getElementById('settingsAutostartToggle').addEventListener('change', (e) => {
+  postToHost('setAutostart', { enabled: e.target.checked });
+});
+
+let wsStatusInterval = setInterval(() => {
+  const dot = document.getElementById('wsDot');
+  const text = document.getElementById('wsStatusText');
+  if (!dot || !text) {
+    clearInterval(wsStatusInterval);
+    return;
+  }
+  if (typeof ws !== 'undefined' && ws && ws.readyState === WebSocket.OPEN) {
+    dot.className = 'ws-dot connected';
+    text.textContent = 'Connected';
+  } else if (typeof ws !== 'undefined' && ws && ws.readyState === WebSocket.CONNECTING) {
+    dot.className = 'ws-dot connecting';
+    text.textContent = 'Connecting...';
+  } else {
+    dot.className = 'ws-dot error';
+    text.textContent = 'Disconnected';
+  }
+}, 500);
+
+let pendingVideoPath = null;
+let pendingVideoInfo = null;
+let previewRotation = 0;
+let trimStartSeconds = 0;
+let trimEndSeconds = 0;
+
+document.getElementById('selectVideoBtn').addEventListener('click', () => {
+  if (!wsReady) {
+    alert('Not connected to AI Video Upscaler+ yet. Please wait a moment and try again - ' +
+      'if this persists, make sure the app is running.');
+    return;
+  }
+  postToHost('selectVideo');
+});
+
+function onVideoSelecting(payload) {
+  document.getElementById('selectVideoBtn').disabled = true;
+  document.getElementById('pendingSettings').classList.add('hidden');
+  document.getElementById('previewPanel').classList.add('hidden');
+  document.getElementById('videoLoadingInfo').classList.remove('hidden');
+}
+
+function onVideoSelected(payload) {
+  document.getElementById('selectVideoBtn').disabled = false;
+  document.getElementById('videoLoadingInfo').classList.add('hidden');
+
+  pendingVideoPath = payload.path;
+  pendingVideoInfo = payload;
+  previewRotation = 0;
+  trimStartSeconds = 0;
+  trimEndSeconds = 0;
+
+  document.getElementById('previewFilename').textContent = payload.name;
+
+  const thumb = document.getElementById('previewThumb');
+  if (payload.thumbnailDataUri) {
+    thumb.src = payload.thumbnailDataUri;
+    thumb.classList.remove('hidden');
+  } else {
+    thumb.classList.add('hidden');
+  }
+
+  const details = [];
+  if (payload.width && payload.height) details.push(statItem('resolution', `${payload.width}\u00d7${payload.height}`));
+  if (payload.fps) details.push(statItem('fps', `${Math.round(payload.fps)} fps`));
+  if (payload.codec) details.push(statItem('codec', payload.codec.toUpperCase()));
+  if (payload.duration) details.push(statItem('duration', formatDuration(payload.duration)));
+  if (payload.fileSizeBytes) details.push(statItem('size', formatBytes(payload.fileSizeBytes)));
+  document.getElementById('previewDetails').innerHTML = details.join('');
+
+  updateEditSummary();
+  document.getElementById('previewPanel').classList.remove('hidden');
+}
+
+document.getElementById('openEditorBtn').addEventListener('click', () => {
+  postToHost('openTrimRotateEditor', { path: pendingVideoPath });
+});
+
+function onTrimRotateResult(payload) {
+  if (payload.cancelled) return;
+  previewRotation = payload.rotation || 0;
+  trimStartSeconds = payload.trimStartSeconds || 0;
+  trimEndSeconds = payload.trimEndSeconds || 0;
+  updateEditSummary();
+}
+
+function updateEditSummary() {
+  const parts = [];
+  if (previewRotation) parts.push(`rotate ${previewRotation}\u00b0`);
+  if (trimEndSeconds > trimStartSeconds) parts.push(`trim ${formatDuration(trimStartSeconds)}\u2013${formatDuration(trimEndSeconds)}`);
+  document.getElementById('editSummary').textContent = parts.length ? parts.join(' \u00b7 ') : 'No edits';
+}
+
+document.getElementById('cancelPreviewBtn').addEventListener('click', () => {
+  pendingVideoPath = null;
+  pendingVideoInfo = null;
+  document.getElementById('previewPanel').classList.add('hidden');
+});
+
+document.getElementById('continueToSettingsBtn').addEventListener('click', () => {
+  document.getElementById('previewPanel').classList.add('hidden');
+
+  document.getElementById('pendingFilename').textContent = pendingVideoInfo.name;
+
+  const thumb = document.getElementById('pendingThumb');
+  if (pendingVideoInfo.thumbnailDataUri) {
+    thumb.src = pendingVideoInfo.thumbnailDataUri;
+    thumb.classList.remove('hidden');
+  } else {
+    thumb.classList.add('hidden');
+  }
+
+  const details = [];
+  if (pendingVideoInfo.width && pendingVideoInfo.height) details.push(statItem('resolution', `${pendingVideoInfo.width}\u00d7${pendingVideoInfo.height}`));
+  if (pendingVideoInfo.fps) details.push(statItem('fps', `${Math.round(pendingVideoInfo.fps)} fps`));
+  if (pendingVideoInfo.codec) details.push(statItem('codec', pendingVideoInfo.codec.toUpperCase()));
+  if (pendingVideoInfo.duration) details.push(statItem('duration', formatDuration(pendingVideoInfo.duration)));
+  if (pendingVideoInfo.fileSizeBytes) details.push(statItem('size', formatBytes(pendingVideoInfo.fileSizeBytes)));
+  if (previewRotation) details.push(`<span class="stat-item">rotate ${previewRotation}\u00b0</span>`);
+  if (trimEndSeconds > trimStartSeconds) details.push(`<span class="stat-item">trimmed to ${formatDuration(trimEndSeconds - trimStartSeconds)}</span>`);
+  document.getElementById('sourceDetails').innerHTML = details.join('');
+
+  document.getElementById('pendingSettings').classList.remove('hidden');
+});
+
+function formatDuration(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = Math.round(seconds % 60);
+  return m > 0 ? `${m}m ${s}s` : `${s}s`;
+}
+
+document.getElementById('strengthSlider').addEventListener('input', (e) => {
+  document.getElementById('strengthValue').textContent = e.target.value + '%';
+});
+
+document.getElementById('cancelAddBtn').addEventListener('click', () => {
+  pendingVideoPath = null;
+  pendingVideoInfo = null;
+  document.getElementById('pendingSettings').classList.add('hidden');
+});
+
+document.getElementById('addToQueueBtn').addEventListener('click', () => {
+  if (!pendingVideoPath) return;
+  const targetHeight = parseInt(document.getElementById('targetHeightSelect').value, 10);
+  const strength = parseInt(document.getElementById('strengthSlider').value, 10) / 100;
+  const targetFps = parseInt(document.getElementById('targetFpsSelect').value, 10);
+
+  postToHost('enqueueJob', {
+    inputPath: pendingVideoPath,
+    targetHeight,
+    gfpganStrength: strength,
+    targetFps,
+    sourceWidth: pendingVideoInfo?.width || 0,
+    sourceHeight: pendingVideoInfo?.height || 0,
+    sourceFps: pendingVideoInfo?.fps || 0,
+    sourceCodec: pendingVideoInfo?.codec || null,
+    sourceDurationSeconds: pendingVideoInfo?.duration || 0,
+    fileSizeBytes: pendingVideoInfo?.fileSizeBytes || 0,
+    thumbnailDataUri: pendingVideoInfo?.thumbnailDataUri || null,
+    manualRotation: previewRotation || null,
+    trimStartSeconds: trimStartSeconds,
+    trimEndSeconds: trimEndSeconds
+  });
+
+  pendingVideoPath = null;
+  pendingVideoInfo = null;
+  previewRotation = 0;
+  trimStartSeconds = 0;
+  trimEndSeconds = 0;
+  document.getElementById('pendingSettings').classList.add('hidden');
+});
+
+const jobs = new Map();
+
+function onJobUpdated(job) {
+  jobs.set(job.id, job);
+  renderQueue();
+}
+
+function onQueueData(jobList) {
+  jobList.forEach(j => jobs.set(j.id, j));
+  renderQueue();
+}
+
+function renderQueue() {
+  const list = document.getElementById('queueList');
+  const empty = document.getElementById('queueEmpty');
+  const active = Array.from(jobs.values()).filter(j => j.status !== 'Completed');
+
+  if (active.length === 0) {
+    list.innerHTML = '';
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+
+  list.innerHTML = active.map(renderJobCard).join('');
+
+  active.forEach(job => {
+    const cancelBtn = document.getElementById('cancel-' + job.id);
+    if (cancelBtn) cancelBtn.addEventListener('click', () => postToHost('cancelJob', { jobId: job.id }));
+
+    const clearBtn = document.getElementById('clear-' + job.id);
+    if (clearBtn) clearBtn.addEventListener('click', () => postToHost('removeJob', { jobId: job.id }));
+  });
+}
+
+function onJobRemoved(payload) {
+  jobs.delete(payload.jobId);
+  renderQueue();
+}
+
+function formatBytes(bytes) {
+  if (!bytes) return '';
+  const mb = bytes / (1024 * 1024);
+  return mb >= 1024 ? (mb / 1024).toFixed(2) + ' GB' : mb.toFixed(1) + ' MB';
+}
+
+function renderJobCard(job) {
+  const name = job.inputPath ? job.inputPath.split('\\').pop() : '';
+  const isActive = ['Queued', 'Extracting', 'Processing', 'Encoding'].includes(job.status);
+  const isDone = ['Cancelled', 'Failed'].includes(job.status);
+  const statusClass = 'status-' + job.status.toLowerCase();
+
+  const metaParts = [];
+  if (job.sourceWidth && job.sourceHeight) metaParts.push(statItem('resolution', `${job.sourceWidth}\u00d7${job.sourceHeight}`));
+  if (job.sourceFps) metaParts.push(statItem('fps', `${Math.round(job.sourceFps)} fps`));
+  if (job.sourceCodec) metaParts.push(statItem('codec', job.sourceCodec.toUpperCase()));
+  if (job.fileSizeBytes) metaParts.push(statItem('size', formatBytes(job.fileSizeBytes)));
+
+  let etaText = null;
+  let detailText = job.statusDetail || '';
+  const etaMatch = detailText.match(/ETA\s+(.+)$/i);
+  if (etaMatch) {
+    etaText = etaMatch[1].trim();
+    detailText = detailText.replace(/\s*\u00b7?\s*ETA\s+.+$/i, '');
+  }
+  const etaBadge = (isActive && etaText)
+    ? `<div class="eta-badge"><div class="eta-badge-value">${etaText}</div><div class="eta-badge-label">ETA</div></div>`
+    : '';
+
+  const thumb = job.thumbnailDataUri
+    ? `<img class="job-thumb" src="${job.thumbnailDataUri}" alt="">`
+    : `<div class="job-thumb job-thumb-placeholder"></div>`;
+
+  return `
+    <div class="job-card${isActive ? ' job-card-active' : ''}">
+      <div class="job-card-row">
+        ${thumb}
+        <div class="job-card-body">
+          <div class="job-card-top">
+            <div class="job-name">${name}</div>
+            <div class="job-status-group">
+              ${etaBadge}
+              <div class="job-status ${statusClass}">${job.status}</div>
+            </div>
+          </div>
+          ${metaParts.length ? `<div class="job-source-meta">${metaParts.join('')}</div>` : ''}
+          <div class="progress-bar-outer${isActive ? ' progress-bar-active' : ''}">
+            <div class="progress-bar-inner" style="width:${job.progressPercent || 0}%"></div>
+          </div>
+          <div class="job-meta">${detailText ? detailText : (job.progressPercent || 0) + '%'}${job.targetHeight ? ' &middot; target ' + job.targetHeight + 'p' : ' &middot; native 4x'}</div>
+          ${job.errorMessage ? `<div class="job-error">${job.errorMessage}</div>` : ''}
+          <div class="job-actions">
+            ${isActive ? `<button class="icon-btn danger" id="cancel-${job.id}">${ACTION_ICONS.cancel}Cancel</button>` : ''}
+            ${isDone ? `<button class="icon-btn" id="clear-${job.id}">${ACTION_ICONS.clear}Clear</button>` : ''}
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function onHistoryData_refresh() {
+  postToHost('getHistory');
+}
+
+function onHistoryData(historyList) {
+  const list = document.getElementById('historyList');
+  const empty = document.getElementById('historyEmpty');
+
+  if (!historyList || historyList.length === 0) {
+    list.innerHTML = '';
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+
+  list.innerHTML = historyList.map(renderHistoryCard).join('');
+
+  historyList.forEach(job => {
+    const playBtn = document.getElementById('play-' + job.id);
+    if (playBtn) playBtn.addEventListener('click', () => postToHost('playVideo', { path: job.outputPath }));
+
+    const folderBtn = document.getElementById('folder-' + job.id);
+    if (folderBtn) folderBtn.addEventListener('click', () => postToHost('openFolder', { path: job.outputPath }));
+
+    const clearBtn = document.getElementById('clearhist-' + job.id);
+    if (clearBtn) clearBtn.addEventListener('click', () => postToHost('removeHistoryEntry', { jobId: job.id }));
+  });
+}
+
+function renderHistoryCard(job) {
+  const name = job.inputPath ? job.inputPath.split('\\').pop() : '';
+  const elapsed = job.elapsed ? formatElapsed(job.elapsed) : '';
+  const thumb = job.thumbnailDataUri
+    ? `<img class="job-thumb" src="${job.thumbnailDataUri}" alt="">`
+    : `<div class="job-thumb job-thumb-placeholder"></div>`;
+
+  const detailParts = [];
+  if (job.outputWidth && job.outputHeight) detailParts.push(statItem('resolution', `${job.outputWidth}\u00d7${job.outputHeight}`));
+  if (job.outputFps) detailParts.push(statItem('fps', `${Math.round(job.outputFps)} fps`));
+  if (job.outputCodec) detailParts.push(statItem('codec', job.outputCodec.toUpperCase()));
+  if (job.outputFileSizeBytes) detailParts.push(statItem('size', formatBytes(job.outputFileSizeBytes)));
+
+  return `
+    <div class="job-card">
+      <div class="job-card-row">
+        ${thumb}
+        <div class="job-card-body">
+          <div class="job-card-top">
+            <div class="job-name">${name}</div>
+            <div class="job-status status-completed">${job.status}</div>
+          </div>
+          ${detailParts.length ? `<div class="job-source-meta">${detailParts.join('')}</div>` : ''}
+          <div class="job-meta">${elapsed ? 'Took ' + elapsed + ' &middot; ' : ''}${job.outputPath}</div>
+          <div class="job-actions">
+            <button class="icon-btn accent" id="play-${job.id}">${ACTION_ICONS.play}Play</button>
+            <button class="icon-btn" id="folder-${job.id}">${ACTION_ICONS.folder}Open Folder</button>
+            <button class="icon-btn" id="clearhist-${job.id}">${ACTION_ICONS.clear}Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function formatElapsed(elapsed) {
+  const parts = elapsed.split(':');
+  if (parts.length < 3) return elapsed;
+  const h = parseInt(parts[0], 10), m = parseInt(parts[1], 10), s = Math.round(parseFloat(parts[2]));
+  if (h > 0) return `${h}h ${m}m`;
+  if (m > 0) return `${m}m ${s}s`;
+  return `${s}s`;
+}
+
+postToHost('getQueue');
+</script>
 </body>
 </html>
