@@ -1,6 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+
+  <script>
+  window.googlefc = window.googlefc || {};
+  
+  // YOU define this function before Google's script loads
+  window.googlefc.controlledMessagingFunction = function(message) {
+    // Check your own session tracker
+    const hasClearedWall = sessionStorage.getItem('user_monetization_state');
+
+    console.log('heree...');
+    if (hasClearedWall === 'in_page_mode') {
+      // Tell Google NOT to show the offerwall
+      console.log('heree... message.proceed(false);  ');
+      message.proceed(false);
+      
+      // Load your in-page / in-article rewarded ad instead
+      initInPageRewardedAd();
+    } else {
+
+      console.log('heree... else  ');
+      // Allow Google's offerwall to show normally
+      message.proceed(true);
+      
+      // Mark that they've now hit the entry state
+      sessionStorage.setItem('user_monetization_state', 'entry_wall_active');
+    }
+  };
+</script>
+<!-- Then load your Google tag / P&M script here -->
+
   <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
 <!-- Stylesheets in your <head> -->
 <link href="https://vjs.zencdn.net/7.17.0/video-js.css" rel="stylesheet" />

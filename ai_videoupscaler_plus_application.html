@@ -346,6 +346,15 @@ select {
 .settings-card-title { font-size: 14px; font-weight: 600; color: var(--text); }
 .settings-card-desc { font-size: 12px; color: var(--text2); margin-top: 2px; }
 
+/* A settings-card that holds a dropdown (GPU selection) rather than a toggle needs a stacked layout
+   instead of the default row-with-a-switch-on-the-right one. */
+.settings-card-column { flex-direction: column; align-items: stretch; gap: 10px; }
+.settings-card-column select { width: 100%; }
+.settings-restart-note {
+  font-size: 12px; color: var(--amber); display: flex; align-items: center; gap: 6px;
+}
+.settings-restart-note.hidden { display: none; }
+
 .toggle-switch { position: relative; width: 46px; height: 26px; flex-shrink: 0; }
 .toggle-switch input { opacity: 0; width: 0; height: 0; }
 .toggle-slider {
@@ -570,6 +579,21 @@ select {
           </div>
 
           <div class="settings-section">
+            <div class="settings-section-title">Performance</div>
+            <div class="settings-card settings-card-column">
+              <div>
+                <div class="settings-card-title">GPU</div>
+                <div class="settings-card-desc">Choose which graphics card AI Video Upscaler+ uses for processing - useful if this PC has more than one (e.g. a laptop's built-in GPU plus a dedicated one).</div>
+              </div>
+              <select id="settingsGpuSelect"></select>
+              <div class="settings-restart-note hidden" id="gpuRestartNote">
+                <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" style="flex-shrink:0"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm.75 4v4.19l3 1.73-.75 1.3L7 10.25V5h1.75z"/></svg>
+                Restart AI Video Upscaler+ for this change to take effect.
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-section">
             <div class="settings-section-title">About</div>
             <div class="settings-card">
               <div>
@@ -743,6 +767,12 @@ function dispatchFromHost(action, payload) {
       if (toggle) toggle.checked = !!payload.enabled;
       break;
     }
+    case 'gpuDevices': onGpuDevices(payload); break;
+    case 'gpuDeviceSet': {
+      const note = document.getElementById('gpuRestartNote');
+      if (note) note.classList.remove('hidden');
+      break;
+    }
     case 'init_urls': break;
     case 'error':
       document.getElementById('selectVideoBtn').disabled = false;
@@ -808,7 +838,7 @@ document.querySelectorAll('.nav-item[data-view]').forEach(btn => {
     btn.classList.add('active');
     document.getElementById('view-' + btn.dataset.view).classList.add('active');
     if (btn.dataset.view === 'history') postToHost('getHistory');
-    if (btn.dataset.view === 'settings') postToHost('getAutostartState');
+    if (btn.dataset.view === 'settings') { postToHost('getAutostartState'); postToHost('getGpuDevices'); }
   });
 });
 
@@ -849,6 +879,37 @@ try { applyTheme(localStorage.getItem('theme') === 'light'); } catch {}
 
 document.getElementById('settingsAutostartToggle').addEventListener('change', (e) => {
   postToHost('setAutostart', { enabled: e.target.checked });
+});
+
+// -1 (or an index no longer present in the device list, e.g. a GPU that got unplugged) means "auto" -
+// the default device. Re-populated every time the Settings tab is opened, so a GPU that was
+// added/removed since the app started shows up without needing a page reload.
+function onGpuDevices(payload) {
+  const select = document.getElementById('settingsGpuSelect');
+  if (!select) return;
+
+  const devices = payload.devices || [];
+  const selectedIndex = typeof payload.selectedIndex === 'number' ? payload.selectedIndex : -1;
+
+  let html = `<option value="-1">Auto (recommended)</option>`;
+  html += devices.map(d => {
+    const vramText = d.approxVramBytes
+      ? ` — ~${(d.approxVramBytes / (1024 * 1024 * 1024)).toFixed(1)} GB`
+      : '';
+    return `<option value="${d.index}">${d.name}${vramText}</option>`;
+  }).join('');
+  select.innerHTML = html;
+
+  const hasSelected = selectedIndex >= 0 && devices.some(d => d.index === selectedIndex);
+  select.value = hasSelected ? String(selectedIndex) : '-1';
+
+  // A restart is required either way - see BridgeActions.HandleSetGpuDevice - but don't show the note
+  // just from opening Settings and seeing the current (already-applied) choice; only after the user
+  // actually changes it this session (gpuDeviceSet handles that in dispatchFromHost).
+}
+
+document.getElementById('settingsGpuSelect').addEventListener('change', (e) => {
+  postToHost('setGpuDevice', { index: parseInt(e.target.value, 10) });
 });
 
 let wsStatusInterval = setInterval(() => {
