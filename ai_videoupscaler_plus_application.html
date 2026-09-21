@@ -154,6 +154,7 @@ main { flex: 1; padding: 24px; overflow-y: auto; }
 }
 
 .primary-btn {
+  display: inline-flex; align-items: center; gap: 7px;
   background: var(--accent);
   color: white;
   border: none;
@@ -163,8 +164,10 @@ main { flex: 1; padding: 24px; overflow-y: auto; }
   font-size: 14px;
 }
 .primary-btn:hover { filter: brightness(1.1); }
+.primary-btn svg, .secondary-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
 
 .secondary-btn {
+  display: inline-flex; align-items: center; gap: 7px;
   background: var(--surface2);
   color: var(--text2);
   border: 1px solid var(--border);
@@ -191,13 +194,33 @@ main { flex: 1; padding: 24px; overflow-y: auto; }
   display: flex; flex-wrap: wrap; align-items: center;
   gap: 4px 14px; font-size: 12px; color: var(--text2); margin-top: 6px;
 }
-.stat-item { display: inline-flex; align-items: center; gap: 5px; }
-.stat-item svg { width: 13px; height: 13px; flex-shrink: 0; opacity: 0.85; }
+.stat-item { display: inline-flex; align-items: center; gap: 5px; color: inherit; }
+.stat-item svg { width: 13px; height: 13px; flex-shrink: 0; color: color-mix(in srgb, currentColor 80%, black); opacity: 0.9; }
 
 .preview-panel { margin-top: 12px; }
 .preview-panel.hidden { display: none; }
-.preview-controls { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+
+/* Single shared background across the three preview sections (thumbnail+info,
+   Trim/Rotate, Continue/Cancel), visually divided by a slim light-gray rule
+   instead of each section drawing its own separate boxed background. */
+.preview-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.preview-section { padding: 14px; }
+.preview-section + .preview-section {
+  border-top: 1px solid color-mix(in srgb, var(--border) 55%, #bbb);
+}
+.preview-section.source-info-card { margin-top: 0; border: none; border-radius: 0; background: transparent; }
+.preview-controls { display: flex; align-items: center; gap: 10px; margin-top: 0; }
+.pending-actions.preview-section { margin-top: 0; display: flex; gap: 10px; }
 .rotation-label { font-size: 13px; color: var(--text2); }
+.source-filepath {
+  font-size: 11px; color: var(--text3); margin-top: 6px;
+  word-break: break-all; font-family: Consolas, "Courier New", monospace;
+}
 .preview-panel label { display: block; font-size: 13px; color: var(--text2); margin: 14px 0 6px; }
 .preview-panel input[type="range"] { width: 100%; }
 
@@ -445,22 +468,25 @@ select {
             <div id="videoLoadingInfo" class="pending-loading hidden">Reading video info...</div>
 
             <div id="previewPanel" class="preview-panel hidden">
-              <div class="source-info-card">
-                <img id="previewThumb" class="source-thumb" src="" alt="">
-                <div class="source-info-text">
-                  <div class="pending-filename" id="previewFilename"></div>
-                  <div class="source-details" id="previewDetails"></div>
+              <div class="preview-card">
+                <div class="preview-section source-info-card">
+                  <img id="previewThumb" class="source-thumb" src="" alt="">
+                  <div class="source-info-text">
+                    <div class="pending-filename" id="previewFilename"></div>
+                    <div class="source-details" id="previewDetails"></div>
+                    <div class="source-filepath" id="previewFilePath"></div>
+                  </div>
                 </div>
-              </div>
 
-              <div class="preview-controls">
-                <button id="openEditorBtn" class="secondary-btn">Trim / Rotate</button>
-                <span id="editSummary" class="rotation-label">No edits</span>
-              </div>
+                <div class="preview-section preview-controls">
+                  <button id="openEditorBtn" class="secondary-btn"></button>
+                  <span id="editSummary" class="rotation-label">No edits</span>
+                </div>
 
-              <div class="pending-actions">
-                <button id="continueToSettingsBtn" class="primary-btn">Continue</button>
-                <button id="cancelPreviewBtn" class="secondary-btn">Cancel</button>
+                <div class="preview-section pending-actions">
+                  <button id="continueToSettingsBtn" class="primary-btn"></button>
+                  <button id="cancelPreviewBtn" class="secondary-btn"></button>
+                </div>
               </div>
             </div>
 
@@ -599,10 +625,10 @@ select {
 
 <script>
 const STAT_ICONS = {
-  resolution: '<svg viewBox="0 0 16 16"><path d="M2 2h5v1.5H3.5V7H2V2zm12 0v5h-1.5V3.5H9V2h5zM2 14V9h1.5v3.5H7V14H2zm12 0H9v-1.5h3.5V9H14v5z"/></svg>',
-  fps: '<svg viewBox="0 0 16 16"><path d="M6 4l6 4-6 4V4z"/></svg>',
+  resolution: '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h5v1.5H3.5V7H2V2zm12 0v5h-1.5V3.5H9V2h5zM2 14V9h1.5v3.5H7V14H2zm12 0H9v-1.5h3.5V9H14v5z"/></svg>',
+  fps: '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M6 4l6 4-6 4V4z"/></svg>',
   codec: '<svg viewBox="0 0 16 16"><rect x="1.2" y="3" width="13.6" height="10" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><line x1="4.3" y1="3" x2="4.3" y2="13" stroke="currentColor" stroke-width="1.3"/><line x1="11.7" y1="3" x2="11.7" y2="13" stroke="currentColor" stroke-width="1.3"/></svg>',
-  size: '<svg viewBox="0 0 16 16"><path d="M2 2h9l3 3v9H2V2zm2 2v3h6V4H4zm0 5v5h8V9H4z"/></svg>',
+  size: '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h9l3 3v9H2V2zm2 2v3h6V4H4zm0 5v5h8V9H4z"/></svg>',
   duration: '<svg viewBox="0 0 16 16"><circle cx="8" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 5v3.5l2.5 1.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>'
 };
 function statItem(iconKey, text) {
@@ -613,8 +639,53 @@ const ACTION_ICONS = {
   cancel: '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm3 9.3L9.3 12 8 10.7 6.7 12 5 10.3 6.3 9 5 7.7 6.7 6 8 7.3 9.3 6 11 7.7 9.7 9 11 10.3z"/></svg>',
   clear: '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M6 2h4v1h4v1.5H2V3h4V2zm-2 4h8l-.6 8.1a1 1 0 01-1 .9H6.6a1 1 0 01-1-.9L4 6z"/></svg>',
   play: '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3l8 5-8 5V3z"/></svg>',
-  folder: '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 4a1 1 0 011-1h3.5l1.5 1.5H13a1 1 0 011 1V12a1 1 0 01-1 1H3a1 1 0 01-1-1V4z"/></svg>'
+  folder: '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 4a1 1 0 011-1h3.5l1.5 1.5H13a1 1 0 011 1V12a1 1 0 01-1 1H3a1 1 0 01-1-1V4z"/></svg>',
+  continue: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h9.5M9 4l4.5 4L9 12"/></svg>',
+  trimRotate: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 1.5V11a2 2 0 002 2h6.5"/><path d="M1.5 5H11a2 2 0 012 2v6.5"/><circle cx="5" cy="12.5" r="1.4" fill="currentColor" stroke="none"/><circle cx="12.5" cy="5" r="1.4" fill="currentColor" stroke="none"/></svg>'
 };
+
+// ── Live per-second ETA countdown ───────────────────────────────────────
+// A fresh backend update sets the authoritative remaining-seconds value for
+// a job; this ticker then decrements the displayed badge by 1 every second
+// in between updates, instead of the badge sitting on a stale ETA string
+// until the next backend recalculation arrives.
+const etaCountdowns = {}; // jobId -> seconds remaining
+
+function formatEtaSeconds(totalSeconds) {
+  totalSeconds = Math.max(0, Math.round(totalSeconds));
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+  if (h >= 1) return `${h}h ${m}m`;
+  if (m >= 1) return `${m}m ${s}s`;
+  return `${s}s`;
+}
+
+function parseEtaSeconds(etaText) {
+  let total = 0;
+  const hMatch = etaText.match(/(\d+)\s*h/);
+  const mMatch = etaText.match(/(\d+)\s*m/);
+  const sMatch = etaText.match(/(\d+)\s*s/);
+  if (hMatch) total += parseInt(hMatch[1], 10) * 3600;
+  if (mMatch) total += parseInt(mMatch[1], 10) * 60;
+  if (sMatch) total += parseInt(sMatch[1], 10);
+  return total;
+}
+
+setInterval(() => {
+  for (const id in etaCountdowns) {
+    if (etaCountdowns[id] > 0) {
+      etaCountdowns[id] -= 1;
+      const el = document.getElementById('eta-value-' + id);
+      if (el) el.textContent = formatEtaSeconds(etaCountdowns[id]);
+    }
+  }
+}, 1000);
+
+// Icon-before-text on the Add Video preview panel's static buttons.
+document.getElementById('openEditorBtn').innerHTML = ACTION_ICONS.trimRotate + '<span>Trim / Rotate</span>';
+document.getElementById('continueToSettingsBtn').innerHTML = ACTION_ICONS.continue + '<span>Continue</span>';
+document.getElementById('cancelPreviewBtn').innerHTML = ACTION_ICONS.cancel + '<span>Cancel</span>';
 
 let ws = null;
 let wsReady = false;
@@ -839,6 +910,7 @@ function onVideoSelected(payload) {
   if (payload.duration) details.push(statItem('duration', formatDuration(payload.duration)));
   if (payload.fileSizeBytes) details.push(statItem('size', formatBytes(payload.fileSizeBytes)));
   document.getElementById('previewDetails').innerHTML = details.join('');
+  document.getElementById('previewFilePath').textContent = payload.path || '';
 
   updateEditSummary();
   document.getElementById('previewPanel').classList.remove('hidden');
@@ -979,6 +1051,7 @@ function renderQueue() {
 
 function onJobRemoved(payload) {
   jobs.delete(payload.jobId);
+  delete etaCountdowns[payload.jobId];
   renderQueue();
 }
 
@@ -1007,9 +1080,19 @@ function renderJobCard(job) {
     etaText = etaMatch[1].trim();
     detailText = detailText.replace(/\s*\u00b7?\s*ETA\s+.+$/i, '');
   }
+
+  if (isActive && etaText) {
+    // Fresh authoritative value from the backend resets the local countdown baseline.
+    etaCountdowns[job.id] = parseEtaSeconds(etaText);
+  } else {
+    delete etaCountdowns[job.id];
+  }
   const etaBadge = (isActive && etaText)
-    ? `<div class="eta-badge"><div class="eta-badge-value">${etaText}</div><div class="eta-badge-label">ETA</div></div>`
+    ? `<div class="eta-badge"><div class="eta-badge-value" id="eta-value-${job.id}">${formatEtaSeconds(etaCountdowns[job.id])}</div><div class="eta-badge-label">ETA</div></div>`
     : '';
+
+  const targetText = job.targetHeight ? `target ${job.targetHeight}p` : 'native 4x';
+  const mainDetail = detailText ? detailText : (job.progressPercent || 0) + '%';
 
   const thumb = job.thumbnailDataUri
     ? `<img class="job-thumb" src="${job.thumbnailDataUri}" alt="">`
@@ -1031,7 +1114,7 @@ function renderJobCard(job) {
           <div class="progress-bar-outer${isActive ? ' progress-bar-active' : ''}">
             <div class="progress-bar-inner" style="width:${job.progressPercent || 0}%"></div>
           </div>
-          <div class="job-meta">${detailText ? detailText : (job.progressPercent || 0) + '%'}${job.targetHeight ? ' &middot; target ' + job.targetHeight + 'p' : ' &middot; native 4x'}</div>
+          <div class="job-meta">${targetText}${mainDetail ? ' &middot; ' + mainDetail : ''}</div>
           ${job.errorMessage ? `<div class="job-error">${job.errorMessage}</div>` : ''}
           <div class="job-actions">
             ${isActive ? `<button class="icon-btn danger" id="cancel-${job.id}">${ACTION_ICONS.cancel}Cancel</button>` : ''}
