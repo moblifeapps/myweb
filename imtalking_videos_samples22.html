@@ -2,33 +2,49 @@
 <html lang="en">
 <head>
 
-
-  <script>
+<script>
   window.googlefc = window.googlefc || {};
   
-  // YOU define this function before Google's script loads
   window.googlefc.controlledMessagingFunction = function(message) {
-    // Check your own session tracker
-    const hasClearedWall = sessionStorage.getItem('user_monetization_state');
+    const monetizationState = sessionStorage.getItem('user_monetization_state');
 
-    console.log('heree...');
-    if (hasClearedWall === 'in_page_mode') {
-      // Tell Google NOT to show the offerwall
-      console.log('heree... message.proceed(false);  ');
+    if (monetizationState === 'in_page_mode') {
+      // 1. User has already cleared the wall in a previous session/page. Bypass P&M!
       message.proceed(false);
       
-      // Load your in-page / in-article rewarded ad instead
-      initInPageRewardedAd();
+      // Safe to load your outstream/in-page monetization
+      initInPageMonetization();
     } else {
-
-      console.log('heree... else  ');
-      // Allow Google's offerwall to show normally
+      // 2. First time or state hasn't been cleared yet. Let P&M run.
       message.proceed(true);
       
-      // Mark that they've now hit the entry state
-      sessionStorage.setItem('user_monetization_state', 'entry_wall_active');
+      // Listen for when the P&M modal is removed from the DOM (meaning user finished/closed it)
+      trackOfferwallDismissal();
     }
   };
+
+  // Helper function to detect when Google's offerwall iframe goes away
+  function trackOfferwallDismissal() {
+    const observer = new MutationObserver((mutations, obs) => {
+      const pmModal = document.querySelector('iframe[src*="fundingchoicesmessages"]');
+      if (!pmModal) {
+        // The offerwall container was removed from the page!
+        // Now we officially flag this user as cleared for subsequent pages.
+        sessionStorage.setItem('user_monetization_state', 'in_page_mode');
+        obs.disconnect();
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  function initInPageMonetization() {
+    console.log("Offerwall bypassed. Loading standard outstream video ads.");
+    // Put your outstream ad initialization logic here
+  }
 </script>
 <!-- Then load your Google tag / P&M script here -->
 
