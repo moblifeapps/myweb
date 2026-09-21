@@ -771,13 +771,22 @@ if (IS_DESKTOP) {
     .catch(() => {
       document.body.innerHTML = `
         <div style="padding:60px 20px;text-align:center;color:#a0a0a8;font-family:Segoe UI,sans-serif;max-width:480px;margin:0 auto;">
+          <img src="https://mlapplications.com/uploads/aivideoupscaler_icon.png" alt="AI Video Upscaler+" style="width:64px;height:64px;border-radius:14px;margin-bottom:18px;">
           <h2 style="color:#e2e8f0;font-size:20px;margin-bottom:12px;">Could not find AI Video Upscaler+ running on this PC</h2>
           <p style="margin-bottom:24px;">If the app is installed, click below to launch it, then try again. If not, you can get it from the Microsoft Store.</p>
-          <button id="launchAppBtn" style="background:#5b7fff;color:white;border:none;padding:12px 24px;border-radius:8px;font-size:14px;cursor:pointer;margin:0 8px 12px;">Open AI Video Upscaler+</button>
+          <button id="launchAppBtn" style="display:inline-flex;align-items:center;gap:8px;background:#5b7fff;color:white;border:none;padding:12px 24px;border-radius:8px;font-size:14px;cursor:pointer;margin:0 8px 12px;">
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M6.5 2H3a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1V9.5"/><path d="M9.5 2H14v4.5M14 2L7 9"/></svg>
+            Open AI Video Upscaler+
+          </button>
           <br>
-          <a href="https://apps.microsoft.com/detail/9P54F81N7R30?referrer=appbadge&cid=browserfallback&mode=full" target="_blank" rel="noopener" style="display:inline-block;background:#1e2333;color:#e2e8f0;border:1px solid #2a3148;padding:12px 24px;border-radius:8px;font-size:14px;text-decoration:none;margin:0 8px 12px;">Get it from Microsoft Store</a>
+          <a href="https://apps.microsoft.com/detail/9P54F81N7R30?referrer=appbadge&cid=browserfallback&mode=full" target="_blank" rel="noopener" style="display:inline-block;margin:4px 8px 12px;">
+            <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft" height="38">
+          </a>
           <br>
-          <button id="retryConnectBtn" style="background:transparent;color:#8a94a8;border:1px solid #2a3148;padding:10px 20px;border-radius:8px;font-size:13px;cursor:pointer;margin-top:8px;">I've opened it - try again</button>
+          <button id="retryConnectBtn" style="display:inline-flex;align-items:center;gap:7px;background:transparent;color:#8a94a8;border:1px solid #2a3148;padding:10px 20px;border-radius:8px;font-size:13px;cursor:pointer;margin-top:8px;">
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M13.5 8A5.5 5.5 0 113 5.5"/><path d="M13.5 2.5V6H10"/></svg>
+            I've opened it - try again
+          </button>
         </div>`;
 
       // Protocol activation - requires the desktop app to have registered "aivideoupscalerplus"
@@ -1081,14 +1090,22 @@ function renderJobCard(job) {
     detailText = detailText.replace(/\s*\u00b7?\s*ETA\s+.+$/i, '');
   }
 
-  if (isActive && etaText) {
-    // Fresh authoritative value from the backend resets the local countdown baseline.
-    etaCountdowns[job.id] = parseEtaSeconds(etaText);
+  // The badge stays mounted for the whole time a job is active, even across the odd status update
+  // that has no "ETA ..." suffix at all (extraction starting, a resume/interpolation-start message,
+  // etc.) - those used to make the badge disappear for one render and reappear on the next, which
+  // shifted the whole row's layout every time it blinked in and out. A fresh authoritative value
+  // resets the countdown baseline when one is present; otherwise the last known value (still ticking
+  // down locally) carries over, and a job that's never had one yet shows a neutral placeholder rather
+  // than no badge at all.
+  if (isActive) {
+    if (etaText) etaCountdowns[job.id] = parseEtaSeconds(etaText);
   } else {
     delete etaCountdowns[job.id];
   }
-  const etaBadge = (isActive && etaText)
-    ? `<div class="eta-badge"><div class="eta-badge-value" id="eta-value-${job.id}">${formatEtaSeconds(etaCountdowns[job.id])}</div><div class="eta-badge-label">ETA</div></div>`
+  const hasEtaValue = isActive && Object.prototype.hasOwnProperty.call(etaCountdowns, job.id);
+  const etaDisplayText = hasEtaValue ? formatEtaSeconds(etaCountdowns[job.id]) : '––';
+  const etaBadge = isActive
+    ? `<div class="eta-badge"><div class="eta-badge-value" id="eta-value-${job.id}">${etaDisplayText}</div><div class="eta-badge-label">ETA</div></div>`
     : '';
 
   const targetText = job.targetHeight ? `target ${job.targetHeight}p` : 'native 4x';
