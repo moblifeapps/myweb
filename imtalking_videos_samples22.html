@@ -1,37 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <script>
   window.googlefc = window.googlefc || {};
   
   window.googlefc.controlledMessagingFunction = function(message) {
+    console.log("[P&M Hook] controlledMessagingFunction triggered by Google framework.");
+
+    // Check your own session tracker
     const monetizationState = sessionStorage.getItem('user_monetization_state');
+    console.log("[P&M Hook] Current sessionStorage state is:", monetizationState);
 
     if (monetizationState === 'in_page_mode') {
-      // 1. User has already cleared the wall in a previous session/page. Bypass P&M!
+      console.log("[P&M Decision] State is 'in_page_mode'. Bypassing P&M offerwall via message.proceed(false).");
+      
+      // Tell Google NOT to show the offerwall
       message.proceed(false);
       
-      // Safe to load your outstream/in-page monetization
+      // Load your in-page / in-article outstream video ad instead
       initInPageMonetization();
     } else {
-      // 2. First time or state hasn't been cleared yet. Let P&M run.
+      console.log("[P&M Decision] State is NOT in_page_mode (First visit or active wall). Allowing offerwall via message.proceed(true).");
+      
+      // Allow Google's offerwall to show normally
       message.proceed(true);
       
-      // Listen for when the P&M modal is removed from the DOM (meaning user finished/closed it)
+      // Mark that they've now hit the entry state for this page view
+      sessionStorage.setItem('user_monetization_state', 'entry_wall_active');
+      console.log("[Session Storage] Updated state to: 'entry_wall_active'");
+
+      // Start watching for when the user closes/completes the offerwall iframe
       trackOfferwallDismissal();
     }
   };
 
   // Helper function to detect when Google's offerwall iframe goes away
   function trackOfferwallDismissal() {
+    console.log("[Observer] Setting up MutationObserver to watch for P&M offerwall dismissal...");
+    
+    let iframeDetected = false;
+
     const observer = new MutationObserver((mutations, obs) => {
       const pmModal = document.querySelector('iframe[src*="fundingchoicesmessages"]');
-      if (!pmModal) {
-        // The offerwall container was removed from the page!
-        // Now we officially flag this user as cleared for subsequent pages.
-        sessionStorage.setItem('user_monetization_state', 'in_page_mode');
-        obs.disconnect();
+      
+      if (pmModal) {
+        if (!iframeDetected) {
+          iframeDetected = true;
+          console.log("[Observer] P&M offerwall iframe detected in the DOM and active.");
+        }
+      } else {
+        if (iframeDetected) {
+          // The iframe was present and now it has been removed (user closed or finished it)
+          console.log("[Observer] P&M offerwall iframe has been REMOVED from the DOM (Closed/Finished).");
+          
+          // Now we officially flag this user as cleared for subsequent pages
+          sessionStorage.setItem('user_monetization_state', 'in_page_mode');
+          console.log("[Session Storage] State successfully updated to: 'in_page_mode'. Ready for next page view!");
+          
+          obs.disconnect();
+        }
       }
     });
 
@@ -42,11 +69,13 @@
   }
 
   function initInPageMonetization() {
-    console.log("Offerwall bypassed. Loading standard outstream video ads.");
+    console.log("[Ad Engine] Initializing standard outstream video ad unit (Offerwall successfully avoided on this page).");
     // Put your outstream ad initialization logic here
   }
 </script>
 <!-- Then load your Google tag / P&M script here -->
+
+
 
   <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
 <!-- Stylesheets in your <head> -->
