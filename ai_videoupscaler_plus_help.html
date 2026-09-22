@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
+
+<!-- Standard GPT script required for GAM & Privacy/Messaging tools -->
+
+  <script>
+  window.googletag = window.googletag || {cmd: []};
+  googletag.cmd.push(function() {
+
+
+     //const slot = googletag.defineOutOfPageSlot(
+//      '/423204242/my_siderail_code_adx',
+//      googletag.enums.OutOfPageFormat.RIGHT_SIDE_RAIL
+//    );
+// 2. Only add service if the browser supports Side Rails (slot !== null)
+    //if (slot) {
+//      window.sideRailSlot = slot.addService(googletag.pubads());
+//    }
+
+    // 4. Global PubAds Settings (Fixes collapseDiv warning)
+    googletag.pubads().collapseEmptyDivs(true); // Replaces invalid setConfig collapseDiv
+
+
+    //var anchorSlot = googletag.defineOutOfPageSlot(
+//      '/423204242/my_bottom_anchor_desktop_code',
+//      googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
+//    );
+
+//    if (anchorSlot) {
+//      anchorSlot.addService(googletag.pubads());
+//    }
+    //googletag.pubads().enableSingleRequest();
+
+
+
+googletag.enableServices();
+
+
+    ///if (anchorSlot) {
+//      googletag.display(anchorSlot);
+//    }
+  });
+</script>
+
+<link rel="preload" as="script" href="https://live.demand.supply/up.js"><script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
+
+
+
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AI Video Upscaler+ Help &amp; Reference</title>
+<meta name="description" content="Reference guide for AI Video Upscaler+: what every Processing Option does, which GPUs are supported, where your videos are saved, and how your data stays private."/>
+<meta name="keywords" content="AI Video Upscaler+ help, AI Video Upscaler+ FAQ, GFPGAN explained, Real-ESRGAN explained, DirectML GPU support, video codec HEVC H264"/>
+<meta name="author" content="mlapplications.com"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="AI Video Upscaler+ Help &amp; Reference"/>
+<meta property="og:description" content="Everything each AI Video Upscaler+ setting does, where your files live, and how privacy works."/>
+<meta property="og:image" content="https://mlapplications.com/uploads/aivideoupscaler_icon.png"/>
+<meta property="og:url" content="https://mlapplications.com/ai_videoupscaler_plus_help.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="AI Video Upscaler+ Help &amp; Reference"/>
+<meta name="twitter:description" content="Everything each AI Video Upscaler+ setting does, where your files live, and how privacy works."/>
+<link rel="canonical" href="https://mlapplications.com/ai_videoupscaler_plus_help.html"/>
+<style>
+:root {
+  --bg:          #0f1117;
+  --surface:     #181c27;
+  --surface2:    #1e2333;
+  --border:      #2a3148;
+  --accent:      #5b7fff;
+  --accent-glow: rgba(91,127,255,.18);
+  --green:       #3ecf82;
+  --text:        #e2e8f0;
+  --text2:       #8a94a8;
+  --text3:       #4e5a72;
+  --radius:      10px;
+  --mono:        'Cascadia Code','Fira Code','Consolas',monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter','Segoe UI',system-ui,sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh;
+}
+a { color: inherit; }
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 34px; height: 96px;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+}
+.topbar-brand { display: flex; align-items: center; gap: 16px; text-decoration: none; }
+.topbar-logo img { width: 64px; height: 64px; display: block; border-radius: 12px; }
+.topbar-title { font-size: 22px; font-weight: 800; letter-spacing: -.5px; line-height: 1.15; }
+.topbar-sub   { font-size: 13px; color: var(--text2); margin-top: 2px; }
+.btn-store img { width: 160px; height: auto; display: block; border-radius: 6px; }
+
+.page-shell { display: flex; align-items: flex-start; max-width: 1180px; margin: 0 auto; }
+.sidebar {
+  width: 220px; flex-shrink: 0;
+  position: sticky; top: 96px;
+  padding: 24px 12px; display: flex; flex-direction: column; gap: 2px;
+  height: calc(100vh - 96px); overflow-y: auto;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 8px;
+  font-size: 13px; font-weight: 500; color: var(--text2);
+  text-decoration: none; transition: all .15s; border: 1px solid transparent;
+}
+.nav-item:hover { background: var(--surface2); color: var(--text); }
+.nav-item.active {
+  background: var(--accent-glow); border-color: rgba(91,127,255,.3);
+  color: var(--accent); font-weight: 600;
+}
+.nav-icon { flex-shrink: 0; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; }
+.nav-icon svg { width: 17px; height: 17px; }
+.nav-divider { height: 1px; background: var(--border); margin: 10px 4px; }
+.sidebar-footer {
+  margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px; text-decoration: none;
+  color: var(--text2); font-size: 11px; padding: 12px 8px 0;
+}
+.sidebar-footer img { width: 28px; height: 28px; border-radius: 6px; object-fit: contain; }
+.sidebar-footer:hover { color: var(--text); }
+
+/* second-level "on this page" nav */
+.subnav { display: flex; flex-direction: column; gap: 1px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
+.subnav-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); padding: 0 12px 8px; }
+.subnav a { font-size: 12.5px; color: var(--text2); text-decoration: none; padding: 6px 12px; border-radius: 6px; }
+.subnav a:hover { background: var(--surface2); color: var(--text); }
+
+main { flex: 1; padding: 40px 40px 80px; max-width: 760px; }
+.page-title { font-size: 30px; font-weight: 800; letter-spacing: -.6px; margin-bottom: 10px; }
+.page-lede  { font-size: 15px; color: var(--text2); line-height: 1.7; margin-bottom: 44px; max-width: 640px; }
+
+.info-section { margin-bottom: 40px; scroll-margin-top: 112px; }
+.info-section h2 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+.info-section .section-sub { font-size: 13px; color: var(--text2); margin-bottom: 16px; line-height: 1.6; }
+.info-section p  { font-size: 13.5px; color: var(--text2); line-height: 1.75; margin-bottom: 8px; }
+.info-section ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 7px; margin: 8px 0; }
+.info-section ul li { font-size: 13.5px; color: var(--text2); line-height: 1.6; padding-left: 16px; position: relative; }
+.info-section ul li::before { content: '·'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+.info-section strong { color: var(--text); font-weight: 600; }
+.info-section code { color: var(--accent); font-family: var(--mono); font-size: 12px; }
+
+.info-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; }
+.info-card-title { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+.info-card p { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin: 0; }
+
+.faq-item { border-bottom: 1px solid var(--border); padding: 16px 0; }
+.faq-item:last-child { border-bottom: none; }
+.faq-q { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+.faq-a { font-size: 13.5px; color: var(--text2); line-height: 1.7; }
+
+footer { text-align: center; padding: 28px; color: var(--text3); font-size: 12px; border-top: 1px solid var(--border); }
+footer a { color: var(--text2); }
+
+@media (max-width: 820px) {
+  .page-shell { flex-direction: column; }
+  .sidebar {
+    position: static; width: 100%; height: auto; flex-direction: row;
+    overflow-x: auto; padding: 12px 16px; border-bottom: 1px solid var(--border);
+  }
+  .sidebar-footer, .nav-divider, .subnav { display: none; }
+  main { padding: 28px 20px 60px; }
+  .topbar { padding: 0 18px; }
+  .btn-store { display: none; }
+}
+</style>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-87MTDXTF59');
+</script>
+<!--<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7710644763832143" crossorigin="anonymous"></script>-->
+</head>
+<body>
+
+<header class="topbar">
+  <a class="topbar-brand" href="ai_videoupscaler_plus_how_to.html">
+    <div class="topbar-logo"><img src="https://mlapplications.com/uploads/aivideoupscaler_icon.png" alt="AI Video Upscaler+ logo" width="64" height="64"/></div>
+    <div>
+      <div class="topbar-title">AI Video Upscaler+</div>
+      <div class="topbar-sub">Help &amp; Reference</div>
+    </div>
+  </a>
+  <a class="btn-store" href="https://apps.microsoft.com/detail/9P54F81N7R30?referrer=appbadge&cid=help&mode=full" target="_blank" rel="noopener">
+    <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft"/>
+  </a>
+</header>
+
+<div class="page-shell">
+  <nav class="sidebar" aria-label="AI Video Upscaler+ documentation">
+    <a class="nav-item" href="ai_videoupscaler_plus_how_to.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+      <span>How-To Guide</span>
+    </a>
+    <a class="nav-item" href="ai_videoupscaler_plus_videos_samples.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m22 8-5 4 5 4V8Z"/></svg></span>
+      <span>Video Samples</span>
+    </a>
+    <a class="nav-item active" href="ai_videoupscaler_plus_help.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.5 2.5 0 0 1 4.8 1c0 1.5-2.3 1.8-2.3 3.4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg></span>
+      <span>Help &amp; Reference</span>
+    </a>
+    <a class="nav-item" href="ai_videoupscaler_plus_tips_and_tricks.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 2.6-1.4 4.9-3.5 6.2V17a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1.8A7 7 0 0 1 12 2z"/><path d="M9 21h6"/><path d="M9 18h6"/></svg></span>
+      <span>Tips &amp; Tricks</span>
+    </a>
+
+    <div class="nav-divider"></div>
+
+    <a class="nav-item" href="ai_videoupscaler_plus_privacy.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+      <span>Privacy</span>
+    </a>
+    <a class="nav-item" href="ai_videoupscaler_plus_contactus.html">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg></span>
+      <span>Contact</span>
+    </a>
+
+    <div class="nav-divider"></div>
+    <a class="nav-item" href="aivideoupscalerplus://">
+      <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4 6 12l-2 6 6-2 8-8"/><path d="M14 4l4 4M10 16l-4 4"/></svg></span>
+      <span>Open the App</span>
+    </a>
+
+    <div class="subnav">
+      <div class="subnav-label">On this page</div>
+      <a href="#processing-options">Processing Options</a>
+      <a href="#gpu-support">GPU Support</a>
+      <a href="#library">Your Library</a>
+      <a href="#privacy">Privacy &amp; Data</a>
+      <a href="#faq">FAQ</a>
+    </div>
+
+    <a class="sidebar-footer" href="https://mlapplications.com/">
+      <img src="https://mlapplications.com/uploads/logo-big_2.webp" alt="mlapplications"/>
+      <span>mlapplications.com</span>
+    </a>
+  </nav>
+<div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
+<!-- old mobile sticky top code -->
+
+  <main>
+    <h1 class="page-title">Help &amp; Reference</h1>
+    <p class="page-lede">What every option does, which GPUs are supported, where your files go, and how AI Video Upscaler+ handles your data.</p>
+
+    <div class="info-section" id="processing-options">
+      <h2>Processing Options Explained</h2>
+      <div class="info-card">
+        <div class="info-card-title">Target Resolution</div>
+        <p>The output resolution you're upscaling to — 1440p, 2K, 4K or 8K. The app can add real, AI-generated detail up to roughly 4× the source's native resolution; going higher automatically switches to a tiled processing path so very large targets stay stable.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Target Frame Rate</div>
+        <p>Raises the video's fps — for example 30 fps to 45 or 60 fps — by generating new, genuinely interpolated in-between frames with AI, rather than simply duplicating existing ones. Leave it unchanged to only upscale resolution.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Face Restoration (GFPGAN)</div>
+        <p>Applies an AI face-restoration pass to every frame for noticeably sharper, cleaner faces. Adds processing time, and is most worthwhile on videos where faces are a focal point.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">GPU Device</div>
+        <p>Choose which graphics card handles the processing, if your PC has more than one — for example an integrated GPU and a dedicated one.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Video Codec</div>
+        <p><strong>Auto</strong> (default) uses H.264 for most videos, but switches to HEVC (H.265) automatically for very large outputs (8K and above), since H.264 decoding often isn't reliably supported at those resolutions. You can also force <strong>Always H.264</strong> for maximum player compatibility, or <strong>Always HEVC</strong> for smaller files at high resolution.</p>
+      </div>
+    </div>
+
+    <div class="info-section" id="gpu-support">
+      <h2>GPU Support</h2>
+      <p>AI Video Upscaler+ runs its AI models through Microsoft's DirectML and ONNX Runtime — the same official Windows AI acceleration path used across GPU vendors. In practice this means:</p>
+      <ul>
+        <li>Any GPU that supports <strong>DirectX 12 (D3D12)</strong> can run the app — including NVIDIA, AMD, and Intel graphics.</li>
+        <li>No vendor-specific SDK (like CUDA) is required — you don't need an NVIDIA card specifically.</li>
+        <li>The app also runs on lower-end PCs, including ones with only integrated graphics — processing simply takes longer on less powerful hardware.</li>
+      </ul>
+    </div>
+
+    <div class="info-section" id="library">
+      <h2>Accessing Your Video Library</h2>
+      <p>Every video you upscale is saved automatically and listed in the <strong>Projects</strong> tab inside the app, along with the settings used to create it. Click <strong>Refresh</strong> there to load your history, or use <strong>Open Folder</strong> after any job to jump straight to the file on disk.</p>
+      <p>Finished videos are saved locally to <code>C:\Users\[you]\Videos\MLApplications Upscaled\</code> and never uploaded anywhere.</p>
+    </div>
+
+    <div class="info-section" id="privacy">
+      <h2>Privacy &amp; Data</h2>
+      <div class="section-sub">AI Video Upscaler+ processes everything locally on your machine. No video is sent to any cloud or external server.</div>
+      <ul>
+        <li>Source videos are read directly from wherever you selected them — never copied to us.</li>
+        <li>Temporary working frames are written to a local working folder and deleted once a job finishes.</li>
+        <li>All AI models ship inside the app itself — nothing further is downloaded to process a video, and the app works fully offline.</li>
+        <li>The only network activity is a periodic check for a local connection certificate — no analytics, no telemetry.</li>
+      </ul>
+    </div>
+
+    <div class="info-section" id="faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <div class="faq-q">Does AI Video Upscaler+ need an internet connection?</div>
+        <div class="faq-a">No — every AI model is bundled with the app. You can disconnect entirely and processing still works exactly the same.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do I need an NVIDIA graphics card?</div>
+        <div class="faq-a">No. Any GPU that supports Microsoft's DirectML — NVIDIA, AMD, or Intel — is supported. The app also runs on integrated graphics, just more slowly.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Why did my upscaled 8K video not play in my video player?</div>
+        <div class="faq-a">Some players and hardware decoders don't reliably support H.264 at 8K. Set <strong>Video codec</strong> to Auto or Always HEVC in Settings — HEVC has far broader real-world 8K playback support.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is AI Video Upscaler+ really free?</div>
+        <div class="faq-a">Yes — the full app, with no feature restrictions, no watermark, and no subscription.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer>© 2026 AI Video Upscaler+ · <a href="https://mlapplications.com/">mlapplications.com</a></footer>
+<!-- old --adsense-- code -->
+<!--<div data-ad="mlapplications.com_sticky_video_myvid" data-devices="m:1,t:1,d:1"   class="demand-supply"></div>-->
+
+
+<!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code -->
+<script>
+//  googletag.cmd.push(function() {
+    // Pass slot objects directly to display()
+ //   if (window.offerwallSlot) {
+   //   googletag.display(window.offerwallSlot);
+  //  }
+    // Only call display if the slot was successfully created
+//    if (window.sideRailSlot) {
+//      googletag.display(window.sideRailSlot);
+//    }
+//  });
+</script>
+</body>
+
+</html>
