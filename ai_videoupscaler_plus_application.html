@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -591,6 +590,17 @@ select {
                 Restart AI Video Upscaler+ for this change to take effect.
               </div>
             </div>
+            <div class="settings-card settings-card-column">
+              <div>
+                <div class="settings-card-title">Video codec</div>
+                <div class="settings-card-desc">Very high output resolutions (like 8K) can fail to play back in some players when encoded as H.264 - HEVC has far more reliable support at those sizes. Auto only switches to HEVC once the output is large enough to need it.</div>
+              </div>
+              <select id="settingsCodecSelect">
+                <option value="Auto">Auto (H.264, HEVC for very large resolutions)</option>
+                <option value="AlwaysH264">Always H.264 (most compatible)</option>
+                <option value="AlwaysHevc">Always HEVC (best for very large resolutions)</option>
+              </select>
+            </div>
           </div>
 
           <div class="settings-section">
@@ -773,6 +783,12 @@ function dispatchFromHost(action, payload) {
       if (note) note.classList.remove('hidden');
       break;
     }
+    case 'videoCodecMode': {
+      const select = document.getElementById('settingsCodecSelect');
+      if (select) select.value = payload.mode || 'Auto';
+      break;
+    }
+    case 'videoCodecModeSet': break; // no restart needed - takes effect on the next job's encode step
     case 'init_urls': break;
     case 'error':
       document.getElementById('selectVideoBtn').disabled = false;
@@ -838,7 +854,7 @@ document.querySelectorAll('.nav-item[data-view]').forEach(btn => {
     btn.classList.add('active');
     document.getElementById('view-' + btn.dataset.view).classList.add('active');
     if (btn.dataset.view === 'history') postToHost('getHistory');
-    if (btn.dataset.view === 'settings') { postToHost('getAutostartState'); postToHost('getGpuDevices'); }
+    if (btn.dataset.view === 'settings') { postToHost('getAutostartState'); postToHost('getGpuDevices'); postToHost('getVideoCodecMode'); }
   });
 });
 
@@ -910,6 +926,10 @@ function onGpuDevices(payload) {
 
 document.getElementById('settingsGpuSelect').addEventListener('change', (e) => {
   postToHost('setGpuDevice', { index: parseInt(e.target.value, 10) });
+});
+
+document.getElementById('settingsCodecSelect').addEventListener('change', (e) => {
+  postToHost('setVideoCodecMode', { mode: e.target.value });
 });
 
 let wsStatusInterval = setInterval(() => {
