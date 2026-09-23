@@ -4,52 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Video Upscaler+</title>
-
-  <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
-
-<!-- Standard GPT script required for GAM & Privacy/Messaging tools -->
-
-  <script>
-  window.googletag = window.googletag || {cmd: []};
-  googletag.cmd.push(function() {
-
-
-     //const slot = googletag.defineOutOfPageSlot(
-//      '/423204242/my_siderail_code_adx',
-//      googletag.enums.OutOfPageFormat.RIGHT_SIDE_RAIL
-//    );
-// 2. Only add service if the browser supports Side Rails (slot !== null)
-    //if (slot) {
-//      window.sideRailSlot = slot.addService(googletag.pubads());
-//    }
-
-    // 4. Global PubAds Settings (Fixes collapseDiv warning)
-    googletag.pubads().collapseEmptyDivs(true); // Replaces invalid setConfig collapseDiv
-
-
-    //var anchorSlot = googletag.defineOutOfPageSlot(
-//      '/423204242/my_bottom_anchor_desktop_code',
-//      googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
-//    );
-
-//    if (anchorSlot) {
-//      anchorSlot.addService(googletag.pubads());
-//    }
-    //googletag.pubads().enableSingleRequest();
-
-
-
-googletag.enableServices();
-
-
-    ///if (anchorSlot) {
-//      googletag.display(anchorSlot);
-//    }
-  });
-</script>
-
-<link rel="preload" as="script" href="https://live.demand.supply/up.js"><script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
-
 <style>
 /* ══════════════════════════════════════════════════════════════════
    THEME TOKENS - same variable names/values as mlapplications.com's other apps.
@@ -70,6 +24,11 @@ googletag.enableServices();
   --text2:       #8a94a8;
   --text3:       #4e5a72;
   --radius:      10px;
+  /* Dark theme only: the selected sidebar item sits flush against the main content area, which is
+     var(--bg) - matching that (instead of the lighter var(--surface2) every other highlighted/hover
+     state still uses) makes the active tab read as "cut into" the same black rather than looking like
+     a separate lighter panel. */
+  --nav-active-bg: var(--bg);
 }
 html.light-theme {
   --bg:          #f0f2f8;
@@ -84,6 +43,8 @@ html.light-theme {
   --text:        #1a1f35;
   --text2:       #4a5278;
   --text3:       #8891b0;
+  /* Unchanged from before - this request was specifically for the dark theme. */
+  --nav-active-bg: var(--surface2);
 }
 
 * { box-sizing: border-box; }
@@ -167,7 +128,7 @@ html, body {
   width: 100%;
 }
 .nav-item:hover { background: var(--surface2); color: var(--text); }
-.nav-item.active { background: var(--surface2); color: var(--text); border-left-color: var(--accent); padding-left: 17px; }
+.nav-item.active { background: var(--nav-active-bg); color: var(--text); border-left-color: var(--accent); padding-left: 17px; }
 .nav-icon { font-size: 15px; width: 18px; text-align: center; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
 .nav-icon svg { width: 16px; height: 16px; display: block; }
 
@@ -278,6 +239,13 @@ main { flex: 1; padding: 24px; overflow-y: auto; }
 .pending-filename { font-size: 13px; color: var(--text2); margin-bottom: 4px; word-break: break-all; }
 .pending-settings label { display: block; font-size: 13px; color: var(--text2); margin: 12px 0 6px; }
 .pending-settings select, .pending-settings input[type="range"] { width: 100%; }
+.pending-settings-title { font-size: 15px; font-weight: 600; color: var(--text); margin-top: 16px; }
+.pending-settings-note {
+  font-size: 12.5px; color: var(--text2); background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 8px 10px; margin: 10px 0 0;
+}
+.pending-settings-note.hidden { display: none; }
+#resolutionSettingsGroup.hidden { display: none; }
 
 select {
   background: var(--bg); color: var(--text);
@@ -445,15 +413,6 @@ select {
 .contact-card-icon svg { width: 17px; height: 17px; }
 .contact-card-text { font-size: 14px; font-weight: 600; }
 </style>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-87MTDXTF59');
-</script>
-<!--<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7710644763832143" crossorigin="anonymous"></script>-->
-
 </head>
 <body>
   <div class="app-shell">
@@ -477,8 +436,11 @@ select {
     <div class="app-layout">
       <aside class="sidebar">
         <nav class="sidebar-nav">
-          <button class="nav-item active" data-view="queue">
+          <button class="nav-item active" data-view="queue" data-mode="full">
             <span class="nav-icon"><svg viewBox="-15 -15 115 115" fill="currentColor"><path d="m -2.0586,51.9066 c 1.625,0 2.9414,-1.3164 2.9414,-2.9414 v -0.14453 c 0,-1.9453 1.582,-3.5312 3.5312,-3.5312 h 0.92188 c 1.625,0 2.9414,-1.3164 2.9414,-2.9414 0,-1.625 -1.3164,-2.9414 -2.9414,-2.9414 H 4.414 c -5.1875,0 -9.4102,4.2227 -9.4102,9.4102 v 0.14453 c 0,1.625 1.3164,2.9414 2.9414,2.9414 z m 38.8242,9.402 c -1.625,0 -2.9414,1.3164 -2.9414,2.9414 v 10.457 c 0,0.14453 -0.0078,0.28906 -0.02344,0.42969 -0.19141,1.6133 0.95703,3.0781 2.5703,3.2695 0.11719,0.01563 0.23828,0.01953 0.35156,0.01953 1.4688,0 2.7383,-1.0977 2.918,-2.5938 0.04297,-0.37109 0.06641,-0.75 0.06641,-1.125 v -10.457 c 0,-1.625 -1.3164,-2.9414 -2.9414,-2.9414 z m -35.8828,8.254 v -11.234 c 0,-1.625 -1.3164,-2.9414 -2.9414,-2.9414 -1.625,0 -2.9414,1.3164 -2.9414,2.9414 v 11.234 c 0,1.625 1.3164,2.9414 2.9414,2.9414 1.625,0 2.9414,-1.3164 2.9414,-2.9414 z m 29.4378,8.672 h -0.04297 -11.219 c -1.625,0 -2.9414,1.3164 -2.9414,2.9414 0,1.625 1.3164,2.9414 2.9414,2.9414 h 11.234 0.04687 c 1.6172,-0.01172 2.9219,-1.3242 2.9219,-2.9414 0,-1.6172 -1.3164,-2.9414 -2.9414,-2.9414 z m -20.621,0 H 4.4144 c -1.1094,0 -2.1328,-0.50781 -2.8086,-1.3906 -0.98828,-1.2891 -2.832,-1.5352 -4.125,-0.54688 -1.2891,0.98828 -1.5352,2.832 -0.55078,4.1211 1.7969,2.3516 4.5234,3.6992 7.4805,3.6992 h 5.2852 c 1.625,0 2.9414,-1.3164 2.9414,-2.9414 0,-1.625 -1.3164,-2.9414 -2.9414,-2.9414 z M 75.7926,-10 h -41.523 c -1.6055,0 -3.1484,0.28516 -4.5742,0.8125 -5.1406,1.8789 -8.8125,6.8125 -8.8125,12.602 v 36 h -6.1875 c -1.625,0 -2.9414,1.3164 -2.9414,2.9414 0,1.625 1.3164,2.9414 2.9414,2.9414 h 6.2031 c 0.24609,7.1875 6.1523,12.941 13.398,12.941 h 41.406 c 5.7891,0 10.727,-3.6719 12.602,-8.8125 C 88.82794,48 89.117,46.457 89.117,44.8516 V 3.3246 c 0,-7.3477 -5.9766,-13.324 -13.324,-13.324 z m -30.125,47.992 c -0.56641,0.57031 -1.3125,0.85938 -2.0586,0.85938 -0.74609,0 -1.4922,-0.28516 -2.0664,-0.85938 -1.1367,-1.1367 -1.1367,-2.9844 0,-4.125 l 21.414,-21.414 h -12.855 c -1.6094,0 -2.9141,-1.3047 -2.9141,-2.9141 0,-1.6094 1.3047,-2.9141 2.9141,-2.9141 h 19.766 c 1.6094,0 2.9141,1.3047 2.9141,2.9141 v 20.027 c 0,1.6094 -1.3047,2.9141 -2.9141,2.9141 -1.6094,0 -2.9141,-1.3047 -2.9141,-2.9141 v -12.859 z"/></svg></span> Upscale
+          </button>
+          <button class="nav-item" data-view="queue" data-mode="frameonly">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg></span> Frame Rate +
           </button>
           <button class="nav-item" data-view="history">
             <span class="nav-icon"><svg viewBox="0 0 100 100" fill="currentColor"><path d="M 50,12.227335 C 70.86012,12.227335 87.772665,29.13988 87.772665,50 87.772665,70.86012 70.86012,87.772665 50,87.772665 29.13988,87.772665 12.227335,70.86012 12.227335,50 12.227335,29.13988 29.13988,12.227335 50,12.227335 Z m 0,7.556789 C 33.313032,19.784124 19.784124,33.313032 19.784124,50 19.784124,66.686968 33.313032,80.215876 50,80.215876 66.686968,80.215876 80.215876,66.686968 80.215876,50 80.215876,33.313032 66.686968,19.784124 50,19.784124 Z m -14.490988,30.670411 9.424556,9.424556 c 1.373756,1.373757 3.602445,1.373757 4.976202,0 6.750355,-6.750355 7.871467,-8.019219 14.590241,-14.804538 1.36699,-1.373757 1.360222,-3.595678 -0.01353,-4.962667 -1.373757,-1.36699 -3.595678,-1.360222 -4.962667,0.01353 L 47.416029,52.409149 40.485214,45.478333 c -1.373757,-1.373756 -3.602446,-1.373756 -4.976202,0 -1.373757,1.373757 -1.373757,3.602446 0,4.976202 z M 48.417586,22.44479 v 2.986624 c 0,0.874106 0.708308,1.582414 1.582414,1.582414 0.874106,0 1.582414,-0.708308 1.582414,-1.582414 V 22.44479 c 0,-0.874106 -0.708308,-1.582414 -1.582414,-1.582414 -0.874106,0.0011 -1.582414,0.709436 -1.582414,1.582414 z m 19.947666,6.952246 -2.112517,2.112517 c -0.618078,0.618078 -0.618078,1.619634 0,2.237712 0.618078,0.618078 1.619634,0.618078 2.237712,0 l 2.112517,-2.112517 c 0.618078,-0.618078 0.618078,-1.619634 0,-2.237712 -0.618078,-0.618078 -1.619634,-0.618078 -2.237712,0 z m 2.237712,38.968216 -2.112517,-2.112517 c -0.618078,-0.618078 -1.619634,-0.618078 -2.237712,0 -0.618078,0.618078 -0.618078,1.619634 0,2.237712 l 2.112517,2.112517 c 0.618078,0.618078 1.619634,0.618078 2.237712,0 0.61695,-0.618078 0.61695,-1.619634 0,-2.237712 z m -38.968216,2.237712 2.112517,-2.112517 c 0.618078,-0.618078 0.618078,-1.619634 0,-2.237712 -0.618078,-0.618078 -1.619634,-0.618078 -2.237712,0 l -2.112517,2.112517 c -0.618078,0.618078 -0.618078,1.619634 0,2.237712 0.618078,0.618078 1.619634,0.618078 2.237712,0 z m -2.237712,-38.968216 2.112517,2.112517 c 0.618078,0.618078 1.619634,0.618078 2.237712,0 0.618078,-0.618078 0.618078,-1.619634 0,-2.237712 l -2.112517,-2.112517 c -0.618078,-0.618078 -1.619634,-0.618078 -2.237712,0 -0.618078,0.618078 -0.618078,1.619634 0,2.237712 z M 77.55521,48.417586 h -2.986624 c -0.874106,0 -1.582414,0.708308 -1.582414,1.582414 0,0.874106 0.708308,1.582414 1.582414,1.582414 h 2.986624 c 0.874106,0 1.582414,-0.708308 1.582414,-1.582414 -0.0011,-0.874106 -0.709436,-1.582414 -1.582414,-1.582414 z M 51.582414,77.55521 v -2.986624 c 0,-0.874106 -0.708308,-1.582414 -1.582414,-1.582414 -0.874106,0 -1.582414,0.708308 -1.582414,1.582414 v 2.986624 c 0,0.874106 0.708308,1.582414 1.582414,1.582414 0.874106,-0.0011 1.582414,-0.709436 1.582414,-1.582414 z M 22.44479,51.582414 h 2.986624 c 0.874106,0 1.582414,-0.708308 1.582414,-1.582414 0,-0.874106 -0.708308,-1.582414 -1.582414,-1.582414 H 22.44479 c -0.874106,0 -1.582414,0.708308 -1.582414,1.582414 0.0011,0.874106 0.709436,1.582414 1.582414,1.582414 z M 18.395705,5.1544066 15.949336,13.728542 c -0.251517,0.884257 0.261668,1.805734 1.145925,2.057251 0.172565,0.0485 0.345131,0.0688 0.51544,0.06316 l 8.792944,0.315807 c 0.916966,0.03271 1.686179,-0.684623 1.718888,-1.601589 0.03271,-0.916965 -0.684623,-1.686178 -1.601588,-1.718887 l -4.553247,-0.163542 c 0.177077,-0.13309 0.355281,-0.265052 0.533486,-0.395886 1.315107,-0.959825 2.700142,-1.862128 4.148339,-2.700142 C 30.134669,7.566939 33.908552,5.9856524 37.895604,4.9175511 41.749566,3.884414 45.807674,3.3340091 50,3.3340091 c 12.887144,0 24.553924,5.2232069 32.998353,13.6676369 8.44443,8.444429 13.667637,20.111209 13.667637,32.998353 0,12.887144 -5.223207,24.553924 -13.667637,32.998353 C 74.552796,91.442782 62.887144,96.66599 50,96.66599 37.112856,96.66599 25.446076,91.442782 17.001647,82.998352 8.557217,74.553924 3.3340101,62.887144 3.3340101,50 c 0,-5.279601 0.8741061,-10.349417 2.4835893,-15.071846 C 7.489116,30.026392 9.951276,25.494575 13.052943,21.48271 13.613498,20.756356 13.479281,19.713068 12.752927,19.152512 12.026573,18.591956 10.983285,18.726174 10.422729,19.452528 7.096614,23.755386 4.4562496,28.61316 2.6663057,33.862309 0.9383953,38.929868 0,44.35835 0,50 0,63.806366 5.5965352,76.306648 14.64438,85.354492 23.693352,94.403465 36.193634,100 50,100 63.806366,100 76.306648,94.403465 85.354492,85.35562 94.403465,76.306648 100,63.806366 100,50 100,36.193634 94.403465,23.693352 85.35562,14.645508 76.306648,5.5965352 63.806366,0 50,0 45.522321,0 41.175475,0.5910085 37.03616,1.7008414 32.769394,2.8433827 28.72482,4.5397126 24.982518,6.707496 23.491462,7.571451 22.028603,8.525637 20.600708,9.564413 L 21.598881,6.0657328 C 21.850398,5.1814757 21.337213,4.2599986 20.452956,4.0084816 19.568699,3.7569647 18.647222,4.2701496 18.395705,5.1544066 Z"/></svg></span> Projects
@@ -571,18 +533,25 @@ select {
                 </div>
               </div>
 
-              <label>Output resolution</label>
-              <select id="targetHeightSelect">
-                <option value="0">Native 4x of source</option>
-                <option value="720">720p</option>
-                <option value="1080" selected>1080p</option>
-                <option value="1440">1440p (2K)</option>
-                <option value="2160">2160p (4K)</option>
-                <option value="4320">4320p (8K)</option>
-              </select>
+              <div id="pendingSettingsTitle" class="pending-settings-title">Upscale settings</div>
+              <p id="pendingSettingsNote" class="pending-settings-note hidden">
+                Only the frame rate changes below &mdash; resolution stays exactly as it is in the source video.
+              </p>
 
-              <label>Face restoration strength: <span id="strengthValue">80%</span></label>
-              <input type="range" id="strengthSlider" min="0" max="100" value="80">
+              <div id="resolutionSettingsGroup">
+                <label>Output resolution</label>
+                <select id="targetHeightSelect">
+                  <option value="0">Native 4x of source</option>
+                  <option value="720">720p</option>
+                  <option value="1080" selected>1080p</option>
+                  <option value="1440">1440p (2K)</option>
+                  <option value="2160">2160p (4K)</option>
+                  <option value="4320">4320p (8K)</option>
+                </select>
+
+                <label>Face restoration strength: <span id="strengthValue">80%</span></label>
+                <input type="range" id="strengthSlider" min="0" max="100" value="80">
+              </div>
 
               <label>Frame rate</label>
               <select id="targetFpsSelect">
@@ -601,7 +570,6 @@ select {
           <div id="queueList" class="job-list"></div>
           <div id="queueEmpty" class="empty-state">No videos queued yet.</div>
         </section>
-<div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
 
         <section id="view-history" class="view">
           <div id="historyList" class="job-list"></div>
@@ -920,8 +888,28 @@ document.querySelectorAll('.nav-item[data-view]').forEach(btn => {
     document.getElementById('view-' + btn.dataset.view).classList.add('active');
     if (btn.dataset.view === 'history') postToHost('getHistory');
     if (btn.dataset.view === 'settings') { postToHost('getAutostartState'); postToHost('getGpuDevices'); postToHost('getVideoCodecMode'); }
+    // "Upscale" and "Frame Rate +" both land on the queue view - which one was clicked decides
+    // whether the add-video flow runs in full-upscale mode or frame-rate-only mode.
+    if (btn.dataset.mode) setJobMode(btn.dataset.mode);
   });
 });
+
+// Full upscale (resolution + optional fps) vs. frame-rate-only (fps only, resolution left
+// exactly as the source has it - Real-ESRGAN/GFPGAN never run for these jobs at all).
+let jobMode = 'full';
+
+function setJobMode(mode) {
+  jobMode = mode;
+  applyJobModeUi();
+}
+
+function applyJobModeUi() {
+  const isFrameOnly = jobMode === 'frameonly';
+  document.getElementById('resolutionSettingsGroup').classList.toggle('hidden', isFrameOnly);
+  document.getElementById('pendingSettingsNote').classList.toggle('hidden', !isFrameOnly);
+  document.getElementById('pendingSettingsTitle').textContent = isFrameOnly ? 'Frame rate settings' : 'Upscale settings';
+  document.getElementById('addToQueueBtn').textContent = isFrameOnly ? 'Add to Queue — Frame Rate Only' : 'Add to Queue';
+}
 
 const externalPageUrls = {
   howto: 'https://mlapplications.com/ai_videoupscaler_plus_how_to.html',
@@ -1119,6 +1107,7 @@ document.getElementById('continueToSettingsBtn').addEventListener('click', () =>
   if (trimEndSeconds > trimStartSeconds) details.push(`<span class="stat-item">trimmed to ${formatDuration(trimEndSeconds - trimStartSeconds)}</span>`);
   document.getElementById('sourceDetails').innerHTML = details.join('');
 
+  applyJobModeUi();
   document.getElementById('pendingSettings').classList.remove('hidden');
 });
 
@@ -1140,15 +1129,27 @@ document.getElementById('cancelAddBtn').addEventListener('click', () => {
 
 document.getElementById('addToQueueBtn').addEventListener('click', () => {
   if (!pendingVideoPath) return;
-  const targetHeight = parseInt(document.getElementById('targetHeightSelect').value, 10);
-  const strength = parseInt(document.getElementById('strengthSlider').value, 10) / 100;
+
+  const frameRateOnly = jobMode === 'frameonly';
   const targetFps = parseInt(document.getElementById('targetFpsSelect').value, 10);
+
+  if (frameRateOnly && targetFps === 0) {
+    alert('Choose a target frame rate - a Frame Rate Only job with "Keep source frame rate" selected would not change anything.');
+    return;
+  }
+
+  // In frame-rate-only mode these two never reach the pipeline (it skips Real-ESRGAN/GFPGAN
+  // entirely for this job type either way), but send the same "untouched" values the backend
+  // assumes rather than whatever the hidden controls happen to be sitting at.
+  const targetHeight = frameRateOnly ? 0 : parseInt(document.getElementById('targetHeightSelect').value, 10);
+  const strength = frameRateOnly ? 0 : parseInt(document.getElementById('strengthSlider').value, 10) / 100;
 
   postToHost('enqueueJob', {
     inputPath: pendingVideoPath,
     targetHeight,
     gfpganStrength: strength,
     targetFps,
+    frameRateOnly,
     sourceWidth: pendingVideoInfo?.width || 0,
     sourceHeight: pendingVideoInfo?.height || 0,
     sourceFps: pendingVideoInfo?.fps || 0,
@@ -1254,7 +1255,7 @@ function renderJobCard(job) {
     ? `<div class="eta-badge"><div class="eta-badge-value" id="eta-value-${job.id}">${etaDisplayText}</div><div class="eta-badge-label">ETA</div></div>`
     : '';
 
-  const targetText = job.targetHeight ? `target ${job.targetHeight}p` : 'native 4x';
+  const targetText = job.frameRateOnly ? 'frame rate only – resolution unchanged' : (job.targetHeight ? `target ${job.targetHeight}p` : 'native 4x');
   const mainDetail = detailText ? detailText : (job.progressPercent || 0) + '%';
 
   const thumb = job.thumbnailDataUri
