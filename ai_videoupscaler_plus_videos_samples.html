@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -243,8 +244,8 @@ footer a:hover{color:var(--text)}
       <div class="compare-media">
         <div class="compare-badge compare-badge-before">Original <span>1280&times;720</span></div>
         <div class="compare-badge compare-badge-after">Upscaled <span>3840&times;2160 (4K)</span></div>
-        <video class="compare-video-before" src="https://mlapplications.com/video_upscale_video_samples/Example1_218_1280x720.mp4" preload="metadata" muted playsinline></video>
-        <video class="compare-video-after" src="https://mlapplications.com/video_upscale_video_samples/Example1_218_3840x2160_(4K).mp4" preload="metadata" muted playsinline></video>
+        <video class="compare-video-before" src="https://mlapplications.com/video_upscale_video_samples/Example1_218_1280x720.mp4" preload="auto" muted playsinline></video>
+        <video class="compare-video-after" src="https://mlapplications.com/video_upscale_video_samples/Example1_218_3840x2160_(4K).mp4" preload="auto" muted playsinline></video>
         <div class="compare-divider"><div class="compare-handle">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7 4 12l4 5"/><path d="M16 7l4 5-4 5"/></svg>
         </div></div>
@@ -283,8 +284,8 @@ footer a:hover{color:var(--text)}
       <div class="compare-media">
         <div class="compare-badge compare-badge-before">Original <span>30 fps</span></div>
         <div class="compare-badge compare-badge-after">Interpolated <span>60 fps</span></div>
-        <video class="compare-video-before" src="https://mlapplications.com/video_upscale_video_samples/Example3_MOV00044_30fps.mp4" preload="metadata" muted playsinline></video>
-        <video class="compare-video-after" src="https://mlapplications.com/video_upscale_video_samples/Example3_MOV00044_60fps.mp4" preload="metadata" muted playsinline></video>
+        <video class="compare-video-before" src="https://mlapplications.com/video_upscale_video_samples/Example3_MOV00044_30fps.mp4" preload="auto" muted playsinline></video>
+        <video class="compare-video-after" src="https://mlapplications.com/video_upscale_video_samples/Example3_MOV00044_60fps.mp4" preload="auto" muted playsinline></video>
         <div class="compare-divider"><div class="compare-handle">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7 4 12l4 5"/><path d="M16 7l4 5-4 5"/></svg>
         </div></div>
@@ -323,8 +324,8 @@ footer a:hover{color:var(--text)}
       <div class="compare-media">
         <div class="compare-badge compare-badge-before">Restoration off</div>
         <div class="compare-badge compare-badge-after">Restoration on &mdash; GFPGAN</div>
-        <video class="compare-video-before" src="https://mlapplications.com/video_upscale_video_samples/face_restoration_off.mp4" preload="metadata" muted playsinline></video>
-        <video class="compare-video-after" src="https://mlapplications.com/video_upscale_video_samples/face_restoration_on.mp4" preload="metadata" muted playsinline></video>
+        <video class="compare-video-before" src="https://mlapplications.com/video_upscale_video_samples/face_restoration_off.mp4" preload="auto" muted playsinline></video>
+        <video class="compare-video-after" src="https://mlapplications.com/video_upscale_video_samples/face_restoration_on.mp4" preload="auto" muted playsinline></video>
         <div class="compare-divider"><div class="compare-handle">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7 4 12l4 5"/><path d="M16 7l4 5-4 5"/></svg>
         </div></div>
@@ -361,10 +362,10 @@ footer a:hover{color:var(--text)}
     </div>
     <div class="compare" data-compare>
       <div class="compare-media">
-        <div class="compare-badge compare-badge-before">Original <span>640&times;480 &middot; 24 fps</span></div>
+        <div class="compare-badge compare-badge-before">Original <span>640&times;480 &middot; 30 fps</span></div>
         <div class="compare-badge compare-badge-after">Upscaled <span>4K &middot; 60 fps</span></div>
-        <video class="compare-video-before" src="https://mlapplications.com/video_samples/full_transform_before_640x480_24fps.mp4" preload="metadata" muted playsinline></video>
-        <video class="compare-video-after" src="https://mlapplications.com/video_samples/full_transform_after_4k_60fps.mp4" preload="metadata" muted playsinline></video>
+        <video class="compare-video-before" src="https://mlapplications.com/video_upscale_video_samples/full_transform_before_640x480_30fps.mp4" preload="auto" muted playsinline></video>
+        <video class="compare-video-after" src="https://mlapplications.com/video_upscale_video_samples/full_transform_after_4k_60fps.mp4" preload="auto" muted playsinline></video>
         <div class="compare-divider"><div class="compare-handle">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7 4 12l4 5"/><path d="M16 7l4 5-4 5"/></svg>
         </div></div>
@@ -499,13 +500,15 @@ class CompareSlider {
     this.before.currentTime = 0;
     this.after.currentTime = 0;
     this.after.playbackRate = 1;
+    this._bufferStalled = false;
     if (this.loopBtn.classList.contains('on')) {
       this.before.play().catch(() => {});
       this.after.play().catch(() => {});
     } else {
+      this._userWantsPlay = false;
       this.before.pause();
       this.after.pause();
-      this.pbIcon.setAttribute('d', PLAY_PATH);
+      this._setPlayIcon(false);
     }
   }
 
@@ -556,30 +559,68 @@ class CompareSlider {
       this._resync();
     });
 
-    // Watchdog: if "before" is playing but "after" has stalled or paused on
-    // its own (buffering, or hitting its own shorter native duration before
-    // we caught it above), pull it back into playback rather than leaving
-    // it frozen on a stale frame.
+    // The real cause of "the second video is completely choppy" on iPhone: a video that is
+    // waiting on network data does NOT report itself as paused (`.paused` stays false the whole
+    // time it's stuck), it just stops advancing and fires 'waiting'. The old watchdog only ever
+    // checked `.paused`, so a genuinely buffering clip - typically "after", since it's always the
+    // heavier file (higher resolution/fps) - was invisible to it: "before" kept racing ahead,
+    // drift kept blowing past the hard-seek threshold, and every one of those seeks immediately
+    // re-triggered more buffering on a connection that already couldn't keep up. That's a
+    // continuous stutter loop, not an occasional correction.
+    // Fix: whichever clip is buffering, pause BOTH until it can play through, then resume
+    // together. This is the same "wait for the slow one" approach any two-video sync needs -
+    // the speed-nudging in _resync() only handles fine drift once both are actually progressing,
+    // it can't fix one of them starving for data.
+    this._userWantsPlay = false;
+    this._bufferStalled = false;
+
+    const pauseForBuffering = () => {
+      if (!this._userWantsPlay || this._bufferStalled) return;
+      this._bufferStalled = true;
+      this.before.pause();
+      this.after.pause();
+    };
+    const resumeFromBuffering = () => {
+      if (!this._userWantsPlay || !this._bufferStalled) return;
+      this._bufferStalled = false;
+      this.before.play().catch(() => {});
+      this.after.play().catch(() => {});
+    };
+    this.before.addEventListener('waiting', pauseForBuffering);
+    this.after.addEventListener('waiting', pauseForBuffering);
+    this.before.addEventListener('playing', resumeFromBuffering);
+    this.after.addEventListener('playing', resumeFromBuffering);
+
+    // Fallback safety net for the rarer case where "after" ends up genuinely
+    // paused (not just buffering) while "before" plays on - e.g. it hit its
+    // own native duration a beat before we caught it above.
     this._watchdog = setInterval(() => {
-      if (!this.before.paused && this.after.paused) {
+      if (this._userWantsPlay && !this._bufferStalled && !this.before.paused && this.after.paused) {
         this.after.currentTime = this.before.currentTime;
         this.after.playbackRate = 1;
         this.after.play().catch(() => {});
       }
     }, 250);
+  }
 
-    this.before.addEventListener('play', () => this.pbIcon.setAttribute('d', PAUSE_PATH));
-    this.before.addEventListener('pause', () => this.pbIcon.setAttribute('d', PLAY_PATH));
+  _setPlayIcon(playing) {
+    this.pbIcon.setAttribute('d', playing ? PAUSE_PATH : PLAY_PATH);
   }
 
   _bindControls() {
     this.playBtn.addEventListener('click', () => {
-      if (this.before.paused) {
+      if (!this._userWantsPlay) {
+        this._userWantsPlay = true;
+        this._bufferStalled = false;
         this.before.play().catch(() => {});
         this.after.play().catch(() => {});
+        this._setPlayIcon(true);
       } else {
+        this._userWantsPlay = false;
+        this._bufferStalled = false;
         this.before.pause();
         this.after.pause();
+        this._setPlayIcon(false);
       }
     });
     this.loopBtn.addEventListener('click', () => {
