@@ -29,6 +29,10 @@
      state still uses) makes the active tab read as "cut into" the same black rather than looking like
      a separate lighter panel. */
   --nav-active-bg: var(--bg);
+  /* Plain gray, deliberately not derived from --accent/--text - this is a background watermark,
+     not a colored icon, so it should read as "slightly different from the page background", not
+     as a brand color. Dark theme gets a dark gray, light theme (below) a light gray. */
+  --queue-bg-icon-color: #3a4152;
 }
 html.light-theme {
   --bg:          #f0f2f8;
@@ -45,6 +49,7 @@ html.light-theme {
   --text3:       #8891b0;
   /* Unchanged from before - this request was specifically for the dark theme. */
   --nav-active-bg: var(--surface2);
+  --queue-bg-icon-color: #c7ccdb;
 }
 
 * { box-sizing: border-box; }
@@ -103,7 +108,7 @@ html, body {
   width: 230px;
   flex-shrink: 0;
   background: var(--surface);
-  border-right: 1px solid var(--border);
+  border-left: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   padding: 16px 0;
@@ -112,27 +117,23 @@ html, body {
 
 .sidebar-nav {
   display: flex; flex-direction: column; gap: 2px;
-  margin: 0 8px; padding: 4px 0; border-radius: 8px;
+  margin: 0; padding: 0; border-radius: 8px;
 }
-.sidebar-divider { border-bottom: 1px solid var(--border); margin: 12px 20px; }
+.sidebar-divider { border-bottom: 1px solid var(--border); margin: 0; }
 
-/* Each sidebar-nav group gets its own faint wash so the sections read as distinct groupings at a
-   glance, on top of the dividers between them - not just a stronger visual separator, but a second,
-   lower-key cue that doesn't compete with the hover/active states (those still paint their own
-   background directly on the button, on top of whichever section wash it's sitting on). Colors are
-   derived from the existing theme tokens (not new hardcoded hex values) so both the dark and light
-   themes stay correct automatically - only the opacity differs per section, chosen to loosely match
-   what each group is for (accent for the two "do work" views, green for the completed-videos view,
-   amber for Rate Us' star, neutral grays for Settings and the legal/contact group).
-   Left/right padding on .nav-item stays the same - only the group container gets the small side
-   margin/radius, so the wash reads as a rounded card without needing to touch every button's own
-   padding. */
-.sidebar-section-primary  { background: color-mix(in srgb, var(--accent) 6%, transparent); }
-.sidebar-section-projects { background: color-mix(in srgb, var(--green) 6%, transparent); }
-.sidebar-section-settings { background: color-mix(in srgb, var(--text3) 10%, transparent); }
-.sidebar-section-docs     { background: color-mix(in srgb, var(--accent) 3%, transparent); }
-.sidebar-section-rateus   { background: color-mix(in srgb, var(--amber) 8%, transparent); }
-.sidebar-section-legal    { background: color-mix(in srgb, var(--text3) 5%, transparent); }
+/* Two washes only, not one per section: the first three groups (Upscale/FPS+, Projects, Settings -
+   the "top 4 buttons") share one background, and the remaining three (How To/Samples/Help/Tips,
+   Rate Us, Privacy/Contact) share a second, distinct one. Colors are still derived from the
+   existing theme tokens (not new hardcoded hex values) so both the dark and light themes stay
+   correct automatically. Left/right padding on .nav-item stays the same - only the group container
+   gets the small side margin/radius, so the wash reads as a rounded card without needing to touch
+   every button's own padding. */
+.sidebar-section-primary,
+.sidebar-section-projects,
+.sidebar-section-settings { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+.sidebar-section-docs,
+.sidebar-section-rateus,
+.sidebar-section-legal    { background: color-mix(in srgb, var(--text3) 6%, transparent); }
 
 .nav-item {
   display: flex;
@@ -143,15 +144,15 @@ html, body {
   border-left: 3px solid transparent;
   color: var(--text2);
   text-align: left;
-  padding: 10px 20px;
+  padding: 14px 20px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 15.5px;
   width: 100%;
 }
 .nav-item:hover { background: var(--surface2); color: var(--text); }
-.nav-item.active { background: var(--nav-active-bg); color: var(--text); border-left-color: var(--accent); padding-left: 17px; }
-.nav-icon { font-size: 15px; width: 18px; text-align: center; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
-.nav-icon svg { width: 16px; height: 16px; display: block; }
+.nav-item.active { background: var(--nav-active-bg); color: var(--text); padding-left: 17px; }
+.nav-icon { font-size: 17px; width: 20px; text-align: center; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
+.nav-icon svg { width: 19px; height: 19px; display: block; }
 
 .sidebar-footer {
   margin-top: auto;
@@ -364,13 +365,44 @@ select {
 
 .empty-state { color: var(--text3); font-size: 14px; text-align: center; padding: 40px 0; }
 .empty-state.hidden { display: none; }
+.empty-state-hint { margin-top: 8px; font-size: 12.5px; color: var(--text3); opacity: 0.85; }
+
+/* Watermark icon for the current tab (Upscale/FPS+ share the queue view and switch via the
+   mode-full/mode-frameonly class; Settings and Contact each get a fixed one of their own) - a
+   large, very faint version of the tab's own icon so the page still reads as "this is the X tab"
+   even with nothing in it. Pinned to the bottom-right corner of the window with position:fixed so
+   it stays put regardless of how far the view's own content scrolls (main is the only element to
+   the right of the sidebar, so viewport bottom-right IS main's bottom-right).
+   z-index is deliberately 0, not negative: a negative z-index on a position:fixed element paints
+   it behind the page's own root background entirely in this engine, making it invisible outright -
+   not just "behind the content", gone. z-index:0 plus being the FIRST element in each view's markup
+   is enough on its own to keep it behind that view's real content (equal/auto z-index siblings
+   stack by DOM order, and every actual card/text node comes later in the markup), without needing
+   a negative index or a z-index bump on every card.
+   --queue-bg-icon-color is a plain gray, not accent/text, chosen per theme so it stays a background
+   element rather than pulling focus like a colored icon would. */
+.view-bg-icon {
+  position: fixed; right: 28px; bottom: 24px; width: 190px;
+  color: var(--queue-bg-icon-color);
+  opacity: 0.20;
+  pointer-events: none;
+  z-index: 0;
+  display: none;
+}
+.view-bg-icon svg { width: 100%; height: 100%; display: block; }
+.view-bg-icon.icon-square { aspect-ratio: 1 / 1; }
+.view-bg-icon.icon-fps { aspect-ratio: 16 / 12; width: 210px; }
+#view-queue.mode-full .queue-bg-icon-upscale { display: block; }
+#view-queue.mode-frameonly .queue-bg-icon-fps { display: block; }
+#view-settings .view-bg-icon,
+#view-contact .view-bg-icon { display: block; }
 
 /* SETTINGS VIEW */
-.settings-header { margin-bottom: 24px; }
+.settings-header { margin-bottom: 24px; position: relative; z-index: 1; }
 .settings-header h1 { font-size: 24px; margin: 0 0 4px; }
 .settings-header p { font-size: 13px; color: var(--text2); margin: 0; }
 
-.settings-section { margin-bottom: 28px; }
+.settings-section { margin-bottom: 28px; position: relative; z-index: 1; }
 .settings-section-title {
   font-size: 11px; font-weight: 700; color: var(--accent);
   text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px;
@@ -527,6 +559,8 @@ select {
 
       <main>
         <section id="view-queue" class="view active">
+          <div class="view-bg-icon icon-square queue-bg-icon-upscale" aria-hidden="true"><svg viewBox="-15 -15 115 115" fill="currentColor"><path d="m -2.0586,51.9066 c 1.625,0 2.9414,-1.3164 2.9414,-2.9414 v -0.14453 c 0,-1.9453 1.582,-3.5312 3.5312,-3.5312 h 0.92188 c 1.625,0 2.9414,-1.3164 2.9414,-2.9414 0,-1.625 -1.3164,-2.9414 -2.9414,-2.9414 H 4.414 c -5.1875,0 -9.4102,4.2227 -9.4102,9.4102 v 0.14453 c 0,1.625 1.3164,2.9414 2.9414,2.9414 z m 38.8242,9.402 c -1.625,0 -2.9414,1.3164 -2.9414,2.9414 v 10.457 c 0,0.14453 -0.0078,0.28906 -0.02344,0.42969 -0.19141,1.6133 0.95703,3.0781 2.5703,3.2695 0.11719,0.01563 0.23828,0.01953 0.35156,0.01953 1.4688,0 2.7383,-1.0977 2.918,-2.5938 0.04297,-0.37109 0.06641,-0.75 0.06641,-1.125 v -10.457 c 0,-1.625 -1.3164,-2.9414 -2.9414,-2.9414 z m -35.8828,8.254 v -11.234 c 0,-1.625 -1.3164,-2.9414 -2.9414,-2.9414 -1.625,0 -2.9414,1.3164 -2.9414,2.9414 v 11.234 c 0,1.625 1.3164,2.9414 2.9414,2.9414 1.625,0 2.9414,-1.3164 2.9414,-2.9414 z m 29.4378,8.672 h -0.04297 -11.219 c -1.625,0 -2.9414,1.3164 -2.9414,2.9414 0,1.625 1.3164,2.9414 2.9414,2.9414 h 11.234 0.04687 c 1.6172,-0.01172 2.9219,-1.3242 2.9219,-2.9414 0,-1.6172 -1.3164,-2.9414 -2.9414,-2.9414 z m -20.621,0 H 4.4144 c -1.1094,0 -2.1328,-0.50781 -2.8086,-1.3906 -0.98828,-1.2891 -2.832,-1.5352 -4.125,-0.54688 -1.2891,0.98828 -1.5352,2.832 -0.55078,4.1211 1.7969,2.3516 4.5234,3.6992 7.4805,3.6992 h 5.2852 c 1.625,0 2.9414,-1.3164 2.9414,-2.9414 0,-1.625 -1.3164,-2.9414 -2.9414,-2.9414 z M 75.7926,-10 h -41.523 c -1.6055,0 -3.1484,0.28516 -4.5742,0.8125 -5.1406,1.8789 -8.8125,6.8125 -8.8125,12.602 v 36 h -6.1875 c -1.625,0 -2.9414,1.3164 -2.9414,2.9414 0,1.625 1.3164,2.9414 2.9414,2.9414 h 6.2031 c 0.24609,7.1875 6.1523,12.941 13.398,12.941 h 41.406 c 5.7891,0 10.727,-3.6719 12.602,-8.8125 C 88.82794,48 89.117,46.457 89.117,44.8516 V 3.3246 c 0,-7.3477 -5.9766,-13.324 -13.324,-13.324 z m -30.125,47.992 c -0.56641,0.57031 -1.3125,0.85938 -2.0586,0.85938 -0.74609,0 -1.4922,-0.28516 -2.0664,-0.85938 -1.1367,-1.1367 -1.1367,-2.9844 0,-4.125 l 21.414,-21.414 h -12.855 c -1.6094,0 -2.9141,-1.3047 -2.9141,-2.9141 0,-1.6094 1.3047,-2.9141 2.9141,-2.9141 h 19.766 c 1.6094,0 2.9141,1.3047 2.9141,2.9141 v 20.027 c 0,1.6094 -1.3047,2.9141 -2.9141,2.9141 -1.6094,0 -2.9141,-1.3047 -2.9141,-2.9141 v -12.859 z"/></svg></div>
+          <div class="view-bg-icon icon-fps queue-bg-icon-fps" aria-hidden="true"><svg viewBox="-5.5 -10.5 16 12" fill="currentColor"><path d="m -5,-10 v 6.015745 h 0.6822759 v -5.172192 c 0,-0.08883 0.072449,-0.161277 0.1612767,-0.161277 H 6.9842432 V -10 Z m 1.0048292,1.004829 v 6.017007 h 0.6822759 v -5.173454 c 0,-0.08883 0.072449,-0.161277 0.1612767,-0.161277 H 7.9890722 v -0.682276 z m 1.0048293,1.004829 v 6.017007 h 0.6822759 v -5.173454 c 0,-0.08883 0.072449,-0.161277 0.1612767,-0.161277 H 8.9939012 v -0.682276 z m 1.0054592,1.006089 v 6.015117 h 7.3670675 l 0.0031,-0.03843 -0.520999,-0.301764 c -0.07749,-0.04536 -0.103317,-0.143635 -0.05985,-0.221124 l 0.422722,-0.730786 c 0.04536,-0.07749 0.143635,-0.103319 0.221125,-0.05985 l 0.520999,0.301765 c 0.05292,-0.04032 0.108358,-0.07749 0.170727,-0.112769 0.05985,-0.03402 0.115925,-0.063 0.175766,-0.08694 v -0.601641 c 0,-0.08883 0.07119,-0.161276 0.161276,-0.161276 h 0.843554 c 0.08883,0 0.161276,0.07245 0.161276,0.161276 v 0.601637 c 0.063,0.02583 0.122843,0.0567 0.178916,0.08883 0.05796,0.03402 0.114666,0.07119 0.166317,0.111509 l 0.522259,-0.299875 c 0.07749,-0.04536 0.175755,-0.01953 0.219235,0.05796 l 0.422722,0.732045 c 0.04536,0.0756 0.01953,0.173868 -0.05796,0.219235 l -0.522259,0.301764 0.005,0.03843 -6.3e-4,6.3e-4 h 1.583787 v -6.015747 z m 4.1100355,0.729211 c 0.02067,0.0024 0.04111,0.009 0.06048,0.01985 l -6.3e-4,-6.3e-4 3.798191,2.117386 c 0.02583,0.01449 0.04851,0.03528 0.063,0.063 0.04347,0.07749 0.01638,0.175756 -0.06111,0.219236 l -3.786851,2.111086 c -0.02583,0.01764 -0.0567,0.02772 -0.09009,0.02772 -0.08883,0 -0.161276,-0.07245 -0.161276,-0.161277 v -4.236663 c 0,-0.02772 0.0063,-0.05292 0.02079,-0.07875 0.0326,-0.05812 0.09548,-0.08804 0.157497,-0.08096 z m 0.143637,0.433746 v 3.688573 l 3.308061,-1.843341 z m 4.36959,3.164425 v 0.553128 c -0.0019,0.06804 -0.04347,0.130407 -0.112769,0.153087 -0.07749,0.02394 -0.151831,0.05796 -0.224275,0.09828 -0.07749,0.04536 -0.144891,0.09513 -0.207895,0.151828 -0.04977,0.04536 -0.125994,0.05481 -0.188996,0.01953 l -0.478791,-0.277194 -0.261445,0.452961 0.474381,0.274044 c 0.06111,0.03213 0.09702,0.103322 0.08253,0.173877 -0.0082,0.04032 -0.01449,0.08064 -0.01953,0.124106 -0.005,0.03717 -0.0063,0.0756 -0.0063,0.117808 l -6.3e-4,-0.0013 c 0,0.05985 0.0019,0.09828 0.0063,0.133558 0.0031,0.04221 0.01134,0.08379 0.01953,0.125997 0.0126,0.06615 -0.01638,0.135448 -0.07749,0.172617 l -0.478791,0.275934 0.261445,0.452961 0.480681,-0.277194 c 0.05796,-0.03213 0.133549,-0.02772 0.187106,0.02079 0.06111,0.05481 0.130409,0.104577 0.203485,0.146786 0.0693,0.04032 0.143633,0.07434 0.219236,0.100169 0.07119,0.01764 0.120958,0.08064 0.120958,0.156237 v 0.551868 h 0.522258 V 0.491139 c 0,-0.0693 0.04347,-0.132297 0.112769,-0.153087 0.07875,-0.02583 0.156229,-0.06111 0.227425,-0.103319 0.07245,-0.04032 0.140489,-0.09009 0.203485,-0.146786 0.05166,-0.04536 0.127254,-0.05481 0.188996,-0.02079 l 0.478791,0.277194 0.262705,-0.452961 -0.475641,-0.274044 c -0.06111,-0.03213 -0.09702,-0.103322 -0.08064,-0.173877 0.0082,-0.04221 0.01449,-0.08379 0.01953,-0.124107 0.0032,-0.03528 0.005,-0.0756 0.0063,-0.133558 -0.0019,-0.04347 -0.0031,-0.08253 -0.0063,-0.117807 -0.005,-0.04221 -0.01134,-0.08379 -0.01953,-0.125997 -0.01449,-0.06615 0.01449,-0.135447 0.0756,-0.170727 l 0.480681,-0.277194 -0.261445,-0.452961 -0.478791,0.275934 c -0.05796,0.03528 -0.135444,0.03087 -0.190256,-0.01764 -0.06111,-0.0567 -0.130409,-0.106467 -0.203485,-0.148678 -0.06804,-0.04032 -0.141744,-0.07245 -0.219236,-0.09828 -0.0693,-0.01953 -0.120958,-0.08253 -0.120958,-0.156237 v -0.553128 z m 0.259555,1.051448 c 0.221125,0 0.420835,0.09009 0.564467,0.233725 0.143636,0.143638 0.233725,0.343342 0.233725,0.564468 0,0.21924 -0.09009,0.417672 -0.233725,0.562579 -0.144896,0.144897 -0.345229,0.233725 -0.564467,0.233725 -0.21924,0 -0.419576,-0.08883 -0.562579,-0.233725 -0.144897,-0.143636 -0.233726,-0.343339 -0.233726,-0.562579 0,-0.219239 0.08883,-0.419574 0.233726,-0.562578 0.144897,-0.144898 0.343339,-0.235615 0.562579,-0.235615 z m 0,0.322553 c -0.130408,0 -0.250113,0.05292 -0.335154,0.138597 -0.08568,0.08568 -0.138597,0.204749 -0.138597,0.337043 0,0.130407 0.05292,0.250112 0.138597,0.335154 0.08568,0.08568 0.204745,0.138597 0.335154,0.138597 0.132296,0 0.251372,-0.05292 0.337042,-0.138597 0.08567,-0.08568 0.138597,-0.204746 0.138597,-0.335154 0,-0.132296 -0.05292,-0.250111 -0.138597,-0.335153 -0.08694,-0.08694 -0.204748,-0.140487 -0.337042,-0.140487 z"/></svg></div>
           <div class="add-video-card">
             <button id="selectVideoBtn" class="primary-btn">+ Add Video</button>
 
@@ -599,7 +633,7 @@ select {
           </div>
 
           <div id="queueList" class="job-list"></div>
-          <div id="queueEmpty" class="empty-state">No videos queued yet.</div>
+          <div id="queueEmpty" class="empty-state">No videos queued yet.<div id="queueEmptyHint" class="empty-state-hint"></div></div>
         </section>
 
         <section id="view-history" class="view">
@@ -608,6 +642,7 @@ select {
         </section>
 
         <section id="view-settings" class="view">
+          <div class="view-bg-icon icon-square" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
           <div class="settings-header">
             <h1>Settings</h1>
             <p>Customize your AI Video Upscaler+ experience.</p>
@@ -690,6 +725,7 @@ select {
         </section>
 
         <section id="view-contact" class="view">
+          <div class="view-bg-icon icon-square" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1.5"></rect><path d="m4 7 8 6 8-6"></path></svg></div>
           <div class="settings-header">
             <h1>Contact</h1>
             <p>Get in touch, report a bug or request a feature.</p>
@@ -940,7 +976,20 @@ function applyJobModeUi() {
   document.getElementById('pendingSettingsNote').classList.toggle('hidden', !isFrameOnly);
   document.getElementById('pendingSettingsTitle').textContent = isFrameOnly ? 'Frame rate settings' : 'Upscale settings';
   document.getElementById('addToQueueBtn').textContent = isFrameOnly ? 'Add to Queue — Frame Rate Only' : 'Add to Queue';
+
+  // Empty-queue watermark icon + instruction line: both mirror whichever of Upscale/FPS+ was
+  // clicked, since the two tabs share this same queue view rather than having separate markup.
+  document.getElementById('view-queue').classList.toggle('mode-full', !isFrameOnly);
+  document.getElementById('view-queue').classList.toggle('mode-frameonly', isFrameOnly);
+  document.getElementById('queueEmptyHint').textContent = isFrameOnly
+    ? 'Press the + Add Video button and select a video from your hard drive to begin increasing its frame rate.'
+    : 'Press the + Add Video button and select a video from your hard drive to begin upscaling.';
 }
+// Runs once up front: without this, the queue view never gets its mode-full/mode-frameonly class
+// (and the empty-state hint stays blank) until the FIRST time a nav item is clicked or a video is
+// previewed - so on a fresh load, the Upscale/FPS+ watermark and instruction line simply don't
+// exist yet, even though Upscale is already shown as the active tab.
+applyJobModeUi();
 
 const externalPageUrls = {
   howto: 'https://mlapplications.com/ai_videoupscaler_plus_how_to.html',
