@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,7 +51,7 @@ googletag.enableServices();
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>AI Video Upscaler+ Video Samples — Compare Before &amp; After Side-by-Side</title>
-<meta name="description" content="See what AI Video Upscaler+ actually does — resolution upscaling, frame-rate interpolation, face restoration, and a full old-phone-video transformation, compared with a draggable before/after slider."/>
+<meta name="description" content="See what AI Video Upscaler+ actually does — resolution upscaling, frame-rate interpolation, face restoration, and a full old-phone-video transformation, compared with a simple before/after toggle."/>
 <meta name="keywords" content="AI Video Upscaler+ samples, video upscale before after, frame rate interpolation example, GFPGAN comparison, 4K upscale example"/>
 <meta property="og:title" content="AI Video Upscaler+ Video Samples — Compare Before &amp; After Side-by-Side"/>
 <meta property="og:description" content="See exactly what upscaling and frame interpolation look like before you spend render time."/>
@@ -101,45 +100,26 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15
   .nav-links{display:none}
 }
 
-/* ── COMPARE SLIDER ── */
+/* ── COMPARE TOGGLE ──
+   One video decodes at a time. Both <video> elements stay in the DOM (so switching is instant and
+   the incoming clip can be seeked to match), but only the one with .active-video is ever displayed
+   or playing - the other is paused outright. */
 .compare{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.compare-media{
-  position:relative;aspect-ratio:16/9;background:#000;overflow:hidden;
-  cursor:ew-resize;touch-action:none;user-select:none;
-}
+.compare-media{position:relative;aspect-ratio:16/9;background:#000;overflow:hidden}
 .compare-media video{
   position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
-  display:block;background:#000;pointer-events:none;
+  display:none;background:#000;pointer-events:none;
 }
-.compare-media .compare-video-after{clip-path:inset(0 0 0 50%)}
+.compare-media video.active-video{display:block}
 
-.compare-badge{
-  position:absolute;top:14px;z-index:3;display:flex;align-items:baseline;gap:6px;
-  padding:6px 12px;border-radius:7px;font-size:12px;font-weight:700;color:#fff;
-  pointer-events:none;white-space:nowrap;
+.compare-label{
+  position:absolute;top:14px;left:14px;z-index:3;
+  padding:7px 13px;border-radius:8px;
+  background:rgba(20,21,28,.78);border:1px solid rgba(255,255,255,.12);
+  pointer-events:none;
 }
-.compare-badge span{font-size:11px;font-weight:500;opacity:.85}
-.compare-badge-before{left:14px;background:rgba(28,32,46,.88);border:1px solid rgba(255,255,255,.12)}
-.compare-badge-after{right:14px;background:rgba(91,60,200,.85);border:1px solid rgba(167,139,250,.4)}
-
-.compare-divider{
-  position:absolute;top:0;bottom:0;left:50%;width:0;z-index:2;
-  border-left:2px dashed rgba(255,255,255,.85);pointer-events:none;
-}
-.compare-handle{
-  position:absolute;top:50%;left:0;transform:translate(-50%,-50%);
-  width:38px;height:38px;border-radius:50%;background:#fff;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 2px 10px rgba(0,0,0,.4);pointer-events:none;
-}
-.compare-handle svg{width:18px;height:18px;color:#20222b}
-
-.compare-hint{
-  position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:3;
-  background:rgba(0,0,0,.55);color:#fff;font-size:11.5px;font-weight:500;
-  padding:5px 12px;border-radius:20px;pointer-events:none;transition:opacity .25s;
-}
-.compare-media.dragged .compare-hint{opacity:0}
+.compare-label-title{display:block;font-size:13px;font-weight:700;color:#fff;line-height:1.3}
+.compare-label-specs{display:block;font-size:11px;font-weight:500;color:rgba(255,255,255,.7);margin-top:2px;line-height:1.2}
 
 /* Fullscreen (in-page) view — breaks the media block out to a fixed,
    viewport-filling box with a small margin so the difference reads
@@ -167,11 +147,13 @@ body.compare-fullscreen-open{overflow:hidden}
 .compare-media.fullscreen .compare-fs-close{display:flex}
 .compare-fs-close svg{width:16px;height:16px}
 
-/* Controls row (drives both videos together) */
+/* Controls row: play/time on the left, the before/after toggle in the middle, mute/fullscreen
+   on the right. */
 .compare-controls{
-  display:flex;align-items:center;gap:8px;padding:8px 12px;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px;
   background:var(--surface2);border-top:1px solid var(--border);
 }
+.ctrl-group{display:flex;align-items:center;gap:6px}
 .ctrl-btn{
   background:none;border:none;color:var(--text2);cursor:pointer;
   padding:4px;border-radius:4px;display:flex;align-items:center;transition:color .15s;
@@ -179,10 +161,17 @@ body.compare-fullscreen-open{overflow:hidden}
 .ctrl-btn:hover{color:var(--text)}
 .ctrl-btn svg{width:16px;height:16px}
 .ctrl-time{font-size:11px;color:var(--text3);font-variant-numeric:tabular-nums;margin-left:2px}
-.ctrl-loop.on{color:var(--accent)}
 .ctrl-mute.muted{color:var(--amber)}
-.ctrl-fullscreen{margin-left:auto}
 .ctrl-fullscreen.on{color:var(--accent)}
+
+.compare-toggle{display:flex;gap:2px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:2px}
+.toggle-btn{
+  background:none;border:none;color:var(--text2);font-size:12px;font-weight:600;
+  padding:6px 14px;border-radius:6px;cursor:pointer;white-space:nowrap;
+  transition:background .15s,color .15s;
+}
+.toggle-btn:hover{color:var(--text)}
+.toggle-btn.active{background:var(--accent);color:#fff}
 
 .compare-caption{padding:12px 14px 14px;font-size:12.5px;color:var(--text2)}
 
@@ -229,7 +218,7 @@ footer a:hover{color:var(--text)}
 
 <div class="hero">
   <h1>Video Samples</h1>
-  <p>Drag the divider — or tap anywhere in the frame — to slide between the original and the upscaled result, at full size, so the difference is obvious.</p>
+  <p>Toggle between the original and the result — each one plays back on its own, full quality, with nothing to fall out of sync.</p>
 </div>
 
 <div class="sections">
@@ -242,33 +231,36 @@ footer a:hover{color:var(--text)}
     </div>
     <div class="compare" data-compare>
       <div class="compare-media">
-        <div class="compare-badge compare-badge-before">Original <span>1280&times;720</span></div>
-        <div class="compare-badge compare-badge-after">Upscaled <span>3840&times;2160 (4K)</span></div>
-        <video class="compare-video-before" src="https://mlapplications.com/video_upscale_video_samples/Example1_218_1280x720.mp4" preload="auto" muted playsinline></video>
-        <video class="compare-video-after" src="https://mlapplications.com/video_upscale_video_samples/Example1_218_3840x2160_(4K).mp4" preload="auto" muted playsinline></video>
-        <div class="compare-divider"><div class="compare-handle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7 4 12l4 5"/><path d="M16 7l4 5-4 5"/></svg>
-        </div></div>
-        <div class="compare-hint">Drag to compare</div>
+        <video class="compare-video-before" data-title="Original" data-specs="1280&times;720" src="https://mlapplications.com/video_upscale_video_samples/Example1_218_1280x720.mp4" preload="auto" muted playsinline loop></video>
+        <video class="compare-video-after" data-title="Upscaled" data-specs="3840&times;2160 (4K)" src="https://mlapplications.com/video_upscale_video_samples/Example1_218_3840x2160_(4K).mp4" preload="auto" muted playsinline loop></video>
+        <div class="compare-label">
+          <span class="compare-label-title"></span>
+          <span class="compare-label-specs"></span>
+        </div>
         <button class="compare-fs-close" aria-label="Exit fullscreen" title="Exit fullscreen (Esc)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
         </button>
       </div>
       <div class="compare-controls">
-        <button class="ctrl-btn ctrl-play" aria-label="Play/pause">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path class="pb-icon" d="M8 5v14l11-7z"/></svg>
-        </button>
-        <span class="ctrl-time">0:00</span>
-        <button class="ctrl-btn ctrl-loop on" title="Loop">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-        </button>
-        <button class="ctrl-btn ctrl-mute muted" title="Unmute">
-          <span class="icon-vol" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
-          <span class="icon-mute"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
-        </button>
-        <button class="ctrl-btn ctrl-fullscreen" title="View fullscreen">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path class="fs-icon" d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
-        </button>
+        <div class="ctrl-group">
+          <button class="ctrl-btn ctrl-play" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path class="pb-icon" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time">0:00</span>
+        </div>
+        <div class="compare-toggle">
+          <button class="toggle-btn toggle-before active" data-side="before">Original</button>
+          <button class="toggle-btn toggle-after" data-side="after">Upscaled</button>
+        </div>
+        <div class="ctrl-group">
+          <button class="ctrl-btn ctrl-mute muted" title="Unmute">
+            <span class="icon-vol" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+          <button class="ctrl-btn ctrl-fullscreen" title="View fullscreen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path class="fs-icon" d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+          </button>
+        </div>
       </div>
       <div class="compare-caption">Same clip, same moment in time &mdash; only the resolution differs.</div>
     </div>
@@ -282,35 +274,38 @@ footer a:hover{color:var(--text)}
     </div>
     <div class="compare" data-compare>
       <div class="compare-media">
-        <div class="compare-badge compare-badge-before">Original <span>30 fps</span></div>
-        <div class="compare-badge compare-badge-after">Interpolated <span>60 fps</span></div>
-        <video class="compare-video-before" src="https://mlapplications.com/video_upscale_video_samples/Example3_MOV00044_30fps.mp4" preload="auto" muted playsinline></video>
-        <video class="compare-video-after" src="https://mlapplications.com/video_upscale_video_samples/Example3_MOV00044_60fps.mp4" preload="auto" muted playsinline></video>
-        <div class="compare-divider"><div class="compare-handle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7 4 12l4 5"/><path d="M16 7l4 5-4 5"/></svg>
-        </div></div>
-        <div class="compare-hint">Drag to compare</div>
+        <video class="compare-video-before" data-title="Original" data-specs="30 fps" src="https://mlapplications.com/video_upscale_video_samples/Example3_MOV00044_30fps.mp4" preload="auto" muted playsinline loop></video>
+        <video class="compare-video-after" data-title="Interpolated" data-specs="60 fps" src="https://mlapplications.com/video_upscale_video_samples/Example3_MOV00044_60fps.mp4" preload="auto" muted playsinline loop></video>
+        <div class="compare-label">
+          <span class="compare-label-title"></span>
+          <span class="compare-label-specs"></span>
+        </div>
         <button class="compare-fs-close" aria-label="Exit fullscreen" title="Exit fullscreen (Esc)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
         </button>
       </div>
       <div class="compare-controls">
-        <button class="ctrl-btn ctrl-play" aria-label="Play/pause">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path class="pb-icon" d="M8 5v14l11-7z"/></svg>
-        </button>
-        <span class="ctrl-time">0:00</span>
-        <button class="ctrl-btn ctrl-loop on" title="Loop">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-        </button>
-        <button class="ctrl-btn ctrl-mute muted" title="Unmute">
-          <span class="icon-vol" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
-          <span class="icon-mute"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
-        </button>
-        <button class="ctrl-btn ctrl-fullscreen" title="View fullscreen">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path class="fs-icon" d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
-        </button>
+        <div class="ctrl-group">
+          <button class="ctrl-btn ctrl-play" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path class="pb-icon" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time">0:00</span>
+        </div>
+        <div class="compare-toggle">
+          <button class="toggle-btn toggle-before active" data-side="before">Original</button>
+          <button class="toggle-btn toggle-after" data-side="after">Interpolated</button>
+        </div>
+        <div class="ctrl-group">
+          <button class="ctrl-btn ctrl-mute muted" title="Unmute">
+            <span class="icon-vol" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+          <button class="ctrl-btn ctrl-fullscreen" title="View fullscreen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path class="fs-icon" d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="compare-caption">Best seen during playback &mdash; hit play, then drag while it's moving to feel the smoother motion on the right.</div>
+      <div class="compare-caption">Best seen during playback &mdash; hit play, then toggle back and forth while it's moving to feel the smoother motion.</div>
     </div>
   </div>
 
@@ -322,35 +317,38 @@ footer a:hover{color:var(--text)}
     </div>
     <div class="compare" data-compare>
       <div class="compare-media">
-        <div class="compare-badge compare-badge-before">Restoration off</div>
-        <div class="compare-badge compare-badge-after">Restoration on &mdash; GFPGAN</div>
-        <video class="compare-video-before" src="https://mlapplications.com/video_upscale_video_samples/face_restoration_off.mp4" preload="auto" muted playsinline></video>
-        <video class="compare-video-after" src="https://mlapplications.com/video_upscale_video_samples/face_restoration_on.mp4" preload="auto" muted playsinline></video>
-        <div class="compare-divider"><div class="compare-handle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7 4 12l4 5"/><path d="M16 7l4 5-4 5"/></svg>
-        </div></div>
-        <div class="compare-hint">Drag to compare</div>
+        <video class="compare-video-before" data-title="Restoration Off" data-specs="GFPGAN disabled" src="https://mlapplications.com/video_upscale_video_samples/face_restoration_off.mp4" preload="auto" muted playsinline loop></video>
+        <video class="compare-video-after" data-title="Restoration On" data-specs="GFPGAN enabled" src="https://mlapplications.com/video_upscale_video_samples/face_restoration_on.mp4" preload="auto" muted playsinline loop></video>
+        <div class="compare-label">
+          <span class="compare-label-title"></span>
+          <span class="compare-label-specs"></span>
+        </div>
         <button class="compare-fs-close" aria-label="Exit fullscreen" title="Exit fullscreen (Esc)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
         </button>
       </div>
       <div class="compare-controls">
-        <button class="ctrl-btn ctrl-play" aria-label="Play/pause">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path class="pb-icon" d="M8 5v14l11-7z"/></svg>
-        </button>
-        <span class="ctrl-time">0:00</span>
-        <button class="ctrl-btn ctrl-loop on" title="Loop">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-        </button>
-        <button class="ctrl-btn ctrl-mute muted" title="Unmute">
-          <span class="icon-vol" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
-          <span class="icon-mute"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
-        </button>
-        <button class="ctrl-btn ctrl-fullscreen" title="View fullscreen">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path class="fs-icon" d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
-        </button>
+        <div class="ctrl-group">
+          <button class="ctrl-btn ctrl-play" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path class="pb-icon" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time">0:00</span>
+        </div>
+        <div class="compare-toggle">
+          <button class="toggle-btn toggle-before active" data-side="before">Off</button>
+          <button class="toggle-btn toggle-after" data-side="after">On</button>
+        </div>
+        <div class="ctrl-group">
+          <button class="ctrl-btn ctrl-mute muted" title="Unmute">
+            <span class="icon-vol" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+          <button class="ctrl-btn ctrl-fullscreen" title="View fullscreen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path class="fs-icon" d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="compare-caption">Zoom in on the face while dragging &mdash; that's where GFPGAN's effect is most visible.</div>
+      <div class="compare-caption">Zoom in on the face and toggle back and forth &mdash; that's where GFPGAN's effect is most visible.</div>
     </div>
   </div>
 
@@ -362,33 +360,36 @@ footer a:hover{color:var(--text)}
     </div>
     <div class="compare" data-compare>
       <div class="compare-media">
-        <div class="compare-badge compare-badge-before">Original <span>640&times;480 &middot; 30 fps</span></div>
-        <div class="compare-badge compare-badge-after">Upscaled <span>4K &middot; 60 fps</span></div>
-        <video class="compare-video-before" src="https://mlapplications.com/video_upscale_video_samples/full_transform_before_640x480_30fps.mp4" preload="auto" muted playsinline></video>
-        <video class="compare-video-after" src="https://mlapplications.com/video_upscale_video_samples/full_transform_after_4k_60fps.mp4" preload="auto" muted playsinline></video>
-        <div class="compare-divider"><div class="compare-handle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7 4 12l4 5"/><path d="M16 7l4 5-4 5"/></svg>
-        </div></div>
-        <div class="compare-hint">Drag to compare</div>
+        <video class="compare-video-before" data-title="Original" data-specs="640&times;480 &middot; 30 fps" src="https://mlapplications.com/video_upscale_video_samples/full_transform_before_640x480_30fps.mp4" preload="auto" muted playsinline loop></video>
+        <video class="compare-video-after" data-title="Upscaled" data-specs="4K &middot; 60 fps" src="https://mlapplications.com/video_upscale_video_samples/full_transform_after_4k_60fps.mp4" preload="auto" muted playsinline loop></video>
+        <div class="compare-label">
+          <span class="compare-label-title"></span>
+          <span class="compare-label-specs"></span>
+        </div>
         <button class="compare-fs-close" aria-label="Exit fullscreen" title="Exit fullscreen (Esc)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
         </button>
       </div>
       <div class="compare-controls">
-        <button class="ctrl-btn ctrl-play" aria-label="Play/pause">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path class="pb-icon" d="M8 5v14l11-7z"/></svg>
-        </button>
-        <span class="ctrl-time">0:00</span>
-        <button class="ctrl-btn ctrl-loop on" title="Loop">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-        </button>
-        <button class="ctrl-btn ctrl-mute muted" title="Unmute">
-          <span class="icon-vol" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
-          <span class="icon-mute"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
-        </button>
-        <button class="ctrl-btn ctrl-fullscreen" title="View fullscreen">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path class="fs-icon" d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
-        </button>
+        <div class="ctrl-group">
+          <button class="ctrl-btn ctrl-play" aria-label="Play/pause">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path class="pb-icon" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="ctrl-time">0:00</span>
+        </div>
+        <div class="compare-toggle">
+          <button class="toggle-btn toggle-before active" data-side="before">Original</button>
+          <button class="toggle-btn toggle-after" data-side="after">Upscaled</button>
+        </div>
+        <div class="ctrl-group">
+          <button class="ctrl-btn ctrl-mute muted" title="Unmute">
+            <span class="icon-vol" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+            <span class="icon-mute"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
+          </button>
+          <button class="ctrl-btn ctrl-fullscreen" title="View fullscreen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path class="fs-icon" d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+          </button>
+        </div>
       </div>
       <div class="compare-caption">Resolution and frame rate improved together &mdash; the combination most old phone videos need.</div>
     </div>
@@ -410,10 +411,10 @@ const FS_COLLAPSE_PATH = 'M9 3v3a2 2 0 0 1-2 2H4m16-5v3a2 2 0 0 0 2 2h3M9 21v-3a
 
 // Only one compare block can be fullscreen at a time; tracked here so a
 // single document-level Escape listener can close whichever one is open.
-let activeFullscreenSlider = null;
+let activeFullscreenPlayer = null;
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && activeFullscreenSlider) {
-    activeFullscreenSlider.exitFullscreen();
+  if (e.key === 'Escape' && activeFullscreenPlayer) {
+    activeFullscreenPlayer.exitFullscreen();
   }
 });
 
@@ -423,208 +424,100 @@ function fmt(t) {
 }
 
 /**
- * Drives one before/after slider block. The two <video> elements are almost
- * never frame-identical in duration once they've been through separate
- * re-encodes (rounding, a slightly different frame count, etc.), so this
- * cannot just trust native <video> `loop` + occasional time-correction:
- * whichever clip is shorter reaches its own end, native playback pauses it
- * there, and it sits frozen while the other keeps playing — which reads as
- * "instantly out of sync" the moment you drag, because you're now comparing
- * a live frame against a stale one. To avoid that:
- *  - both clips loop against the SHORTER of the two durations, decided here
- *    rather than left to each video's own `ended` event,
- *  - a short watchdog re-starts "after" any time it stalls or pauses on its
- *    own while "before" is still playing,
- *  - the divider re-syncs both clips' current time the instant a drag
- *    starts, so any drift that did accumulate is corrected right when the
- *    user is about to notice it.
+ * Drives one before/after example. The previous version overlaid both videos with a draggable
+ * divider and kept them in lockstep with continuous drift-correction - which meant decoding TWO
+ * videos at once for as long as the block was on screen. That's exactly what made playback choppy
+ * on phones (iOS Safari in particular has very little headroom for two concurrent video decoders),
+ * and no amount of resync logic could fix a decode-capacity problem.
+ * This version only ever decodes ONE video at a time: a toggle switches which clip is visible and
+ * playing, and the other is paused outright rather than just hidden. Both videos stay in the DOM so
+ * switching is instant, and each carries its own `loop` attribute so it repeats on its own - there
+ * are no two clips to keep in sync, so there's no sync value and nothing to drift.
  */
-class CompareSlider {
+class ComparePlayer {
   constructor(root) {
     this.root = root;
     this.media = root.querySelector('.compare-media');
     this.before = root.querySelector('.compare-video-before');
     this.after = root.querySelector('.compare-video-after');
-    this.divider = root.querySelector('.compare-divider');
-    this.hintShown = true;
-    this.minDuration = null;
+
+    this.labelTitle = root.querySelector('.compare-label-title');
+    this.labelSpecs = root.querySelector('.compare-label-specs');
 
     this.playBtn = root.querySelector('.ctrl-play');
     this.pbIcon = root.querySelector('.pb-icon');
     this.timeEl = root.querySelector('.ctrl-time');
-    this.loopBtn = root.querySelector('.ctrl-loop');
     this.muteBtn = root.querySelector('.ctrl-mute');
     this.fsBtn = root.querySelector('.ctrl-fullscreen');
     this.fsIcon = root.querySelector('.fs-icon');
     this.fsClose = root.querySelector('.compare-fs-close');
+    this.toggleBeforeBtn = root.querySelector('.toggle-before');
+    this.toggleAfterBtn = root.querySelector('.toggle-after');
     this._backdrop = null;
 
-    this._setPosition(50);
-    this._bindDrag();
+    // Start on the original clip - seeing the source first, then switching to the result, reads
+    // more naturally than starting on the result.
+    this.active = this.before;
+    this.before.classList.add('active-video');
+    this.after.pause();
+
+    this._updateLabel();
+    this._bindToggle();
     this._bindPlayback();
     this._bindControls();
     this._bindFullscreen();
   }
 
-  _setPosition(pct) {
-    pct = Math.min(100, Math.max(0, pct));
-    this.after.style.clipPath = `inset(0 0 0 ${pct}%)`;
-    this.divider.style.left = pct + '%';
+  _updateLabel() {
+    const title = this.active.dataset.title || '';
+    const specs = this.active.dataset.specs || '';
+    this.labelTitle.textContent = title;
+    this.labelSpecs.textContent = specs;
+    this.labelSpecs.style.display = specs ? '' : 'none';
   }
 
-  // Only ever nudges "after" - "before" is always the timing master. On a phone (iOS Safari
-  // especially) a currentTime jump forces the decoder to flush and reseek, which is visible as a
-  // stutter - and since routine drift correction only ever touched "after", that stutter landed
-  // entirely on the right-hand video, several times a second, for the whole clip: "the second video
-  // is completely choppy" is exactly what constant reseeking looks like. Small, everyday drift (a few
-  // hundredths of a second, from the two videos simply decoding independently) is now closed by
-  // gently nudging "after"'s playback SPEED instead - a couple percent faster or slower - which pulls
-  // it back in line over about a second with no visible seek at all. A hard seek is reserved for
-  // genuinely large drift (a stall/recovery case), where the jump itself is far less noticeable than
-  // dozens of tiny ones would be.
-  _resync() {
-    const drift = this.after.currentTime - this.before.currentTime;
-    const absDrift = Math.abs(drift);
+  _switchTo(target) {
+    if (target === this.active) return;
+    const wasPlaying = !this.active.paused;
+    const t = this.active.currentTime;
 
-    if (absDrift > 0.5) {
-      this.after.currentTime = this.before.currentTime;
-      this.after.playbackRate = 1;
-    } else if (absDrift > 0.08) {
-      this.after.playbackRate = drift > 0 ? 0.97 : 1.03;
-    } else if (this.after.playbackRate !== 1) {
-      this.after.playbackRate = 1;
-    }
+    this.active.pause();
+    this.active.classList.remove('active-video');
+
+    // Carry position (and play state) across so the video you land on picks up right where the
+    // one you left off was - the whole point of a toggle instead of two independent players.
+    target.currentTime = t;
+    target.classList.add('active-video');
+    this.active = target;
+
+    this.toggleBeforeBtn.classList.toggle('active', this.active === this.before);
+    this.toggleAfterBtn.classList.toggle('active', this.active === this.after);
+    this._updateLabel();
+    this.timeEl.textContent = fmt(target.currentTime);
+
+    if (wasPlaying) target.play().catch(() => {});
   }
 
-  _restart() {
-    this.before.currentTime = 0;
-    this.after.currentTime = 0;
-    this.after.playbackRate = 1;
-    this._bufferStalled = false;
-    if (this.loopBtn.classList.contains('on')) {
-      this.before.play().catch(() => {});
-      this.after.play().catch(() => {});
-    } else {
-      this._userWantsPlay = false;
-      this.before.pause();
-      this.after.pause();
-      this._setPlayIcon(false);
-    }
-  }
-
-  _bindDrag() {
-    let dragging = false;
-    const moveTo = (clientX) => {
-      const rect = this.media.getBoundingClientRect();
-      this._setPosition(((clientX - rect.left) / rect.width) * 100);
-      if (this.hintShown) { this.media.classList.add('dragged'); this.hintShown = false; }
-    };
-    this.media.addEventListener('pointerdown', (e) => {
-      dragging = true;
-      this.media.setPointerCapture(e.pointerId);
-      // A hard seek here (rather than the gentler speed-nudge _resync() uses during normal playback)
-      // is deliberate: this is the one moment a snap is actually the right tool, not a stutter to
-      // avoid - it happens right as the user's attention shifts to the handle, is over before they're
-      // actually comparing frames, and closes the gap immediately instead of over the following
-      // second, which matters exactly when they're about to drag back and forth to compare.
-      if (Math.abs(this.after.currentTime - this.before.currentTime) > 0.02) {
-        this.after.currentTime = this.before.currentTime;
-        this.after.playbackRate = 1;
-      }
-      moveTo(e.clientX);
-    });
-    this.media.addEventListener('pointermove', (e) => { if (dragging) moveTo(e.clientX); });
-    this.media.addEventListener('pointerup', () => { dragging = false; });
-    this.media.addEventListener('pointercancel', () => { dragging = false; });
+  _bindToggle() {
+    this.toggleBeforeBtn.addEventListener('click', () => this._switchTo(this.before));
+    this.toggleAfterBtn.addEventListener('click', () => this._switchTo(this.after));
   }
 
   _bindPlayback() {
-    const computeMinDuration = () => {
-      if (this.before.duration && this.after.duration) {
-        this.minDuration = Math.min(this.before.duration, this.after.duration);
-      }
-    };
-    this.before.addEventListener('loadedmetadata', computeMinDuration);
-    this.after.addEventListener('loadedmetadata', computeMinDuration);
-
-    this.before.addEventListener('timeupdate', () => {
-      if (!this.before.duration) return;
-      this.timeEl.textContent = fmt(this.before.currentTime);
-
-      const limit = this.minDuration || this.before.duration;
-      if (this.before.currentTime >= limit - 0.08) {
-        this._restart();
-        return;
-      }
-      this._resync();
+    [this.before, this.after].forEach((v) => {
+      v.addEventListener('timeupdate', () => {
+        if (v !== this.active || !v.duration) return;
+        this.timeEl.textContent = fmt(v.currentTime);
+      });
+      v.addEventListener('play', () => { if (v === this.active) this.pbIcon.setAttribute('d', PAUSE_PATH); });
+      v.addEventListener('pause', () => { if (v === this.active) this.pbIcon.setAttribute('d', PLAY_PATH); });
     });
-
-    // The real cause of "the second video is completely choppy" on iPhone: a video that is
-    // waiting on network data does NOT report itself as paused (`.paused` stays false the whole
-    // time it's stuck), it just stops advancing and fires 'waiting'. The old watchdog only ever
-    // checked `.paused`, so a genuinely buffering clip - typically "after", since it's always the
-    // heavier file (higher resolution/fps) - was invisible to it: "before" kept racing ahead,
-    // drift kept blowing past the hard-seek threshold, and every one of those seeks immediately
-    // re-triggered more buffering on a connection that already couldn't keep up. That's a
-    // continuous stutter loop, not an occasional correction.
-    // Fix: whichever clip is buffering, pause BOTH until it can play through, then resume
-    // together. This is the same "wait for the slow one" approach any two-video sync needs -
-    // the speed-nudging in _resync() only handles fine drift once both are actually progressing,
-    // it can't fix one of them starving for data.
-    this._userWantsPlay = false;
-    this._bufferStalled = false;
-
-    const pauseForBuffering = () => {
-      if (!this._userWantsPlay || this._bufferStalled) return;
-      this._bufferStalled = true;
-      this.before.pause();
-      this.after.pause();
-    };
-    const resumeFromBuffering = () => {
-      if (!this._userWantsPlay || !this._bufferStalled) return;
-      this._bufferStalled = false;
-      this.before.play().catch(() => {});
-      this.after.play().catch(() => {});
-    };
-    this.before.addEventListener('waiting', pauseForBuffering);
-    this.after.addEventListener('waiting', pauseForBuffering);
-    this.before.addEventListener('playing', resumeFromBuffering);
-    this.after.addEventListener('playing', resumeFromBuffering);
-
-    // Fallback safety net for the rarer case where "after" ends up genuinely
-    // paused (not just buffering) while "before" plays on - e.g. it hit its
-    // own native duration a beat before we caught it above.
-    this._watchdog = setInterval(() => {
-      if (this._userWantsPlay && !this._bufferStalled && !this.before.paused && this.after.paused) {
-        this.after.currentTime = this.before.currentTime;
-        this.after.playbackRate = 1;
-        this.after.play().catch(() => {});
-      }
-    }, 250);
-  }
-
-  _setPlayIcon(playing) {
-    this.pbIcon.setAttribute('d', playing ? PAUSE_PATH : PLAY_PATH);
   }
 
   _bindControls() {
     this.playBtn.addEventListener('click', () => {
-      if (!this._userWantsPlay) {
-        this._userWantsPlay = true;
-        this._bufferStalled = false;
-        this.before.play().catch(() => {});
-        this.after.play().catch(() => {});
-        this._setPlayIcon(true);
-      } else {
-        this._userWantsPlay = false;
-        this._bufferStalled = false;
-        this.before.pause();
-        this.after.pause();
-        this._setPlayIcon(false);
-      }
-    });
-    this.loopBtn.addEventListener('click', () => {
-      this.loopBtn.classList.toggle('on');
+      if (this.active.paused) this.active.play().catch(() => {});
+      else this.active.pause();
     });
     this.muteBtn.addEventListener('click', () => {
       const nowMuted = !this.before.muted;
@@ -654,8 +547,8 @@ class CompareSlider {
   enterFullscreen() {
     if (this.media.classList.contains('fullscreen')) return;
     // Only one compare block fullscreen at a time.
-    if (activeFullscreenSlider && activeFullscreenSlider !== this) {
-      activeFullscreenSlider.exitFullscreen();
+    if (activeFullscreenPlayer && activeFullscreenPlayer !== this) {
+      activeFullscreenPlayer.exitFullscreen();
     }
     this.media.classList.add('fullscreen');
     document.body.classList.add('compare-fullscreen-open');
@@ -665,7 +558,7 @@ class CompareSlider {
     this.media.parentNode.insertBefore(this._backdrop, this.media);
     if (this.fsBtn) this.fsBtn.classList.add('on');
     if (this.fsIcon) this.fsIcon.setAttribute('d', FS_COLLAPSE_PATH);
-    activeFullscreenSlider = this;
+    activeFullscreenPlayer = this;
   }
 
   exitFullscreen() {
@@ -678,11 +571,11 @@ class CompareSlider {
     }
     if (this.fsBtn) this.fsBtn.classList.remove('on');
     if (this.fsIcon) this.fsIcon.setAttribute('d', FS_EXPAND_PATH);
-    if (activeFullscreenSlider === this) activeFullscreenSlider = null;
+    if (activeFullscreenPlayer === this) activeFullscreenPlayer = null;
   }
 }
 
-document.querySelectorAll('[data-compare]').forEach((el) => new CompareSlider(el));
+document.querySelectorAll('[data-compare]').forEach((el) => new ComparePlayer(el));
 </script>
 
 <!-- old --adsense-- code -->
