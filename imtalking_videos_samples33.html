@@ -192,11 +192,11 @@ footer a:hover{color:var(--text)}
   gtag('config', 'G-87MTDXTF59');
 </script>
 
-<!-- 2. STYLING: INLINE, STICKY TRANSITIONS, AND BLUR ANIMATION -->
-  
-  <!-- 2. STYLING: STATIC GHOST ANCHOR, STICKY TRANSITIONS, AND BLUR ANIMATION -->
+  <!-- ======================================================================= -->
+  <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
+  <!-- ======================================================================= -->
   <style>
-    /* KEEPS SPACE RESERVED IN TEXT FLOW: Stops infinite flicker and browser freezing */
+    /* THE GHOST ANCHOR: Stays fixed in layout to completely eliminate infinite layout flickers */
     .outstream-placement-anchor {
       width: 336px;
       height: 280px;
@@ -205,7 +205,7 @@ footer a:hover{color:var(--text)}
       background: transparent;
     }
 
-    /* Main moving container at its native inline size */
+    /* THE MOVING CONTAINER: Holds the ad frame and performs transitions on scroll */
     .outstream-main-container {
       width: 336px;
       height: 280px;
@@ -216,11 +216,11 @@ footer a:hover{color:var(--text)}
       transition: box-shadow 0.3s ease;
     }
 
-    /* THE STICKY OVERLAY STATE (Activated by scroll engine) */
+    /* STICKY OVERLAY STATE: Engaged programmatically by IntersectionObserver */
     .outstream-main-container.is-sticky {
       position: fixed;
-      top: auto; /* Clears top absolute constraint */
-      left: auto; /* Clears left absolute constraint */
+      top: auto;
+      left: auto;
       bottom: 25px;
       right: 25px;
       z-index: 99999;
@@ -228,21 +228,21 @@ footer a:hover{color:var(--text)}
       border-radius: 4px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
       
-      /* Scale downward slightly for pristine desktop corner placement */
+      /* Downscale slightly for clean desktop corner placement */
       transform: scale(0.9);
       transform-origin: bottom right;
       
-      /* Elegant entrance physics: Slides up, fades in, clears blur filter */
+      /* Premium entrance physics: slides up, clears blur layer, fades visibility */
       animation: dynamicStickyShow 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     }
 
-    /* Target the GPT iframe holder within the sticky wrapper */
+    /* Keeps iframe elements isolated and clipped safely inside borders when sticky */
     .outstream-main-container.is-sticky #div-gpt-ad-outstream-slot {
       border-radius: 4px;
       overflow: hidden;
     }
 
-    /* CLOSE BUTTON STYLING (Hidden inline, exposed on sticky status) */
+    /* CLOSE TRIGGER MARKUP: Revealed exclusively during sticky activation mode */
     .outstream-close-trigger {
       display: none;
       position: absolute;
@@ -266,14 +266,14 @@ footer a:hover{color:var(--text)}
     }
 
     .outstream-close-trigger:hover {
-      background: #ff3b30; /* Shifts red on desktop hover actions */
+      background: #ff3b30; /* Desktop specific feedback overlay shift */
     }
 
     .outstream-main-container.is-sticky .outstream-close-trigger {
       display: block;
     }
 
-    /* SMOOTH BLUR AND FADE-IN ENTRANCE ANIMATION */
+    /* BLUR ENTRANCE KEYFRAME SEQUENCING */
     @keyframes dynamicStickyShow {
       0% {
         transform: translateY(60px) scale(0.85);
@@ -332,10 +332,11 @@ footer a:hover{color:var(--text)}
 -->
   
 
-  <!-- 3. RUNTIME JAVASCRIPT: FIXED ENGINE FOR ANCHOR VIEWPORT OBSERVATION -->
+  <!-- ======================================================================= -->
+  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
+  <!-- ======================================================================= -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // TARGET THE FIXED GHOST ANCHOR PLACEHOLDER FOR OBSERVATION
       const anchorNode = document.querySelector('.outstream-placement-anchor');
       const adWrapper = document.getElementById('outstream-ad-wrapper');
       const closeBtn = document.getElementById('outstream-close');
@@ -343,41 +344,55 @@ footer a:hover{color:var(--text)}
 
       if (!anchorNode || !adWrapper) return;
 
+      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
+      window.googletag = window.googletag || {cmd: []};
+      googletag.cmd.push(function() {
+        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
+            if (event.isEmpty) {
+              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
+              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
+            } else {
+              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
+              // Only trigger performance tracking cycles if demand actually filled the layout container
+              stickyObserver.observe(anchorNode);
+            }
+          }
+        });
+      });
+
+      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
       const stickyObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          // Absolute bypass if the close icon has been triggered
           if (userClosedAd) return;
 
-          // If the static anchor location completely leaves the viewport scope
+          // If the invisible inline space position completely rolls out of view
           if (!entry.isIntersecting) {
             const boundingBox = entry.boundingClientRect;
             
-            // Only convert to sticky if user has scrolled past the placement DOWN the page
+            // Only apply sticky docking if user scrolled past the ad DOWN the page
             if (boundingBox.top < 0) {
               adWrapper.classList.add('is-sticky');
             }
           } else {
-            // Re-dock seamlessly back inline if user scrolls back UP to original placement location
+            // Re-dock cleanly back inline the second the user scrolls back up
             adWrapper.classList.remove('is-sticky');
           }
         });
       }, { 
         root: null, 
-        threshold: 0 // Triggers immediately the precise pixel frame it fully leaves view
+        threshold: 0 // Fires instantly the frame the boundary is crossed
       });
 
-      stickyObserver.observe(anchorNode);
-
-      // Clean removal script execution on click
+      // STEP C: CLOSE ICON ACTIONS
       closeBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         userClosedAd = true;
         adWrapper.classList.remove('is-sticky');
-        anchorNode.remove(); // Safely tears down the entire layout block nodes
+        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
       });
     });
   </script>
-
   <!-- ENHANCE -->
   <div class="section">
     <div class="section-header">
@@ -385,16 +400,15 @@ footer a:hover{color:var(--text)}
       <p>GFPGAN face restoration runs on every frame for a sharper result, at the cost of extra render time.</p>
     </div>
 
-     
-  <!-- ========================================== -->
-  <!-- OUTSTREAM PLACEMENT WITH GHOST ANCHOR FIX -->
-  <!-- ========================================== -->
+   
+  <!-- ======================================================================= -->
+  <!-- 3. WEB PAGE STRUCTURAL CORE HOUSING PLACEMENT MARKUP                   -->
+  <!-- ======================================================================= -->
   <div class="outstream-placement-anchor">
-    
     <div id="outstream-ad-wrapper" class="outstream-main-container">
       <div id="outstream-close" class="outstream-close-trigger">&times;</div>
       
-      <!-- Exact target slot for the display GPT tag -->
+      <!-- Target Display DOM Container Slot node -->
       <div id="div-gpt-ad-outstream-slot" style="width: 336px; height: 280px; margin: 0 auto;">
         <script>
           googletag.cmd.push(function() { 
@@ -403,6 +417,7 @@ footer a:hover{color:var(--text)}
         </script>
       </div>
     </div>
+  </div> 
 
   </div>
   <!-- ========================================== -->
