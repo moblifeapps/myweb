@@ -185,12 +185,12 @@ _W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":
  <script>
   window.googletag = window.googletag || {cmd: []};
     googletag.cmd.push(function() {
-      // NATIVE LAZY LOADING CONFIGURATION 
-    googletag.pubads().enableLazyLoad({ 
-    fetchMarginPercent: 0,  // Forces the slot to fetch only when close to the viewport 
-    renderMarginPercent: 0, // Delays rendering until it is nearly visible 
-    mobileScalingFactor: 1.0  // Keeps desktop and mobile behaviors identical 
-    }); 
+      googletag.setConfig({
+  lazyLoad: {
+    fetchMarginPercent: 0,  // Forces the slot to fetch only when close to the viewport
+    renderMarginPercent: 0  // Delays rendering until it is nearly visible
+  }
+}); 
 // Configured for 336x280 (or 300x250) display slots where outstream videos backfill 
     googletag.defineSlot('/423204242/myAdx_outstrm_dnt',[ [336, 280] , [300,250]], 'div-gpt-ad-outstream-slot')
     .addService(googletag.pubads()); 
