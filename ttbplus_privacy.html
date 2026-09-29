@@ -132,26 +132,22 @@
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
 
 <!-- Standard GPT script required for GAM & Privacy/Messaging tools -->
- <script>
-  window.googletag = window.googletag || {cmd: []};
-    googletag.cmd.push(function() {
-      googletag.setConfig({
-  lazyLoad: {
-    fetchMarginPercent: 0,  // Forces the slot to fetch only when close to the viewport
-    renderMarginPercent: 0  // Delays rendering until it is nearly visible
-  }
-}); 
-// Configured for 336x280 (or 300x250) display slots where outstream videos backfill 
-    googletag.defineSlot('/423204242/myAdx_outstrm_dnt',[ [336, 280] , [300,250]], 'div-gpt-ad-outstream-slot')
-    .addService(googletag.pubads()); 
-    // 4. Global PubAds Settings (Fixes collapseDiv warning)
-    googletag.pubads().collapseEmptyDivs(true); // Replaces invalid setConfig collapseDiv  	 
-    googletag.enableServices();
-    
-  
-    ///if (anchorSlot) {
-//      googletag.display(anchorSlot);
-//    }
+ <script>  
+  window.googletag = window.googletag || {cmd: []};    
+  googletag.cmd.push(function() {      
+    googletag.setConfig({  
+      lazyLoad: {
+        fetchMarginPercent: 0,  // Forces the slot to fetch only when close to the viewport
+        renderMarginPercent: 0  // Delays rendering until it is nearly visible
+      },
+      collapseDiv: "ON_NO_FILL"  // Replaces the deprecated collapseEmptyDivs(true)
+    }); 
+
+    // Configured for 336x280 (or 300x250) display slots where outstream videos backfill     
+    googletag.defineSlot('/423204242/myAdx_outstrm_dnt', [[336, 280], [300, 250]], 'div-gpt-ad-outstream-slot')
+      .addService(googletag.pubads());     
+
+    googletag.enableServices();          
   });
 </script>
 
