@@ -186,7 +186,104 @@ googletag.enableServices();
  
  
 <!--<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7710644763832143" crossorigin="anonymous"></script>-->
-</head>
+  <!-- ======================================================================= -->
+  <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
+  <!-- ======================================================================= -->
+  <style>
+    /* THE GHOST ANCHOR: Stays fixed in layout to completely eliminate infinite layout flickers */
+    .outstream-placement-anchor {
+      width: 336px;
+      height: 280px;
+      margin: 40px auto;
+      position: relative;
+      background: transparent;
+    }
+
+    /* THE MOVING CONTAINER: Holds the ad frame and performs transitions on scroll */
+    .outstream-main-container {
+      width: 336px;
+      height: 280px;
+      background: #fbfbfb;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: box-shadow 0.3s ease;
+    }
+
+    /* STICKY OVERLAY STATE: Engaged programmatically by IntersectionObserver */
+    .outstream-main-container.is-sticky {
+      position: fixed;
+      top: auto;
+      left: auto;
+      bottom: 25px;
+      right: 25px;
+      z-index: 99999;
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      
+      /* Downscale slightly for clean desktop corner placement */
+      transform: scale(0.9);
+      transform-origin: bottom right;
+      
+      /* Premium entrance physics: slides up, clears blur layer, fades visibility */
+      animation: dynamicStickyShow 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    /* Keeps iframe elements isolated and clipped safely inside borders when sticky */
+    .outstream-main-container.is-sticky #div-gpt-ad-outstream-slot {
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    /* CLOSE TRIGGER MARKUP: Revealed exclusively during sticky activation mode */
+    .outstream-close-trigger {
+      display: none;
+      position: absolute;
+      top: -12px;
+      left: -12px;
+      width: 26px;
+      height: 26px;
+      background: #111;
+      color: #fff;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 23px;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      font-weight: bold;
+      border: 2px solid #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 100000;
+      transition: background 0.2s ease;
+    }
+
+    .outstream-close-trigger:hover {
+      background: #ff3b30; /* Desktop specific feedback overlay shift */
+    }
+
+    .outstream-main-container.is-sticky .outstream-close-trigger {
+      display: block;
+    }
+
+    /* BLUR ENTRANCE KEYFRAME SEQUENCING */
+    @keyframes dynamicStickyShow {
+      0% {
+        transform: translateY(60px) scale(0.85);
+        opacity: 0;
+        filter: blur(8px);
+      }
+      100% {
+        transform: translateY(0) scale(0.9);
+        opacity: 1;
+        filter: blur(0);
+      }
+    }
+  </style>
+  
+  </head>
+ 
 <body>
 <div class="warning-container">
 	<h2 class="header">404</h2>
@@ -216,6 +313,69 @@ googletag.enableServices();
 //    } 
 //  });
 </script> 
+  <!-- ======================================================================= -->
+  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
+  <!-- ======================================================================= -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const anchorNode = document.querySelector('.outstream-placement-anchor');
+      const adWrapper = document.getElementById('outstream-ad-wrapper');
+      const closeBtn = document.getElementById('outstream-close');
+      let userClosedAd = false;
+
+      if (!anchorNode || !adWrapper) return;
+
+      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
+      window.googletag = window.googletag || {cmd: []};
+      googletag.cmd.push(function() {
+        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
+            if (event.isEmpty) {
+              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
+              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
+            } else {
+              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
+              // Only trigger performance tracking cycles if demand actually filled the layout container
+              stickyObserver.observe(anchorNode);
+            }
+          }
+        });
+      });
+
+      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
+      const stickyObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (userClosedAd) return;
+
+          // If the invisible inline space position completely rolls out of view
+          if (!entry.isIntersecting) {
+            const boundingBox = entry.boundingClientRect;
+            
+            // Only apply sticky docking if user scrolled past the ad DOWN the page
+            if (boundingBox.top < 0) {
+              adWrapper.classList.add('is-sticky');
+            }
+          } else {
+            // Re-dock cleanly back inline the second the user scrolls back up
+            adWrapper.classList.remove('is-sticky');
+          }
+        });
+      }, { 
+        root: null, 
+        threshold: 0 // Fires instantly the frame the boundary is crossed
+      });
+
+      // STEP C: CLOSE ICON ACTIONS
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        userClosedAd = true;
+        adWrapper.classList.remove('is-sticky');
+        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
+      });
+    });
+  </script>
+
 </body>
+
 
 </html>
