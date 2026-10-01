@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- WEB_ONLY_START -->
+<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
+<script>
+window.googletag = window.googletag || {cmd: []};
+googletag.cmd.push(function() {
+  googletag.pubads().collapseEmptyDivs(true);
+  googletag.enableServices();
+});
+</script>
+<link rel="preload" as="script" href="https://live.demand.supply/up.js"><script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
+<!-- WEB_ONLY_END -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transparent Taskbar+</title>
+<style>
+/* ══════════════════════════════════════════════════════════════════
+   THEME TOKENS - same variable names/values as AI Video Upscaler+ and the
+   other mlapplications.com apps. html.light-theme overrides everything.
+   ══════════════════════════════════════════════════════════════════ */
+:root {
+  --bg:          #0f1117;
+  --surface:     #181c27;
+  --surface2:    #1e2333;
+  --border:      #2a3148;
+  --accent:      #5b7fff;
+  --accent-glow: rgba(91,127,255,.18);
+  --green:       #3ecf82;
+  --red:         #ff5f72;
+  --amber:       #f5a623;
+  --text:        #e2e8f0;
+  --text2:       #8a94a8;
+  --text3:       #4e5a72;
+  --radius:      10px;
+  --nav-active-bg: var(--bg);
+  --bg-icon-color: #3a4152;
+}
+html.light-theme {
+  --bg:          #f0f2f8;
+  --surface:     #ffffff;
+  --surface2:    #e8ecf4;
+  --border:      #d0d5e8;
+  --accent:      #4a6ef5;
+  --accent-glow: rgba(74,110,245,.14);
+  --green:       #16a34a;
+  --red:         #dc2626;
+  --amber:       #d97706;
+  --text:        #1a1f35;
+  --text2:       #4a5278;
+  --text3:       #8891b0;
+  --nav-active-bg: var(--surface2);
+  --bg-icon-color: #c7ccdb;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app-shell { display: flex; flex-direction: column; height: 100vh; }
+
+/* TOP BAR */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  padding: 12px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.topbar-brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.topbar-brand img { width: 40px; height: 40px; border-radius: 9px; }
+.topbar-brand-title { font-size: 17px; font-weight: 700; color: var(--text); line-height: 1.15; }
+.topbar-brand-subtitle { font-size: 11px; color: var(--text2); }
+.topbar-center {
+  flex: 1; text-align: center; font-size: 11px; color: var(--text2);
+  line-height: 1.5; max-width: 600px; margin: 0 auto;
+}
+.topbar-center strong { color: var(--text); }
+.topbar-status {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--text2);
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 20px; padding: 7px 16px; flex-shrink: 0; white-space: nowrap;
+}
+.ws-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--text3); flex-shrink: 0; transition: background .3s; }
+.ws-dot.connected { background: var(--green); box-shadow: 0 0 5px var(--green); }
+.ws-dot.connecting { background: var(--amber); animation: wsBlink 1s infinite; }
+.ws-dot.error { background: var(--red); box-shadow: 0 0 5px var(--red); }
+@keyframes wsBlink { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+.app-layout { display: flex; flex: 1; min-height: 0; }
+
+/* SIDEBAR - identical structure to AI Video Upscaler+ */
+.sidebar {
+  width: 230px; flex-shrink: 0;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  padding: 16px 0;
+  overflow-y: auto;
+}
+.sidebar-nav { display: flex; flex-direction: column; gap: 2px; margin: 0; padding: 0; border-radius: 8px; }
+.sidebar-divider { border-bottom: 1px solid var(--border); margin: 0; }
+.sidebar-section-primary,
+.sidebar-section-settings { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+.sidebar-section-docs,
+.sidebar-section-rateus,
+.sidebar-section-legal    { background: color-mix(in srgb, var(--text3) 6%, transparent); }
+
+.nav-item {
+  display: flex; align-items: center; gap: 12px;
+  background: transparent; border: none; border-left: 3px solid transparent;
+  color: var(--text2); text-align: left;
+  padding: 14px 20px; cursor: pointer; font-size: 15.5px; width: 100%;
+  font-family: inherit;
+}
+.nav-item:hover { background: var(--surface2); color: var(--text); }
+.nav-item.active { background: var(--nav-active-bg); color: var(--text); padding-left: 17px; }
+.nav-icon { font-size: 17px; width: 20px; text-align: center; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
+.nav-icon svg { width: 19px; height: 19px; display: block; }
+.nav-soon {
+  margin-left: auto; font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--text3); border: 1px solid var(--border); border-radius: 10px; padding: 1px 7px;
+}
+
+.sidebar-footer { margin-top: auto; padding: 16px 20px 4px; text-align: center; }
+.sidebar-footer-logo { height: 22px; width: auto; max-width: 96px; object-fit: contain; opacity: 0.85; }
+.sidebar-footer-link {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: var(--text3); font-size: 11px; cursor: pointer;
+  background: none; border: none; font-family: inherit; margin: 0 auto;
+}
+.sidebar-footer-link:hover { color: var(--text2); }
+
+main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
+
+.view { display: none; }
+.view.active { display: block; }
+
+/* Faint watermark of the current tab's icon, bottom-right (same as AI Video Upscaler+) */
+.view-bg-icon {
+  position: fixed; right: 28px; bottom: 24px; width: 190px; aspect-ratio: 1 / 1;
+  color: var(--bg-icon-color); opacity: 0.20; pointer-events: none; z-index: 0;
+}
+.view-bg-icon svg { width: 100%; height: 100%; display: block; }
+
+/* HEADERS / SECTIONS / CARDS (shared with AI Video Upscaler+) */
+.settings-header { margin-bottom: 24px; position: relative; z-index: 1; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.settings-header h1 { font-size: 24px; margin: 0 0 4px; }
+.settings-header p { font-size: 13px; color: var(--text2); margin: 0; }
+
+.settings-section { margin-bottom: 28px; position: relative; z-index: 1; }
+.settings-section-title {
+  font-size: 11px; font-weight: 700; color: var(--accent);
+  text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+.settings-section-title svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+.settings-card {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px 18px; margin-bottom: 10px;
+}
+.settings-card-title { font-size: 14px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 8px; }
+.settings-card-desc { font-size: 12px; color: var(--text2); margin-top: 2px; line-height: 1.5; }
+
+.toggle-switch { position: relative; width: 46px; height: 26px; flex-shrink: 0; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute; inset: 0; cursor: pointer;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 26px; transition: background .2s ease;
+}
+.toggle-slider::before {
+  content: ''; position: absolute; height: 18px; width: 18px;
+  left: 3px; top: 3px; background: white; border-radius: 50%; transition: transform .2s ease;
+}
+.toggle-switch input:checked + .toggle-slider { background: var(--accent); }
+.toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
+.toggle-switch input:disabled + .toggle-slider { opacity: .5; cursor: not-allowed; }
+
+.primary-btn, .secondary-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 18px; border-radius: 6px; cursor: pointer; font-size: 14px; font-family: inherit;
+}
+.primary-btn { background: var(--accent); color: white; border: none; }
+.primary-btn:hover { filter: brightness(1.1); }
+.secondary-btn { background: var(--surface2); color: var(--text2); border: 1px solid var(--border); }
+.secondary-btn:hover { color: var(--text); border-color: var(--accent); }
+.primary-btn:disabled, .secondary-btn:disabled { opacity: .5; cursor: not-allowed; filter: none; }
+.primary-btn svg, .secondary-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* ══════════════════════════════════════════════════════════════════
+   BOTTOM TASKBAR - style cards with a live mini preview
+   ══════════════════════════════════════════════════════════════════ */
+.style-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+  gap: 14px; position: relative; z-index: 1;
+}
+.style-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 12px; display: flex; flex-direction: column; gap: 10px; cursor: pointer;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.style-card:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
+.style-card.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 0 16px var(--accent-glow); }
+
+.style-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.style-card-name { font-size: 14px; font-weight: 600; color: var(--text); }
+.style-card-desc { font-size: 12px; color: var(--text2); margin-top: 2px; }
+.active-badge {
+  display: none; align-items: center; gap: 5px; flex-shrink: 0;
+  font-size: 11px; font-weight: 700; color: var(--green);
+  background: color-mix(in srgb, var(--green) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--green) 45%, transparent);
+  border-radius: 12px; padding: 2px 9px;
+}
+.active-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+.style-card.current .active-badge { display: inline-flex; }
+
+.style-card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 36px; }
+.color-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.color-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text2); cursor: pointer; }
+.color-chip input[type="color"] {
+  width: 30px; height: 26px; padding: 0; border: 1px solid var(--border); border-radius: 6px;
+  background: none; cursor: pointer;
+}
+.color-chip input[type="color"]::-webkit-color-swatch-wrapper { padding: 2px; }
+.color-chip input[type="color"]::-webkit-color-swatch { border: none; border-radius: 4px; }
+.apply-btn { padding: 7px 14px; font-size: 13px; }
+
+/* Mini preview: a "desktop wallpaper" with a taskbar along the bottom */
+.tb-preview {
+  position: relative; height: 96px; border-radius: 8px; overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 30%, rgba(255,255,255,.35) 0, transparent 38%),
+    radial-gradient(circle at 80% 20%, #f59f00 0, transparent 42%),
+    radial-gradient(circle at 70% 85%, #e64980 0, transparent 45%),
+    linear-gradient(135deg, #364fc7 0%, #7048e8 50%, #c2255c 100%);
+}
+.tb-bar {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+}
+.tb-dock { display: inline-flex; align-items: center; gap: 4px; padding: 3px 5px; border-radius: 7px; }
+.tb-btn {
+  width: 16px; height: 16px; border-radius: 4px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.tb-btn::after { content: ''; width: 10px; height: 10px; border-radius: 3px; background: rgba(255,255,255,.92); }
+.tb-btn:nth-child(2)::after { background: #74c0fc; }
+.tb-btn:nth-child(3)::after { background: #ffd43b; }
+.tb-btn:nth-child(4)::after { background: #69db7c; }
+.tb-btn:nth-child(5)::after { background: #ff8787; }
+.tb-tray { position: absolute; right: 7px; bottom: 8px; display: flex; gap: 3px; }
+.tb-tray i { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.9); }
+.tb-widget { position: absolute; left: 7px; bottom: 7px; width: 14px; height: 9px; border-radius: 3px; background: rgba(255,255,255,.75); }
+
+/* Per-style rendering - colors come from the --c-* variables set by script on #styleGrid */
+.tb-preview[data-type="transparent"] .tb-bar { border-top: 1px solid rgba(255,255,255,.65); }
+.tb-preview[data-type="buttons_glass"] .tb-btn,
+.tb-preview[data-type="dock_glass"] .tb-dock {
+  background: rgba(255,255,255,.22);
+  border: 1px solid rgba(255,255,255,.38);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.tb-preview[data-type="buttons_color"] .tb-btn { background: var(--c-buttons); }
+.tb-preview[data-type="dock_color"] .tb-dock { background: var(--c-dock); }
+.tb-preview[data-type="gradient1"] .tb-bar { background: linear-gradient(to top, var(--c-color1) 0%, color-mix(in srgb, var(--c-color1) 35%, transparent) 100%); }
+.tb-preview[data-type="gradient2"] .tb-bar { background: linear-gradient(90deg, var(--c-color2) 0%, var(--c-color2) 50%, var(--c-color3) 50%, var(--c-color3) 100%); }
+
+.taskbar-footer { margin-top: 22px; display: flex; gap: 10px; flex-wrap: wrap; position: relative; z-index: 1; }
+
+/* Notice shown above the cards when not connected */
+.notice {
+  display: none; align-items: center; gap: 10px; margin-bottom: 16px; position: relative; z-index: 1;
+  font-size: 13px; color: var(--text); background: color-mix(in srgb, var(--amber) 12%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--amber) 45%, var(--border)); border-radius: 8px; padding: 10px 14px;
+}
+.notice.show { display: flex; }
+.notice svg { width: 16px; height: 16px; color: var(--amber); flex-shrink: 0; }
+
+/* Toast */
+.toast {
+  position: fixed; left: 50%; bottom: 26px; transform: translate(-50%, 20px);
+  background: var(--surface2); color: var(--text); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 16px; font-size: 13px; z-index: 50;
+  opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast.ok { border-color: color-mix(in srgb, var(--green) 55%, var(--border)); }
+.toast.err { border-color: color-mix(in srgb, var(--red) 55%, var(--border)); }
+
+/* CONTACT (same as AI Video Upscaler+) */
+.contact-card {
+  display: flex; align-items: center; gap: 14px; width: 100%;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px 18px; margin-bottom: 10px;
+  text-decoration: none; color: var(--text); cursor: pointer; font-family: inherit; text-align: left;
+}
+.contact-card:hover { border-color: var(--accent); }
+.contact-card-icon {
+  width: 34px; height: 34px; border-radius: 8px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--accent-glow); color: var(--accent);
+}
+.contact-card-icon svg { width: 17px; height: 17px; }
+.contact-card-text { font-size: 14px; font-weight: 600; }
+
+/* "App not found" screen (browser mode only) */
+.offline-screen {
+  display: none; position: fixed; inset: 0; z-index: 100; background: var(--bg);
+  align-items: center; justify-content: center; padding: 40px 20px;
+}
+.offline-screen.show { display: flex; }
+.offline-box { max-width: 500px; text-align: center; color: var(--text2); }
+.offline-box img.app-icon { width: 64px; height: 64px; border-radius: 14px; margin-bottom: 18px; }
+.offline-box h2 { color: var(--text); font-size: 20px; margin: 0 0 12px; }
+.offline-box p { font-size: 14px; line-height: 1.6; margin: 0 0 22px; }
+.offline-actions { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+</style>
+<!-- WEB_ONLY_START -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-87MTDXTF59');
+</script>
+<!-- WEB_ONLY_END -->
+</head>
+<body>
+  <div class="app-shell">
+    <div class="topbar">
+      <div class="topbar-brand">
+        <img src="https://mlapplications.com/uploads/ttbicon.png" alt="Transparent Taskbar+">
+        <div>
+          <div class="topbar-brand-title">Transparent Taskbar+</div>
+          <div class="topbar-brand-subtitle">Styles &amp; Effects</div>
+        </div>
+      </div>
+      <div class="topbar-center">
+        Pick a style, then press <strong>Apply</strong>. Changes take effect on your taskbar immediately and are remembered by the app.
+      </div>
+      <div class="topbar-status">
+        <span class="ws-dot connecting" id="wsDot"></span>
+        <span id="wsStatusText">Connecting...</span>
+      </div>
+    </div>
+
+    <!-- WEB_ONLY_START -->
+    <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
+    <!-- WEB_ONLY_END -->
+
+    <div class="app-layout">
+      <aside class="sidebar">
+        <nav class="sidebar-nav sidebar-section-primary">
+          <button class="nav-item active" data-view="taskbar">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 16h18"/><path d="M8 18h.01M12 18h.01M16 18h.01"/></svg>
+            </span> Bottom Taskbar
+          </button>
+          <button class="nav-item" data-view="effects">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7L18.5 9.5 13.8 11.3 12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>
+            </span> Effects
+          </button>
+        </nav>
+
+        <div class="sidebar-divider"></div>
+
+        <nav class="sidebar-nav sidebar-section-settings">
+          <button class="nav-item" data-view="settings">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </span> Settings
+          </button>
+        </nav>
+
+        <div class="sidebar-divider"></div>
+
+        <nav class="sidebar-nav sidebar-section-docs">
+          <button class="nav-item" data-external="help">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+            </span> Help
+          </button>
+          <button class="nav-item" data-external="effectshelp">
+            <span class="nav-icon">&#128214;</span> Effects Guide
+          </button>
+          <button class="nav-item" data-external="tips">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg>
+            </span> Tips &amp; Tricks
+          </button>
+        </nav>
+
+        <div class="sidebar-divider"></div>
+
+        <nav class="sidebar-nav sidebar-section-rateus">
+          <button class="nav-item" data-external="rateus">
+            <span class="nav-icon">&#11088;</span> Rate Us
+          </button>
+        </nav>
+
+        <div class="sidebar-divider"></div>
+
+        <nav class="sidebar-nav sidebar-section-legal">
+          <button class="nav-item" data-external="privacy">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </span> Privacy
+          </button>
+          <button class="nav-item" data-view="contact">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
+            </span> Contact
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <button class="sidebar-footer-link" id="mlappsFooterLink">
+            <img class="sidebar-footer-logo" src="https://mlapplications.com/uploads/logo-big_2.webp" alt="mlapplications.com">
+            <span id="footerVersion">mlapplications.com</span>
+          </button>
+        </div>
+      </aside>
+
+      <main>
+        <!-- ═══════════════ BOTTOM TASKBAR ═══════════════ -->
+        <section id="view-taskbar" class="view active">
+          <div class="view-bg-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 16h18"/><path d="M8 18h.01M12 18h.01M16 18h.01"/></svg>
+          </div>
+          <div class="settings-header">
+            <div>
+              <h1>Bottom Taskbar</h1>
+              <p>Choose the visual style of your taskbar. Pick colors where available, then press Apply.</p>
+            </div>
+          </div>
+
+          <div class="notice" id="notConnectedNotice">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+            <span>Not connected to Transparent Taskbar+ yet - your choices will be sent as soon as the connection is back.</span>
+          </div>
+
+          <div class="style-grid" id="styleGrid"></div>
+
+          <div class="taskbar-footer">
+            <button class="secondary-btn" id="resetDefaultsBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+              Reset Default Values
+            </button>
+          </div>
+        </section>
+
+        <!-- ═══════════════ EFFECTS ═══════════════ -->
+        <section id="view-effects" class="view">
+          <div class="view-bg-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7L18.5 9.5 13.8 11.3 12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>
+          </div>
+          <div class="settings-header">
+            <div>
+              <h1>Taskbar Effects</h1>
+              <p>Effects triggered by the mouse on your taskbar.</p>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <div class="settings-section-title">Mouse effects</div>
+            <div class="settings-card">
+              <div>
+                <div class="settings-card-title">Taskbar highlight</div>
+                <div class="settings-card-desc">The taskbar is highlighted when you move the mouse over it.</div>
+              </div>
+              <label class="toggle-switch"><input type="checkbox" id="effectBlink" data-effect="blink"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="settings-card">
+              <div>
+                <div class="settings-card-title">Click highlight</div>
+                <div class="settings-card-desc">A bursting bubble effect when you click on the taskbar.</div>
+              </div>
+              <label class="toggle-switch"><input type="checkbox" id="effectClicks" data-effect="clicks"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="settings-card">
+              <div>
+                <div class="settings-card-title">Mouse light shadow</div>
+                <div class="settings-card-desc">A soft light that follows the mouse across the taskbar.</div>
+              </div>
+              <label class="toggle-switch"><input type="checkbox" id="effectShadow" data-effect="shadow"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <div class="settings-section-title">Need help?</div>
+            <div class="settings-card">
+              <div>
+                <div class="settings-card-title">Effects guide</div>
+                <div class="settings-card-desc">Examples and tips for every effect, on our website.</div>
+              </div>
+              <button class="secondary-btn" data-external-btn="effectshelp">Open guide</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══════════════ SETTINGS ═══════════════ -->
+        <section id="view-settings" class="view">
+          <div class="view-bg-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </div>
+          <div class="settings-header">
+            <div>
+              <h1>Settings</h1>
+              <p>Customize your Transparent Taskbar+ experience.</p>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <div class="settings-section-title">Appearance</div>
+            <div class="settings-card">
+              <div>
+                <div class="settings-card-title">Light Theme</div>
+                <div class="settings-card-desc">Switch between dark and light interface</div>
+              </div>
+              <label class="toggle-switch"><input type="checkbox" id="settingsThemeToggle"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <div class="settings-section-title">System</div>
+            <div class="settings-card">
+              <div>
+                <div class="settings-card-title">Start with Windows</div>
+                <div class="settings-card-desc">Apply your taskbar style automatically every time you sign in</div>
+              </div>
+              <label class="toggle-switch"><input type="checkbox" id="settingsAutostartToggle"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="settings-card">
+              <div>
+                <div class="settings-card-title">Show this window at startup</div>
+                <div class="settings-card-desc">Open the settings window when Transparent Taskbar+ starts</div>
+              </div>
+              <label class="toggle-switch"><input type="checkbox" id="settingsAutoshowToggle"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <div class="settings-section-title">Window</div>
+            <div class="settings-card">
+              <div>
+                <div class="settings-card-title" id="switchModeTitle">Open in your browser</div>
+                <div class="settings-card-desc" id="switchModeDesc">Continue in a browser tab instead of the app window</div>
+              </div>
+              <button class="secondary-btn" id="switchModeBtn">Switch</button>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <div class="settings-section-title">Troubleshooting</div>
+            <div class="settings-card">
+              <div>
+                <div class="settings-card-title">Restart taskbar connection</div>
+                <div class="settings-card-desc">Use this if the taskbar stopped changing, e.g. after Windows Explorer restarted</div>
+              </div>
+              <button class="secondary-btn" id="softResetBtn">Restart</button>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <div class="settings-section-title">About</div>
+            <div class="settings-card">
+              <div>
+                <div class="settings-card-title">Transparent Taskbar+</div>
+                <div class="settings-card-desc" id="aboutVersion">Built by mlapplications.com</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══════════════ CONTACT ═══════════════ -->
+        <section id="view-contact" class="view">
+          <div class="view-bg-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
+          </div>
+          <div class="settings-header">
+            <div>
+              <h1>Contact</h1>
+              <p>Get in touch, report a bug or request a feature.</p>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <div class="settings-section-title">Reach Us</div>
+            <button class="contact-card" data-external-btn="website">
+              <div class="contact-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg></div>
+              <div class="contact-card-text">mlapplications.com &mdash; our main website</div>
+            </button>
+            <button class="contact-card" data-external-btn="email">
+              <div class="contact-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg></div>
+              <div class="contact-card-text">mil.applications@hotmail.com &mdash; support &amp; bug reports</div>
+            </button>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Browser mode: shown when the app can't be found on this PC -->
+  <div class="offline-screen" id="offlineScreen">
+    <div class="offline-box">
+      <img class="app-icon" src="https://mlapplications.com/uploads/ttbicon.png" alt="Transparent Taskbar+">
+      <h2 id="offlineTitle">Could not find Transparent Taskbar+ running on this PC</h2>
+      <p id="offlineText">If the app is installed, click below to launch it, then try again. If not, you can get it from the Microsoft Store.</p>
+      <div class="offline-actions">
+        <button class="primary-btn" id="launchAppBtn">Open Transparent Taskbar+</button>
+        <a href="https://apps.microsoft.com/detail/9P7HB1KDTTT8?referrer=appbadge&amp;cid=browserfallback&amp;mode=full" target="_blank" rel="noopener">
+          <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft" height="38">
+        </a>
+        <button class="secondary-btn" id="retryConnectBtn">I've opened it - try again</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+/* ═════════════════════════════════════════════════════════════════════════════
+   Transparent Taskbar+ settings page - one file for both:
+     • the app's own WebView2 window   (?mode=desktop&wsport=<LocalWsPort>)
+     • a normal browser tab on mlapplications.com (beacon -> wss://)
+   Same transport pattern as AI Video Upscaler+; ports are TTB+'s own:
+
+     Beacon (HTTP, fixed) : http://127.0.0.1:49399/   -> {wssPort, wsLocalPort, wssAvailable}
+     Browser (WSS/Kestrel): wss://myttbplus.mlapplications.com:{8491|8591|8691}/ws
+     Desktop (WS/Fleck)   : ws://127.0.0.1:{8493|8593|8693}/ws
+
+   Every message, both directions:  { "type": "...", "payload": { ... } }
+
+   PAGE -> APP
+     getState                                         ask for the current settings
+     applyStyle    { style, colors }                  style: transparent|clean|buttons_glass|
+                                                      buttons_color|dock_glass|dock_color|
+                                                      gradient1|gradient2
+                                                      colors: {color1,color2,color3,buttons,dock} ("#RRGGBB")
+     setEffect     { effect: "blink"|"clicks"|"shadow", enabled }
+     setAutostart  { enabled }
+     setAutoshow   { enabled }
+     resetDefaults
+     softReset
+     openAppWindow                                    (browser tab -> show the WPF window)
+     openInBrowser                                    (WPF window -> open this page in a browser)
+     openExternalUrl { url }                          (desktop mode only; browser opens links itself)
+
+   APP -> PAGE
+     state         { style, colors, effects:{blink,clicks,shadow}, autostart, autoshow, appVersion }
+                   sent on getState AND broadcast after every change, so a browser tab and the
+                   app window stay in sync with each other
+     init_urls     (optional, ignored)
+     error         { message }
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+const DISCOVERY_URL = 'http://127.0.0.1:49399/';
+const WS_HOST = 'myttbplus.mlapplications.com';
+
+const _urlParams = new URLSearchParams(window.location.search);
+const IS_DESKTOP = _urlParams.get('mode') === 'desktop' || window.__FORCE_DESKTOP === true;
+
+const DEFAULTS = {
+  style: 'transparent',
+  colors: { color1: '#0A7B08', color2: '#0A7B08', color3: '#0B560B', buttons: '#EFB240', dock: '#001359' },
+  effects: { blink: false, clicks: false, shadow: false },
+  autostart: false,
+  autoshow: false,
+  appVersion: ''
+};
+
+// "state" = what the app last confirmed. "draft" = the colors the user is editing (not applied yet).
+let state = structuredClone(DEFAULTS);
+let draftColors = structuredClone(DEFAULTS.colors);
+let selectedStyle = DEFAULTS.style;
+let hasState = false;
+
+const STYLES = [
+  { id: 'transparent',   name: 'Transparent (line)',  desc: 'Full transparency with a thin line',  colors: [] },
+  { id: 'clean',         name: 'Transparent (clean)', desc: 'Full transparency, no line',          colors: [] },
+  { id: 'buttons_glass', name: 'Buttons (glass)',     desc: 'Glass effect on app buttons',         colors: [] },
+  { id: 'buttons_color', name: 'Buttons (color)',     desc: 'Colorful app buttons',                colors: [{ key: 'buttons', label: 'Buttons' }] },
+  { id: 'dock_glass',    name: 'Dock panel (glass)',  desc: 'Glass effect on a dock panel',        colors: [] },
+  { id: 'dock_color',    name: 'Dock panel (color)',  desc: 'Colorful dock panel',                 colors: [{ key: 'dock', label: 'Dock' }] },
+  { id: 'gradient1',     name: 'Gradient',            desc: 'Single color gradient',               colors: [{ key: 'color1', label: 'Color' }] },
+  { id: 'gradient2',     name: 'Gradient (50-50)',    desc: 'Two color split gradient',            colors: [{ key: 'color2', label: 'Left' }, { key: 'color3', label: 'Right' }] }
+];
+
+/* ───────────────────────── transport (same as AI Video Upscaler+) ───────────────────────── */
+let ws = null;
+let wsReady = false;
+const pendingMessages = [];
+
+function postToHost(type, payload) {
+  const msg = { type, payload: payload || {} };
+  if (wsReady && ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify(msg));
+  } else {
+    // Only the latest request of each kind matters (e.g. three quick style clicks while
+    // reconnecting should apply the last one, not all three in a row).
+    const i = pendingMessages.findIndex(m => m.type === type && type !== 'setEffect');
+    if (i >= 0) pendingMessages.splice(i, 1);
+    pendingMessages.push(msg);
+  }
+}
+
+function connectWs(port, secure) {
+  const url = secure ? `wss://${WS_HOST}:${port}/ws` : `ws://127.0.0.1:${port}/ws`;
+  ws = new WebSocket(url);
+
+  ws.onopen = () => {
+    wsReady = true;
+    updateConnectionUi();
+    // Always ask for the real state first, then flush anything queued while offline.
+    ws.send(JSON.stringify({ type: 'getState', payload: {} }));
+    while (pendingMessages.length) ws.send(JSON.stringify(pendingMessages.shift()));
+  };
+
+  ws.onmessage = (e) => {
+    let msg;
+    try { msg = JSON.parse(e.data); } catch { return; }
+    dispatchFromHost(msg.type, msg.payload || {});
+  };
+
+  ws.onclose = () => {
+    wsReady = false;
+    updateConnectionUi();
+    setTimeout(() => connectWs(port, secure), 2000);
+  };
+
+  ws.onerror = () => {};
+}
+
+function dispatchFromHost(type, payload) {
+  switch (type) {
+    case 'state': onState(payload); break;
+    case 'init_urls': break;
+    case 'error': showToast(payload.message || 'Something went wrong.', 'err'); break;
+  }
+}
+
+/* ───────────────────────── state from the app ───────────────────────── */
+function normalizeColor(c, fallback) {
+  if (typeof c !== 'string') return fallback;
+  c = c.trim();
+  if (!c.startsWith('#')) c = '#' + c;            // the app has historically stored "0A7B08"
+  return /^#[0-9a-fA-F]{6}$/.test(c) ? c.toUpperCase() : fallback;
+}
+
+function onState(p) {
+  const prevStyle = state.style;
+  const firstState = !hasState;
+
+  state = {
+    style: STYLES.some(s => s.id === p.style) ? p.style : DEFAULTS.style,
+    colors: {
+      color1:  normalizeColor(p.colors?.color1,  DEFAULTS.colors.color1),
+      color2:  normalizeColor(p.colors?.color2,  DEFAULTS.colors.color2),
+      color3:  normalizeColor(p.colors?.color3,  DEFAULTS.colors.color3),
+      buttons: normalizeColor(p.colors?.buttons, DEFAULTS.colors.buttons),
+      dock:    normalizeColor(p.colors?.dock,    DEFAULTS.colors.dock)
+    },
+    effects: {
+      blink:  !!p.effects?.blink,
+      clicks: !!p.effects?.clicks,
+      shadow: !!p.effects?.shadow
+    },
+    autostart: !!p.autostart,
+    autoshow: !!p.autoshow,
+    appVersion: p.appVersion || ''
+  };
+  hasState = true;
+
+  // The app's confirmed colors become the editing baseline.
+  draftColors = structuredClone(state.colors);
+  if (firstState) selectedStyle = state.style;
+
+  renderAll();
+  if (!firstState && prevStyle !== state.style) {
+    showToast(`${styleName(state.style)} applied`, 'ok');
+  }
+}
+
+/* ───────────────────────── rendering ───────────────────────── */
+function styleName(id) { return (STYLES.find(s => s.id === id) || {}).name || id; }
+
+function buildStyleGrid() {
+  const grid = document.getElementById('styleGrid');
+  grid.innerHTML = STYLES.map(s => `
+    <div class="style-card" data-style="${s.id}" tabindex="0">
+      <div class="style-card-head">
+        <div>
+          <div class="style-card-name">${s.name}</div>
+          <div class="style-card-desc">${s.desc}</div>
+        </div>
+        <span class="active-badge">Active</span>
+      </div>
+      <div class="tb-preview" data-type="${s.id}">
+        <div class="tb-widget"></div>
+        <div class="tb-bar">
+          <div class="tb-dock">
+            <span class="tb-btn"></span><span class="tb-btn"></span><span class="tb-btn"></span><span class="tb-btn"></span><span class="tb-btn"></span>
+          </div>
+        </div>
+        <div class="tb-tray"><i></i><i></i><i></i></div>
+      </div>
+      <div class="style-card-foot">
+        <div class="color-row">
+          ${s.colors.map(c => `
+            <label class="color-chip" title="${c.label} color">
+              <input type="color" data-color-key="${c.key}">
+              ${c.label}
+            </label>`).join('')}
+        </div>
+        <button class="primary-btn apply-btn" data-apply="${s.id}">Apply</button>
+      </div>
+    </div>`).join('');
+
+  grid.querySelectorAll('.style-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('input, label, button')) return;
+      selectStyle(card.dataset.style);
+    });
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') applyStyle(card.dataset.style);
+    });
+  });
+
+  // One color input per key can appear in only one card, but keep this generic.
+  grid.querySelectorAll('input[data-color-key]').forEach(input => {
+    input.addEventListener('input', () => {
+      draftColors[input.dataset.colorKey] = input.value.toUpperCase();
+      selectStyle(input.closest('.style-card').dataset.style);
+      renderColors();
+    });
+  });
+
+  grid.querySelectorAll('[data-apply]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      applyStyle(btn.dataset.apply);
+    });
+  });
+}
+
+function selectStyle(id) {
+  selectedStyle = id;
+  document.querySelectorAll('.style-card').forEach(c => c.classList.toggle('selected', c.dataset.style === id));
+}
+
+function renderColors() {
+  const grid = document.getElementById('styleGrid');
+  grid.style.setProperty('--c-color1', draftColors.color1);
+  grid.style.setProperty('--c-color2', draftColors.color2);
+  grid.style.setProperty('--c-color3', draftColors.color3);
+  grid.style.setProperty('--c-buttons', draftColors.buttons);
+  grid.style.setProperty('--c-dock', draftColors.dock);
+  grid.querySelectorAll('input[data-color-key]').forEach(input => {
+    const v = draftColors[input.dataset.colorKey];
+    if (input.value.toUpperCase() !== v) input.value = v;
+  });
+}
+
+function renderAll() {
+  document.querySelectorAll('.style-card').forEach(c => {
+    c.classList.toggle('current', hasState && c.dataset.style === state.style);
+  });
+  selectStyle(selectedStyle);
+  renderColors();
+
+  document.querySelectorAll('[data-effect]').forEach(t => { t.checked = !!state.effects[t.dataset.effect]; });
+  document.getElementById('settingsAutostartToggle').checked = state.autostart;
+  document.getElementById('settingsAutoshowToggle').checked = state.autoshow;
+
+  const v = state.appVersion ? `Version ${state.appVersion} · Built by mlapplications.com` : 'Built by mlapplications.com';
+  document.getElementById('aboutVersion').textContent = v;
+  document.getElementById('footerVersion').textContent = state.appVersion ? `v${state.appVersion} · mlapplications.com` : 'mlapplications.com';
+}
+
+/* ───────────────────────── actions ───────────────────────── */
+function applyStyle(id) {
+  selectStyle(id);
+  postToHost('applyStyle', { style: id, colors: structuredClone(draftColors) });
+  if (!wsReady) showToast('Will apply as soon as the app is connected.');
+}
+
+document.getElementById('resetDefaultsBtn').addEventListener('click', () => {
+  // Show the defaults immediately; the app confirms with a "state" message.
+  draftColors = structuredClone(DEFAULTS.colors);
+  selectStyle(DEFAULTS.style);
+  renderColors();
+  postToHost('resetDefaults');
+});
+
+document.querySelectorAll('[data-effect]').forEach(t => {
+  t.addEventListener('change', () => postToHost('setEffect', { effect: t.dataset.effect, enabled: t.checked }));
+});
+
+document.getElementById('settingsAutostartToggle').addEventListener('change', (e) => {
+  postToHost('setAutostart', { enabled: e.target.checked });
+});
+document.getElementById('settingsAutoshowToggle').addEventListener('change', (e) => {
+  postToHost('setAutoshow', { enabled: e.target.checked });
+});
+
+document.getElementById('softResetBtn').addEventListener('click', () => {
+  if (confirm('Restart the connection to the taskbar now? Your taskbar may flicker for a moment.')) {
+    postToHost('softReset');
+  }
+});
+
+// Window <-> browser switching, worded for whichever side we're on.
+(function setupSwitchMode() {
+  const title = document.getElementById('switchModeTitle');
+  const desc = document.getElementById('switchModeDesc');
+  const btn = document.getElementById('switchModeBtn');
+  if (IS_DESKTOP) {
+    title.textContent = 'Open in your browser';
+    desc.textContent = 'Continue in a browser tab instead of this window';
+    btn.addEventListener('click', () => postToHost('openInBrowser'));
+  } else {
+    title.textContent = 'Open the app window';
+    desc.textContent = 'Show the Transparent Taskbar+ window on your desktop';
+    btn.addEventListener('click', () => postToHost('openAppWindow'));
+  }
+})();
+
+/* ───────────────────────── navigation & links ───────────────────────── */
+document.querySelectorAll('.nav-item[data-view]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('view-' + btn.dataset.view).classList.add('active');
+    if (btn.dataset.view !== 'contact') postToHost('getState');
+  });
+});
+
+const externalPageUrls = {
+  help: 'https://mlapplications.com/hlp_ttbplus.html',
+  effectshelp: 'https://mlapplications.com/hlp_ttbplus_effects.html',
+  tips: 'https://mlapplications.com/hlp_ttbplus_tipsnandtricks.html',
+  privacy: 'https://mlapplications.com/ttbplus_privacy.html',
+  rateus: 'ms-windows-store://review/?ProductId=9P7HB1KDTTT8',
+  website: 'https://mlapplications.com',
+  email: 'mailto:mil.applications@hotmail.com'
+};
+
+function openExternal(key) {
+  const url = externalPageUrls[key];
+  if (!url) return;
+  if (IS_DESKTOP) {
+    postToHost('openExternalUrl', { url });          // WebView2 window: let the app open it
+  } else {
+    window.open(url, url.startsWith('http') ? '_blank' : '_self');
+  }
+}
+document.querySelectorAll('.nav-item[data-external]').forEach(btn => {
+  btn.addEventListener('click', () => openExternal(btn.dataset.external));
+});
+document.querySelectorAll('[data-external-btn]').forEach(btn => {
+  btn.addEventListener('click', () => openExternal(btn.dataset.externalBtn));
+});
+document.getElementById('mlappsFooterLink').addEventListener('click', () => openExternal('website'));
+
+/* ───────────────────────── theme (local to this page, like AI Video Upscaler+) ───────────────────────── */
+function applyTheme(light) {
+  document.documentElement.classList.toggle('light-theme', light);
+  document.getElementById('settingsThemeToggle').checked = light;
+  try { localStorage.setItem('ttbplus_theme', light ? 'light' : 'dark'); } catch {}
+}
+document.getElementById('settingsThemeToggle').addEventListener('change', (e) => applyTheme(e.target.checked));
+(function initTheme() {
+  let saved = null;
+  try { saved = localStorage.getItem('ttbplus_theme'); } catch {}
+  const fromUrl = (_urlParams.get('theme') || '').toLowerCase();   // the app may pass &theme=light|dark
+  if (saved) applyTheme(saved === 'light');
+  else if (fromUrl) applyTheme(fromUrl === 'light');
+  else applyTheme(false);
+})();
+
+/* ───────────────────────── status / toast ───────────────────────── */
+function updateConnectionUi() {
+  const dot = document.getElementById('wsDot');
+  const text = document.getElementById('wsStatusText');
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    dot.className = 'ws-dot connected'; text.textContent = 'Connected';
+  } else if (ws && ws.readyState === WebSocket.CONNECTING) {
+    dot.className = 'ws-dot connecting'; text.textContent = 'Connecting...';
+  } else {
+    dot.className = 'ws-dot error'; text.textContent = 'Disconnected';
+  }
+  document.getElementById('notConnectedNotice').classList.toggle('show', !wsReady);
+}
+setInterval(updateConnectionUi, 500);
+
+let toastTimer = null;
+function showToast(message, kind) {
+  const t = document.getElementById('toast');
+  t.textContent = message;
+  t.className = 'toast show' + (kind ? ' ' + kind : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.className = 'toast'; }, 2600);
+}
+
+/* ───────────────────────── start ───────────────────────── */
+buildStyleGrid();
+renderAll();
+
+function showOffline(title, text, showLaunch) {
+  document.getElementById('offlineTitle').textContent = title;
+  document.getElementById('offlineText').textContent = text;
+  document.getElementById('launchAppBtn').style.display = showLaunch ? '' : 'none';
+  document.getElementById('offlineScreen').classList.add('show');
+}
+
+document.getElementById('launchAppBtn').addEventListener('click', () => {
+  window.location.href = 'transparenttaskbarplus://';   // protocol registered in Package.appxmanifest
+});
+document.getElementById('retryConnectBtn').addEventListener('click', () => window.location.reload());
+
+if (IS_DESKTOP) {
+  const wsport = _urlParams.get('wsport') || window.__WS_LOCAL_PORT;
+  connectWs(wsport, false);
+} else {
+  fetch(DISCOVERY_URL, { cache: 'no-store' })
+    .then(r => r.json())
+    .then(data => {
+      if (!data.wssAvailable) {
+        showOffline(
+          'Transparent Taskbar+ is running, but browser mode isn\'t available right now',
+          'It couldn\'t obtain its security certificate - this usually clears up once the PC has a working internet connection. You can still use the app window in the meantime.',
+          false);
+        return;
+      }
+      connectWs(data.wssPort, true);
+    })
+    .catch(() => showOffline(
+      'Could not find Transparent Taskbar+ running on this PC',
+      'If the app is installed, click below to launch it, then try again. If not, you can get it from the Microsoft Store.',
+      true));
+}
+</script>
+</body>
+</html>
