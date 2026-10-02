@@ -350,6 +350,116 @@ footer a:hover{color:var(--text)}
     }
   </style>
   
+  <style>
+    /* Full-screen backdrop with blur */
+#custom-paywall-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease-in-out;
+}
+
+#custom-paywall-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Modal Card */
+.paywall-card {
+    background: #ffffff;
+    width: 90%;
+    max-width: 440px;
+    padding: 36px 32px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Site Logo */
+.paywall-logo {
+    max-height: 48px;
+    width: auto;
+    margin-bottom: 20px;
+}
+
+/* Typography */
+.paywall-card h2 {
+    margin: 0 0 12px 0;
+    color: #1f2937;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.paywall-card p {
+    color: #4b5563;
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0 0 28px 0;
+}
+
+/* Interactive Action Option Card */
+.paywall-action-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.paywall-action-box:hover {
+    border-color: #2563eb;
+    background: #f8fafc;
+}
+
+.paywall-action-text h4 {
+    margin: 0 0 4px 0;
+    color: #1f2937;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.paywall-action-text span {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+/* Play Icon Button */
+.paywall-icon-btn {
+    background: #1e40af;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-left: 16px;
+}
+
+.paywall-icon-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    margin-left: 2px; /* optical adjustment for play triangle */
+}
+  </style>
   </head>
  
 <body>
@@ -843,394 +953,71 @@ footer a:hover{color:var(--text)}
   </div>
 
 
-</div><!-- /sections -->
+</div> 
 
 <footer>
   <p>© 2026 ImTalking · <a href="https://mlapplications.com/">mlapplications.com</a> ·
   <a href="https://mlapplications.com/imtalking_privacy.html">Privacy</a> ·
   <a href="https://mlapplications.com/imtalking_contactus.html">Contact</a></p>
 </footer>
-
-<script>
-const PLAY_PATH  = 'M8 5v14l11-7z';
-const PAUSE_PATH = 'M6 19h4V5H6v14zm8-14v14h4V5h-4z';
-
-function fmt(t) {
-  const m = Math.floor(t / 60), s = Math.floor(t % 60);
-  return m + ':' + String(s).padStart(2, '0');
-}
-
-function bindVideo(id) {
-  const v = document.getElementById(id);
-  if (!v) return;
-  const bar    = document.getElementById('bar-' + id.slice(2));
-  const timeEl = document.getElementById('time-' + id.slice(2));
-  const pbIcon = document.getElementById('pbicon-' + id.slice(2));
-
-  v.addEventListener('timeupdate', () => {
-    if (!v.duration) return;
-    if (bar)    bar.style.width = (v.currentTime / v.duration * 100) + '%';
-    if (timeEl) timeEl.textContent = fmt(v.currentTime);
-  });
-  v.addEventListener('play',  () => { if (pbIcon) pbIcon.setAttribute('d', PAUSE_PATH); });
-  v.addEventListener('pause', () => { if (pbIcon) pbIcon.setAttribute('d', PLAY_PATH); });
-  v.addEventListener('ended', () => { if (pbIcon) pbIcon.setAttribute('d', PLAY_PATH); });
-
-  // No auto-play — user starts each video manually
-}
-
-function togglePlay(id) {
-  const v = document.getElementById(id);
-  if (!v) return;
-  v.paused ? v.play().catch(()=>{}) : v.pause();
-}
-
-function seekVideo(e, id) {
-  const v = document.getElementById(id);
-  if (!v || !v.duration) return;
-  const rect = e.currentTarget.getBoundingClientRect();
-  v.currentTime = ((e.clientX - rect.left) / rect.width) * v.duration;
-}
-
-function toggleLoop(vid, btnId) {
-  const v = document.getElementById(vid);
-  const b = document.getElementById(btnId);
-  if (!v || !b) return;
-  v.loop = !v.loop;
-  b.classList.toggle('on', v.loop);
-}
-
-// Bind all videos
-function toggleMute(id) {
-  const v = document.getElementById(id);
-  const btn = document.getElementById('mute-' + id.slice(2));
-  if (!v || !btn) return;
-  v.muted = !v.muted;
-  btn.classList.toggle('muted', v.muted);
-  btn.title = v.muted ? 'Unmute' : 'Mute';
-  btn.querySelector('.icon-vol').style.display  = v.muted ? 'none' : 'inline';
-  btn.querySelector('.icon-mute').style.display = v.muted ? 'inline' : 'none';
-}
-
-['v-enhance-off','v-enhance-on','v-enhance-off2','v-enhance-on2',
- 'v-upscale-512','v-upscale-1024',
- 'v-still-on','v-still-off',
- 'v-expr-07','v-expr-12'].forEach(bindVideo);
-</script>
-
-<!-- old --adsense-- code -->
-<!--<div data-ad="mlapplications.com_sticky_video_myvid" data-devices="m:1,t:1,d:1"   class="demand-supply"></div>-->
-
-
-<!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code -->
-<script>
-//  googletag.cmd.push(function() { 
-    // Pass slot objects directly to display()
- //   if (window.offerwallSlot) {
-   //   googletag.display(window.offerwallSlot);
-  //  }
-    // Only call display if the slot was successfully created
-//    if (window.sideRailSlot) {
-//      googletag.display(window.sideRailSlot);
-//    } 
-//  });
-</script> 
+   
+  
  
 
-<!-- Core Video.js 
-<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
--->
-<!-- Google IMA SDK 
-<script src="//imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
--->
-<!-- Contads & IMA Plugins 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-ads/7.5.2/videojs.ads.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-ima/2.11.0/videojs.ima.min.js"></script>
--->
-<!-- Scripts before closing   <!-- ======================================================================= -->
-  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
-  <!-- ======================================================================= -->
-<!--  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const anchorNode = document.querySelector('.outstream-placement-anchor');
-      const adWrapper = document.getElementById('outstream-ad-wrapper');
-      const closeBtn = document.getElementById('outstream-close');
-      let userClosedAd = false;
-
-      if (!anchorNode || !adWrapper) return;
-
-      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
-      window.googletag = window.googletag || {cmd: []};
-      googletag.cmd.push(function() {
-        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
-            if (event.isEmpty) {
-              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
-              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
-            } else {
-              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
-              // Only trigger performance tracking cycles if demand actually filled the layout container
-              stickyObserver.observe(anchorNode);
-            }
-          }
-        });
-      });
-
-      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
-      const stickyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (userClosedAd) return;
-
-          // If the invisible inline space position completely rolls out of view
-          if (!entry.isIntersecting) {
-            const boundingBox = entry.boundingClientRect;
-            
-            // Only apply sticky docking if user scrolled past the ad DOWN the page
-            if (boundingBox.top < 0) {
-              adWrapper.classList.add('is-sticky');
-            }
-          } else {
-            // Re-dock cleanly back inline the second the user scrolls back up
-            adWrapper.classList.remove('is-sticky');
-          }
-        });
-      }, { 
-        root: null, 
-        threshold: 0 // Fires instantly the frame the boundary is crossed
-      });
-
-      // STEP C: CLOSE ICON ACTIONS
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userClosedAd = true;
-        adWrapper.classList.remove('is-sticky');
-        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
-      });
-    });
-  </script> -->
-
-</body>
- -->
-
-<!-- Scripts right before closing   <!-- ======================================================================= -->
-  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
-  <!-- ======================================================================= -->
-<!--  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const anchorNode = document.querySelector('.outstream-placement-anchor');
-      const adWrapper = document.getElementById('outstream-ad-wrapper');
-      const closeBtn = document.getElementById('outstream-close');
-      let userClosedAd = false;
-
-      if (!anchorNode || !adWrapper) return;
-
-      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
-      window.googletag = window.googletag || {cmd: []};
-      googletag.cmd.push(function() {
-        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
-            if (event.isEmpty) {
-              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
-              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
-            } else {
-              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
-              // Only trigger performance tracking cycles if demand actually filled the layout container
-              stickyObserver.observe(anchorNode);
-            }
-          }
-        });
-      });
-
-      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
-      const stickyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (userClosedAd) return;
-
-          // If the invisible inline space position completely rolls out of view
-          if (!entry.isIntersecting) {
-            const boundingBox = entry.boundingClientRect;
-            
-            // Only apply sticky docking if user scrolled past the ad DOWN the page
-            if (boundingBox.top < 0) {
-              adWrapper.classList.add('is-sticky');
-            }
-          } else {
-            // Re-dock cleanly back inline the second the user scrolls back up
-            adWrapper.classList.remove('is-sticky');
-          }
-        });
-      }, { 
-        root: null, 
-        threshold: 0 // Fires instantly the frame the boundary is crossed
-      });
-
-      // STEP C: CLOSE ICON ACTIONS
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userClosedAd = true;
-        adWrapper.classList.remove('is-sticky');
-        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
-      });
-    });
-  </script> -->
-
-</body>
- -->
- <!-- Core Video.js -->
-  <!-- Scripts right before closing   <!-- ======================================================================= -->
-  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
-  <!-- ======================================================================= -->
-<!--  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const anchorNode = document.querySelector('.outstream-placement-anchor');
-      const adWrapper = document.getElementById('outstream-ad-wrapper');
-      const closeBtn = document.getElementById('outstream-close');
-      let userClosedAd = false;
-
-      if (!anchorNode || !adWrapper) return;
-
-      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
-      window.googletag = window.googletag || {cmd: []};
-      googletag.cmd.push(function() {
-        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
-            if (event.isEmpty) {
-              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
-              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
-            } else {
-              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
-              // Only trigger performance tracking cycles if demand actually filled the layout container
-              stickyObserver.observe(anchorNode);
-            }
-          }
-        });
-      });
-
-      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
-      const stickyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (userClosedAd) return;
-
-          // If the invisible inline space position completely rolls out of view
-          if (!entry.isIntersecting) {
-            const boundingBox = entry.boundingClientRect;
-            
-            // Only apply sticky docking if user scrolled past the ad DOWN the page
-            if (boundingBox.top < 0) {
-              adWrapper.classList.add('is-sticky');
-            }
-          } else {
-            // Re-dock cleanly back inline the second the user scrolls back up
-            adWrapper.classList.remove('is-sticky');
-          }
-        });
-      }, { 
-        root: null, 
-        threshold: 0 // Fires instantly the frame the boundary is crossed
-      });
-
-      // STEP C: CLOSE ICON ACTIONS
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userClosedAd = true;
-        adWrapper.classList.remove('is-sticky');
-        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
-      });
-    });
-  </script> -->
-
-</body>
- -->
-<!--
+  <div id="custom-paywall-overlay">
+    <div class="paywall-card">
+        <!-- Replace src with your actual site logo path -->
+        <img src="path-to-your-logo.png" alt="Logo" class="paywall-logo">
+        
+        <h2>Unlock more content</h2>
+        <p>Take action to continue accessing the content on this site</p>
+        
+        <!-- Clickable Action Box matching Google's layout -->
+        <div class="paywall-action-box" id="paywall-action-trigger">
+            <div class="paywall-action-text">
+                <h4>View a short ad</h4>
+                <span>Site-wide access for 1 hour</span>
+            </div>
+            <div class="paywall-icon-btn">
+                <!-- Play Icon SVG -->
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
-  // Ensure DOM and plugins are fully parsed
-  window.addEventListener('load', function() {
-    var player = videojs('v-still-off');
+  document.addEventListener("DOMContentLoaded", function () {
+    const overlay = document.getElementById("custom-paywall-overlay");
+    const actionTrigger = document.getElementById("paywall-action-trigger");
 
-    var options2 = {
-      id: 'v-still-off',
-      adTagUrl: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/423204242/myvidcode&description_url=https%3A%2F%2Fmlapplications.com%2Fimtalking_videos_samples22.html&tfcd=0&npa=0&sz=640x480&gdfp_req=1&unviewed_position_start=1&output=vast&env=vp&impl=s&correlator='
-    };
-var options = {
-  id: 'v-still-off',
-  // Use Google's safe test tag temporarily
-  adTagUrl: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/21775744923/external/single_ad_samples&sz=640x480&cust_params=sample_ct%3Dlinear&ciu_szs=300x264%2C728x90&gdfp_req=1&output=vast&unviewed_position_start=1&env=vp&impl=s&correlator=',
-  showControlsForAds: true
-};
-    // Initialize IMA safely
-    if (typeof player.ima === 'function') {
-      player.ima(options);
-      player.one('click', function() {
-        player.ima.initializeAdDisplayContainer();
-      });
-    } else {
-      console.error('IMA plugin failed to bind to player instance.');
+    // Timer configuration (e.g., 4 minutes = 240000 ms)
+    const TIMEOUT_DURATION = 4 * 60 * 1000; 
+
+    // Check if access is already granted for this session
+    const isUnlocked = sessionStorage.getItem("page_unlocked_session");
+
+    if (!isUnlocked) {
+        setTimeout(() => {
+            if (overlay) {
+                overlay.classList.add("active");
+                document.body.style.overflow = "hidden"; 
+            }
+        }, TIMEOUT_DURATION);
     }
-  });
-</script> -->
- 
-  <!-- ======================================================================= -->
-  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
-  <!-- ======================================================================= -->
-<!--  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const anchorNode = document.querySelector('.outstream-placement-anchor');
-      const adWrapper = document.getElementById('outstream-ad-wrapper');
-      const closeBtn = document.getElementById('outstream-close');
-      let userClosedAd = false;
 
-      if (!anchorNode || !adWrapper) return;
-
-      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
-      window.googletag = window.googletag || {cmd: []};
-      googletag.cmd.push(function() {
-        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
-            if (event.isEmpty) {
-              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
-              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
-            } else {
-              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
-              // Only trigger performance tracking cycles if demand actually filled the layout container
-              stickyObserver.observe(anchorNode);
-            }
-          }
-        });
-      });
-
-      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
-      const stickyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (userClosedAd) return;
-
-          // If the invisible inline space position completely rolls out of view
-          if (!entry.isIntersecting) {
-            const boundingBox = entry.boundingClientRect;
-            
-            // Only apply sticky docking if user scrolled past the ad DOWN the page
-            if (boundingBox.top < 0) {
-              adWrapper.classList.add('is-sticky');
-            }
-          } else {
-            // Re-dock cleanly back inline the second the user scrolls back up
-            adWrapper.classList.remove('is-sticky');
-          }
-        });
-      }, { 
-        root: null, 
-        threshold: 0 // Fires instantly the frame the boundary is crossed
-      });
-
-      // STEP C: CLOSE ICON ACTIONS
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userClosedAd = true;
-        adWrapper.classList.remove('is-sticky');
-        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
-      });
+    // Handle user clicking the action card
+    actionTrigger.addEventListener("click", function () {
+        // TODO: Trigger your custom ad or reward script logic here
+        
+        // Grant temporary session access
+        sessionStorage.setItem("page_unlocked_session", "true");
+        
+        // Hide the overlay and restore scrolling
+        overlay.classList.remove("active");
+        document.body.style.overflow = "auto";
     });
-  </script> -->
-
+});
+</script>
 </body>
 
 
