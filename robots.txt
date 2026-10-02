@@ -7,6 +7,24 @@ Allow: /
 User-agent: AmazonAdBot
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Verity/1.1
+Allow: /
+
+User-agent: AmazonAdBot
+Allow: /
+
 Sitemap: https://mlapplications.com/sitemap.xml
 
 # As a condition of accessing this website, you agree to abide by the following
