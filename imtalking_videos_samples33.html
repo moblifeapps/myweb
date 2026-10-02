@@ -991,7 +991,8 @@ footer a:hover{color:var(--text)}
     const actionTrigger = document.getElementById("paywall-action-trigger");
 
     // Timer configuration (e.g., 4 minutes = 240000 ms)
-    const TIMEOUT_DURATION = 4 * 60 * 1000; 
+    //const TIMEOUT_DURATION = 4 * 60 * 1000; 
+    const TIMEOUT_DURATION = 10000; 
 
     // Check if access is already granted for this session
     const isUnlocked = sessionStorage.getItem("page_unlocked_session");
