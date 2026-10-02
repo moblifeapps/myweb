@@ -7,17 +7,10 @@
  <script>  
   window.googletag = window.googletag || {cmd: []};    
   googletag.cmd.push(function() {      
-    googletag.setConfig({  
-      lazyLoad: {
-        fetchMarginPercent: 0,  // Forces the slot to fetch only when close to the viewport
-        renderMarginPercent: 0  // Delays rendering until it is nearly visible
-      },
-      collapseDiv: "ON_NO_FILL"  // Replaces the deprecated collapseEmptyDivs(true)
-    }); 
+    // no lazy load 
 
     // Configured for 336x280 (or 300x250) display slots where outstream videos backfill     
-    googletag.defineSlot('/423204242/myAdx_outstrm_dnt', [[336, 280], [300, 250]], 'div-gpt-ad-outstream-slot')
-      .addService(googletag.pubads());     
+    // no definition for myAdx_outstrm_dnt!      
 
     googletag.enableServices();          
   });
@@ -328,7 +321,7 @@ footer a { color: var(--text2); }
   <!-- ======================================================================= -->
   <!-- 3. WEB PAGE STRUCTURAL CORE HOUSING PLACEMENT MARKUP                   -->
   <!-- ======================================================================= -->
-  <div class="outstream-placement-anchor">
+  <div class="myyy-outstream-placement-anchor">
     <div id="outstream-ad-wrapper" class="outstream-main-container">
       <div id="outstream-close" class="outstream-close-trigger">&times;</div>
       
@@ -444,7 +437,7 @@ footer a { color: var(--text2); }
   <!-- ======================================================================= -->
   <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
   <!-- ======================================================================= -->
-  <script>
+<!--  <script>
     document.addEventListener("DOMContentLoaded", () => {
       const anchorNode = document.querySelector('.outstream-placement-anchor');
       const adWrapper = document.getElementById('outstream-ad-wrapper');
@@ -501,7 +494,7 @@ footer a { color: var(--text2); }
         anchorNode.remove(); // Safely detaches elements to keep client footprint clean
       });
     });
-  </script>
+  </script> -->
 
 </body>
 
