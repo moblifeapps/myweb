@@ -26,10 +26,39 @@
     }
 
     window.googletag = window.googletag || {cmd: []};
-    let rewardedSlot;
-    let isRewardedReady = false;
+    //let rewardedSlot;
+    //let isRewardedReady = false;
 
-    googletag.cmd.push(() => {
+    window.rewardedSlot = null;
+    window.isRewardedReady = false;
+
+ googletag.cmd.push(function() {
+    window.rewardedSlot = googletag.defineOutOfPageSlot(
+ '/423204242/Offerwall_Live_Rewarded_code', 
+            googletag.enums.OutOfPageFormat.REWARDED
+);
+
+  if (window.rewardedSlot) {
+    window.rewardedSlot.addService(googletag.pubads());
+    }
+
+    // 2. Event Listeners for Rewarded / Offerwall
+  googletag.pubads().addEventListener('rewardedSlotReady', function(evt) {
+
+      if (event.slot === rewardedSlot) {
+                    console.log('Rewarded ad is ready to be displayed.');
+                    isRewardedReady = true;
+                }
+
+  //evt.makeRewardedVisible();
+  });
+
+  //  googletag.pubads().addEventListener('rewardedSlotGranted', function(evt) {
+  //    console.log('Offerwall completed / Reward granted');
+  //  });
+
+
+   /* googletag.cmd.push(() => {
         googletag.setConfig({ singleRequest: true });
 
         // Define the out-of-page rewarded slot
@@ -60,9 +89,9 @@
                 console.log('Rewarded ad closed.');
             });
         }
-
+*/
         googletag.enableServices();
-    });
+    }); 
 </script>
 
 <!-- Standard GPT script required for GAM & Privacy/Messaging tools -->
