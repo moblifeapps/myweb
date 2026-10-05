@@ -5,9 +5,6 @@
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
 <script>
     window.googletag = window.googletag || {cmd: []};
-    window.rewardedSlot = null;
-    window.isRewardedReady = false;
-    window.rewardEventObj = null;
 
     function grantUserAccess() {
         const overlay = document.getElementById("custom-paywall-overlay");
@@ -18,50 +15,25 @@
         }
         location.reload(); 
     }
-
-    function my_grantUserAccess_2() {
-        const overlay = document.getElementById("custom-paywall-overlay");
-        sessionStorage.setItem("page_unlocked_session", "true");
-        if (overlay) {
-            overlay.classList.remove("active");
-            document.body.style.overflow = "auto";
-        }
-    }
     
     googletag.cmd.push(function() {
-        window.rewardedSlot = googletag.defineOutOfPageSlot(
-            '/423204242/Offerwall_Live_Rewarded_code', 
-            googletag.enums.OutOfPageFormat.REWARDED
-        );
+        // 1. Define the responsive size mapping for your display banner
+        var mapping = googletag.sizeMapping()
+            .addSize([1024, 768], [[728, 90], [970, 250]])
+            .addSize([0, 0], [300, 250])
+            .build();
 
-        if (window.rewardedSlot) {
-            window.rewardedSlot.addService(googletag.pubads());
+        // 2. Define standard display slot (compatible with display AdX demand)
+        var slot = googletag.defineSlot('/423204242/Offerwall_Live_Rewarded_code', [[300, 250], [336, 280], [728, 90]], 'div-gpt-ad-display-slot')
+            .defineSizeMapping(mapping)
+            .addService(googletag.pubads());
 
-            googletag.pubads().addEventListener('rewardedSlotReady', function(evt) {
-                if (evt.slot === window.rewardedSlot) {
-                    console.log('Rewarded ad is ready!');
-                    window.isRewardedReady = true;
-                    window.rewardEventObj = evt;
-                }
-            });
-
-            googletag.pubads().addEventListener('rewardedSlotGranted', function(evt) {
-                grantUserAccess();
-            });
-
-            googletag.pubads().addEventListener('rewardedSlotClosed', function(evt) {
-                console.log('Rewarded ad closed.');
-                googletag.pubads().refresh([window.rewardedSlot]);
-            });
-        }
-
+        // 3. Enable services and single request architecture
+        googletag.pubads().enableSingleRequest();
         googletag.enableServices();
-
-        googletag.cmd.push(function() {
-            if (window.rewardedSlot) {
-                googletag.pubads().refresh([window.rewardedSlot]);
-            }
-        });
+        
+        // 4. Display the slot (Make sure you have a <div id="div-gpt-ad-display-slot"></div> in your paywall modal HTML)
+        googletag.display('div-gpt-ad-display-slot');
     });
 </script>
 
@@ -677,6 +649,12 @@ footer a:hover{color:var(--text)}
             <div class="paywall-icon-btn">
                 <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
             </div>
+
+
+            <!-- THE REQUIRED AD CONTAINER DIV -->
+        <div id="div-gpt-ad-display-slot" style="min-height: 250px; text-align: center; margin: 15px 0;"></div>
+
+        
         </div>
     </div>
 </div>
