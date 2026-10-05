@@ -1111,7 +1111,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlay = document.getElementById("custom-paywall-overlay");
     const actionTrigger = document.getElementById("paywall-action-trigger");
 
-    const TIMEOUT_DURATION = 4 * 60 * 1000; // 4 minutes
+//    const TIMEOUT_DURATION_2 = 4 * 60 * 1000; // 4 minutes
+    const TIMEOUT_DURATION = 1 * 10 * 1000; // 4 minutes
 
     if (!sessionStorage.getItem("page_unlocked_session")) {
         setTimeout(() => {
