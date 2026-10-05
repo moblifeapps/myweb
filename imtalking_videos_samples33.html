@@ -5,7 +5,6 @@
    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
 <!-- old demand -->
 <script>
-    // Define global access function first
     function grantUserAccess() {
         const overlay = document.getElementById("custom-paywall-overlay");
         sessionStorage.setItem("page_unlocked_session", "true");
@@ -18,12 +17,12 @@
 
     window.googletag = window.googletag || {cmd: []};
     let rewardedSlot;
+    let isRewardedReady = false;
 
     googletag.cmd.push(() => {
-        // Modernized config (replacing deprecated single request syntax)
         googletag.setConfig({ singleRequest: true });
 
-        // Define your out-of-page rewarded slot using your exact Ad Unit Code
+        // Define the out-of-page rewarded slot
         rewardedSlot = googletag.defineOutOfPageSlot(
             '/423204242/Offerwall_Live_Rewarded_code', 
             googletag.enums.OutOfPageFormat.REWARDED
@@ -32,13 +31,21 @@
         if (rewardedSlot) {
             rewardedSlot.addService(googletag.pubads());
 
-            // Event listener when user successfully watches the rewarded ad
+            // 1. REQUIRED: Listen for the slot ready event
+            googletag.pubads().addEventListener('rewardedSlotReady', (event) => {
+                if (event.slot === rewardedSlot) {
+                    console.log('Rewarded ad is ready to be displayed.');
+                    isRewardedReady = true;
+                }
+            });
+
+            // 2. Listen for the reward fulfillment
             googletag.pubads().addEventListener('rewardedSlotGranted', (event) => {
                 console.log('Reward granted!', event.payload);
                 grantUserAccess();
             });
 
-            // Event listener when the ad overlay is closed
+            // 3. Listen for when the ad closes
             googletag.pubads().addEventListener('rewardedSlotClosed', (event) => {
                 console.log('Rewarded ad closed.');
             });
@@ -1104,6 +1111,35 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlay = document.getElementById("custom-paywall-overlay");
     const actionTrigger = document.getElementById("paywall-action-trigger");
 
+    const TIMEOUT_DURATION = 4 * 60 * 1000; // 4 minutes
+
+    if (!sessionStorage.getItem("page_unlocked_session")) {
+        setTimeout(() => {
+            if (overlay) {
+                overlay.classList.add("active");
+                document.body.style.overflow = "hidden"; 
+            }
+        }, TIMEOUT_DURATION);
+    }
+
+    // When the user clicks your custom paywall button
+    actionTrigger.addEventListener("click", function () {
+        googletag.cmd.push(() => {
+            if (rewardedSlot && isRewardedReady) {
+                // Correct method: Standard display call triggers the GPT rewarded overlay UI
+                googletag.display(rewardedSlot);
+            } else {
+                console.warn("Rewarded ad is not ready yet or slot failed. Granting fallback access.");
+                grantUserAccess();
+            }
+        });
+    });
+});
+ /* 
+document.addEventListener("DOMContentLoaded", function () {
+    const overlay = document.getElementById("custom-paywall-overlay");
+    const actionTrigger = document.getElementById("paywall-action-trigger");
+
     //const TIMEOUT_DURATION = 4 * 60 * 1000; // 4 minutes
       const TIMEOUT_DURATION = 1 * 10 * 1000; // 10 seconds
 
@@ -1142,7 +1178,7 @@ function grantUserAccess() {
     // Refresh your content or reload page to show full text
     location.reload(); 
 }
-/*
+
 
   document.addEventListener("DOMContentLoaded", function () {
     const overlay = document.getElementById("custom-paywall-overlay");
