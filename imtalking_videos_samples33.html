@@ -18,7 +18,8 @@
     window.rewardedSlot = null;
     window.isRewardedReady = false;
 
-    googletag.cmd.push(function() {
+    window.cmd.push(function() {
+      console.log("GPT command queue is executing!"); // <--- Add this
         // 1. Define the out-of-page rewarded slot
         window.rewardedSlot = googletag.defineOutOfPageSlot(
             '/423204242/Offerwall_Live_Rewarded_code', 
@@ -961,7 +962,7 @@ footer a:hover{color:var(--text)}
       controls
       preload="auto"
       playsinline
-      poster="YOUR_POSTER_IMAGE.jpg">
+       
       <source src="https://mlapplications.com/video_samples/still_off.mp4" type="video/mp4" />
     </video>
   </div>
