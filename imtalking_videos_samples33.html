@@ -2,19 +2,8 @@
 <html lang="en">
 <head>
 
-   <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
-<!-- old demand -->
+  <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
 <script>
-
-  function my_grantUserAccess_2() {
-        const overlay = document.getElementById("custom-paywall-overlay");
-        sessionStorage.setItem("page_unlocked_session2222", "true");
-        if (overlay) {
-            overlay.classList.remove("active");
-            document.body.style.overflow = "auto";
-        }
-        //location.reload(); 
-    }
     function grantUserAccess() {
         const overlay = document.getElementById("custom-paywall-overlay");
         sessionStorage.setItem("page_unlocked_session2222", "true");
@@ -26,71 +15,46 @@
     }
 
     window.googletag = window.googletag || {cmd: []};
-    //let rewardedSlot;
-    //let isRewardedReady = false;
-
     window.rewardedSlot = null;
     window.isRewardedReady = false;
 
- googletag.cmd.push(function() {
-    window.rewardedSlot = googletag.defineOutOfPageSlot(
- '/423204242/Offerwall_Live_Rewarded_code', 
-            googletag.enums.OutOfPageFormat.REWARDED
-);
-
-  if (window.rewardedSlot) {
-    window.rewardedSlot.addService(googletag.pubads());
-    }
-
-    // 2. Event Listeners for Rewarded / Offerwall
-  googletag.pubads().addEventListener('rewardedSlotReady', function(evt) {
-
-      if (event.slot === rewardedSlot) {
-                    console.log('Rewarded ad is ready to be displayed.');
-                    isRewardedReady = true;
-                }
-
-  //evt.makeRewardedVisible();
-  });
-
-  //  googletag.pubads().addEventListener('rewardedSlotGranted', function(evt) {
-  //    console.log('Offerwall completed / Reward granted');
-  //  });
-
-
-   /* googletag.cmd.push(() => {
-        googletag.setConfig({ singleRequest: true });
-
-        // Define the out-of-page rewarded slot
-        rewardedSlot = googletag.defineOutOfPageSlot(
+    googletag.cmd.push(function() {
+        // 1. Define the out-of-page rewarded slot
+        window.rewardedSlot = googletag.defineOutOfPageSlot(
             '/423204242/Offerwall_Live_Rewarded_code', 
             googletag.enums.OutOfPageFormat.REWARDED
         );
 
-        if (rewardedSlot) {
-            rewardedSlot.addService(googletag.pubads());
+        if (window.rewardedSlot) {
+            window.rewardedSlot.addService(googletag.pubads());
 
-            // 1. REQUIRED: Listen for the slot ready event
-            googletag.pubads().addEventListener('rewardedSlotReady', (event) => {
-                if (event.slot === rewardedSlot) {
+            // 2. Event Listener: Ready
+            googletag.pubads().addEventListener('rewardedSlotReady', function(evt) {
+                if (evt.slot === window.rewardedSlot) {
                     console.log('Rewarded ad is ready to be displayed.');
-                    isRewardedReady = true;
+                    window.isRewardedReady = true;
                 }
             });
 
-            // 2. Listen for the reward fulfillment
-            googletag.pubads().addEventListener('rewardedSlotGranted', (event) => {
-                console.log('Reward granted!', event.payload);
+            // 3. Event Listener: Reward Granted
+            googletag.pubads().addEventListener('rewardedSlotGranted', function(evt) {
+                console.log('Reward granted!', evt.payload);
                 grantUserAccess();
             });
 
-            // 3. Listen for when the ad closes
-            googletag.pubads().addEventListener('rewardedSlotClosed', (event) => {
+            // 4. Event Listener: Closed
+            googletag.pubads().addEventListener('rewardedSlotClosed', function(evt) {
                 console.log('Rewarded ad closed.');
             });
         }
-*/
+
+        // 5. Enable services BEFORE fetching
         googletag.enableServices();
+
+        // 6. CRITICAL: Explicitly fetch the rewarded slot to trigger the request to gampad/ads
+        if (window.rewardedSlot) {
+            googletag.pubads().refresh([window.rewardedSlot]);
+        }
     }); 
 </script>
 
@@ -1173,7 +1137,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
           if (rewardedSlot && isRewardedReady) {
                 // Correct method: Standard display call triggers the GPT rewarded overlay UI
-                googletag.display(rewardedSlot);
+              window.rewardedSlot.makeRewardedVisible();
+                //      googletag.display(rewardedSlot);
             } else {
                 console.warn("Rewarded ad is not ready yet or slot failed. Granting fallback access.");
                 my_grantUserAccess_2();
