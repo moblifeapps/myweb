@@ -4,7 +4,49 @@
 
    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
 <!-- old demand -->
+<script>
+    // Define global access function first
+    function grantUserAccess() {
+        const overlay = document.getElementById("custom-paywall-overlay");
+        sessionStorage.setItem("page_unlocked_session", "true");
+        if (overlay) {
+            overlay.classList.remove("active");
+            document.body.style.overflow = "auto";
+        }
+        location.reload(); 
+    }
 
+    window.googletag = window.googletag || {cmd: []};
+    let rewardedSlot;
+
+    googletag.cmd.push(() => {
+        // Modernized config (replacing deprecated single request syntax)
+        googletag.setConfig({ singleRequest: true });
+
+        // Define your out-of-page rewarded slot using your exact Ad Unit Code
+        rewardedSlot = googletag.defineOutOfPageSlot(
+            '/423204242/Offerwall_Live_Rewarded_code', 
+            googletag.enums.OutOfPageFormat.REWARDED
+        );
+
+        if (rewardedSlot) {
+            rewardedSlot.addService(googletag.pubads());
+
+            // Event listener when user successfully watches the rewarded ad
+            googletag.pubads().addEventListener('rewardedSlotGranted', (event) => {
+                console.log('Reward granted!', event.payload);
+                grantUserAccess();
+            });
+
+            // Event listener when the ad overlay is closed
+            googletag.pubads().addEventListener('rewardedSlotClosed', (event) => {
+                console.log('Rewarded ad closed.');
+            });
+        }
+
+        googletag.enableServices();
+    });
+</script>
 
 <!-- Standard GPT script required for GAM & Privacy/Messaging tools -->
  <!--
@@ -32,7 +74,7 @@ function grantUserAccess() {
     }
     location.reload(); 
 }
-</script> -->
+</script> 
 <script>
         window.googletag = window.googletag || {cmd: []};
         let rewardedSlot;
@@ -66,7 +108,7 @@ function grantUserAccess() {
             googletag.enableServices();
         });
     </script>
-
+-->
 <link rel="preload" as="script" href="https://live.demand.supply/up.js"><script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
 <!--
@@ -1062,7 +1104,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlay = document.getElementById("custom-paywall-overlay");
     const actionTrigger = document.getElementById("paywall-action-trigger");
 
-    const TIMEOUT_DURATION = 4 * 60 * 1000; // 4 minutes
+    //const TIMEOUT_DURATION = 4 * 60 * 1000; // 4 minutes
+      const TIMEOUT_DURATION = 1 * 10 * 1000; // 10 seconds
 
     if (!sessionStorage.getItem("page_unlocked_session")) {
         setTimeout(() => {
