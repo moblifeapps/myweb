@@ -27,8 +27,39 @@
             document.body.style.overflow = "auto";
         }
     }
+    
+googletag.cmd.push(function() {
+    window.rewardedSlot = googletag.defineOutOfPageSlot(
+        '/423204242/Offerwall_Live_Rewarded_code', 
+        googletag.enums.OutOfPageFormat.REWARDED
+    );
 
-    window.googletag.cmd.push(function() {
+    if (window.rewardedSlot) {
+        window.rewardedSlot.addService(googletag.pubads());
+
+        googletag.pubads().addEventListener('rewardedSlotReady', function(evt) {
+            if (evt.slot === window.rewardedSlot) {
+                console.log('Rewarded ad is ready!');
+                window.isRewardedReady = true;
+            }
+        });
+
+        googletag.pubads().addEventListener('rewardedSlotGranted', function(evt) {
+            grantUserAccess();
+        });
+    }
+
+    googletag.enableServices();
+
+    // Instead of an immediate refresh which can drop out-of-page calls, 
+    // let pubads handle the initial fetch queue safely:
+    googletag.cmd.push(function() {
+        if (window.rewardedSlot) {
+            googletag.pubads().refresh([window.rewardedSlot]);
+        }
+    });
+});
+  /*  window.googletag.cmd.push(function() {
         // 1. Define out-of-page rewarded slot
         window.rewardedSlot = googletag.defineOutOfPageSlot(
             '/423204242/Offerwall_Live_Rewarded_code', 
@@ -63,6 +94,8 @@
             googletag.pubads().refresh([window.rewardedSlot]);
         }
     });
+
+*/
 </script>
  
 
