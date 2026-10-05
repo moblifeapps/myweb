@@ -5,6 +5,16 @@
    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
 <!-- old demand -->
 <script>
+
+  function my_grantUserAccess_2() {
+        const overlay = document.getElementById("custom-paywall-overlay");
+        sessionStorage.setItem("page_unlocked_session2222", "true");
+        if (overlay) {
+            overlay.classList.remove("active");
+            document.body.style.overflow = "auto";
+        }
+        //location.reload(); 
+    }
     function grantUserAccess() {
         const overlay = document.getElementById("custom-paywall-overlay");
         sessionStorage.setItem("page_unlocked_session2222", "true");
@@ -1136,7 +1146,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 googletag.display(rewardedSlot);
             } else {
                 console.warn("Rewarded ad is not ready yet or slot failed. Granting fallback access.");
-                grantUserAccess();
+                my_grantUserAccess_2();
             }
         });
     });
