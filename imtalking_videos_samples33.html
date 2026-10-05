@@ -2,8 +2,13 @@
 <html lang="en">
 <head>
 
-  <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
+   <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
 <script>
+    // Ensure googletag is safely initialized first
+    window.googletag = window.googletag || {cmd: []};
+    window.rewardedSlot = null;
+    window.isRewardedReady = false;
+
     function grantUserAccess() {
         const overlay = document.getElementById("custom-paywall-overlay");
         sessionStorage.setItem("page_unlocked_session2222", "true");
@@ -14,13 +19,17 @@
         location.reload(); 
     }
 
-    window.googletag = window.googletag || {cmd: []};
-    window.rewardedSlot = null;
-    window.isRewardedReady = false;
+    function my_grantUserAccess_2() {
+        const overlay = document.getElementById("custom-paywall-overlay");
+        sessionStorage.setItem("page_unlocked_session2222", "true");
+        if (overlay) {
+            overlay.classList.remove("active");
+            document.body.style.overflow = "auto";
+        }
+    }
 
-    window.cmd.push(function() {
-      console.log("GPT command queue is executing!"); // <--- Add this
-        // 1. Define the out-of-page rewarded slot
+    window.googletag.cmd.push(function() {
+        // 1. Define out-of-page rewarded slot
         window.rewardedSlot = googletag.defineOutOfPageSlot(
             '/423204242/Offerwall_Live_Rewarded_code', 
             googletag.enums.OutOfPageFormat.REWARDED
@@ -29,7 +38,7 @@
         if (window.rewardedSlot) {
             window.rewardedSlot.addService(googletag.pubads());
 
-            // 2. Event Listener: Ready
+            // 2. Event Listeners
             googletag.pubads().addEventListener('rewardedSlotReady', function(evt) {
                 if (evt.slot === window.rewardedSlot) {
                     console.log('Rewarded ad is ready to be displayed.');
@@ -37,27 +46,25 @@
                 }
             });
 
-            // 3. Event Listener: Reward Granted
             googletag.pubads().addEventListener('rewardedSlotGranted', function(evt) {
                 console.log('Reward granted!', evt.payload);
                 grantUserAccess();
             });
 
-            // 4. Event Listener: Closed
             googletag.pubads().addEventListener('rewardedSlotClosed', function(evt) {
                 console.log('Rewarded ad closed.');
             });
         }
 
-        // 5. Enable services BEFORE fetching
+        // 3. Enable services and fetch
         googletag.enableServices();
 
-        // 6. CRITICAL: Explicitly fetch the rewarded slot to trigger the request to gampad/ads
         if (window.rewardedSlot) {
             googletag.pubads().refresh([window.rewardedSlot]);
         }
-    }); 
+    });
 </script>
+ 
 
 <!-- Standard GPT script required for GAM & Privacy/Messaging tools -->
  <!--
