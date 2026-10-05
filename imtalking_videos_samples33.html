@@ -20,7 +20,19 @@
   });
 </script>
 -->
-
+<!--
+<script>
+  // 1. Define grantUserAccess globally first so it's always in scope
+function grantUserAccess() {
+    const overlay = document.getElementById("custom-paywall-overlay");
+    sessionStorage.setItem("page_unlocked_session", "true");
+    if (overlay) {
+        overlay.classList.remove("active");
+        document.body.style.overflow = "auto";
+    }
+    location.reload(); 
+}
+</script> -->
 <script>
         window.googletag = window.googletag || {cmd: []};
         let rewardedSlot;
@@ -1076,7 +1088,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-/*
+
 function grantUserAccess() {
     const overlay = document.getElementById("custom-paywall-overlay");
     sessionStorage.setItem("page_unlocked_session", "true");
@@ -1087,7 +1099,7 @@ function grantUserAccess() {
     // Refresh your content or reload page to show full text
     location.reload(); 
 }
-
+/*
 
   document.addEventListener("DOMContentLoaded", function () {
     const overlay = document.getElementById("custom-paywall-overlay");
