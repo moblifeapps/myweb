@@ -7,6 +7,7 @@
 
 
 <!-- Standard GPT script required for GAM & Privacy/Messaging tools -->
+ <!--
  <script>  
   window.googletag = window.googletag || {cmd: []};    
   googletag.cmd.push(function() {      
@@ -18,6 +19,42 @@
     googletag.enableServices(); // 
   });
 </script>
+-->
+
+<script>
+        window.googletag = window.googletag || {cmd: []};
+        let rewardedSlot;
+
+        googletag.cmd.push(() => {
+            // Define the out-of-page rewarded ad slot
+            rewardedSlot = googletag.defineOutOfPageSlot(
+                '/423204242/Site_Rewarded_Video_Code', 
+                googletag.enums.OutOfPageFormat.REWARDED
+            );
+
+            if (rewardedSlot) {
+                rewardedSlot.addService(googletag.pubads());
+
+                // Listen for when the reward is actually earned
+                googletag.pubads().addEventListener('rewardedSlotGranted', (event) => {
+                    console.log('Reward granted!', event.payload);
+                    // Code to unlock your page access goes here!
+                    grantUserAccess();
+                });
+
+                // Listen for when the ad closes (whether watched or skipped)
+                googletag.pubads().addEventListener('rewardedSlotClosed', (event) => {
+                    console.log('Rewarded ad closed.');
+                    // Refresh slot so it's ready for next time if needed
+                    googletag.pubads().refresh([rewardedSlot]);
+                });
+            }
+
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+
 <link rel="preload" as="script" href="https://live.demand.supply/up.js"><script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
 <!--
@@ -989,7 +1026,7 @@ footer a:hover{color:var(--text)}
   <div id="custom-paywall-overlay">
     <div class="paywall-card">
         <!-- Replace src with your actual site logo path -->
-        <img src="path-to-your-logo.png" alt="Logo" class="paywall-logo">
+        <img src="/uploads/logo-big_2.webp" alt="Logo" class="paywall-logo">
         
         <h2>Unlock more content</h2>
         <p>Take action to continue accessing the content on this site</p>
@@ -1007,7 +1044,51 @@ footer a:hover{color:var(--text)}
         </div>
     </div>
 </div>
+
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const overlay = document.getElementById("custom-paywall-overlay");
+    const actionTrigger = document.getElementById("paywall-action-trigger");
+
+    const TIMEOUT_DURATION = 4 * 60 * 1000; // 4 minutes
+
+    if (!sessionStorage.getItem("page_unlocked_session")) {
+        setTimeout(() => {
+            if (overlay) {
+                overlay.classList.add("active");
+                document.body.style.overflow = "hidden"; 
+            }
+        }, TIMEOUT_DURATION);
+    }
+
+    // When user clicks the blue play button card
+    actionTrigger.addEventListener("click", function () {
+        // Check if Google's rewarded slot is ready and display it
+        googletag.cmd.push(() => {
+            if (rewardedSlot) {
+                // This triggers the Google-hosted rewarded video overlay natively
+                googletag.pubads().displayRewardedAd(rewardedSlot);
+            } else {
+                // Fallback if ad hasn't loaded or blocked by adblocker: grant access gracefully
+                console.warn("Rewarded ad slot not ready. Granting fallback access.");
+                grantUserAccess();
+            }
+        });
+    });
+});
+/*
+function grantUserAccess() {
+    const overlay = document.getElementById("custom-paywall-overlay");
+    sessionStorage.setItem("page_unlocked_session", "true");
+    if (overlay) {
+        overlay.classList.remove("active");
+        document.body.style.overflow = "auto";
+    }
+    // Refresh your content or reload page to show full text
+    location.reload(); 
+}
+
+
   document.addEventListener("DOMContentLoaded", function () {
     const overlay = document.getElementById("custom-paywall-overlay");
     const actionTrigger = document.getElementById("paywall-action-trigger");
@@ -1039,7 +1120,7 @@ footer a:hover{color:var(--text)}
         overlay.classList.remove("active");
         document.body.style.overflow = "auto";
     });
-});
+}); */
 </script>
 </body>
 
