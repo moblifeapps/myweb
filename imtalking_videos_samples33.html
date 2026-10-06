@@ -2,7 +2,16 @@
 <html lang="en">
 <head>
 
-   <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
+  
+
+   <link rel="stylesheet" href="/rwrd/paywall.css?v=1">
+<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
+<script defer src="/rwrd/rewarded-paywall.js?v=1"></script>
+
+ 
+ 
+ 
+ <!--
  <script>
   window.googletag = window.googletag || { cmd: [] };
 
@@ -123,20 +132,10 @@
     }
   });
 </script>
-
+-->
 <!-- Standard GPT script required for GAM & Privacy/Messaging tools -->
  <!--
- <script>  
-  window.googletag = window.googletag || {cmd: []};    
-  googletag.cmd.push(function() {      
-    // no lazy load 
-
-    // Configured for 336x280 (or 300x250) display slots where outstream videos backfill     
-    // no definition for myAdx_outstrm_dnt!      
-
-    googletag.enableServices(); // 
-  });
-</script>
+  
 -->
 <!--
 <script>
@@ -190,7 +189,10 @@ function grantUserAccess() {
 
 
 
-  <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script> -->
+  <link rel="stylesheet" href="/rwrd/paywall.css?v=1">
+<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
+<script defer src="/rwrd/rewarded-paywall.js?v=1"></script>
+ -->
 <!-- old demand -->
 <!--
  Stylesheets in your <head> -->
@@ -199,17 +201,7 @@ function grantUserAccess() {
 <link href="https://cdn.jsdelivr.net/npm/videojs-ima@2.4.0/dist/videojs.ima.css" rel="stylesheet" />
 Standard GPT script required for GAM & Privacy/Messaging tools 
    
-  <script>  
-  window.googletag = window.googletag || {cmd: []};    
-  googletag.cmd.push(function() {      
-    // no lazy load 
-
-    // Configured for 336x280 (or 300x250) display slots where outstream videos backfill     
-    // no definition for myAdx_outstrm_dnt!      
-
-    googletag.enableServices(); // 
-  });
-</script>
+   
 <link rel="preload" as="script" href="https://live.demand.supply/up.js"><script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
 -->
@@ -1153,147 +1145,29 @@ footer a:hover{color:var(--text)}
    
   
  
-
+<!--
   <div id="custom-paywall-overlay">
     <div class="paywall-card">
-        <!-- Replace src with your actual site logo path -->
+        
         <img src="/uploads/logo-big_2.webp" alt="Logo" class="paywall-logo">
         
         <h2>Unlock more content</h2>
         <p>Take action to continue accessing the content on this site</p>
         
-        <!-- Clickable Action Box matching Google's layout -->
+       
         <div class="paywall-action-box" id="paywall-action-trigger">
             <div class="paywall-action-text">
                 <h4>View a short ad</h4>
                 <span>Unlock your next 4 pages</span>
             </div>
             <div class="paywall-icon-btn">
-                <!-- Play Icon SVG -->
+                
                 <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
             </div>
         </div>
     </div>
-</div>
-
-<script> 
-
-/*
-document.addEventListener("DOMContentLoaded", function () {
-    const overlay = document.getElementById("custom-paywall-overlay");
-    const actionTrigger = document.getElementById("paywall-action-trigger");
-
-//    const TIMEOUT_DURATION_2 = 4 * 60 * 1000; // 4 minutes
-    const TIMEOUT_DURATION = 1 * 8 * 1000; // 8 seconds
-  console.log('timeout fired');
-    if (!sessionStorage.getItem("page_unlocked_session")) {
-        setTimeout(() => {
-            if (overlay) {
-                overlay.classList.add("active");
-                document.body.style.overflow = "hidden"; 
-            }
-        }, TIMEOUT_DURATION);
-    }
-
-    // When the user clicks your custom paywall button
-    actionTrigger.addEventListener("click", function () {
-      console.log('click here');
-        window.googletag.cmd.push(() => {
-          console.log('googletag.cmd.push ..... ');
-          console.log('rewardedSlot:  ', window.rewardedSlot);
-          console.log('isRewardedReady:  ', window.isRewardedReady);
-
-          if (window.rewardedSlot && window.isRewardedReady) {
-
-            console.log('if (rewardedSlot && window.isRewardedReady):  passed !!');
-                // Correct method: Standard display call triggers the GPT rewarded overlay UI
-              window.rewardedSlot.makeRewardedVisible();
-                //      googletag.display(rewardedSlot);
-            } else {
-                console.warn("Rewarded ad is not ready yet or slot failed. Granting fallback access.");
-                my_grantUserAccess_2();
-            }
-        });
-    });
-});
+</div> -->
  
-document.addEventListener("DOMContentLoaded", function () {
-    const overlay = document.getElementById("custom-paywall-overlay");
-    const actionTrigger = document.getElementById("paywall-action-trigger");
-
-    //const TIMEOUT_DURATION = 4 * 60 * 1000; // 4 minutes
-      const TIMEOUT_DURATION = 1 * 10 * 1000; // 10 seconds
-
-    if (!sessionStorage.getItem("page_unlocked_session")) {
-        setTimeout(() => {
-            if (overlay) {
-                overlay.classList.add("active");
-                document.body.style.overflow = "hidden"; 
-            }
-        }, TIMEOUT_DURATION);
-    }
-
-    // When user clicks the blue play button card
-    actionTrigger.addEventListener("click", function () {
-        // Check if Google's rewarded slot is ready and display it
-        googletag.cmd.push(() => {
-            if (rewardedSlot) {
-                // This triggers the Google-hosted rewarded video overlay natively
-                googletag.pubads().displayRewardedAd(rewardedSlot);
-            } else {
-                // Fallback if ad hasn't loaded or blocked by adblocker: grant access gracefully
-                console.warn("Rewarded ad slot not ready. Granting fallback access.");
-                grantUserAccess();
-            }
-        });
-    });
-});
-
-function grantUserAccess() {
-    const overlay = document.getElementById("custom-paywall-overlay");
-    sessionStorage.setItem("page_unlocked_session", "true");
-    if (overlay) {
-        overlay.classList.remove("active");
-        document.body.style.overflow = "auto";
-    }
-    // Refresh your content or reload page to show full text
-    location.reload(); 
-}
-
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const overlay = document.getElementById("custom-paywall-overlay");
-    const actionTrigger = document.getElementById("paywall-action-trigger");
-
-    // Timer configuration (e.g., 4 minutes = 240000 ms)
-    //const TIMEOUT_DURATION = 4 * 60 * 1000; 
-    const TIMEOUT_DURATION = 10000; 
-
-    // Check if access is already granted for this session
-    const isUnlocked = sessionStorage.getItem("page_unlocked_session");
-
-    if (!isUnlocked) {
-        setTimeout(() => {
-            if (overlay) {
-                overlay.classList.add("active");
-                document.body.style.overflow = "hidden"; 
-            }
-        }, TIMEOUT_DURATION);
-    }
-
-    // Handle user clicking the action card
-    actionTrigger.addEventListener("click", function () {
-        // TODO: Trigger your custom ad or reward script logic here
-        
-        // Grant temporary session access
-        sessionStorage.setItem("page_unlocked_session", "true");
-        
-        // Hide the overlay and restore scrolling
-        overlay.classList.remove("active");
-        document.body.style.overflow = "auto";
-    });
-}); */
-</script>
 </body>
 
 
