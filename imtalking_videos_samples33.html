@@ -8,7 +8,7 @@
     window.googletag = window.googletag || {cmd: []};
     window.rewardedSlot = null;
     window.isRewardedReady = false;
-
+    
     function grantUserAccess() {
         const overlay = document.getElementById("custom-paywall-overlay");
         sessionStorage.setItem("page_unlocked_session2222", "true");
@@ -28,7 +28,7 @@
         }
     }
     
-googletag.cmd.push(function() {
+window.googletag.cmd.push(function() {
     window.rewardedSlot = googletag.defineOutOfPageSlot(
         '/423204242/Offerwall_Live_Rewarded_code', 
         googletag.enums.OutOfPageFormat.REWARDED
@@ -37,25 +37,25 @@ googletag.cmd.push(function() {
     if (window.rewardedSlot) {
         window.rewardedSlot.addService(googletag.pubads());
 
-        googletag.pubads().addEventListener('rewardedSlotReady', function(evt) {
+        window.googletag.pubads().addEventListener('rewardedSlotReady', function(evt) {
             if (evt.slot === window.rewardedSlot) {
                 console.log('Rewarded ad is ready!');
                 window.isRewardedReady = true;
             }
         });
 
-        googletag.pubads().addEventListener('rewardedSlotGranted', function(evt) {
+        window.googletag.pubads().addEventListener('rewardedSlotGranted', function(evt) {
             grantUserAccess();
         });
     }
 
-    googletag.enableServices();
+    window.googletag.enableServices();
 
     // Instead of an immediate refresh which can drop out-of-page calls, 
     // let pubads handle the initial fetch queue safely:
-    googletag.cmd.push(function() {
+    window.googletag.cmd.push(function() {
         if (window.rewardedSlot) {
-            googletag.pubads().refresh([window.rewardedSlot]);
+            window.googletag.pubads().refresh([window.rewardedSlot]);
         }
     });
 });
@@ -1171,14 +1171,14 @@ document.addEventListener("DOMContentLoaded", function () {
     // When the user clicks your custom paywall button
     actionTrigger.addEventListener("click", function () {
       console.log('click here');
-        googletag.cmd.push(() => {
+        window.googletag.cmd.push(() => {
           console.log('googletag.cmd.push ..... ');
-          console.log('rewardedSlot:  ', rewardedSlot);
-          console.log('isRewardedReady:  ', isRewardedReady);
+          console.log('rewardedSlot:  ', window.rewardedSlot);
+          console.log('isRewardedReady:  ', window.isRewardedReady);
 
-          if (rewardedSlot && isRewardedReady) {
+          if (window.rewardedSlot && window.isRewardedReady) {
 
-            console.log('if (rewardedSlot && isRewardedReady):  passed !!');
+            console.log('if (rewardedSlot && window.isRewardedReady):  passed !!');
                 // Correct method: Standard display call triggers the GPT rewarded overlay UI
               window.rewardedSlot.makeRewardedVisible();
                 //      googletag.display(rewardedSlot);
