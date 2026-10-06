@@ -6,29 +6,50 @@
  <script>
   window.googletag = window.googletag || { cmd: [] };
 
-  const UNLOCK_KEY = "paywall_unlocked_until";
-  const UNLOCK_DURATION = 60 * 60 * 1000;   // 1 hour
-  const PAYWALL_DELAY = 8 * 1000;           // 8 seconds (testing)
+  const UNLOCK_KEY = "paywall_unlock";
+  const UNLOCK_PAGES = 4;                  // pages per ad (current page counts as 1)
+  const UNLOCK_DURATION = 25 * 60 * 1000;  // 25 minutes
+  const PAYWALL_DELAY = 8 * 1000;          // delay before paywall appears
 
   let rewardedSlot = null;
-  let rewardedEvent = null;   // set when the ad is ready
+  let rewardedEvent = null;
   let rewardEarned = false;
 
-  function isUnlocked() {
-    try {
-      return Date.now() < Number(localStorage.getItem(UNLOCK_KEY) || 0);
-    } catch (e) { return false; }
+  // --- Unlock state: { until: timestamp, pagesLeft: number } ---
+  function readUnlock() {
+    try { return JSON.parse(localStorage.getItem(UNLOCK_KEY)) || null; }
+    catch (e) { return null; }
   }
 
+  function writeUnlock(state) {
+    try { localStorage.setItem(UNLOCK_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  // Runs once per page load: uses up one page of the current unlock
+  function consumePageView() {
+    const s = readUnlock();
+    if (!s || Date.now() >= s.until || s.pagesLeft <= 0) {
+      try { localStorage.removeItem(UNLOCK_KEY); } catch (e) {}
+      return false;   // locked
+    }
+    s.pagesLeft -= 1;
+    writeUnlock(s);
+    return true;      // this page is unlocked
+  }
+
+  let pageUnlocked = consumePageView();
+
   function unlockPage() {
-    try { localStorage.setItem(UNLOCK_KEY, String(Date.now() + UNLOCK_DURATION)); } catch (e) {}
+    // Current page counts as the first of the 4
+    writeUnlock({ until: Date.now() + UNLOCK_DURATION, pagesLeft: UNLOCK_PAGES - 1 });
+    pageUnlocked = true;
     const overlay = document.getElementById("custom-paywall-overlay");
     if (overlay) overlay.classList.remove("active");
     document.body.style.overflow = "auto";
   }
 
-  // --- GPT rewarded setup (only if the page is locked) ---
-  if (!isUnlocked()) {
+  // --- GPT rewarded setup (only when the page is locked) ---
+  if (!pageUnlocked) {
     googletag.cmd.push(function () {
       rewardedSlot = googletag.defineOutOfPageSlot(
         "/423204242/Offerwall_Live_Rewarded_code",
@@ -71,7 +92,7 @@
       });
 
       googletag.enableServices();
-      googletag.display(rewardedSlot);   // requests the ad
+      googletag.display(rewardedSlot);
     });
   }
 
@@ -80,10 +101,10 @@
     const overlay = document.getElementById("custom-paywall-overlay");
     const actionTrigger = document.getElementById("paywall-action-trigger");
 
-    if (!isUnlocked()) {
+    if (!pageUnlocked) {
       setTimeout(function () {
         console.log("Paywall timer fired");
-        if (overlay && !isUnlocked()) {
+        if (overlay && !pageUnlocked) {
           overlay.classList.add("active");
           document.body.style.overflow = "hidden";
         }
@@ -93,7 +114,7 @@
     if (actionTrigger) {
       actionTrigger.addEventListener("click", function () {
         if (rewardedEvent) {
-          rewardedEvent.makeRewardedVisible();   // shows the ad
+          rewardedEvent.makeRewardedVisible();
         } else {
           console.warn("Rewarded ad not ready (no fill or blocked). Granting fallback access.");
           unlockPage();
@@ -1145,7 +1166,7 @@ footer a:hover{color:var(--text)}
         <div class="paywall-action-box" id="paywall-action-trigger">
             <div class="paywall-action-text">
                 <h4>View a short ad</h4>
-                <span>Site-wide access for 1 hour</span>
+                <span>Unlock your next 4 pages</span>
             </div>
             <div class="paywall-icon-btn">
                 <!-- Play Icon SVG -->

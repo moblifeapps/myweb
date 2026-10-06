@@ -1,0 +1,110 @@
+/* Full-screen backdrop with blur */
+#custom-paywall-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease-in-out;
+}
+
+#custom-paywall-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Modal Card */
+.paywall-card {
+    background: #ffffff;
+    width: 90%;
+    max-width: 440px;
+    padding: 36px 32px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Site Logo */
+.paywall-logo {
+    max-height: 48px;
+    width: auto;
+    margin-bottom: 20px;
+}
+
+/* Typography */
+.paywall-card h2 {
+    margin: 0 0 12px 0;
+    color: #1f2937;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.paywall-card p {
+    color: #4b5563;
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0 0 28px 0;
+}
+
+/* Interactive Action Option Card */
+.paywall-action-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.paywall-action-box:hover,
+.paywall-action-box:focus-visible {
+    border-color: #2563eb;
+    background: #f8fafc;
+    outline: none;
+}
+
+.paywall-action-text h4 {
+    margin: 0 0 4px 0;
+    color: #1f2937;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.paywall-action-text span {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+/* Play Icon Button */
+.paywall-icon-btn {
+    background: #1e40af;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-left: 16px;
+}
+
+.paywall-icon-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    margin-left: 2px; /* optical adjustment for play triangle */
+}
