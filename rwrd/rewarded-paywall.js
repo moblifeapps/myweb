@@ -35,6 +35,7 @@
   let rewardedEvent = null;
   let rewardEarned = false;
   let delayPassed = false;
+  let adShowing = false;   // prevents double clicks from showing the ad twice
 
   // ---------- Unlock state: { until: timestamp, pagesLeft: number } ----------
   function readUnlock() {
@@ -96,7 +97,9 @@
   }
 
   function onActionClick() {
+    if (adShowing) return; // ad already opening/visible
     if (rewardedEvent) {
+      adShowing = true;
       rewardedEvent.makeRewardedVisible();
     } else {
       // Rare: ad expired or slot was destroyed after the paywall appeared
@@ -138,6 +141,7 @@
         if (evt.slot === rewardedSlot) {
           googletag.destroySlots([rewardedSlot]);
           rewardedEvent = null;
+          adShowing = false;
           if (rewardEarned) {
             unlockPage();
           } else {
