@@ -2,40 +2,195 @@
 <html lang="en">
 <head>
 
-<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
+   <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
 <script>
+    // Ensure googletag is safely initialized first
     window.googletag = window.googletag || {cmd: []};
+    window.rewardedSlot = null;
+    window.isRewardedReady = false;
 
     function grantUserAccess() {
         const overlay = document.getElementById("custom-paywall-overlay");
-        sessionStorage.setItem("page_unlocked_session", "true");
+        sessionStorage.setItem("page_unlocked_session2222", "true");
         if (overlay) {
             overlay.classList.remove("active");
             document.body.style.overflow = "auto";
         }
         location.reload(); 
     }
+
+    function my_grantUserAccess_2() {
+        const overlay = document.getElementById("custom-paywall-overlay");
+        sessionStorage.setItem("page_unlocked_session2222", "true");
+        if (overlay) {
+            overlay.classList.remove("active");
+            document.body.style.overflow = "auto";
+        }
+    }
     
+googletag.cmd.push(function() {
+    window.rewardedSlot = googletag.defineOutOfPageSlot(
+        '/423204242/Offerwall_Live_Rewarded_code', 
+        googletag.enums.OutOfPageFormat.REWARDED
+    );
+
+    if (window.rewardedSlot) {
+        window.rewardedSlot.addService(googletag.pubads());
+
+        googletag.pubads().addEventListener('rewardedSlotReady', function(evt) {
+            if (evt.slot === window.rewardedSlot) {
+                console.log('Rewarded ad is ready!');
+                window.isRewardedReady = true;
+            }
+        });
+
+        googletag.pubads().addEventListener('rewardedSlotGranted', function(evt) {
+            grantUserAccess();
+        });
+    }
+
+    googletag.enableServices();
+
+    // Instead of an immediate refresh which can drop out-of-page calls, 
+    // let pubads handle the initial fetch queue safely:
     googletag.cmd.push(function() {
-        // 1. Define the responsive size mapping for your display banner
-        var mapping = googletag.sizeMapping()
-            .addSize([1024, 768], [[728, 90], [970, 250]])
-            .addSize([0, 0], [300, 250])
-            .build();
-
-        // 2. Define standard display slot (compatible with display AdX demand)
-        var slot = googletag.defineSlot('/423204242/Offerwall_Live_Rewarded_code', [[300, 250], [336, 280], [728, 90]], 'div-gpt-ad-display-slot')
-            .defineSizeMapping(mapping)
-            .addService(googletag.pubads());
-
-        // 3. Enable services and single request architecture
-        googletag.pubads().enableSingleRequest();
-        googletag.enableServices();
-        
-        // 4. Display the slot (Make sure you have a <div id="div-gpt-ad-display-slot"></div> in your paywall modal HTML)
-        googletag.display('div-gpt-ad-display-slot');
+        if (window.rewardedSlot) {
+            googletag.pubads().refresh([window.rewardedSlot]);
+        }
     });
+});
+  /*  window.googletag.cmd.push(function() {
+        // 1. Define out-of-page rewarded slot
+        window.rewardedSlot = googletag.defineOutOfPageSlot(
+            '/423204242/Offerwall_Live_Rewarded_code', 
+            googletag.enums.OutOfPageFormat.REWARDED
+        );
+
+        if (window.rewardedSlot) {
+            window.rewardedSlot.addService(googletag.pubads());
+
+            // 2. Event Listeners
+            googletag.pubads().addEventListener('rewardedSlotReady', function(evt) {
+                if (evt.slot === window.rewardedSlot) {
+                    console.log('Rewarded ad is ready to be displayed.');
+                    window.isRewardedReady = true;
+                }
+            });
+
+            googletag.pubads().addEventListener('rewardedSlotGranted', function(evt) {
+                console.log('Reward granted!', evt.payload);
+                grantUserAccess();
+            });
+
+            googletag.pubads().addEventListener('rewardedSlotClosed', function(evt) {
+                console.log('Rewarded ad closed.');
+            });
+        }
+
+        // 3. Enable services and fetch
+        googletag.enableServices();
+
+        if (window.rewardedSlot) {
+            googletag.pubads().refresh([window.rewardedSlot]);
+        }
+    });
+
+*/
 </script>
+ 
+
+<!-- Standard GPT script required for GAM & Privacy/Messaging tools -->
+ <!--
+ <script>  
+  window.googletag = window.googletag || {cmd: []};    
+  googletag.cmd.push(function() {      
+    // no lazy load 
+
+    // Configured for 336x280 (or 300x250) display slots where outstream videos backfill     
+    // no definition for myAdx_outstrm_dnt!      
+
+    googletag.enableServices(); // 
+  });
+</script>
+-->
+<!--
+<script>
+  // 1. Define grantUserAccess globally first so it's always in scope
+function grantUserAccess() {
+    const overlay = document.getElementById("custom-paywall-overlay");
+    sessionStorage.setItem("page_unlocked_session", "true");
+    if (overlay) {
+        overlay.classList.remove("active");
+        document.body.style.overflow = "auto";
+    }
+    location.reload(); 
+}
+</script> 
+<script>
+        window.googletag = window.googletag || {cmd: []};
+        let rewardedSlot;
+
+        googletag.cmd.push(() => {
+            // Define the out-of-page rewarded ad slot
+            rewardedSlot = googletag.defineOutOfPageSlot(
+                '/423204242/Offerwall_Live_Rewarded_code', 
+                googletag.enums.OutOfPageFormat.REWARDED
+            );
+
+            if (rewardedSlot) {
+                rewardedSlot.addService(googletag.pubads());
+
+                // Listen for when the reward is actually earned
+                googletag.pubads().addEventListener('rewardedSlotGranted', (event) => {
+                    console.log('Reward granted!', event.payload);
+                    // Code to unlock your page access goes here!
+                    grantUserAccess();
+                });
+
+                // Listen for when the ad closes (whether watched or skipped)
+                googletag.pubads().addEventListener('rewardedSlotClosed', (event) => {
+                    console.log('Rewarded ad closed.');
+                    // Refresh slot so it's ready for next time if needed
+                    googletag.pubads().refresh([rewardedSlot]);
+                });
+            }
+
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+-->
+    <!--
+<link rel="preload" as="script" href="https://live.demand.supply/up.js"><script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
+
+
+
+  <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script> -->
+<!-- old demand -->
+<!--
+ Stylesheets in your <head> -->
+<!-- <link href="https://vjs.zencdn.net/7.17.0/video-js.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/videojs-contrib-ads@6.6.4/dist/videojs.ads.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/videojs-ima@2.4.0/dist/videojs.ima.css" rel="stylesheet" />
+Standard GPT script required for GAM & Privacy/Messaging tools 
+   
+  <script>  
+  window.googletag = window.googletag || {cmd: []};    
+  googletag.cmd.push(function() {      
+    // no lazy load 
+
+    // Configured for 336x280 (or 300x250) display slots where outstream videos backfill     
+    // no definition for myAdx_outstrm_dnt!      
+
+    googletag.enableServices(); // 
+  });
+</script>
+<link rel="preload" as="script" href="https://live.demand.supply/up.js"><script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
+
+-->
+
+
+
 
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -99,6 +254,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15
 .video-wrap{position:relative;background:#000;aspect-ratio:1/1}
 .video-wrap video{width:100%;height:100%;object-fit:cover;display:block}
 
+/* Play/pause overlay */
 .video-overlay{
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   background:rgba(0,0,0,.35);opacity:0;transition:opacity .2s;cursor:pointer;
@@ -106,12 +262,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15
 .video-wrap:hover .video-overlay{opacity:1}
 .video-overlay svg{width:44px;height:44px;color:#fff;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
 
+/* Progress bar */
 .video-progress{
   position:absolute;bottom:0;left:0;right:0;height:3px;
   background:rgba(255,255,255,.15);cursor:pointer;
 }
 .video-progress-bar{height:100%;background:var(--accent);width:0%;transition:width .1s linear;pointer-events:none}
 
+/* Controls row */
 .video-controls{
   display:flex;align-items:center;gap:8px;padding:8px 12px;
   background:var(--surface2);border-top:1px solid var(--border);
@@ -127,6 +285,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15
 .ctrl-loop.on{color:var(--accent)}
 .ctrl-mute.muted{color:var(--amber)}
 
+/* Caption */
 .video-caption{padding:12px 14px}
 .video-badge{
   display:inline-block;font-size:10px;font-weight:700;letter-spacing:.8px;
@@ -142,10 +301,19 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15
 .video-caption h3{font-size:13px;font-weight:600;margin-bottom:2px}
 .video-caption p{font-size:12px;color:var(--text3);line-height:1.4}
 
+/* placeholder while no video */
+.video-placeholder{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  aspect-ratio:1/1;background:var(--surface2);color:var(--text3);font-size:13px;gap:8px;
+}
+.video-placeholder svg{width:32px;height:32px;opacity:.35}
+
+/* ── FOOTER ── */
 footer{text-align:center;padding:32px 24px;border-top:1px solid var(--border);color:var(--text3);font-size:13px}
 footer a{color:var(--text2);text-decoration:none}
 footer a:hover{color:var(--text)}
 </style>
+
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
 <script>
@@ -155,7 +323,200 @@ footer a:hover{color:var(--text)}
   gtag('config', 'G-87MTDXTF59');
 </script>
 
-<style>
+  <!-- ======================================================================= -->
+  <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
+  <!-- ======================================================================= -->
+  <style>
+    /* THE GHOST ANCHOR: Stays fixed in layout to completely eliminate infinite layout flickers */
+    .outstream-placement-anchor {
+      width: 336px;
+      height: 280px;
+      margin: 40px auto;
+      position: relative;
+      background: transparent;
+    }
+
+    /* THE MOVING CONTAINER: Holds the ad frame and performs transitions on scroll */
+    .outstream-main-container {
+      width: 336px;
+      height: 280px;
+      background: #fbfbfb;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: box-shadow 0.3s ease;
+    }
+
+    /* STICKY OVERLAY STATE: Engaged programmatically by IntersectionObserver */
+    .outstream-main-container.is-sticky {
+      position: fixed;
+      top: auto;
+      left: auto;
+      bottom: 25px;
+      right: 25px;
+      z-index: 99999;
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      
+      /* Downscale slightly for clean desktop corner placement */
+      transform: scale(0.9);
+      transform-origin: bottom right;
+      
+      /* Premium entrance physics: slides up, clears blur layer, fades visibility */
+      animation: dynamicStickyShow 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    /* Keeps iframe elements isolated and clipped safely inside borders when sticky */
+    .outstream-main-container.is-sticky #div-gpt-ad-outstream-slot {
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    /* CLOSE TRIGGER MARKUP: Revealed exclusively during sticky activation mode */
+    .outstream-close-trigger {
+      display: none;
+      position: absolute;
+      top: -12px;
+      left: -12px;
+      width: 26px;
+      height: 26px;
+      background: #111;
+      color: #fff;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 23px;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      font-weight: bold;
+      border: 2px solid #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 100000;
+      transition: background 0.2s ease;
+    }
+
+    .outstream-close-trigger:hover {
+      background: #ff3b30; /* Desktop specific feedback overlay shift */
+    }
+
+    .outstream-main-container.is-sticky .outstream-close-trigger {
+      display: block;
+    }
+
+    /* BLUR ENTRANCE KEYFRAME SEQUENCING */
+    @keyframes dynamicStickyShow {
+      0% {
+        transform: translateY(60px) scale(0.85);
+        opacity: 0;
+        filter: blur(8px);
+      }
+      100% {
+        transform: translateY(0) scale(0.9);
+        opacity: 1;
+        filter: blur(0);
+      }
+    }
+  </style>
+<!--<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7710644763832143" crossorigin="anonymous"></script>-->
+  <!-- ======================================================================= -->
+  <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
+  <!-- ======================================================================= -->
+  <style>
+    /* THE GHOST ANCHOR: Stays fixed in layout to completely eliminate infinite layout flickers */
+    .outstream-placement-anchor {
+      width: 336px;
+      height: 280px;
+      margin: 40px auto;
+      position: relative;
+      background: transparent;
+    }
+
+    /* THE MOVING CONTAINER: Holds the ad frame and performs transitions on scroll */
+    .outstream-main-container {
+      width: 336px;
+      height: 280px;
+      background: #fbfbfb;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: box-shadow 0.3s ease;
+    }
+
+    /* STICKY OVERLAY STATE: Engaged programmatically by IntersectionObserver */
+    .outstream-main-container.is-sticky {
+      position: fixed;
+      top: auto;
+      left: auto;
+      bottom: 25px;
+      right: 25px;
+      z-index: 99999;
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      
+      /* Downscale slightly for clean desktop corner placement */
+      transform: scale(0.9);
+      transform-origin: bottom right;
+      
+      /* Premium entrance physics: slides up, clears blur layer, fades visibility */
+      animation: dynamicStickyShow 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    /* Keeps iframe elements isolated and clipped safely inside borders when sticky */
+    .outstream-main-container.is-sticky #div-gpt-ad-outstream-slot {
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    /* CLOSE TRIGGER MARKUP: Revealed exclusively during sticky activation mode */
+    .outstream-close-trigger {
+      display: none;
+      position: absolute;
+      top: -12px;
+      left: -12px;
+      width: 26px;
+      height: 26px;
+      background: #111;
+      color: #fff;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 23px;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      font-weight: bold;
+      border: 2px solid #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 100000;
+      transition: background 0.2s ease;
+    }
+
+    .outstream-close-trigger:hover {
+      background: #ff3b30; /* Desktop specific feedback overlay shift */
+    }
+
+    .outstream-main-container.is-sticky .outstream-close-trigger {
+      display: block;
+    }
+
+    /* BLUR ENTRANCE KEYFRAME SEQUENCING */
+    @keyframes dynamicStickyShow {
+      0% {
+        transform: translateY(60px) scale(0.85);
+        opacity: 0;
+        filter: blur(8px);
+      }
+      100% {
+        transform: translateY(0) scale(0.9);
+        opacity: 1;
+        filter: blur(0);
+      }
+    }
+  </style>
+  
+  <style>
+    /* Full-screen backdrop with blur */
 #custom-paywall-overlay {
     position: fixed;
     top: 0;
@@ -178,6 +539,7 @@ footer a:hover{color:var(--text)}
     pointer-events: auto;
 }
 
+/* Modal Card */
 .paywall-card {
     background: #ffffff;
     width: 90%;
@@ -189,12 +551,14 @@ footer a:hover{color:var(--text)}
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
+/* Site Logo */
 .paywall-logo {
     max-height: 48px;
     width: auto;
     margin-bottom: 20px;
 }
 
+/* Typography */
 .paywall-card h2 {
     margin: 0 0 12px 0;
     color: #1f2937;
@@ -209,6 +573,7 @@ footer a:hover{color:var(--text)}
     margin: 0 0 28px 0;
 }
 
+/* Interactive Action Option Card */
 .paywall-action-box {
     display: flex;
     align-items: center;
@@ -239,6 +604,7 @@ footer a:hover{color:var(--text)}
     font-size: 13px;
 }
 
+/* Play Icon Button */
 .paywall-icon-btn {
     background: #1e40af;
     color: white;
@@ -256,10 +622,10 @@ footer a:hover{color:var(--text)}
     width: 16px;
     height: 16px;
     fill: currentColor;
-    margin-left: 2px;
+    margin-left: 2px; /* optical adjustment for play triangle */
 }
-</style>
-</head>
+  </style>
+  </head>
  
 <body>
 
@@ -279,19 +645,122 @@ footer a:hover{color:var(--text)}
   </a>
 </nav>
 
+
+<!--
+ <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
+-->
+<!-- old mobile sticky top code -->
+
+
 <div class="hero">
   <h1>Video Samples</h1>
   <p>Every Processing Option changes the output in a different way. Compare them side-by-side before you spend render time on your own video.</p>
 </div>
 
 <div class="sections">
+<!--
+   <div style="padding: 20px; text-align: center; color: #666;">↓ Scroll down to view the inline outstream ad transform into a sticky corner overlay ↓</div>
+  <div style="height: 900px; background: #f0f2f5; display: flex; align-items: center; justify-content: center; font-family: sans-serif; color: #aaa;">[Article Content Space Area]</div>
+-->
+  <!-- AD UNIT CONTAINER POSITION START -->
+ 
+  <!-- AD UNIT CONTAINER POSITION END -->
+<!--
+  <div style="height: 1600px; background: #e9ecef; display: flex; align-items: center; justify-content: center; font-family: sans-serif; color: #aaa;">[Continue Reading Article Elements Below...]</div>
+-->
+  
 
+  <!-- ======================================================================= -->
+  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
+  <!-- ======================================================================= -->
+<!--  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const anchorNode = document.querySelector('.outstream-placement-anchor');
+      const adWrapper = document.getElementById('outstream-ad-wrapper');
+      const closeBtn = document.getElementById('outstream-close');
+      let userClosedAd = false;
+
+      if (!anchorNode || !adWrapper) return;
+
+      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
+      window.googletag = window.googletag || {cmd: []};
+      googletag.cmd.push(function() {
+        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
+            if (event.isEmpty) {
+              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
+              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
+            } else {
+              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
+              // Only trigger performance tracking cycles if demand actually filled the layout container
+              stickyObserver.observe(anchorNode);
+            }
+          }
+        });
+      });
+
+      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
+      const stickyObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (userClosedAd) return;
+
+          // If the invisible inline space position completely rolls out of view
+          if (!entry.isIntersecting) {
+            const boundingBox = entry.boundingClientRect;
+            
+            // Only apply sticky docking if user scrolled past the ad DOWN the page
+            if (boundingBox.top < 0) {
+              adWrapper.classList.add('is-sticky');
+            }
+          } else {
+            // Re-dock cleanly back inline the second the user scrolls back up
+            adWrapper.classList.remove('is-sticky');
+          }
+        });
+      }, { 
+        root: null, 
+        threshold: 0 // Fires instantly the frame the boundary is crossed
+      });
+
+      // STEP C: CLOSE ICON ACTIONS
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        userClosedAd = true;
+        adWrapper.classList.remove('is-sticky');
+        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
+      });
+    });
+  </script> -->
   <!-- ENHANCE -->
   <div class="section">
     <div class="section-header">
       <h2>Enhance &mdash; GFPGAN on vs. off</h2>
       <p>GFPGAN face restoration runs on every frame for a sharper result, at the cost of extra render time.</p>
     </div>
+
+   
+  <!-- ======================================================================= -->
+  <!-- 3. WEB PAGE STRUCTURAL CORE HOUSING PLACEMENT MARKUP                   -->
+  <!-- ======================================================================= -->
+  <!--<div class="myyy-outstream-placement-anchor">
+    <div id="outstream-ad-wrapper" class="outstream-main-container">
+      <div id="outstream-close" class="outstream-close-trigger">&times;</div>
+      
+       
+      <div id="div-gpt-ad-outstream-slot" style="width: 336px; height: 280px; margin: 0 auto;">
+        <script>
+          googletag.cmd.push(function() { 
+            googletag.display('div-gpt-ad-outstream-slot'); 
+          });
+        </script>
+      </div>
+    </div>
+  </div>--> 
+
+  </div>
+  <!-- ========================================== -->
+  <!-- END OF AD UNIT LAYOUT STRUCTURE            -->
+  <!-- ========================================== -->
     <div class="video-grid cols-2">
       <div class="video-card">
         <div class="video-wrap">
@@ -525,6 +994,27 @@ footer a:hover{color:var(--text)}
       </div>
 
       <div class="video-card">
+  <div class="video-wrap">
+    <!-- Video.js Container -->
+    <video
+      id="v-still-off"
+      class="video-js vjs-default-skin vjs-big-play-centered"
+      controls
+      preload="auto"
+      playsinline
+       
+      <source src="https://mlapplications.com/video_samples/still_off.mp4" type="video/mp4" />
+    </video>
+  </div>
+  
+  <div class="video-caption">
+    <span class="video-badge badge-natural">Still mode off &mdash; natural drift</span>
+    <h3>Still mode off</h3>
+    <p>More natural head motion. Better for conversational avatars.</p>
+  </div>
+</div>
+
+<!--      <div class="video-card">
         <div class="video-wrap">
           <video id="v-still-off" src="https://mlapplications.com/video_samples/still_off.mp4"
             preload="metadata" loop playsinline></video>
@@ -553,7 +1043,7 @@ footer a:hover{color:var(--text)}
           <h3>Still mode off</h3>
           <p>More natural head motion. Better for conversational avatars.</p>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -627,6 +1117,7 @@ footer a:hover{color:var(--text)}
     </div>
   </div>
 
+
 </div> 
 
 <footer>
@@ -634,27 +1125,28 @@ footer a:hover{color:var(--text)}
   <a href="https://mlapplications.com/imtalking_privacy.html">Privacy</a> ·
   <a href="https://mlapplications.com/imtalking_contactus.html">Contact</a></p>
 </footer>
+   
+  
+ 
 
-<div id="custom-paywall-overlay">
+  <div id="custom-paywall-overlay">
     <div class="paywall-card">
+        <!-- Replace src with your actual site logo path -->
         <img src="/uploads/logo-big_2.webp" alt="Logo" class="paywall-logo">
+        
         <h2>Unlock more content</h2>
         <p>Take action to continue accessing the content on this site</p>
         
+        <!-- Clickable Action Box matching Google's layout -->
         <div class="paywall-action-box" id="paywall-action-trigger">
             <div class="paywall-action-text">
                 <h4>View a short ad</h4>
                 <span>Site-wide access for 1 hour</span>
             </div>
             <div class="paywall-icon-btn">
+                <!-- Play Icon SVG -->
                 <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
             </div>
-
-
-            <!-- THE REQUIRED AD CONTAINER DIV -->
-        <div id="div-gpt-ad-display-slot" style="min-height: 250px; text-align: center; margin: 15px 0;"></div>
-
-        
         </div>
     </div>
 </div>
@@ -663,7 +1155,47 @@ footer a:hover{color:var(--text)}
 document.addEventListener("DOMContentLoaded", function () {
     const overlay = document.getElementById("custom-paywall-overlay");
     const actionTrigger = document.getElementById("paywall-action-trigger");
-    const TIMEOUT_DURATION = 10 * 1000; // 10 seconds
+
+//    const TIMEOUT_DURATION_2 = 4 * 60 * 1000; // 4 minutes
+    const TIMEOUT_DURATION = 1 * 8 * 1000; // 8 seconds
+  console.log('timeout fired');
+    if (!sessionStorage.getItem("page_unlocked_session")) {
+        setTimeout(() => {
+            if (overlay) {
+                overlay.classList.add("active");
+                document.body.style.overflow = "hidden"; 
+            }
+        }, TIMEOUT_DURATION);
+    }
+
+    // When the user clicks your custom paywall button
+    actionTrigger.addEventListener("click", function () {
+      console.log('click here');
+        googletag.cmd.push(() => {
+          console.log('googletag.cmd.push ..... ');
+          console.log('rewardedSlot:  ', rewardedSlot);
+          console.log('isRewardedReady:  ', isRewardedReady);
+
+          if (rewardedSlot && isRewardedReady) {
+
+            console.log('if (rewardedSlot && isRewardedReady):  passed !!');
+                // Correct method: Standard display call triggers the GPT rewarded overlay UI
+              window.rewardedSlot.makeRewardedVisible();
+                //      googletag.display(rewardedSlot);
+            } else {
+                console.warn("Rewarded ad is not ready yet or slot failed. Granting fallback access.");
+                my_grantUserAccess_2();
+            }
+        });
+    });
+});
+ /* 
+document.addEventListener("DOMContentLoaded", function () {
+    const overlay = document.getElementById("custom-paywall-overlay");
+    const actionTrigger = document.getElementById("paywall-action-trigger");
+
+    //const TIMEOUT_DURATION = 4 * 60 * 1000; // 4 minutes
+      const TIMEOUT_DURATION = 1 * 10 * 1000; // 10 seconds
 
     if (!sessionStorage.getItem("page_unlocked_session")) {
         setTimeout(() => {
@@ -674,17 +1206,68 @@ document.addEventListener("DOMContentLoaded", function () {
         }, TIMEOUT_DURATION);
     }
 
+    // When user clicks the blue play button card
     actionTrigger.addEventListener("click", function () {
+        // Check if Google's rewarded slot is ready and display it
         googletag.cmd.push(() => {
-            if (window.rewardedSlot && window.isRewardedReady && window.rewardEventObj) {
-                window.rewardEventObj.makeRewardedVisible();
+            if (rewardedSlot) {
+                // This triggers the Google-hosted rewarded video overlay natively
+                googletag.pubads().displayRewardedAd(rewardedSlot);
             } else {
-                console.warn("Rewarded ad is not ready yet or slot failed. Granting fallback access.");
-                my_grantUserAccess_2();
+                // Fallback if ad hasn't loaded or blocked by adblocker: grant access gracefully
+                console.warn("Rewarded ad slot not ready. Granting fallback access.");
+                grantUserAccess();
             }
         });
     });
 });
+
+function grantUserAccess() {
+    const overlay = document.getElementById("custom-paywall-overlay");
+    sessionStorage.setItem("page_unlocked_session", "true");
+    if (overlay) {
+        overlay.classList.remove("active");
+        document.body.style.overflow = "auto";
+    }
+    // Refresh your content or reload page to show full text
+    location.reload(); 
+}
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const overlay = document.getElementById("custom-paywall-overlay");
+    const actionTrigger = document.getElementById("paywall-action-trigger");
+
+    // Timer configuration (e.g., 4 minutes = 240000 ms)
+    //const TIMEOUT_DURATION = 4 * 60 * 1000; 
+    const TIMEOUT_DURATION = 10000; 
+
+    // Check if access is already granted for this session
+    const isUnlocked = sessionStorage.getItem("page_unlocked_session");
+
+    if (!isUnlocked) {
+        setTimeout(() => {
+            if (overlay) {
+                overlay.classList.add("active");
+                document.body.style.overflow = "hidden"; 
+            }
+        }, TIMEOUT_DURATION);
+    }
+
+    // Handle user clicking the action card
+    actionTrigger.addEventListener("click", function () {
+        // TODO: Trigger your custom ad or reward script logic here
+        
+        // Grant temporary session access
+        sessionStorage.setItem("page_unlocked_session", "true");
+        
+        // Hide the overlay and restore scrolling
+        overlay.classList.remove("active");
+        document.body.style.overflow = "auto";
+    });
+}); */
 </script>
 </body>
+
+
 </html>
