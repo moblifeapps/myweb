@@ -108,7 +108,33 @@
   }
 
   // ---------- GPT rewarded setup (only when the page is locked) ----------
-  if (!pageUnlocked) {
+  // Waits for the other ad wrapper on the page to finish its own GPT setup
+  // (enableServices), so this script never locks GPT settings before it.
+  const WRAPPER_WAIT_MAX = 5000;  // max wait for the other wrapper (ms)
+  const WRAPPER_POLL = 250;
+
+  function whenGptReadyForUs(fn) {
+    const start = Date.now();
+    (function check() {
+      const ready = window.googletag && googletag.apiReady && googletag.pubadsReady;
+      if (ready || Date.now() - start >= WRAPPER_WAIT_MAX) {
+        fn();
+      } else {
+        setTimeout(check, WRAPPER_POLL);
+      }
+    })();
+  }
+
+  function initialLoadDisabled() {
+    try {
+      if (typeof googletag.getConfig === "function") {
+        return !!googletag.getConfig("disableInitialLoad");
+      }
+      return googletag.pubads().isInitialLoadDisabled();
+    } catch (e) { return false; }
+  }
+
+  function startRewarded() {
     googletag.cmd.push(function () {
       rewardedSlot = googletag.defineOutOfPageSlot(
         AD_UNIT_PATH,
@@ -156,9 +182,23 @@
         }
       });
 
-      googletag.enableServices();
+      // Don't call enableServices if the other wrapper already did
+      if (!googletag.pubadsReady) googletag.enableServices();
+
       googletag.display(rewardedSlot);
+      // If the other wrapper disabled initial load, display() won't fetch: refresh only our slot
+      if (initialLoadDisabled()) googletag.pubads().refresh([rewardedSlot]);
     });
+  }
+
+  if (!pageUnlocked) {
+    if (document.readyState === "complete") {
+      whenGptReadyForUs(startRewarded);
+    } else {
+      window.addEventListener("load", function () {
+        whenGptReadyForUs(startRewarded);
+      });
+    }
   }
 
   // ---------- Page ready ----------
