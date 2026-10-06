@@ -53,11 +53,11 @@ window.googletag.cmd.push(function() {
 
     // Instead of an immediate refresh which can drop out-of-page calls, 
     // let pubads handle the initial fetch queue safely:
-    window.googletag.cmd.push(function() {
-        if (window.rewardedSlot) {
-            window.googletag.pubads().refresh([window.rewardedSlot]);
-        }
-    });
+  //  window.googletag.cmd.push(function() {
+    //    if (window.rewardedSlot) {
+      //      window.googletag.pubads().refresh([window.rewardedSlot]);
+      //  }
+   // });
 });
   /*  window.googletag.cmd.push(function() {
         // 1. Define out-of-page rewarded slot
