@@ -3,101 +3,105 @@
 <head>
 
    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=423204242"></script>
-<script>
-    // Ensure googletag is safely initialized first
-    window.googletag = window.googletag || {cmd: []};
-    window.rewardedSlot = null;
-    window.isRewardedReady = false;
-    
-    function grantUserAccess() {
-        const overlay = document.getElementById("custom-paywall-overlay");
-        sessionStorage.setItem("page_unlocked_session2222", "true");
-        if (overlay) {
-            overlay.classList.remove("active");
-            document.body.style.overflow = "auto";
-        }
-        location.reload(); 
-    }
+ <script>
+  window.googletag = window.googletag || { cmd: [] };
 
-    function my_grantUserAccess_2() {
-        const overlay = document.getElementById("custom-paywall-overlay");
-        sessionStorage.setItem("page_unlocked_session2222", "true");
-        if (overlay) {
-            overlay.classList.remove("active");
-            document.body.style.overflow = "auto";
-        }
-    }
-    
-window.googletag.cmd.push(function() {
-    window.rewardedSlot = googletag.defineOutOfPageSlot(
-        '/423204242/Offerwall_Live_Rewarded_code', 
+  const UNLOCK_KEY = "paywall_unlocked_until";
+  const UNLOCK_DURATION = 60 * 60 * 1000;   // 1 hour
+  const PAYWALL_DELAY = 8 * 1000;           // 8 seconds (testing)
+
+  let rewardedSlot = null;
+  let rewardedEvent = null;   // set when the ad is ready
+  let rewardEarned = false;
+
+  function isUnlocked() {
+    try {
+      return Date.now() < Number(localStorage.getItem(UNLOCK_KEY) || 0);
+    } catch (e) { return false; }
+  }
+
+  function unlockPage() {
+    try { localStorage.setItem(UNLOCK_KEY, String(Date.now() + UNLOCK_DURATION)); } catch (e) {}
+    const overlay = document.getElementById("custom-paywall-overlay");
+    if (overlay) overlay.classList.remove("active");
+    document.body.style.overflow = "auto";
+  }
+
+  // --- GPT rewarded setup (only if the page is locked) ---
+  if (!isUnlocked()) {
+    googletag.cmd.push(function () {
+      rewardedSlot = googletag.defineOutOfPageSlot(
+        "/423204242/Offerwall_Live_Rewarded_code",
         googletag.enums.OutOfPageFormat.REWARDED
-    );
+      );
 
-    if (window.rewardedSlot) {
-        window.rewardedSlot.addService(googletag.pubads());
+      if (!rewardedSlot) {
+        console.warn("Rewarded not supported on this page");
+        return;
+      }
 
-        window.googletag.pubads().addEventListener('rewardedSlotReady', function(evt) {
-            if (evt.slot === window.rewardedSlot) {
-                console.log('Rewarded ad is ready!');
-                window.isRewardedReady = true;
-            }
-        });
+      rewardedSlot.addService(googletag.pubads());
 
-        window.googletag.pubads().addEventListener('rewardedSlotGranted', function(evt) {
-            grantUserAccess();
-        });
+      googletag.pubads().addEventListener("rewardedSlotReady", function (evt) {
+        if (evt.slot === rewardedSlot) {
+          console.log("Rewarded ad ready");
+          rewardedEvent = evt;
+        }
+      });
+
+      googletag.pubads().addEventListener("rewardedSlotGranted", function (evt) {
+        if (evt.slot === rewardedSlot) {
+          console.log("Reward granted", evt.payload);
+          rewardEarned = true;
+        }
+      });
+
+      googletag.pubads().addEventListener("rewardedSlotClosed", function (evt) {
+        if (evt.slot === rewardedSlot) {
+          googletag.destroySlots([rewardedSlot]);
+          rewardedEvent = null;
+          if (rewardEarned) unlockPage();
+        }
+      });
+
+      googletag.pubads().addEventListener("slotRenderEnded", function (evt) {
+        if (evt.slot === rewardedSlot) {
+          console.log("Rewarded render ended, empty:", evt.isEmpty);
+        }
+      });
+
+      googletag.enableServices();
+      googletag.display(rewardedSlot);   // requests the ad
+    });
+  }
+
+  // --- Paywall UI ---
+  document.addEventListener("DOMContentLoaded", function () {
+    const overlay = document.getElementById("custom-paywall-overlay");
+    const actionTrigger = document.getElementById("paywall-action-trigger");
+
+    if (!isUnlocked()) {
+      setTimeout(function () {
+        console.log("Paywall timer fired");
+        if (overlay && !isUnlocked()) {
+          overlay.classList.add("active");
+          document.body.style.overflow = "hidden";
+        }
+      }, PAYWALL_DELAY);
     }
 
-    window.googletag.enableServices();
-
-    // Instead of an immediate refresh which can drop out-of-page calls, 
-    // let pubads handle the initial fetch queue safely:
-  //  window.googletag.cmd.push(function() {
-    //    if (window.rewardedSlot) {
-      //      window.googletag.pubads().refresh([window.rewardedSlot]);
-      //  }
-   // });
-});
-  /*  window.googletag.cmd.push(function() {
-        // 1. Define out-of-page rewarded slot
-        window.rewardedSlot = googletag.defineOutOfPageSlot(
-            '/423204242/Offerwall_Live_Rewarded_code', 
-            googletag.enums.OutOfPageFormat.REWARDED
-        );
-
-        if (window.rewardedSlot) {
-            window.rewardedSlot.addService(googletag.pubads());
-
-            // 2. Event Listeners
-            googletag.pubads().addEventListener('rewardedSlotReady', function(evt) {
-                if (evt.slot === window.rewardedSlot) {
-                    console.log('Rewarded ad is ready to be displayed.');
-                    window.isRewardedReady = true;
-                }
-            });
-
-            googletag.pubads().addEventListener('rewardedSlotGranted', function(evt) {
-                console.log('Reward granted!', evt.payload);
-                grantUserAccess();
-            });
-
-            googletag.pubads().addEventListener('rewardedSlotClosed', function(evt) {
-                console.log('Rewarded ad closed.');
-            });
+    if (actionTrigger) {
+      actionTrigger.addEventListener("click", function () {
+        if (rewardedEvent) {
+          rewardedEvent.makeRewardedVisible();   // shows the ad
+        } else {
+          console.warn("Rewarded ad not ready (no fill or blocked). Granting fallback access.");
+          unlockPage();
         }
-
-        // 3. Enable services and fetch
-        googletag.enableServices();
-
-        if (window.rewardedSlot) {
-            googletag.pubads().refresh([window.rewardedSlot]);
-        }
-    });
-
-*/
+      });
+    }
+  });
 </script>
- 
 
 <!-- Standard GPT script required for GAM & Privacy/Messaging tools -->
  <!--
@@ -1151,7 +1155,9 @@ footer a:hover{color:var(--text)}
     </div>
 </div>
 
-<script>
+<script> 
+
+/*
 document.addEventListener("DOMContentLoaded", function () {
     const overlay = document.getElementById("custom-paywall-overlay");
     const actionTrigger = document.getElementById("paywall-action-trigger");
@@ -1189,7 +1195,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
- /* 
+ 
 document.addEventListener("DOMContentLoaded", function () {
     const overlay = document.getElementById("custom-paywall-overlay");
     const actionTrigger = document.getElementById("paywall-action-trigger");
