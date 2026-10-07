@@ -29,6 +29,8 @@
   // which switches to the fallback immediately.
   const AD_WATCHDOG = 35 * 1000;
   const FALLBACK_READY_WAIT = 12 * 1000;    // max wait for the fallback ad to become ready
+  const CLOSE_WATCH_POLL = 300;             // how often to check whether the ad overlay closed (ms)
+  const CLOSE_WATCH_GRACE = 5 * 1000;       // stop watching if the overlay never appears
   const UNLOCK_ON_FAILURE = true;           // if the user tried but every ad failed, unlock anyway
 
   // ---------- Paywall HTML ----------
@@ -138,8 +140,70 @@
     hidePaywall();
   }
 
+  // ---------- Close detection ----------
+  // Google's rewardedSlotClosed event does not always fire when a broken
+  // (black-screen) video is closed with X / Skip. As a second signal, watch the
+  // ad's own container on our page: once it has been visible and then
+  // disappears (removed, hidden or collapsed), the ad was closed.
+  let closeWatchTimer = null;
+
+  function stopCloseWatch() {
+    clearInterval(closeWatchTimer);
+    closeWatchTimer = null;
+  }
+
+  function startCloseWatch() {
+    stopCloseWatch();
+    const id = rewardedSlot && rewardedSlot.getSlotElementId();
+    if (!id) return;
+    const started = Date.now();
+    let seenVisible = false;
+
+    closeWatchTimer = setInterval(function () {
+      if (!adShowing || finished) { stopCloseWatch(); return; }
+      const el = document.getElementById(id);
+      let visible = false;
+      if (el && el.isConnected && el.offsetWidth > 0 && el.offsetHeight > 0) {
+        const cs = window.getComputedStyle(el);
+        visible = cs.display !== "none" && cs.visibility !== "hidden" && cs.opacity !== "0";
+      }
+      if (visible) {
+        seenVisible = true;
+      } else if (seenVisible) {
+        stopCloseWatch();
+        handleClosed("dom");
+      } else if (Date.now() - started > CLOSE_WATCH_GRACE) {
+        stopCloseWatch(); // overlay never appeared: leave it to events / watchdog
+      }
+    }, CLOSE_WATCH_POLL);
+  }
+
+  // Single place that reacts to the ad closing (from the GPT event or the DOM watch).
+  function handleClosed(source) {
+    if (finished || !adShowing) return; // already handled
+    stopCloseWatch();
+    if (rewardEarned) {
+      track("unlocked");
+      teardownSlot();
+      finished = true;
+      unlockPage();
+      return;
+    }
+    track("closed_early_" + source);
+    if (unitIndex === 0) {
+      // Could be a black-screen video the user had to close: switch to the fallback now
+      tryFallback("closed_early");
+    } else {
+      // Closed the fallback early: let them read this page, no unlock
+      teardownSlot();
+      finished = true;
+      hidePaywall();
+    }
+  }
+
   // ---------- Slot lifecycle ----------
   function teardownSlot() {
+    stopCloseWatch();
     clearTimeout(watchdogTimer);
     watchdogTimer = null;
     if (rewardedSlot && window.googletag && googletag.destroySlots) {
@@ -203,6 +267,7 @@
       rewardedEvent.makeRewardedVisible();
       clearTimeout(watchdogTimer);
       watchdogTimer = setTimeout(onAdStuck, AD_WATCHDOG);
+      startCloseWatch();
     } else if (fallbackTimer) {
       // Fallback ad still loading; the status line already says so
       return;
@@ -251,7 +316,8 @@
       clearTimeout(fallbackTimer);
       fallbackTimer = null;
       rewardedEvent = evt;
-      setStatus("");
+      // After switching to the fallback, tell the user a new ad is waiting
+      setStatus(unitIndex > 0 && userTried ? "Another ad is ready. Tap “View a short ad”." : "");
       track("ad_ready");
       maybeShowPaywall();
     });
@@ -265,24 +331,8 @@
     });
 
     pubads.addEventListener("rewardedSlotClosed", function (evt) {
-      if (evt.slot !== rewardedSlot || finished) return;
-      if (rewardEarned) {
-        track("unlocked");
-        teardownSlot();
-        finished = true;
-        unlockPage();
-        return;
-      }
-      track("closed_early");
-      if (unitIndex === 0) {
-        // Could be a black-screen video the user had to close: offer the fallback
-        tryFallback("closed_early");
-      } else {
-        // Closed the fallback early: let them read this page, no unlock
-        teardownSlot();
-        finished = true;
-        hidePaywall();
-      }
+      if (evt.slot !== rewardedSlot) return;
+      handleClosed("event");
     });
 
     pubads.addEventListener("slotRenderEnded", function (evt) {
