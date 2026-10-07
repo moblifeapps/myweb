@@ -108,3 +108,25 @@
     fill: currentColor;
     margin-left: 2px; /* optical adjustment for play triangle */
 }
+
+
+/* "Ad not playing? Close it with ✕ to get another one." */
+#custom-paywall-overlay .paywall-hint {
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.4;
+  opacity: .65;
+}
+ 
+/* "Loading another ad…" status line (shown while switching to the fallback unit) */
+#custom-paywall-overlay .paywall-status {
+  margin: 12px 0 0;
+  font-size: 14px;
+  line-height: 1.4;
+  opacity: .85;
+}
+ 
+#custom-paywall-overlay .paywall-status[hidden] {
+  display: none;
+}
+ 
