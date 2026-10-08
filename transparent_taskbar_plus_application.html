@@ -992,6 +992,8 @@ function buildStyleGrid() {
     card.addEventListener('click', (e) => {
       if (e.target.closest('input, label, button')) return;
       selectStyle(card.dataset.style);
+      // the Pattern card opens the pattern list
+      if (card.dataset.style === 'pattern') openPatternPicker();
     });
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') applyStyle(card.dataset.style);
