@@ -166,6 +166,9 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
 .settings-header { margin-bottom: 24px; position: relative; z-index: 1; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .settings-header h1 { font-size: 24px; margin: 0 0 4px; }
 .settings-header p { font-size: 13px; color: var(--text2); margin: 0; }
+.position-action { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.position-hint { font-size: 11px; color: var(--text3); text-align: right; }
+.position-hint strong { color: var(--text2); font-weight: 600; }
 
 .settings-section { margin-bottom: 28px; position: relative; z-index: 1; }
 .settings-section-title {
@@ -288,6 +291,32 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
 .tb-preview[data-type="dock_color"] .tb-dock { background: var(--c-dock); }
 .tb-preview[data-type="gradient1"] .tb-bar { background: linear-gradient(to bottom, var(--c-color1) 0%, var(--c-color1) 50%, color-mix(in srgb, var(--c-color1) 70%, #000) 50%, color-mix(in srgb, var(--c-color1) 70%, #000) 100%); }
 .tb-preview[data-type="gradient2"] .tb-bar { background: linear-gradient(to bottom, var(--c-color2) 0%, var(--c-color2) 50%, var(--c-color3) 50%, var(--c-color3) 100%); }
+
+.tb-preview[data-type="pattern"] .tb-bar { background: #1f1f1f; }
+
+/* Real desktop wallpaper behind every preview, once the app has sent it */
+.has-wallpaper .tb-preview { background: var(--ttb-wallpaper) center / cover no-repeat, var(--ttb-wallpaper-color, #202020); }
+.has-wallpaper-color .tb-preview { background: var(--ttb-wallpaper-color, #202020); }
+
+/* Pattern picker (below the style cards) */
+.pattern-section { margin-top: 26px; position: relative; z-index: 1; }
+.pattern-section-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.pattern-section-head h2 { font-size: 16px; margin: 0; }
+.pattern-section-head p { font-size: 12px; color: var(--text2); margin: 2px 0 0; }
+.pattern-tabs { display: inline-flex; background: var(--surface2); border: 1px solid var(--border); border-radius: 9px; padding: 3px; gap: 3px; }
+.pattern-tab { border: none; background: transparent; color: var(--text2); font: inherit; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+.pattern-tab.active { background: var(--accent); color: #fff; }
+.pattern-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.pattern-swatch {
+  border: 1px solid var(--border); border-radius: 9px; background: var(--surface); padding: 6px; cursor: pointer;
+  display: flex; flex-direction: column; gap: 5px; text-align: left; font: inherit; color: var(--text2);
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.pattern-swatch:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
+.pattern-swatch.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.pattern-swatch.current .pattern-swatch-name::after { content: ' • active'; color: var(--green); }
+.pattern-swatch-bar { height: 30px; border-radius: 5px; }
+.pattern-swatch-name { font-size: 11px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 .taskbar-footer { margin-top: 22px; display: flex; gap: 10px; flex-wrap: wrap; position: relative; z-index: 1; }
 
@@ -458,6 +487,13 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
               <h1 id="taskbarViewTitle">Bottom Taskbar</h1>
               <p>Choose the visual style of your taskbar. Pick colors where available, then press Apply.</p>
             </div>
+            <div class="position-action">
+              <button class="secondary-btn" id="taskbarPositionBtn" title="Opens Windows Settings - Personalization - Taskbar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16"/><path d="M14 10l-3 2 3 2"/></svg>
+                Change taskbar position&hellip;
+              </button>
+              <span class="position-hint">In Windows Settings open <strong>Taskbar behaviors</strong> &rarr; <strong>Taskbar position</strong></span>
+            </div>
           </div>
 
           <div class="notice" id="notConnectedNotice">
@@ -466,6 +502,20 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
           </div>
 
           <div class="style-grid" id="styleGrid"></div>
+
+          <div class="pattern-section">
+            <div class="pattern-section-head">
+              <div>
+                <h2>Patterns</h2>
+                <p>Pick a pattern for the <strong>Pattern</strong> style, then press Apply on its card (or double-click a pattern).</p>
+              </div>
+              <div class="pattern-tabs">
+                <button class="pattern-tab active" data-pattern-theme="dark">Dark</button>
+                <button class="pattern-tab" data-pattern-theme="light">Light</button>
+              </div>
+            </div>
+            <div class="pattern-grid" id="patternGrid"></div>
+          </div>
 
           <div class="taskbar-footer">
             <button class="secondary-btn" id="resetDefaultsBtn">
@@ -645,6 +695,88 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
   <div class="toast" id="toast"></div>
 
 <script>
+// Taskbar background patterns (78: 40 dark + 38 light). Same list in myUI\myBuiltIn.html and the settings page.
+// Pure CSS backgrounds; the border lines of the original showcase are left out.
+const TTB_PATTERNS = [{"id":"d1","theme":"dark","name":"Luminous Diagonal Light Rays","category":"Rays & Beams","css":"background-color: #1f1f1f; background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, transparent 40%, rgba(255, 255, 255, 0.08) 60%, transparent 100%); background-size: 80px 80px;"},
+  {"id":"d2","theme":"dark","name":"High-Contrast Diagonal Grid Lines","category":"Lines & Grids","css":"background-color: #1f1f1f; background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.12) 25%, transparent 25%), linear-gradient(-45deg, rgba(255, 255, 255, 0.12) 25%, transparent 25%); background-size: 16px 16px;"},
+  {"id":"d3","theme":"dark","name":"Radiant Cone Beam Effect","category":"Rays & Beams","css":"background-color: #1f1f1f; background-image: repeating-linear-gradient(60deg, rgba(255, 255, 255, 0.09) 0px, rgba(255, 255, 255, 0.09) 2px, transparent 2px, transparent 32px);"},
+  {"id":"d4","theme":"dark","name":"Micro Dot Matrix","category":"Dots","css":"background-color: #1f1f1f; background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px); background-size: 12px 12px;"},
+  {"id":"d5","theme":"dark","name":"Sharp Focus Light Beam","category":"Rays & Beams","css":"background-color: #1f1f1f; background-image: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.16) 50%, transparent 80%); background-size: 120px 100%;"},
+  {"id":"d6","theme":"dark","name":"Fine Horizontal Striations","category":"Lines & Grids","css":"background-color: #1f1f1f; background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px); background-size: 100% 4px;"},
+  {"id":"d7","theme":"dark","name":"Multi-Angle Prismatic Rays","category":"Rays & Beams","css":"background-color: #1f1f1f; background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, transparent 30%), linear-gradient(-45deg, rgba(255, 255, 255, 0.1) 0%, transparent 30%); background-size: 50px 50px;"},
+  {"id":"d8","theme":"dark","name":"Precision Vertical Rulers","category":"Lines & Grids","css":"background-color: #1f1f1f; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px); background-size: 16px 100%;"},
+  {"id":"d9","theme":"dark","name":"Isometric Crosshatch","category":"Lines & Grids","css":"background-color: #1f1f1f; background-image: linear-gradient(30deg, rgba(255, 255, 255, 0.09) 1px, transparent 1px), linear-gradient(150deg, rgba(255, 255, 255, 0.09) 1px, transparent 1px); background-size: 20px 20px;"},
+  {"id":"d10","theme":"dark","name":"Offset Staggered Dots","category":"Dots","css":"background-color: #1f1f1f; background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1.5px, transparent 1.5px); background-size: 16px 16px; background-position: 0 0, 8px 8px;"},
+  {"id":"d11","theme":"dark","name":"Rotated Rectangle Weave","category":"Rectangles","css":"background-color: #1f1f1f; background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.05) 50%, transparent 50%), linear-gradient(135deg, rgba(255, 255, 255, 0.04) 50%, transparent 50%); background-size: 24px 24px;"},
+  {"id":"d12","theme":"dark","name":"Subtle Concentric Rings","category":"Circles","css":"background-color: #1f1f1f; background-image: radial-gradient(circle, transparent 40%, rgba(255, 255, 255, 0.06) 41%, transparent 42%); background-size: 30px 30px;"},
+  {"id":"d13","theme":"dark","name":"Sharp Chevron Chevrons","category":"Lines & Grids","css":"background-color: #1f1f1f; background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%), linear-gradient(225deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%); background-size: 20px 20px;"},
+  {"id":"d14","theme":"dark","name":"Interlocking Dashed Grid","category":"Lines & Grids","css":"background-color: #1f1f1f; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.11) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.11) 1px, transparent 1px); background-size: 24px 24px;"},
+  {"id":"d15","theme":"dark","name":"Sparse High-Tech Node Grid","category":"Dots","css":"background-color: #1f1f1f; background-image: radial-gradient(rgba(255, 255, 255, 0.18) 1px, transparent 1px), linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px); background-size: 32px 32px;"},
+  {"id":"d16","theme":"dark","name":"Angled Micro Stripes","category":"Lines & Grids","css":"background-color: #1f1f1f; background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05) 1px, transparent 1px, transparent 12px);"},
+  {"id":"d17","theme":"dark","name":"Rotated Rectangle Blocks","category":"Rectangles","css":"background-color: #1f1f1f; background-image: linear-gradient(60deg, rgba(255, 255, 255, 0.05) 20%, transparent 20%), linear-gradient(120deg, rgba(255, 255, 255, 0.05) 20%, transparent 20%); background-size: 28px 28px;"},
+  {"id":"d18","theme":"dark","name":"Tiny Dashed Pulse Tracks","category":"Lines & Grids","css":"background-color: #1f1f1f; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.08) 50%, transparent 50%); background-size: 8px 2px;"},
+  {"id":"d19","theme":"dark","name":"Faded Dot Halftone","category":"Dots","css":"background-color: #1f1f1f; background-image: radial-gradient(circle, rgba(255, 255, 255, 0.15) 1px, rgba(31, 31, 31, 0.8) 1px); background-size: 10px 10px;"},
+  {"id":"d20","theme":"dark","name":"Subtle Hex-Style Grid","category":"Lines & Grids","css":"background-color: #1f1f1f; background-image: linear-gradient(60deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(-60deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(0deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px); background-size: 30px 52px;"},
+  {"id":"d21","theme":"dark","name":"Fine Circuit Dashes","category":"Lines & Grids","css":"background-color: #1f1f1f; background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px); background-size: 18px 18px;"},
+  {"id":"d22","theme":"dark","name":"Subtle Circle Wavelets","category":"Circles","css":"background-color: #1f1f1f; background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0, rgba(255, 255, 255, 0.02) 60%, transparent 61%); background-size: 40px 40px;"},
+  {"id":"d23","theme":"dark","name":"Ambient Horizon Beam Ray","category":"Rays & Beams","css":"background-color: #1f1f1f; background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.04) 35%, transparent 70%); background-size: 100% 60px;"},
+  {"id":"d24","theme":"dark","name":"Ultra-Fine Carbon Matrix","category":"Dots","css":"background-color: #1f1f1f; background-image: radial-gradient(rgba(255, 255, 255, 0.12) 0.75px, transparent 0.75px); background-size: 6px 6px;"},
+  {"id":"d25","theme":"dark","name":"Soft Cyan Edge Glow Rays","category":"Rays & Beams","css":"background-color: #1f1f1f; background-image: linear-gradient(115deg, transparent 30%, rgba(56, 189, 248, 0.12) 50%, transparent 70%), linear-gradient(65deg, transparent 40%, rgba(255,255,255,0.06) 55%, transparent 70%); background-size: 140px 100%, 90px 100%;"},
+  {"id":"d26","theme":"dark","name":"Isometric Diamond Lattice","category":"Lines & Grids","css":"background-color: #1f1f1f; background-image: linear-gradient(30deg, rgba(255,255,255,0.07) 1px, transparent 1px), linear-gradient(150deg, rgba(255,255,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 28px 48px, 28px 48px, 14px 14px;"},
+  {"id":"d27","theme":"dark","name":"Pulsing Node Grid + Fine Lines","category":"Dots","css":"background-color: #1f1f1f; background-image: radial-gradient(circle, rgba(56,189,248,0.25) 1.2px, transparent 1.2px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 36px 36px, 18px 18px, 18px 18px;"},
+  {"id":"d28","theme":"dark","name":"Sharp Multi-Beam Spotlight","category":"Rays & Beams","css":"background-color: #1f1f1f; background-image: linear-gradient(105deg, transparent 15%, rgba(255,255,255,0.14) 48%, transparent 52%), linear-gradient(75deg, transparent 25%, rgba(255,255,255,0.08) 50%, transparent 75%); background-size: 160px 100%, 110px 100%;"},
+  {"id":"d29","theme":"dark","name":"Hexagonal Soft Grid","category":"Lines & Grids","css":"background-color: #1f1f1f; background-image: linear-gradient(60deg, rgba(255,255,255,0.08) 1.5px, transparent 1.5px), linear-gradient(-60deg, rgba(255,255,255,0.08) 1.5px, transparent 1.5px), linear-gradient(0deg, rgba(255,255,255,0.06) 1px, transparent 1px); background-size: 34px 60px;"},
+  {"id":"d30","theme":"dark","name":"Vertical Circuit Traces","category":"Lines & Grids","css":"background-color: #1f1f1f; background-image: linear-gradient(90deg, transparent 40%, rgba(255,255,255,0.09) 45%, rgba(255,255,255,0.09) 55%, transparent 60%), radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 28px 100%, 28px 28px;"},
+  {"id":"d31","theme":"dark","name":"Layered Chevron Weave","category":"Lines & Grids","css":"background-color: #1f1f1f; background-image: linear-gradient(135deg, rgba(255,255,255,0.09) 25%, transparent 25%), linear-gradient(225deg, rgba(255,255,255,0.09) 25%, transparent 25%), linear-gradient(45deg, rgba(255,255,255,0.04) 25%, transparent 25%); background-size: 22px 22px;"},
+  {"id":"d32","theme":"dark","name":"Soft Ambient Horizon + Micro Dots","category":"Rays & Beams","css":"background-color: #1f1f1f; background-image: linear-gradient(0deg, rgba(255,255,255,0.12) 0%, transparent 45%), radial-gradient(rgba(255,255,255,0.1) 0.8px, transparent 0.8px); background-size: 100% 50px, 10px 10px;"},
+  {"id":"d33","theme":"dark","name":"Rotated Rectangle Prism","category":"Rectangles","css":"background-color: #1f1f1f; background-image: linear-gradient(55deg, rgba(255,255,255,0.07) 18%, transparent 18%), linear-gradient(125deg, rgba(255,255,255,0.07) 18%, transparent 18%); background-size: 32px 32px;"},
+  {"id":"d34","theme":"dark","name":"Fine Diagonal Scanlines","category":"Lines & Grids","css":"background-color: #1f1f1f; background-image: repeating-linear-gradient( -18deg, transparent, transparent 3px, rgba(255,255,255,0.06) 3px, rgba(255,255,255,0.06) 4px );"},
+  {"id":"d35","theme":"dark","name":"Dual Offset Dot Field","category":"Dots","css":"background-color: #1f1f1f; background-image: radial-gradient(rgba(255,255,255,0.14) 1.3px, transparent 1.3px), radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px); background-size: 20px 20px, 20px 20px; background-position: 0 0, 10px 10px;"},
+  {"id":"d36","theme":"dark","name":"Soft Cone Beam Sweep","category":"Rays & Beams","css":"background-color: #1f1f1f; background-image: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 40%, transparent 80%), linear-gradient(70deg, transparent 20%, rgba(255,255,255,0.07) 50%, transparent 80%); background-size: 180px 100%, 120px 100%;"},
+  {"id":"d37","theme":"dark","name":"Micro Hex Dot Matrix","category":"Dots","css":"background-color: #1f1f1f; background-image: radial-gradient(circle, rgba(255,255,255,0.13) 1px, transparent 1px); background-size: 14px 24px; background-position: 0 0, 7px 12px;"},
+  {"id":"d38","theme":"dark","name":"Crossed Precision Rulers","category":"Lines & Grids","css":"background-color: #1f1f1f; background-image: linear-gradient(90deg, rgba(255,255,255,0.09) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.09) 1px, transparent 1px), linear-gradient(45deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 20px 20px, 20px 20px, 28px 28px;"},
+  {"id":"d39","theme":"dark","name":"Soft Radial Pulse Rings","category":"Circles","css":"background-color: #1f1f1f; background-image: radial-gradient(circle at 50% 50%, transparent 35%, rgba(255,255,255,0.07) 36%, transparent 38%); background-size: 48px 48px;"},
+  {"id":"d40","theme":"dark","name":"High-Tech Dashed Tracks","category":"Lines & Grids","css":"background-color: #1f1f1f; background-image: linear-gradient(90deg, rgba(255,255,255,0.1) 40%, transparent 40%), linear-gradient(0deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 12px 3px, 100% 16px;"},
+  {"id":"l1","theme":"light","name":"Geometric Grid Accent","category":"Lines & Grids","css":"background-color: #fafafa; background-image: linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(0deg, rgba(0,0,0,0.03) 1px, transparent 1px); background-size: 20px 20px;"},
+  {"id":"l2","theme":"light","name":"Dual-Tone Striped Lines","category":"Lines & Grids","css":"background: repeating-linear-gradient(45deg, #ffffff, #ffffff 10px, #f2f2f2 10px, #f2f2f2 20px);"},
+  {"id":"l3","theme":"light","name":"Micro-Dot Matrix Pattern","category":"Dots","css":"background-image: radial-gradient(#d0d0d0 1px, transparent 1.5px); background-size: 12px 12px; background-color: #fbfbfb;"},
+  {"id":"l4","theme":"light","name":"Abstract Random Ray Lines","category":"Rays & Beams","css":"background: linear-gradient(110deg, #ffffff 40%, #eaeaea 40.5%, #fcfcfc 41%, #f0f0f0 70%, #ffffff 70.5%);"},
+  {"id":"l5","theme":"light","name":"Horizontal Fine Lines (Pinstripe)","category":"Lines & Grids","css":"background: linear-gradient(to bottom, #ffffff, #f7f7f7); background-image: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.02) 3px, rgba(0,0,0,0.02) 4px);"},
+  {"id":"l6","theme":"light","name":"Dual Diagonal Block Highlights","category":"Rectangles","css":"background: linear-gradient(-60deg, #ffffff 35%, #f1f1f1 35.5%, #f1f1f1 65%, #fafafa 65.5%);"},
+  {"id":"l7","theme":"light","name":"Polka Circle Spacers","category":"Dots","css":"background-color: #ffffff; background-image: radial-gradient(circle, #e0e0e0 1.5px, transparent 1.5px); background-size: 24px 24px;"},
+  {"id":"l8","theme":"light","name":"Diagonal Hash Stripes","category":"Lines & Grids","css":"background-color: #fafafa; background-image: repeating-linear-gradient(-45deg, rgba(0,0,0,0.02), rgba(0,0,0,0.02) 2px, transparent 2px, transparent 12px);"},
+  {"id":"l9","theme":"light","name":"Horizontal Segmented Line","category":"Lines & Grids","css":"background-color: #ffffff; background-image: linear-gradient(0deg, rgba(0,0,0,0.04) 1px, transparent 1px); background-size: 100% 8px;"},
+  {"id":"l10","theme":"light","name":"Rotated Angular Block Pattern","category":"Rectangles","css":"background-color: #fcfcfc; background-image: linear-gradient(30deg, #e8e8e8 12px, transparent 12px), linear-gradient(150deg, #f0f0f0 12px, transparent 12px); background-size: 40px 40px; background-position: 0 0, 20px 0;"},
+  {"id":"l11","theme":"light","name":"Staggered Soft Circles","category":"Dots","css":"background-color: #f8f8f8; background-image: radial-gradient(circle, #d5d5d5 2px, transparent 2px); background-size: 32px 32px; background-position: 16px 16px;"},
+  {"id":"l12","theme":"light","name":"Chevron Crosshatch","category":"Lines & Grids","css":"background-color: #ffffff; background-image: linear-gradient(135deg, #f0f0f0 25%, transparent 25%), linear-gradient(225deg, #f0f0f0 25%, transparent 25%); background-size: 18px 18px;"},
+  {"id":"l13","theme":"light","name":"Hybrid Vertical Lines & Dots","category":"Lines & Grids","css":"background-color: #fafafa; background-image: linear-gradient(90deg, rgba(0,0,0,0.03) 2px, transparent 2px), radial-gradient(circle, #cccccc 1px, transparent 1px); background-size: 30px 30px, 15px 15px;"},
+  {"id":"l14","theme":"light","name":"Minimalist Spaced Pinstripe","category":"Lines & Grids","css":"background-color: #ffffff; background-image: repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(0,0,0,0.025) 15px, rgba(0,0,0,0.025) 16px);"},
+  {"id":"l15","theme":"light","name":"Diamond Grid Net","category":"Lines & Grids","css":"background-color: #fbfbfb; background-image: linear-gradient(45deg, #e8e8e8 1px, transparent 1px), linear-gradient(-45deg, #e8e8e8 1px, transparent 1px); background-size: 24px 24px;"},
+  {"id":"l16","theme":"light","name":"Centered Dot Constellation","category":"Dots","css":"background-color: #ffffff; background-image: radial-gradient(circle at 50% 50%, #d8d8d8 1px, transparent 2px); background-size: 20px 20px;"},
+  {"id":"l17","theme":"light","name":"Ribbed Horizontal Grooves","category":"Lines & Grids","css":"background-color: #f5f5f5; background-image: linear-gradient(0deg, #ffffff 50%, #f0f0f0 50%); background-size: 100% 4px;"},
+  {"id":"l18","theme":"light","name":"Fine Angular Hash","category":"Lines & Grids","css":"background-color: #ffffff; background-image: repeating-linear-gradient(60deg, #efefef, #efefef 2px, transparent 2px, transparent 10px);"},
+  {"id":"l19","theme":"light","name":"Dense Dot Field","category":"Dots","css":"background-color: #fafafa; background-image: radial-gradient(circle, #cccccc 1px, transparent 1px); background-size: 10px 10px;"},
+  {"id":"l20","theme":"light","name":"Vertical Block Stripes","category":"Lines & Grids","css":"background-color: #ffffff; background-image: linear-gradient(90deg, rgba(0,0,0,0.02) 50%, transparent 50%); background-size: 12px 100%;"},
+  {"id":"l21","theme":"light","name":"Rotated Square Grid Overlay","category":"Lines & Grids","css":"background-color: #f8f8f8; background-image: linear-gradient(135deg, #e4e4e4 2px, transparent 2px), linear-gradient(45deg, #e4e4e4 2px, transparent 2px); background-size: 20px 20px;"},
+  {"id":"l22","theme":"light","name":"Ellipse Dot Array","category":"Dots","css":"background-color: #ffffff; background-image: radial-gradient(ellipse at center, #d0d0d0 0, #d0d0d0 1px, transparent 1px); background-size: 16px 16px;"},
+  {"id":"l23","theme":"light","name":"Soft Cool Grid + Accent","category":"Lines & Grids","css":"background-color: #f8fafc; background-image: linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(0deg, rgba(0,0,0,0.04) 1px, transparent 1px); background-size: 22px 22px;"},
+  {"id":"l24","theme":"light","name":"Soft Diagonal Hash","category":"Lines & Grids","css":"background-color: #ffffff; background-image: repeating-linear-gradient( -45deg, transparent, transparent 8px, rgba(0,0,0,0.03) 8px, rgba(0,0,0,0.03) 9px );"},
+  {"id":"l25","theme":"light","name":"Elegant Micro Dot Field","category":"Dots","css":"background-color: #fafafa; background-image: radial-gradient(circle, #c0c0c0 1.1px, transparent 1.1px); background-size: 14px 14px;"},
+  {"id":"l26","theme":"light","name":"Soft Angled Light Beam","category":"Rays & Beams","css":"background-color: #ffffff; background-image: linear-gradient(110deg, #ffffff 35%, #f0f0f0 38%, #fafafa 42%, #f5f5f5 65%, #ffffff 68%);"},
+  {"id":"l27","theme":"light","name":"Fine Horizontal Ribbing","category":"Lines & Grids","css":"background-color: #f7f7f7; background-image: repeating-linear-gradient( 0deg, transparent, transparent 2px, rgba(0,0,0,0.025) 2px, rgba(0,0,0,0.025) 3px );"},
+  {"id":"l28","theme":"light","name":"Soft Isometric Blocks","category":"Rectangles","css":"background-color: #fcfcfc; background-image: linear-gradient(30deg, #ebebeb 12px, transparent 12px), linear-gradient(150deg, #f0f0f0 12px, transparent 12px); background-size: 36px 36px; background-position: 0 0, 18px 0;"},
+  {"id":"l29","theme":"light","name":"Staggered Soft Circles","category":"Dots","css":"background-color: #ffffff; background-image: radial-gradient(circle, #d4d4d4 1.8px, transparent 1.8px); background-size: 28px 28px; background-position: 0 0, 14px 14px;"},
+  {"id":"l30","theme":"light","name":"Clean Chevron Pattern","category":"Lines & Grids","css":"background-color: #fafafa; background-image: linear-gradient(135deg, #e8e8e8 25%, transparent 25%), linear-gradient(225deg, #e8e8e8 25%, transparent 25%); background-size: 18px 18px;"},
+  {"id":"l31","theme":"light","name":"Hybrid Lines + Dots","category":"Lines & Grids","css":"background-color: #ffffff; background-image: linear-gradient(90deg, rgba(0,0,0,0.035) 1.5px, transparent 1.5px), radial-gradient(circle, #cccccc 1px, transparent 1px); background-size: 26px 26px, 13px 13px;"},
+  {"id":"l32","theme":"light","name":"Soft Vertical Pinstripes","category":"Lines & Grids","css":"background-color: #ffffff; background-image: repeating-linear-gradient( 90deg, transparent, transparent 11px, rgba(0,0,0,0.03) 11px, rgba(0,0,0,0.03) 12px );"},
+  {"id":"l33","theme":"light","name":"Diamond Net","category":"Lines & Grids","css":"background-color: #fbfbfb; background-image: linear-gradient(45deg, #e4e4e4 1px, transparent 1px), linear-gradient(-45deg, #e4e4e4 1px, transparent 1px); background-size: 22px 22px;"},
+  {"id":"l34","theme":"light","name":"Centered Soft Dot Constellation","category":"Dots","css":"background-color: #ffffff; background-image: radial-gradient(circle at 50% 50%, #d0d0d0 1.2px, transparent 1.8px); background-size: 18px 18px;"},
+  {"id":"l35","theme":"light","name":"Subtle Ribbed Horizontal","category":"Lines & Grids","css":"background-color: #f5f5f5; background-image: linear-gradient(0deg, #ffffff 50%, #efefef 50%); background-size: 100% 5px;"},
+  {"id":"l36","theme":"light","name":"Fine 60° Hash","category":"Lines & Grids","css":"background-color: #ffffff; background-image: repeating-linear-gradient( 60deg, #efefef, #efefef 1.5px, transparent 1.5px, transparent 9px );"},
+  {"id":"l37","theme":"light","name":"Dense Elegant Dot Field","category":"Dots","css":"background-color: #fafafa; background-image: radial-gradient(circle, #c8c8c8 1px, transparent 1px); background-size: 9px 9px;"},
+  {"id":"l38","theme":"light","name":"Soft Rotated Square Overlay","category":"Lines & Grids","css":"background-color: #f8f8f8; background-image: linear-gradient(135deg, #e6e6e6 1.5px, transparent 1.5px), linear-gradient(45deg, #e6e6e6 1.5px, transparent 1.5px); background-size: 20px 20px;"}];
+</script>
+<script>
 /* ═════════════════════════════════════════════════════════════════════════════
    Transparent Taskbar+ settings page - one file for both:
      • the app's own WebView2 window   (?mode=desktop&wsport=<LocalWsPort>)
@@ -659,10 +791,12 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
 
    PAGE -> APP
      getState                                         ask for the current settings
-     applyStyle    { style, colors }                  style: transparent|clean|buttons_glass|
+     getWallpaper                                     ask for the user's desktop wallpaper (for the previews)
+     applyStyle    { style, colors, pattern }         style: transparent|clean|buttons_glass|
                                                       buttons_color|dock_glass|dock_color|
-                                                      gradient1|gradient2
+                                                      gradient1|gradient2|pattern
                                                       colors: {color1,color2,color3,buttons,dock} ("#RRGGBB")
+                                                      pattern: "d1".."d40" (dark) | "l1".."l38" (light)
      setEffect     { effect: "blink"|"clicks"|"shadow", enabled }
      setAutostart  { enabled }
      setAutoshow   { enabled }
@@ -670,13 +804,17 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
      softReset
      openAppWindow                                    (browser tab -> show the WPF window)
      openInBrowser                                    (WPF window -> open this page in a browser)
+     openTaskbarSettings                              (open Windows Settings > Personalization > Taskbar,
+                                                      where the user picks bottom / top / left / right)
      openExternalUrl { url }                          (desktop mode only; browser opens links itself)
 
    APP -> PAGE
      state         { style, colors, effects:{blink,clicks,shadow}, autostart, autoshow, appVersion,
-                     taskbarEdge: "bottom"|"top"|"left"|"right" }
+                     taskbarEdge: "bottom"|"top"|"left"|"right", pattern }
                    sent on getState AND broadcast after every change, so a browser tab and the
                    app window stay in sync with each other
+     wallpaper     { mode: "image", dataUrl, color } | { mode: "color", color } | { mode: "none" }
+                   reply to getWallpaper, and broadcast whenever the desktop wallpaper changes
      init_urls     (optional, ignored)
      error         { message }
    ═════════════════════════════════════════════════════════════════════════════ */
@@ -694,7 +832,8 @@ const DEFAULTS = {
   autostart: false,
   autoshow: false,
   appVersion: '',
-  taskbarEdge: 'bottom'
+  taskbarEdge: 'bottom',
+  pattern: 'd1'
 };
 
 // "state" = what the app last confirmed. "draft" = the colors the user is editing (not applied yet).
@@ -702,6 +841,8 @@ let state = structuredClone(DEFAULTS);
 let draftColors = structuredClone(DEFAULTS.colors);
 let selectedStyle = DEFAULTS.style;
 let hasState = false;
+let draftPattern = DEFAULTS.pattern;      // pattern chosen in the picker (not applied yet)
+let patternTheme = 'dark';
 
 const STYLES = [
   { id: 'transparent',   name: 'Transparent (line)',  desc: 'Full transparency with a thin line',  colors: [] },
@@ -711,7 +852,8 @@ const STYLES = [
   { id: 'dock_glass',    name: 'Dock panel (glass)',  desc: 'Glass effect on a dock panel',        colors: [] },
   { id: 'dock_color',    name: 'Dock panel (color)',  desc: 'Colorful dock panel',                 colors: [{ key: 'dock', label: 'Dock' }] },
   { id: 'gradient1',     name: 'Gradient',            desc: 'Single color gradient',               colors: [{ key: 'color1', label: 'Color' }] },
-  { id: 'gradient2',     name: 'Gradient (50-50)',    desc: 'Two color split gradient',            colors: [{ key: 'color2', label: 'Inner' }, { key: 'color3', label: 'Edge' }] }
+  { id: 'gradient2',     name: 'Gradient (50-50)',    desc: 'Two color split gradient',            colors: [{ key: 'color2', label: 'Inner' }, { key: 'color3', label: 'Edge' }] },
+  { id: 'pattern',       name: 'Pattern',             desc: 'A background pattern - pick one below', colors: [] }
 ];
 
 /* ───────────────────────── transport (same as AI Video Upscaler+) ───────────────────────── */
@@ -741,6 +883,7 @@ function connectWs(port, secure) {
     updateConnectionUi();
     // Always ask for the real state first, then flush anything queued while offline.
     ws.send(JSON.stringify({ type: 'getState', payload: {} }));
+    ws.send(JSON.stringify({ type: 'getWallpaper', payload: {} }));
     while (pendingMessages.length) ws.send(JSON.stringify(pendingMessages.shift()));
   };
 
@@ -763,6 +906,7 @@ function dispatchFromHost(type, payload) {
   switch (type) {
     case 'state': onState(payload); break;
     case 'init_urls': break;
+    case 'wallpaper': onWallpaper(payload); break;
     case 'error': showToast(payload.message || 'Something went wrong.', 'err'); break;
   }
 }
@@ -777,6 +921,7 @@ function normalizeColor(c, fallback) {
 
 function onState(p) {
   const prevStyle = state.style;
+  const prevPattern = state.pattern;
   const firstState = !hasState;
 
   state = {
@@ -796,9 +941,15 @@ function onState(p) {
     autostart: !!p.autostart,
     autoshow: !!p.autoshow,
     appVersion: p.appVersion || '',
-    taskbarEdge: ['bottom', 'top', 'left', 'right'].includes(p.taskbarEdge) ? p.taskbarEdge : 'bottom'
+    taskbarEdge: ['bottom', 'top', 'left', 'right'].includes(p.taskbarEdge) ? p.taskbarEdge : 'bottom',
+    pattern: TTB_PATTERNS.some(x => x.id === p.pattern) ? p.pattern : DEFAULTS.pattern
   };
+  const patternChanged = state.pattern !== prevPattern;
   hasState = true;
+  if (firstState || patternChanged) {
+    draftPattern = state.pattern;
+    patternTheme = state.pattern.startsWith('l') ? 'light' : 'dark';
+  }
 
   // The app's confirmed colors become the editing baseline.
   draftColors = structuredClone(state.colors);
@@ -896,6 +1047,7 @@ function renderAll() {
   });
   selectStyle(selectedStyle);
   renderColors();
+  renderPatterns();
 
   document.querySelectorAll('[data-effect]').forEach(t => { t.checked = !!state.effects[t.dataset.effect]; });
   document.getElementById('settingsAutostartToggle').checked = state.autostart;
@@ -911,10 +1063,65 @@ function renderAll() {
   document.getElementById('footerVersion').textContent = state.appVersion ? `v${state.appVersion} · mlapplications.com` : 'mlapplications.com';
 }
 
+/* ───────────────────────── patterns ───────────────────────── */
+function patternById(id) { return TTB_PATTERNS.find(x => x.id === id) || TTB_PATTERNS[0]; }
+
+function buildPatternGrid() {
+  const grid = document.getElementById('patternGrid');
+  grid.innerHTML = TTB_PATTERNS.filter(x => x.theme === patternTheme).map(x => `
+    <button class="pattern-swatch" data-pattern="${x.id}" title="${x.name} (${x.category})">
+      <span class="pattern-swatch-bar" style="${x.css}"></span>
+      <span class="pattern-swatch-name">${x.id.slice(1)}. ${x.name}</span>
+    </button>`).join('');
+  grid.querySelectorAll('.pattern-swatch').forEach(btn => {
+    btn.addEventListener('click', () => {
+      draftPattern = btn.dataset.pattern;
+      selectStyle('pattern');
+      renderPatterns();
+    });
+    btn.addEventListener('dblclick', () => {
+      draftPattern = btn.dataset.pattern;
+      applyStyle('pattern');
+    });
+  });
+  document.querySelectorAll('.pattern-tab').forEach(t => t.classList.toggle('active', t.dataset.patternTheme === patternTheme));
+  renderPatterns();
+}
+
+function renderPatterns() {
+  const shownTheme = document.querySelector('.pattern-tab.active')?.dataset.patternTheme;
+  if (shownTheme !== patternTheme) { buildPatternGrid(); return; }
+  document.querySelectorAll('.pattern-swatch').forEach(b => {
+    b.classList.toggle('selected', b.dataset.pattern === draftPattern);
+    b.classList.toggle('current', hasState && state.style === 'pattern' && b.dataset.pattern === state.pattern);
+  });
+  // the Pattern card's preview shows the pattern being picked
+  const bar = document.querySelector('.tb-preview[data-type="pattern"] .tb-bar');
+  if (bar) bar.style.cssText = patternById(draftPattern).css;
+}
+
+document.querySelectorAll('.pattern-tab').forEach(t => {
+  t.addEventListener('click', () => { patternTheme = t.dataset.patternTheme; buildPatternGrid(); });
+});
+
+/* ───────────────────────── real desktop wallpaper in the previews ───────────────────────── */
+// The app sends { mode: "image", dataUrl, color } or { mode: "color", color } and again whenever it changes.
+function onWallpaper(p) {
+  const root = document.documentElement;
+  document.body.classList.remove('has-wallpaper', 'has-wallpaper-color');
+  if (p && typeof p.color === 'string') root.style.setProperty('--ttb-wallpaper-color', p.color);
+  if (p && p.mode === 'image' && typeof p.dataUrl === 'string' && p.dataUrl.startsWith('data:image/')) {
+    root.style.setProperty('--ttb-wallpaper', `url("${p.dataUrl}")`);
+    document.body.classList.add('has-wallpaper');
+  } else if (p && p.mode === 'color') {
+    document.body.classList.add('has-wallpaper-color');
+  }
+}
+
 /* ───────────────────────── actions ───────────────────────── */
 function applyStyle(id) {
   selectStyle(id);
-  postToHost('applyStyle', { style: id, colors: structuredClone(draftColors) });
+  postToHost('applyStyle', { style: id, colors: structuredClone(draftColors), pattern: draftPattern });
   if (!wsReady) showToast('Will apply as soon as the app is connected.');
 }
 
@@ -935,6 +1142,17 @@ document.getElementById('settingsAutostartToggle').addEventListener('change', (e
 });
 document.getElementById('settingsAutoshowToggle').addEventListener('change', (e) => {
   postToHost('setAutoshow', { enabled: e.target.checked });
+});
+
+// Windows itself moves the taskbar (Settings > Personalization > Taskbar > Taskbar behaviors >
+// Taskbar position); the app follows the new position on its own.
+document.getElementById('taskbarPositionBtn').addEventListener('click', () => {
+  if (wsReady) {
+    postToHost('openTaskbarSettings');
+  } else if (!IS_DESKTOP) {
+    window.location.href = 'ms-settings:taskbar';   // the browser asks once before opening Settings
+  }
+  showToast('Opening Windows Settings - expand "Taskbar behaviors", then pick the taskbar position.');
 });
 
 document.getElementById('softResetBtn').addEventListener('click', () => {
@@ -1039,6 +1257,7 @@ function showToast(message, kind) {
 
 /* ───────────────────────── start ───────────────────────── */
 buildStyleGrid();
+buildPatternGrid();
 renderAll();
 
 function showOffline(title, text, showLaunch) {
