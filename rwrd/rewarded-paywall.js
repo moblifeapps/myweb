@@ -64,6 +64,7 @@
   let watchdogTimer = null;
   let fallbackTimer = null;
   let listenersAdded = false;
+  let paywallShownTracked = false;
 
   // ---------- Logging (console + GA4 if present) ----------
   function track(name) {
@@ -129,6 +130,10 @@
     if (finished || pageUnlocked || !delayPassed || !rewardedEvent) return;
     const overlay = getOverlay();
     if (overlay) {
+      if (!paywallShownTracked) {
+        paywallShownTracked = true;
+        track("shown"); // paywall actually appeared on screen (once per page)
+      }
       overlay.classList.add("active");
       document.body.style.overflow = "hidden";
     }
@@ -370,6 +375,7 @@
   }
 
   if (!pageUnlocked) {
+    track("locked"); // locked page view: an ad will be requested for it
     if (document.readyState === "complete") {
       whenGptReadyForUs(loadSlot);
     } else {
