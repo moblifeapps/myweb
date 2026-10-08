@@ -286,8 +286,8 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
 }
 .tb-preview[data-type="buttons_color"] .tb-btn { background: var(--c-buttons); }
 .tb-preview[data-type="dock_color"] .tb-dock { background: var(--c-dock); }
-.tb-preview[data-type="gradient1"] .tb-bar { background: linear-gradient(to top, var(--c-color1) 0%, color-mix(in srgb, var(--c-color1) 35%, transparent) 100%); }
-.tb-preview[data-type="gradient2"] .tb-bar { background: linear-gradient(90deg, var(--c-color2) 0%, var(--c-color2) 50%, var(--c-color3) 50%, var(--c-color3) 100%); }
+.tb-preview[data-type="gradient1"] .tb-bar { background: linear-gradient(to bottom, var(--c-color1) 0%, var(--c-color1) 50%, color-mix(in srgb, var(--c-color1) 70%, #000) 50%, color-mix(in srgb, var(--c-color1) 70%, #000) 100%); }
+.tb-preview[data-type="gradient2"] .tb-bar { background: linear-gradient(to bottom, var(--c-color2) 0%, var(--c-color2) 50%, var(--c-color3) 50%, var(--c-color3) 100%); }
 
 .taskbar-footer { margin-top: 22px; display: flex; gap: 10px; flex-wrap: wrap; position: relative; z-index: 1; }
 
@@ -370,7 +370,7 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
     </div>
 
     <!-- WEB_ONLY_START -->
-     <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
+    <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
     <!-- WEB_ONLY_END -->
 
     <div class="app-layout">
@@ -379,7 +379,7 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
           <button class="nav-item active" data-view="taskbar">
             <span class="nav-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 16h18"/><path d="M8 18h.01M12 18h.01M16 18h.01"/></svg>
-            </span> Bottom Taskbar
+            </span> <span id="taskbarNavLabel">Bottom Taskbar</span>
           </button>
           <button class="nav-item" data-view="effects">
             <span class="nav-icon">
@@ -455,7 +455,7 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
           </div>
           <div class="settings-header">
             <div>
-              <h1>Bottom Taskbar</h1>
+              <h1 id="taskbarViewTitle">Bottom Taskbar</h1>
               <p>Choose the visual style of your taskbar. Pick colors where available, then press Apply.</p>
             </div>
           </div>
@@ -673,7 +673,8 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
      openExternalUrl { url }                          (desktop mode only; browser opens links itself)
 
    APP -> PAGE
-     state         { style, colors, effects:{blink,clicks,shadow}, autostart, autoshow, appVersion }
+     state         { style, colors, effects:{blink,clicks,shadow}, autostart, autoshow, appVersion,
+                     taskbarEdge: "bottom"|"top"|"left"|"right" }
                    sent on getState AND broadcast after every change, so a browser tab and the
                    app window stay in sync with each other
      init_urls     (optional, ignored)
@@ -692,7 +693,8 @@ const DEFAULTS = {
   effects: { blink: false, clicks: false, shadow: false },
   autostart: false,
   autoshow: false,
-  appVersion: ''
+  appVersion: '',
+  taskbarEdge: 'bottom'
 };
 
 // "state" = what the app last confirmed. "draft" = the colors the user is editing (not applied yet).
@@ -709,7 +711,7 @@ const STYLES = [
   { id: 'dock_glass',    name: 'Dock panel (glass)',  desc: 'Glass effect on a dock panel',        colors: [] },
   { id: 'dock_color',    name: 'Dock panel (color)',  desc: 'Colorful dock panel',                 colors: [{ key: 'dock', label: 'Dock' }] },
   { id: 'gradient1',     name: 'Gradient',            desc: 'Single color gradient',               colors: [{ key: 'color1', label: 'Color' }] },
-  { id: 'gradient2',     name: 'Gradient (50-50)',    desc: 'Two color split gradient',            colors: [{ key: 'color2', label: 'Left' }, { key: 'color3', label: 'Right' }] }
+  { id: 'gradient2',     name: 'Gradient (50-50)',    desc: 'Two color split gradient',            colors: [{ key: 'color2', label: 'Inner' }, { key: 'color3', label: 'Edge' }] }
 ];
 
 /* ───────────────────────── transport (same as AI Video Upscaler+) ───────────────────────── */
@@ -793,7 +795,8 @@ function onState(p) {
     },
     autostart: !!p.autostart,
     autoshow: !!p.autoshow,
-    appVersion: p.appVersion || ''
+    appVersion: p.appVersion || '',
+    taskbarEdge: ['bottom', 'top', 'left', 'right'].includes(p.taskbarEdge) ? p.taskbarEdge : 'bottom'
   };
   hasState = true;
 
@@ -897,6 +900,11 @@ function renderAll() {
   document.querySelectorAll('[data-effect]').forEach(t => { t.checked = !!state.effects[t.dataset.effect]; });
   document.getElementById('settingsAutostartToggle').checked = state.autostart;
   document.getElementById('settingsAutoshowToggle').checked = state.autoshow;
+
+  // Where Windows has the taskbar right now (Settings > Personalization > Taskbar > Taskbar behaviors).
+  const edgeTitle = state.taskbarEdge.charAt(0).toUpperCase() + state.taskbarEdge.slice(1) + ' Taskbar';
+  document.getElementById('taskbarNavLabel').textContent = edgeTitle;
+  document.getElementById('taskbarViewTitle').textContent = edgeTitle;
 
   const v = state.appVersion ? `Version ${state.appVersion} · Built by mlapplications.com` : 'Built by mlapplications.com';
   document.getElementById('aboutVersion').textContent = v;
