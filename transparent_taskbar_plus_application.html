@@ -329,6 +329,50 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
 .pattern-swatch-bar { height: 30px; border-radius: 5px; }
 .pattern-swatch-name { font-size: 11px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+/* ── Image style (10): the user's own picture ── */
+.tb-bar .tb-img { position: absolute; inset: 0; pointer-events: none; }
+.tb-preview[data-type="image"] .tb-bar { background: #202020; }
+.tb-preview[data-type="image"] .tb-dock { position: relative; }
+.image-section .img-stage { position: relative; border-radius: 8px; overflow: hidden; padding-top: 34px;
+  background: var(--ttb-wallpaper, linear-gradient(135deg, #364fc7 0%, #7048e8 50%, #c2255c 100%)) center / cover no-repeat, var(--ttb-wallpaper-color, #202020); }
+.image-section .img-stage .tb-bar { position: relative; height: 40px; overflow: hidden; }
+.img-size-hint { font-size: 12px; color: var(--text2); margin: 8px 0 0; line-height: 1.5; }
+.img-size-hint.warn { color: var(--amber); }
+.img-rows { display: grid; grid-template-columns: 130px 1fr; gap: 14px 16px; margin-top: 16px; align-items: start; }
+.img-rows > * { min-width: 0; }
+.img-label { font-size: 12px; font-weight: 600; color: var(--text); padding-top: 6px; }
+.img-sub { font-size: 11px; color: var(--text3); margin-top: 6px; line-height: 1.45; }
+.img-recent { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 8px; }
+.img-tile { position: relative; height: 62px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; padding: 0;
+  background: var(--surface2) center / cover no-repeat; transition: border-color .15s ease, box-shadow .15s ease; font: inherit; }
+.img-tile:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
+.img-tile.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.img-tile .img-badge { position: absolute; left: 5px; bottom: 5px; font-size: 10px; padding: 1px 6px; border-radius: 8px;
+  background: rgba(0,0,0,.6); color: #fff; display: none; }
+.img-tile.current .img-badge { display: inline-block; }
+.img-tile .img-remove { position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; border-radius: 50%; border: none;
+  background: rgba(0,0,0,.65); color: #fff; font-size: 13px; line-height: 20px; cursor: pointer; display: none; padding: 0; }
+.img-tile:hover .img-remove { display: block; }
+.img-tile.current .img-remove { display: none !important; }
+.img-add { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: var(--accent);
+  border-style: dashed; background: color-mix(in srgb, var(--accent) 6%, var(--surface)); font-size: 12px; font-weight: 600; }
+.img-add svg { width: 18px; height: 18px; }
+.seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; flex-wrap: wrap; }
+.seg button { border: none; background: var(--surface); color: var(--text2); font: inherit; font-size: 12px; padding: 7px 13px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--border); }
+.seg button.on { background: var(--accent); color: #fff; }
+.img-opacity { display: flex; align-items: center; gap: 12px; max-width: 420px; }
+.img-opacity input[type="range"] { flex: 1; accent-color: var(--accent); }
+.img-opacity output { font-size: 12px; color: var(--text); min-width: 38px; text-align: right; font-variant-numeric: tabular-nums; }
+.img-backing { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.img-backing .backing-dot { width: 22px; height: 22px; border-radius: 6px; border: 1px solid var(--border); }
+.img-side { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.img-side-thumb { width: 26px; height: 62px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2) center / cover no-repeat; }
+.img-side-pick { display: none; align-items: center; gap: 10px; margin-top: 10px; }
+.img-side-pick.show { display: flex; }
+.img-empty { font-size: 12px; color: var(--text2); }
+@media (max-width: 640px) { .img-rows { grid-template-columns: 1fr; gap: 6px; } .img-label { padding-top: 10px; } }
+
 .taskbar-footer { margin-top: 22px; display: flex; gap: 10px; flex-wrap: wrap; position: relative; z-index: 1; }
 
 /* Notice shown above the cards when not connected */
@@ -394,7 +438,7 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
   <div class="app-shell">
     <div class="topbar">
       <div class="topbar-brand">
-        <img src="https://mlapplications.com/uploads/ttbicon.png" alt="Transparent Taskbar+">
+        <img id="ttbLogo" src="data:image/png;base64,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" alt="Transparent Taskbar+">
         <div>
           <div class="topbar-brand-title">Transparent Taskbar+</div>
           <div class="topbar-brand-subtitle">Styles &amp; Effects</div>
@@ -528,6 +572,74 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
             </div>
             <div class="pattern-preview-status" id="patternPreviewStatus"></div>
             <div id="patternGroups"></div>
+          </div>
+
+          <!-- Image picker: hidden until "Choose picture" on the Image card -->
+          <div class="pattern-section image-section" id="imageSection">
+            <div class="pattern-section-head">
+              <div>
+                <h2>Your picture</h2>
+                <p>Every change is shown on your taskbar for 5 seconds. Press <strong>Apply</strong> to keep it.</p>
+              </div>
+              <div class="pattern-actions">
+                <button class="primary-btn" id="applyImageBtn">Apply</button>
+                <button class="secondary-btn" id="closeImageBtn">Close</button>
+              </div>
+            </div>
+            <div class="pattern-preview-status" id="imagePreviewStatus"></div>
+
+            <div class="img-stage" id="imageStage">
+              <div class="tb-bar" id="imageStageBar"><span class="tb-img"></span>
+                <div class="tb-dock"><span class="tb-btn"></span><span class="tb-btn"></span><span class="tb-btn"></span><span class="tb-btn"></span><span class="tb-btn"></span></div>
+              </div>
+            </div>
+            <p class="img-size-hint" id="imageSizeHint"></p>
+
+            <div class="img-rows">
+              <div class="img-label">Picture</div>
+              <div>
+                <div class="img-recent" id="imageRecent"></div>
+                <div class="img-sub">PNG or JPG. The app keeps its own copy, so you can move or delete the original afterwards.</div>
+              </div>
+
+              <div class="img-label">Fit</div>
+              <div>
+                <div class="seg" id="imageFit">
+                  <button data-fit="fill">Fill</button><button data-fit="stretch">Stretch</button><button data-fit="tile">Tile</button><button data-fit="center">Center</button>
+                </div>
+                <div class="img-sub" id="imageFitHint"></div>
+              </div>
+
+              <div class="img-label">Opacity</div>
+              <div>
+                <div class="img-opacity"><input type="range" id="imageOpacity" min="10" max="100" step="5" value="100"><output id="imageOpacityVal">100%</output></div>
+                <div class="img-sub">Lower values fade the picture into the backing colour below. The taskbar never becomes see-through, so your desktop doesn't show behind it.</div>
+              </div>
+
+              <div class="img-label">Backing colour</div>
+              <div class="img-backing">
+                <div class="seg" id="imageBacking">
+                  <button data-backing="auto">Auto</button><button data-backing="#000000">Black</button><button data-backing="custom">Custom</button>
+                </div>
+                <label class="color-chip" title="Custom backing colour"><input type="color" id="imageBackingColor" value="#202020"></label>
+                <span class="backing-dot" id="imageBackingDot" title="The colour Auto picked from your picture"></span>
+                <div class="img-sub" style="flex-basis:100%;margin-top:0">Auto uses the picture's average colour. It also fills any transparent parts of a PNG.</div>
+              </div>
+
+              <div class="img-label">Side taskbars</div>
+              <div>
+                <div class="img-side">
+                  <label class="toggle-switch"><input type="checkbox" id="imageUseSide"><span class="toggle-slider"></span></label>
+                  <span class="img-empty">Use a different picture when the taskbar is on the left or right</span>
+                </div>
+                <div class="img-side-pick" id="imageSidePick">
+                  <span class="img-side-thumb" id="imageSideThumb"></span>
+                  <button class="secondary-btn choose-pattern-btn" id="imageSideBtn">Choose side picture&hellip;</button>
+                  <span class="img-empty" id="imageSideName"></span>
+                </div>
+                <div class="img-sub">Otherwise the picture is turned with the taskbar, so it looks the same from the desktop.</div>
+              </div>
+            </div>
           </div>
 
           <div class="taskbar-footer">
@@ -692,7 +804,7 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
   <!-- Browser mode: shown when the app can't be found on this PC -->
   <div class="offline-screen" id="offlineScreen">
     <div class="offline-box">
-      <img class="app-icon" src="https://mlapplications.com/uploads/ttbicon.png" alt="Transparent Taskbar+">
+      <img class="app-icon" data-ttb-logo alt="Transparent Taskbar+">
       <h2 id="offlineTitle">Could not find Transparent Taskbar+ running on this PC</h2>
       <p id="offlineText">If the app is installed, click below to launch it, then try again. If not, you can get it from the Microsoft Store.</p>
       <div class="offline-actions">
@@ -710,7 +822,7 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
 <script>
 // Taskbar background patterns, in four groups (ids: d = dark, l = light, t = thin glow, h = heavy glow).
 // Same list in myUI\myBuiltIn.html and the settings page. Pure CSS backgrounds.
-const TTB_PATTERN_GROUPS = [{"id":"dark","title":"Dark","desc":"Subtle textures on a dark base"},{"id":"light","title":"Light","desc":"Soft textures on a light base"},{"id":"thin","title":"Thin Glow","desc":"Fine grids and soft blue beams"},{"id":"heavy","title":"Heavy Glow & Beams","desc":"Bold glows and dramatic rays"}];
+const TTB_PATTERN_GROUPS = [{"id":"dark","title":"Dark","desc":"Subtle textures on a dark base"},{"id":"light","title":"Light","desc":"Soft textures on a light base"},{"id":"thin","title":"Thin Glow","desc":"Fine grids and soft blue beams"},{"id":"heavy","title":"Heavy Glow & Beams","desc":"Bold glows and rays on blue"}];
 const TTB_PATTERNS = [{"id":"d1","theme":"dark","name":"Luminous Diagonal Light Rays","category":"Rays & Beams","css":"background-color: #1f1f1f; background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, transparent 40%, rgba(255, 255, 255, 0.08) 60%, transparent 100%); background-size: 80px 80px;"},
   {"id":"d3","theme":"dark","name":"Radiant Cone Beam Effect","category":"Rays & Beams","css":"background-color: #1f1f1f; background-image: repeating-linear-gradient(60deg, rgba(255, 255, 255, 0.09) 0px, rgba(255, 255, 255, 0.09) 2px, transparent 2px, transparent 32px);"},
   {"id":"d5","theme":"dark","name":"Sharp Focus Light Beam","category":"Rays & Beams","css":"background-color: #1f1f1f; background-image: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.16) 50%, transparent 80%); background-size: 120px 100%;"},
@@ -748,22 +860,22 @@ const TTB_PATTERNS = [{"id":"d1","theme":"dark","name":"Luminous Diagonal Light 
   {"id":"t14","theme":"thin","name":"Soft Mesh + Glow","category":"","css":"background-color: #0f172a; background-image: radial-gradient(circle at 50% 50%, transparent 38%, rgba(59,130,246,0.12) 40%, transparent 42%), linear-gradient(30deg, rgba(59,130,246,0.08) 1px, transparent 1px), linear-gradient(150deg, rgba(59,130,246,0.08) 1px, transparent 1px); background-size: 32px 32px, 32px 56px, 32px 56px;"},
   {"id":"t15","theme":"thin","name":"Dreamy Soft Blue Rays","category":"","css":"background-color: #0c1929; background-image: linear-gradient(135deg, rgba(96,165,250,0.28) 0%, transparent 45%), linear-gradient(45deg, rgba(56,189,248,0.18) 0%, transparent 50%), linear-gradient(225deg, rgba(37,99,235,0.22) 0%, transparent 50%);"},
   {"id":"t16","theme":"thin","name":"Ultra-fine Carbon + Cyan Glow","category":"","css":"background-color: #020617; background-image: linear-gradient(90deg, transparent 20%, rgba(34,211,238,0.3) 50%, transparent 80%), radial-gradient(rgba(255,255,255,0.12) 0.6px, transparent 0.6px); background-size: 100% 100%, 8px 8px;"},
-  {"id":"h1","theme":"heavy","name":"Heavy Cyan Core Beam","category":"","css":"background-color: #020617; background-image: linear-gradient(90deg, transparent 0%, rgba(34,211,238,0.15) 20%, rgba(34,211,238,0.55) 50%, rgba(34,211,238,0.15) 80%, transparent 100%);"},
-  {"id":"h2","theme":"heavy","name":"Triple Diagonal Ray Burst","category":"","css":"background-color: #0c1929; background-image: linear-gradient(125deg, transparent 10%, rgba(56,189,248,0.45) 48%, transparent 60%), linear-gradient(105deg, transparent 20%, rgba(14,165,233,0.3) 50%, transparent 70%), linear-gradient(145deg, transparent 30%, rgba(96,165,250,0.22) 55%, transparent 80%);"},
-  {"id":"h3","theme":"heavy","name":"Intense Spotlight + Grid","category":"","css":"background-color: #020617; background-image: radial-gradient(ellipse at 50% 50%, rgba(34,211,238,0.5) 0%, transparent 65%), linear-gradient(rgba(56,189,248,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(56,189,248,0.12) 1px, transparent 1px); background-size: 100% 100%, 22px 22px, 22px 22px;"},
-  {"id":"h4","theme":"heavy","name":"Crossing Power Rays","category":"","css":"background-color: #0a1628; background-image: linear-gradient(135deg, transparent 20%, rgba(59,130,246,0.4) 50%, transparent 80%), linear-gradient(45deg, transparent 20%, rgba(14,165,233,0.35) 50%, transparent 80%);"},
-  {"id":"h5","theme":"heavy","name":"Deep Glow Horizon Beam","category":"","css":"background-color: #020617; background-image: linear-gradient(0deg, rgba(14,165,233,0.35) 0%, transparent 50%), linear-gradient(90deg, transparent 15%, rgba(56,189,248,0.4) 50%, transparent 85%);"},
-  {"id":"h6","theme":"heavy","name":"Fancy Multi-Angle Beams","category":"","css":"background-color: #0c1a2e; background-image: linear-gradient(110deg, transparent 5%, rgba(34,211,238,0.4) 45%, transparent 55%), linear-gradient(70deg, transparent 15%, rgba(59,130,246,0.3) 50%, transparent 70%), linear-gradient(160deg, transparent 25%, rgba(96,165,250,0.2) 55%, transparent 85%);"},
-  {"id":"h7","theme":"heavy","name":"Heavy Radial Core + Rays","category":"","css":"background-color: #020617; background-image: radial-gradient(circle at 50% 50%, rgba(34,211,238,0.45) 0%, transparent 55%), linear-gradient(120deg, transparent 20%, rgba(56,189,248,0.25) 50%, transparent 80%), linear-gradient(60deg, transparent 20%, rgba(14,165,233,0.2) 50%, transparent 80%);"},
-  {"id":"h8","theme":"heavy","name":"Dramatic Diagonal Sweep","category":"","css":"background-color: #0f172a; background-image: linear-gradient(130deg, transparent 0%, rgba(56,189,248,0.5) 40%, transparent 60%), linear-gradient(50deg, transparent 10%, rgba(14,165,233,0.3) 50%, transparent 70%);"},
-  {"id":"h9","theme":"heavy","name":"Luminous Edge Beams","category":"","css":"background-color: #020617; background-image: linear-gradient(90deg, rgba(34,211,238,0.4) 0%, transparent 25%), linear-gradient(270deg, rgba(34,211,238,0.4) 0%, transparent 25%), linear-gradient(0deg, rgba(56,189,248,0.15) 0%, transparent 40%);"},
-  {"id":"h10","theme":"heavy","name":"Rich Prismatic Rays","category":"","css":"background-color: #0c1929; background-image: linear-gradient(115deg, transparent 15%, rgba(34,211,238,0.4) 48%, transparent 58%), linear-gradient(75deg, transparent 25%, rgba(59,130,246,0.28) 50%, transparent 75%), linear-gradient(155deg, transparent 35%, rgba(96,165,250,0.18) 55%, transparent 85%);"},
-  {"id":"h11","theme":"heavy","name":"Heavy Glow Mesh","category":"","css":"background-color: #020617; background-image: radial-gradient(ellipse at center, rgba(34,211,238,0.4) 0%, transparent 60%), linear-gradient(30deg, rgba(56,189,248,0.15) 1px, transparent 1px), linear-gradient(150deg, rgba(56,189,248,0.15) 1px, transparent 1px); background-size: 100% 100%, 28px 48px, 28px 48px;"},
-  {"id":"h12","theme":"heavy","name":"Ultra Intense Center Beam","category":"","css":"background-color: #020617; background-image: linear-gradient(90deg, transparent 10%, rgba(14,165,233,0.2) 30%, rgba(34,211,238,0.65) 50%, rgba(14,165,233,0.2) 70%, transparent 90%);"},
-  {"id":"h13","theme":"heavy","name":"Criss-Cross Power Rays","category":"","css":"background-color: #0a1628; background-image: linear-gradient(140deg, transparent 15%, rgba(56,189,248,0.4) 50%, transparent 85%), linear-gradient(40deg, transparent 15%, rgba(14,165,233,0.35) 50%, transparent 85%), linear-gradient(90deg, transparent 40%, rgba(96,165,250,0.15) 50%, transparent 60%);"},
-  {"id":"h14","theme":"heavy","name":"Deep Atmospheric Rays","category":"","css":"background-color: #020617; background-image: linear-gradient(160deg, rgba(30,64,175,0.5) 0%, transparent 50%), linear-gradient(20deg, rgba(14,165,233,0.35) 0%, transparent 45%), linear-gradient(200deg, rgba(56,189,248,0.25) 0%, transparent 40%);"},
-  {"id":"h15","theme":"heavy","name":"Fancy Edge + Core Glow","category":"","css":"background-color: #0c1a2e; background-image: linear-gradient(90deg, rgba(34,211,238,0.35) 0%, transparent 20%), linear-gradient(270deg, rgba(34,211,238,0.35) 0%, transparent 20%), radial-gradient(ellipse at center, rgba(56,189,248,0.4) 0%, transparent 60%);"},
-  {"id":"h16","theme":"heavy","name":"Maximum Drama Diagonal","category":"","css":"background-color: #020617; background-image: linear-gradient(125deg, transparent 5%, rgba(34,211,238,0.55) 45%, transparent 55%), linear-gradient(55deg, transparent 15%, rgba(59,130,246,0.35) 50%, transparent 70%), linear-gradient(165deg, transparent 25%, rgba(14,165,233,0.25) 55%, transparent 80%);"}];
+  {"id":"h1","theme":"heavy","name":"Heavy Cyan Core Beam","category":"","css":"background-color: #1e3a8a; background-image: linear-gradient(90deg, transparent 0%, rgba(34,211,238,0.15) 20%, rgba(34,211,238,0.55) 50%, rgba(34,211,238,0.15) 80%, transparent 100%), linear-gradient(180deg, #2563eb 0%, #1e3a8a 100%);"},
+  {"id":"h2","theme":"heavy","name":"Triple Diagonal Ray Burst","category":"","css":"background-color: #1e40af; background-image: linear-gradient(125deg, transparent 10%, rgba(56,189,248,0.45) 48%, transparent 60%), linear-gradient(105deg, transparent 20%, rgba(14,165,233,0.3) 50%, transparent 70%), linear-gradient(145deg, transparent 30%, rgba(96,165,250,0.22) 55%, transparent 80%), linear-gradient(180deg, #3b82f6 0%, #1e40af 100%);"},
+  {"id":"h3","theme":"heavy","name":"Intense Spotlight + Grid","category":"","css":"background-color: #1e3a8a; background-image: radial-gradient(ellipse at 50% 50%, rgba(34,211,238,0.5) 0%, transparent 65%), linear-gradient(rgba(56,189,248,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(56,189,248,0.12) 1px, transparent 1px), linear-gradient(180deg, #2563eb 0%, #1e3a8a 100%); background-size: 100% 100%, 22px 22px, 22px 22px, 100% 100%;"},
+  {"id":"h4","theme":"heavy","name":"Crossing Power Rays","category":"","css":"background-color: #1e40af; background-image: linear-gradient(135deg, transparent 20%, rgba(59,130,246,0.4) 50%, transparent 80%), linear-gradient(45deg, transparent 20%, rgba(14,165,233,0.35) 50%, transparent 80%), linear-gradient(180deg, #3b82f6 0%, #1e40af 100%);"},
+  {"id":"h5","theme":"heavy","name":"Deep Glow Horizon Beam","category":"","css":"background-color: #1e3a8a; background-image: linear-gradient(0deg, rgba(14,165,233,0.35) 0%, transparent 50%), linear-gradient(90deg, transparent 15%, rgba(56,189,248,0.4) 50%, transparent 85%), linear-gradient(180deg, #2563eb 0%, #1e3a8a 100%);"},
+  {"id":"h6","theme":"heavy","name":"Fancy Multi-Angle Beams","category":"","css":"background-color: #1e40af; background-image: linear-gradient(110deg, transparent 5%, rgba(34,211,238,0.4) 45%, transparent 55%), linear-gradient(70deg, transparent 15%, rgba(59,130,246,0.3) 50%, transparent 70%), linear-gradient(160deg, transparent 25%, rgba(96,165,250,0.2) 55%, transparent 85%), linear-gradient(180deg, #3b82f6 0%, #1e40af 100%);"},
+  {"id":"h7","theme":"heavy","name":"Heavy Radial Core + Rays","category":"","css":"background-color: #1e3a8a; background-image: radial-gradient(circle at 50% 50%, rgba(34,211,238,0.45) 0%, transparent 55%), linear-gradient(120deg, transparent 20%, rgba(56,189,248,0.25) 50%, transparent 80%), linear-gradient(60deg, transparent 20%, rgba(14,165,233,0.2) 50%, transparent 80%), linear-gradient(180deg, #2563eb 0%, #1e3a8a 100%);"},
+  {"id":"h8","theme":"heavy","name":"Dramatic Diagonal Sweep","category":"","css":"background-color: #1e40af; background-image: linear-gradient(130deg, transparent 0%, rgba(56,189,248,0.5) 40%, transparent 60%), linear-gradient(50deg, transparent 10%, rgba(14,165,233,0.3) 50%, transparent 70%), linear-gradient(180deg, #3b82f6 0%, #1e40af 100%);"},
+  {"id":"h9","theme":"heavy","name":"Luminous Edge Beams","category":"","css":"background-color: #1e3a8a; background-image: linear-gradient(90deg, rgba(34,211,238,0.4) 0%, transparent 25%), linear-gradient(270deg, rgba(34,211,238,0.4) 0%, transparent 25%), linear-gradient(0deg, rgba(56,189,248,0.15) 0%, transparent 40%), linear-gradient(180deg, #2563eb 0%, #1e3a8a 100%);"},
+  {"id":"h10","theme":"heavy","name":"Rich Prismatic Rays","category":"","css":"background-color: #1e40af; background-image: linear-gradient(115deg, transparent 15%, rgba(34,211,238,0.4) 48%, transparent 58%), linear-gradient(75deg, transparent 25%, rgba(59,130,246,0.28) 50%, transparent 75%), linear-gradient(155deg, transparent 35%, rgba(96,165,250,0.18) 55%, transparent 85%), linear-gradient(180deg, #3b82f6 0%, #1e40af 100%);"},
+  {"id":"h11","theme":"heavy","name":"Heavy Glow Mesh","category":"","css":"background-color: #1e3a8a; background-image: radial-gradient(ellipse at center, rgba(34,211,238,0.4) 0%, transparent 60%), linear-gradient(30deg, rgba(56,189,248,0.15) 1px, transparent 1px), linear-gradient(150deg, rgba(56,189,248,0.15) 1px, transparent 1px), linear-gradient(180deg, #2563eb 0%, #1e3a8a 100%); background-size: 100% 100%, 28px 48px, 28px 48px, 100% 100%;"},
+  {"id":"h12","theme":"heavy","name":"Ultra Intense Center Beam","category":"","css":"background-color: #1e3a8a; background-image: linear-gradient(90deg, transparent 10%, rgba(14,165,233,0.2) 30%, rgba(34,211,238,0.65) 50%, rgba(14,165,233,0.2) 70%, transparent 90%), linear-gradient(180deg, #2563eb 0%, #1e3a8a 100%);"},
+  {"id":"h13","theme":"heavy","name":"Criss-Cross Power Rays","category":"","css":"background-color: #1e40af; background-image: linear-gradient(140deg, transparent 15%, rgba(56,189,248,0.4) 50%, transparent 85%), linear-gradient(40deg, transparent 15%, rgba(14,165,233,0.35) 50%, transparent 85%), linear-gradient(90deg, transparent 40%, rgba(96,165,250,0.15) 50%, transparent 60%), linear-gradient(180deg, #3b82f6 0%, #1e40af 100%);"},
+  {"id":"h14","theme":"heavy","name":"Deep Atmospheric Rays","category":"","css":"background-color: #1e3a8a; background-image: linear-gradient(160deg, rgba(30,64,175,0.5) 0%, transparent 50%), linear-gradient(20deg, rgba(14,165,233,0.35) 0%, transparent 45%), linear-gradient(200deg, rgba(56,189,248,0.25) 0%, transparent 40%), linear-gradient(180deg, #2563eb 0%, #1e3a8a 100%);"},
+  {"id":"h15","theme":"heavy","name":"Fancy Edge + Core Glow","category":"","css":"background-color: #1e40af; background-image: linear-gradient(90deg, rgba(34,211,238,0.35) 0%, transparent 20%), linear-gradient(270deg, rgba(34,211,238,0.35) 0%, transparent 20%), radial-gradient(ellipse at center, rgba(56,189,248,0.4) 0%, transparent 60%), linear-gradient(180deg, #3b82f6 0%, #1e40af 100%);"},
+  {"id":"h16","theme":"heavy","name":"Maximum Drama Diagonal","category":"","css":"background-color: #1e3a8a; background-image: linear-gradient(125deg, transparent 5%, rgba(34,211,238,0.55) 45%, transparent 55%), linear-gradient(55deg, transparent 15%, rgba(59,130,246,0.35) 50%, transparent 70%), linear-gradient(165deg, transparent 25%, rgba(14,165,233,0.25) 55%, transparent 80%), linear-gradient(180deg, #2563eb 0%, #1e3a8a 100%);"}];
 </script>
 <script>
 /* ═════════════════════════════════════════════════════════════════════════════
@@ -783,9 +895,16 @@ const TTB_PATTERNS = [{"id":"d1","theme":"dark","name":"Luminous Diagonal Light 
      getWallpaper                                     ask for the user's desktop wallpaper (for the previews)
      previewPattern { pattern, seconds }              show a pattern on the taskbar for a few seconds,
                                                       then the app goes back to the saved style
-     applyStyle    { style, colors, pattern }         style: transparent|clean|buttons_glass|
+     getImages                                        ask for the picture settings + recent pictures
+     pickImage     { slot: "main"|"side" }            the app shows the Windows file picker and keeps
+                                                      its own copy of the picture
+     removeImage   { name }                           drop a picture from the recent list (not one in use)
+     previewImage  { image, seconds }                 show picture settings on the taskbar for a few seconds
+     applyStyle    { style, colors, pattern, image }  style: transparent|clean|buttons_glass|
                                                       buttons_color|dock_glass|dock_color|
-                                                      gradient1|gradient2|pattern
+                                                      gradient1|gradient2|pattern|image
+                                                      image: { image, sideImage, useSide, fit: fill|stretch|tile|center,
+                                                               opacity: 10..100, backing: "auto"|"#RRGGBB" }
                                                       colors: {color1,color2,color3,buttons,dock} ("#RRGGBB")
                                                       pattern: "d.." dark | "l.." light | "t.." thin glow | "h.." heavy glow
      setEffect     { effect: "blink"|"clicks"|"shadow", enabled }
@@ -801,7 +920,12 @@ const TTB_PATTERNS = [{"id":"d1","theme":"dark","name":"Luminous Diagonal Light 
 
    APP -> PAGE
      state         { style, colors, effects:{blink,clicks,shadow}, autostart, autoshow, appVersion,
-                     taskbarEdge: "bottom"|"top"|"left"|"right", pattern }
+                     taskbarEdge: "bottom"|"top"|"left"|"right", pattern,
+                     taskbarSize: { width, height } (main taskbar, physical px, long side first) }
+     images        { settings: { image, sideImage, useSide, fit, opacity, backing },
+                     recent: [ { name, width, height, avg, thumb (small data URL) } ] }
+                   reply to getImages / pickImage, broadcast when the list or the applied picture changes
+     imagePicked   { slot, name }                     the picture the user just chose in the file picker
                    sent on getState AND broadcast after every change, so a browser tab and the
                    app window stay in sync with each other
      wallpaper     { mode: "image", dataUrl, color } | { mode: "color", color } | { mode: "none" }
@@ -824,7 +948,8 @@ const DEFAULTS = {
   autoshow: false,
   appVersion: '',
   taskbarEdge: 'bottom',
-  pattern: 'd1'
+  pattern: 'd1',
+  taskbarSize: null
 };
 
 // "state" = what the app last confirmed. "draft" = the colors the user is editing (not applied yet).
@@ -843,7 +968,8 @@ const STYLES = [
   { id: 'dock_color',    name: 'Dock panel (color)',  desc: 'Colorful dock panel',                 colors: [{ key: 'dock', label: 'Dock' }] },
   { id: 'gradient1',     name: 'Gradient',            desc: 'Single color gradient',               colors: [{ key: 'color1', label: 'Color' }] },
   { id: 'gradient2',     name: 'Gradient (50-50)',    desc: 'Two color split gradient',            colors: [{ key: 'color2', label: 'Inner' }, { key: 'color3', label: 'Edge' }] },
-  { id: 'pattern',       name: 'Pattern',             desc: 'A background pattern for the taskbar',  colors: [] }
+  { id: 'pattern',       name: 'Pattern',             desc: 'A background pattern for the taskbar',  colors: [] },
+  { id: 'image',         name: 'Image',               desc: 'Your own picture as the background',    colors: [] }
 ];
 
 /* ───────────────────────── transport (same as AI Video Upscaler+) ───────────────────────── */
@@ -874,6 +1000,7 @@ function connectWs(port, secure) {
     // Always ask for the real state first, then flush anything queued while offline.
     ws.send(JSON.stringify({ type: 'getState', payload: {} }));
     ws.send(JSON.stringify({ type: 'getWallpaper', payload: {} }));
+    ws.send(JSON.stringify({ type: 'getImages', payload: {} }));
     while (pendingMessages.length) ws.send(JSON.stringify(pendingMessages.shift()));
   };
 
@@ -897,6 +1024,8 @@ function dispatchFromHost(type, payload) {
     case 'state': onState(payload); break;
     case 'init_urls': break;
     case 'wallpaper': onWallpaper(payload); break;
+    case 'images': onImages(payload); break;
+    case 'imagePicked': onImagePicked(payload); break;
     case 'error': showToast(payload.message || 'Something went wrong.', 'err'); break;
   }
 }
@@ -932,7 +1061,9 @@ function onState(p) {
     autoshow: !!p.autoshow,
     appVersion: p.appVersion || '',
     taskbarEdge: ['bottom', 'top', 'left', 'right'].includes(p.taskbarEdge) ? p.taskbarEdge : 'bottom',
-    pattern: TTB_PATTERNS.some(x => x.id === p.pattern) ? p.pattern : DEFAULTS.pattern
+    pattern: TTB_PATTERNS.some(x => x.id === p.pattern) ? p.pattern : DEFAULTS.pattern,
+    taskbarSize: p.taskbarSize && p.taskbarSize.width > 0 && p.taskbarSize.height > 0
+      ? { width: p.taskbarSize.width, height: p.taskbarSize.height } : null
   };
   const patternChanged = state.pattern !== prevPattern;
   hasState = true;
@@ -978,6 +1109,9 @@ function buildStyleGrid() {
           ${s.id === 'pattern' ? `
             <button class="secondary-btn choose-pattern-btn" data-choose-pattern>Choose pattern</button>
             <span class="pattern-current-name" id="patternCurrentName"></span>` : ''}
+          ${s.id === 'image' ? `
+            <button class="secondary-btn choose-pattern-btn" data-choose-image>Choose picture</button>
+            <span class="pattern-current-name" id="imageCurrentName"></span>` : ''}
           ${s.colors.map(c => `
             <label class="color-chip" title="${c.label} color">
               <input type="color" data-color-key="${c.key}">
@@ -994,6 +1128,7 @@ function buildStyleGrid() {
       selectStyle(card.dataset.style);
       // the Pattern card opens the pattern list
       if (card.dataset.style === 'pattern') openPatternPicker();
+      if (card.dataset.style === 'image') openImagePicker();
     });
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') applyStyle(card.dataset.style);
@@ -1042,6 +1177,7 @@ function renderAll() {
   selectStyle(selectedStyle);
   renderColors();
   renderPatterns();
+  renderImage();
 
   document.querySelectorAll('[data-effect]').forEach(t => { t.checked = !!state.effects[t.dataset.effect]; });
   document.getElementById('settingsAutostartToggle').checked = state.autostart;
@@ -1111,6 +1247,7 @@ function renderPatterns() {
 function openPatternPicker() {
   const sec = document.getElementById('patternSection');
   sec.classList.add('open');
+  closeImagePicker();
   selectStyle('pattern');
   renderPatterns();
   sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1161,6 +1298,274 @@ document.getElementById('styleGrid').addEventListener('click', (e) => {
   if (e.target.closest('[data-choose-pattern]')) { e.stopPropagation(); openPatternPicker(); }
 });
 
+/* ───────────────────────── image (style 10) ─────────────────────────
+   The user's own picture. The app does the file picking (Windows file picker) and keeps its
+   own copy; the page only sees small previews ("images" message) and picture names.
+   Every change previews on the real taskbar for 5 s; Apply saves. The picture always sits on
+   a solid backing colour - opacity fades into that colour, never into see-through. */
+const IMAGE_PREVIEW_SECONDS = 5;
+const IMAGE_FITS = {
+  fill:    'Covers the whole taskbar and crops what doesn’t fit. Works with almost any picture.',
+  stretch: 'Squeezes the whole picture onto the taskbar. Can look distorted.',
+  tile:    'Repeats the picture at its own size. Best for small textures and patterns.',
+  center:  'Shows the picture at its own size in the middle, on the backing colour.'
+};
+const IMAGE_DEFAULTS = { image: null, sideImage: null, useSide: false, fit: 'fill', opacity: 100, backing: 'auto' };
+let imageData = { settings: structuredClone(IMAGE_DEFAULTS), recent: [] };
+let draftImage = structuredClone(IMAGE_DEFAULTS);
+let imagesLoaded = false;
+let imagePreviewTimer = null;
+let imagePreviewDebounce = null;
+
+function imageEntry(name) { return imageData.recent.find(e => e.name === name) || null; }
+function isHex(c) { return typeof c === 'string' && /^#[0-9a-fA-F]{6}$/.test(c); }
+
+function cleanImageSettings(s) {
+  const r = Object.assign(structuredClone(IMAGE_DEFAULTS), s || {});
+  if (!imageEntry(r.image)) r.image = null;
+  if (!imageEntry(r.sideImage)) r.sideImage = null;
+  if (!IMAGE_FITS[r.fit]) r.fit = 'fill';
+  r.opacity = Math.min(100, Math.max(10, Number(r.opacity) || 100));
+  r.backing = isHex(r.backing) ? r.backing.toUpperCase() : 'auto';
+  r.useSide = !!r.useSide;
+  return r;
+}
+
+function onImages(p) {
+  const prevApplied = JSON.stringify(imageData.settings);
+  imageData.recent = Array.isArray(p.recent) ? p.recent.filter(e => e && typeof e.name === 'string') : [];
+  imageData.settings = cleanImageSettings(p.settings);
+  // a newly applied choice (here or in another window) becomes the editing baseline;
+  // otherwise keep what the user is in the middle of choosing
+  if (!imagesLoaded || JSON.stringify(imageData.settings) !== prevApplied) {
+    draftImage = structuredClone(imageData.settings);
+  } else {
+    draftImage = cleanImageSettings(draftImage);
+  }
+  imagesLoaded = true;
+  renderImage();
+}
+
+function onImagePicked(p) {
+  if (!p || !imageEntry(p.name)) return;
+  if (p.slot === 'side') { draftImage.sideImage = p.name; draftImage.useSide = true; }
+  else draftImage.image = p.name;
+  selectStyle('image');
+  renderImage();
+  scheduleImagePreview(0);
+}
+
+function resolvedBacking(useSideImage) {
+  if (draftImage.backing !== 'auto') return draftImage.backing;
+  const e = imageEntry(useSideImage ? draftImage.sideImage : draftImage.image);
+  return e && isHex(e.avg) ? e.avg : '#202020';
+}
+
+// Draws the picture into a mini taskbar (.tb-bar with a .tb-img inside), scaled like the real one.
+function paintImageBar(bar, s) {
+  if (!bar) return;
+  let layer = bar.querySelector('.tb-img');
+  if (!layer) { layer = document.createElement('span'); layer.className = 'tb-img'; bar.prepend(layer); }
+  const e = imageEntry(s.image);
+  bar.style.background = e ? (s.backing !== 'auto' ? s.backing : (isHex(e.avg) ? e.avg : '#202020')) : '#202020';
+  if (!e || !e.thumb) { layer.style.backgroundImage = 'none'; return; }
+  layer.style.backgroundImage = `url("${e.thumb}")`;
+  layer.style.opacity = String(s.opacity / 100);
+  // the real taskbar is (taskbarSize.width) px wide - scale Tile/Center sizes the same way
+  const tbw = state.taskbarSize && state.taskbarSize.width ? state.taskbarSize.width : 1920;
+  const k = (bar.clientWidth || 300) / tbw;
+  const w = Math.max(2, e.width * k) + 'px', h = Math.max(2, e.height * k) + 'px';
+  const css = {
+    fill:    ['cover', 'no-repeat', 'center'],
+    stretch: ['100% 100%', 'no-repeat', 'center'],
+    tile:    [`${w} ${h}`, 'repeat', 'left top'],
+    center:  [`${w} ${h}`, 'no-repeat', 'center']
+  }[s.fit] || ['cover', 'no-repeat', 'center'];
+  layer.style.backgroundSize = css[0];
+  layer.style.backgroundRepeat = css[1];
+  layer.style.backgroundPosition = css[2];
+}
+
+function renderImage() {
+  // the Image card shows the picture being chosen
+  paintImageBar(document.querySelector('.tb-preview[data-type="image"] .tb-bar'), draftImage);
+  const cardName = document.getElementById('imageCurrentName');
+  if (cardName) cardName.textContent = draftImage.image ? '' : 'No picture yet';
+
+  const stageBar = document.getElementById('imageStageBar');
+  if (!stageBar) return;
+  // the big preview has the real taskbar's proportions (at least 28 px high)
+  const size = state.taskbarSize && state.taskbarSize.width ? state.taskbarSize : { width: 1920, height: 48 };
+  const stageW = document.getElementById('imageStage').clientWidth || 600;
+  stageBar.style.height = Math.max(28, Math.round(stageW * size.height / size.width)) + 'px';
+  paintImageBar(stageBar, draftImage);
+
+  // size advice
+  const hint = document.getElementById('imageSizeHint');
+  const e = imageEntry(draftImage.image);
+  let text = state.taskbarSize && state.taskbarSize.width
+    ? `Your taskbar is <b>${size.width} &times; ${size.height}</b> px. For the sharpest result use a picture at least this size (wider and taller is fine; Fill uses the middle).`
+    : 'For the sharpest result use a picture at least as wide as your screen.';
+  let warn = false;
+  if (e && state.taskbarSize && state.taskbarSize.width && (draftImage.fit === 'fill' || draftImage.fit === 'stretch')
+      && (e.width < size.width * 0.75 || (draftImage.fit === 'fill' && e.width / e.height > size.width / size.height && e.height < size.height))) {
+    text += ` This picture is ${e.width} &times; ${e.height} px, so it will look soft. Try a larger one, or <b>Tile</b>.`;
+    warn = true;
+  }
+  if (['left', 'right'].includes(state.taskbarEdge)) {
+    text += ` Your taskbar is on the ${state.taskbarEdge}: ${draftImage.useSide && draftImage.sideImage ? 'the side picture is used.' : 'the picture is turned with it.'}`;
+  }
+  hint.innerHTML = text;
+  hint.classList.toggle('warn', warn);
+
+  // recent pictures, with "+ Choose picture" first
+  const recent = document.getElementById('imageRecent');
+  recent.innerHTML = `
+    <button class="img-tile img-add" data-pick="main" title="Choose a picture from your PC">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+      Choose picture&hellip;
+    </button>` +
+    imageData.recent.map(x => `
+      <button class="img-tile" data-image="${x.name}" title="${x.width} &times; ${x.height} px">
+        <span class="img-badge">Active</span>
+        <span class="img-remove" data-remove="${x.name}" title="Remove from this list" role="button">&times;</span>
+      </button>`).join('');
+  recent.querySelectorAll('[data-image]').forEach(t => {
+    const x = imageEntry(t.dataset.image);
+    if (x && x.thumb) t.style.backgroundImage = `url("${x.thumb}")`;
+    t.classList.toggle('selected', t.dataset.image === draftImage.image);
+    t.classList.toggle('current', hasState && state.style === 'image' && t.dataset.image === imageData.settings.image);
+  });
+
+  document.querySelectorAll('#imageFit [data-fit]').forEach(b => b.classList.toggle('on', b.dataset.fit === draftImage.fit));
+  document.getElementById('imageFitHint').textContent = IMAGE_FITS[draftImage.fit];
+  document.getElementById('imageOpacity').value = draftImage.opacity;
+  document.getElementById('imageOpacityVal').textContent = draftImage.opacity + '%';
+
+  const isAuto = draftImage.backing === 'auto', isBlack = draftImage.backing === '#000000';
+  document.querySelectorAll('#imageBacking [data-backing]').forEach(b => b.classList.toggle('on',
+    b.dataset.backing === 'auto' ? isAuto : b.dataset.backing === '#000000' ? isBlack : (!isAuto && !isBlack)));
+  if (!isAuto) document.getElementById('imageBackingColor').value = draftImage.backing.toLowerCase();
+  document.getElementById('imageBackingDot').style.background = resolvedBacking(false);
+  // Auto shows the colour it picked; Custom shows the colour box
+  document.getElementById('imageBackingDot').style.display = isAuto ? '' : 'none';
+  document.getElementById('imageBackingColor').closest('label').style.display = (!isAuto && !isBlack) ? '' : 'none';
+
+  document.getElementById('imageUseSide').checked = draftImage.useSide;
+  document.getElementById('imageSidePick').classList.toggle('show', draftImage.useSide);
+  const side = imageEntry(draftImage.sideImage);
+  document.getElementById('imageSideThumb').style.backgroundImage = side && side.thumb ? `url("${side.thumb}")` : 'none';
+  document.getElementById('imageSideName').textContent = side ? `${side.width} × ${side.height} px` : 'No side picture yet';
+
+  document.getElementById('applyImageBtn').disabled = !draftImage.image;
+}
+
+function openImagePicker() {
+  const sec = document.getElementById('imageSection');
+  sec.classList.add('open');
+  closePatternPicker();
+  selectStyle('image');
+  renderImage();
+  postToHost('getImages');
+  sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeImagePicker() {
+  document.getElementById('imageSection').classList.remove('open');
+  stopImagePreviewUi();
+}
+
+function pickImage(slot) {
+  if (!wsReady) { showToast('Connect to the app first - it opens the file picker.'); return; }
+  postToHost('pickImage', { slot });
+  showToast(IS_DESKTOP ? 'Choose a picture in the window that opened.' : 'The file picker opened on your desktop - choose a picture there.');
+}
+
+// what the app receives for previewImage / applyStyle
+function imageChoice() {
+  return {
+    image: draftImage.image, sideImage: draftImage.sideImage, useSide: draftImage.useSide && !!draftImage.sideImage,
+    fit: draftImage.fit, opacity: draftImage.opacity, backing: draftImage.backing
+  };
+}
+
+function scheduleImagePreview(delay) {
+  clearTimeout(imagePreviewDebounce);
+  imagePreviewDebounce = setTimeout(startImagePreview, delay == null ? 350 : delay);
+}
+
+function startImagePreview() {
+  if (!draftImage.image) return;
+  const status = document.getElementById('imagePreviewStatus');
+  if (!wsReady) {
+    status.innerHTML = '<span>Not connected to the app - the change is shown here only.</span>';
+    status.classList.add('show');
+    return;
+  }
+  postToHost('previewImage', { image: imageChoice(), seconds: IMAGE_PREVIEW_SECONDS });
+  let left = IMAGE_PREVIEW_SECONDS;
+  const paint = () => {
+    status.innerHTML = left > 0
+      ? `<span>Preview on your taskbar - ${left}s. Press <b>Apply</b> to keep it.</span>`
+      : '<span>Preview ended - your saved style is back. Press <b>Apply</b> to use this picture.</span>';
+  };
+  clearInterval(imagePreviewTimer);
+  status.classList.add('show');
+  paint();
+  imagePreviewTimer = setInterval(() => {
+    left--;
+    paint();
+    if (left <= 0) clearInterval(imagePreviewTimer);
+  }, 1000);
+}
+
+function stopImagePreviewUi() {
+  clearInterval(imagePreviewTimer);
+  clearTimeout(imagePreviewDebounce);
+  document.getElementById('imagePreviewStatus').classList.remove('show');
+}
+
+document.getElementById('imageRecent').addEventListener('click', (e) => {
+  const rm = e.target.closest('[data-remove]');
+  if (rm) { e.stopPropagation(); postToHost('removeImage', { name: rm.dataset.remove }); return; }
+  if (e.target.closest('[data-pick]')) { pickImage('main'); return; }
+  const t = e.target.closest('[data-image]');
+  if (!t) return;
+  draftImage.image = t.dataset.image;
+  selectStyle('image');
+  renderImage();
+  scheduleImagePreview(0);
+});
+document.querySelectorAll('#imageFit [data-fit]').forEach(b => b.addEventListener('click', () => {
+  draftImage.fit = b.dataset.fit; renderImage(); scheduleImagePreview();
+}));
+document.getElementById('imageOpacity').addEventListener('input', (e) => {
+  draftImage.opacity = Number(e.target.value); renderImage(); scheduleImagePreview(500);
+});
+document.querySelectorAll('#imageBacking [data-backing]').forEach(b => b.addEventListener('click', () => {
+  draftImage.backing = b.dataset.backing === 'custom' ? document.getElementById('imageBackingColor').value.toUpperCase() : b.dataset.backing;
+  renderImage(); scheduleImagePreview();
+}));
+document.getElementById('imageBackingColor').addEventListener('input', (e) => {
+  draftImage.backing = e.target.value.toUpperCase(); renderImage(); scheduleImagePreview(500);
+});
+document.getElementById('imageUseSide').addEventListener('change', (e) => {
+  draftImage.useSide = e.target.checked;
+  renderImage();
+  if (draftImage.useSide && !draftImage.sideImage) pickImage('side');
+  else if (['left', 'right'].includes(state.taskbarEdge)) scheduleImagePreview();
+});
+document.getElementById('imageSideBtn').addEventListener('click', () => pickImage('side'));
+document.getElementById('applyImageBtn').addEventListener('click', () => {
+  stopImagePreviewUi();
+  applyStyle('image');
+});
+document.getElementById('closeImageBtn').addEventListener('click', closeImagePicker);
+document.getElementById('styleGrid').addEventListener('click', (e) => {
+  if (e.target.closest('[data-choose-image]')) { e.stopPropagation(); openImagePicker(); }
+});
+window.addEventListener('resize', () => { if (document.getElementById('imageSection').classList.contains('open')) renderImage(); });
+
 /* ───────────────────────── real desktop wallpaper in the previews ───────────────────────── */
 // The app sends { mode: "image", dataUrl, color } or { mode: "color", color } and again whenever it changes.
 function onWallpaper(p) {
@@ -1177,8 +1582,15 @@ function onWallpaper(p) {
 
 /* ───────────────────────── actions ───────────────────────── */
 function applyStyle(id) {
+  if (id === 'image' && !draftImage.image) {      // nothing to apply yet - open the picture panel
+    openImagePicker();
+    showToast('Choose a picture first.');
+    return;
+  }
   selectStyle(id);
-  postToHost('applyStyle', { style: id, colors: structuredClone(draftColors), pattern: draftPattern });
+  const payload = { style: id, colors: structuredClone(draftColors), pattern: draftPattern };
+  if (id === 'image') payload.image = imageChoice();
+  postToHost('applyStyle', payload);
   if (!wsReady) showToast('Will apply as soon as the app is connected.');
 }
 
@@ -1242,6 +1654,7 @@ document.querySelectorAll('.nav-item[data-view]').forEach(btn => {
     btn.classList.add('active');
     document.getElementById('view-' + btn.dataset.view).classList.add('active');
     if (btn.dataset.view !== 'contact') postToHost('getState');
+    if (btn.dataset.view === 'taskbar') postToHost('getImages');
   });
 });
 
@@ -1313,6 +1726,15 @@ function showToast(message, kind) {
 }
 
 /* ───────────────────────── start ───────────────────────── */
+// The app logo is built into this page (#ttbLogo) so it shows offline too - reuse it elsewhere.
+(function useBuiltInLogo() {
+  const logo = document.getElementById('ttbLogo').src;
+  document.querySelectorAll('img[data-ttb-logo]').forEach(img => { img.src = logo; });
+  const fav = document.createElement('link');
+  fav.rel = 'icon'; fav.type = 'image/png'; fav.href = logo;
+  document.head.appendChild(fav);
+})();
+
 buildStyleGrid();
 buildPatternGrid();
 renderAll();
