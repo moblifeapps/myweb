@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <!-- WEB_ONLY_START -->
@@ -106,6 +106,34 @@ html, body {
 .ws-dot.error { background: var(--red); box-shadow: 0 0 5px var(--red); }
 @keyframes wsBlink { 0%,100%{opacity:1} 50%{opacity:.25} }
 
+/* ACTION BAR - under the top bar, on every tab. The three buttons keep the same blue look in
+   the light and the dark theme (fixed colours, not theme variables). */
+.action-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  padding: 10px 24px; background: var(--bg); border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+.action-bar-hint { font-size: 12px; color: var(--text2); line-height: 1.45; min-width: 0; }
+.action-bar-hint strong { color: var(--text); font-weight: 600; }
+.action-bar-buttons { display: flex; gap: 10px; flex-wrap: wrap; margin-left: auto; }
+.action-btn {
+  /* compact tile, about 120 x 70: big icon on the left, label wrapped on two lines */
+  display: inline-flex; align-items: center; gap: 8px;
+  width: 160px; height: 66px; padding: 6px 8px 6px 8px; border-radius: 9px; cursor: pointer;
+  font: inherit; font-size: 12.5px; font-weight: 700; line-height: 1.2; color: #ffffff; letter-spacing: .1px;
+  text-align: left;
+  background: linear-gradient(180deg, #1f6fd1 0%, #0f55b5 48%, #0a3f8f 100%);
+  border: 1px solid #3a86e8;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 1px 3px rgba(0,0,0,.35);
+  text-shadow: 0 1px 1px rgba(0,0,0,.35);
+  transition: filter .15s ease, transform .05s ease;
+}
+.action-btn svg { width: 36px; height: 36px; flex-shrink: 0; filter: drop-shadow(0 1px 1px rgba(0,0,0,.35)); }
+.action-btn span { min-width: 0; overflow-wrap: break-word; }
+.action-btn:hover { filter: brightness(1.12); }
+.action-btn:active { transform: translateY(1px); filter: brightness(.95); }
+.action-btn:focus-visible { outline: 2px solid #8ab8ff; outline-offset: 2px; }
+@media (max-width: 900px) { .action-bar-hint { display: none; } .action-bar { justify-content: flex-end; } }
+
 .app-layout { display: flex; flex: 1; min-height: 0; }
 
 /* SIDEBAR - identical structure to AI Video Upscaler+ */
@@ -166,9 +194,6 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
 .settings-header { margin-bottom: 24px; position: relative; z-index: 1; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .settings-header h1 { font-size: 24px; margin: 0 0 4px; }
 .settings-header p { font-size: 13px; color: var(--text2); margin: 0; }
-.position-action { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
-.position-hint { font-size: 11px; color: var(--text3); text-align: right; }
-.position-hint strong { color: var(--text2); font-weight: 600; }
 
 .settings-section { margin-bottom: 28px; position: relative; z-index: 1; }
 .settings-section-title {
@@ -453,6 +478,25 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
       </div>
     </div>
 
+    <!-- Actions available on every tab -->
+    <div class="action-bar">
+      <div class="action-bar-hint">To move the taskbar: in Windows Settings open <strong>Taskbar behaviors</strong> &rarr; <strong>Taskbar position</strong>.</div>
+      <div class="action-bar-buttons">
+        <button class="action-btn" id="taskbarPositionBtn" title="Opens Windows Settings - Personalization - Taskbar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16"/><path d="M14 10l-3 2 3 2"/></svg>
+          <span>Change taskbar<br>position&hellip;</span>
+        </button>
+        <button class="action-btn" id="switchModeBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="16" rx="2"/><path d="M2.5 8.5h19"/><path d="M6 6.3h.01M8.5 6.3h.01"/><path d="M10 16l4-4M10.5 12H14v3.5"/></svg>
+          <span id="switchModeLabel">Open in your browser</span>
+        </button>
+        <button class="action-btn" id="softResetBtn" title="Reconnects to the taskbar - use this if it stopped changing, e.g. after Windows Explorer restarted">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-15.4 6.4L3 16"/><path d="M3 21v-5h5"/><path d="M3 12a9 9 0 0 1 15.4-6.4L21 8"/><path d="M21 3v5h-5"/></svg>
+          <span>Reload<br>Taskbar</span>
+        </button>
+      </div>
+    </div>
+
     <!-- WEB_ONLY_START -->
     <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
     <!-- WEB_ONLY_END -->
@@ -541,13 +585,6 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
             <div>
               <h1 id="taskbarViewTitle">Bottom Taskbar</h1>
               <p>Choose the visual style of your taskbar. Pick colors where available, then press Apply.</p>
-            </div>
-            <div class="position-action">
-              <button class="secondary-btn" id="taskbarPositionBtn" title="Opens Windows Settings - Personalization - Taskbar">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16"/><path d="M14 10l-3 2 3 2"/></svg>
-                Change taskbar position&hellip;
-              </button>
-              <span class="position-hint">In Windows Settings open <strong>Taskbar behaviors</strong> &rarr; <strong>Taskbar position</strong></span>
             </div>
           </div>
 
@@ -737,28 +774,6 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
                 <div class="settings-card-desc">Open the settings window when Transparent Taskbar+ starts</div>
               </div>
               <label class="toggle-switch"><input type="checkbox" id="settingsAutoshowToggle"><span class="toggle-slider"></span></label>
-            </div>
-          </div>
-
-          <div class="settings-section">
-            <div class="settings-section-title">Window</div>
-            <div class="settings-card">
-              <div>
-                <div class="settings-card-title" id="switchModeTitle">Open in your browser</div>
-                <div class="settings-card-desc" id="switchModeDesc">Continue in a browser tab instead of the app window</div>
-              </div>
-              <button class="secondary-btn" id="switchModeBtn">Switch</button>
-            </div>
-          </div>
-
-          <div class="settings-section">
-            <div class="settings-section-title">Troubleshooting</div>
-            <div class="settings-card">
-              <div>
-                <div class="settings-card-title">Restart taskbar connection</div>
-                <div class="settings-card-desc">Use this if the taskbar stopped changing, e.g. after Windows Explorer restarted</div>
-              </div>
-              <button class="secondary-btn" id="softResetBtn">Restart</button>
             </div>
           </div>
 
@@ -1625,23 +1640,22 @@ document.getElementById('taskbarPositionBtn').addEventListener('click', () => {
 });
 
 document.getElementById('softResetBtn').addEventListener('click', () => {
-  if (confirm('Restart the connection to the taskbar now? Your taskbar may flicker for a moment.')) {
+  if (confirm('Reload the taskbar now? It may flicker for a moment.')) {
     postToHost('softReset');
   }
 });
 
 // Window <-> browser switching, worded for whichever side we're on.
 (function setupSwitchMode() {
-  const title = document.getElementById('switchModeTitle');
-  const desc = document.getElementById('switchModeDesc');
+  const label = document.getElementById('switchModeLabel');
   const btn = document.getElementById('switchModeBtn');
   if (IS_DESKTOP) {
-    title.textContent = 'Open in your browser';
-    desc.textContent = 'Continue in a browser tab instead of this window';
+    label.textContent = 'Open in your browser';
+    btn.title = 'Continue in a browser tab instead of this window';
     btn.addEventListener('click', () => postToHost('openInBrowser'));
   } else {
-    title.textContent = 'Open the app window';
-    desc.textContent = 'Show the Transparent Taskbar+ window on your desktop';
+    label.textContent = 'Open the app window';
+    btn.title = 'Show the Transparent Taskbar+ window on your desktop';
     btn.addEventListener('click', () => postToHost('openAppWindow'));
   }
 })();
