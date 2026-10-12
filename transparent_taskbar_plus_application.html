@@ -1016,6 +1016,8 @@ function connectWs(port, secure) {
     ws.send(JSON.stringify({ type: 'getState', payload: {} }));
     ws.send(JSON.stringify({ type: 'getWallpaper', payload: {} }));
     ws.send(JSON.stringify({ type: 'getImages', payload: {} }));
+    // the app's own windows (e.g. the tray menu window) use the same theme as this page
+    ws.send(JSON.stringify({ type: 'setTheme', payload: { theme: document.documentElement.classList.contains('light-theme') ? 'light' : 'dark' } }));
     while (pendingMessages.length) ws.send(JSON.stringify(pendingMessages.shift()));
   };
 
@@ -1705,7 +1707,10 @@ function applyTheme(light) {
   document.getElementById('settingsThemeToggle').checked = light;
   try { localStorage.setItem('ttbplus_theme', light ? 'light' : 'dark'); } catch {}
 }
-document.getElementById('settingsThemeToggle').addEventListener('change', (e) => applyTheme(e.target.checked));
+document.getElementById('settingsThemeToggle').addEventListener('change', (e) => {
+  applyTheme(e.target.checked);
+  postToHost('setTheme', { theme: e.target.checked ? 'light' : 'dark' });   // the app's own windows follow
+});
 (function initTheme() {
   let saved = null;
   try { saved = localStorage.getItem('ttbplus_theme'); } catch {}
