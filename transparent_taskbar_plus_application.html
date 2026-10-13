@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <!-- WEB_ONLY_START -->
@@ -303,22 +303,6 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
 .tb-tray i { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.9); }
 .tb-widget { position: absolute; left: 7px; bottom: 7px; width: 14px; height: 9px; border-radius: 3px; background: rgba(255,255,255,.75); }
 
-/* Per-style rendering - colors come from the --c-* variables set by script on #styleGrid */
-.tb-preview[data-type="transparent"] .tb-bar { border-top: 1px solid rgba(255,255,255,.65); }
-.tb-preview[data-type="buttons_glass"] .tb-btn,
-.tb-preview[data-type="dock_glass"] .tb-dock {
-  background: rgba(255,255,255,.22);
-  border: 1px solid rgba(255,255,255,.38);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-}
-.tb-preview[data-type="buttons_color"] .tb-btn { background: var(--c-buttons); }
-.tb-preview[data-type="dock_color"] .tb-dock { background: var(--c-dock); }
-.tb-preview[data-type="gradient1"] .tb-bar { background: linear-gradient(to bottom, var(--c-color1) 0%, var(--c-color1) 50%, color-mix(in srgb, var(--c-color1) 70%, #000) 50%, color-mix(in srgb, var(--c-color1) 70%, #000) 100%); }
-.tb-preview[data-type="gradient2"] .tb-bar { background: linear-gradient(to bottom, var(--c-color2) 0%, var(--c-color2) 50%, var(--c-color3) 50%, var(--c-color3) 100%); }
-
-.tb-preview[data-type="pattern"] .tb-bar { background: #1f1f1f; }
-
 /* Real desktop wallpaper behind every preview, once the app has sent it */
 .has-wallpaper .tb-preview { background: var(--ttb-wallpaper) center / cover no-repeat, var(--ttb-wallpaper-color, #202020); }
 .has-wallpaper-color .tb-preview { background: var(--ttb-wallpaper-color, #202020); }
@@ -356,8 +340,6 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
 
 /* ── Image style (10): the user's own picture ── */
 .tb-bar .tb-img { position: absolute; inset: 0; pointer-events: none; }
-.tb-preview[data-type="image"] .tb-bar { background: #202020; }
-.tb-preview[data-type="image"] .tb-dock { position: relative; }
 .image-section .img-stage { position: relative; border-radius: 8px; overflow: hidden; padding-top: 34px;
   background: var(--ttb-wallpaper, linear-gradient(135deg, #364fc7 0%, #7048e8 50%, #c2255c 100%)) center / cover no-repeat, var(--ttb-wallpaper-color, #202020); }
 .image-section .img-stage .tb-bar { position: relative; height: 40px; overflow: hidden; }
@@ -448,6 +430,51 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
 .offline-box h2 { color: var(--text); font-size: 20px; margin: 0 0 12px; }
 .offline-box p { font-size: 14px; line-height: 1.6; margin: 0 0 22px; }
 .offline-actions { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+/* ── Taskbar tab: three rows (border line / background / buttons), one option each, combined ── */
+.layer-rows { display: flex; flex-direction: column; gap: 18px; position: relative; z-index: 1; }
+.layer-row { background: color-mix(in srgb, var(--surface) 55%, transparent); border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 4px); padding: 14px 14px 16px; }
+.layer-row-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.layer-row-head h2 { font-size: 15px; margin: 0; color: var(--text); }
+.layer-row-head p { font-size: 12px; color: var(--text2); margin: 2px 0 0; }
+.layer-step { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: #fff; background: linear-gradient(180deg, #1f6fd1 0%, #0a3f8f 100%); }
+.layer-grid { grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); gap: 12px; }
+.tb-bar { overflow: hidden; }
+.tb-bar .tb-bg { position: absolute; inset: 0; pointer-events: none; }
+.tb-bar .tb-line { position: absolute; left: 0; right: 0; top: 0; z-index: 2; pointer-events: none; display: none; }
+.tb-preview .tb-dock { position: relative; z-index: 1; }
+.tb-preview[data-btn="buttons_glass"] .tb-btn,
+.tb-preview[data-btn="dock_glass"] .tb-dock {
+  background: rgba(255,255,255,.22); border: 1px solid rgba(255,255,255,.38);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.tb-preview[data-btn="buttons_color"] .tb-btn { background: var(--c-buttons); }
+.tb-preview[data-btn="dock_color"] .tb-dock { background: var(--c-dock); }
+.seg-sm button { padding: 5px 10px; font-size: 11.5px; }
+.layer-card .color-row { row-gap: 6px; }
+.layers-apply { position: sticky; bottom: 0; z-index: 3; margin-top: 18px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 14px;
+  box-shadow: 0 -4px 16px rgba(0,0,0,.12); }
+.layers-apply.dirty { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 -4px 18px var(--accent-glow); }
+.layers-apply-text { font-size: 13px; color: var(--text2); flex: 1; min-width: 180px; }
+.layers-apply.dirty .layers-apply-text { color: var(--text); font-weight: 600; }
+.layers-apply-btns { display: flex; gap: 8px; margin-left: auto; }
+.layers-apply .pattern-preview-status { margin-top: 0; flex-basis: 100%; }
+.layers-legacy { display: none; margin-bottom: 14px; font-size: 12px; color: var(--text2); position: relative; z-index: 1;
+  border: 1px dashed var(--border); border-radius: 8px; padding: 8px 12px; }
+.layers-legacy.show { display: block; }
+/* the three action buttons sit in the header of the open tab, next to its title */
+.settings-header { align-items: center; flex-wrap: nowrap; }
+.settings-header > div:first-child { flex: 1 1 auto; min-width: 0; }
+.header-actions { display: flex; gap: 10px; flex-shrink: 0; }
+@media (max-width: 1100px) { .settings-header { flex-wrap: wrap; } .header-actions { flex-wrap: wrap; } }
+@media (max-width: 700px) { .topbar-art { display: none; } }
+.layer-card .tb-preview { height: 74px; }
+.layer-card { gap: 8px; }
+.layer-card .style-card-foot { min-height: 0; }
+.topbar-art { height: 40px; width: auto; flex-shrink: 0; display: block; }
+.topbar-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 </style>
 <!-- WEB_ONLY_START -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
@@ -470,30 +497,14 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
         </div>
       </div>
       <div class="topbar-center">
-        Pick a style, then press <strong>Apply</strong>. Changes take effect on your taskbar immediately and are remembered by the app.
+        Pick a border line, a background and buttons, then press <strong>Apply</strong>. Changes take effect on your taskbar immediately and are remembered by the app.
       </div>
-      <div class="topbar-status">
-        <span class="ws-dot connecting" id="wsDot"></span>
-        <span id="wsStatusText">Connecting...</span>
-      </div>
-    </div>
-
-    <!-- Actions available on every tab -->
-    <div class="action-bar">
-      <div class="action-bar-hint">To move the taskbar: in Windows Settings open <strong>Taskbar behaviors</strong> &rarr; <strong>Taskbar position</strong>.</div>
-      <div class="action-bar-buttons">
-        <button class="action-btn" id="taskbarPositionBtn" title="Opens Windows Settings - Personalization - Taskbar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16"/><path d="M14 10l-3 2 3 2"/></svg>
-          <span>Change taskbar<br>position&hellip;</span>
-        </button>
-        <button class="action-btn" id="switchModeBtn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="16" rx="2"/><path d="M2.5 8.5h19"/><path d="M6 6.3h.01M8.5 6.3h.01"/><path d="M10 16l4-4M10.5 12H14v3.5"/></svg>
-          <span id="switchModeLabel">Open in your browser</span>
-        </button>
-        <button class="action-btn" id="softResetBtn" title="Reconnects to the taskbar - use this if it stopped changing, e.g. after Windows Explorer restarted">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-15.4 6.4L3 16"/><path d="M3 21v-5h5"/><path d="M3 12a9 9 0 0 1 15.4-6.4L21 8"/><path d="M21 3v5h-5"/></svg>
-          <span>Reload<br>Taskbar</span>
-        </button>
+      <div class="topbar-right">
+        <img class="topbar-art" src="data:image/png;base64,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" alt="" aria-hidden="true">
+        <div class="topbar-status">
+          <span class="ws-dot connecting" id="wsDot"></span>
+          <span id="wsStatusText">Connecting...</span>
+        </div>
       </div>
     </div>
 
@@ -584,7 +595,21 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
           <div class="settings-header">
             <div>
               <h1 id="taskbarViewTitle">Bottom Taskbar</h1>
-              <p>Choose the visual style of your taskbar. Pick colors where available, then press Apply.</p>
+              <p>Pick one option in each row - they are combined. Every click shows it on your taskbar for 5 seconds; press Apply to keep it.</p>
+            </div>
+            <div id="headerActions" class="header-actions">
+            <button class="action-btn" id="taskbarPositionBtn" title="Opens Windows Settings - Personalization - Taskbar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16"/><path d="M14 10l-3 2 3 2"/></svg>
+              <span>Change taskbar<br>position&hellip;</span>
+            </button>
+            <button class="action-btn" id="switchModeBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="16" rx="2"/><path d="M2.5 8.5h19"/><path d="M6 6.3h.01M8.5 6.3h.01"/><path d="M10 16l4-4M10.5 12H14v3.5"/></svg>
+              <span id="switchModeLabel">Open in your browser</span>
+            </button>
+            <button class="action-btn" id="softResetBtn" title="Reconnects to the taskbar - use this if it stopped changing, e.g. after Windows Explorer restarted">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-15.4 6.4L3 16"/><path d="M3 21v-5h5"/><path d="M3 12a9 9 0 0 1 15.4-6.4L21 8"/><path d="M21 3v5h-5"/></svg>
+              <span>Reload<br>Taskbar</span>
+            </button>
             </div>
           </div>
 
@@ -593,7 +618,16 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
             <span>Not connected to Transparent Taskbar+ yet - your choices will be sent as soon as the connection is back.</span>
           </div>
 
-          <div class="style-grid" id="styleGrid"></div>
+          <div class="layers-legacy" id="layersLegacyNotice">This version of the app shows one style at a time - update Transparent Taskbar+ to combine a line, a background and buttons. The most visible option you pick is applied.</div>
+          <div id="styleGrid" class="layer-rows"></div>
+          <div class="layers-apply" id="layersApply">
+            <span class="layers-apply-text" id="layersApplyText"></span>
+            <div class="layers-apply-btns">
+              <button class="secondary-btn" id="layersRevertBtn">Undo changes</button>
+              <button class="primary-btn" id="layersApplyBtn">Apply</button>
+            </div>
+            <div class="pattern-preview-status" id="layersPreviewStatus"></div>
+          </div>
 
           <!-- Pattern picker: hidden until "Choose pattern" on the Pattern card -->
           <div class="pattern-section" id="patternSection">
@@ -915,7 +949,12 @@ const TTB_PATTERNS = [{"id":"d1","theme":"dark","name":"Luminous Diagonal Light 
                                                       its own copy of the picture
      removeImage   { name }                           drop a picture from the recent list (not one in use)
      previewImage  { image, seconds }                 show picture settings on the taskbar for a few seconds
-     applyStyle    { style, colors, pattern, image }  style: transparent|clean|buttons_glass|
+     applyLayers   { layers, colors, pattern, image } the three rows together (apps with "layers" in state):
+                                                      layers: { line: none|line, lineWidth: 1|2, lineColor: "auto"|"#RRGGBB",
+                                                                background: transparent|gradient1|gradient2|pattern|image,
+                                                                buttons: none|buttons_glass|buttons_color|dock_glass|dock_color }
+     previewLayers { layers, colors, pattern, image, seconds }  the same, shown for a few seconds
+     applyStyle    { style, colors, pattern, image }  (older apps) style: transparent|clean|buttons_glass|
                                                       buttons_color|dock_glass|dock_color|
                                                       gradient1|gradient2|pattern|image
                                                       image: { image, sideImage, useSide, fit: fill|stretch|tile|center,
@@ -936,7 +975,9 @@ const TTB_PATTERNS = [{"id":"d1","theme":"dark","name":"Luminous Diagonal Light 
    APP -> PAGE
      state         { style, colors, effects:{blink,clicks,shadow}, autostart, autoshow, appVersion,
                      taskbarEdge: "bottom"|"top"|"left"|"right", pattern,
-                     taskbarSize: { width, height } (main taskbar, physical px, long side first) }
+                     taskbarSize: { width, height } (main taskbar, physical px, long side first),
+                     layers: { ... as applyLayers } (missing in older apps),
+                     lineAutoColor: "#RRGGBB" (the colour of Windows' own text - used by lineColor "auto") }
      images        { settings: { image, sideImage, useSide, fit, opacity, backing },
                      recent: [ { name, width, height, avg, thumb (small data URL) } ] }
                    reply to getImages / pickImage, broadcast when the list or the applied picture changes
@@ -1016,8 +1057,10 @@ function connectWs(port, secure) {
     ws.send(JSON.stringify({ type: 'getState', payload: {} }));
     ws.send(JSON.stringify({ type: 'getWallpaper', payload: {} }));
     ws.send(JSON.stringify({ type: 'getImages', payload: {} }));
-    // the app's own windows (e.g. the tray menu window) use the same theme as this page
-    ws.send(JSON.stringify({ type: 'setTheme', payload: { theme: document.documentElement.classList.contains('light-theme') ? 'light' : 'dark' } }));
+    // a theme chosen on this page wins: the app's own windows (e.g. the tray menu window) follow it
+    if (themeChosenHere) {
+      ws.send(JSON.stringify({ type: 'setTheme', payload: { theme: document.documentElement.classList.contains('light-theme') ? 'light' : 'dark' } }));
+    }
     while (pendingMessages.length) ws.send(JSON.stringify(pendingMessages.shift()));
   };
 
@@ -1058,6 +1101,7 @@ function normalizeColor(c, fallback) {
 function onState(p) {
   const prevStyle = state.style;
   const prevPattern = state.pattern;
+  const prevLayers = JSON.stringify(state.layers || null);
   const firstState = !hasState;
 
   state = {
@@ -1080,8 +1124,12 @@ function onState(p) {
     taskbarEdge: ['bottom', 'top', 'left', 'right'].includes(p.taskbarEdge) ? p.taskbarEdge : 'bottom',
     pattern: TTB_PATTERNS.some(x => x.id === p.pattern) ? p.pattern : DEFAULTS.pattern,
     taskbarSize: p.taskbarSize && p.taskbarSize.width > 0 && p.taskbarSize.height > 0
-      ? { width: p.taskbarSize.width, height: p.taskbarSize.height } : null
+      ? { width: p.taskbarSize.width, height: p.taskbarSize.height } : null,
+    layers: p.layers ? cleanLayers(p.layers) : null,                 // null: an older app (one style at a time)
+    lineAutoColor: normalizeColor(p.lineAutoColor, '#FFFFFF')
   };
+  // no theme picked on this page yet: use the app's
+  if (!themeChosenHere && (p.theme === 'light' || p.theme === 'dark')) applyTheme(p.theme === 'light', false);
   const patternChanged = state.pattern !== prevPattern;
   hasState = true;
   if (firstState || patternChanged) {
@@ -1091,88 +1139,342 @@ function onState(p) {
   // The app's confirmed colors become the editing baseline.
   draftColors = structuredClone(state.colors);
   if (firstState) selectedStyle = state.style;
+  const layersChanged = JSON.stringify(state.layers || null) !== prevLayers;
+  if (firstState || layersChanged || (!state.layers && prevStyle !== state.style)) draftLayers = structuredClone(appliedLayers());
 
   renderAll();
-  if (!firstState && prevStyle !== state.style) {
-    showToast(`${styleName(state.style)} applied`, 'ok');
+  if (!firstState && (layersChanged || prevStyle !== state.style)) {
+    showToast('Taskbar style applied', 'ok');
   }
 }
 
-/* ───────────────────────── rendering ───────────────────────── */
-function styleName(id) { return (STYLES.find(s => s.id === id) || {}).name || id; }
+/* ───────────────────────── taskbar look: border line + background + buttons ─────────────────────────
+   Three independent rows; one option per row, all drawn together on the taskbar.
+   Clicking an option shows the whole combination on the real taskbar for 5 s; Apply saves it.
+   An app that predates combined styles (no "layers" in its state) gets the closest single style. */
+const LAYER_DEFAULTS = { line: 'none', lineWidth: 1, lineColor: 'auto', background: 'transparent', buttons: 'none' };
+const RESET_LAYERS = { line: 'line', lineWidth: 1, lineColor: 'auto', background: 'transparent', buttons: 'none' };
+const LAYER_ROWS = [
+  { id: 'line', step: 1, title: 'Border line', desc: 'A line along the desktop side of the taskbar', options: [
+      { value: 'none', name: 'No line', desc: 'Nothing on the edge' },
+      { value: 'line', name: 'Line', desc: 'Thin or thick, in any colour', extra: 'line' } ] },
+  { id: 'background', step: 2, title: 'Background', desc: 'What fills the taskbar', options: [
+      { value: 'transparent', name: 'Transparent', desc: 'The desktop shows through' },
+      { value: 'gradient1', name: 'Gradient', desc: 'One colour, darker at the edge', colors: [{ key: 'color1', label: 'Color' }] },
+      { value: 'gradient2', name: 'Gradient (50-50)', desc: 'Two colours, half and half', colors: [{ key: 'color2', label: 'Inner' }, { key: 'color3', label: 'Edge' }] },
+      { value: 'pattern', name: 'Pattern', desc: 'A background pattern', extra: 'pattern' },
+      { value: 'image', name: 'Image', desc: 'Your own picture', extra: 'image' } ] },
+  { id: 'buttons', step: 3, title: 'Buttons', desc: 'How the app icons are shown', options: [
+      { value: 'none', name: 'Transparent', desc: 'Plain icons' },
+      { value: 'buttons_glass', name: 'Glass buttons', desc: 'A glass tile behind each icon' },
+      { value: 'buttons_color', name: 'Color buttons', desc: 'A coloured tile behind each icon', colors: [{ key: 'buttons', label: 'Buttons' }] },
+      { value: 'dock_glass', name: 'Glass dock', desc: 'One glass panel behind the icons' },
+      { value: 'dock_color', name: 'Color dock', desc: 'One coloured panel behind the icons', colors: [{ key: 'dock', label: 'Dock' }] } ] }
+];
+const LAYERS_PREVIEW_SECONDS = 5;
+let draftLayers = structuredClone(LAYER_DEFAULTS);
+let layersPreviewTimer = null;
+let layersPreviewDebounce = null;
 
-function buildStyleGrid() {
-  const grid = document.getElementById('styleGrid');
-  grid.innerHTML = STYLES.map(s => `
-    <div class="style-card" data-style="${s.id}" tabindex="0">
+function cleanLayers(l) {
+  l = l || {};
+  const ok = (row, v) => LAYER_ROWS.find(r => r.id === row).options.some(o => o.value === v);
+  return {
+    line: ok('line', l.line) ? l.line : 'none',
+    lineWidth: l.lineWidth === 2 ? 2 : 1,
+    lineColor: typeof l.lineColor === 'string' && /^#[0-9a-fA-F]{6}$/.test(l.lineColor) ? l.lineColor.toUpperCase() : 'auto',
+    background: ok('background', l.background) ? l.background : 'transparent',
+    buttons: ok('buttons', l.buttons) ? l.buttons : 'none'
+  };
+}
+
+// an older app only knows one style at a time
+function layersFromStyle(style) {
+  const l = structuredClone(LAYER_DEFAULTS);
+  if (style === 'transparent') { l.line = 'line'; l.lineWidth = 2; }
+  else if (['buttons_glass', 'buttons_color', 'dock_glass', 'dock_color'].includes(style)) l.buttons = style;
+  else if (['gradient1', 'gradient2', 'pattern', 'image'].includes(style)) l.background = style;
+  return l;
+}
+function legacyStyleFor(l) {
+  if (l.buttons !== 'none') return l.buttons;
+  if (l.background !== 'transparent') return l.background;
+  return l.line === 'line' ? 'transparent' : 'clean';
+}
+function supportsLayers() { return !!(hasState && state.layers); }
+function appliedLayers() { return state.layers || layersFromStyle(state.style); }
+function lineColorOf(l) { return l.lineColor === 'auto' ? (state.lineAutoColor || '#FFFFFF') : l.lineColor; }
+
+function layersDirty() {
+  if (!hasState) return false;
+  const d = cleanLayers(draftLayers), a = appliedLayers();
+  if (JSON.stringify(d) !== JSON.stringify(a)) return true;
+  const used = new Set();
+  if (d.background === 'gradient1') used.add('color1');
+  if (d.background === 'gradient2') { used.add('color2'); used.add('color3'); }
+  if (d.buttons === 'buttons_color') used.add('buttons');
+  if (d.buttons === 'dock_color') used.add('dock');
+  for (const k of used) if (draftColors[k] !== state.colors[k]) return true;
+  if (d.background === 'pattern' && draftPattern !== state.pattern) return true;
+  if (d.background === 'image' && JSON.stringify(imageChoice()) !== JSON.stringify({
+      image: imageData.settings.image, sideImage: imageData.settings.sideImage, useSide: imageData.settings.useSide && !!imageData.settings.sideImage,
+      fit: imageData.settings.fit, opacity: imageData.settings.opacity, backing: imageData.settings.backing })) return true;
+  return false;
+}
+
+function layersPayload() {
+  const l = cleanLayers(draftLayers);
+  const p = { layers: l, colors: structuredClone(draftColors), pattern: draftPattern };
+  if (l.background === 'image') p.image = imageChoice();
+  return p;
+}
+
+/* ---------- cards ---------- */
+function layerCardHtml(row, o) {
+  let extra = '';
+  if (o.extra === 'line') extra = `
+      <div class="seg seg-sm" data-line-width><button data-w="1">Thin</button><button data-w="2">Thick</button></div>
+      <div class="seg seg-sm" data-line-colormode><button data-mode="auto" title="The colour of Windows' own text: dark in light mode, white in dark mode">Auto</button><button data-mode="custom">Custom</button></div>
+      <label class="color-chip" id="lineColorChip" title="Line colour"><input type="color" id="lineColorInput" value="#ffffff"></label>`;
+  if (o.extra === 'pattern') extra = `
+      <button class="secondary-btn choose-pattern-btn" data-choose-pattern>Choose pattern</button>
+      <span class="pattern-current-name" id="patternCurrentName"></span>`;
+  if (o.extra === 'image') extra = `
+      <button class="secondary-btn choose-pattern-btn" data-choose-image>Choose picture</button>
+      <span class="pattern-current-name" id="imageCurrentName"></span>`;
+  const colors = (o.colors || []).map(c => `
+      <label class="color-chip" title="${c.label} color"><input type="color" data-color-key="${c.key}">${c.label}</label>`).join('');
+  return `
+    <div class="style-card layer-card" data-row="${row.id}" data-value="${o.value}" tabindex="0">
       <div class="style-card-head">
         <div>
-          <div class="style-card-name">${s.name}</div>
-          <div class="style-card-desc">${s.desc}</div>
+          <div class="style-card-name">${o.name}</div>
+          <div class="style-card-desc">${o.desc}</div>
         </div>
         <span class="active-badge">Active</span>
       </div>
-      <div class="tb-preview" data-type="${s.id}">
+      <div class="tb-preview">
         <div class="tb-widget"></div>
         <div class="tb-bar">
-          <div class="tb-dock">
-            <span class="tb-btn"></span><span class="tb-btn"></span><span class="tb-btn"></span><span class="tb-btn"></span><span class="tb-btn"></span>
-          </div>
+          <span class="tb-bg"></span><span class="tb-img"></span><span class="tb-line"></span>
+          <div class="tb-dock"><span class="tb-btn"></span><span class="tb-btn"></span><span class="tb-btn"></span><span class="tb-btn"></span><span class="tb-btn"></span></div>
         </div>
         <div class="tb-tray"><i></i><i></i><i></i></div>
       </div>
-      <div class="style-card-foot">
-        <div class="color-row">
-          ${s.id === 'pattern' ? `
-            <button class="secondary-btn choose-pattern-btn" data-choose-pattern>Choose pattern</button>
-            <span class="pattern-current-name" id="patternCurrentName"></span>` : ''}
-          ${s.id === 'image' ? `
-            <button class="secondary-btn choose-pattern-btn" data-choose-image>Choose picture</button>
-            <span class="pattern-current-name" id="imageCurrentName"></span>` : ''}
-          ${s.colors.map(c => `
-            <label class="color-chip" title="${c.label} color">
-              <input type="color" data-color-key="${c.key}">
-              ${c.label}
-            </label>`).join('')}
-        </div>
-        <button class="primary-btn apply-btn" data-apply="${s.id}">Apply</button>
-      </div>
-    </div>`).join('');
+      <div class="style-card-foot"><div class="color-row">${extra}${colors}</div></div>
+    </div>`;
+}
 
-  grid.querySelectorAll('.style-card').forEach(card => {
+function buildStyleGrid() {
+  const grid = document.getElementById('styleGrid');
+  grid.innerHTML = LAYER_ROWS.map(row => `
+    <section class="layer-row" data-row="${row.id}">
+      <div class="layer-row-head">
+        <span class="layer-step">${row.step}</span>
+        <div><h2>${row.title}</h2><p>${row.desc}</p></div>
+      </div>
+      <div class="style-grid layer-grid">${row.options.map(o => layerCardHtml(row, o)).join('')}</div>
+    </section>`).join('');
+
+  grid.querySelectorAll('.layer-card').forEach(card => {
     card.addEventListener('click', (e) => {
       if (e.target.closest('input, label, button')) return;
-      selectStyle(card.dataset.style);
-      // the Pattern card opens the pattern list
-      if (card.dataset.style === 'pattern') openPatternPicker();
-      if (card.dataset.style === 'image') openImagePicker();
+      chooseLayer(card.dataset.row, card.dataset.value);
+      if (card.dataset.value === 'pattern') openPatternPicker();
+      if (card.dataset.value === 'image') openImagePicker();
     });
     card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') applyStyle(card.dataset.style);
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); chooseLayer(card.dataset.row, card.dataset.value); }
     });
   });
 
-  // One color input per key can appear in only one card, but keep this generic.
   grid.querySelectorAll('input[data-color-key]').forEach(input => {
     input.addEventListener('input', () => {
       draftColors[input.dataset.colorKey] = input.value.toUpperCase();
-      selectStyle(input.closest('.style-card').dataset.style);
+      const card = input.closest('.layer-card');
+      chooseLayer(card.dataset.row, card.dataset.value, 500);
       renderColors();
     });
   });
 
-  grid.querySelectorAll('[data-apply]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      applyStyle(btn.dataset.apply);
-    });
+  grid.querySelectorAll('[data-line-width] [data-w]').forEach(b => b.addEventListener('click', () => {
+    draftLayers.lineWidth = Number(b.dataset.w);
+    chooseLayer('line', 'line');
+  }));
+  grid.querySelectorAll('[data-line-colormode] [data-mode]').forEach(b => b.addEventListener('click', () => {
+    draftLayers.lineColor = b.dataset.mode === 'auto' ? 'auto' : (document.getElementById('lineColorInput').value || '#FFFFFF').toUpperCase();
+    chooseLayer('line', 'line');
+  }));
+  document.getElementById('lineColorInput').addEventListener('input', (e) => {
+    draftLayers.lineColor = e.target.value.toUpperCase();
+    chooseLayer('line', 'line', 500);
   });
 }
 
-function selectStyle(id) {
-  selectedStyle = id;
-  document.querySelectorAll('.style-card').forEach(c => c.classList.toggle('selected', c.dataset.style === id));
+// pick one option of a row (not applied yet) and show the combination on the taskbar for a few seconds
+function chooseLayer(row, value, previewDelay) {
+  draftLayers[row] = value;
+  renderLayers();
+  if (row === 'background' && value === 'image' && !draftImage.image) return;   // the picture panel opens first
+  scheduleLayersPreview(previewDelay);
 }
+
+// kept for the pattern / picture panels
+function selectStyle(id) {
+  if (['transparent', 'gradient1', 'gradient2', 'pattern', 'image'].includes(id)) draftLayers.background = id;
+  renderLayers();
+}
+
+function paintLayerPreview(preview, l) {
+  const bar = preview.querySelector('.tb-bar');
+  preview.dataset.btn = l.buttons;
+  const bg = bar.querySelector('.tb-bg'), img = bar.querySelector('.tb-img'), line = bar.querySelector('.tb-line');
+  bg.removeAttribute('style');
+  bar.style.background = '';
+  img.style.backgroundImage = 'none';
+  switch (l.background) {
+    case 'gradient1':
+      bg.style.background = 'linear-gradient(to bottom, var(--c-color1) 0%, var(--c-color1) 50%, color-mix(in srgb, var(--c-color1) 70%, #000) 50%, color-mix(in srgb, var(--c-color1) 70%, #000) 100%)';
+      break;
+    case 'gradient2':
+      bg.style.background = 'linear-gradient(to bottom, var(--c-color2) 0%, var(--c-color2) 50%, var(--c-color3) 50%, var(--c-color3) 100%)';
+      break;
+    case 'pattern':
+      bg.style.cssText = patternById(draftPattern).css;
+      break;
+    case 'image':
+      if (draftImage.image) paintImageBar(bar, draftImage); else bar.style.background = '#202020';
+      break;
+  }
+  line.style.display = l.line === 'line' ? 'block' : 'none';
+  line.style.height = (l.lineWidth === 2 ? 2 : 1) + 'px';
+  line.style.background = lineColorOf(l);
+}
+
+function renderLayers() {
+  const applied = appliedLayers();
+  document.querySelectorAll('.layer-card').forEach(card => {
+    const row = card.dataset.row, value = card.dataset.value;
+    card.classList.toggle('selected', draftLayers[row] === value);
+    card.classList.toggle('current', hasState && applied[row] === value);
+    paintLayerPreview(card.querySelector('.tb-preview'), Object.assign({}, cleanLayers(draftLayers), { [row]: value }));
+  });
+
+  // line controls
+  document.querySelectorAll('[data-line-width] [data-w]').forEach(b => b.classList.toggle('on', Number(b.dataset.w) === (draftLayers.lineWidth === 2 ? 2 : 1)));
+  const auto = draftLayers.lineColor === 'auto';
+  document.querySelectorAll('[data-line-colormode] [data-mode]').forEach(b => b.classList.toggle('on', (b.dataset.mode === 'auto') === auto));
+  const chip = document.getElementById('lineColorChip');
+  if (chip) chip.style.display = auto ? 'none' : '';
+  const input = document.getElementById('lineColorInput');
+  if (input && !auto && input.value.toUpperCase() !== draftLayers.lineColor) input.value = draftLayers.lineColor.toLowerCase();
+
+  // names under Pattern / Image
+  const pn = document.getElementById('patternCurrentName');
+  if (pn) pn.textContent = patternById(draftPattern).name;
+
+  // apply bar
+  const dirty = layersDirty();
+  const bar = document.getElementById('layersApply');
+  bar.classList.toggle('dirty', dirty);
+  document.getElementById('layersApplyBtn').disabled = !dirty;
+  document.getElementById('layersRevertBtn').disabled = !dirty;
+  document.getElementById('layersApplyText').textContent = dirty
+    ? 'You have changes that are not applied yet.'
+    : 'Your taskbar uses the options marked Active.';
+  document.getElementById('layersLegacyNotice').classList.toggle('show', hasState && !state.layers);
+}
+
+/* ---------- preview on the real taskbar ---------- */
+function scheduleLayersPreview(delay) {
+  clearTimeout(layersPreviewDebounce);
+  layersPreviewDebounce = setTimeout(startLayersPreview, delay == null ? 250 : delay);
+}
+
+function startLayersPreview() {
+  const status = document.getElementById('layersPreviewStatus');
+  if (!wsReady) {
+    status.innerHTML = '<span>Not connected to the app - the change is shown on the cards only.</span>';
+    status.classList.add('show');
+    return;
+  }
+  const l = cleanLayers(draftLayers);
+  if (supportsLayers()) {
+    postToHost('previewLayers', Object.assign(layersPayload(), { seconds: LAYERS_PREVIEW_SECONDS }));
+  } else if (l.background === 'pattern') {
+    postToHost('previewPattern', { pattern: draftPattern, seconds: LAYERS_PREVIEW_SECONDS });
+  } else if (l.background === 'image' && draftImage.image) {
+    postToHost('previewImage', { image: imageChoice(), seconds: LAYERS_PREVIEW_SECONDS });
+  } else {
+    status.classList.remove('show');
+    return;                                            // an older app can't preview the others
+  }
+  let left = LAYERS_PREVIEW_SECONDS;
+  const paint = () => {
+    status.innerHTML = left > 0
+      ? `<span>Preview on your taskbar - ${left}s. Press <b>Apply</b> to keep it.</span>`
+      : '<span>Preview ended - your saved style is back. Press <b>Apply</b> to use it.</span>';
+  };
+  clearInterval(layersPreviewTimer);
+  status.classList.add('show');
+  paint();
+  layersPreviewTimer = setInterval(() => {
+    left--;
+    paint();
+    if (left <= 0) clearInterval(layersPreviewTimer);
+  }, 1000);
+}
+
+function stopLayersPreviewUi() {
+  clearInterval(layersPreviewTimer);
+  clearTimeout(layersPreviewDebounce);
+  document.getElementById('layersPreviewStatus').classList.remove('show');
+}
+
+/* ---------- apply ---------- */
+function applyLayers() {
+  const l = cleanLayers(draftLayers);
+  if (l.background === 'image' && !draftImage.image) {
+    openImagePicker();
+    showToast('Choose a picture first.');
+    return;
+  }
+  stopLayersPreviewUi();
+  stopPatternPreviewUi();
+  stopImagePreviewUi();
+  if (supportsLayers() || !hasState) {
+    postToHost('applyLayers', layersPayload());
+  } else {
+    // older app: one style at a time
+    const style = legacyStyleFor(l);
+    const payload = { style, colors: structuredClone(draftColors), pattern: draftPattern };
+    if (style === 'image') payload.image = imageChoice();
+    postToHost('applyStyle', payload);
+  }
+  if (!wsReady) showToast('Will apply as soon as the app is connected.');
+}
+// the pattern / picture panels call this
+function applyStyle(id) { if (id) selectStyle(id); applyLayers(); }
+
+document.getElementById('layersApplyBtn').addEventListener('click', applyLayers);
+document.getElementById('layersRevertBtn').addEventListener('click', () => {
+  draftLayers = structuredClone(appliedLayers());
+  draftColors = structuredClone(state.colors);
+  draftPattern = state.pattern;
+  draftImage = cleanImageSettings(imageData.settings);
+  stopLayersPreviewUi();
+  renderAll();
+});
+
+/* ---------- the three header buttons follow the open tab ---------- */
+function placeHeaderActions(view) {
+  const host = document.querySelector(`#view-${view} .settings-header`);
+  const actions = document.getElementById('headerActions');
+  if (host && actions && actions.parentElement !== host) host.appendChild(actions);
+}
+
+/* ───────────────────────── rendering ───────────────────────── */
+function styleName(id) { return (STYLES.find(s => s.id === id) || {}).name || id; }
 
 function renderColors() {
   const grid = document.getElementById('styleGrid');
@@ -1188,13 +1490,10 @@ function renderColors() {
 }
 
 function renderAll() {
-  document.querySelectorAll('.style-card').forEach(c => {
-    c.classList.toggle('current', hasState && c.dataset.style === state.style);
-  });
-  selectStyle(selectedStyle);
   renderColors();
   renderPatterns();
   renderImage();
+  renderLayers();
 
   document.querySelectorAll('[data-effect]').forEach(t => { t.checked = !!state.effects[t.dataset.effect]; });
   document.getElementById('settingsAutostartToggle').checked = state.autostart;
@@ -1209,6 +1508,7 @@ function renderAll() {
   document.getElementById('aboutVersion').textContent = v;
   document.getElementById('footerVersion').textContent = state.appVersion ? `v${state.appVersion} · mlapplications.com` : 'mlapplications.com';
 }
+
 
 /* ───────────────────────── patterns ─────────────────────────
    The picker stays hidden until "Choose pattern". Clicking a pattern previews it on the real
@@ -1252,11 +1552,9 @@ function buildPatternGrid() {
 function renderPatterns() {
   document.querySelectorAll('.pattern-swatch').forEach(b => {
     b.classList.toggle('selected', b.dataset.pattern === draftPattern);
-    b.classList.toggle('current', hasState && state.style === 'pattern' && b.dataset.pattern === state.pattern);
+    b.classList.toggle('current', hasState && appliedLayers().background === 'pattern' && b.dataset.pattern === state.pattern);
   });
-  // the Pattern card shows the pattern being picked
-  const bar = document.querySelector('.tb-preview[data-type="pattern"] .tb-bar');
-  if (bar) bar.style.cssText = patternById(draftPattern).css;
+  if (document.getElementById('layersApply')) renderLayers();   // the cards show the pattern being picked
   const name = document.getElementById('patternCurrentName');
   if (name) name.textContent = patternById(draftPattern).name;
 }
@@ -1283,7 +1581,12 @@ function startPatternPreview(id) {
     status.classList.add('show');
     return;
   }
-  postToHost('previewPattern', { pattern: id, seconds: PATTERN_PREVIEW_SECONDS });
+  if (supportsLayers()) {
+    draftLayers.background = 'pattern';
+    postToHost('previewLayers', Object.assign(layersPayload(), { seconds: PATTERN_PREVIEW_SECONDS }));
+  } else {
+    postToHost('previewPattern', { pattern: id, seconds: PATTERN_PREVIEW_SECONDS });
+  }
 
   let left = PATTERN_PREVIEW_SECONDS;
   const paint = () => {
@@ -1405,7 +1708,7 @@ function paintImageBar(bar, s) {
 
 function renderImage() {
   // the Image card shows the picture being chosen
-  paintImageBar(document.querySelector('.tb-preview[data-type="image"] .tb-bar'), draftImage);
+  renderLayers();                                  // the cards show the picture being chosen
   const cardName = document.getElementById('imageCurrentName');
   if (cardName) cardName.textContent = draftImage.image ? '' : 'No picture yet';
 
@@ -1519,7 +1822,12 @@ function startImagePreview() {
     status.classList.add('show');
     return;
   }
-  postToHost('previewImage', { image: imageChoice(), seconds: IMAGE_PREVIEW_SECONDS });
+  if (supportsLayers()) {
+    draftLayers.background = 'image';
+    postToHost('previewLayers', Object.assign(layersPayload(), { seconds: IMAGE_PREVIEW_SECONDS }));
+  } else {
+    postToHost('previewImage', { image: imageChoice(), seconds: IMAGE_PREVIEW_SECONDS });
+  }
   let left = IMAGE_PREVIEW_SECONDS;
   const paint = () => {
     status.innerHTML = left > 0
@@ -1598,24 +1906,13 @@ function onWallpaper(p) {
 }
 
 /* ───────────────────────── actions ───────────────────────── */
-function applyStyle(id) {
-  if (id === 'image' && !draftImage.image) {      // nothing to apply yet - open the picture panel
-    openImagePicker();
-    showToast('Choose a picture first.');
-    return;
-  }
-  selectStyle(id);
-  const payload = { style: id, colors: structuredClone(draftColors), pattern: draftPattern };
-  if (id === 'image') payload.image = imageChoice();
-  postToHost('applyStyle', payload);
-  if (!wsReady) showToast('Will apply as soon as the app is connected.');
-}
-
 document.getElementById('resetDefaultsBtn').addEventListener('click', () => {
   // Show the defaults immediately; the app confirms with a "state" message.
   draftColors = structuredClone(DEFAULTS.colors);
-  selectStyle(DEFAULTS.style);
+  draftLayers = structuredClone(RESET_LAYERS);
+  stopLayersPreviewUi();
   renderColors();
+  renderLayers();
   postToHost('resetDefaults');
 });
 
@@ -1669,6 +1966,7 @@ document.querySelectorAll('.nav-item[data-view]').forEach(btn => {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('view-' + btn.dataset.view).classList.add('active');
+    placeHeaderActions(btn.dataset.view);
     if (btn.dataset.view !== 'contact') postToHost('getState');
     if (btn.dataset.view === 'taskbar') postToHost('getImages');
   });
@@ -1702,10 +2000,16 @@ document.querySelectorAll('[data-external-btn]').forEach(btn => {
 document.getElementById('mlappsFooterLink').addEventListener('click', () => openExternal('website'));
 
 /* ───────────────────────── theme (local to this page, like AI Video Upscaler+) ───────────────────────── */
-function applyTheme(light) {
+// The theme the user picked on this page is remembered; until then the page follows the app's theme,
+// which arrives with the "state" message (the app no longer puts it in the link).
+let themeChosenHere = false;
+function applyTheme(light, remember = true) {
   document.documentElement.classList.toggle('light-theme', light);
   document.getElementById('settingsThemeToggle').checked = light;
-  try { localStorage.setItem('ttbplus_theme', light ? 'light' : 'dark'); } catch {}
+  if (remember) {
+    themeChosenHere = true;
+    try { localStorage.setItem('ttbplus_theme', light ? 'light' : 'dark'); } catch {}
+  }
 }
 document.getElementById('settingsThemeToggle').addEventListener('change', (e) => {
   applyTheme(e.target.checked);
@@ -1716,8 +2020,8 @@ document.getElementById('settingsThemeToggle').addEventListener('change', (e) =>
   try { saved = localStorage.getItem('ttbplus_theme'); } catch {}
   const fromUrl = (_urlParams.get('theme') || '').toLowerCase();   // the app may pass &theme=light|dark
   if (saved) applyTheme(saved === 'light');
-  else if (fromUrl) applyTheme(fromUrl === 'light');
-  else applyTheme(false);
+  else if (fromUrl) applyTheme(fromUrl === 'light', false);   // older app versions still send &theme=
+  else applyTheme(false, false);                              // until the app tells us its theme
 })();
 
 /* ───────────────────────── status / toast ───────────────────────── */
