@@ -13,6 +13,17 @@ MLApplications develops native Windows apps using C# WPF and MSIX/Desktop Bridge
 - [DVD Player+](https://mlapplications.com/dvd-player): Plays DVDs and Blu-Ray discs on modern Windows systems that lack built-in DVD playback. completely free without any limitation.
 - [unReachable](https://mlapplications.com/unreachable): Windows utility app (see product page for current feature set) where you can track with one number only in your taskbar the quality of your network connection. 
 
+## Transparent Taskbar+ Lite
+
+Free taskbar customizer for Windows 11 and Windows 10 (Microsoft Store ID 9P7HB1KDTTT8). Makes the taskbar transparent, tinted, blurred or acrylic, and adds styles TranslucentTB does not have: a border line (none, thin or thick, automatic or custom colour), one- and two-colour gradients, 50+ patterns, your own picture as the background (fill, stretch, tile, center, opacity, backing colour), glass or coloured buttons and docks behind app icons, a dock-style icon magnifier (the icon under the mouse grows, on by default), and mouse effects (taskbar highlight, click bubbles, mouse light). One line, one background and one button style are combined. Works with top, bottom, left and right taskbars and multiple monitors. Settings open in the app window or in a browser and preview each change on the real taskbar for 5 seconds.
+
+- [Overview and TranslucentTB comparison](https://mlapplications.com/transparent_taskbar_windows.html)
+- [Help & How-To](https://mlapplications.com/hlp_ttbplus.html)
+- [Effects Guide](https://mlapplications.com/hlp_ttbplus_effects.html)
+- [Tips & Tricks](https://mlapplications.com/hlp_ttbplus_tipsnandtricks.html)
+- [Privacy](https://mlapplications.com/ttbplus_privacy.html)
+- [Microsoft Store](https://apps.microsoft.com/detail/9P7HB1KDTTT8)
+
 ## Docs
 
 - [Support](https://mlapplications.com/support): Help articles, FAQs, and troubleshooting for MLApplications products.

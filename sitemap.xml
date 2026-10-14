@@ -324,24 +324,10 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-  <url>
-    <loc>https://mlapplications.com/hlp_ttbplus_effects.html</loc>
-    <lastmod>2026-09-29</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://mlapplications.com/hlp_ttbplus_tipsnandtricks.html</loc>
-    <lastmod>2026-09-29</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://mlapplications.com/hlp_ttbplus.html</loc>
-    <lastmod>2026-09-29</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
+  <url><loc>https://mlapplications.com/hlp_ttbplus.html</loc><lastmod>2026-10-13</lastmod><priority>0.7</priority></url>
+  <url><loc>https://mlapplications.com/hlp_ttbplus_effects.html</loc><lastmod>2026-10-13</lastmod><priority>0.6</priority></url>
+  <url><loc>https://mlapplications.com/hlp_ttbplus_tipsnandtricks.html</loc><lastmod>2026-10-13</lastmod><priority>0.6</priority></url>
+  <url><loc>https://mlapplications.com/ttbplus_privacy.html</loc><lastmod>2026-10-13</lastmod><priority>0.3</priority></url>
   <url>
     <loc>https://mlapplications.com/hlp_unreachable.html</loc>
     <lastmod>2026-09-29</lastmod>
@@ -834,18 +820,18 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url><loc>https://mlapplications.com/transparent_taskbar_windows.html</loc><lastmod>2026-10-13</lastmod><priority>0.9</priority>
+    <image:image><image:loc>https://mlapplications.com/uploads/ttbplus/ttbplus-overview.webp</image:loc></image:image>
+    <image:image><image:loc>https://mlapplications.com/uploads/ttbplus/ttbplus-image-picker.webp</image:loc></image:image>
+    <image:image><image:loc>https://mlapplications.com/uploads/ttbplus/ttbplus-pattern-picker.webp</image:loc></image:image>
+  </url>
   <url>
     <loc>https://mlapplications.com/transparent_taskbar_windows.html</loc>
     <lastmod>2026-09-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-  <url>
-    <loc>https://mlapplications.com/ttbplus_privacy.html</loc>
-    <lastmod>2026-09-29</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
+ 
   <url>
     <loc>https://mlapplications.com/unreachable_application.html</loc>
     <lastmod>2026-09-29</lastmod>
