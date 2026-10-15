@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-	
+
    <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script>
 /* bfcache: turn third-party 'unload' handlers into 'pagehide' */
 (function () {
@@ -20,23 +21,22 @@
   } catch (e) {}
 })();
 </script>
+<!-- sulvo -->
+<link rel="preload" as="script" href="https://live.demand.supply/up.js">
+<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
- 
-
- 
- <script>console.log('here goes sulvo');</script>
-
-
- <script>console.log('here goes f59');</script>
- 
+<!-- rewarded paywall -->
+<link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<style>#custom-paywall-overlay:not(.active){display:none}</style>
+<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
 
 <link rel="icon" id="favicon" type="image/x-icon" href="/uploads/favpreview.gif">
- 		
+
 <title>WinRAR+ What’s New — Release Notes, Features & Free Download</title>
 <meta name="description" content="Discover what’s new in WinRAR+: release notes, new features, UI improvements and why this free app is a better alternative to WinRAR / WinZip / 7‑Zip.">
 <meta name="keywords" content="WinRAR+, WinRAR+ release notes, WinRAR+ features, WinRAR alternative, free zip unzip app, download WinRAR+, archive software">
 <meta name="robots" content="index, follow">
-		
+
 <meta property="og:site_name" content="M.I.L. Team - 3D+ and more.." />
 <meta property="og:title" content="New Features &amp; Update - WinRare+ (FREE)" />
 <meta property="og:image" content="uploads/logo-big-2_26.png" />
@@ -65,15 +65,9 @@
   }
 }
 </script>
- 
- 
-<meta name="msvalidate.01" content="42DB115A8751E45435878B9B9CF5C7F5" />
- 
- 
- 
 
-  
- 
+<meta name="msvalidate.01" content="42DB115A8751E45435878B9B9CF5C7F5" />
+
 		<link id="wsite-base-style" rel="stylesheet" type="text/css" href="/cdn2.editmysite.com/css/sites367f.css?buildTime=1751393202" />
 <link rel="stylesheet" type="text/css" href="/cdn2.editmysite.com/css/old/fancybox5209.css?1751393202" />
 <link rel="stylesheet" type="text/css" href="/cdn2.editmysite.com/css/social-icons9aef.css?buildtime=1751393202" media="screen,projection" />
@@ -165,7 +159,7 @@ _W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":
 			com_currentSite = "607878847879865438";
 			com_userID = "79962194";</script><script type="text/javascript">_W.configDomain = "www.weebly.com";</script><script>_W.relinquish && _W.relinquish()</script>
 <script type="text/javascript" src="/cdn2.editmysite.com/js/lang/en/stld62d.js?buildTime=1751393202&amp;"></script><script> _W.themePlugins = [];</script><script type="text/javascript"> _W.recaptchaUrl = "../www.google.com/recaptcha/api.js"; </script><script type="text/javascript"><!--
-	
+
 	var DISABLE_NAV_MORE = 1;
 	function initFlyouts(){
 		initPublishedFlyoutMenus(
@@ -191,197 +185,36 @@ img {margin-bottom: -8px;}
 .mySlides {display: none;}
 </style>
 
-		
-	<script>
-    console.log('here i am not from cloudflare tag setup !');
-</script>
-
-<!--<script type="text/javascript" async="async" src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=44890869"></script>-->
-  <!-- sulvo first -->
-<link rel="preload" as="script" href="https://live.demand.supply/up.js">
-<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
-
-<!-- rewarded paywall -->
-   <link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
-<style>#custom-paywall-overlay:not(.active){display:none}</style>
-
-<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
-
-
-<!-- old demand -->
-
-
- 
-  
-
-
-
-
-
-
-
- 
-<style>	
+<style>
 /* Fix fixed ad overflow */
 .stpdwrapper {
   max-width: 100vw !important;
   right: 0 !important;
 }
-</style> 
+</style>
 
- 
-
- 
-  <!-- ======================================================================= -->
-  <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
-  <!-- ======================================================================= -->
-  <style>
-    /* THE GHOST ANCHOR: Stays fixed in layout to completely eliminate infinite layout flickers */
-    .outstream-placement-anchor {
-      width: 336px;
-      height: 280px;
-      margin: 40px auto;
-      position: relative;
-      background: transparent;
-    }
-
-    /* THE MOVING CONTAINER: Holds the ad frame and performs transitions on scroll */
-    .outstream-main-container {
-      width: 336px;
-      height: 280px;
-      background: #fbfbfb;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transition: box-shadow 0.3s ease;
-    }
-
-    /* STICKY OVERLAY STATE: Engaged programmatically by IntersectionObserver */
-    .outstream-main-container.is-sticky {
-      position: fixed;
-      top: auto;
-      left: auto;
-      bottom: 25px;
-      right: 25px;
-      z-index: 99999;
-      background: #fff;
-      border-radius: 4px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      
-      /* Downscale slightly for clean desktop corner placement */
-      transform: scale(0.9);
-      transform-origin: bottom right;
-      
-      /* Premium entrance physics: slides up, clears blur layer, fades visibility */
-      animation: dynamicStickyShow 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    /* Keeps iframe elements isolated and clipped safely inside borders when sticky */
-    .outstream-main-container.is-sticky #div-gpt-ad-outstream-slot {
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    /* CLOSE TRIGGER MARKUP: Revealed exclusively during sticky activation mode */
-    .outstream-close-trigger {
-      display: none;
-      position: absolute;
-      top: -12px;
-      left: -12px;
-      width: 26px;
-      height: 26px;
-      background: #111;
-      color: #fff;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 23px;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-      font-size: 15px;
-      font-weight: bold;
-      border: 2px solid #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 100000;
-      transition: background 0.2s ease;
-    }
-
-    .outstream-close-trigger:hover {
-      background: #ff3b30; /* Desktop specific feedback overlay shift */
-    }
-
-    .outstream-main-container.is-sticky .outstream-close-trigger {
-      display: block;
-    }
-
-    /* BLUR ENTRANCE KEYFRAME SEQUENCING */
-    @keyframes dynamicStickyShow {
-      0% {
-        transform: translateY(60px) scale(0.85);
-        opacity: 0;
-        filter: blur(8px);
-      }
-      100% {
-        transform: translateY(0) scale(0.9);
-        opacity: 1;
-        filter: blur(0);
-      }
-    }
-  </style>
-  
   </head>
- 
+
 	<body class="  wsite-theme-light  wsite-page-winrar_whatsnew" width="468" height="1">
 		<div style="visibility: hidden;height: 1px;">
 <h1>What’s New in WinRAR+ — Features, Release Notes & Download</h1>
-</div>	
-<!-- Google Tag Manager (noscript) -->
-<!--<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5BBV9FN"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>-->
-<!-- End Google Tag Manager (noscript) -->
+</div>
+
 <div  >
  <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
 
-  <!-- <div data-ad="mlapplications.com_sticky_video_myvidsticky" data-devices="m:1,t:1,d:1"   class="demand-supply"></div> -->
-  <!-- ======================================================================= -->
-  <!-- 3. WEB PAGE STRUCTURAL CORE HOUSING PLACEMENT MARKUP                   -->
-  <!-- ======================================================================= -->
-  <!--<div class="myyy-outstream-placement-anchor">
-    <div id="outstream-ad-wrapper" class="outstream-main-container">
-      <div id="outstream-close" class="outstream-close-trigger">&times;</div>
-      
-       
-      <div id="div-gpt-ad-outstream-slot" style="width: 336px; height: 280px; margin: 0 auto;">
-        <script>
-          googletag.cmd.push(function() { 
-            googletag.display('div-gpt-ad-outstream-slot'); 
-          });
-        </script>
-      </div>
-    </div>
-  </div>--> 
-
-
-
-<!-- old mobile sticky top code -->
 </div>
 
-
- 
-<!--mlapplications_com_300x600_desktop_sticky --> 
-  
-  
-
-<!-- Anchor ad on bottom -->
 <script>
 function removeElement(id) {
 	 try
 	 {
 	 var elem = document.getElementById(id);
      elem.parentNode.removeChild(elem);
-	} 
+	}
 	catch (err) { console.log('err here...'+err); }
 }
-</script>	 
+</script>
 <div width="468" height="1">
 <div class="content-wrap railway-layout">
       <div id="wsite-content" class="wsite-elements wsite-not-footer">
@@ -712,8 +545,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:24.736842105263%; padding:0 15px;">
-					
-						
 
 <div><div class="wsite-image wsite-image-border-none " style="padding-top:5px;padding-bottom:0px;margin-left:0px;margin-right:0px;text-align:left">
 <a>
@@ -722,16 +553,10 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:75.263157894737%; padding:0 15px;">
-					
-						
 
 <div class="paragraph"><font size="5" color="#515151">Great News here at <font color="#3f3f3f"><strong>Mobility in Life Applications</strong></font>! We are happy to announce the first release of our new, and free <strong><font color="#0064c8"><font color="#2a2a2a">application: "</font>WinRAR</font></strong><font color="#2a2a2a">+</font><strong><font color="#0064c8"><font color="#2a2a2a">"</font></font></strong><font color="#2a2a2a">.</font></font><br /><br /><font color="#515151"><font size="5">Read below, (or watch the <strong>demo video</strong>) to see why </font></font><font size="5" color="#515151"><strong><font color="#0064c8"><font color="#2a2a2a">"</font>WinRAR</font></strong><font color="#2a2a2a">+</font><strong><font color="#0064c8"><font color="#2a2a2a">"&nbsp; </font></font></strong></font><font color="#515151"><font size="5">is better than your current archive application!&nbsp; </font></font><br /></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -757,7 +582,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
     text-decoration: none;
-     
+
     cursor: pointer;
 }
 
@@ -784,7 +609,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 <button class="mynewbutton" onclick="myFunctionOpenUrl('https://www.microsoft.com/store/apps/9PG2VPDGMJ71')"><i class="fa fa-windows  w3-xlarge w3-text-white"></i>   get   WinRAR+ !</button>
 <script>
- 
 
 function myFunctionOpenUrl(theurl) {
  // var myWindow = window.open(theurl, "", "toolbar=yes, location=yes, directories=yes, status=yes, menubar=yes, scrollbars=yes, resizable=yes, copyhistory=yes, width=1024, height=768");
@@ -794,8 +618,6 @@ function myFunctionOpenUrl(theurl) {
 
 </script>
 </div>
-
-
 
 </div>
 
@@ -856,16 +678,10 @@ function myFunctionOpenUrl(theurl) {
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:8.8011817735423%; padding:0 25px;">
-					
-						
 
 <div class="paragraph" style="text-align:right;"><font size="6">1</font><br /></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:15.462775408638%; padding:0 25px;">
-					
-						
 
 <div><div class="wsite-image wsite-image-border-none " style="padding-top:0px;padding-bottom:0px;margin-left:0px;margin-right:0px;text-align:center">
 <a>
@@ -874,16 +690,10 @@ function myFunctionOpenUrl(theurl) {
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:75.73604281782%; padding:0 25px;">
-					
-						
 
 <div class="paragraph" style="text-align:left;"><font size="6"><strong>WinZip</strong></font><br /></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -1016,16 +826,10 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:8.5865188034559%; padding:0 25px;">
-					
-						
 
 <div class="paragraph" style="text-align:right;"><font size="6">2 </font><br /></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:15.98946966844%; padding:0 25px;">
-					
-						
 
 <div><div class="wsite-image wsite-image-border-none " style="padding-top:0px;padding-bottom:0px;margin-left:0px;margin-right:0px;text-align:center">
 <a>
@@ -1034,16 +838,10 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:75.424011528104%; padding:0 25px;">
-					
-						
 
 <div class="paragraph" style="text-align:left;"><font size="6"><strong>WinRar,</strong></font></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -1176,16 +974,10 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:8.4791873184127%; padding:0 25px;">
-					
-						
 
 <div class="paragraph" style="text-align:right;"><font size="6">3</font><br /></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:16.936610162914%; padding:0 25px;">
-					
-						
 
 <div><div class="wsite-image wsite-image-border-none " style="padding-top:0px;padding-bottom:0px;margin-left:0px;margin-right:0px;text-align:center">
 <a>
@@ -1194,16 +986,10 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:74.584202518673%; padding:0 25px;">
-					
-						
 
 <div class="paragraph" style="text-align:left;"><font size="6"><strong>7-zip app</strong></font><br /></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -1411,7 +1197,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
     text-decoration: none;
-     
+
     cursor: pointer;
 }
 
@@ -1438,7 +1224,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 <button class="mynewbutton" onclick="myFunctionOpenUrl('https://www.microsoft.com/store/apps/9PG2VPDGMJ71')"><i class="fa fa-windows  w3-xlarge w3-text-white"></i>   get   WinRAR+ !</button>
 <script>
- 
 
 function myFunctionOpenUrl(theurl) {
  // var myWindow = window.open(theurl, "", "toolbar=yes, location=yes, directories=yes, status=yes, menubar=yes, scrollbars=yes, resizable=yes, copyhistory=yes, width=1024, height=768");
@@ -1448,8 +1233,6 @@ function myFunctionOpenUrl(theurl) {
 
 </script>
 </div>
-
-
 
 </div>
 			</div>
@@ -1464,8 +1247,6 @@ function myFunctionOpenUrl(theurl) {
         <div class="container">
 			<div class="wsite-section-elements">
 				<div><div id="923652471218691074" align="left" style="width: 100%; " class="wcustomhtml"><div></div></div>
-
-
 
 </div>
 
@@ -1493,8 +1274,6 @@ function myFunctionOpenUrl(theurl) {
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:33.157894736842%; padding:0 15px;">
-					
-						
 
 <div><div class="wsite-image wsite-image-border-none " style="padding-top:10px;padding-bottom:0px;margin-left:0px;margin-right:0px;text-align:center">
 <a>
@@ -1503,11 +1282,7 @@ function myFunctionOpenUrl(theurl) {
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:66.842105263158%; padding:0 15px;">
-					
-						
 
 <div class="paragraph" style="text-align:center;"><font size="5"><a class="no_nu_reward2" href="appwinrareplus.html"><strong><font color="#00219c"><u>WinRAR+ app page..</u></font></strong></a></font><br /></div>
 
@@ -1523,8 +1298,6 @@ function myFunctionOpenUrl(theurl) {
 
 <div class="paragraph" style="text-align:center;"><font size="5"><a class="no_nu_reward2" href="hlpwinrare_1.html"><strong><font color="#00219c"><u>WinRAR+ Manual</u></font></strong></a></font><br /></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -1595,16 +1368,12 @@ function myFunctionOpenUrl(theurl) {
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:66.519823788546%; padding:0 15px;">
-					
-						
 
 <div><div class="wsite-multicol"><div class="wsite-multicol-table-wrap" style="margin:0 -15px;">
 	<table class="wsite-multicol-table">
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:50%; padding:0 15px;">
-					
-						
 
 <div style="text-align:center;"><div style="height: 10px;  "></div>
 <a class="wsite-button wsite-button-small wsite-button-normal" href="https://www.microsoft.com/store/apps/9PG2VPDGMJ71" target="_blank">
@@ -1612,11 +1381,7 @@ function myFunctionOpenUrl(theurl) {
 </a>
 <div style="height: 10px;  "></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:50%; padding:0 15px;">
-					
-						
 
 <div style="text-align:center;"><div style="height: 10px;  "></div>
 <a class="wsite-button wsite-button-small wsite-button-normal" href="appwinrareplus.html" >
@@ -1624,18 +1389,12 @@ function myFunctionOpenUrl(theurl) {
 </a>
 <div style="height: 10px;  "></div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
 </div></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:33.480176211454%; padding:0 15px;">
-					
-						
 
 <div style="text-align:center;"><div style="height: 10px;  "></div>
 <a class="wsite-button wsite-button-small wsite-button-normal" href="hlpwinrare_2.html" >
@@ -1643,8 +1402,6 @@ function myFunctionOpenUrl(theurl) {
 </a>
 <div style="height: 10px;  "></div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -1768,12 +1525,10 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <hr class="styled-hr" style="width:100%;"></hr>
 <div style="height: 20px;   width: 100%;"></div></div>
 
-<div><div id="611768456325783759" align="center" style="width: 100%; " class="wcustomhtml"><!-- /36463547/adxp_mlapplications_rectangle_2 -->
+<div><div id="611768456325783759" align="center" style="width: 100%; " class="wcustomhtml">
 <div >
   <</div>
 </div>
-
-
 
 </div>
 
@@ -1800,7 +1555,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Welcome
 			</a>
-			
+
 		</li>
 		<li id="pg420291035968415525" class="wsite-menu-item-wrap">
 			<a
@@ -1822,7 +1577,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Windows Apps
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-576387146180606075"
 	class="wsite-menu-subitem-wrap "
@@ -1835,7 +1590,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Windows Phone Apps
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-181564505483526232"
 	class="wsite-menu-subitem-wrap "
@@ -1848,7 +1603,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Android Apps
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -1862,7 +1617,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Help Center
 			</a>
-			
+
 		</li>
 		<li id="pg457614141667606990" class="wsite-menu-item-wrap">
 			<a
@@ -1884,7 +1639,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			How-to Check DVDs
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -1903,8 +1658,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<li id="wsite-nav-164382401196655753"
 	class="wsite-menu-subitem-wrap "
 	>
-	 
-	
+
 </li>
 <li id="wsite-nav-809491643896992333"
 	class="wsite-menu-subitem-wrap "
@@ -1917,7 +1671,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			3D F.A.Q.
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-802757451138523212"
 	class="wsite-menu-subitem-wrap "
@@ -1930,9 +1684,9 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			3D Anaglyphs
 		</span>
 	</a>
-	
+
 </li>
- 
+
 <li id="wsite-nav-860537803288251427"
 	class="wsite-menu-subitem-wrap "
 	>
@@ -1944,7 +1698,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			3D Photos on Flickr
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-252052803303239081"
 	class="wsite-menu-subitem-wrap "
@@ -1957,7 +1711,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Find 3D Videos on Youtube
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -1971,7 +1725,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Opinion & Blog
 			</a>
-			
+
 		</li>
 		<li id="pg765675763726769427" class="wsite-menu-item-wrap">
 			<a
@@ -1980,7 +1734,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				About us
 			</a>
-			
+
 		</li>
 		<li id="pg589846066449704670" class="wsite-menu-item-wrap">
 			<a
@@ -1989,7 +1743,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Contact
 			</a>
-			
+
 		</li>
 </ul>
 </div>
@@ -2146,18 +1900,12 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:19.232629580985%; padding:0 0px;">
-					
-						
 
 <div class="wsite-spacer" style="height:10px;"></div>
 
 <div class="paragraph" style="text-align:center;"><strong><font color="#a9b9d1" size="4">Share:</font></strong></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:27.826663358363%; padding:0 0px;">
-					
-						
 
 <div><div id="581391898368846183" align="center" style="width: 100%; " class="wcustomhtml"><link rel="stylesheet" href= "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
@@ -2198,7 +1946,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
   color: #ffffff;
 }
 
-
 .fa-pinterest {
   background: #cb2027;
   color: #ffffff;
@@ -2211,28 +1958,17 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <a class="fa fa-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://%20www.mlapplications.com&amp;title=Free%20and%20Useful%20Applications%20for%20Windows%20and%20Android&amp;summary=My%20favorite%20developers%20website&amp;source=Mobility_in_Life_Applications" target="_blank"></a>
 </div>
 
-
-
 </div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:35.179953724175%; padding:0 0px;">
-					
-						
 
 <div><div id="998866482991838868" align="center" style="width: 100%; " class="wcustomhtml"><a class="fa fa-pinterest" href="http://pinterest.com/pin/create/link/?url=http%3A%2F%2Fwww.mlapplications.com&amp;description=" target="_blank"></a>
 <a class="fa fa-google" href="https://plus.google.com/share?url=https://%20www.mlapplications.com" target="_blank"></a>
 </div>
 
-
 </div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:17.760753336477%; padding:0 0px;">
-					
-						
 
 <div><div class="wsite-image wsite-image-border-none " style="padding-top:10px;padding-bottom:10px;margin-left:0;margin-right:0;text-align:center">
 <a>
@@ -2241,8 +1977,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -2260,8 +1994,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:26.942518066303%; padding:0 15px;">
-					
-						
 
 <div id="433306533626245074"><div><style type="text/css">
 	#element-5b110cff-50c0-4dca-86e4-07d38f3516de .content-color-box-wrapper {
@@ -2515,11 +2247,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:50.108589914178%; padding:0 15px;">
-					
-						
 
 <div id="210476769210520075"><div><style type="text/css">
 	#element-8d4fb41b-44b4-46c0-bb50-01e7cefb3258 .waddons_vert_divider {
@@ -2776,7 +2504,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 </script></div></div>
 
 <div id="486082001627672347"><div><style type="text/css">
-	
+
 </style><div id="element-71605150-6990-463d-89aa-4df7ffeb559c" data-platform-element-id="698263678581730663-1.1.0" class="platform-element-contents">
 <div class="content-color-box-wrapper">
 
@@ -2887,11 +2615,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:22.948892019519%; padding:0 15px;">
-					
-						
 
 <div id="678568118291078683"><div><style type="text/css">
 	#element-55b91c17-e3a7-4f6b-8dec-a80823db0b69 .waddons_vert_divider {
@@ -3027,8 +2751,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -3041,18 +2763,9 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="height: 0px;   width: 100%;"></div></div></div></div>
 
 <!-- mycode for detecting desktop and apply padding   -->
- 
+
 <a href="#" class="no_nu_reward2 mynextButton"><img src="uploads/myarrownextglossy.png" alt="Nexts Page"></a>
 
- 
- 
- 
-
-
- 
-		<!--
-<script type="text/javascript" src="//services.brid.tv/player/build/brid.outstream.min.js"></script> <script type="text/javascript"> $bos("Brid_74170706", {"id":"10903","width":"480","height":"270"}); </script>
--->
   <style>
         #wsite-com-product-inventory {
             display: none !important;
@@ -3065,14 +2778,11 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
     <script>
 $(document).ready(function(){
 
-
- 
     //Check to see if the window is top if not then display button
     $(window).scroll(function(){
         if ($(this).scrollTop() > 50) {
             $('.scrollToTop').fadeIn();
             $('.mynextButton').fadeIn();
- 
 
         } else {
             $('.scrollToTop').fadeOut();
@@ -3085,7 +2795,7 @@ $('.mynextButton').fadeOut();
 $('.mynextButton').fadeIn();
 $('.mynextButton').fadeOut();
 $('.mynextButton').fadeIn();
- 
+
    }
 
     });
@@ -3095,7 +2805,6 @@ $('.mynextButton').fadeIn();
         $('html, body').animate({scrollTop : 0},800);
         return false;
     });
-
 
 //Click event to go next
 var xx = $(location).attr('pathname');
@@ -3174,7 +2883,7 @@ case "/hlpdvdplayer_remote_6.html": next =  "hlpdvdplayer_remote_7"; break;
 case "/hlpdvdplayer_remote_7.html": next =  "hlpdvdplayer_remote_8"; break;
 case "/hlpdvdplayer_remote_8.html": next =  "hlpdvdplayer_remote_1"; break;
 case "/hlpblurayplayer_1.html": next =  "hlpblurayplayer_2"; break;
- 
+
 case "/hlpblurayplayer_3.html": next =  "hlpblurayplayer_4"; break;
 case "/hlpblurayplayer_4.html": next =  "hlpblurayplayer_5"; break;
 case "/hlpblurayplayer_5.html": next =  "hlpblurayplayer_6"; break;
@@ -3210,9 +2919,6 @@ case "/hlpwinrare_6.html": next =  "hlpwinrare_1"; break
 }
 
 $('.mynextButton').attr("href", wheretogo + next + ".html");
-
-
-
 
 //Click event to go previous
 $('.mypreviousButton').click(function(){
@@ -3324,12 +3030,8 @@ window.location.href = wheretogonext + nextpage + ".html";;
 
     });
 
- 
- 
-
-   
 });
- 
+
     </script>
 <script>
 
@@ -3343,8 +3045,8 @@ try
 		const lala = document.getElementsByClassName("fc-cta-consent");
 		lala[0].click();
 	}
-catch (ee) 
-	{ 
+catch (ee)
+	{
 		console.log('no fc');
 	}
 try
@@ -3353,18 +3055,12 @@ try
 	//console.log('lala22' + lala22);
 	lala22.click();
 	window.location.reload(true);
-}   catch (ee22) { 
+}   catch (ee22) {
 			//console.log('no lala22'+ ee22);
 }
 
 }
 </script>
-
- 
- 
-
-
-
 
 <script>
 	(function(jQuery) {
@@ -3425,7 +3121,6 @@ try
 					return;
 				}
 
-
 				ccLinks.style.display = 'block';
 
 				var ccParent = ccLinks.parentElement;
@@ -3458,86 +3153,6 @@ try
 	})(window._W && _W.jQuery);
 </script>
 
- 
-	
-<!-- old --adsense-- code -->
-<!--<div data-ad="mlapplications.com_sticky_video_myvid" data-devices="m:1,t:1,d:1"   class="demand-supply"></div>-->
-
-<!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code -->
-<script>
-//  googletag.cmd.push(function() { 
-    // Pass slot objects directly to display()
- //   if (window.offerwallSlot) {
-   //   googletag.display(window.offerwallSlot);
-  //  }
-    // Only call display if the slot was successfully created
-//    if (window.sideRailSlot) {
-//      googletag.display(window.sideRailSlot);
-//    } 
-//  });
-</script> 
-  <!-- ======================================================================= -->
-  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
-  <!-- ======================================================================= -->
-<!--  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const anchorNode = document.querySelector('.outstream-placement-anchor');
-      const adWrapper = document.getElementById('outstream-ad-wrapper');
-      const closeBtn = document.getElementById('outstream-close');
-      let userClosedAd = false;
-
-      if (!anchorNode || !adWrapper) return;
-
-      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
-      window.googletag = window.googletag || {cmd: []};
-      googletag.cmd.push(function() {
-        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
-            if (event.isEmpty) {
-              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
-              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
-            } else {
-              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
-              // Only trigger performance tracking cycles if demand actually filled the layout container
-              stickyObserver.observe(anchorNode);
-            }
-          }
-        });
-      });
-
-      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
-      const stickyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (userClosedAd) return;
-
-          // If the invisible inline space position completely rolls out of view
-          if (!entry.isIntersecting) {
-            const boundingBox = entry.boundingClientRect;
-            
-            // Only apply sticky docking if user scrolled past the ad DOWN the page
-            if (boundingBox.top < 0) {
-              adWrapper.classList.add('is-sticky');
-            }
-          } else {
-            // Re-dock cleanly back inline the second the user scrolls back up
-            adWrapper.classList.remove('is-sticky');
-          }
-        });
-      }, { 
-        root: null, 
-        threshold: 0 // Fires instantly the frame the boundary is crossed
-      });
-
-      // STEP C: CLOSE ICON ACTIONS
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userClosedAd = true;
-        adWrapper.classList.remove('is-sticky');
-        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
-      });
-    });
-  </script> -->
-
 <!-- WEB_ONLY_START -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
 <script>
@@ -3548,6 +3163,5 @@ try
 </script>
 <!-- WEB_ONLY_END -->
 </body>
-
 
  </html>

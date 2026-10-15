@@ -3,6 +3,7 @@
  <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script>
 /* bfcache: turn third-party 'unload' handlers into 'pagehide' */
 (function () {
@@ -19,145 +20,25 @@
   } catch (e) {}
 })();
 </script>
-
-	<title>mygeo</title>
-	 
-	 
-	<meta name="robots" content="noarchive" />
-<script>
-    console.log('here i am not from cloudflare tag setup !');
-</script>
- 
-  <!-- sulvo first -->
+<!-- sulvo -->
 <link rel="preload" as="script" href="https://live.demand.supply/up.js">
 <script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
 <!-- rewarded paywall -->
-   <link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
 <style>#custom-paywall-overlay:not(.active){display:none}</style>
-
 <script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
 
+	<title>mygeo</title>
 
-<!-- old demand -->
+	<meta name="robots" content="noarchive" />
 
-
- 
-  
-
-
-
-
-
-
-
-  
- 
--->
- 
-  <!-- ======================================================================= -->
-  <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
-  <!-- ======================================================================= -->
-  <style>
-    /* THE GHOST ANCHOR: Stays fixed in layout to completely eliminate infinite layout flickers */
-    .outstream-placement-anchor {
-      width: 336px;
-      height: 280px;
-      margin: 40px auto;
-      position: relative;
-      background: transparent;
-    }
-
-    /* THE MOVING CONTAINER: Holds the ad frame and performs transitions on scroll */
-    .outstream-main-container {
-      width: 336px;
-      height: 280px;
-      background: #fbfbfb;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transition: box-shadow 0.3s ease;
-    }
-
-    /* STICKY OVERLAY STATE: Engaged programmatically by IntersectionObserver */
-    .outstream-main-container.is-sticky {
-      position: fixed;
-      top: auto;
-      left: auto;
-      bottom: 25px;
-      right: 25px;
-      z-index: 99999;
-      background: #fff;
-      border-radius: 4px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      
-      /* Downscale slightly for clean desktop corner placement */
-      transform: scale(0.9);
-      transform-origin: bottom right;
-      
-      /* Premium entrance physics: slides up, clears blur layer, fades visibility */
-      animation: dynamicStickyShow 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    /* Keeps iframe elements isolated and clipped safely inside borders when sticky */
-    .outstream-main-container.is-sticky #div-gpt-ad-outstream-slot {
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    /* CLOSE TRIGGER MARKUP: Revealed exclusively during sticky activation mode */
-    .outstream-close-trigger {
-      display: none;
-      position: absolute;
-      top: -12px;
-      left: -12px;
-      width: 26px;
-      height: 26px;
-      background: #111;
-      color: #fff;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 23px;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-      font-size: 15px;
-      font-weight: bold;
-      border: 2px solid #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 100000;
-      transition: background 0.2s ease;
-    }
-
-    .outstream-close-trigger:hover {
-      background: #ff3b30; /* Desktop specific feedback overlay shift */
-    }
-
-    .outstream-main-container.is-sticky .outstream-close-trigger {
-      display: block;
-    }
-
-    /* BLUR ENTRANCE KEYFRAME SEQUENCING */
-    @keyframes dynamicStickyShow {
-      0% {
-        transform: translateY(60px) scale(0.85);
-        opacity: 0;
-        filter: blur(8px);
-      }
-      100% {
-        transform: translateY(0) scale(0.9);
-        opacity: 1;
-        filter: blur(0);
-      }
-    }
-  </style>
-  
   </head>
- 
+
 <body>mygeo
 
-
   <div id="status-banner" style="display:none; background: #fff3cd; padding: 10px;">
-    It looks like we need permission to talk to your Desktop App. 
+    It looks like we need permission to talk to your Desktop App.
     <button onclick="requestAccess()">Enable Connection</button>
 </div>
 
@@ -167,9 +48,9 @@
     <g fill="#ffffff" transform="translate(74.806872,64)">
       <path d="m 351.85979,42.666667 v 42.666666 l -68.66594,-0.0029 C 319.27129,116.98858 341.38187,163.3214 341.33989,213.8039 341.27469,291.983 288.09818,360.12159 212.27759,379.17975 136.457,398.23787 57.381812,363.34191 20.358051,294.48541 -16.66571,225.62892 -2.170037,140.42041 55.539794,87.68 c 8.153397,12.97223 19.649072,23.50993 33.28,30.50667 -29.319929,23.68688 -46.340016,59.37416 -46.293333,97.06666 1.04924,69.94151 58.050619,126.08787 127.999999,126.08 64.07171,1.05539 118.70865,-46.1951 126.90564,-109.74908 6.12419,-47.48286 -15.13509,-92.7404 -52.2365,-118.94717 L 245.19313,192 H 202.52646 V 42.666667 Z M 127.85979,0 c 23.56415,0 42.66667,19.102517 42.66667,42.666667 0,23.564149 -19.10252,42.666666 -42.66667,42.666666 -23.56415,0 -42.666662,-19.102517 -42.666662,-42.666666 C 85.193128,19.102517 104.29564,0 127.85979,0 Z" /></g></g>
 </svg>
-           
-Reset Default Values 
-       </button> 
+
+Reset Default Values
+       </button>
 <script>
 async function checkDesktopConnection() {
     try {
@@ -187,7 +68,7 @@ async function checkDesktopConnection() {
         }
     } catch (err) {
         if (err.name === 'AbortError') return "TIMEOUT";
-        
+
         // This is where PNA blocks usually end up
         console.warn("Connection blocked or app not running.");
         return "BLOCKED_OR_OFFLINE";
@@ -198,9 +79,9 @@ async function sendCommand(data) {
     try {
         const response = await fetch("https://myttbplus.mlapplications.com:5001/command", {
             method: "POST",
-            headers: { 
+            headers: {
                 "Content-Type": "application/json",
-                "X-App-Token": "secret" 
+                "X-App-Token": "secret"
             },
             body: JSON.stringify(data)
         });
@@ -211,10 +92,10 @@ async function sendCommand(data) {
             console.error("APP BLOCK: The Desktop App is running, but the Security Token is wrong.");
         }
     } catch (err) {
-        // If we land here, the request never finished. 
+        // If we land here, the request never finished.
         // We check if the 'health' endpoint is reachable to see if the app is even on.
-        const isAppRunning = await checkIsAppRunning(); 
-        
+        const isAppRunning = await checkIsAppRunning();
+
         if (!isAppRunning) {
             alert("OFFLINE: Please open the Desktop App first.");
         } else {
@@ -227,7 +108,7 @@ async function checkIsAppRunning() {
     try {
         // We use a very short timeout
         const res = await fetch("https://myttbplus.mlapplications.com:5001/health", { mode: 'no-cors' });
-        return true; 
+        return true;
     } catch {
         return false;
     }
@@ -236,11 +117,11 @@ async function checkIsAppRunning() {
   async function diagnoseConnection() {
     try {
         // Try a very basic fetch
-        await fetch("https://myttbplus.mlapplications.com:5001/command", { 
+        await fetch("https://myttbplus.mlapplications.com:5001/command", {
             mode: 'no-cors', // Tells browser: "Don't worry about headers, just try to connect"
             cache: 'no-store'
         });
-        
+
         // If we get here, the app IS running, but your real fetch failed earlier.
         // Therefore, the problem is likely the "Block" permission.
         return "USER_BLOCKED";
@@ -256,12 +137,12 @@ async function checkIsAppRunning() {
             headers: { "X-App-Token": "secret", "Content-Type": "application/json" },
             body: JSON.stringify(command)
         });
-        
+
         if (response.ok) alert("Command sent!");
 
     } catch (err) {
         const reason = await diagnoseConnection();
-        
+
         if (reason === "USER_BLOCKED") {
             showInstructions("It looks like the connection was blocked. Please click the icon next to the URL and allow access.");
         } else {
@@ -271,11 +152,10 @@ async function checkIsAppRunning() {
 }
 
   const continueBtn = document.getElementById("continueBtn");
-const myData = { 
-    action: "open_file", 
-    path: "C:\\temp\\test.txt" 
+const myData = {
+    action: "open_file",
+    path: "C:\\temp\\test.txt"
 };
-
 
 continueBtn.addEventListener("click", () => {
     console.log('.....');
@@ -295,7 +175,7 @@ continueBtn.addEventListener("click", () => {
 });
 
 async function requestAccess() {
-    // This second attempt, triggered by a button click, 
+    // This second attempt, triggered by a button click,
     // forces the browser to show the "Allow/Block" prompt.
     const status = await checkDesktopConnection();
     if (status === "CONNECTED") {
@@ -314,84 +194,6 @@ window.onload = async () => {
 };
 </script>
 
-<!-- old --adsense-- code -->
-<!--<div data-ad="mlapplications.com_sticky_video_myvid" data-devices="m:1,t:1,d:1"   class="demand-supply"></div>-->
-
-<!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code -->
-<script>
-//  googletag.cmd.push(function() { 
-    // Pass slot objects directly to display()
- //   if (window.offerwallSlot) {
-   //   googletag.display(window.offerwallSlot);
-  //  }
-    // Only call display if the slot was successfully created
-//    if (window.sideRailSlot) {
-//      googletag.display(window.sideRailSlot);
-//    } 
-//  });
-</script> 
-  <!-- ======================================================================= -->
-  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
-  <!-- ======================================================================= -->
-<!--  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const anchorNode = document.querySelector('.outstream-placement-anchor');
-      const adWrapper = document.getElementById('outstream-ad-wrapper');
-      const closeBtn = document.getElementById('outstream-close');
-      let userClosedAd = false;
-
-      if (!anchorNode || !adWrapper) return;
-
-      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
-      window.googletag = window.googletag || {cmd: []};
-      googletag.cmd.push(function() {
-        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
-            if (event.isEmpty) {
-              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
-              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
-            } else {
-              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
-              // Only trigger performance tracking cycles if demand actually filled the layout container
-              stickyObserver.observe(anchorNode);
-            }
-          }
-        });
-      });
-
-      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
-      const stickyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (userClosedAd) return;
-
-          // If the invisible inline space position completely rolls out of view
-          if (!entry.isIntersecting) {
-            const boundingBox = entry.boundingClientRect;
-            
-            // Only apply sticky docking if user scrolled past the ad DOWN the page
-            if (boundingBox.top < 0) {
-              adWrapper.classList.add('is-sticky');
-            }
-          } else {
-            // Re-dock cleanly back inline the second the user scrolls back up
-            adWrapper.classList.remove('is-sticky');
-          }
-        });
-      }, { 
-        root: null, 
-        threshold: 0 // Fires instantly the frame the boundary is crossed
-      });
-
-      // STEP C: CLOSE ICON ACTIONS
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userClosedAd = true;
-        adWrapper.classList.remove('is-sticky');
-        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
-      });
-    });
-  </script> -->
-
 <!-- WEB_ONLY_START -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
 <script>
@@ -402,6 +204,5 @@ window.onload = async () => {
 </script>
 <!-- WEB_ONLY_END -->
 </body>
-
 
 </html>

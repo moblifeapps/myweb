@@ -4,6 +4,7 @@
  <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script>
 /* bfcache: turn third-party 'unload' handlers into 'pagehide' */
 (function () {
@@ -20,30 +21,16 @@
   } catch (e) {}
 })();
 </script>
-
- 
-<title>Transparent Taskbar+ Lite</title>
-  <!-- sulvo first -->
+<!-- sulvo -->
 <link rel="preload" as="script" href="https://live.demand.supply/up.js">
 <script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
 <!-- rewarded paywall -->
-   <link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
 <style>#custom-paywall-overlay:not(.active){display:none}</style>
-
 <script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
 
-
-<!-- old demand -->
-
-
- 
-  
-
-
-
-
-
+<title>Transparent Taskbar+ Lite</title>
 
 <link
 href="uploads/shareon.min.css"
@@ -55,18 +42,6 @@ rel="stylesheet">
   init
 ></script>
 
-<!--
-<link 
-  href="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.min.css"
-  rel="stylesheet"
-> 
-<script
-  src="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.iife.js"
-  defer
-  init
-></script>-->
-<!--
-<script src="https://cdn.jsdelivr.net/npm/shareon/dist/shareon.min.js" defer></script>-->
 <style>
     /*
 .share-popup {
@@ -78,7 +53,7 @@ rel="stylesheet">
     padding: 25px;
     border-radius: 18px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-    display: none;  
+    display: none;
     z-index: 9999;
 } */
 
@@ -107,7 +82,7 @@ body.popup-open::before {
     flex-wrap:wrap;
     justify-content:center;
 }
- 
+
 .shareon a{
     width:64px;
     height:64px;
@@ -135,17 +110,13 @@ body.popup-open::before {
     left: auto !important;
      margin-left:24px;
     margin-top: 11px;
-} 
-  
+}
 
- 
 /* labels */
 .shareon  .telegram::after{ content:"Telegram"; }
 .shareon  .viber::after{ content:"Viber"; }
 .shareon .whatsapp::after{ content:"WhatsApp"; }
 .shareon .tumblr::after{ content:"Tumblr"; }
-
-
 
 .shareon  .facebook::after{ content:"Facebook"; }
 .shareon  .linkedin::after{ content:"LinkedIn"; }
@@ -159,7 +130,6 @@ body.popup-open::before {
 .shareon .copy-url::after{ content:"Copy"; }
 .shareon .web-share::after{ content:"Link"; }
 
- 
 /* Optional: hover effect */
 .shareon a:hover:before {
     transform: scale(1.1);
@@ -175,7 +145,7 @@ body.popup-open::before {
 }
 
 /* Each button: column layout */
- 
+
 /* Icon style */
 .shareon a:before {
     width:56px;
@@ -186,7 +156,7 @@ body.popup-open::before {
     display:block;
 }
 
-/* Text labels under icons 
+/* Text labels under icons
 .shareon .facebook::after { content: "Facebook"; }
 .shareon .linkedin::after { content: "LinkedIn"; }
 .shareon .twitter::after { content: "X"; }
@@ -194,7 +164,7 @@ body.popup-open::before {
 .shareon .email::after { content: "Email"; }
 .shareon .copy-url::after { content: "Copy"; }
 */
-/* Optional: hover effect 
+/* Optional: hover effect
 .shareon a:hover:before {
     transform: scale(1.1);
     transition: 0.2s;
@@ -271,7 +241,6 @@ body.popup-open::before {
   background: var( --bgforswitch); /*: #ffffff;*/
   color: var(--textforswitch); /*: #111;*/
 
-  
 }
 
 /* hover effect */
@@ -368,7 +337,6 @@ body.popup-open::before {
         inset 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
-
 .glossy-switchtowindows{
     width:90px;
     height:90px;
@@ -404,7 +372,6 @@ body.popup-open::before {
         rgba(255,255,255,.2)
     );
 }
-
 
 /* hover */
 .glossy-switchtowindows:hover{
@@ -491,8 +458,7 @@ body.popup-open::before {
     transform:translateY(1px);
     box-shadow: inset 0 3px 6px rgba(0,0,0,0.6);
 }
- 
-    
+
 .toggle {
   display: flex;
   align-items: center;
@@ -560,7 +526,6 @@ body.popup-open::before {
   display: inline;
 }
 
-
 .switch {
   display: flex;
   align-items: center;
@@ -609,9 +574,6 @@ body.popup-open::before {
     z-index: 5;
 }
 
-
-
-
     .icon {
     position: absolute;
     top: 12px;
@@ -622,7 +584,7 @@ body.popup-open::before {
     pointer-events: none;      /* prevents click blocking */
     flex-shrink: 0;
 }
-/* icon container 
+/* icon container
 .icon {
     position: relative;
     width: 32px;
@@ -635,7 +597,7 @@ body.popup-open::before {
 .icon svg {
     position: absolute;
     inset: 0;
-    transition: 
+    transition:
         opacity 0.2s ease,
         transform 0.2s ease;
 }
@@ -672,7 +634,7 @@ body.popup-open::before {
      opacity: 1;
      transform: scale(1);
 }
-/* ripple circle 
+/* ripple circle
 .option .ripple22 {
     position: absolute;
     border-radius: 50%;
@@ -702,7 +664,7 @@ body.popup-open::before {
     border-radius: 8px;
     height: auto;
     color: white;
-    
+
   /*  background-color:  var(--accent);*/
     background: linear-gradient(
   to bottom,
@@ -710,11 +672,11 @@ body.popup-open::before {
   var(--accent) 50%,
   var(--accent-hard) 50%,
   var(--accent-hard) 100%
-  
+
 );
 
     color: white;
-  /*  color: var(--accent);  
+  /*  color: var(--accent);
     pointer-events: none;  */   /* prevents click blocking */
     flex-shrink: 0;
 }
@@ -810,8 +772,6 @@ body.popup-open::before {
     --cardDARK: #383838;
     --cardLIGHT: #f8f8f8;
 
-    
-
     --card2: #b2b2b2;
     --card2DARK: #2c2c2c;
     --card2LIGHT: #b2b2b2;
@@ -833,7 +793,7 @@ body.popup-open::before {
   z-index: 100;
  top: 1px;
      opacity: 1;
-    background:  
+    background:
     var(--bgTopHeader);
 }
 
@@ -847,7 +807,7 @@ body.popup-open::before {
   z-index: 100;
  top: 1px;
      opacity: 1;
-    background:  
+    background:
     var(--bgTopHeader);
     /*
     linear-gradient(
@@ -886,7 +846,7 @@ body.popup-open::before {
   flex-shrink: 0;
   z-index: 100;
      opacity: 1;
-    background:  
+    background:
     var(--bgTopHeader);
     margin-top: -4px;
     /*
@@ -907,20 +867,18 @@ body.popup-open::before {
   align-items: center;       /* vertical center */
 }
 
-
 body {
     margin: 0;
     background: var(--bg);
-   
+
     color: var(--fg);
     font-family: system-ui, Segoe UI, sans-serif;
     /**/  height: 100vh;
-  display: flex; 
-
+  display: flex;
 
     height: 100%;
  flex-direction: column;
-  /*flex-direction: row;*/   
+  /*flex-direction: row;*/
    align-items: center;
     justify-content: center;
 }
@@ -939,8 +897,7 @@ body {
     border-radius: 22px;
     background: var(--card);
     box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-  
-  
+
   align-items: center;
   justify-content: center;
 
@@ -955,8 +912,7 @@ body {
     border-radius: 22px;
     background: var(--card);
     box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-     
-  
+
   align-items: center;
   justify-content: center;
 
@@ -972,12 +928,11 @@ body {
     background: var(--card2);
     box-shadow: 0 30px 60px rgba(0,0,0,0.4);
   color: black;
-  
+
   align-items: center;
   justify-content: center;
 
 }
-
 
 h1 {
     margin-top: 0;
@@ -1071,7 +1026,7 @@ button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
- 
+
 /* Fixed image */
 .logo {
     width: 100px;
@@ -1083,10 +1038,10 @@ button:disabled {
 /* Buttons */
 .top-header button {
     height: 50px;
-    padding: 0 25px;    
+    padding: 0 25px;
     font-size: 16px;
     cursor: pointer;
-    
+
     flex-shrink: 0;
     border-radius: 5px;
     margin-left: 2px;
@@ -1104,192 +1059,82 @@ button:disabled {
     width: 120px;                /* this makes it fill remaining space */
     height: 60px;
    flex-shrink: 0;
-     
+
 }
 </style>
 
- 
-
- 
-  <!-- ======================================================================= -->
-  <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
-  <!-- ======================================================================= -->
-  <style>
-    /* THE GHOST ANCHOR: Stays fixed in layout to completely eliminate infinite layout flickers */
-    .outstream-placement-anchor {
-      width: 336px;
-      height: 280px;
-      margin: 40px auto;
-      position: relative;
-      background: transparent;
-    }
-
-    /* THE MOVING CONTAINER: Holds the ad frame and performs transitions on scroll */
-    .outstream-main-container {
-      width: 336px;
-      height: 280px;
-      background: #fbfbfb;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transition: box-shadow 0.3s ease;
-    }
-
-    /* STICKY OVERLAY STATE: Engaged programmatically by IntersectionObserver */
-    .outstream-main-container.is-sticky {
-      position: fixed;
-      top: auto;
-      left: auto;
-      bottom: 25px;
-      right: 25px;
-      z-index: 99999;
-      background: #fff;
-      border-radius: 4px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      
-      /* Downscale slightly for clean desktop corner placement */
-      transform: scale(0.9);
-      transform-origin: bottom right;
-      
-      /* Premium entrance physics: slides up, clears blur layer, fades visibility */
-      animation: dynamicStickyShow 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    /* Keeps iframe elements isolated and clipped safely inside borders when sticky */
-    .outstream-main-container.is-sticky #div-gpt-ad-outstream-slot {
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    /* CLOSE TRIGGER MARKUP: Revealed exclusively during sticky activation mode */
-    .outstream-close-trigger {
-      display: none;
-      position: absolute;
-      top: -12px;
-      left: -12px;
-      width: 26px;
-      height: 26px;
-      background: #111;
-      color: #fff;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 23px;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-      font-size: 15px;
-      font-weight: bold;
-      border: 2px solid #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 100000;
-      transition: background 0.2s ease;
-    }
-
-    .outstream-close-trigger:hover {
-      background: #ff3b30; /* Desktop specific feedback overlay shift */
-    }
-
-    .outstream-main-container.is-sticky .outstream-close-trigger {
-      display: block;
-    }
-
-    /* BLUR ENTRANCE KEYFRAME SEQUENCING */
-    @keyframes dynamicStickyShow {
-      0% {
-        transform: translateY(60px) scale(0.85);
-        opacity: 0;
-        filter: blur(8px);
-      }
-      100% {
-        transform: translateY(0) scale(0.9);
-        opacity: 1;
-        filter: blur(0);
-      }
-    }
-  </style>
-  
   </head>
- 
 
 <body>
 
-   
-
     <div id="block-guide" style="display:none; color: red; border: 1px solid red; padding: 10px;">
-        <strong>Action Required:</strong> The browser blocked the connection. 
+        <strong>Action Required:</strong> The browser blocked the connection.
         Click the icon next to the URL bar and <strong>Allow Private Network Access</strong>.
     </div>
-<!--
-    <button id="btn-open-folder" style="visibility: collapse;" onclick="handleButtonClick('OPEN_FOLDER')" disabled>
-        Open My Folder
-    </button> -->
- <div class="toptopheader"> 
+
+ <div class="toptopheader">
 <div class="top-header">
     <img  src="uploads/ttbicon.png" class="logo" />
 
         <button  onclick="" class="ripple-btn" id="OpenHelpBtn" >
-<svg style="margin-top: -11px; margin-bottom: -11px; margin-right: 5px;" 
+<svg style="margin-top: -11px; margin-bottom: -11px; margin-right: 5px;"
   fill="#ffffff"
    viewBox="0 0 30 30"
    width="30px"
    height="30px">
-    <path 
+    <path
        d="M 2.8574219 0 C 1.2811621 0 0 1.2663506 0 2.8222656 L 0 11.15625 C 0 12.712165 1.2811621 13.982422 2.8574219 13.982422 L 9.6601562 13.982422 L 9.6601562 12.966797 L 2.8574219 12.966797 C 1.8404735 12.966797 1.0175781 12.152829 1.0175781 11.15625 L 1.0175781 2.8222656 C 1.0175781 1.8256562 1.8404735 1.0175781 2.8574219 1.0175781 L 16.464844 1.0175781 C 17.481792 1.0175781 18.304687 1.8256562 18.304688 2.8222656 L 18.304688 5.59375 L 19.322266 5.59375 L 19.322266 2.8222656 C 19.322266 1.2663506 18.041103 2.9605918e-16 16.464844 0 L 2.8574219 0 z M 8.6347656 2.2578125 C 7.2035597 2.2584014 5.7861755 3.2799586 5.7949219 5.1132812 C 5.8644707 6.1115685 7.3522853 6.037323 7.3183594 5.0351562 C 7.3429997 3.5772792 9.3901695 3.3053874 9.875 4.6464844 C 10.040356 5.1916648 9.6955632 5.8683149 9.1386719 6.09375 C 8.0978867 6.5143303 7.0948093 7.5259685 7.3535156 8.7519531 C 7.4292433 9.110958 7.7468042 9.3574219 8.0996094 9.3574219 C 8.5772956 9.3625042 8.9521787 8.9049405 8.8476562 8.4375 C 8.787571 8.1529761 9.1905445 7.7178556 9.7109375 7.5078125 C 11.000245 6.9854422 11.728001 5.5050498 11.333984 4.2050781 C 10.8693 2.875141 9.7479258 2.2573544 8.6347656 2.2578125 z M 13.533203 6.609375 C 11.958871 6.609375 10.677734 7.8769054 10.677734 9.4335938 L 10.677734 17.767578 C 10.677734 19.324267 11.958871 20.589844 13.533203 20.589844 L 21.578125 20.589844 C 22.114407 22.099859 23.630196 23.148438 25.251953 23.148438 C 25.59464 23.136458 26.084159 23.170656 26.210938 22.765625 C 26.271517 22.583389 26.223948 22.382149 26.087891 22.246094 C 25.671278 21.828991 25.44985 21.218977 25.470703 20.589844 L 27.144531 20.589844 C 28.719114 20.589844 30 19.324267 30 17.767578 L 30 9.4335938 C 30 7.8769054 28.719114 6.609375 27.144531 6.609375 L 13.533203 6.609375 z M 20.664062 8.8691406 C 21.777142 8.8685214 22.89758 9.4842288 23.363281 10.814453 C 23.757049 12.114395 23.029796 13.597264 21.740234 14.119141 C 21.22034 14.329677 20.816871 14.762849 20.876953 15.046875 C 20.981511 15.514066 20.606811 15.972628 20.128906 15.966797 C 19.776351 15.966797 19.460736 15.722285 19.384766 15.363281 C 19.125561 14.137295 20.127189 13.126156 21.167969 12.705078 C 21.725602 12.479642 22.069653 11.803522 21.904297 11.257812 C 21.417331 9.918984 19.372298 10.18576 19.347656 11.644531 C 19.382536 12.648869 17.887122 12.719422 17.824219 11.722656 C 17.815281 9.8898916 19.23296 8.8699368 20.664062 8.8691406 z M 8.1035156 10.169922 C 7.0943872 10.186242 7.100006 11.678584 8.1035156 11.695312 C 9.106033 11.678183 9.105906 10.186899 8.1035156 10.169922 z M 3.0507812 15 L 3.0507812 22.851562 C 3.0507812 24.407479 4.3319434 25.677734 5.9082031 25.677734 L 13.953125 25.677734 C 14.487015 27.182783 16.001014 28.234375 17.623047 28.234375 C 17.965393 28.221465 18.455753 28.2574 18.583984 27.849609 C 18.645004 27.666565 18.595099 27.467345 18.462891 27.330078 C 18.045937 26.91313 17.821437 26.303141 17.841797 25.677734 L 19.515625 25.677734 C 20.969857 25.677734 22.169669 24.599078 22.347656 23.210938 C 21.971391 22.941465 21.635124 22.621972 21.355469 22.255859 L 21.355469 22.851562 C 21.355469 23.848142 20.532574 24.660156 19.515625 24.660156 L 17.394531 24.660156 C 16.452533 24.715896 16.87134 26.646678 17.134766 27.171875 C 15.970341 26.968477 15.049901 26.034104 14.826172 25.052734 C 14.775342 24.823949 14.567892 24.660156 14.333984 24.660156 L 5.9082031 24.660156 C 4.8912548 24.660156 4.0683594 23.848142 4.0683594 22.851562 L 4.0683594 15 L 3.0507812 15 z M 20.128906 16.779297 C 21.136946 16.794477 21.136638 18.286597 20.132812 18.304688 C 19.130884 18.288708 19.125949 16.797668 20.128906 16.779297 z " />
-</svg> 
+</svg>
 Help
 
-       
-
-
-           
-       
-</button> 
+</button>
   <button    class="ripple-btn" id="shareButton" >
-<svg style="margin-top: -11px; margin-bottom: -11px; margin-right: 5px;" 
+<svg style="margin-top: -11px; margin-bottom: -11px; margin-right: 5px;"
   fill="#ffffff"
    viewBox="0 0 30 34"
    width="30px"
    height="30px">
-    <path 
+    <path
        d="M27.11499,0C29.707031,0 31.900024,1.8940125 31.900024,4.2870178 31.900024,6.6790161 29.707031,8.572998 27.11499,8.572998 26.018005,8.572998 25.022034,8.2740173 24.223999,7.6760254L10.268005,16.249023 23.825012,24.623016C24.722046,23.826019 25.819031,23.427002 27.215027,23.427002 29.906006,23.427002 32,25.321014 32,27.713013 32,30.106018 29.807007,32 27.215027,32 24.822021,32 22.828003,30.404999 22.429993,28.312012L7.875,19.438995C7.0780029,20.037018 5.9810181,20.436005 4.7850342,20.436005 2.0930176,20.436005 0,18.542023 0,16.150024 0,13.857025 2.1929932,11.963013 4.7850342,11.963013 5.9810181,11.963013 7.177002,12.361023 7.9750366,13.059021L22.230042,4.2870178C22.330017,1.8940125,24.423035,0,27.11499,0z" />
-</svg> 
+</svg>
 Share
-</button> 
+</button>
 
   <button   onclick="" class="ripple-btn" id="RateUsBtn" >
-<svg style="margin-top: -1px; margin-bottom: -16px; margin-right: -5px;" 
+<svg style="margin-top: -1px; margin-bottom: -16px; margin-right: -5px;"
   fill="#ffffff"
    viewBox="-6 -6 65 31"
    width="50px"
    height="38px">
-    <path 
+    <path
        d="m 16.383505,-10 c -0.474789,0 -0.858128,0.3851266 -0.858128,0.8581281 v 1.9448562 c 0,0.4747892 0.385126,0.8581282 0.858128,0.8581282 0.474789,0 0.858128,-0.3851261 0.858128,-0.8581282 V -9.1418719 C 17.241633,-9.6166606 16.856507,-10 16.383505,-10 Z m -5.473204,1.4568839 c -0.138365,0.0036 -0.277282,0.040988 -0.405325,0.1151789 -0.411478,0.2373899 -0.5521725,0.7613966 -0.314765,1.1728925 l 0.972429,1.6846038 h 0.0018 c 0.16002,0.2760775 0.44667,0.4290641 0.743829,0.4290641 0.145952,0 0.29366,-0.036927 0.427305,-0.1142998 0.411478,-0.2373899 0.552172,-0.7613965 0.314764,-1.1728925 L 11.677865,-8.1131728 C 11.51466,-8.3960641 11.214701,-8.5510737 10.910298,-8.5431161 Z m 10.942892,0.00176 c -0.304448,-0.00796 -0.602585,0.147052 -0.765809,0.4299432 l -0.972428,1.6846038 c -0.23739,0.4114783 -0.09671,0.9354756 0.314764,1.1728925 0.135401,0.077374 0.283116,0.1143002 0.429064,0.1143002 0.297181,0 0.585595,-0.1529825 0.743828,-0.4290646 l 0.972428,-1.6846038 c 0.23739,-0.4114779 0.09671,-0.9354751 -0.314764,-1.1728924 -0.128587,-0.074184 -0.268698,-0.1115623 -0.407083,-0.1151789 z m -14.8844791,3.986423 c -0.3044479,-0.00796 -0.6034641,0.147052 -0.7666882,0.4299433 -0.2373899,0.4114779 -0.096714,0.9354751 0.3147643,1.172892 l 1.6846038,0.9724283 c 0.1354008,0.077374 0.2831118,0.1142997 0.4290645,0.1142997 0.2971808,0 0.5855952,-0.1529869 0.7438279,-0.429064 0.2373903,-0.4114779 0.096714,-0.9354752 -0.3147643,-1.1728925 L 7.3749181,-4.4397515 C 7.2463315,-4.5139361 7.1070993,-4.5513138 6.9687139,-4.5549304 Z m 18.8304611,0.00266 c -0.138388,0.0036 -0.278491,0.040659 -0.407083,0.1142997 l -1.684604,0.9724284 c -0.409722,0.2373898 -0.550416,0.7613961 -0.314764,1.172892 0.16002,0.2760775 0.44667,0.429064 0.743828,0.429064 0.145953,0 0.293663,-0.036927 0.429064,-0.1142997 l 1.684604,-0.9724279 c 0.409723,-0.2373903 0.550417,-0.7613965 0.314764,-1.1728924 -0.163205,-0.2828913 -0.461354,-0.4369695 -0.765809,-0.4290641 z m -9.406878,0.9812201 c -0.21673,0 -0.433467,0.114306 -0.53633,0.3428996 l -1.25554,2.76252394 c -0.04572,0.0914376 -0.137162,0.16002036 -0.25146,0.18287977 L 11.334968,0.06014598 C 10.832044,0.1058648 10.628074,0.74419554 10.992069,1.0870862 h 0.0018 l 2.236761,2.0538805 c 0.06858,0.068578 0.114303,0.1828775 0.09144,0.2743196 l -0.61546,2.9682793 c -0.09144,0.5029246 0.434329,0.8897856 0.86692,0.6400792 l 2.62538,-1.4841396 c 0.09144,-0.045719 0.205737,-0.045719 0.297179,0 l 2.62538,1.4841396 c 0.501169,0.2514575 1.049797,-0.1371501 0.9355,-0.6400792 L 19.439704,3.4152863 c -0.02286,-0.1143015 0.02286,-0.2057369 0.09144,-0.2743196 l 2.23676,-2.0538805 c 0.365759,-0.34289966 0.18288,-0.98124841 -0.342899,-1.02694022 l -3.012238,-0.34289967 c -0.114301,-0.0228594 -0.20574,-0.0685782 -0.228599,-0.18287977 L 16.928627,-3.2281731 c -0.102869,-0.2285937 -0.319599,-0.3428997 -0.53633,-0.3428997 z M 7.5648317,1.7913649 c -0.2015616,0 -0.4018205,0.1072663 -0.4941269,0.3226773 L 5.9030878,4.6726001 C 5.8661607,4.7587663 5.7799936,4.8203143 5.6692124,4.8449294 L 2.8767795,5.1649687 C 2.4090129,5.2018958 2.2244008,5.7927111 2.5567396,6.1127784 l 2.0784992,1.9061699 h -0.00176 c 0.061547,0.061547 0.1107795,0.1723256 0.086165,0.2461843 L 4.1411145,11.020638 c -0.073854,0.467767 0.4061975,0.824703 0.8124084,0.590843 l 2.435466,-1.376874 c 0.086166,-0.03693 0.1846413,-0.03693 0.270803,0 l 2.4354661,1.376874 c 0.467767,0.233874 0.97063,-0.123094 0.861645,-0.590843 L 10.390679,8.2651326 c -0.02462,-0.098474 0.02461,-0.1846377 0.08616,-0.2461843 L 11.252324,7.3050141 C 11.104613,6.9234114 11.067679,6.4925782 11.141538,6.0635258 L 11.350794,5.0664793 9.4446246,4.8449136 C 9.3338434,4.8202941 9.2476785,4.7833656 9.223059,4.6725844 L 8.0677513,2.1140264 C 7.9692776,1.8986155 7.7663934,1.7913491 7.5648317,1.7913491 Z m 17.6443803,9.003e-4 c -0.201558,0 -0.404445,0.1081455 -0.502919,0.3235565 h -0.0018 l -1.155308,2.5585584 c -0.02462,0.1107812 -0.11078,0.1477092 -0.221565,0.1723288 l -1.90617,0.2215661 0.196947,0.9601185 c 0.09847,0.4308215 0.06155,0.8739717 -0.09847,1.2784001 l 0.775481,0.7139342 c 0.06155,0.061547 0.110779,0.147711 0.08616,0.2461848 l -0.566223,2.7555054 c -0.110782,0.467767 0.393878,0.824703 0.861644,0.590842 L 25.1125,10.236387 c 0.08617,-0.03693 0.184641,-0.03693 0.270802,0 l 2.435467,1.376873 c 0.406202,0.233875 0.88628,-0.123093 0.812408,-0.590842 L 28.052644,8.2669126 c -0.02462,-0.073854 0.02462,-0.1846382 0.08616,-0.2461848 L 30.217307,6.1145584 C 30.549655,5.7945177 30.365021,5.2037073 29.897268,5.1667487 L 27.104834,4.8467089 C 26.994053,4.8220893 26.907886,4.7605418 26.870959,4.6743801 L 25.703342,2.1158217 C 25.611022,1.9004107 25.410773,1.7922652 25.209215,1.7922652 Z M -0.42384897,7.2601573 c -0.17694478,0 -0.3552117,0.09232 -0.44137295,0.2769576 L -1.8991962,9.8002522 c -0.036928,0.073854 -0.1107813,0.135403 -0.1969474,0.1477101 l -2.4723938,0.2831127 c -0.406202,0.03693 -0.5785508,0.566226 -0.2831119,0.849336 l 1.8323145,1.672294 c 0.061547,0.06155 0.098475,0.160021 0.073855,0.233875 l -0.5046779,2.423157 c -0.073854,0.418514 0.3569851,0.726244 0.7139345,0.529296 l 2.15235437,-1.216854 c 0.0738537,-0.03693 0.16002261,-0.03693 0.24618385,0 h 0.00176 l 2.14004488,1.216854 c 0.418514,0.196948 0.8598865,-0.110773 0.7754804,-0.529296 L 2.0749234,12.98658 c -0.02462,-0.09847 0.012312,-0.172328 0.073855,-0.233875 L 2.8011669,12.149554 C 2.5672924,11.718732 2.4811271,11.215839 2.5796008,10.698825 L 2.7026932,10.120292 1.2273458,9.9479623 C 1.1411796,9.9356548 1.0673272,9.8987254 1.0427077,9.8002522 L 0.00873359,7.5371149 C -0.07127659,7.3524773 -0.24690284,7.2601573 -0.42384762,7.2601573 Z m 33.62525897,0 c -0.176943,0 -0.352564,0.09232 -0.432581,0.2769576 l -1.033974,2.2631373 c -0.03693,0.073854 -0.110783,0.135403 -0.209257,0.1477101 l -1.463038,0.1723297 0.123092,0.61546 c 0.09847,0.480056 0.01231,0.984749 -0.221566,1.413802 l 0.652389,0.603151 c 0.04924,0.06155 0.09848,0.160021 0.07385,0.233875 l -0.504678,2.423157 c -0.07385,0.418514 0.356985,0.726244 0.713935,0.529296 l 2.152354,-1.216854 c 0.07385,-0.03693 0.160021,-0.03693 0.233875,0 l 2.152354,1.216854 c 0.406202,0.196948 0.859912,-0.110773 0.763171,-0.529296 L 35.696664,12.98658 c -0.01231,-0.09847 0.02462,-0.172328 0.07386,-0.233875 l 1.832314,-1.672294 h 0.0018 c 0.307728,-0.283114 0.160018,-0.812423 -0.270803,-0.849336 L 34.861396,9.9479623 C 34.762922,9.9356548 34.689069,9.8987254 34.676757,9.8002522 L 33.642783,7.5371149 C 33.556619,7.3524773 33.378352,7.2601573 33.20141,7.2601573 Z" />
-</svg> 
+</svg>
 Rate us
-</button> 
- 
+</button>
+
   <button   onclick="" class="ripple-btn" id="PrivacyBtn" >
-<svg style="margin-top: -1px; margin-bottom: -16px; margin-right: -5px;" 
+<svg style="margin-top: -1px; margin-bottom: -16px; margin-right: -5px;"
   fill="#ffffff"
    viewBox="-6 4 65 31"
    width="50px"
    height="38px">
-    <path 
+    <path
        d="M21.914978,18.709999C21.914978,18.709999,31.121033,20.901001,32,29.668999L0,29.668999C0,29.668999,2.6290283,20.021996,10.518005,19.143997L12.65802,28.294998 14.22998,28.284996 16.012024,23.601997 14.348022,20.707001 17.677002,20.707001 16.078979,23.672997 18.116028,28.253998 19.34198,28.243996z M15.778015,0C20.653992,0 24.612,3.9519958 24.612,8.8330002 24.612,13.709 20.653992,17.666 15.778015,17.666 10.897034,17.666 6.9440308,13.709 6.9440308,8.8330002 6.9440308,3.9519958 10.897034,0 15.778015,0z" />
-</svg> 
+</svg>
 Privacy
-</button> 
- 
+</button>
+
   <button   onclick="" class="ripple-btn" id="TipsAndTricksBtn" >
-<svg style="margin-top: -1px; margin-bottom: -16px; margin-right: 2px;" 
+<svg style="margin-top: -1px; margin-bottom: -16px; margin-right: 2px;"
   fill="#ffffff"
    viewBox="26 44 65 31"
    width="30px"
    height="38px">
-    <path 
+    <path
        d="M 50 18.5 C 49.171881 18.5 48.5 19.171881 48.5 20 L 48.5 25 C 48.5 25.828119 49.171881 26.5 50 26.5 C 50.828119 26.5 51.5 25.828119 51.5 25 L 51.5 20 C 51.5 19.171881 50.828119 18.5 50 18.5 z M 31.136719 26.28125 C 30.730469 26.277344 30.343717 26.433587 30.054688 26.722656 C 29.769528 27.007816 29.613278 27.398462 29.617188 27.800781 C 29.621093 28.207031 29.789062 28.589854 30.082031 28.871094 L 33.617188 32.40625 C 33.898437 32.69922 34.28126 32.867194 34.6875 32.871094 C 35.08984 32.878906 35.480495 32.718753 35.765625 32.433594 C 36.054685 32.148434 36.210931 31.757788 36.207031 31.355469 C 36.203125 30.949219 36.031251 30.562486 35.738281 30.285156 L 32.203125 26.75 C 31.925785 26.45703 31.539058 26.28906 31.136719 26.28125 z M 68.847656 26.337891 C 68.470709 26.333008 68.091775 26.470702 67.796875 26.75 L 64.261719 30.285156 C 63.964839 30.562496 63.796879 30.949229 63.792969 31.355469 C 63.789062 31.757808 63.945305 32.148464 64.234375 32.433594 C 64.519535 32.718753 64.91018 32.878904 65.3125 32.871094 C 65.71875 32.867188 66.101573 32.69921 66.382812 32.40625 L 69.917969 28.871094 C 70.476558 28.281254 70.464848 27.351643 69.886719 26.777344 C 69.599609 26.490234 69.224603 26.342774 68.847656 26.337891 z M 49.644531 28.501953 C 46.743134 28.558106 43.855779 29.310545 41.238281 30.751953 C 36.004454 33.630538 32.520035 38.904705 31.921875 44.849609 C 31.328822 50.598942 33.527827 56.286156 37.835938 60.136719 C 39.285136 61.378918 40.132869 63.183652 40.167969 65.09375 L 40.167969 71.664062 C 40.175781 74.27736 41.968815 76.550757 44.507812 77.160156 C 45.113282 79.703154 47.386703 81.5 50 81.5 C 52.617197 81.5 54.886688 79.703054 55.492188 77.160156 C 58.035185 76.550777 59.828038 74.28126 59.835938 71.664062 L 59.835938 65.277344 C 59.867187 63.269546 60.74998 61.371186 62.261719 60.054688 C 66.667914 56.015592 68.808574 50.069938 67.984375 44.152344 C 67.156256 38.23435 63.472707 33.102825 58.132812 30.423828 C 55.460915 29.085929 52.545928 28.445801 49.644531 28.501953 z M 49.923828 31.478516 C 53.676106 31.464115 57.312128 32.843753 60.113281 35.363281 C 63.308578 38.218778 65.144469 42.289023 65.167969 46.574219 C 65.191406 50.855414 63.402378 54.94894 60.238281 57.835938 C 58.101583 59.722636 56.863237 62.425747 56.835938 65.277344 L 56.835938 66 L 43.167969 66 L 43.167969 65.09375 C 43.125 62.335953 41.917948 59.730461 39.84375 57.914062 C 36.851553 55.222665 35.054644 51.457402 34.839844 47.441406 C 34.625004 43.42971 36.015628 39.492703 38.703125 36.503906 C 41.390622 33.511709 45.155979 31.7109 49.171875 31.5 C 49.42285 31.486573 49.673676 31.479476 49.923828 31.478516 z M 49.916016 40.552734 C 49.833758 40.555714 49.751219 40.562744 49.667969 40.574219 C 48.33597 40.761719 47.398519 41.988314 47.574219 43.320312 L 48.9375 53.175781 L 48.9375 53.179688 C 49.003906 53.652347 49.378909 54.02735 49.855469 54.09375 C 50.136718 54.132812 50.421878 54.058593 50.648438 53.886719 C 50.874997 53.714839 51.02344 53.460937 51.0625 53.179688 L 52.425781 43.324219 L 52.429688 43.320312 C 52.45703 43.097653 52.45703 42.871087 52.429688 42.648438 C 52.246585 41.399689 51.149878 40.508042 49.916016 40.552734 z M 71.667969 45.164062 C 70.83985 45.164062 70.167969 45.835943 70.167969 46.664062 C 70.167969 47.496092 70.83985 48.164062 71.667969 48.164062 L 76.667969 48.164062 C 77.496088 48.164062 78.167969 47.496092 78.167969 46.664062 C 78.167969 45.835943 77.496088 45.164062 76.667969 45.164062 L 71.667969 45.164062 z M 23.332031 45.167969 C 22.503912 45.167969 21.832031 45.83985 21.832031 46.667969 C 21.832031 47.496088 22.503912 48.167969 23.332031 48.167969 L 28.332031 48.167969 C 29.16015 48.167969 29.832031 47.496088 29.832031 46.667969 C 29.832031 45.83985 29.16015 45.167969 28.332031 45.167969 L 23.332031 45.167969 z M 49.974609 55.273438 C 49.845653 55.274619 49.714844 55.286865 49.585938 55.3125 C 48.898438 55.44922 48.328093 55.921887 48.058594 56.566406 C 47.792974 57.214846 47.863287 57.953057 48.253906 58.535156 C 48.644526 59.117186 49.300801 59.464844 50 59.464844 C 50.554689 59.46875 51.085863 59.246092 51.476562 58.851562 C 52.296872 58.035153 52.300781 56.710918 51.484375 55.886719 L 51.476562 55.886719 C 51.076659 55.486815 50.533419 55.268317 49.974609 55.273438 z M 34.6875 60.457031 C 34.28516 60.464844 33.898433 60.632808 33.621094 60.929688 L 30.085938 64.464844 L 30.085938 64.460938 C 29.796878 64.742187 29.636722 65.125004 29.632812 65.527344 C 29.632812 65.925783 29.789059 66.31251 30.074219 66.59375 C 30.355468 66.87891 30.742195 67.035156 31.140625 67.035156 C 31.542965 67.03125 31.925792 66.871097 32.207031 66.585938 L 35.738281 63.046875 C 36.035161 62.769535 36.203118 62.386708 36.210938 61.980469 C 36.214843 61.574219 36.058601 61.183557 35.769531 60.898438 C 35.484372 60.613278 35.09372 60.453131 34.6875 60.457031 z M 65.3125 60.457031 C 64.91016 60.453125 64.519505 60.609368 64.234375 60.898438 C 63.945315 61.183597 63.789069 61.574243 63.792969 61.976562 C 63.796875 62.382812 63.968749 62.765635 64.261719 63.046875 L 67.800781 66.585938 C 68.081667 66.872531 68.462786 67.03517 68.863281 67.039062 C 69.265621 67.039062 69.648454 66.882816 69.933594 66.597656 C 70.218733 66.312497 70.375 65.929673 70.375 65.527344 C 70.371094 65.125004 70.207028 64.742177 69.917969 64.460938 L 66.382812 60.925781 C 66.101563 60.632812 65.71874 60.464841 65.3125 60.457031 z M 43.167969 69 L 56.835938 69 L 56.835938 71.664062 C 56.832031 73.136761 55.640667 74.332038 54.167969 74.335938 L 45.832031 74.335938 C 44.359333 74.332031 43.167969 73.136761 43.167969 71.664062 L 43.167969 69 z " />
-</svg> 
+</svg>
 Tips & Tricks
-</button> 
+</button>
      <img style="margin-left: 25px; margin-bottom: -38px; "  src="uploads/ttbdrawingheader.png"   />
 
     <div class="svg-container">
@@ -1307,41 +1152,17 @@ Tips & Tricks
  <div id="connection-status" style="padding: 10px;margin-left: 20px; margin-bottom: 2px; border: 1px solid #ccc;">
         Checking Desktop Connection...
     </div>
-    <!--<img  src="uploads/ttbicon.png" class="logo" /> -->
+
 </div>
-</div>  
+</div>
  <div  >
  <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
 
-  <!-- <div data-ad="mlapplications.com_sticky_video_myvidsticky" data-devices="m:1,t:1,d:1"   class="demand-supply"></div> -->
-  <!-- ======================================================================= -->
-  <!-- 3. WEB PAGE STRUCTURAL CORE HOUSING PLACEMENT MARKUP                   -->
-  <!-- ======================================================================= -->
-  <!--<div class="myyy-outstream-placement-anchor">
-    <div id="outstream-ad-wrapper" class="outstream-main-container">
-      <div id="outstream-close" class="outstream-close-trigger">&times;</div>
-      
-       
-      <div id="div-gpt-ad-outstream-slot" style="width: 336px; height: 280px; margin: 0 auto;">
-        <script>
-          googletag.cmd.push(function() { 
-            googletag.display('div-gpt-ad-outstream-slot'); 
-          });
-        </script>
-      </div>
-    </div>
-  </div>--> 
-
-
-
-<!-- old mobile sticky top code -->
 </div>
 <div class="panel" id="panel" style="padding-top: 150px;">
-   <!-- <div id="arxidia">
 
-    </div> -->
     <h1>Taskbar Style</h1>
-    
+
       <svg style="width: 100px; height: 68px">
      <path
      d="M 81.415202,35.500356 H 99.069646 C 99.582645,35.500356 100,35.082979 100,34.569958 V 6.1277226 C 100,5.614702 99.582645,5.197325 99.069646,5.197325 H 81.415201 c -0.512999,0 -0.930354,0.417377 -0.930354,0.9303976 V 34.569958 c 0,0.513021 0.417355,0.930398 0.930355,0.930398 z"
@@ -1462,7 +1283,7 @@ Tips & Tricks
     <div class="options">
 
         <div class="option" data-type="transparent">
-            
+
             <h2>Transparent (line)</h2>
             <span>Full transparency with line</span>
             <div class="icon" style="width: 30px;">
@@ -1471,7 +1292,7 @@ Tips & Tricks
                     <rect x="3" y="3" width="18" height="18" rx="4"
                         fill="none" stroke="#D8D2CB" stroke-width="2"/>
                 </svg>
-                <!-- Selected icon -->           
+                <!-- Selected icon -->
                 <svg class="icon-on" fill="#000000" height="30px" width="30px" viewBox="0 0 512 512">
                 <g style="stroke:#0000bd;stroke-opacity:1;stroke-width:0.99968;stroke-dasharray:none;fill:#38bdf8;fill-opacity:1">
                 <g style="stroke:#0000bd;stroke-opacity:1;stroke-width:0.99968;stroke-dasharray:none;fill:#38bdf8;fill-opacity:1">
@@ -1494,7 +1315,6 @@ Tips & Tricks
      style="stroke-width:0.036" />
                 </svg>
                 </div>
-                
 
             </button>
         </div>
@@ -1508,7 +1328,7 @@ Tips & Tricks
                     <rect x="3" y="3" width="18" height="18" rx="4"
                         fill="none" stroke="#D8D2CB" stroke-width="2"/>
                 </svg>
-                <!-- Selected icon -->           
+                <!-- Selected icon -->
                 <svg class="icon-on" fill="#000000" height="30px" width="30px" viewBox="0 0 512 512">
                 <g style="stroke:#0000bd;stroke-opacity:1;stroke-width:0.99968;stroke-dasharray:none;fill:#38bdf8;fill-opacity:1">
                 <g style="stroke:#0000bd;stroke-opacity:1;stroke-width:0.99968;stroke-dasharray:none;fill:#38bdf8;fill-opacity:1">
@@ -1531,7 +1351,6 @@ Tips & Tricks
      style="stroke-width:0.036" />
                 </svg>
                 </div>
-                
 
             </button>
         </div>
@@ -1545,7 +1364,7 @@ Tips & Tricks
                     <rect x="3" y="3" width="18" height="18" rx="4"
                         fill="none" stroke="#D8D2CB" stroke-width="2"/>
                 </svg>
-                <!-- Selected icon -->           
+                <!-- Selected icon -->
                 <svg class="icon-on" fill="#000000" height="30px" width="30px" viewBox="0 0 512 512">
                 <g style="stroke:#0000bd;stroke-opacity:1;stroke-width:0.99968;stroke-dasharray:none;fill:#38bdf8;fill-opacity:1">
                 <g style="stroke:#0000bd;stroke-opacity:1;stroke-width:0.99968;stroke-dasharray:none;fill:#38bdf8;fill-opacity:1">
@@ -1568,7 +1387,6 @@ Tips & Tricks
      style="stroke-width:0.036" />
                 </svg>
                 </div>
-                
 
             </button>
         </div>
@@ -1577,10 +1395,6 @@ Tips & Tricks
             <h2>Buttons (Color)</h2>
             <span>Colorful App Buttons</span>
 
-          <!--  <div class="color-picker">
-        <input type="range" min="0" max="360" value="200" class="hue">
-        <div class="color-preview"></div>
-    </div> -->
               <div class="colors">
                 <input id="colorbuttons" class="color color-picker" type="color" value="#EFB240">
             </div>
@@ -1590,7 +1404,7 @@ Tips & Tricks
                     <rect x="3" y="3" width="18" height="18" rx="4"
                         fill="none" stroke="#D8D2CB" stroke-width="2"/>
                 </svg>
-                <!-- Selected icon -->           
+                <!-- Selected icon -->
                 <svg class="icon-on" fill="#000000" height="30px" width="30px" viewBox="0 0 512 512">
                 <g style="stroke:#0000bd;stroke-opacity:1;stroke-width:0.99968;stroke-dasharray:none;fill:#38bdf8;fill-opacity:1">
                 <g style="stroke:#0000bd;stroke-opacity:1;stroke-width:0.99968;stroke-dasharray:none;fill:#38bdf8;fill-opacity:1">
@@ -1606,20 +1420,20 @@ Tips & Tricks
                     <path d="M -1.50248,-2.597172 A 0.035136,0.035136 0 0 0 -1.514144,-2.64624 l -0.357192,-0.217152 a 0.037116,0.037116 0 0 0 -0.01926,-0.00536 c -0.02016,0 -0.036468,0.015948 -0.036468,0.03564 v 0.434196 c 0,0.00666 0.00191,0.013176 0.00551,0.018828 0.010656,0.016704 0.03312,0.021816 0.05022,0.011412 l 0.357192,-0.217116 c 0.00472,-0.00288 0.00875,-0.0068 0.0117,-0.011412 z m 0.00648,0.084276 -0.33678,0.204732 c -0.0513,0.031212 -0.1188,0.01584 -0.150696,-0.034236 A 0.105048,0.105048 0 0 1 -2,-2.39892 V -2.83308 C -2,-2.892156 -1.95104,-2.94 -1.89056,-2.94 c 0.020412,0 0.040428,0.00558 0.05778,0.016128 L -1.496,-2.71914 V -2.868 a 0.072,0.072 0 0 1 0.072,-0.072 h 0.072 a 0.072,0.072 0 0 1 0.072,0.072 v 0.504 a 0.072,0.072 0 0 1 -0.072,0.072 H -1.424 A 0.072,0.072 0 0 1 -1.496,-2.364 Z M -1.424,-2.868 v 0.504 h 0.072 v -0.504 z" style="stroke-width:0.036" />
                 </svg>
                 </div>
-            </button><!-- -->
+            </button>
         </div>
 
         <div class="option" data-type="dock_glass">
             <h2>Dock panel (glass)</h2>
              <span>Glass effect on a Dock Panel</span>
-            
+
              <div class="icon" style="width: 30px;">
                 <!-- Deselected icon -->
                 <svg class="icon-off" viewBox="0 0 24 24">
                     <rect x="3" y="3" width="18" height="18" rx="4"
                         fill="none" stroke="#D8D2CB" stroke-width="2"/>
                 </svg>
-                <!-- Selected icon -->           
+                <!-- Selected icon -->
                 <svg class="icon-on" fill="#000000" height="30px" width="30px" viewBox="0 0 512 512">
                 <g style="stroke:#0000bd;stroke-opacity:1;stroke-width:0.99968;stroke-dasharray:none;fill:#38bdf8;fill-opacity:1">
                 <g style="stroke:#0000bd;stroke-opacity:1;stroke-width:0.99968;stroke-dasharray:none;fill:#38bdf8;fill-opacity:1">
@@ -1652,7 +1466,7 @@ Tips & Tricks
                     <rect x="3" y="3" width="18" height="18" rx="4"
                         fill="none" stroke="#D8D2CB" stroke-width="2"/>
                 </svg>
-                <!-- Selected icon -->           
+                <!-- Selected icon -->
                 <svg class="icon-on" fill="#000000" height="30px" width="30px" viewBox="0 0 512 512">
                 <g style="stroke:#0000bd;stroke-opacity:1;stroke-width:0.99968;stroke-dasharray:none;fill:#38bdf8;fill-opacity:1">
                 <g style="stroke:#0000bd;stroke-opacity:1;stroke-width:0.99968;stroke-dasharray:none;fill:#38bdf8;fill-opacity:1">
@@ -1672,7 +1486,6 @@ Tips & Tricks
 
         </div>
 
-
         <div class="option" data-type="gradient1">
             <h2>Gradient</h2>
             <span>Single color gradient</span>
@@ -1685,7 +1498,7 @@ Tips & Tricks
                     <rect x="3" y="3" width="18" height="18" rx="4"
                         fill="none" stroke="#D8D2CB" stroke-width="2"/>
                 </svg>
-                <!-- Selected icon -->           
+                <!-- Selected icon -->
                 <svg class="icon-on" fill="#000000" height="30px" width="30px" viewBox="0 0 512 512">
                 <g style="stroke:#0000bd;stroke-opacity:1;stroke-width:0.99968;stroke-dasharray:none;fill:#38bdf8;fill-opacity:1">
                 <g style="stroke:#0000bd;stroke-opacity:1;stroke-width:0.99968;stroke-dasharray:none;fill:#38bdf8;fill-opacity:1">
@@ -1719,7 +1532,7 @@ Tips & Tricks
                     <rect x="3" y="3" width="18" height="18" rx="4"
                         fill="none" stroke="#D8D2CB" stroke-width="2"/>
                 </svg>
-                <!-- Selected icon -->           
+                <!-- Selected icon -->
                 <svg class="icon-on" fill="#000000" height="30px" width="30px" viewBox="0 0 512 512">
                 <g style="stroke:#0000bd;stroke-opacity:1;stroke-width:0.99968;stroke-dasharray:none;fill:#38bdf8;fill-opacity:1">
                 <g style="stroke:#0000bd;stroke-opacity:1;stroke-width:0.99968;stroke-dasharray:none;fill:#38bdf8;fill-opacity:1">
@@ -1741,16 +1554,7 @@ Tips & Tricks
 
     </div>
 
-    
     <div class="footer">
-<!--<button class="ripple-btn-apply" id="ApplyBtn" >
-                <div>Apply
-                <svg  style="margin-bottom: -4px;" fill="#ffffff" width="20" height="20" viewBox="-2 -3 0.75 0.75">
-                    <path d="M -1.50248,-2.597172 A 0.035136,0.035136 0 0 0 -1.514144,-2.64624 l -0.357192,-0.217152 a 0.037116,0.037116 0 0 0 -0.01926,-0.00536 c -0.02016,0 -0.036468,0.015948 -0.036468,0.03564 v 0.434196 c 0,0.00666 0.00191,0.013176 0.00551,0.018828 0.010656,0.016704 0.03312,0.021816 0.05022,0.011412 l 0.357192,-0.217116 c 0.00472,-0.00288 0.00875,-0.0068 0.0117,-0.011412 z m 0.00648,0.084276 -0.33678,0.204732 c -0.0513,0.031212 -0.1188,0.01584 -0.150696,-0.034236 A 0.105048,0.105048 0 0 1 -2,-2.39892 V -2.83308 C -2,-2.892156 -1.95104,-2.94 -1.89056,-2.94 c 0.020412,0 0.040428,0.00558 0.05778,0.016128 L -1.496,-2.71914 V -2.868 a 0.072,0.072 0 0 1 0.072,-0.072 h 0.072 a 0.072,0.072 0 0 1 0.072,0.072 v 0.504 a 0.072,0.072 0 0 1 -0.072,0.072 H -1.424 A 0.072,0.072 0 0 1 -1.496,-2.364 Z M -1.424,-2.868 v 0.504 h 0.072 v -0.504 z" style="stroke-width:0.036" />
-                </svg>
-                </div>
-            </button> -->
-
 
        <button class="ripple-btn" id="continueBtn" >
 <svg style="margin-bottom: -4px;    "  width="22" height="22" viewBox="0 3 15.36 10.36">
@@ -1758,15 +1562,14 @@ Tips & Tricks
     <g fill="#ffffff" transform="translate(74.806872,64)">
       <path d="m 351.85979,42.666667 v 42.666666 l -68.66594,-0.0029 C 319.27129,116.98858 341.38187,163.3214 341.33989,213.8039 341.27469,291.983 288.09818,360.12159 212.27759,379.17975 136.457,398.23787 57.381812,363.34191 20.358051,294.48541 -16.66571,225.62892 -2.170037,140.42041 55.539794,87.68 c 8.153397,12.97223 19.649072,23.50993 33.28,30.50667 -29.319929,23.68688 -46.340016,59.37416 -46.293333,97.06666 1.04924,69.94151 58.050619,126.08787 127.999999,126.08 64.07171,1.05539 118.70865,-46.1951 126.90564,-109.74908 6.12419,-47.48286 -15.13509,-92.7404 -52.2365,-118.94717 L 245.19313,192 H 202.52646 V 42.666667 Z M 127.85979,0 c 23.56415,0 42.66667,19.102517 42.66667,42.666667 0,23.564149 -19.10252,42.666666 -42.66667,42.666666 -23.56415,0 -42.666662,-19.102517 -42.666662,-42.666666 C 85.193128,19.102517 104.29564,0 127.85979,0 Z" /></g></g>
 </svg>
-           
-Reset Default Values 
-       </button> 
+
+Reset Default Values
+       </button>
     </div>
 </div>
 
-
 <div class="panel2" id="panel2">
-    <h1>Taskbar Effects !</h1> 
+    <h1>Taskbar Effects !</h1>
     <svg
    width="80.3731"
    height="68"
@@ -2013,7 +1816,6 @@ Reset Default Values
   </g>
 </svg>
 
-   
     <p>Enable/Disable effects for the Taskbar that triggered with mouse.</p>
     <div style="color: black;">
   <hr>
@@ -2026,9 +1828,9 @@ Reset Default Values
 <span  style="color: #2B559B; font-weight: bolder;">
     Taskbar-highlight effect </span>
  <p></p>
-   
+
  <label class="toggle">
-  
+
    <input id="chck_blink" type="checkbox"> <!-- checked> -->
   <span class="slider"></span>
    <span class="state">
@@ -2041,14 +1843,7 @@ The taskbar will be highlighted when you move the mouse over it !
 </span>
 <hr>
 
-<!--
-<svg style="margin-bottom: -4px;    "  width="40px" height="30px" >
-  <g stroke="none" stroke-width="1" >
-    <g fill="#000000"  >
-      <path d="M19.487188,21.027932L19.34533,21.107306C18.032056,21.830062,16.594211,22.534393,15.043882,23.213128L14.935678,23.259923 14.990329,23.324017C15.854117,24.392926,16.302456,25.695468,16.339503,27.022055L16.33974,27.080229 19.148006,24.271959C20.053307,23.366593,20.175974,21.984063,19.490615,21.032432z M17.238489,13.062014C17.673746,13.062015 18.109004,13.228014 18.44101,13.560014 19.105021,14.224014 19.105021,15.301014 18.44101,15.965014 17.776998,16.629014 16.699979,16.629014 16.035968,15.965014 15.371956,15.301014 15.371956,14.224014 16.035968,13.560014 16.367973,13.228014 16.803231,13.062015 17.238489,13.062014z M9.5309606,12.071919C8.8579609,12.08692,8.2179613,12.363924,7.727962,12.853932L4.9202375,15.661259 4.9774604,15.661488C6.3040485,15.698443,7.6066127,16.146755,8.6758327,17.010779L8.7404919,17.065911 8.7876945,16.956754C9.4662316,15.406675,10.170146,13.969118,10.892052,12.65629L10.971652,12.513898 10.882225,12.451754C10.490022,12.193796,10.02371,12.059169,9.5309606,12.071919z M20.640499,9.6599817C21.075757,9.6599817 21.511014,9.825985 21.84302,10.15799 22.507032,10.822002 22.507032,11.899021 21.84302,12.563033 21.179008,13.227045 20.10199,13.227045 19.437978,12.563033 18.773966,11.899021 18.773966,10.822002 19.437978,10.15799 19.769984,9.825985 20.205242,9.6599817 20.640499,9.6599817z M24.041479,6.2590094C24.476729,6.2590103 24.911979,6.4250097 25.243979,6.7570095 25.907979,7.42101 25.907979,8.4980097 25.243979,9.1620092 24.579979,9.8260088 23.502979,9.8260088 22.83898,9.1620092 22.17498,8.4980097 22.17498,7.42101 22.83898,6.7570095 23.170979,6.4250097 23.606229,6.2590103 24.041479,6.2590094z M29.946111,2.0543213C27.825098,2.2193184 22.754067,2.9983082 18.11204,6.6512585 18.075039,6.6832581 18.028039,6.7202578 17.971039,6.763257 15.052021,8.9832268 11.932002,14.105158 9.3659863,20.867067L11.132998,22.634043C17.895038,20.069078 23.01707,16.94812 25.237082,14.030159 25.281083,13.97216 25.318084,13.92616 25.349084,13.889161 29.003106,9.2472239 29.782111,4.1762924 29.946111,2.0543213z M30.885486,5.7220459E-06C30.956838,7.8201294E-05,31.002994,0.0009727478,31.022119,0.0013484955L31.973125,0.027347565 31.999124,0.97933578C32.008124,1.2833309,32.144124,8.5102339,26.926093,15.137144L26.847093,15.226143C25.648492,16.805809,23.793564,18.386354,21.386644,19.905878L21.224525,20.006415 21.237862,20.025815C22.360305,21.752949,22.130061,24.133814,20.569989,25.693958L14.40817,31.855785 14.384132,31.881015 14.266124,31.999015 14.265533,31.998423 14.264999,31.998957 12.843016,30.576958 12.98448,30.435493 13.121676,30.291648C14.720456,28.53255,14.745373,25.87621,13.140055,24.270025L12.954793,24.084775 12.911181,24.102309C12.361872,24.320498,11.800662,24.535488,11.227998,24.747015L10.623994,24.970011 7.0309725,21.37606 7.253974,20.772069C7.4655046,20.199492,7.6804934,19.638363,7.8986664,19.089134L7.9156523,19.046887 7.7299895,18.86106C6.1228356,17.25491,3.466466,17.280733,1.7073669,18.879434L1.5825472,18.998476 1.422967,19.158034 1.1159506,18.851012 0,17.735086 0.11800003,17.617089 0.15813828,17.578863 6.305963,11.431909C7.1639624,10.573895 8.2949615,10.086887 9.4879603,10.061887 10.38346,10.022886 11.251959,10.28089 11.985459,10.767554L11.994003,10.773538 12.091659,10.615867C13.608334,8.210288,15.18371,6.3576374,16.754031,5.1632786L16.864032,5.0742798C23.075945,0.18247032,29.815206,-0.0011005402,30.885486,5.7220459E-06z" /></g></g>
-</svg>
--->
-<svg style="margin-bottom: -10px; margin-right: 10px;    "    
+<svg style="margin-bottom: -10px; margin-right: 10px;    "
   width="35px" height="35px" >
   <g stroke="none" stroke-width="1" >
     <g fill="#2B559B"  >
@@ -2056,10 +1851,10 @@ The taskbar will be highlighted when you move the mouse over it !
 </svg>
 <span  style="color: #2B559B; font-weight: bolder;">
 
-   Click-highlight effect 
+   Click-highlight effect
 </span>
    <label class="toggle" style="margin-top: 20px;">
-  
+
    <input id="chck_click" type="checkbox" > <!-- checked> -->
   <span class="slider"></span>
    <span class="state">
@@ -2073,8 +1868,7 @@ A bursting bubble effect when you click on the taskbar
 
 <hr>
 
-
-<svg style="margin-bottom: -10px; margin-right: 10px;    "    
+<svg style="margin-bottom: -10px; margin-right: 10px;    "
   width="35px" height="35px" >
   <g stroke="none" stroke-width="1" >
     <g fill="#2B559B"  >
@@ -2082,10 +1876,10 @@ A bursting bubble effect when you click on the taskbar
 </svg>
 <span  style="color: #2B559B; font-weight: bolder;">
 
- Mouse Light Shadow - effect 
+ Mouse Light Shadow - effect
 </span>
  <label class="toggle" style="margin-top: 20px;">
-  
+
    <input id="chck_shadow" type="checkbox" > <!-- checked> -->
   <span class="slider"></span>
    <span class="state">
@@ -2094,7 +1888,7 @@ A bursting bubble effect when you click on the taskbar
   </span>
 </label>
 <span  style="color: var(--muted);">
-A light shadow behind mouse move 
+A light shadow behind mouse move
 </span>
 
 <hr>
@@ -2106,48 +1900,41 @@ A light shadow behind mouse move
 </svg>
 <span  style="color: #2B559B; font-weight: bolder;">
 
-    Need Help ? 
+    Need Help ?
 </span>
     <p></p>
 <span style="color: var(--muted);">
     If you need more help on choosing what to do with the app settings, there is a dedicated space on our website for it
 </span>
 
-
     </div>
 
     <div class="footer">
-<!--<button class="ripple-btn-apply" id="ApplyBtn" >
-                <div>Apply
-                <svg  style="margin-bottom: -4px;" fill="#ffffff" width="20" height="20" viewBox="-2 -3 0.75 0.75">
-                    <path d="M -1.50248,-2.597172 A 0.035136,0.035136 0 0 0 -1.514144,-2.64624 l -0.357192,-0.217152 a 0.037116,0.037116 0 0 0 -0.01926,-0.00536 c -0.02016,0 -0.036468,0.015948 -0.036468,0.03564 v 0.434196 c 0,0.00666 0.00191,0.013176 0.00551,0.018828 0.010656,0.016704 0.03312,0.021816 0.05022,0.011412 l 0.357192,-0.217116 c 0.00472,-0.00288 0.00875,-0.0068 0.0117,-0.011412 z m 0.00648,0.084276 -0.33678,0.204732 c -0.0513,0.031212 -0.1188,0.01584 -0.150696,-0.034236 A 0.105048,0.105048 0 0 1 -2,-2.39892 V -2.83308 C -2,-2.892156 -1.95104,-2.94 -1.89056,-2.94 c 0.020412,0 0.040428,0.00558 0.05778,0.016128 L -1.496,-2.71914 V -2.868 a 0.072,0.072 0 0 1 0.072,-0.072 h 0.072 a 0.072,0.072 0 0 1 0.072,0.072 v 0.504 a 0.072,0.072 0 0 1 -0.072,0.072 H -1.424 A 0.072,0.072 0 0 1 -1.496,-2.364 Z M -1.424,-2.868 v 0.504 h 0.072 v -0.504 z" style="stroke-width:0.036" />
-                </svg>
-                </div>
-            </button> -->
+
        <button onclick="" class="ripple-btn" id="OpenEffectsHelpBtn" >
-<svg style="margin-bottom: -4px; margin-right: 5px;" 
+<svg style="margin-bottom: -4px; margin-right: 5px;"
   fill="#ffffff"
    viewBox="0 0 22 20"
    width="22px"
    height="20px">
-    <path 
+    <path
        d="M 11,0 C 17.075132,0 22,4.2532946 22,9.5 22,14.746705 17.075132,19 11,19 9.278481,19 7.6493275,18.658463 6.198429,18.049567 L 0.76611328,20.533813 2.1131908,15.099756 C 0.7843691,13.529522 0,11.59387 0,9.5 0,4.2532946 4.9248674,0 11,0 Z m 0,1 C 5.4771522,1 1,4.8055794 1,9.5 c 0,2.009541 0.8204112,3.856207 2.1920657,5.311206 L 2.0679932,19.030395 6.0757995,16.899747 C 7.5294088,17.600135 9.209767,18 11,18 16.522848,18 21,14.194421 21,9.5 21,4.8055794 16.522848,1 11,1 Z M 9.8684082,12.925781 h 1.4575198 v 1.523438 H 9.8684082 V 12.925781 Z M 8.2937012,4.513916 c 0.5957061,-0.642093 1.413569,-0.9631347 2.4536138,-0.9631347 0.961918,0 1.732174,0.2746554 2.310791,0.8239745 0.578616,0.5493192 0.867919,1.2512165 0.867919,2.1057129 0,0.5175807 -0.1062,0.9374984 -0.318603,1.2597657 -0.212403,0.3222672 -0.640866,0.7958953 -1.2854,1.4208984 -0.468753,0.4541039 -0.772705,0.8386215 -0.911866,1.1535642 -0.139161,0.314943 -0.20874,0.780027 -0.20874,1.395264 H 9.8977051 c 0,-0.698246 0.083007,-1.260984 0.2490239,-1.688232 0.166016,-0.4272487 0.529782,-0.9167457 1.091308,-1.4685063 l 0.585938,-0.5786133 c 0.175782,-0.1660165 0.317382,-0.3393546 0.424804,-0.5200196 0.195314,-0.3173844 0.292969,-0.6469709 0.292969,-0.9887695 0,-0.478518 -0.142821,-0.8935529 -0.428467,-1.2451172 -0.285646,-0.3515643 -0.758053,-0.5273437 -1.417236,-0.5273437 -0.8154338,0 -1.379393,0.3027313 -1.6918946,0.9082031 C 8.8283683,5.9384782 8.7282716,6.4243132 8.7038574,7.059082 H 7.4001465 c 0,-1.0546928 0.2978485,-1.903073 0.8935547,-2.545166 0,0 -0.5957062,0.642093 0,0 z" />
-</svg>           
+</svg>
 Effects usage ..
-<svg style="margin-top: -14px; margin-right: -15px; margin-left: 15px;" 
+<svg style="margin-top: -14px; margin-right: -15px; margin-left: 15px;"
   fill="#ffffff"
    viewBox="0 0 17 20"
    width="22px"
    height="20px">
-    <path 
+    <path
        d="M 10,0 12.792969,2.7929688 4.585938,11 6,12.414062 14.207031,4.2070313 17,7 V 0 Z M 0,3 V 17 H 14 V 9 h -2 v 6 H 2 V 5 H 8 V 3 Z" />
-</svg>           
-       </button> 
+</svg>
+       </button>
     </div>
 </div>
 
 <div class="panel3" id="panel3">
-    <h1>App Settings !</h1> 
+    <h1>App Settings !</h1>
     <svg style="width: 100px; height: 68px">
         <path
      d="m 98.211857,62.148484 c -0.68418,2.373509 -2.681902,4.034991 -4.765778,5.446397 q -0.436448,0.295669 -0.873173,0.577722 c -0.002,8.12e-4 -0.004,0.0027 -0.006,0.0036 -0.01401,0.009 -0.02804,0.01801 -0.04109,0.02707 -0.06009,0.03873 -0.120201,0.07749 -0.179791,0.115788 l 0.03273,0.01471 c 0,0 0.03214,0.01709 -0.003,0.0027 -0.01047,-0.0044 -0.02143,-0.0083 -0.03188,-0.01272 -1.2106,-0.488254 -2.442702,-1.012488 -3.370443,-1.927149 -0.962397,-0.949815 -1.524819,-2.439558 -1.00369,-3.687344 a 2.3824414,2.3824414 0 0 1 0.257961,-0.462987 c 0.04227,-0.06049 0.0878,-0.118383 0.135198,-0.175203 a 2.553556,2.553556 0 0 1 4.38581,0.775955 c 0.15308,-1.425423 -1.022311,-2.619448 -2.153453,-3.500462 -1.13164,-0.88057 -2.417501,-1.83953 -2.636277,-3.257065 -0.122174,-0.788697 0.152082,-1.55302 0.651694,-2.166594 0.01547,-0.01864 0.03091,-0.03726 0.04685,-0.05539 a 3.7266846,3.7266846 0 0 1 2.395281,-1.285023 c 1.735225,-0.180341 3.420729,0.738145 4.681332,1.944618 2.028924,1.941131 3.255504,4.92271 2.477724,7.621376 z"
@@ -2337,14 +2124,12 @@ Effects usage ..
      style="stroke-width:0.135425" />
 
     </svg>
-    
-    
+
     <p>
         <span  style="color: black;">
         Choose the application settings when you logon to Windows.
     </span>
     </p>
-
 
     <div style="color: black;">
   <hr>
@@ -2358,7 +2143,7 @@ Effects usage ..
     Autostart
 </span>
     <label class="toggle" style="margin-top: 20px;">
-  
+
    <input id="chck_autostart" type="checkbox"> <!-- checked> -->
   <span class="slider"></span>
    <span class="state">
@@ -2371,20 +2156,13 @@ Select whether the "Transparent Taskbar+ Lite" will autostart when you logon to 
 </span>
 <hr>
 
-<!--
-<svg style="margin-bottom: -4px;    "  width="40px" height="30px" >
-  <g stroke="none" stroke-width="1" >
-    <g fill="#000000"  >
-      <path d="M19.487188,21.027932L19.34533,21.107306C18.032056,21.830062,16.594211,22.534393,15.043882,23.213128L14.935678,23.259923 14.990329,23.324017C15.854117,24.392926,16.302456,25.695468,16.339503,27.022055L16.33974,27.080229 19.148006,24.271959C20.053307,23.366593,20.175974,21.984063,19.490615,21.032432z M17.238489,13.062014C17.673746,13.062015 18.109004,13.228014 18.44101,13.560014 19.105021,14.224014 19.105021,15.301014 18.44101,15.965014 17.776998,16.629014 16.699979,16.629014 16.035968,15.965014 15.371956,15.301014 15.371956,14.224014 16.035968,13.560014 16.367973,13.228014 16.803231,13.062015 17.238489,13.062014z M9.5309606,12.071919C8.8579609,12.08692,8.2179613,12.363924,7.727962,12.853932L4.9202375,15.661259 4.9774604,15.661488C6.3040485,15.698443,7.6066127,16.146755,8.6758327,17.010779L8.7404919,17.065911 8.7876945,16.956754C9.4662316,15.406675,10.170146,13.969118,10.892052,12.65629L10.971652,12.513898 10.882225,12.451754C10.490022,12.193796,10.02371,12.059169,9.5309606,12.071919z M20.640499,9.6599817C21.075757,9.6599817 21.511014,9.825985 21.84302,10.15799 22.507032,10.822002 22.507032,11.899021 21.84302,12.563033 21.179008,13.227045 20.10199,13.227045 19.437978,12.563033 18.773966,11.899021 18.773966,10.822002 19.437978,10.15799 19.769984,9.825985 20.205242,9.6599817 20.640499,9.6599817z M24.041479,6.2590094C24.476729,6.2590103 24.911979,6.4250097 25.243979,6.7570095 25.907979,7.42101 25.907979,8.4980097 25.243979,9.1620092 24.579979,9.8260088 23.502979,9.8260088 22.83898,9.1620092 22.17498,8.4980097 22.17498,7.42101 22.83898,6.7570095 23.170979,6.4250097 23.606229,6.2590103 24.041479,6.2590094z M29.946111,2.0543213C27.825098,2.2193184 22.754067,2.9983082 18.11204,6.6512585 18.075039,6.6832581 18.028039,6.7202578 17.971039,6.763257 15.052021,8.9832268 11.932002,14.105158 9.3659863,20.867067L11.132998,22.634043C17.895038,20.069078 23.01707,16.94812 25.237082,14.030159 25.281083,13.97216 25.318084,13.92616 25.349084,13.889161 29.003106,9.2472239 29.782111,4.1762924 29.946111,2.0543213z M30.885486,5.7220459E-06C30.956838,7.8201294E-05,31.002994,0.0009727478,31.022119,0.0013484955L31.973125,0.027347565 31.999124,0.97933578C32.008124,1.2833309,32.144124,8.5102339,26.926093,15.137144L26.847093,15.226143C25.648492,16.805809,23.793564,18.386354,21.386644,19.905878L21.224525,20.006415 21.237862,20.025815C22.360305,21.752949,22.130061,24.133814,20.569989,25.693958L14.40817,31.855785 14.384132,31.881015 14.266124,31.999015 14.265533,31.998423 14.264999,31.998957 12.843016,30.576958 12.98448,30.435493 13.121676,30.291648C14.720456,28.53255,14.745373,25.87621,13.140055,24.270025L12.954793,24.084775 12.911181,24.102309C12.361872,24.320498,11.800662,24.535488,11.227998,24.747015L10.623994,24.970011 7.0309725,21.37606 7.253974,20.772069C7.4655046,20.199492,7.6804934,19.638363,7.8986664,19.089134L7.9156523,19.046887 7.7299895,18.86106C6.1228356,17.25491,3.466466,17.280733,1.7073669,18.879434L1.5825472,18.998476 1.422967,19.158034 1.1159506,18.851012 0,17.735086 0.11800003,17.617089 0.15813828,17.578863 6.305963,11.431909C7.1639624,10.573895 8.2949615,10.086887 9.4879603,10.061887 10.38346,10.022886 11.251959,10.28089 11.985459,10.767554L11.994003,10.773538 12.091659,10.615867C13.608334,8.210288,15.18371,6.3576374,16.754031,5.1632786L16.864032,5.0742798C23.075945,0.18247032,29.815206,-0.0011005402,30.885486,5.7220459E-06z" /></g></g>
-</svg>
--->
 <span  style="color: #2B559B; font-weight: bolder;">
 
     Show Settings on Startup?
 </span>
 
     <label class="toggle">
-  
+
    <input id="chck_autoshow" type="checkbox" > <!-- checked> -->
   <span class="slider"></span>
    <span class="state">
@@ -2405,51 +2183,39 @@ Select whether to show the "Settings" window when the app starts.
 </svg>
 <span  style="color: #2B559B; font-weight: bolder;">
 
-Need Help ? 
+Need Help ?
 </span>
 <p></p>
 <span  style="color: rgb(64, 64, 64);">
     If you need more help on choosing what to do with the app settings, there is a dedicated space on our website for it
 </span>
 
-
     </div>
 
     <div class="footer">
-<!--<button class="ripple-btn-apply" id="ApplyBtn" >
-                <div>Apply
-                <svg  style="margin-bottom: -4px;" fill="#ffffff" width="20" height="20" viewBox="-2 -3 0.75 0.75">
-                    <path d="M -1.50248,-2.597172 A 0.035136,0.035136 0 0 0 -1.514144,-2.64624 l -0.357192,-0.217152 a 0.037116,0.037116 0 0 0 -0.01926,-0.00536 c -0.02016,0 -0.036468,0.015948 -0.036468,0.03564 v 0.434196 c 0,0.00666 0.00191,0.013176 0.00551,0.018828 0.010656,0.016704 0.03312,0.021816 0.05022,0.011412 l 0.357192,-0.217116 c 0.00472,-0.00288 0.00875,-0.0068 0.0117,-0.011412 z m 0.00648,0.084276 -0.33678,0.204732 c -0.0513,0.031212 -0.1188,0.01584 -0.150696,-0.034236 A 0.105048,0.105048 0 0 1 -2,-2.39892 V -2.83308 C -2,-2.892156 -1.95104,-2.94 -1.89056,-2.94 c 0.020412,0 0.040428,0.00558 0.05778,0.016128 L -1.496,-2.71914 V -2.868 a 0.072,0.072 0 0 1 0.072,-0.072 h 0.072 a 0.072,0.072 0 0 1 0.072,0.072 v 0.504 a 0.072,0.072 0 0 1 -0.072,0.072 H -1.424 A 0.072,0.072 0 0 1 -1.496,-2.364 Z M -1.424,-2.868 v 0.504 h 0.072 v -0.504 z" style="stroke-width:0.036" />
-                </svg>
-                </div>
-            </button> -->
+
        <button onclick="" class="ripple-btn" id="OpenHelpBtn2" >
-<svg style="margin-bottom: -4px; margin-right: 5px;" 
+<svg style="margin-bottom: -4px; margin-right: 5px;"
   fill="#ffffff"
    viewBox="0 0 22 20"
    width="22px"
    height="20px">
-    <path 
+    <path
        d="M 10.052734,0 C 4.5002398,0 0,3.9374268 0,8.794922 0,12.952418 3.2979733,16.43504 7.7304687,17.352539 L 6.8027343,22 12.365234,17.35498 C 16.80273,16.442481 20.10791,12.954918 20.10791,8.794922 20.10791,3.9374268 15.60767,0 10.055176,0 Z M 9.911621,3.4458008 c 0.109863,-0.00445 0.220997,-0.00295 0.333496,0.00439 1.287499,0.085 2.42502,0.9899232 2.77002,2.232422 0.354999,1.2774987 -0.122306,2.5997662 -1.112305,3.3222655 l -0.0049,0.00245 c -0.847499,0.6174902 -1.165215,1.3853817 -1.282715,1.8378817 -0.06,0.2275 -0.272383,0.37957 -0.504883,0.37207 -0.3324993,-0.01 -0.5649213,-0.32252 -0.4824215,-0.645019 0.1625,-0.6249997 0.5849225,-1.602091 1.6699215,-2.3920902 0.6625,-0.4849996 0.977227,-1.3853133 0.719727,-2.2578126 C 11.805078,5.197364 11.175116,4.6424412 10.432617,4.5024415 9.1176187,4.2574417 7.965332,5.265099 7.965332,6.5375977 c 0,0.2824995 -0.2302543,0.5097655 -0.510254,0.5097655 -0.2799998,0 -0.5097655,-0.2297657 -0.5097655,-0.5097655 0,-1.664061 1.3183612,-3.0250092 2.9663085,-3.0917969 z m 0.121094,9.1992192 c 0.497499,0 0.902344,0.404844 0.902344,0.902343 0,0.4975 -0.404845,0.902832 -0.902344,0.902832 -0.4974997,0 -0.902344,-0.405332 -0.902344,-0.902832 0,-0.497499 0.4048443,-0.902343 0.902344,-0.902343 z" />
-</svg>           
+</svg>
 Open help ..
-<svg style="margin-top: -14px; margin-right: -15px; margin-left: 15px;" 
+<svg style="margin-top: -14px; margin-right: -15px; margin-left: 15px;"
   fill="#ffffff"
    viewBox="0 0 17 20"
    width="22px"
    height="20px">
-    <path 
+    <path
        d="M 10,0 12.792969,2.7929688 4.585938,11 6,12.414062 14.207031,4.2070313 17,7 V 0 Z M 0,3 V 17 H 14 V 9 h -2 v 6 H 2 V 5 H 8 V 3 Z" />
-</svg>           
+</svg>
 
-
-           
-       
-</button> 
+</button>
     </div>
 </div>
-
-
 
 <button onclick="bindSwitchToWindows()" id="switchtowindowsbutton" class="glossy-switchtowindows">
     <div class="btn-content myResetButton">
@@ -2459,18 +2225,9 @@ Open help ..
          <svg viewBox="-5 -15 26 25.459635">
     <path d="M 9.4121094 -10 C 8.74335 -10 8.2070187 -9.4687793 8.1992188 -8.8125 C 8.1914188 -8.1531407 8.7273194 -7.6074094 9.3867188 -7.5996094 C 13.363275 -7.5589894 16.599609 -4.2952285 16.599609 -0.3203125 C 16.599609 1.6234456 15.843749 3.4569926 14.46875 4.8320312 L 11.800781 7.5 L 11.800781 3.1992188 C 11.800781 2.5398594 11.258969 2 10.599609 2 C 9.94025 2 9.4003906 2.5398594 9.4003906 3.1992188 L 9.4003906 8 C 9.4003906 9.984358 11.015642 11.599609 13 11.599609 L 17.800781 11.599609 C 18.460141 11.599609 19 11.05975 19 10.400391 C 19 9.7410313 18.460141 9.1992188 17.800781 9.1992188 L 13.492188 9.1992188 L 16.164062 6.5273438 C 17.992181 4.6992256 19 2.2688849 19 -0.3203125 C 19 -5.6047072 14.699704 -9.9484001 9.4121094 -10 z M -3.8007812 -8.4101562 C -4.4601406 -8.4101562 -5 -7.8683437 -5 -7.2089844 C -5 -6.549625 -4.4601406 -6.0097656 -3.8007812 -6.0097656 L 0.5078125 -6.0097656 L -2.1640625 -3.3378906 C -3.9921807 -1.5097725 -5 0.92056821 -5 3.5097656 L -5 3.5117188 C -5 8.7961135 -0.69970409 13.137853 4.5878906 13.189453 C 5.25665 13.189453 5.7929813 12.658232 5.8007812 12.001953 C 5.8085812 11.342594 5.2726806 10.798816 4.6132812 10.791016 C 0.63672523 10.750396 -2.5996094 7.4866348 -2.5996094 3.5117188 C -2.5996094 1.5679607 -1.8437486 -0.26558638 -0.46875 -1.640625 L 2.1992188 -4.3085938 L 2.1992188 -0.009765625 C 2.1992188 0.64959372 2.7410313 1.1914063 3.4003906 1.1914062 C 4.05975 1.1914062 4.5996094 0.64959372 4.5996094 -0.009765625 L 4.5996094 -4.8085938 C 4.5996094 -6.7929518 2.984358 -8.4101563 1 -8.4101562 L -3.8007812 -8.4101562 z "/>
 </svg>
-<!--
-        <svg viewBox="0 0 24 24">
-            <path d="M12 2L15 8l6 .9-4.5 4.4L17.8 20 12 16.9 6.2 20l1.3-6.7L3 8.9 9 8z"/>
-        </svg>
-    -->
-    
+
     </div>
 </button>
-
-
-
-
 
 <button id="softresetbutton" class="glossy-btn">
     <div class="btn-content myResetButton">
@@ -2480,15 +2237,9 @@ Open help ..
          <svg viewBox="0 0 24 24">
     <path d="M12 5V1L7 6l5 5V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/>
 </svg>
-<!--
-        <svg viewBox="0 0 24 24">
-            <path d="M12 2L15 8l6 .9-4.5 4.4L17.8 20 12 16.9 6.2 20l1.3-6.7L3 8.9 9 8z"/>
-        </svg>
-    -->
-      
+
     </div>
 </button>
-
 
 <div id="welcomeDialog" style="font-size: 14px; display: none;" class="dialog-overlay">
   <div class="dialog">
@@ -2504,7 +2255,6 @@ Transparent Taskbar+ Lite</h1>
     <p style="color: grey; font-style: italic;">If you accidentally click on <b>"Block"</b> or you want to <b>revoke</b> this permission, you can easily do this:</p>
 <img src="/uploads/TTB_Revoke.jpg" style="width: 220px;">
 <hr>
-
 
     <label>
       <input type="checkbox" id="dontShow" >
@@ -2523,27 +2273,25 @@ Transparent Taskbar+ Lite</h1>
     <hr>
     <p style="font-size: 16px; font-weight: normal;"><b>Status: </b> ❌ Desktop App Offline</p>
     <p style="font-size: 16px; font-style: italic;">It seems the "<b>Transparent Taskbar+ Lite</b> application" is not running on your Windows PC. </p>
-   
+
     <p style="font-size: 16px; color: var(--accent);">You can try to launch the app now. Click on the button below:</p>
     <p></p>
-    
+
      <button  onclick="tryLaunchApp()" class="ripple-btn" id="OpenHelpBtn" >
 
-Launch App on Windows 
+Launch App on Windows
 
  <svg  style="margin-left: 15px; margin-bottom: -4px; " fill="#ffffff" width="20" height="20" viewBox="-2 -3 0.75 0.75">
                     <path d="M -1.50248,-2.597172 A 0.035136,0.035136 0 0 0 -1.514144,-2.64624 l -0.357192,-0.217152 a 0.037116,0.037116 0 0 0 -0.01926,-0.00536 c -0.02016,0 -0.036468,0.015948 -0.036468,0.03564 v 0.434196 c 0,0.00666 0.00191,0.013176 0.00551,0.018828 0.010656,0.016704 0.03312,0.021816 0.05022,0.011412 l 0.357192,-0.217116 c 0.00472,-0.00288 0.00875,-0.0068 0.0117,-0.011412 z m 0.00648,0.084276 -0.33678,0.204732 c -0.0513,0.031212 -0.1188,0.01584 -0.150696,-0.034236 A 0.105048,0.105048 0 0 1 -2,-2.39892 V -2.83308 C -2,-2.892156 -1.95104,-2.94 -1.89056,-2.94 c 0.020412,0 0.040428,0.00558 0.05778,0.016128 L -1.496,-2.71914 V -2.868 a 0.072,0.072 0 0 1 0.072,-0.072 h 0.072 a 0.072,0.072 0 0 1 0.072,0.072 v 0.504 a 0.072,0.072 0 0 1 -0.072,0.072 H -1.424 A 0.072,0.072 0 0 1 -1.496,-2.364 Z M -1.424,-2.868 v 0.504 h 0.072 v -0.504 z" style="stroke-width:0.036" />
                 </svg>
-</button> 
- <hr>     
+</button>
+ <hr>
  <p st> </p>
 <p style="margin-top: 20px;">Example:</p>
 <img src="/uploads/TTBPLUS_launch_app.jpg" style="margin-top: 2px; margin-left: 15px; width: 370px;">
 
-
-   
     <hr>
-    
+
   </div>
 </div>
 
@@ -2554,25 +2302,20 @@ Transparent Taskbar+ Lite</h1>
     <hr>
     <p style="font-size: 16px; font-weight: normal;"><b>Status: </b> ⚠️ Permission Required</p>
     <p style="font-size: 16px; font-style: italic;">You must give permission from your browser to send commands to the "<b>Transparent Taskbar+ Lite</b> application" that is running on your Windows PC. </p>
-   
+
     <p style="font-size: 16px; color: var(--accent);">You can give permission like the example below: Be sure to select the "<b>Allowed</b>":</p>
     <p>After that, <b>close</b> this browser tab and <b>restart</b> the application from Windows</p>
     <p></p>
-    
-    
- <hr>     
+
+ <hr>
  <p st> </p>
 <p style="margin-top: 20px;">Example:</p>
 <img src="/uploads/TTB_Revoke.jpg" style="margin-top: 2px; margin-left: 15px; width: 370px;">
 
-
-   
     <hr>
-    
+
   </div>
 </div>
-
-
 
 <script>
 
@@ -2581,16 +2324,13 @@ const continueBtn = document.getElementById("continueBtn");
 
 let selected = null;
 
-
 //window.appParams = {{theme: '{App.setting_theme}',  choice: {mychoice}, color1: '{App.setting_color1}' , color2: '{App.setting_color2}' ,color3: '{App.setting_color3}' ,colorbuttons: '{App.setting_colorbuttons}' , colordock: '{App.setting_colordock}' , autostart: '{App.setting_autostart}' , autoshow: '{App.setting_autoshow}' ,show_blink: '{App.setting_show_blink}' ,show_clicks: '{App.setting_show_clicks}' , show_shadow: '{App.setting_show_shadow}' }};
-
 
 const urlparams = new URLSearchParams(window.location.search);
 
 window.appParams = Object.fromEntries(urlparams.entries());
 
-
-//window.appParams = 
+//window.appParams =
 //const params = new URLSearchParams(window.location.search);
 //const params = window.appParams;
 const params = window.appParams;
@@ -2607,7 +2347,7 @@ window.history.replaceState({}, document.title, window.location.pathname);
 const choice = parseInt(window.appParams.choice, 10);
 console.log('choice:' + choice);
 
-//document.getElementById('arxidia').innerHTML = "paparia,'choice:'  " + choice; 
+//document.getElementById('arxidia').innerHTML = "paparia,'choice:'  " + choice;
 
 const colorParam_1 = params.color1;
 const colorParam_2 = params.color2;
@@ -2653,7 +2393,6 @@ if (choiceMap[choice]) {
         `.option[data-type="${choiceMap[choice]}"]`
     );
 
-
         if (colorParam_1) {
             //const cl1 = document.getElementById('color1');
             //cl1.picker.value =  "#"+colorParam_1;
@@ -2672,7 +2411,6 @@ if (choiceMap[choice]) {
         if (colorParam_5) {
             document.getElementById("colordock").value = "#"+colorParam_5;
         }
-
 
     if (opt) {
 
@@ -2739,7 +2477,6 @@ function ApplyDefaultValues()
 
 function onOptionSelected(thetype) {
 
-    
     console.log("Option selected:", thetype);
 
 return;
@@ -2751,7 +2488,7 @@ return;
     //}
 
  const colors = [...selected.querySelectorAll("input[type=color]")]
-        .map(c => c.value); 
+        .map(c => c.value);
 
     const payload = {
         type: "styleSelected",
@@ -2766,7 +2503,6 @@ return;
 
     // 🔜 Add more logic here if needed
 }
-
 
 /* ---------- selection logic ---------- */
 
@@ -2803,11 +2539,10 @@ options.forEach(option => {
         });
     });
 });
- 
 
 </script>
- 
-<script> 
+
+<script>
 let isPickingColor = false;
 let colorPickerActive = false;
 
@@ -2834,7 +2569,6 @@ options.forEach(option => {
         ripple.addEventListener("animationend", () => ripple.remove());
     });
 });
-
 
 document.querySelectorAll(".ripple-btn").forEach(btn => {
     btn.addEventListener("click", function (e) {
@@ -2894,10 +2628,8 @@ input.addEventListener("pointerdown", e => {
     });
 });
 /*
-    
-document.querySelectorAll(".color-picker").forEach(input => {
 
-   
+document.querySelectorAll(".color-picker").forEach(input => {
 
     input.addEventListener("mousedown", e => {
         isPickingColor = true;
@@ -2909,7 +2641,7 @@ document.querySelectorAll(".color-picker").forEach(input => {
     });
 
      input.addEventListener("input", e => {
-      e.stopPropagation();    
+      e.stopPropagation();
     if (!e.target.closest(".option").classList.contains("selected"))
         return;
 
@@ -2923,13 +2655,11 @@ document.querySelectorAll(".color-picker").forEach(input => {
     });
 });
 
-
     */
 //const options = document.querySelectorAll(".option");
 
 document.querySelectorAll(".ripple-btn").forEach(btn => {
-   
-    
+
    btn.addEventListener("click", function (e) {
 
   //  btn.addEventListener('mousedown', e => {
@@ -2953,15 +2683,11 @@ document.querySelectorAll(".ripple-btn").forEach(btn => {
         btn.appendChild(ripple);
 
         ripple.addEventListener("animationend", () => ripple.remove());
-    }) 
+    })
 });
 
-
-
-
 document.querySelectorAll(".ripple-btn-apply").forEach(btn => {
-   
-    
+
 //   btn.addEventListener("click", function (e) {
 
     btn.addEventListener('mousedown', e => {
@@ -2986,10 +2712,8 @@ document.querySelectorAll(".ripple-btn-apply").forEach(btn => {
 
         ripple.addEventListener("animationend", () => ripple.remove());
 
-
-        
  const colors = [...selected.querySelectorAll("input[type=color]")]
-        .map(c => c.value); 
+        .map(c => c.value);
 
     const payload = {
         type: "styleSelected",
@@ -3009,8 +2733,7 @@ document.querySelectorAll(".ripple-btn-apply").forEach(btn => {
 //const state = {
 //chck_autostart: true,
 //chck_autoshow: true
- // };    
-
+ // };
 
  const state = {
 
@@ -3026,12 +2749,11 @@ chck_autoshow: params.get("autoshow") === "1",
 chck_blink: params.get("show_blink") === "1",
 chck_click: params.get("show_clicks") === "1",
 chck_shadow: params.get("show_shadow") === "1",
-*/  
-  };    
+*/
+  };
 
 //params.get("autostart") === "1"
 //params.get("autoshow") === "1";
-
 
 function bindToggle(id) {
     const el = document.getElementById(id);
@@ -3062,23 +2784,19 @@ function bindToggle(id) {
 //params.get("autostart") === "1";
 //params.get("autoshow") === "1";
 // document.getElementById("color1").value = "#"+colorParam_1;
- 
+
 //const chckParama_6 = params.get("autostart");
 //const chckParama_7 = params.get("autoshow");
-
 
   bindToggle("chck_autostart");
   bindToggle("chck_autoshow");
   bindToggle("chck_blink");
   bindToggle("chck_click");
   bindToggle("chck_shadow");
-  
 
  // bindToggle("opt3");
 
 </script>
- 
-
 
 <script>
 const themeSelect = document.getElementById("themeSelect");
@@ -3090,10 +2808,10 @@ function mySetTheDarkTheme()
     document.documentElement.style.setProperty('--card', 'var(--cardDARK)');
     document.documentElement.style.setProperty('--card2', 'var(--card2DARK)');
     document.documentElement.style.setProperty('--bgTopHeader', 'var(--bgTopHeaderDARK)');
-  
+
    document.documentElement.setAttribute("data-theme", "Dark");
   //  themeSelect.target.value = "Dark";
-  
+
     //    --bg = --bgDARK;
 
 }
@@ -3105,7 +2823,7 @@ function mySetTheLightTheme()
     document.documentElement.style.setProperty('--card2', 'var(--card2LIGHT)');
     document.documentElement.style.setProperty('--bgTopHeader', 'var(--bgTopHeaderLIGHT)');
     document.documentElement.setAttribute("data-theme", "Light");
-  
+
 //    themeSelect.target.value = "Light";
     //    --bg = --bgDARK;
 
@@ -3125,10 +2843,6 @@ else if (selected === "Dark")
 }
    // applyTheme(selected);
 });
-
-
-
-
 
 function bindSwitchToWindows(id)
 {
@@ -3154,15 +2868,15 @@ function bindSwitchToWindows(id)
     handleButtonClick(payload234);
 
     setTimeout(() => {
-        window.location.replace("https://mlapplications.com");    
+        window.location.replace("https://mlapplications.com");
     }, 2000);
-   
+
    // });
 
 }
 
 function bindRestart(id) {
-   
+
     const el = document.getElementById(id);
 
     // set default from state
@@ -3184,7 +2898,6 @@ function bindRestart(id) {
     }
     handleButtonClick(payload234);
 
-
     });
   }
 
@@ -3203,7 +2916,6 @@ bindRestart("softresetbutton");
     window.open("ms-windows-store://review/?productid=9P7HB1KDTTT8", "_blank");
   });
 
-
   document.getElementById("OpenHelpBtn2").addEventListener("click", function () {
     window.open("https://mlapplications.com/hlp_ttbplus.html", "_blank");
   });
@@ -3214,7 +2926,6 @@ bindRestart("softresetbutton");
   document.getElementById("OpenEffectsHelpBtn").addEventListener("click", function () {
     window.open("https://mlapplications.com/hlp_ttbplus_effects.html", "_blank");
   });
-  
 
   console.log("einai: thetheme:" + thetheme);
   if (thetheme === "Dark")
@@ -3237,10 +2948,7 @@ bindRestart("softresetbutton");
 
   }
 
-
 </script>
-
-
 
     <script>
 //   const themeFromUrl = window.appParams.theme;
@@ -3276,9 +2984,9 @@ bindRestart("softresetbutton");
                 const controller = new AbortController();
         //////////////        setTimeout(() => controller.abort(), 2000);
 
-                const response = await fetch(`${APP_URL}/ping`, { 
+                const response = await fetch(`${APP_URL}/ping`, {
                     method: 'GET',
-                    signal: controller.signal 
+                    signal: controller.signal
                 });
 
                 console.log(response);
@@ -3322,15 +3030,12 @@ bindRestart("softresetbutton");
                /////// btn.disabled = false;
                 guide.style.display = "none";
 
-
-                
                 document.getElementById("PermissionDialog").style.display = "none";
                 document.getElementById("NotConnectedDialog").style.display = "none";
                 document.getElementById("welcomeDialog").style.display = "none";
                 document.getElementById("panel").style.display = "initial";
                 document.getElementById("panel2").style.display = "initial";
                 document.getElementById("panel3").style.display = "initial";
-
 
             } else if (state === "BLOCKED") {
                 statusDiv.innerHTML = "⚠️ Permission Required";
@@ -3344,7 +3049,6 @@ bindRestart("softresetbutton");
                 document.getElementById("panel").style.display = "none";
                 document.getElementById("panel2").style.display = "none";
                 document.getElementById("panel3").style.display = "none";
-
 
             } else {
                 statusDiv.innerHTML = "❌ Desktop App Offline";
@@ -3390,13 +3094,11 @@ bindRestart("softresetbutton");
             }
         }
 
-
-
 function SendTheAppliedThemeAfterConnected()
 {
     console.log('SendTheAppliedThemeAfterConnected()');
     const colors = [...selected.querySelectorAll("input[type=color]")]
-        .map(c => c.value); 
+        .map(c => c.value);
 
     const payload = {
         type: "styleSelected",
@@ -3407,14 +3109,12 @@ function SendTheAppliedThemeAfterConnected()
     if (window.chrome && window.chrome.webview) {
         chrome.webview.postMessage(payload);
     }
- 
+
     handleButtonClick(payload);
 
 }
 
-
 window.addEventListener("DOMContentLoaded", () => {
-
 
     document.getElementById("panel").style.display = "none";
     document.getElementById("panel2").style.display = "none";
@@ -3423,8 +3123,6 @@ window.addEventListener("DOMContentLoaded", () => {
     document.getElementById("NotConnectedDialog").style.display = "none";
     document.getElementById("welcomeDialog").style.display = "none";
 
-
-
 try
 {
      sharePopup.style.display = "none";
@@ -3432,17 +3130,15 @@ try
 }
 catch (ex) { }
 
-
  //////////////   const hide = localStorage.getItem("hideWelcomeDialog");
-document.getElementById("welcomeDialog").style.display = "none"; 
+document.getElementById("welcomeDialog").style.display = "none";
 probeApp();
 /*
 try
 {
 
-    
   if (hide === "true") {
-    document.getElementById("welcomeDialog").style.display = "none"; 
+    document.getElementById("welcomeDialog").style.display = "none";
 
       probeApp();
     //setInterval(probeApp, 3000);
@@ -3451,9 +3147,9 @@ try
   {
     document.getElementById("welcomeDialog").style.display = "initial";
   }
-} catch (err ) { 
+} catch (err ) {
 */
-    
+
 }
 
 //////  probeApp();
@@ -3489,29 +3185,18 @@ function closeDialog() {
 
 }
 
-
-
         // Run the probe as soon as the page loads
        // window.onload = probeApp;
     </script>
- 
 
-<div class="shareon"    data-url="https://www.microsoft.com/store/apps/9P7HB1KDTTT8" 
+<div class="shareon"    data-url="https://www.microsoft.com/store/apps/9P7HB1KDTTT8"
      data-title="Check out the 'Transparent Taskbar+ Lite' on Microsoft Store. It's free!"   id="sharePopup" style="display: flex; border-radius: 12px; border-style: solid; border-color: #cfcfcf; padding: 10px; background-color: white; max-width: 320px;  ">
    <div style="background-color: transparent; color: gray; width: 320px; display: flex;">
-    
+
      <img src="/uploads/ttb_share.jpg" style="margin-top: -12px; margin-bottom: -12px; margin-left: 15px; margin-right: 10px;  ">
-Share the app. 
+Share the app.
    </div>
-<!--    <a class="vkontakte"></a>
-    <a class="pocket"></a>
-    <a class="odnoklassniki"></a>
-    <a class="bluesky"></a> 
-    <a class="fediverse"></a>
-    <a class="mastodon"></a>
-    <a class="hackernews"></a> -->
-    <!-- FB App ID is required for the Messenger button to function 
-    <a class="messenger" data-fb-app-id="0123456789012345"></a>-->
+
     <a class="facebook"></a>
     <a class="linkedin"></a>
     <a class="twitter"></a>
@@ -3519,15 +3204,14 @@ Share the app.
     <a class="pinterest"></a>
     <a class="telegram"></a>
     <a class="teams"></a>
-  
+
     <a class="viber"></a>
     <a class="whatsapp"></a>
-    
+
     <a class="web-share"></a>
     <a class="email"></a>
     <a class="copy-url"></a>
-  <!--  <a class="email"></a>
-    <a class="print"></a> -->
+
     <!-- Does not work in every browser -->
 </div>
 
@@ -3556,84 +3240,6 @@ sharePopup.addEventListener("click", (e) => {
 });
 </script>
 
-<!-- old --adsense-- code -->
-<!--<div data-ad="mlapplications.com_sticky_video_myvid" data-devices="m:1,t:1,d:1"   class="demand-supply"></div>-->
-
-<!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code -->
-<script>
-//  googletag.cmd.push(function() { 
-    // Pass slot objects directly to display()
- //   if (window.offerwallSlot) {
-   //   googletag.display(window.offerwallSlot);
-  //  }
-    // Only call display if the slot was successfully created
-//    if (window.sideRailSlot) {
-//      googletag.display(window.sideRailSlot);
-//    } 
-//  });
-</script> 
-  <!-- ======================================================================= -->
-  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
-  <!-- ======================================================================= -->
-<!--  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const anchorNode = document.querySelector('.outstream-placement-anchor');
-      const adWrapper = document.getElementById('outstream-ad-wrapper');
-      const closeBtn = document.getElementById('outstream-close');
-      let userClosedAd = false;
-
-      if (!anchorNode || !adWrapper) return;
-
-      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
-      window.googletag = window.googletag || {cmd: []};
-      googletag.cmd.push(function() {
-        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
-            if (event.isEmpty) {
-              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
-              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
-            } else {
-              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
-              // Only trigger performance tracking cycles if demand actually filled the layout container
-              stickyObserver.observe(anchorNode);
-            }
-          }
-        });
-      });
-
-      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
-      const stickyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (userClosedAd) return;
-
-          // If the invisible inline space position completely rolls out of view
-          if (!entry.isIntersecting) {
-            const boundingBox = entry.boundingClientRect;
-            
-            // Only apply sticky docking if user scrolled past the ad DOWN the page
-            if (boundingBox.top < 0) {
-              adWrapper.classList.add('is-sticky');
-            }
-          } else {
-            // Re-dock cleanly back inline the second the user scrolls back up
-            adWrapper.classList.remove('is-sticky');
-          }
-        });
-      }, { 
-        root: null, 
-        threshold: 0 // Fires instantly the frame the boundary is crossed
-      });
-
-      // STEP C: CLOSE ICON ACTIONS
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userClosedAd = true;
-        adWrapper.classList.remove('is-sticky');
-        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
-      });
-    });
-  </script> -->
-
 <!-- WEB_ONLY_START -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
 <script>
@@ -3644,6 +3250,5 @@ sharePopup.addEventListener("click", (e) => {
 </script>
 <!-- WEB_ONLY_END -->
 </body>
-
 
 </html>

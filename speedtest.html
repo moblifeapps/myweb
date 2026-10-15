@@ -3,6 +3,7 @@
  <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script>
 /* bfcache: turn third-party 'unload' handlers into 'pagehide' */
 (function () {
@@ -19,31 +20,14 @@
   } catch (e) {}
 })();
 </script>
-
-    <!-- sulvo first -->
+<!-- sulvo -->
 <link rel="preload" as="script" href="https://live.demand.supply/up.js">
 <script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
 <!-- rewarded paywall -->
-   <link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
 <style>#custom-paywall-overlay:not(.active){display:none}</style>
-
 <script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
-
-
-<!-- old demand -->
-
-
- 
-  
-
-
-
-
-
-
- 
- 
 
 <link rel="icon" id="favicon" type="image/x-icon" href="/uploads/favpreview.gif">
 <title>Speed Test for your Network Connection - Connection Quality Score | MLApplications - Official page</title>
@@ -69,14 +53,11 @@
 <meta property="og:image" content="uploads/letters-orig_1.jpg?123" />
 <meta property="og:url" content="speedtest.html" />
 
-
- 
-
 <!-- Open Graph / Facebook -->
   <meta property="og:description" content="test your network connection for free with our advanced network quality score utility." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://mlapplications.com/speedtest.html" />
-  
+
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Connection Quality Test & Speed Test | MLApplications" />
@@ -100,24 +81,10 @@
 
 <!-- Canonical URL -->
   <link rel="canonical" href="https://mlapplications.com/speedtest.html" />
- <!--
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js" integrity="sha512-J9QfbPuFlqGD2CYVCa6zn8/7PEgZnGpM5qtFOBZgwujjDnG5w5Fjx46YzqvIh/ORstcj7luStvvIHkisQi5SKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
--->
- 
-
 
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-<!-- 
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@300;400;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet"/>
-
--->
-<!--
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
--->
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -817,7 +784,7 @@ footer {
   nav { padding: 0 16px; }
   .gauges-row { gap: 24px; }
 }
-   
+
 /* ═══════════════════════════════════════════════
    COMPACT WIDGET
    The widget is a small self-contained grid that
@@ -1056,139 +1023,17 @@ footer {
 }
 </style>
 
- 
-
- 
-  <!-- ======================================================================= -->
-  <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
-  <!-- ======================================================================= -->
-  <style>
-    /* THE GHOST ANCHOR: Stays fixed in layout to completely eliminate infinite layout flickers */
-    .outstream-placement-anchor {
-      width: 336px;
-      height: 280px;
-      margin: 40px auto;
-      position: relative;
-      background: transparent;
-    }
-
-    /* THE MOVING CONTAINER: Holds the ad frame and performs transitions on scroll */
-    .outstream-main-container {
-      width: 336px;
-      height: 280px;
-      background: #fbfbfb;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transition: box-shadow 0.3s ease;
-    }
-
-    /* STICKY OVERLAY STATE: Engaged programmatically by IntersectionObserver */
-    .outstream-main-container.is-sticky {
-      position: fixed;
-      top: auto;
-      left: auto;
-      bottom: 25px;
-      right: 25px;
-      z-index: 99999;
-      background: #fff;
-      border-radius: 4px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      
-      /* Downscale slightly for clean desktop corner placement */
-      transform: scale(0.9);
-      transform-origin: bottom right;
-      
-      /* Premium entrance physics: slides up, clears blur layer, fades visibility */
-      animation: dynamicStickyShow 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    /* Keeps iframe elements isolated and clipped safely inside borders when sticky */
-    .outstream-main-container.is-sticky #div-gpt-ad-outstream-slot {
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    /* CLOSE TRIGGER MARKUP: Revealed exclusively during sticky activation mode */
-    .outstream-close-trigger {
-      display: none;
-      position: absolute;
-      top: -12px;
-      left: -12px;
-      width: 26px;
-      height: 26px;
-      background: #111;
-      color: #fff;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 23px;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-      font-size: 15px;
-      font-weight: bold;
-      border: 2px solid #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 100000;
-      transition: background 0.2s ease;
-    }
-
-    .outstream-close-trigger:hover {
-      background: #ff3b30; /* Desktop specific feedback overlay shift */
-    }
-
-    .outstream-main-container.is-sticky .outstream-close-trigger {
-      display: block;
-    }
-
-    /* BLUR ENTRANCE KEYFRAME SEQUENCING */
-    @keyframes dynamicStickyShow {
-      0% {
-        transform: translateY(60px) scale(0.85);
-        opacity: 0;
-        filter: blur(8px);
-      }
-      100% {
-        transform: translateY(0) scale(0.9);
-        opacity: 1;
-        filter: blur(0);
-      }
-    }
-  </style>
-  
   </head>
- 
+
 <body>
    <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
-
-  <!-- <div data-ad="mlapplications.com_sticky_video_myvidsticky" data-devices="m:1,t:1,d:1"   class="demand-supply"></div> -->
-  <!-- ======================================================================= -->
-  <!-- 3. WEB PAGE STRUCTURAL CORE HOUSING PLACEMENT MARKUP                   -->
-  <!-- ======================================================================= -->
-  <!--<div class="myyy-outstream-placement-anchor">
-    <div id="outstream-ad-wrapper" class="outstream-main-container">
-      <div id="outstream-close" class="outstream-close-trigger">&times;</div>
-      
-       
-      <div id="div-gpt-ad-outstream-slot" style="width: 336px; height: 280px; margin: 0 auto;">
-        <script>
-          googletag.cmd.push(function() { 
-            googletag.display('div-gpt-ad-outstream-slot'); 
-          });
-        </script>
-      </div>
-    </div>
-  </div>--> 
-
-
-
-<!-- old mobile sticky top code -->
 
 <div id="app">
 
  <div class="container" style="position: relative;left: 10px;width: 300px;" >
         <p style="display: flex;
     justify-content: center;  ">
-        <img   src="uploads/unreachable.png" style=" height: 50px;">    
+        <img   src="uploads/unreachable.png" style=" height: 50px;">
         </p>
          <div  style="display: flex;  font-family: var(--sans);
          text-transform: none; font-size: 16px; font-weight:bold;  letter-spacing:normal;
@@ -1197,19 +1042,17 @@ footer {
      <div  style="display: flex; font-size: 13px; font-weight:normal;  letter-spacing:normal;
     justify-content: center;  ">
     Network<span style="color: #1b8fff; margin-left: 10px;">Quality</span>
-<span style="color: #0078d4; margin-left: 10px;">Monitor </span>    
+<span style="color: #0078d4; margin-left: 10px;">Monitor </span>
 <span style="color: #8a94a6; margin-left: 10px;">for Windows 11</span>
    </div>
-   <hr style="opacity: 0.5; margin-top: 10px; margin-bottom: 10px;"> 
+   <hr style="opacity: 0.5; margin-top: 10px; margin-bottom: 10px;">
  </div>
 
   <!-- NAV -->
   <nav>
-    
 
-    
     <div class="logo">
-      
+
       <div class="logo-dot"></div>
       <span>Speed</span><em>Test</em>
     </div>
@@ -1230,7 +1073,7 @@ footer {
       <!-- Speed Test Card -->
       <div class="card"  id="capture-target" style="background: linear-gradient(135deg, calc(--bg) 0%, calc(--bg) 100%);">
         <div class="card-title">Speed Test
-         
+
 </div>
         <div class="gauge-section">
           <div class="gauges-row">
@@ -1277,16 +1120,16 @@ footer {
             </div>
           </div>
         </div>
-      
-         <div class="card-title" id="mysharepanel" style=" text-transform: none; display: none; "> 
+
+         <div class="card-title" id="mysharepanel" style=" text-transform: none; display: none; ">
           <img src="uploads/unreachable_myqr.png" style="height: 180px;" />
           <div style="text-transform: none;">
             measured with:
-           
+
  <div class="container" style="position: relative;left: 10px;color: white; width: 300px;" >
         <p style="display: flex;
     justify-content: center;  ">
-        <img   src="uploads/unreachable.png" style=" height: 50px;">    
+        <img   src="uploads/unreachable.png" style=" height: 50px;">
         </p>
          <div  style="display: flex;  font-family: var(--sans);
          text-transform: none; font-size: 16px; font-weight:bold;  letter-spacing:normal;
@@ -1295,50 +1138,40 @@ footer {
      <div  style="display: flex; font-size: 13px; font-weight:normal;  letter-spacing:normal;
     justify-content: center;  ">
     Network<span style="color: #1b8fff; margin-left: 10px;">Quality</span>
-<span style="color: #0078d4; margin-left: 10px;">Monitor </span>    
+<span style="color: #0078d4; margin-left: 10px;">Monitor </span>
 <span style="color: #8a94a6; margin-left: 10px;">for Windows 11</span>
    </div>
-   <hr style="opacity: 0.5; margin-top: 10px; margin-bottom: 10px;"> 
+   <hr style="opacity: 0.5; margin-top: 10px; margin-bottom: 10px;">
     <span id="footer-time2"></span>
  </div>
           </div>
-          
+
 </div>
        <button class="ripple-btn" id="shareButton" onclick="shareDivAsImage()">
 <svg style="margin-top: -11px; margin-bottom: -11px;  margin-right: 5px;" fill="#ffffff" viewBox="0 0 30 34" width="30px" height="30px">
     <path d="M27.11499,0C29.707031,0 31.900024,1.8940125 31.900024,4.2870178 31.900024,6.6790161 29.707031,8.572998 27.11499,8.572998 26.018005,8.572998 25.022034,8.2740173 24.223999,7.6760254L10.268005,16.249023 23.825012,24.623016C24.722046,23.826019 25.819031,23.427002 27.215027,23.427002 29.906006,23.427002 32,25.321014 32,27.713013 32,30.106018 29.807007,32 27.215027,32 24.822021,32 22.828003,30.404999 22.429993,28.312012L7.875,19.438995C7.0780029,20.037018 5.9810181,20.436005 4.7850342,20.436005 2.0930176,20.436005 0,18.542023 0,16.150024 0,13.857025 2.1929932,11.963013 4.7850342,11.963013 5.9810181,11.963013 7.177002,12.361023 7.9750366,13.059021L22.230042,4.2870178C22.330017,1.8940125,24.423035,0,27.11499,0z"></path>
-</svg> 
+</svg>
 Share as image
 </button>
       </div>
 
-     
     </div>
 
-    
- <hr style="opacity: 0.5; margin-top: 0px; margin-bottom: 0px;"> 
- 
-  
+ <hr style="opacity: 0.5; margin-top: 0px; margin-bottom: 0px;">
+
  <div class="card" style="margin: 5px;  width: 100%;">
-               <span style="font-size: large; font-weight:bolder; color: #0078d4; margin-left: 10px;">by:</span>    
+               <span style="font-size: large; font-weight:bolder; color: #0078d4; margin-left: 10px;">by:</span>
 
 				<a href="index.html" class="waves-effect waves-light">
 						<span class="hide-on-small-only"><img src="uploads/logo-big_2.png?123" height="50" id="appicon" style="vertical-align: middle;margin-bottom:10px;margin-right:10px;"></span>
-					 
-				</a>
-				
-				             
 
-                   
+				</a>
 
 			  </div>
-			
-   
- 
+
 </div>
-  
+
   </main>
- 
 
   <footer>
     <span>Connection Quality and Speed Test // NETWORK MONITOR</span>
@@ -1899,7 +1732,6 @@ async function runSpeedTest() {
     $('test-phase').textContent = 'Testing upload speed...';
     $('btn-label').textContent  = '↑';
 
-
     // dika mou
     //const lalalla =  await measureUploadSpeedSimple();
  //   console.log(' sssss: ' + lalalla);
@@ -1908,7 +1740,6 @@ async function runSpeedTest() {
 console.log('aaaaaa: ' );
     const ulMbps = await  measureUpload((p) => {
 
-      
       arcProgress = 0.5 + p * 0.5;
       drawBtnArc(arcProgress);
       const live = Math.round(p * 80);
@@ -1984,7 +1815,6 @@ async function measureDownload(onProgress) {
   throw new Error('Download test failed');
 }
 
-
 async function measureUploadSpeedSimple() {
     const uploadBytes = 10_000_000;
    const url = 'https://lively-fog-26a9.g-karberis.workers.dev/';
@@ -2020,7 +1850,6 @@ async function SKATA_measureUpload(progressCallback) {
     const uploadBytes = 10_000_000; // 10 MB
 //    const url = "https://httpbin.org/post";
     const url = 'https://lively-fog-26a9.g-karberis.workers.dev/';
-
 
     // Generate random payload
     const data = new Uint8Array(uploadBytes);
@@ -2077,13 +1906,13 @@ async function measureUpload(onProgress) {
   crypto.getRandomValues(chunk.slice(0, 65536));
 
   // Try to find a closer/faster endpoint if possible
-  
- // const url = 'https://httpbin.org/post'; 
+
+ // const url = 'https://httpbin.org/post';
 const url = 'https://lively-fog-26a9.g-karberis.workers.dev/';
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', url);
-    
+
     const start = performance.now();
 
     xhr.upload.onprogress = e => {
@@ -2097,7 +1926,7 @@ const url = 'https://lively-fog-26a9.g-karberis.workers.dev/';
       const durationSeconds = (performance.now() - start) / 1000;
       // bits / (seconds * 1,000,000) = Mbps
       const mbps = (size * 8) / (durationSeconds * 1_000_000);
-      
+
       onProgress(1);
       resolve(Number(mbps.toFixed(2)));
     };
@@ -2113,7 +1942,6 @@ async function measureUploadaaaaaaaaa(onProgress) {
   const size   = 1_000_000; // 3MB — enough for a browser test
   const chunk  = new Uint8Array(size);
   crypto.getRandomValues(chunk.slice(0, Math.min(65536, size))); // fill first 64KB randomly
-
 
  const endpoints = [
   'https://lively-fog-26a9.g-karberis.workers.dev/'
@@ -2225,7 +2053,7 @@ function updateClock() {
   $('nav-time').textContent  = formatTime(now);
   $('footer-time').textContent = now.toLocaleDateString() + '  ' + formatTime(now);
   $('footer-time2').textContent = $('footer-time').textContent;
-  
+
 }
 updateClock();
 setInterval(updateClock, 1000);
@@ -2243,10 +2071,9 @@ window.addEventListener('resize', () => {
   drawGauge('gauge-ul', null, 1000, '#00e5a0', '#009966');
 });
 
-
 </script>
  <style>
-        /* Basic styling for demonstration 
+        /* Basic styling for demonstration
         #capture-target {
             padding: 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -2299,7 +2126,7 @@ window.addEventListener('resize', () => {
 }
 
     </style>
-    
+
     <!-- html2canvas Library -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js"></script>
     <script>
@@ -2308,11 +2135,10 @@ window.addEventListener('resize', () => {
       const my_share_panel = document.getElementById('mysharepanel');
    //   my_share_panel.attributes.style.vi
 
-    const my_share_Button = document.getElementById('shareButton');  
-
+    const my_share_Button = document.getElementById('shareButton');
 
     const element = document.getElementById('capture-target');
-    
+
     try {
 
         if (my_share_panel) my_share_panel.style.display = 'flex';      // Make extra div visible
@@ -2320,7 +2146,7 @@ window.addEventListener('resize', () => {
 
         // htmlToImage bypasses canvas rendering bugs entirely by generating a direct blob
         const blob = await htmlToImage.toBlob(element, { cacheBust: true });
-        
+
         if (!blob) return;
 
         const file = new File([blob], 'captured-image.png', { type: 'image/png' });
@@ -2344,84 +2170,6 @@ window.addEventListener('resize', () => {
 }
  </script>
 
-<!-- old --adsense-- code -->
-<!--<div data-ad="mlapplications.com_sticky_video_myvid" data-devices="m:1,t:1,d:1"   class="demand-supply"></div>-->
-
-<!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code -->
-<script>
-//  googletag.cmd.push(function() { 
-    // Pass slot objects directly to display()
- //   if (window.offerwallSlot) {
-   //   googletag.display(window.offerwallSlot);
-  //  }
-    // Only call display if the slot was successfully created
-//    if (window.sideRailSlot) {
-//      googletag.display(window.sideRailSlot);
-//    } 
-//  });
-</script> 
-  <!-- ======================================================================= -->
-  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
-  <!-- ======================================================================= -->
-<!--  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const anchorNode = document.querySelector('.outstream-placement-anchor');
-      const adWrapper = document.getElementById('outstream-ad-wrapper');
-      const closeBtn = document.getElementById('outstream-close');
-      let userClosedAd = false;
-
-      if (!anchorNode || !adWrapper) return;
-
-      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
-      window.googletag = window.googletag || {cmd: []};
-      googletag.cmd.push(function() {
-        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
-            if (event.isEmpty) {
-              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
-              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
-            } else {
-              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
-              // Only trigger performance tracking cycles if demand actually filled the layout container
-              stickyObserver.observe(anchorNode);
-            }
-          }
-        });
-      });
-
-      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
-      const stickyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (userClosedAd) return;
-
-          // If the invisible inline space position completely rolls out of view
-          if (!entry.isIntersecting) {
-            const boundingBox = entry.boundingClientRect;
-            
-            // Only apply sticky docking if user scrolled past the ad DOWN the page
-            if (boundingBox.top < 0) {
-              adWrapper.classList.add('is-sticky');
-            }
-          } else {
-            // Re-dock cleanly back inline the second the user scrolls back up
-            adWrapper.classList.remove('is-sticky');
-          }
-        });
-      }, { 
-        root: null, 
-        threshold: 0 // Fires instantly the frame the boundary is crossed
-      });
-
-      // STEP C: CLOSE ICON ACTIONS
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userClosedAd = true;
-        adWrapper.classList.remove('is-sticky');
-        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
-      });
-    });
-  </script> -->
-
 <!-- WEB_ONLY_START -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
 <script>
@@ -2432,6 +2180,5 @@ window.addEventListener('resize', () => {
 </script>
 <!-- WEB_ONLY_END -->
 </body>
-
 
 </html>

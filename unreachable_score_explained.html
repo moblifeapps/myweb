@@ -3,6 +3,7 @@
  <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script>
 /* bfcache: turn third-party 'unload' handlers into 'pagehide' */
 (function () {
@@ -19,31 +20,14 @@
   } catch (e) {}
 })();
 </script>
-
-     <!-- sulvo first -->
+<!-- sulvo -->
 <link rel="preload" as="script" href="https://live.demand.supply/up.js">
 <script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
 <!-- rewarded paywall -->
-   <link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
 <style>#custom-paywall-overlay:not(.active){display:none}</style>
-
 <script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
-
-
-<!-- old demand -->
-
-
- 
-  
-
-
-
-
-
-
-     
-     
 
     <title>unReachable - Quality Score Explained</title>
 
@@ -101,174 +85,47 @@
     }
     </script>
 
-     
-
- 
-  <!-- ======================================================================= -->
-  <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
-  <!-- ======================================================================= -->
-  <style>
-    /* THE GHOST ANCHOR: Stays fixed in layout to completely eliminate infinite layout flickers */
-    .outstream-placement-anchor {
-      width: 336px;
-      height: 280px;
-      margin: 40px auto;
-      position: relative;
-      background: transparent;
-    }
-
-    /* THE MOVING CONTAINER: Holds the ad frame and performs transitions on scroll */
-    .outstream-main-container {
-      width: 336px;
-      height: 280px;
-      background: #fbfbfb;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transition: box-shadow 0.3s ease;
-    }
-
-    /* STICKY OVERLAY STATE: Engaged programmatically by IntersectionObserver */
-    .outstream-main-container.is-sticky {
-      position: fixed;
-      top: auto;
-      left: auto;
-      bottom: 25px;
-      right: 25px;
-      z-index: 99999;
-      background: #fff;
-      border-radius: 4px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      
-      /* Downscale slightly for clean desktop corner placement */
-      transform: scale(0.9);
-      transform-origin: bottom right;
-      
-      /* Premium entrance physics: slides up, clears blur layer, fades visibility */
-      animation: dynamicStickyShow 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    /* Keeps iframe elements isolated and clipped safely inside borders when sticky */
-    .outstream-main-container.is-sticky #div-gpt-ad-outstream-slot {
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    /* CLOSE TRIGGER MARKUP: Revealed exclusively during sticky activation mode */
-    .outstream-close-trigger {
-      display: none;
-      position: absolute;
-      top: -12px;
-      left: -12px;
-      width: 26px;
-      height: 26px;
-      background: #111;
-      color: #fff;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 23px;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-      font-size: 15px;
-      font-weight: bold;
-      border: 2px solid #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 100000;
-      transition: background 0.2s ease;
-    }
-
-    .outstream-close-trigger:hover {
-      background: #ff3b30; /* Desktop specific feedback overlay shift */
-    }
-
-    .outstream-main-container.is-sticky .outstream-close-trigger {
-      display: block;
-    }
-
-    /* BLUR ENTRANCE KEYFRAME SEQUENCING */
-    @keyframes dynamicStickyShow {
-      0% {
-        transform: translateY(60px) scale(0.85);
-        opacity: 0;
-        filter: blur(8px);
-      }
-      100% {
-        transform: translateY(0) scale(0.9);
-        opacity: 1;
-        filter: blur(0);
-      }
-    }
-  </style>
-  
   </head>
- 
 
 <body>
 <div  >
  <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
 
-  <!-- <div data-ad="mlapplications.com_sticky_video_myvidsticky" data-devices="m:1,t:1,d:1"   class="demand-supply"></div> -->
-  <!-- ======================================================================= -->
-  <!-- 3. WEB PAGE STRUCTURAL CORE HOUSING PLACEMENT MARKUP                   -->
-  <!-- ======================================================================= -->
-  <!--<div class="myyy-outstream-placement-anchor">
-    <div id="outstream-ad-wrapper" class="outstream-main-container">
-      <div id="outstream-close" class="outstream-close-trigger">&times;</div>
-      
-       
-      <div id="div-gpt-ad-outstream-slot" style="width: 336px; height: 280px; margin: 0 auto;">
-        <script>
-          googletag.cmd.push(function() { 
-            googletag.display('div-gpt-ad-outstream-slot'); 
-          });
-        </script>
-      </div>
-    </div>
-  </div>--> 
-
-
-
-<!-- old mobile sticky top code -->
 </div>
     <header class="hero">
         <nav class="navbar" style="margin-bottom: 10px; margin-top: 20px;">
             <div class="container" style="margin-bottom: 10px;  width: 100%;">
-               <span style="font-size: large; font-weight:bolder; color: #0078d4; margin-left: 10px;">by:</span>    
+               <span style="font-size: large; font-weight:bolder; color: #0078d4; margin-left: 10px;">by:</span>
 
 				<a href="index.html" class="waves-effect waves-light">
 						<span class="hide-on-small-only"><img src="uploads/logo-big_2.png?123" height="50" id="appicon" style="vertical-align: middle;margin-bottom:10px;margin-right:10px;"></span>
-					 
-				</a>
-				
-				             
 
-                    <hr style="opacity: 0.5; margin-top: 10px; margin-bottom: 10px;"> 
+				</a>
+
+                    <hr style="opacity: 0.5; margin-top: 10px; margin-bottom: 10px;">
 
 			  </div>
                </nav>
-             
-            
+
     <div  style="display: flex; font-size:xx-large;
     justify-content: center;  "><span style="color: goldenrod;">un</span>Reachable</div>
     <div  style="display: flex; font-size:large;
     justify-content: center;  ">
     Network<span style="color: #1b8fff; margin-left: 10px;">Quality</span>
-<span style="color: #0078d4; margin-left: 10px;">Monitor </span>    
+<span style="color: #0078d4; margin-left: 10px;">Monitor </span>
 <span style="color: #8a94a6; margin-left: 10px;">for Windows 11</span>
 </div>
-    
+
         <p style="display: flex;
     justify-content: center;  ">
-        <img   src="uploads/unreachable.png" style=" width: 200px;">    
+        <img   src="uploads/unreachable.png" style=" width: 200px;">
         </p>
-    
-   
- 
-          <hr style="opacity: 0.5; margin-top: 10px; margin-bottom: 30px;"> 
+
+          <hr style="opacity: 0.5; margin-top: 10px; margin-bottom: 30px;">
 
         <div class="hero-content">
             <div class="hero-text">
-                
+
                 <h1>
                     How unReachable calculates your Network Quality Score ?
                 </h1>
@@ -278,7 +135,7 @@
                 </p>
                 <p>
 
-                    unReachable takes into account three different parameters: 
+                    unReachable takes into account three different parameters:
                     Latency, jitter and packet loss, combines them and gives a simple
                     network quality score from 0-100.
                 </p>
@@ -287,7 +144,6 @@
                     <a  href="https://apps.microsoft.com/detail/9NB66SPC84SG?referrer=appbadge&amp;cid=myapppage&amp;mode=full" target="_blank" rel="noopener noreferrer">
 	<img src="https://get.microsoft.com/images/en-us%20light.svg" style="border-radius: 8px; " >
 </a>
-                   
 
                     <a href="#features" class="secondary-btn">
                         Learn More
@@ -297,7 +153,6 @@
 
             <div class="hero-image">
                   <section class="widgets-section">
-     
 
         <div class="widget-grid">
 
@@ -309,18 +164,16 @@
 
                 <h3>Desktop Widget</h3>
 
-               
             </div>
 
             <div class="widget-card">
-                <img 
+                <img
                     src="uploads/unreachable_widget_taskbar.png"
                     alt="Taskbar widget screenshot"
                 />
 
                 <h3>Taskbar Widget</h3>
 
-              
             </div>
 
             <div class="widget-card">
@@ -331,12 +184,11 @@
 
                 <h3>Windows Widget</h3>
 
-                
             </div>
 
         </div>
     </section>
-               
+
             </div>
         </div>
     </header>
@@ -347,7 +199,7 @@
         <div class="feature-grid">
 
             <div class="card">
-                      <img 
+                      <img
                     src="uploads/unreachable-latency.png"
                     alt="Latency icon"
                 />
@@ -359,7 +211,7 @@
             </div>
 
             <div class="card">
-                                <img 
+                                <img
                     src="uploads/unreachable-jitter.png"
                     alt="Jitter icon"
                 />
@@ -372,7 +224,7 @@
             </div>
 
             <div class="card">
-                        <img 
+                        <img
                     src="uploads/unreachable-packet-loss.png"
                     alt="Packet Loss icon"
                 />
@@ -386,8 +238,6 @@
         </div>
     </section>
 
-  
-
 <div class="qs-container">
    <section class="qs-section">
     <h2>External endpoint for measuring Network Latency</h2>
@@ -395,7 +245,7 @@
     <br>
     <p><em>This is something that might change in future app updates !</em></p>
 <br>
-     <p>There are several reasons behind this is:</p>  
+     <p>There are several reasons behind this is:</p>
 
 <p><strong>1. Global Presence / Nearby Servers</strong><br/>
 Cloudflare operates one of the world's largest edge networks with data centers in hundreds of cities worldwide. Your latency test will usually hit a geographically close server, reducing bias from long-distance routing.</p>
@@ -424,10 +274,9 @@ If many users measure against the same provider, results become more comparable 
 <strong>• Router ping</strong> → measures <em>local network latency</em>.<br/>
 <strong>• Cloudflare (1.1.1.1) ping</strong> → measures <em>end-to-end internet latency</em>, including ISP performance.
 </p>
- 
 
 <p>This provides a more complete picture of <strong>overall network quality</strong>.</p>
-     
+
   </section>
   <section class="qs-section">
     <h2>Quality Score System</h2>
@@ -538,13 +387,12 @@ If many users measure against the same provider, results become more comparable 
   </section>
 </div>
 
-
 <style>
   /* Container & Layout */
   .qs-container {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: whitesmoke;
-    
+
     margin: 20px auto;
     padding: 20px;
     background-color: transparent; /* Seamlessly blends into your near-black background */
@@ -676,17 +524,15 @@ If many users measure against the same provider, results become more comparable 
     color: #ffffff;
   }
 </style>
- 
 
   <section class="cta">
           <div  style="display: flex; font-size:xx-large;
     justify-content: center;  ">
-    
+
       <h2>explore more..</h2>
 <h2>
     <span style="margin-left: 14px; color: goldenrod;">un</span>Reachable</h2></div>
-    
-    
+
         <p>
             our dedicated list of articles for unReachable.
         </p>
@@ -697,7 +543,7 @@ If many users measure against the same provider, results become more comparable 
 	unReachable introduction ..
 </a>
   </div>
-  
+
     <div class="faq-item">
     <svg style="margin-top: 0px;margin-bottom: -19px;margin-right: 5px;height: 44px;" fill="#ffffff" viewBox="-10 12 40 20" width="40px" height="70px">
     <path d="M 2.8574219 0 C 1.2811621 0 0 1.2663506 0 2.8222656 L 0 11.15625 C 0 12.712165 1.2811621 13.982422 2.8574219 13.982422 L 9.6601562 13.982422 L 9.6601562 12.966797 L 2.8574219 12.966797 C 1.8404735 12.966797 1.0175781 12.152829 1.0175781 11.15625 L 1.0175781 2.8222656 C 1.0175781 1.8256562 1.8404735 1.0175781 2.8574219 1.0175781 L 16.464844 1.0175781 C 17.481792 1.0175781 18.304687 1.8256562 18.304688 2.8222656 L 18.304688 5.59375 L 19.322266 5.59375 L 19.322266 2.8222656 C 19.322266 1.2663506 18.041103 2.9605918e-16 16.464844 0 L 2.8574219 0 z M 8.6347656 2.2578125 C 7.2035597 2.2584014 5.7861755 3.2799586 5.7949219 5.1132812 C 5.8644707 6.1115685 7.3522853 6.037323 7.3183594 5.0351562 C 7.3429997 3.5772792 9.3901695 3.3053874 9.875 4.6464844 C 10.040356 5.1916648 9.6955632 5.8683149 9.1386719 6.09375 C 8.0978867 6.5143303 7.0948093 7.5259685 7.3535156 8.7519531 C 7.4292433 9.110958 7.7468042 9.3574219 8.0996094 9.3574219 C 8.5772956 9.3625042 8.9521787 8.9049405 8.8476562 8.4375 C 8.787571 8.1529761 9.1905445 7.7178556 9.7109375 7.5078125 C 11.000245 6.9854422 11.728001 5.5050498 11.333984 4.2050781 C 10.8693 2.875141 9.7479258 2.2573544 8.6347656 2.2578125 z M 13.533203 6.609375 C 11.958871 6.609375 10.677734 7.8769054 10.677734 9.4335938 L 10.677734 17.767578 C 10.677734 19.324267 11.958871 20.589844 13.533203 20.589844 L 21.578125 20.589844 C 22.114407 22.099859 23.630196 23.148438 25.251953 23.148438 C 25.59464 23.136458 26.084159 23.170656 26.210938 22.765625 C 26.271517 22.583389 26.223948 22.382149 26.087891 22.246094 C 25.671278 21.828991 25.44985 21.218977 25.470703 20.589844 L 27.144531 20.589844 C 28.719114 20.589844 30 19.324267 30 17.767578 L 30 9.4335938 C 30 7.8769054 28.719114 6.609375 27.144531 6.609375 L 13.533203 6.609375 z M 20.664062 8.8691406 C 21.777142 8.8685214 22.89758 9.4842288 23.363281 10.814453 C 23.757049 12.114395 23.029796 13.597264 21.740234 14.119141 C 21.22034 14.329677 20.816871 14.762849 20.876953 15.046875 C 20.981511 15.514066 20.606811 15.972628 20.128906 15.966797 C 19.776351 15.966797 19.460736 15.722285 19.384766 15.363281 C 19.125561 14.137295 20.127189 13.126156 21.167969 12.705078 C 21.725602 12.479642 22.069653 11.803522 21.904297 11.257812 C 21.417331 9.918984 19.372298 10.18576 19.347656 11.644531 C 19.382536 12.648869 17.887122 12.719422 17.824219 11.722656 C 17.815281 9.8898916 19.23296 8.8699368 20.664062 8.8691406 z M 8.1035156 10.169922 C 7.0943872 10.186242 7.100006 11.678584 8.1035156 11.695312 C 9.106033 11.678183 9.105906 10.186899 8.1035156 10.169922 z M 3.0507812 15 L 3.0507812 22.851562 C 3.0507812 24.407479 4.3319434 25.677734 5.9082031 25.677734 L 13.953125 25.677734 C 14.487015 27.182783 16.001014 28.234375 17.623047 28.234375 C 17.965393 28.221465 18.455753 28.2574 18.583984 27.849609 C 18.645004 27.666565 18.595099 27.467345 18.462891 27.330078 C 18.045937 26.91313 17.821437 26.303141 17.841797 25.677734 L 19.515625 25.677734 C 20.969857 25.677734 22.169669 24.599078 22.347656 23.210938 C 21.971391 22.941465 21.635124 22.621972 21.355469 22.255859 L 21.355469 22.851562 C 21.355469 23.848142 20.532574 24.660156 19.515625 24.660156 L 17.394531 24.660156 C 16.452533 24.715896 16.87134 26.646678 17.134766 27.171875 C 15.970341 26.968477 15.049901 26.034104 14.826172 25.052734 C 14.775342 24.823949 14.567892 24.660156 14.333984 24.660156 L 5.9082031 24.660156 C 4.8912548 24.660156 4.0683594 23.848142 4.0683594 22.851562 L 4.0683594 15 L 3.0507812 15 z M 20.128906 16.779297 C 21.136946 16.794477 21.136638 18.286597 20.132812 18.304688 C 19.130884 18.288708 19.125949 16.797668 20.128906 16.779297 z"></path>
@@ -714,21 +560,17 @@ If many users measure against the same provider, results become more comparable 
 	Speed Test  ..
 </a>
   </div>
-  
-      
-        
 
     </section>
 
     <section class="cta">
           <div  style="display: flex; font-size:xx-large;
     justify-content: center;  ">
-    
+
       <h2>Download</h2>
 <h2>
     <span style="margin-left: 14px; color: goldenrod;">un</span>Reachable today</h2></div>
-    
-    
+
         <p>
             Start monitoring your internet quality in real time on Windows 11.
         </p>
@@ -743,18 +585,17 @@ If many users measure against the same provider, results become more comparable 
         <p>© 2026 unReachable. All rights reserved.</p>
     </footer>
 
-      
 <div id="bottom" style="height: 80px;">
 <a href="#" class="no_nu_reward scrollToTop"><img src="uploads/scrollupblue.png" alt="Scroll to Top"></a>
 
-<a href="#" class="no_nu_reward scrollToBottom" id="scrollBottom"><img src="uploads/scrolldownblue.png" alt="Scroll to Top"></a>  
+<a href="#" class="no_nu_reward scrollToBottom" id="scrollBottom"><img src="uploads/scrolldownblue.png" alt="Scroll to Top"></a>
 
-<a href="javascript:googlefc.callbackQueue.push(googlefc.showRevocationMessage)" class="no_nu_reward2 privacyBottom" id="scrollBottom2"><img src="uploads/privacyblue.png" alt="Scroll to Top"></a>  
- 
+<a href="javascript:googlefc.callbackQueue.push(googlefc.showRevocationMessage)" class="no_nu_reward2 privacyBottom" id="scrollBottom2"><img src="uploads/privacyblue.png" alt="Scroll to Top"></a>
+
 </div>
 <script>
 const btn = document.getElementById("scrollBottom");
- 
+
 btn.addEventListener("click", function (e) {
     e.preventDefault();
 
@@ -763,86 +604,8 @@ btn.addEventListener("click", function (e) {
         behavior: "smooth"
     });
 });
- 
+
 </script>
-
-<!-- old --adsense-- code -->
-<!--<div data-ad="mlapplications.com_sticky_video_myvid" data-devices="m:1,t:1,d:1"   class="demand-supply"></div>-->
-
-<!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code -->
-<script>
-//  googletag.cmd.push(function() { 
-    // Pass slot objects directly to display()
- //   if (window.offerwallSlot) {
-   //   googletag.display(window.offerwallSlot);
-  //  }
-    // Only call display if the slot was successfully created
-//    if (window.sideRailSlot) {
-//      googletag.display(window.sideRailSlot);
-//    } 
-//  });
-</script> 
-  <!-- ======================================================================= -->
-  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
-  <!-- ======================================================================= -->
-<!--  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const anchorNode = document.querySelector('.outstream-placement-anchor');
-      const adWrapper = document.getElementById('outstream-ad-wrapper');
-      const closeBtn = document.getElementById('outstream-close');
-      let userClosedAd = false;
-
-      if (!anchorNode || !adWrapper) return;
-
-      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
-      window.googletag = window.googletag || {cmd: []};
-      googletag.cmd.push(function() {
-        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
-            if (event.isEmpty) {
-              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
-              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
-            } else {
-              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
-              // Only trigger performance tracking cycles if demand actually filled the layout container
-              stickyObserver.observe(anchorNode);
-            }
-          }
-        });
-      });
-
-      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
-      const stickyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (userClosedAd) return;
-
-          // If the invisible inline space position completely rolls out of view
-          if (!entry.isIntersecting) {
-            const boundingBox = entry.boundingClientRect;
-            
-            // Only apply sticky docking if user scrolled past the ad DOWN the page
-            if (boundingBox.top < 0) {
-              adWrapper.classList.add('is-sticky');
-            }
-          } else {
-            // Re-dock cleanly back inline the second the user scrolls back up
-            adWrapper.classList.remove('is-sticky');
-          }
-        });
-      }, { 
-        root: null, 
-        threshold: 0 // Fires instantly the frame the boundary is crossed
-      });
-
-      // STEP C: CLOSE ICON ACTIONS
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userClosedAd = true;
-        adWrapper.classList.remove('is-sticky');
-        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
-      });
-    });
-  </script> -->
 
 <!-- WEB_ONLY_START -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
@@ -854,6 +617,5 @@ btn.addEventListener("click", function (e) {
 </script>
 <!-- WEB_ONLY_END -->
 </body>
-
 
 </html>

@@ -1,30 +1,33 @@
 
 <!DOCTYPE html>
 <html lang="en">
- <!--<head style="width: 550px; height: 550px;"> -->
-<head style="width: 100%; height: 100%;">
- <!--
- <script data-cfasync="false"  src="https://fundingchoicesmessages.google.com/i/pub-7710644763832143?ers=1" nonce=""></script>
-<script nonce="">
-  (function() {
-    function signalGooglefcPresent() {
-      if (!window.frames['googlefcPresent']) {
-        if (document.body) {
-          var iframe = document.createElement('iframe');
-          iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
-          iframe.style.display = 'none';
-          iframe.name = 'googlefcPresent';
-          document.body.appendChild(iframe);
-        } else {
-          setTimeout(signalGooglefcPresent, 0);
-        }
-      }
-    }
-    signalGooglefcPresent();
-  })();
-</script>
 
--->
+<head style="width: 100%; height: 100%;">
+<script>
+/* bfcache: turn third-party 'unload' handlers into 'pagehide' */
+(function () {
+  var add = EventTarget.prototype.addEventListener;
+  window.addEventListener = function (type, fn, opts) {
+    return add.call(this, type === 'unload' ? 'pagehide' : type, fn, opts);
+  };
+  try {
+    Object.defineProperty(window, 'onunload', {
+      configurable: true,
+      get: function () { return null; },
+      set: function (fn) { if (typeof fn === 'function') add.call(window, 'pagehide', fn); }
+    });
+  } catch (e) {}
+})();
+</script>
+<!-- sulvo -->
+<link rel="preload" as="script" href="https://live.demand.supply/up.js">
+<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
+
+<!-- rewarded paywall -->
+<link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<style>#custom-paywall-overlay:not(.active){display:none}</style>
+<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
+
  <link rel="icon" id="favicon" type="image/x-icon" href="/uploads/favpreview.gif">
 
 		<title>D.L.W.+ (mlapplications.com) - M.I.L. Team - 3D+ and more..</title><meta property="og:site_name" content="M.I.L. Team - 3D+ and more.." />
@@ -35,35 +38,30 @@
 
  <meta name="keywords" content="desktop,live,wallpaper,wallpapers,video wallpaper,windows wallpaper,windows video background, windows theme" />
 
-  
 <script>
 
-
-	 
 	 let lastcode  =0;
-	 window.onkeydown = function(e){	 	 
+	 window.onkeydown = function(e){
 			console.log("window.onkeydown: " + String.fromCharCode(e.keyCode) +" --> "+e.keyCode);
 //            alert("window.onkeydown: " + String.fromCharCode(e.keyCode));
-         
+
 		 if (e.keyCode == 76)
 		 {
 //					console.log("Click NOW!! ");
 					try
 					{
-					document.getElementById('myAnchor').href += "?stp=" + Math.floor(Date.now() / 1000); 
-					} catch (exx)  {} 
-	            	document.getElementById('myAnchor').click(); 		 
+					document.getElementById('myAnchor').href += "?stp=" + Math.floor(Date.now() / 1000);
+					} catch (exx)  {}
+	            	document.getElementById('myAnchor').click();
 		 }
-		 
-    
-		 
+
 			 if ((e.keyCode == 16) || (e.keyCode == 32) || (e.keyCode == 9) || (e.keyCode == 13) || (e.keyCode == 17) || (e.keyCode == 82) || (e.keyCode == 116) || (e.keyCode == 76))
-			 { 
+			 {
 				 console.log(" OK ....: " + e.keyCode);
 			 }
-			 else			 
+			 else
 			 {
-				console.log("stop ...: " + e.keyCode);			    
+				console.log("stop ...: " + e.keyCode);
 				e.stopPropagation();
 				e.preventDefault();
 				try {
@@ -72,36 +70,34 @@
 				catch (event) {
 
 				}
-			} 
+			}
             return false;
-          
+
 }
-
-
 
   function myexec(themessageee) {
 	     try {
-		
+
 	      console.log(Date.now() +  ' ' + themessageee);
-//		  let url = location.href; 
+//		  let url = location.href;
 	//	  alert('url:' + url);
 //		  let url2 = url.replace("mlapplications.com/dlw.html","mlapplications.com/dlw2.html")
 //	      window.location.replace(url2);
 		}
 		catch(err) {
 console.log(Date.now() +  ' err: ' + err);
-		}     
+		}
 	  };
 
 // window.addEventListener("pagehide", myexec('pagehide'));
 //    window.addEventListener("beforeunload", myexec('beforeunload'));
 //    window.onbeforeunload = myexec('onbeforeunload');
     //window.addEventListener('unload', myexec('unload'));
- 
+
 	////////////////     setTimeout(function () { subscribe2(); }, 50000);
-	   
+
 	  function subscribe2() {
-   
+
 	    let stamataw = false;
 		try {
 			if ( document.getElementById("myextraapps").style.visibility == 'visible'  )
@@ -112,8 +108,8 @@ console.log(Date.now() +  ' err: ' + err);
 
 		if (stamataw == false)
 		{
-	
-		  let url = location.href; 
+
+		  let url = location.href;
 	//	  alert('url:' + url);
 		  let url2 = url.replace("mlapplications.com/desktopliveapp.html","mlapplications.com/desktoplivewallpaperapp.html")
 	      window.location.replace(url2);
@@ -121,15 +117,10 @@ console.log(Date.now() +  ' err: ' + err);
 		}
 		catch(err) {
 
-		}     
+		}
 	  };
 
-
-	 
-
  </script>
-	 
-
 
 <style>
     .kb-container
@@ -142,184 +133,17 @@ console.log(Date.now() +  ' err: ' + err);
 	{
     display: none;
     visibility: hidden;
-	
+
 	}
     </style>
 
-	<!-- 
-<script>
-
-var ismyckexists = false;
-var thename="gdpr-kb-p";
-
-if (myckExists(thename) == true)
-{
-console.log('exists!');
-ismyckexists = true;
-}
-else
-{
-console.log(' not exists!');
-mysett('true',990);
-}
-
-function mysett(cvalue,exdays) {
-  var d = new Date();
-  d.setTime(d.getTime() + (exdays*24*60*60*1000));
-  var expires = "expires=" + d.toGMTString();
-  document.cookie = thename + "=" + cvalue + ";" + expires + ";path=/";
-}
-function myckExists(name) {
-  var cks = document.cookie.split(';');
-  for(i = 0; i < cks.length; i++)
-    if (cks[i].split('=')[0].trim() == name) return true;
-}
-</script> 
-
- 
- 
- 
-   	
-	 
- 
-		
-	<script>
-    console.log('here i am not from cloudflare tag setup !');
-</script> -->
-
-<!--<script type="text/javascript" async="async" src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=44890869"></script>-->
-  <!-- sulvo first -->
-<link rel="preload" as="script" href="https://live.demand.supply/up.js">
-<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
-
-<!-- rewarded paywall -->
-   <link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
-<style>#custom-paywall-overlay:not(.active){display:none}</style>
-
-<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
-
-
-<!-- old demand -->
-
-
- 
-  
-
-
-
-
-
-
-
- 
-  
-
- 
-
- 
-  <!-- ======================================================================= -->
-  <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
-  <!-- ======================================================================= -->
-  <style>
-    /* THE GHOST ANCHOR: Stays fixed in layout to completely eliminate infinite layout flickers */
-    .outstream-placement-anchor {
-      width: 336px;
-      height: 280px;
-      margin: 40px auto;
-      position: relative;
-      background: transparent;
-    }
-
-    /* THE MOVING CONTAINER: Holds the ad frame and performs transitions on scroll */
-    .outstream-main-container {
-      width: 336px;
-      height: 280px;
-      background: #fbfbfb;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transition: box-shadow 0.3s ease;
-    }
-
-    /* STICKY OVERLAY STATE: Engaged programmatically by IntersectionObserver */
-    .outstream-main-container.is-sticky {
-      position: fixed;
-      top: auto;
-      left: auto;
-      bottom: 25px;
-      right: 25px;
-      z-index: 99999;
-      background: #fff;
-      border-radius: 4px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      
-      /* Downscale slightly for clean desktop corner placement */
-      transform: scale(0.9);
-      transform-origin: bottom right;
-      
-      /* Premium entrance physics: slides up, clears blur layer, fades visibility */
-      animation: dynamicStickyShow 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    /* Keeps iframe elements isolated and clipped safely inside borders when sticky */
-    .outstream-main-container.is-sticky #div-gpt-ad-outstream-slot {
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    /* CLOSE TRIGGER MARKUP: Revealed exclusively during sticky activation mode */
-    .outstream-close-trigger {
-      display: none;
-      position: absolute;
-      top: -12px;
-      left: -12px;
-      width: 26px;
-      height: 26px;
-      background: #111;
-      color: #fff;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 23px;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-      font-size: 15px;
-      font-weight: bold;
-      border: 2px solid #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 100000;
-      transition: background 0.2s ease;
-    }
-
-    .outstream-close-trigger:hover {
-      background: #ff3b30; /* Desktop specific feedback overlay shift */
-    }
-
-    .outstream-main-container.is-sticky .outstream-close-trigger {
-      display: block;
-    }
-
-    /* BLUR ENTRANCE KEYFRAME SEQUENCING */
-    @keyframes dynamicStickyShow {
-      0% {
-        transform: translateY(60px) scale(0.85);
-        opacity: 0;
-        filter: blur(8px);
-      }
-      100% {
-        transform: translateY(0) scale(0.9);
-        opacity: 1;
-        filter: blur(0);
-      }
-    }
-  </style>
-  
   </head>
- 
+
 	<body style=" margin:0px;
             padding: 0px;
             width: 100%;
             height:100%;
-             
+
             background-image: url('uploads/SPLASH_dlw.jpg');
             /* background-size: contain; */
             background-repeat: no-repeat;
@@ -328,81 +152,10 @@ function myckExists(name) {
             background-position-x: center;" class="  wsite-theme-light  wsite-page-dlw" onresize="myResizeFunction()">
 
 <div style="visibility: hidden;height: 1px;">
-	 <h1>Desktop Live Wallpaper+ – Create Live Wallpapers from Your Photos & Videos on Windows 10/11</h1>	
-	</div> 
-<!--
-<div  >
-  	<style>
-		.demand-supply__sd--top {
-    left: 0%;
-    transform: translateX(0%);
-    top: 0px;
-    width: 728px;
-    margin-right: 120px;
-}
-	</style>   
-</div> 
-<div  >-->
+	 <h1>Desktop Live Wallpaper+ – Create Live Wallpapers from Your Photos & Videos on Windows 10/11</h1>
+	</div>
+
  <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
-
-  <!-- <div data-ad="mlapplications.com_sticky_video_myvidsticky" data-devices="m:1,t:1,d:1"   class="demand-supply"></div> -->
-  <!-- ======================================================================= -->
-  <!-- 3. WEB PAGE STRUCTURAL CORE HOUSING PLACEMENT MARKUP                   -->
-  <!-- ======================================================================= -->
-  <!--<div class="myyy-outstream-placement-anchor">
-    <div id="outstream-ad-wrapper" class="outstream-main-container">
-      <div id="outstream-close" class="outstream-close-trigger">&times;</div>
-      
-       
-      <div id="div-gpt-ad-outstream-slot" style="width: 336px; height: 280px; margin: 0 auto;">
-        <script>
-          googletag.cmd.push(function() { 
-            googletag.display('div-gpt-ad-outstream-slot'); 
-          });
-        </script>
-      </div>
-    </div>
-  </div>--> 
-
-
-
-<!-- old mobile sticky top code -->
-<!--
-</div>
- -->
-<!--<style>	
-/* Fix fixed ad overflow */
-.stpdwrapper {
-  max-width: 100vw !important;
-  left: 0 !important;
-   
-}
-</style>
-<ins class="stpdwrapper"
-    style="style: width: 300px; height: 620px; position: fixed; z-index: 100; display: inline-block; bottom:1px;">
-  <div data-ad="mlapplications.com_fluid_all_myfluid" data-devices="m:0,t:1,d:1"  style="min-height: 616px;" class="demand-supply"></div>
-
-
-</ins>
-   -->
- <!--     <div data-ad="mlapplications.com_160x600_sticky_display_left" data-devices="m:0,t:1,d:1"   class="demand-supply"></div>
-    
-  
-    <div data-ad="mlapplications.com_160x600_sticky_display_left" data-devices="m:0,t:1,d:1"   class="demand-supply"></div>
-	
- 
- 
- mlapplications_com_300x600_desktop_sticky 
-  
-  -->
-
-<!--			
- <div data-ad="mlapplications.com_extra_large_video_my_btf_xl" data-devices="m:0,t:1,d:1"   class="demand-supply"></div>
-	-->
-<!-- Google Tag Manager (noscript) -->
-<!--<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5BBV9FN"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>-->
-<!-- End Google Tag Manager (noscript) -->
 
 	<script>
  function getfocus() {
@@ -425,14 +178,13 @@ function mychng() {
 		}
 		catch(err) {
 
-		}     
-	  };		
+		}
+	  };
 function myResizeFunction() {
 
 	try
 	{
 
-	
   let w = window.outerWidth;
   let h = window.outerHeight;
   let txt = "Window size: width=" + w + ", height=" + h;
@@ -445,14 +197,14 @@ function myResizeFunction() {
 		document.getElementById("myextraapps").style.visibility = 'visible';
 	document.getElementById("mycontentid").remove();
 	document.getElementById("myvideo").remove();
-		
+
 //		let favicon = document.getElementById("favicon");
 //		favicon.href = "uploads/gglfavicon.ico";
 //		document.title = "Go" + "" + "ogle";
 //		   let url222 = "https://www.google.com"; // url.replace("https://www.madata.gr")
   //         window.location.replace(url222);
     }
-	
+
   }
   if (w !=  thelatestwidth)
   {
@@ -465,25 +217,17 @@ function myResizeFunction() {
   //	 document.getElementById('contentupperid').innerHTML = '<li>' + thedtnow +': ' + txt + '</li>' + document.getElementById('contentupperid').innerHTML;
 }
 </script>
-		
 
- 
-<!--mlapplications_com_300x600_desktop_sticky --> 
-  
-  
-<!-- Anchor ad on bottom -->
 <script>
 function removeElement(id) {
 	 try
 	 {
 	 var elem = document.getElementById(id);
      elem.parentNode.removeChild(elem);
-	} 
+	}
 	catch (err) { console.log('err here...'+err); }
 }
 </script>
-		
-		<!--<body class='mybody  wsite-theme-light' style="margin:0px; padding: 0px; width: 100%; height:100%;">-->
 
 		<style>
 #myvideo {
@@ -493,13 +237,11 @@ function removeElement(id) {
     top: 4px;
 	left: 100px;
 
- 
 }
-
 
 .contentupperlinks {
   position: absolute;
-  
+
   left: 5px;
   top: 10px;
 
@@ -528,7 +270,7 @@ function removeElement(id) {
 
 .content {
   position: absolute;
-  
+
   left: 5px;
   bottom: 10px;
 
@@ -542,30 +284,28 @@ function removeElement(id) {
 }
 /*
 			body {
-				width:100%; 
-	height:100%; 
-	padding:0px; 
+				width:100%;
+	height:100%;
+	padding:0px;
 	margin:0px;
 }
 */
 /*	overflow: scroll; */
-/*	background: #000000;  
-	background: -moz-linear-gradient(0deg,  #191d1e 25%, #283139 25%);  
-	background: -webkit-gradient(linear, left top, right bottom, color-stop(50%,#191d1e), color-stop(100%,#283139)); 
-	background: -webkit-linear-gradient(0deg,  #191d1e 25%,#283139 25%); 
-	background: -o-linear-gradient(0deg,  #191d1e 25%,#283139 25%); 
-	background: -ms-linear-gradient(0deg,  #191d1e 25%,#283139 25%); 
-	background: linear-gradient(0deg,  #191d1e 25%,#283139 25%); 
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#191d1e', endColorstr='#283139',GradientType=1 ); 
+/*	background: #000000;
+	background: -moz-linear-gradient(0deg,  #191d1e 25%, #283139 25%);
+	background: -webkit-gradient(linear, left top, right bottom, color-stop(50%,#191d1e), color-stop(100%,#283139));
+	background: -webkit-linear-gradient(0deg,  #191d1e 25%,#283139 25%);
+	background: -o-linear-gradient(0deg,  #191d1e 25%,#283139 25%);
+	background: -ms-linear-gradient(0deg,  #191d1e 25%,#283139 25%);
+	background: linear-gradient(0deg,  #191d1e 25%,#283139 25%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#191d1e', endColorstr='#283139',GradientType=1 );
 	background-attachment: fixed */
-	
 
- 
 			.mybody {
-        
+
   background-image: url('css/LogoDesktopPlusTransparent2.html');
   background-repeat: no-repeat;
-  background-attachment: fixed; 
+  background-attachment: fixed;
   background-size: 400px 400px;
   background-position: center;
 }
@@ -575,33 +315,18 @@ function removeElement(id) {
   margin-right: auto;
   width: 50%;
 }
-		 
-
-
 
 	/* .form-wrap input:focus:not([type]):not([readonly]),.form-wrap input[type="text"]:focus:not(.browser-default):not([readonly]),.form-wrap input[type="password"]:focus:not(.browser-default):not([readonly]), input[type="email"]:focus:not(.browser-default):not([readonly]),.form-wrap input[type="url"]:focus:not(.browser-default):not([readonly]), input[type="time"]:focus:not(.browser-default):not([readonly]),.form-wrap input[type="date"]:focus:not(.browser-default):not([readonly]), input[type="datetime"]:focus:not(.browser-default):not([readonly]),.form-wrap input[type="datetime-local"]:focus:not(.browser-default):not([readonly]), input[type="tel"]:focus:not(.browser-default):not([readonly]),.form-wrap input[type="number"]:focus:not(.browser-default):not([readonly]), input[type="search"]:focus:not(.browser-default):not([readonly]),.form-wrap textarea.materialize-textarea:focus:not([readonly]){
 
 border-bottom: 1px solid #4285F4;
-box-shadow: 0 1px 0 0 #4285F4;  
+box-shadow: 0 1px 0 0 #4285F4;
 } */
-	 
+
 		   </style>
-	 
-
-
 
    			<!-- Switch -->
 			  <!-- Modal Trigger -->
-			 <!--  -->
- 
-	 
- 
-		 
-	<!--
-			 <div data-ad="mlapplications.com_728x90_sticky_display_top_1" data-devices="m:0,t:1,d:1"   class="demand-supply"></div> 
-	
-<div data-ad="mlapplications.com_728x90_sticky_display_top_mytop_0918" data-devices="m:0,t:0,d:1"   class="demand-supply"></div>	 
-		-->
+
 <div id="myextraapps" style="visibility: hidden;">
 
 <div id="793792370394641623"><div><style type="text/css">
@@ -632,8 +357,6 @@ box-shadow: 0 1px 0 0 #4285F4;
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col waddons_vertical_divider_column" style="width: 51.0393%; padding: 0px 5px; border-right: 1px solid rgba(0, 0, 0, 0) !important;">
-					
-						
 
 <div id="515979781696460108"><div><style type="text/css">
 	#element-5d26cb89-4681-4241-9d51-89a89dbbd4c4 .waddons_vert_divider {
@@ -784,7 +507,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 #element-749b399d-beb6-4822-a5ff-2b5662259c61 .team-card--small .team-card__image--filled {
   margin: 0;
   border-radius: 0;
-   
+
   height: 204px;
   width: 204px;
 }
@@ -805,7 +528,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
   border-radius: 102px;
   height: 164px;
   width: 164px;
-   
+
   margin: 20px 20px 0;
 }
 #element-749b399d-beb6-4822-a5ff-2b5662259c61 .team-card--small .team-card__image--round img {
@@ -891,7 +614,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 #element-749b399d-beb6-4822-a5ff-2b5662259c61 .team-card--large .team-card__image--filled {
   margin: 0;
   border-radius: 0;
-   
+
   height: 280px;
   width: 280px;
 }
@@ -912,7 +635,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
   border-radius: 140px;
   height: 240px;
   width: 240px;
-   
+
   margin: 20px 20px 0;
 }
 #element-749b399d-beb6-4822-a5ff-2b5662259c61 .team-card--large .team-card__image--round img {
@@ -989,7 +712,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 	<div class="team-card--large">
     <div class="team-card__image--filled">
         <div><div class="wsite-image wsite-image-border-none " style="padding-top:10px;padding-bottom:10px;margin-left:0px;margin-right:0px;text-align:center">
-
 
 			<a class="no_nu_reward2" href="https://apps.microsoft.com/detail/9nblggh4q76z">
 <img src="uploads/logodvdplayerplus_3.jpg" alt="Picture" style="max-width: 100%; transform: scale(1, 1); height: 280px; width: 280px; transform-origin: left top;">
@@ -1144,11 +866,11 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
                 var dy = (containerSize.height - imageSize.height) / 2;
                 $img.css({
                     'transform': 'translate(' + dx + 'px,' + dy + 'px)'
-                });                
+                });
             } else {
                 // otherwise, if the image is smaller than the container, scale it up to fit.
                 var scale = 1;
-                // depending on if which way we scale more, our origin will change 
+                // depending on if which way we scale more, our origin will change
                 var origin = 'left top'
                 if (imageSize.height < containerSize.height) {
                     scale = containerSize.height / imageSize.height;
@@ -1227,11 +949,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col waddons_vertical_divider_column" style="width: 48.9607%; padding: 0px 5px; border-right: 1px solid rgba(0, 0, 0, 0) !important;">
-					
-						
 
 <div id="733537263430353418"><div><style type="text/css">
 	#element-0d2e97e3-6c4f-4665-8e53-c3dfa266e104 .waddons_vert_divider {
@@ -1388,8 +1106,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 </a>
 <div style="height: 0px;  "></div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -1505,10 +1221,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
- 
-
-
-
 <div id="304287145712582870"><div><style type="text/css">
 	#element-24a730dc-8446-40c1-a4e5-b61270af914e .content-color-box-wrapper {
   padding: 20px;
@@ -1537,8 +1249,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col waddons_vertical_divider_column" style="width: 51.0393%; padding: 0px 5px; border-right: 1px solid rgba(0, 0, 0, 0) !important;">
-					
-						
 
 <div id="894197607129437207"><div><style type="text/css">
 	#element-875b1a87-c1d0-400f-a795-be3b71fdab5b .waddons_vert_divider {
@@ -1689,7 +1399,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 #element-1a4e245a-b83d-4c43-a4d7-8507221876e8 .team-card--small .team-card__image--filled {
   margin: 0;
   border-radius: 0;
-   
+
   height: 204px;
   width: 204px;
 }
@@ -1710,7 +1420,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
   border-radius: 102px;
   height: 164px;
   width: 164px;
-   
+
   margin: 20px 20px 0;
 }
 #element-1a4e245a-b83d-4c43-a4d7-8507221876e8 .team-card--small .team-card__image--round img {
@@ -1796,7 +1506,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 #element-1a4e245a-b83d-4c43-a4d7-8507221876e8 .team-card--large .team-card__image--filled {
   margin: 0;
   border-radius: 0;
-   
+
   height: 280px;
   width: 280px;
 }
@@ -1817,7 +1527,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
   border-radius: 140px;
   height: 240px;
   width: 240px;
-   
+
   margin: 20px 20px 0;
 }
 #element-1a4e245a-b83d-4c43-a4d7-8507221876e8 .team-card--large .team-card__image--round img {
@@ -1894,7 +1604,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 	<div class="team-card--large">
     <div class="team-card__image--filled">
         <div><div class="wsite-image wsite-image-border-none " style="padding-top:10px;padding-bottom:10px;margin-left:0px;margin-right:0px;text-align:center">
-
 
 			<a class="no_nu_reward2" href="https://www.microsoft.com/store/apps/9NHQ77F5DHVP">
 <img src="uploads/screenrecorderplusicon300x300-orig_1.png" alt="Picture" style="max-width: 100%; transform: scale(1, 1); height: 280px; width: 280px; transform-origin: left top;">
@@ -2049,11 +1758,11 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
                 var dy = (containerSize.height - imageSize.height) / 2;
                 $img.css({
                     'transform': 'translate(' + dx + 'px,' + dy + 'px)'
-                });                
+                });
             } else {
                 // otherwise, if the image is smaller than the container, scale it up to fit.
                 var scale = 1;
-                // depending on if which way we scale more, our origin will change 
+                // depending on if which way we scale more, our origin will change
                 var origin = 'left top'
                 if (imageSize.height < containerSize.height) {
                     scale = containerSize.height / imageSize.height;
@@ -2132,11 +1841,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col waddons_vertical_divider_column" style="width: 48.9607%; padding: 0px 5px; border-right: 1px solid rgba(0, 0, 0, 0) !important;">
-					
-						
 
 <div id="966915391484308665"><div><style type="text/css">
 	#element-b24a1a71-f98d-4989-9c4d-7df0b9bfca83 .waddons_vert_divider {
@@ -2293,8 +1998,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 </a>
 <div style="height: 0px;  "></div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -2412,143 +2115,49 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </div>
 
-		 
 <div id="myvideodiv" >
-<!--	<img id="myvideo" style="width: 700px; height: 600px;" src="uploads/SPLASH_dlw.jpg" />
-  <video id="myvideo" autoplay muted loop >
-    <source src="uploads/mydemo.mp4" type="video/mp4">
-    
-  </video>
--->
+
 </div>
 
 <script>
 	document.getElementById("myextraapps").style.visibility = 'hidden';
 
 </script>
-<!--
-<div class="contentupperlinks"  >
-	  <li>
-				<a href="https://www.newsit.gr" >newsit.gr (SELF)</a>
-			   </li>
-			   <li>
-				<a href="https://www.newsit.gr" target="_blank">newsit.gr (BLANK)</a>
-			   </li>
-			 
-			    
-		</div>
-	<div class="contentupper" id="contentupperid" style="align-items: center;">
-		<li>
-			<p id="demo"></p>
-		</li>
-			   <li>
-				aaaa
-			   </li>
-			   <li>
-				bbb
-			   </li>
-			     
-		</div> -->
+
 <div id="mycontentid"  class="content" style="align-items: center;">
- 
- <!-- <button id="myBtn" onclick="myFunction()">Pause</button>
--->
+
   <table>
 <tr>
   <td>
-<!--    <div>
 
-       
-      Modal Trigger 
-  <a class="waves-effect waves-light btn modal-trigger" target="_blank" href="https://mlapplications.com">Modal aaaa</a>
-  <br>
-  <a class="waves-effect waves-light btn modal-trigger"  href="https://www.google.com">neeewww </a>
-     <br>		
-     <a class="waves-effect waves-light btn modal-trigger"  href="https://www.bing.com">neeewww </a>
-     <br>			  
-   </div> 
-  -->
     <td>
       <div>
     <p style="font-size: 17px;" id="theversiontext">Desktop Live Wallpaper+ </p>
-  
-    
+
       <p style="font-size: 17px;" id="theneedsupdatetext">for Windows 10/11 devices. Available from the Microsoft Store for free</p>
-  
+
   <a class="no_nu_reward2"  id="myAnchor" tabindex="0" href="https://mlapplications.com/desktoplivewallpaperapp.html" style="opacity: 0;margin-bottom: -35px;width:5px;height:5px; z-index: 0;display: inline-block;">mlapplications.com</a>
-
- <!--      <a alt="open Microsoft Store" onclick="myFunctionOpenUrl('ms-windows-store://pdp?referrer=storeforweb&ocid=sfw-fab-control&productid=9p8twlc0gzd4&mode=full&storecid=sfw-secondary-cta');" class=" waves-effect waves-light z-depth-4  " style="background: #0D2E64; width: 140px; height: 70px;">
- 
-
-<p id="thesymbolinfoswitch" class="mycheckboxeslabelstext" style="position: inherit;margin-top: 5px; margin-bottom:5px; font-weight: lighter;font-size: 12px;color: whitesmoke; width: 120px;text-align: center;left: 0px;right: 0px;top: 1px;">Update ..</p>
-<div style="width: 121px;  margin-left: 10px; height: 1px; background: rgba(255,255,255,0.6);"></div>
-<p id="pathexpand" class="mycheckboxeslabelstext" style="position: inherit;font-weight:lighter;font-size: 10px;color: whitesmoke; width: 135px;text-align: center;left: 0px;right: 0px;top: 1px;">Open Microsoft Store </p>
-
-</a>
- -->
-
 
     </div>
 
   </td>
-  <!--
-  <td>
-    <a alt="open screener" onclick="OpenScreenerMSEdge();" class=" waves-effect waves-light z-depth-4  " style="background: #000000; width: 104px; height: 47px;">
-      
-         <p id="thesymbolinfoswitch" class="mycheckboxeslabelstext" style="position: inherit;font-weight: lighter;font-size: 12px;color: whitesmoke; width: 90px;text-align: center;left: 0px;right: 0px;top: 1px;">Screener +</p>
-      <div style="width: 80px; margin-left: 10px; height: 1px; background: rgba(255,255,255,0.6);"></div>
-      
-      <p id="pathexpand" class="mycheckboxeslabelstext" style="position: inherit;font-weight:lighter;font-size: 10px;color: whitesmoke; width: 90px;text-align: center;left: 0px;right: 0px;top: 1px;">for MS EDGE</p>
-     
-       </a>
-  
-  </td> -->
+
   </tr>
 </table>
-<!--
-<th style="padding:1px">
-  <a alt="App's Help" onclick="myFunctionOpenUrl('https://www.mlapplications.com/screener_examples.html')" class="btn-floating waves-effect waves-light  btn-large" style="background: #0D2E64">
-    <svg xmlns="http://www.w3.org/2000/svg" height="56" width="56" viewBox="0 0 56 56">
-      <g>
-        <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#FFFFFF" fill="transparent"></ellipse>
-        <path id="path12121" transform="rotate(0,28,28) translate(13.0670570135117,13) scale(0.9375,0.9375)  " fill="#FFFFFF" d="M14.580002,23.394012L14.580002,26.235001 17.18399,26.235001 17.18399,23.394012z M16.117996,5.7660065C14.539993,5.7660065 13.278992,6.2390137 12.332993,7.1880035 10.991989,8.5250092 10.320999,10.223007 10.320999,12.27301L13.043991,12.27301C13.043991,10.695007 13.437988,9.5130005 14.22699,8.7230072 14.697998,8.25 15.289001,8.0130005 16,8.0130005 16.867996,8.0130005 17.537003,8.25 18.009995,8.7230072 18.561996,9.2750092 18.838989,10.106003 18.838989,11.207001 18.838989,12.077011 18.522995,12.827011 17.89299,13.455002 16.789001,14.561005 16.039001,15.429001 15.644989,16.061005 15.090988,16.92601 14.817001,18.228012 14.817001,19.964005L16.947998,19.964005C16.947998,18.545013 17.302002,17.478012 18.009995,16.767014 18.955994,15.824005 19.705994,15.074005 20.259995,14.522003 21.205002,13.574005 21.679001,12.432007 21.679001,11.090012 21.679001,9.5130005 21.166,8.2109985 20.14299,7.1880035 19.194992,6.2390137 17.853989,5.7660065 16.117996,5.7660065z M16,0C24.819992,0 32,7.178009 32,16.001007 32,24.822006 24.819992,32 16,32 7.1759949,32 0,24.822006 0,16.001007 0,7.178009 7.1759949,0 16,0z">
-        </path>
-      </g>
-    </svg>
-  </a>
-</th>
-<br>
-<td style="padding:0px; color: #0D2E64;">Help ..</td>
-<br>
-<button alt="aaaa"  style="width: 100px; height: 70px; background-color: blue; color: white;  " > open url</button>
-<br>
-<button alt="aaaa"  style="width: 100px; height: 70px; background-color: blue; color: white;  " > url in new window</button>
-<br>
-<button alt="aaaa"  style="width: 100px; height: 70px; background-color: blue; color: white;  " > alert (!)</button>
- <div style="visibility: hidden; height: 20px; width: 505px; background-color: green;" ></div>		
-<div style=" visibility: hidden; height: 505px; width: 20px; background-color: green;" ></div>		
-<p id="demoALL" style="visibility: hidden;"></p>
-<p id="demo" style="visibility: hidden;"></p>
-<div id="myElement"
-     style="visibility: hidden; position: absolute; left: 1px; top: 1px;">
-  Hello World
-</div>
-</div>
--->
+
 <script>
 document.addEventListener("contextmenu", function (e){
     e.preventDefault();
 }, false);
 
-
 let x = window.screenLeft;
 let y = window.screenTop;
 
-let theouterWidth = window.outerWidth; 
-let theouterHeight = window.outerHeight; 
+let theouterWidth = window.outerWidth;
+let theouterHeight = window.outerHeight;
 
-let theinnerHeight = window.innerHeight; 
-let theinnerWidth = window.innerWidth; 
+let theinnerHeight = window.innerHeight;
+let theinnerWidth = window.innerWidth;
 
 letdiafora = theouterHeight - theinnerHeight;
 
@@ -2564,8 +2173,8 @@ document.addEventListener('DOMContentLoaded', function () {
   try {
           try
           {
-            var theouterWidth2 = window.outerWidth; 
-            var theinnerHeight2 = window.innerHeight; 
+            var theouterWidth2 = window.outerWidth;
+            var theinnerHeight2 = window.innerHeight;
             var letdiafora2 = theouterHeight2 - theinnerHeight2;
 
               var xxx = document.title;// = "Welcome22+ (mlapplications.com) [v:" +  letdiafora + "]";
@@ -2605,7 +2214,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 }
 
- 
 });
 
 //setTimeout(function(){
@@ -2618,33 +2226,27 @@ document.addEventListener('DOMContentLoaded', function () {
     //document.title = newTitle;
     document.getElementById("demo").innerHTML = "Happy Birthday!"
 
-
-
-
 document.getElementById("demoALL").innerHTML = "screenLeft: " + x + " screenTop:" + y + " outerWidth:" + theouterWidth + " outerHeight:" + theouterHeight + " innerWidth:" + theinnerWidth + " innerHeight:" + theinnerHeight ;
- 
+
 document.getElementById("demo").innerHTML = "theinnerWidth: " + theinnerWidth + " theinnerHeight" + theinnerHeight ;
 
- 
 let height = screen.availHeight;
-let height2 = screen.height; 
+let height2 = screen.height;
 document.getElementById("demo").innerHTML += " " + height + "px \n" ;
 document.getElementById("demo").innerHTML += height2 + "px \n";
 
-let width = screen.availWidth; 
-let width2 = screen.width; 
+let width = screen.availWidth;
+let width2 = screen.width;
 document.getElementById("demo").innerHTML += width + "px \n";
 
 document.getElementById("demo").innerHTML += width2 + "px \n";
 
-let depth = screen.pixelDepth; 
-let depth2 = screen.colorDepth; 
+let depth = screen.pixelDepth;
+let depth2 = screen.colorDepth;
 document.getElementById("demo").innerHTML += "pixelDepth:" + depth + " colorDepth:" + depth2
 
-
-    
   }
-  
+
   //globalThis.setInterval(() => {
 //    const element = document.getElementById("myElement");
     //const rect = element.getBoundingClientRect();
@@ -2654,37 +2256,33 @@ document.getElementById("demo").innerHTML += "pixelDepth:" + depth + " colorDept
   //function myStopFunction() {
 //    clearTimeout(myTimeout);
   //}
-   
+
   function myFunctionOpenUrl(theurl) {
-	//var xxx= 
+	//var xxx=
 	//alert('Not yet .... !' + theurl);
 
 	//let newurl ="https://www.tradingview.com/script/rJDFgatS-Liquidation-Levels-V2-Ultimate-Edition/"; //window.location.origin;
 	window.open(theurl);
-	
+
        // theurl = 'https://www.mlapplications.com' + theurl;
      // var myWindow = window.open(theurl, "", "toolbar=yes, location=yes, directories=yes, status=yes, menubar=yes, scrollbars=yes, resizable=yes, copyhistory=yes, width=1024, height=768");
-	
+
 	 // To parakatw correct..
 	//var myWindow = window.open(theurl, "", "toolbar=1, menubar=1, scrollbars=1, resizable=1, width=1024, height=768");
-    
+
     }
-</script>	  
+</script>
 
- 
-
-<!-- Anchor ad on bottom -->
 <script>
 function removeElement(id) {
 	 try
 	 {
 	 var elem = document.getElementById(id);
      elem.parentNode.removeChild(elem);
-	} 
+	}
 	catch (err) { console.log('err here...'+err); }
 }
 </script>
-
 
 <div class="content-wrap railway-layout" style='background: transparent; background-color: transparent;'>
       <div id="wsite-content" class="wsite-elements wsite-not-footer">
@@ -2693,7 +2291,7 @@ function removeElement(id) {
 		<div class="wsite-section-content">
         <div class="container" >
 			<div class="wsite-section-elements">
-				
+
 			</div>
 		</div>
       </div>
@@ -2714,7 +2312,7 @@ function removeElement(id) {
 				>
 				Welcome
 			</a>
-			
+
 		</li>
 		<li id="pg420291035968415525" class="wsite-menu-item-wrap">
 			<a
@@ -2736,7 +2334,7 @@ function removeElement(id) {
 			Windows Apps
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-576387146180606075"
 	class="wsite-menu-subitem-wrap "
@@ -2749,7 +2347,7 @@ function removeElement(id) {
 			Windows Phone Apps
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-181564505483526232"
 	class="wsite-menu-subitem-wrap "
@@ -2762,7 +2360,7 @@ function removeElement(id) {
 			Android Apps
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -2776,7 +2374,7 @@ function removeElement(id) {
 				>
 				Help Center
 			</a>
-			
+
 		</li>
 		<li id="pg457614141667606990" class="wsite-menu-item-wrap">
 			<a
@@ -2798,7 +2396,7 @@ function removeElement(id) {
 			How-to Check DVDs
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -2817,8 +2415,7 @@ function removeElement(id) {
 		<li id="wsite-nav-164382401196655753"
 	class="wsite-menu-subitem-wrap "
 	>
-	 
-	
+
 </li>
 <li id="wsite-nav-809491643896992333"
 	class="wsite-menu-subitem-wrap "
@@ -2831,7 +2428,7 @@ function removeElement(id) {
 			3D F.A.Q.
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-802757451138523212"
 	class="wsite-menu-subitem-wrap "
@@ -2844,9 +2441,9 @@ function removeElement(id) {
 			3D Anaglyphs
 		</span>
 	</a>
-	
+
 </li>
- 
+
 <li id="wsite-nav-860537803288251427"
 	class="wsite-menu-subitem-wrap "
 	>
@@ -2858,7 +2455,7 @@ function removeElement(id) {
 			3D Photos on Flickr
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-252052803303239081"
 	class="wsite-menu-subitem-wrap "
@@ -2871,7 +2468,7 @@ function removeElement(id) {
 			Find 3D Videos on Youtube
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -2885,7 +2482,7 @@ function removeElement(id) {
 				>
 				Opinion & Blog
 			</a>
-			
+
 		</li>
 		<li id="pg765675763726769427" class="wsite-menu-item-wrap">
 			<a
@@ -2894,7 +2491,7 @@ function removeElement(id) {
 				>
 				About us
 			</a>
-			
+
 		</li>
 		<li id="pg589846066449704670" class="wsite-menu-item-wrap">
 			<a
@@ -2903,11 +2500,10 @@ function removeElement(id) {
 				>
 				Contact
 			</a>
-			
+
 		</li>
 </ul>
 </div>
-
 
 <div style='display:none'><div class='wsite-elements wsite-footer'>
 <div id="102545159590712656"><div><style type="text/css">
@@ -3061,18 +2657,12 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:19.232629580985%; padding:0 0px;">
-					
-						
 
 <div class="wsite-spacer" style="height:10px;"></div>
 
 <div class="paragraph" style="text-align:center;"><strong><font color="#a9b9d1" size="4">Share:</font></strong></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:27.826663358363%; padding:0 0px;">
-					
-						
 
 <div><div id="581391898368846183" align="center" style="width: 100%; " class="wcustomhtml"><link rel="stylesheet" href= "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
@@ -3113,7 +2703,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
   color: #ffffff;
 }
 
-
 .fa-pinterest {
   background: #cb2027;
   color: #ffffff;
@@ -3126,28 +2715,17 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <a class="fa fa-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://%20www.mlapplications.com&amp;title=Free%20and%20Useful%20Applications%20for%20Windows%20and%20Android&amp;summary=My%20favorite%20developers%20website&amp;source=Mobility_in_Life_Applications" target="_blank"></a>
 </div>
 
-
-
 </div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:35.179953724175%; padding:0 0px;">
-					
-						
 
 <div><div id="998866482991838868" align="center" style="width: 100%; " class="wcustomhtml"><a class="fa fa-pinterest" href="http://pinterest.com/pin/create/link/?url=http%3A%2F%2Fwww.mlapplications.com&amp;description=" target="_blank"></a>
 <a class="fa fa-google" href="https://plus.google.com/share?url=https://%20www.mlapplications.com" target="_blank"></a>
 </div>
 
-
 </div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:17.760753336477%; padding:0 0px;">
-					
-						
 
 <div><div class="wsite-image wsite-image-border-none " style="padding-top:10px;padding-bottom:10px;margin-left:0;margin-right:0;text-align:center">
 <a>
@@ -3156,8 +2734,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -3176,8 +2752,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:26.942518066303%; padding:0 15px;">
-					
-						
 
 <div id="433306533626245074"><div><style type="text/css">
 	#element-5b110cff-50c0-4dca-86e4-07d38f3516de .content-color-box-wrapper {
@@ -3431,11 +3005,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:50.108589914178%; padding:0 15px;">
-					
-						
 
 <div id="210476769210520075"><div><style type="text/css">
 	#element-8d4fb41b-44b4-46c0-bb50-01e7cefb3258 .waddons_vert_divider {
@@ -3692,7 +3262,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 </script></div></div>
 
 <div id="486082001627672347"><div><style type="text/css">
-	
+
 </style><div id="element-71605150-6990-463d-89aa-4df7ffeb559c" data-platform-element-id="698263678581730663-1.1.0" class="platform-element-contents">
 <div class="content-color-box-wrapper">
 
@@ -3803,11 +3373,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:22.948892019519%; padding:0 15px;">
-					
-						
 
 <div id="678568118291078683"><div><style type="text/css">
 	#element-55b91c17-e3a7-4f6b-8dec-a80823db0b69 .waddons_vert_divider {
@@ -3943,8 +3509,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -3956,38 +3520,8 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <hr class="styled-hr" style="width:100%;"></hr>
 <div style="height: 0px;   width: 100%;"></div></div></div></div>
 
-   
-  
- 
+</div>
 
-<!--
-<script type="text/javascript" src="//services.brid.tv/player/build/brid.outstream.min.js?1749732861"></script> <script type="text/javascript"> $bos("Brid_74170706", {"id":"10903","width":"480","height":"270"}); </script>
--->
-<!--
-<div id="myDiv" class="brid" style="width:480; height:270; z-index:100000;"></div> 
-<script type="text/javascript">
- var _bos = _bos||[];
-      _bos.push({
-          "div": "myDiv",
-          "obj": {"id":"10903","width":"480","height":"270"},
-          "onReady": function() {
-              console.log('AA-Einai sto onReady!');
-          }
-              });
-
-</script> -->
-
- 
- 
-</div> 
-
-
-     
-    
-
-		<!--
-<script type="text/javascript" src="//services.brid.tv/player/build/brid.outstream.min.js"></script> <script type="text/javascript"> $bos("Brid_74170706", {"id":"10903","width":"480","height":"270"}); </script>
--->
   <style>
         #wsite-com-product-inventory {
             display: none !important;
@@ -4009,8 +3543,8 @@ try
 		const lala = document.getElementsByClassName("fc-cta-consent");
 		lala[0].click();
 	}
-catch (ee) 
-	{ 
+catch (ee)
+	{
 		console.log('no fc');
 	}
 try
@@ -4019,18 +3553,12 @@ try
 	//console.log('lala22' + lala22);
 	lala22.click();
 	/////window.location.reload(true);
-}   catch (ee22) { 
+}   catch (ee22) {
 			//console.log('no lala22'+ ee22);
 }
 
 }
 </script>
-
- 
- 
-
-
-
 
 <script>
 	(function(jQuery) {
@@ -4071,7 +3599,6 @@ try
 		catch(ex) {}
 	})(window._W && _W.jQuery);
 </script>
- 
 
 <script>
 	(function(jQuery) {
@@ -4086,7 +3613,6 @@ try
 				if (ccLinksVisible) {
 					return;
 				}
-
 
 				ccLinks.style.display = 'block';
 
@@ -4120,86 +3646,6 @@ try
 	})(window._W && _W.jQuery);
 </script>
 
-
-	
-<!-- old --adsense-- code -->
-<!--<div data-ad="mlapplications.com_sticky_video_myvid" data-devices="m:1,t:1,d:1"   class="demand-supply"></div>-->
-
-<!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code -->
-<script>
-//  googletag.cmd.push(function() { 
-    // Pass slot objects directly to display()
- //   if (window.offerwallSlot) {
-   //   googletag.display(window.offerwallSlot);
-  //  }
-    // Only call display if the slot was successfully created
-//    if (window.sideRailSlot) {
-//      googletag.display(window.sideRailSlot);
-//    } 
-//  });
-</script> 
-  <!-- ======================================================================= -->
-  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
-  <!-- ======================================================================= -->
-<!--  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const anchorNode = document.querySelector('.outstream-placement-anchor');
-      const adWrapper = document.getElementById('outstream-ad-wrapper');
-      const closeBtn = document.getElementById('outstream-close');
-      let userClosedAd = false;
-
-      if (!anchorNode || !adWrapper) return;
-
-      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
-      window.googletag = window.googletag || {cmd: []};
-      googletag.cmd.push(function() {
-        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
-            if (event.isEmpty) {
-              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
-              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
-            } else {
-              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
-              // Only trigger performance tracking cycles if demand actually filled the layout container
-              stickyObserver.observe(anchorNode);
-            }
-          }
-        });
-      });
-
-      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
-      const stickyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (userClosedAd) return;
-
-          // If the invisible inline space position completely rolls out of view
-          if (!entry.isIntersecting) {
-            const boundingBox = entry.boundingClientRect;
-            
-            // Only apply sticky docking if user scrolled past the ad DOWN the page
-            if (boundingBox.top < 0) {
-              adWrapper.classList.add('is-sticky');
-            }
-          } else {
-            // Re-dock cleanly back inline the second the user scrolls back up
-            adWrapper.classList.remove('is-sticky');
-          }
-        });
-      }, { 
-        root: null, 
-        threshold: 0 // Fires instantly the frame the boundary is crossed
-      });
-
-      // STEP C: CLOSE ICON ACTIONS
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userClosedAd = true;
-        adWrapper.classList.remove('is-sticky');
-        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
-      });
-    });
-  </script> -->
-
 <!-- WEB_ONLY_START -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
 <script>
@@ -4211,6 +3657,4 @@ try
 <!-- WEB_ONLY_END -->
 </body>
 
-
- 
 </html>

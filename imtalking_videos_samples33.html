@@ -3,6 +3,7 @@
  <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script>
 /* bfcache: turn third-party 'unload' handlers into 'pagehide' */
 (function () {
@@ -19,215 +20,15 @@
   } catch (e) {}
 })();
 </script>
-
-
-  
-
-     <!-- sulvo first -->
+<!-- sulvo -->
 <link rel="preload" as="script" href="https://live.demand.supply/up.js">
 <script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
 <!-- rewarded paywall -->
-   <link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
 <style>#custom-paywall-overlay:not(.active){display:none}</style>
-
 <script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
 
-
- 
- 
- 
- <!--
- <script>
-  window.googletag = window.googletag || { cmd: [] };
-
-  const UNLOCK_KEY = "paywall_unlock";
-  const UNLOCK_PAGES = 4;                  // pages per ad (current page counts as 1)
-  const UNLOCK_DURATION = 25 * 60 * 1000;  // 25 minutes
-  const PAYWALL_DELAY = 8 * 1000;          // delay before paywall appears
-
-  let rewardedSlot = null;
-  let rewardedEvent = null;
-  let rewardEarned = false;
-
-  // --- Unlock state: { until: timestamp, pagesLeft: number } ---
-  function readUnlock() {
-    try { return JSON.parse(localStorage.getItem(UNLOCK_KEY)) || null; }
-    catch (e) { return null; }
-  }
-
-  function writeUnlock(state) {
-    try { localStorage.setItem(UNLOCK_KEY, JSON.stringify(state)); } catch (e) {}
-  }
-
-  // Runs once per page load: uses up one page of the current unlock
-  function consumePageView() {
-    const s = readUnlock();
-    if (!s || Date.now() >= s.until || s.pagesLeft <= 0) {
-      try { localStorage.removeItem(UNLOCK_KEY); } catch (e) {}
-      return false;   // locked
-    }
-    s.pagesLeft -= 1;
-    writeUnlock(s);
-    return true;      // this page is unlocked
-  }
-
-  let pageUnlocked = consumePageView();
-
-  function unlockPage() {
-    // Current page counts as the first of the 4
-    writeUnlock({ until: Date.now() + UNLOCK_DURATION, pagesLeft: UNLOCK_PAGES - 1 });
-    pageUnlocked = true;
-    const overlay = document.getElementById("custom-paywall-overlay");
-    if (overlay) overlay.classList.remove("active");
-    document.body.style.overflow = "auto";
-  }
-
-  // --- GPT rewarded setup (only when the page is locked) ---
-  if (!pageUnlocked) {
-    googletag.cmd.push(function () {
-      rewardedSlot = googletag.defineOutOfPageSlot(
-        "/423204242/Offerwall_Live_Rewarded_code",
-        googletag.enums.OutOfPageFormat.REWARDED
-      );
-
-      if (!rewardedSlot) {
-        console.warn("Rewarded not supported on this page");
-        return;
-      }
-
-      rewardedSlot.addService(googletag.pubads());
-
-      googletag.pubads().addEventListener("rewardedSlotReady", function (evt) {
-        if (evt.slot === rewardedSlot) {
-          console.log("Rewarded ad ready");
-          rewardedEvent = evt;
-        }
-      });
-
-      googletag.pubads().addEventListener("rewardedSlotGranted", function (evt) {
-        if (evt.slot === rewardedSlot) {
-          console.log("Reward granted", evt.payload);
-          rewardEarned = true;
-        }
-      });
-
-      googletag.pubads().addEventListener("rewardedSlotClosed", function (evt) {
-        if (evt.slot === rewardedSlot) {
-          googletag.destroySlots([rewardedSlot]);
-          rewardedEvent = null;
-          if (rewardEarned) unlockPage();
-        }
-      });
-
-      googletag.pubads().addEventListener("slotRenderEnded", function (evt) {
-        if (evt.slot === rewardedSlot) {
-          console.log("Rewarded render ended, empty:", evt.isEmpty);
-        }
-      });
-
-      googletag.enableServices();
-      googletag.display(rewardedSlot);
-    });
-  }
-
-  // --- Paywall UI ---
-  document.addEventListener("DOMContentLoaded", function () {
-    const overlay = document.getElementById("custom-paywall-overlay");
-    const actionTrigger = document.getElementById("paywall-action-trigger");
-
-    if (!pageUnlocked) {
-      setTimeout(function () {
-        console.log("Paywall timer fired");
-        if (overlay && !pageUnlocked) {
-          overlay.classList.add("active");
-          document.body.style.overflow = "hidden";
-        }
-      }, PAYWALL_DELAY);
-    }
-
-    if (actionTrigger) {
-      actionTrigger.addEventListener("click", function () {
-        if (rewardedEvent) {
-          rewardedEvent.makeRewardedVisible();
-        } else {
-          console.warn("Rewarded ad not ready (no fill or blocked). Granting fallback access.");
-          unlockPage();
-        }
-      });
-    }
-  });
-</script>
--->
-<!-- Standard GPT script required for GAM & Privacy/Messaging tools -->
- <!--
-  
--->
-<!--
-<script>
-  // 1. Define grantUserAccess globally first so it's always in scope
-function grantUserAccess() {
-    const overlay = document.getElementById("custom-paywall-overlay");
-    sessionStorage.setItem("page_unlocked_session", "true");
-    if (overlay) {
-        overlay.classList.remove("active");
-        document.body.style.overflow = "auto";
-    }
-    location.reload(); 
-}
-</script> 
-<script>
-        window.googletag = window.googletag || {cmd: []};
-        let rewardedSlot;
-
-        googletag.cmd.push(() => {
-            // Define the out-of-page rewarded ad slot
-            rewardedSlot = googletag.defineOutOfPageSlot(
-                '/423204242/Offerwall_Live_Rewarded_code', 
-                googletag.enums.OutOfPageFormat.REWARDED
-            );
-
-            if (rewardedSlot) {
-                rewardedSlot.addService(googletag.pubads());
-
-                // Listen for when the reward is actually earned
-                googletag.pubads().addEventListener('rewardedSlotGranted', (event) => {
-                    console.log('Reward granted!', event.payload);
-                    // Code to unlock your page access goes here!
-                    grantUserAccess();
-                });
-
-                // Listen for when the ad closes (whether watched or skipped)
-                googletag.pubads().addEventListener('rewardedSlotClosed', (event) => {
-                    console.log('Rewarded ad closed.');
-                    // Refresh slot so it's ready for next time if needed
-                    googletag.pubads().refresh([rewardedSlot]);
-                });
-            }
-
-            googletag.pubads().enableSingleRequest();
-            googletag.enableServices();
-        });
-    </script>
--->
-     
-<!-- old demand -->
-
-<!-- <link href="https://vjs.zencdn.net/7.17.0/video-js.css" rel="stylesheet" />
-<link href="https://cdn.jsdelivr.net/npm/videojs-contrib-ads@6.6.4/dist/videojs.ads.css" rel="stylesheet" />
-<link href="https://cdn.jsdelivr.net/npm/videojs-ima@2.4.0/dist/videojs.ima.css" rel="stylesheet" />
-Standard GPT script required for GAM & Privacy/Messaging tools 
-   
-   
-  
-
--->
-
-
-
-
- 
- 
 <title>ImTalking Video Samples — Compare Settings Side-by-Side</title>
 <meta name="description" content="See what ImTalking's Processing Options actually look like — GFPGAN enhancement, upscale levels, still mode and expression scale, compared side-by-side."/>
 <meta name="keywords" content="ImTalking samples, GFPGAN comparison, talking avatar examples, SadTalker samples"/>
@@ -348,201 +149,6 @@ footer a{color:var(--text2);text-decoration:none}
 footer a:hover{color:var(--text)}
 </style>
 
-
- 
-
-  <!-- ======================================================================= -->
-  <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
-  <!-- ======================================================================= -->
-  <style>
-    /* THE GHOST ANCHOR: Stays fixed in layout to completely eliminate infinite layout flickers */
-    .outstream-placement-anchor {
-      width: 336px;
-      height: 280px;
-      margin: 40px auto;
-      position: relative;
-      background: transparent;
-    }
-
-    /* THE MOVING CONTAINER: Holds the ad frame and performs transitions on scroll */
-    .outstream-main-container {
-      width: 336px;
-      height: 280px;
-      background: #fbfbfb;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transition: box-shadow 0.3s ease;
-    }
-
-    /* STICKY OVERLAY STATE: Engaged programmatically by IntersectionObserver */
-    .outstream-main-container.is-sticky {
-      position: fixed;
-      top: auto;
-      left: auto;
-      bottom: 25px;
-      right: 25px;
-      z-index: 99999;
-      background: #fff;
-      border-radius: 4px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      
-      /* Downscale slightly for clean desktop corner placement */
-      transform: scale(0.9);
-      transform-origin: bottom right;
-      
-      /* Premium entrance physics: slides up, clears blur layer, fades visibility */
-      animation: dynamicStickyShow 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    /* Keeps iframe elements isolated and clipped safely inside borders when sticky */
-    .outstream-main-container.is-sticky #div-gpt-ad-outstream-slot {
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    /* CLOSE TRIGGER MARKUP: Revealed exclusively during sticky activation mode */
-    .outstream-close-trigger {
-      display: none;
-      position: absolute;
-      top: -12px;
-      left: -12px;
-      width: 26px;
-      height: 26px;
-      background: #111;
-      color: #fff;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 23px;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-      font-size: 15px;
-      font-weight: bold;
-      border: 2px solid #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 100000;
-      transition: background 0.2s ease;
-    }
-
-    .outstream-close-trigger:hover {
-      background: #ff3b30; /* Desktop specific feedback overlay shift */
-    }
-
-    .outstream-main-container.is-sticky .outstream-close-trigger {
-      display: block;
-    }
-
-    /* BLUR ENTRANCE KEYFRAME SEQUENCING */
-    @keyframes dynamicStickyShow {
-      0% {
-        transform: translateY(60px) scale(0.85);
-        opacity: 0;
-        filter: blur(8px);
-      }
-      100% {
-        transform: translateY(0) scale(0.9);
-        opacity: 1;
-        filter: blur(0);
-      }
-    }
-  </style>
- 
-  <!-- ======================================================================= -->
-  <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
-  <!-- ======================================================================= -->
-  <style>
-    /* THE GHOST ANCHOR: Stays fixed in layout to completely eliminate infinite layout flickers */
-    .outstream-placement-anchor {
-      width: 336px;
-      height: 280px;
-      margin: 40px auto;
-      position: relative;
-      background: transparent;
-    }
-
-    /* THE MOVING CONTAINER: Holds the ad frame and performs transitions on scroll */
-    .outstream-main-container {
-      width: 336px;
-      height: 280px;
-      background: #fbfbfb;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transition: box-shadow 0.3s ease;
-    }
-
-    /* STICKY OVERLAY STATE: Engaged programmatically by IntersectionObserver */
-    .outstream-main-container.is-sticky {
-      position: fixed;
-      top: auto;
-      left: auto;
-      bottom: 25px;
-      right: 25px;
-      z-index: 99999;
-      background: #fff;
-      border-radius: 4px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      
-      /* Downscale slightly for clean desktop corner placement */
-      transform: scale(0.9);
-      transform-origin: bottom right;
-      
-      /* Premium entrance physics: slides up, clears blur layer, fades visibility */
-      animation: dynamicStickyShow 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    /* Keeps iframe elements isolated and clipped safely inside borders when sticky */
-    .outstream-main-container.is-sticky #div-gpt-ad-outstream-slot {
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    /* CLOSE TRIGGER MARKUP: Revealed exclusively during sticky activation mode */
-    .outstream-close-trigger {
-      display: none;
-      position: absolute;
-      top: -12px;
-      left: -12px;
-      width: 26px;
-      height: 26px;
-      background: #111;
-      color: #fff;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 23px;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-      font-size: 15px;
-      font-weight: bold;
-      border: 2px solid #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 100000;
-      transition: background 0.2s ease;
-    }
-
-    .outstream-close-trigger:hover {
-      background: #ff3b30; /* Desktop specific feedback overlay shift */
-    }
-
-    .outstream-main-container.is-sticky .outstream-close-trigger {
-      display: block;
-    }
-
-    /* BLUR ENTRANCE KEYFRAME SEQUENCING */
-    @keyframes dynamicStickyShow {
-      0% {
-        transform: translateY(60px) scale(0.85);
-        opacity: 0;
-        filter: blur(8px);
-      }
-      100% {
-        transform: translateY(0) scale(0.9);
-        opacity: 1;
-        filter: blur(0);
-      }
-    }
-  </style>
-  
   <style>
     /* Full-screen backdrop with blur */
 #custom-paywall-overlay {
@@ -654,7 +260,7 @@ footer a:hover{color:var(--text)}
 }
   </style>
   </head>
- 
+
 <body>
 
 <nav class="topnav">
@@ -673,92 +279,13 @@ footer a:hover{color:var(--text)}
   </a>
 </nav>
 
-
-<!--
- <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
--->
-<!-- old mobile sticky top code -->
-
-
 <div class="hero">
   <h1>Video Samples</h1>
   <p>Every Processing Option changes the output in a different way. Compare them side-by-side before you spend render time on your own video.</p>
 </div>
 
 <div class="sections">
-<!--
-   <div style="padding: 20px; text-align: center; color: #666;">↓ Scroll down to view the inline outstream ad transform into a sticky corner overlay ↓</div>
-  <div style="height: 900px; background: #f0f2f5; display: flex; align-items: center; justify-content: center; font-family: sans-serif; color: #aaa;">[Article Content Space Area]</div>
--->
-  <!-- AD UNIT CONTAINER POSITION START -->
- 
-  <!-- AD UNIT CONTAINER POSITION END -->
-<!--
-  <div style="height: 1600px; background: #e9ecef; display: flex; align-items: center; justify-content: center; font-family: sans-serif; color: #aaa;">[Continue Reading Article Elements Below...]</div>
--->
-  
 
-  <!-- ======================================================================= -->
-  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
-  <!-- ======================================================================= -->
-<!--  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const anchorNode = document.querySelector('.outstream-placement-anchor');
-      const adWrapper = document.getElementById('outstream-ad-wrapper');
-      const closeBtn = document.getElementById('outstream-close');
-      let userClosedAd = false;
-
-      if (!anchorNode || !adWrapper) return;
-
-      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
-      window.googletag = window.googletag || {cmd: []};
-      googletag.cmd.push(function() {
-        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
-            if (event.isEmpty) {
-              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
-              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
-            } else {
-              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
-              // Only trigger performance tracking cycles if demand actually filled the layout container
-              stickyObserver.observe(anchorNode);
-            }
-          }
-        });
-      });
-
-      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
-      const stickyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (userClosedAd) return;
-
-          // If the invisible inline space position completely rolls out of view
-          if (!entry.isIntersecting) {
-            const boundingBox = entry.boundingClientRect;
-            
-            // Only apply sticky docking if user scrolled past the ad DOWN the page
-            if (boundingBox.top < 0) {
-              adWrapper.classList.add('is-sticky');
-            }
-          } else {
-            // Re-dock cleanly back inline the second the user scrolls back up
-            adWrapper.classList.remove('is-sticky');
-          }
-        });
-      }, { 
-        root: null, 
-        threshold: 0 // Fires instantly the frame the boundary is crossed
-      });
-
-      // STEP C: CLOSE ICON ACTIONS
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userClosedAd = true;
-        adWrapper.classList.remove('is-sticky');
-        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
-      });
-    });
-  </script> -->
   <!-- ENHANCE -->
   <div class="section">
     <div class="section-header">
@@ -766,29 +293,8 @@ footer a:hover{color:var(--text)}
       <p>GFPGAN face restoration runs on every frame for a sharper result, at the cost of extra render time.</p>
     </div>
 
-   
-  <!-- ======================================================================= -->
-  <!-- 3. WEB PAGE STRUCTURAL CORE HOUSING PLACEMENT MARKUP                   -->
-  <!-- ======================================================================= -->
-  <!--<div class="myyy-outstream-placement-anchor">
-    <div id="outstream-ad-wrapper" class="outstream-main-container">
-      <div id="outstream-close" class="outstream-close-trigger">&times;</div>
-      
-       
-      <div id="div-gpt-ad-outstream-slot" style="width: 336px; height: 280px; margin: 0 auto;">
-        <script>
-          googletag.cmd.push(function() { 
-            googletag.display('div-gpt-ad-outstream-slot'); 
-          });
-        </script>
-      </div>
-    </div>
-  </div>--> 
-
   </div>
-  <!-- ========================================== -->
-  <!-- END OF AD UNIT LAYOUT STRUCTURE            -->
-  <!-- ========================================== -->
+
     <div class="video-grid cols-2">
       <div class="video-card">
         <div class="video-wrap">
@@ -979,7 +485,7 @@ footer a:hover{color:var(--text)}
           <h3>1024 px upscale</h3>
           <p>Maximum clarity, larger file. Best for presentations and high-res exports.</p>
         </div>
-      </div>  
+      </div>
     </div>
   </div>
 
@@ -1030,11 +536,11 @@ footer a:hover{color:var(--text)}
       controls
       preload="auto"
       playsinline
-       
+
       <source src="https://mlapplications.com/video_samples/still_off.mp4" type="video/mp4" />
     </video>
   </div>
-  
+
   <div class="video-caption">
     <span class="video-badge badge-natural">Still mode off &mdash; natural drift</span>
     <h3>Still mode off</h3>
@@ -1042,36 +548,6 @@ footer a:hover{color:var(--text)}
   </div>
 </div>
 
-<!--      <div class="video-card">
-        <div class="video-wrap">
-          <video id="v-still-off" src="https://mlapplications.com/video_samples/still_off.mp4"
-            preload="metadata" loop playsinline></video>
-          <div class="video-overlay" onclick="togglePlay('v-still-off')">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-          <div class="video-progress" onclick="seekVideo(event,'v-still-off')">
-            <div class="video-progress-bar" id="bar-still-off"></div>
-          </div>
-        </div>
-        <div class="video-controls">
-          <button class="ctrl-btn" onclick="togglePlay('v-still-off')" aria-label="Play/pause">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path id="pbicon-still-off" d="M8 5v14l11-7z"/></svg>
-          </button>
-          <span class="ctrl-time" id="time-still-off">0:00</span>
-          <button class="ctrl-btn ctrl-loop on" id="loop-still-off" onclick="toggleLoop('v-still-off','loop-still-off')" title="Loop">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-          </button>
-          <button class="ctrl-btn ctrl-mute" id="mute-still-off" onclick="toggleMute('v-still-off')" title="Mute">
-            <span class="icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
-            <span class="icon-mute" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></span>
-          </button>
-        </div>
-        <div class="video-caption">
-          <span class="video-badge badge-natural">Still mode off &mdash; natural drift</span>
-          <h3>Still mode off</h3>
-          <p>More natural head motion. Better for conversational avatars.</p>
-        </div>
-      </div> -->
     </div>
   </div>
 
@@ -1145,40 +621,14 @@ footer a:hover{color:var(--text)}
     </div>
   </div>
 
-
-</div> 
+</div>
 
 <footer>
   <p>© 2026 ImTalking · <a href="https://mlapplications.com/">mlapplications.com</a> ·
   <a href="https://mlapplications.com/imtalking_privacy.html">Privacy</a> ·
   <a href="https://mlapplications.com/imtalking_contactus.html">Contact</a></p>
 </footer>
-   
-  
- 
-<!--
-  <div id="custom-paywall-overlay">
-    <div class="paywall-card">
-        
-        <img src="/uploads/logo-big_2.webp" alt="Logo" class="paywall-logo">
-        
-        <h2>Unlock more content</h2>
-        <p>Take action to continue accessing the content on this site</p>
-        
-       
-        <div class="paywall-action-box" id="paywall-action-trigger">
-            <div class="paywall-action-text">
-                <h4>View a short ad</h4>
-                <span>Unlock your next 4 pages</span>
-            </div>
-            <div class="paywall-icon-btn">
-                
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-        </div>
-    </div>
-</div> -->
- 
+
 <!-- WEB_ONLY_START -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
 <script>
@@ -1189,6 +639,5 @@ footer a:hover{color:var(--text)}
 </script>
 <!-- WEB_ONLY_END -->
 </body>
-
 
 </html>
