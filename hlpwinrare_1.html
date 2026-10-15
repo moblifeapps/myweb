@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
- 
+
    <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script>
 /* bfcache: turn third-party 'unload' handlers into 'pagehide' */
 (function () {
@@ -20,82 +21,14 @@
   } catch (e) {}
 })();
 </script>
+<!-- sulvo -->
+<link rel="preload" as="script" href="https://live.demand.supply/up.js">
+<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
- 
-
-
-
-<!--<script>
-  // Define dataLayer and the gtag function.
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-
-  // Set default consent to 'denied' as a placeholder
-  // Determine actual values based on your own requirements
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-    'analytics_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-  });
-</script>-->
- <script>console.log('here goes sulvo');</script>
-
-
- <script>console.log('here goes f59');</script>
-
-<!-- Google Tag Manager -->
- <!--
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-5BBV9FN');</script>-->
-<!-- End Google Tag Manager -->
-<!--
- <link rel="preload" as="script" href="https://live.demand.supply/up.js"><script id="analytics-script" type="text/plain" data-consent-category="statistics" async data-cfasync="false"  src="https://live.demand.supply/up.js"></script>
--->
-<!--<script>
-	function executeScriptsssssssssssOnConsent(category) {
-  // 1. Find all script elements that were blocked for this category
-  const blockedScripts = document.querySelectorAll(
-    `script[data-consent-category="${category}"]`
-  );
-
-  blockedScripts.forEach(originalScript => {
-    // 2. Change the type back to a runnable JavaScript type
-    originalScript.setAttribute('type', 'text/javascript');
-    
-    // 3. Get the source URL
-    const scriptSrc = originalScript.getAttribute('src');
-
-    // 4. Create a NEW script element to force execution
-    // Browsers often don't execute a script just by changing the type, 
-    // so we need to create a fresh element and append it.
-    if (scriptSrc) {
-      const newScript = document.createElement('script');
-      newScript.src = scriptSrc;
-      
-      // Preserve original attributes like 'async' or 'defer'
-      if (originalScript.hasAttribute('async')) {
-        newScript.setAttribute('async', 'true');
-      }
-
-	if (originalScript.hasAttribute('data-cfasync')) {
-		newScript.setAttribute('data-cfasync','false');
-	}
-      // 5. Append the new, runnable script to the document head
-      // This action triggers the browser to fetch and execute the analytics code.
-      document.head.appendChild(newScript);
-
-      // (Optional) Remove the original blocked script element to keep the DOM clean
-      originalScript.remove(); 
-    }
-  });
-}
-</script>-->
+<!-- rewarded paywall -->
+<link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<style>#custom-paywall-overlay:not(.active){display:none}</style>
+<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
 
 <link rel="icon" id="favicon" type="image/x-icon" href="/uploads/favpreview.gif">
 		<title>Help Center - WinRare+   (FREE) - M.I.L. Team - 3D+ and more..</title><meta property="og:site_name" content="M.I.L. Team - 3D+ and more.." />
@@ -115,339 +48,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta name="keywords" content="preview archive contents,WinRare+,WinRare,unzip,unrar,extract .rar .zip .7z,zip,rar,tar,untar,preview archive,media archive,play archive files,best zip app" />
 
-
-<!-- InMobi Choice. Consent Manager Tag v3.0 (for TCF 2.2) --><!--
-<script type="text/javascript" async=true>
-(function() {
-  var host = 'mlapplications.com';
-  var element = document.createElement('script');
-  var firstScript = document.getElementsByTagName('script')[0];
-  var url = 'https://cmp.inmobi.com'
-    .concat('/choice/', 'rFbVBARkjS_85', '/', host, '/choice.js?tag_version=V3');
-  var uspTries = 0;
-  var uspTriesLimit = 3;
-  element.async = true;
-  element.type = 'text/javascript';
-  element.src = url;
-
-  firstScript.parentNode.insertBefore(element, firstScript);
-
-  function makeStub() {
-    var TCF_LOCATOR_NAME = '__tcfapiLocator';
-    var queue = [];
-    var win = window;
-    var cmpFrame;
-
-    function addFrame() {
-      var doc = win.document;
-      var otherCMP = !!(win.frames[TCF_LOCATOR_NAME]);
-
-      if (!otherCMP) {
-        if (doc.body) {
-          var iframe = doc.createElement('iframe');
-
-          iframe.style.cssText = 'display:none';
-          iframe.name = TCF_LOCATOR_NAME;
-          doc.body.appendChild(iframe);
-        } else {
-          setTimeout(addFrame, 5);
-        }
-      }
-      return !otherCMP;
-    }
-
-    function tcfAPIHandler() {
-      var gdprApplies;
-      var args = arguments;
-
-      if (!args.length) {
-        return queue;
-      } else if (args[0] === 'setGdprApplies') {
-        if (
-          args.length > 3 &&
-          args[2] === 2 &&
-          typeof args[3] === 'boolean'
-        ) {
-          gdprApplies = args[3];
-          if (typeof args[2] === 'function') {
-            args[2]('set', true);
-          }
-        }
-      } else if (args[0] === 'ping') {
-        var retr = {
-          gdprApplies: gdprApplies,
-          cmpLoaded: false,
-          cmpStatus: 'stub'
-        };
-
-        if (typeof args[2] === 'function') {
-          args[2](retr);
-        }
-      } else {
-        if(args[0] === 'init' && typeof args[3] === 'object') {
-          args[3] = Object.assign(args[3], { tag_version: 'V3' });
-        }
-        queue.push(args);
-      }
-    }
-
-    function postMessageEventHandler(event) {
-      var msgIsString = typeof event.data === 'string';
-      var json = {};
-
-      try {
-        if (msgIsString) {
-          json = JSON.parse(event.data);
-        } else {
-          json = event.data;
-        }
-      } catch (ignore) {}
-
-      var payload = json.__tcfapiCall;
-
-      if (payload) {
-        window.__tcfapi(
-          payload.command,
-          payload.version,
-          function(retValue, success) {
-            var returnMsg = {
-              __tcfapiReturn: {
-                returnValue: retValue,
-                success: success,
-                callId: payload.callId
-              }
-            };
-            if (msgIsString) {
-              returnMsg = JSON.stringify(returnMsg);
-            }
-            if (event && event.source && event.source.postMessage) {
-              event.source.postMessage(returnMsg, '*');
-            }
-          },
-          payload.parameter
-        );
-      }
-    }
-
-    while (win) {
-      try {
-        if (win.frames[TCF_LOCATOR_NAME]) {
-          cmpFrame = win;
-          break;
-        }
-      } catch (ignore) {}
-
-      if (win === window.top) {
-        break;
-      }
-      win = win.parent;
-    }
-    if (!cmpFrame) {
-      addFrame();
-      win.__tcfapi = tcfAPIHandler;
-      win.addEventListener('message', postMessageEventHandler, false);
-    }
-  };
-
-  makeStub();
-
-  function makeGppStub() {
-    const CMP_ID = 10;
-    const SUPPORTED_APIS = [
-      '2:tcfeuv2',
-      '6:uspv1',
-      '7:usnatv1',
-      '8:usca',
-      '9:usvav1',
-      '10:uscov1',
-      '11:usutv1',
-      '12:usctv1'
-    ];
-
-    window.__gpp_addFrame = function (n) {
-      if (!window.frames[n]) {
-        if (document.body) {
-          var i = document.createElement("iframe");
-          i.style.cssText = "display:none";
-          i.name = n;
-          document.body.appendChild(i);
-        } else {
-          window.setTimeout(window.__gpp_addFrame, 10, n);
-        }
-      }
-    };
-    window.__gpp_stub = function () {
-      var b = arguments;
-      __gpp.queue = __gpp.queue || [];
-      __gpp.events = __gpp.events || [];
-
-      if (!b.length || (b.length == 1 && b[0] == "queue")) {
-        return __gpp.queue;
-      }
-
-      if (b.length == 1 && b[0] == "events") {
-        return __gpp.events;
-      }
-
-      var cmd = b[0];
-      var clb = b.length > 1 ? b[1] : null;
-      var par = b.length > 2 ? b[2] : null;
-      if (cmd === "ping") {
-        clb(
-          {
-            gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
-            cmpStatus: "stub", // possible values: stub, loading, loaded, error
-            cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
-            signalStatus: "not ready", // possible values: not ready, ready
-            supportedAPIs: SUPPORTED_APIS, // list of supported APIs
-            cmpId: CMP_ID, // IAB assigned CMP ID, may be 0 during stub/loading
-            sectionList: [],
-            applicableSections: [-1],
-            gppString: "",
-            parsedSections: {},
-          },
-          true
-        );
-      } else if (cmd === "addEventListener") {
-        if (!("lastId" in __gpp)) {
-          __gpp.lastId = 0;
-        }
-        __gpp.lastId++;
-        var lnr = __gpp.lastId;
-        __gpp.events.push({
-          id: lnr,
-          callback: clb,
-          parameter: par,
-        });
-        clb(
-          {
-            eventName: "listenerRegistered",
-            listenerId: lnr, // Registered ID of the listener
-            data: true, // positive signal
-            pingData: {
-              gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
-              cmpStatus: "stub", // possible values: stub, loading, loaded, error
-              cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
-              signalStatus: "not ready", // possible values: not ready, ready
-              supportedAPIs: SUPPORTED_APIS, // list of supported APIs
-              cmpId: CMP_ID, // list of supported APIs
-              sectionList: [],
-              applicableSections: [-1],
-              gppString: "",
-              parsedSections: {},
-            },
-          },
-          true
-        );
-      } else if (cmd === "removeEventListener") {
-        var success = false;
-        for (var i = 0; i < __gpp.events.length; i++) {
-          if (__gpp.events[i].id == par) {
-            __gpp.events.splice(i, 1);
-            success = true;
-            break;
-          }
-        }
-        clb(
-          {
-            eventName: "listenerRemoved",
-            listenerId: par, // Registered ID of the listener
-            data: success, // status info
-            pingData: {
-              gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
-              cmpStatus: "stub", // possible values: stub, loading, loaded, error
-              cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
-              signalStatus: "not ready", // possible values: not ready, ready
-              supportedAPIs: SUPPORTED_APIS, // list of supported APIs
-              cmpId: CMP_ID, // CMP ID
-              sectionList: [],
-              applicableSections: [-1],
-              gppString: "",
-              parsedSections: {},
-            },
-          },
-          true
-        );
-      } else if (cmd === "hasSection") {
-        clb(false, true);
-      } else if (cmd === "getSection" || cmd === "getField") {
-        clb(null, true);
-      }
-      //queue all other commands
-      else {
-        __gpp.queue.push([].slice.apply(b));
-      }
-    };
-    window.__gpp_msghandler = function (event) {
-      var msgIsString = typeof event.data === "string";
-      try {
-        var json = msgIsString ? JSON.parse(event.data) : event.data;
-      } catch (e) {
-        var json = null;
-      }
-      if (typeof json === "object" && json !== null && "__gppCall" in json) {
-        var i = json.__gppCall;
-        window.__gpp(
-          i.command,
-          function (retValue, success) {
-            var returnMsg = {
-              __gppReturn: {
-                returnValue: retValue,
-                success: success,
-                callId: i.callId,
-              },
-            };
-            event.source.postMessage(msgIsString ? JSON.stringify(returnMsg) : returnMsg, "*");
-          },
-          "parameter" in i ? i.parameter : null,
-          "version" in i ? i.version : "1.1"
-        );
-      }
-    };
-    if (!("__gpp" in window) || typeof window.__gpp !== "function") {
-      window.__gpp = window.__gpp_stub;
-      window.addEventListener("message", window.__gpp_msghandler, false);
-      window.__gpp_addFrame("__gppLocator");
-    }
-  };
-
-  makeGppStub();
-
-  var uspStubFunction = function() {
-    var arg = arguments;
-    if (typeof window.__uspapi !== uspStubFunction) {
-      setTimeout(function() {
-        if (typeof window.__uspapi !== 'undefined') {
-          window.__uspapi.apply(window.__uspapi, arg);
-        }
-      }, 500);
-    }
-  };
-
-  var checkIfUspIsReady = function() {
-    uspTries++;
-    if (window.__uspapi === uspStubFunction && uspTries < uspTriesLimit) {
-      console.warn('USP is not accessible');
-    } else {
-      clearInterval(uspInterval);
-    }
-  };
-
-  if (typeof window.__uspapi === 'undefined') {
-    window.__uspapi = uspStubFunction;
-    var uspInterval = setInterval(checkIfUspIsReady, 6000);
-  }
-})();
-</script>
---><!--End InMobi Choice. Consent Manager Tag v3.0 (for TCF 2.2) -->
-
-
-
-
-
- <!-- 
- <script>console.log('here goes sulvo');</script>
--->	
  <style>
     .kb-container
     {
@@ -459,7 +59,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	{
     display: none;
     visibility: hidden;
-	
+
 	}
     </style>
 <script>
@@ -489,16 +89,10 @@ function myckExists(name) {
   for(i = 0; i < cks.length; i++)
     if (cks[i].split('=')[0].trim() == name) return true;
 }
-</script> 
-
+</script>
 
 <meta name="msvalidate.01" content="42DB115A8751E45435878B9B9CF5C7F5" />
-  
 
- 
-
-  
- 
 		<link id="wsite-base-style" rel="stylesheet" type="text/css" href="/cdn2.editmysite.com/css/sites367f.css?buildTime=1751393202" />
 <link rel="stylesheet" type="text/css" href="/cdn2.editmysite.com/css/old/fancybox5209.css?1751393202" />
 <link rel="stylesheet" type="text/css" href="/cdn2.editmysite.com/css/social-icons9aef.css?buildtime=1751393202" media="screen,projection" />
@@ -590,7 +184,7 @@ _W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":
 			com_currentSite = "607878847879865438";
 			com_userID = "79962194";</script><script type="text/javascript">_W.configDomain = "www.weebly.com";</script><script>_W.relinquish && _W.relinquish()</script>
 <script type="text/javascript" src="/cdn2.editmysite.com/js/lang/en/stld62d.js?buildTime=1751393202&amp;"></script><script> _W.themePlugins = [];</script><script type="text/javascript"> _W.recaptchaUrl = "../www.google.com/recaptcha/api.js"; </script><script type="text/javascript"><!--
-	
+
 	var DISABLE_NAV_MORE = 1;
 	function initFlyouts(){
 		initPublishedFlyoutMenus(
@@ -605,216 +199,41 @@ _W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":
 	}
 //-->
 </script>
-		
-		
-	<script>
-    console.log('here i am not from cloudflare tag setup !');
-</script>
 
-<!--<script type="text/javascript" async="async" src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=44890869"></script>-->
-  <!-- sulvo first -->
-<link rel="preload" as="script" href="https://live.demand.supply/up.js">
-<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
-
-<!-- rewarded paywall -->
-   <link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
-<style>#custom-paywall-overlay:not(.active){display:none}</style>
-
-<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
-
-
-<!-- old demand -->
-
-
- 
-  
-
-
-
-
-
-
-
- 
-<style>	
+<style>
 /* Fix fixed ad overflow */
 .stpdwrapper {
   max-width: 100vw !important;
   right: 0 !important;
 }
-</style> 
+</style>
 
- 
-
- 
-  <!-- ======================================================================= -->
-  <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
-  <!-- ======================================================================= -->
-  <style>
-    /* THE GHOST ANCHOR: Stays fixed in layout to completely eliminate infinite layout flickers */
-    .outstream-placement-anchor {
-      width: 336px;
-      height: 280px;
-      margin: 40px auto;
-      position: relative;
-      background: transparent;
-    }
-
-    /* THE MOVING CONTAINER: Holds the ad frame and performs transitions on scroll */
-    .outstream-main-container {
-      width: 336px;
-      height: 280px;
-      background: #fbfbfb;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transition: box-shadow 0.3s ease;
-    }
-
-    /* STICKY OVERLAY STATE: Engaged programmatically by IntersectionObserver */
-    .outstream-main-container.is-sticky {
-      position: fixed;
-      top: auto;
-      left: auto;
-      bottom: 25px;
-      right: 25px;
-      z-index: 99999;
-      background: #fff;
-      border-radius: 4px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      
-      /* Downscale slightly for clean desktop corner placement */
-      transform: scale(0.9);
-      transform-origin: bottom right;
-      
-      /* Premium entrance physics: slides up, clears blur layer, fades visibility */
-      animation: dynamicStickyShow 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    /* Keeps iframe elements isolated and clipped safely inside borders when sticky */
-    .outstream-main-container.is-sticky #div-gpt-ad-outstream-slot {
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    /* CLOSE TRIGGER MARKUP: Revealed exclusively during sticky activation mode */
-    .outstream-close-trigger {
-      display: none;
-      position: absolute;
-      top: -12px;
-      left: -12px;
-      width: 26px;
-      height: 26px;
-      background: #111;
-      color: #fff;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 23px;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-      font-size: 15px;
-      font-weight: bold;
-      border: 2px solid #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 100000;
-      transition: background 0.2s ease;
-    }
-
-    .outstream-close-trigger:hover {
-      background: #ff3b30; /* Desktop specific feedback overlay shift */
-    }
-
-    .outstream-main-container.is-sticky .outstream-close-trigger {
-      display: block;
-    }
-
-    /* BLUR ENTRANCE KEYFRAME SEQUENCING */
-    @keyframes dynamicStickyShow {
-      0% {
-        transform: translateY(60px) scale(0.85);
-        opacity: 0;
-        filter: blur(8px);
-      }
-      100% {
-        transform: translateY(0) scale(0.9);
-        opacity: 1;
-        filter: blur(0);
-      }
-    }
-  </style>
-  
   </head>
- 
+
 	<body class="  wsite-theme-light  wsite-page-hlpwinrare_1">
 		 <div style="visibility: hidden;height: 1px;">
-		 <h1>WinRare+ Help Center – Official Guide to Preview, Extract & Create Archives</h1>	
-		</div>	
+		 <h1>WinRare+ Help Center – Official Guide to Preview, Extract & Create Archives</h1>
+		</div>
 <div  >
  <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
 
-  <!-- <div data-ad="mlapplications.com_sticky_video_myvidsticky" data-devices="m:1,t:1,d:1"   class="demand-supply"></div> -->
-  <!-- ======================================================================= -->
-  <!-- 3. WEB PAGE STRUCTURAL CORE HOUSING PLACEMENT MARKUP                   -->
-  <!-- ======================================================================= -->
-  <!--<div class="myyy-outstream-placement-anchor">
-    <div id="outstream-ad-wrapper" class="outstream-main-container">
-      <div id="outstream-close" class="outstream-close-trigger">&times;</div>
-      
-       
-      <div id="div-gpt-ad-outstream-slot" style="width: 336px; height: 280px; margin: 0 auto;">
-        <script>
-          googletag.cmd.push(function() { 
-            googletag.display('div-gpt-ad-outstream-slot'); 
-          });
-        </script>
-      </div>
-    </div>
-  </div>--> 
-
-
-
-<!-- old mobile sticky top code -->
 </div>
 
-<!-- Google Tag Manager (noscript) -->
-<!--<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5BBV9FN"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>-->
-<!-- End Google Tag Manager (noscript) -->
-
-  
 <div id="mydivforpremium" ></div>
- 
- 
-<!--mlapplications_com_300x600_desktop_sticky --> 
-  
-  
 
-<!-- Anchor ad on bottom -->
 <script>
 function removeElement(id) {
 	 try
 	 {
 	 var elem = document.getElementById(id);
      elem.parentNode.removeChild(elem);
-	} 
+	}
 	catch (err) { console.log('err here...'+err); }
 }
 </script>
 
- 
-<!--
-<a href="#" class="mypreviousButton"><img src="/files/theme/myarrowpreviousglossy.png" alt="Previous Page"></a> -->
 <a href="#" class="no_nu_reward2 mynextButton"><img src="uploads/myarrownextglossy.png" alt="Nexts Page"></a>
 
-
-
-
-<!--
-<a href="#" class="no_nu_reward2 mynextButton"><img src="/uploads/myarrownextglossy.png"></a>
-<a href="#" class="no_nu_reward2 mynextButton"><img src="/files/theme/myarrownext.png"></a> -->
-<!-- Ezoic - mytoppage - top_of_page 
-<div id="ezoic-pub-ad-placeholder-102"></div> -->
-<!-- End Ezoic - mytoppage - top_of_page -->
 <div >
 <div class="content-wrap railway-layout">
       <div id="wsite-content" class="wsite-elements wsite-not-footer">
@@ -866,7 +285,6 @@ function removeElement(id) {
 </a>
 
 </td>
- 
 
 <td style="width:100px;height:100px">
 <a class="no_nu_reward2" href="hlpwinrare_4.html">
@@ -888,11 +306,8 @@ function removeElement(id) {
 </td>
 </tr>
 
-
 </tbody>
 </table></div>
-
-
 
 </div>
 
@@ -1150,8 +565,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:15.268817204301%; padding:0 5px;">
-					
-						
 
 <div id="244561258696838963"><div><style type="text/css">
 	#element-4988c147-b635-453e-81d5-5947c517422d .waddons_vert_divider {
@@ -1287,11 +700,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:21.182795698925%; padding:0 5px;">
-					
-						
 
 <div><div class="wsite-image wsite-image-border-none " style="padding-top:5px;padding-bottom:10px;margin-left:0px;margin-right:10px;text-align:center">
 <a>
@@ -1300,11 +709,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:49.462365591398%; padding:0 5px;">
-					
-						
 
 <div class="paragraph" style="text-align:left;"><font size="5" color="#2b579a">Everything you may want to ask about the </font><strong><font size="5" color="#d5d5d5"><font color="#0065ca">"<font color="#0074e7">WinRare<font color="#2a2a2a">+</font></font>"</font></font></strong><font size="5" color="#2b579a"> application !</font><br /></div>
 
@@ -1312,11 +717,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 <div class="paragraph" style="text-align:left;"><font size="5" color="#2b579a">Find useful info, watch video examples and get support.. Welcome !</font></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:14.086021505376%; padding:0 5px;">
-					
-						
 
 <div id="711849771360425692"><div><style type="text/css">
 	#element-d1b8d894-9d1c-4982-a855-59f68633a2b2 .waddons_vert_divider {
@@ -1452,8 +853,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -1585,8 +984,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 <div><div id="299432561159502778" align="center" style="width: 100%; " class="wcustomhtml"><div></div></div>
 
-
-
 </div>
 			</div>
 		</div>
@@ -1600,8 +997,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
         <div class="container" >
 			<div class="wsite-section-elements">
 				<div><div id="974721667815364110" align="center" style="width: 100%; " class="wcustomhtml"><div></div></div>
-
-
 
 </div>
 
@@ -1630,8 +1025,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="height: 20px;   width: 100%;"></div></div>
 
 <div><div id="194268234501796650" align="center" style="width: 100%; " class="wcustomhtml"><div></div></div>
-
-
 
 </div>
 
@@ -1666,8 +1059,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:38.398692810458%; padding:0 15px;">
-					
-						
 
 <div id="729500970873145946"><div><style type="text/css">
 	#element-aa0ab247-137d-4c8b-8cd8-95acc165a040 .waddons_vert_divider {
@@ -1803,11 +1194,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:21.56862745098%; padding:0 15px;">
-					
-						
 
 <div id="391527341570514372"><div><style type="text/css">
 	#element-0b5d6478-d3a0-460b-be52-e08d59b9d62d .content-color-box-wrapper {
@@ -1931,11 +1318,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:40.032679738562%; padding:0 15px;">
-					
-						
 
 <div id="161260193291279444"><div><style type="text/css">
 	#element-112e5c87-4a8f-4d65-ae7e-775e97d643f3 .waddons_vert_divider {
@@ -2071,8 +1454,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -2087,8 +1468,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:19.321928039909%; padding:0 5px;">
-					
-						
 
 <div class="wsite-spacer" style="height:18px;"></div>
 
@@ -2099,11 +1478,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:54.721756329477%; padding:0 5px;">
-					
-						
 
 <div class="wsite-spacer" style="height:18px;"></div>
 
@@ -2111,11 +1486,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 <div class="paragraph" style="text-align:center;"><font size="6" color="#3f3f3f">Use the red buttons on the page to navigate fast to the tutorial pages!</font></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:25.956315630614%; padding:0 5px;">
-					
-						
 
 <div><div class="wsite-image wsite-image-border-none " style="padding-top:0px;padding-bottom:0px;margin-left:0px;margin-right:0px;text-align:center">
 <a>
@@ -2124,8 +1495,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -2288,16 +1657,10 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:7.2607260726073%; padding:0 15px;">
-					
-						
 
 <div class="paragraph" style="text-align:right;"><font size="6">1)</font><br /></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:7.5510188633542%; padding:0 15px;">
-					
-						
 
 <div><div class="wsite-image wsite-image-border-none " style="padding-top:0px;padding-bottom:0px;margin-left:0px;margin-right:0px;text-align:center">
 <a>
@@ -2306,16 +1669,10 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:85.188255064039%; padding:0 15px;">
-					
-						
 
 <div class="paragraph" style="text-align:left;"><font size="6"><strong>WinZip</strong></font><br /></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -2448,16 +1805,10 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:7.2607260726073%; padding:0 15px;">
-					
-						
 
 <div class="paragraph" style="text-align:right;"><font size="6">2)</font><br /></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:7.5510188633542%; padding:0 15px;">
-					
-						
 
 <div><div class="wsite-image wsite-image-border-none " style="padding-top:0px;padding-bottom:0px;margin-left:0px;margin-right:0px;text-align:center">
 <a>
@@ -2466,16 +1817,10 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:85.188255064039%; padding:0 15px;">
-					
-						
 
 <div class="paragraph" style="text-align:left;"><font size="6"><strong>WinRar,</strong></font><br /></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -2608,16 +1953,10 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:7.2607260726073%; padding:0 15px;">
-					
-						
 
 <div class="paragraph" style="text-align:right;"><font size="6">3)</font><br /></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:7.5510188633542%; padding:0 15px;">
-					
-						
 
 <div><div class="wsite-image wsite-image-border-none " style="padding-top:0px;padding-bottom:0px;margin-left:0px;margin-right:0px;text-align:center">
 <a>
@@ -2626,16 +1965,10 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:85.188255064039%; padding:0 15px;">
-					
-						
 
 <div class="paragraph" style="text-align:left;"><font size="6"><strong>7-zip app</strong></font><br /></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -2984,8 +2317,6 @@ tr:nth-child(odd) { vertical-align: bottom; }
 
 </tbody></table></div>
 
-
-
 </div>
 
 <div><div style="height: 10px;   width: 100%;"></div>
@@ -3156,8 +2487,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <hr class="styled-hr" style="width:100%;"></hr>
 <div style="height: 20px;   width: 100%;"></div></div>
 
- 
-
 <div><div style="height: 20px;   width: 100%;"></div>
 <hr class="styled-hr" style="width:100%;"></hr>
 <div style="height: 20px;   width: 100%;"></div></div>
@@ -3206,7 +2535,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Welcome
 			</a>
-			
+
 		</li>
 		<li id="pg420291035968415525" class="wsite-menu-item-wrap">
 			<a
@@ -3228,7 +2557,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Windows Apps
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-576387146180606075"
 	class="wsite-menu-subitem-wrap "
@@ -3241,7 +2570,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Windows Phone Apps
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-181564505483526232"
 	class="wsite-menu-subitem-wrap "
@@ -3254,7 +2583,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Android Apps
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -3268,7 +2597,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Help Center
 			</a>
-			
+
 		</li>
 		<li id="pg457614141667606990" class="wsite-menu-item-wrap">
 			<a
@@ -3290,7 +2619,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			How-to Check DVDs
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -3309,8 +2638,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<li id="wsite-nav-164382401196655753"
 	class="wsite-menu-subitem-wrap "
 	>
-	 
-	
+
 </li>
 <li id="wsite-nav-809491643896992333"
 	class="wsite-menu-subitem-wrap "
@@ -3323,7 +2651,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			3D F.A.Q.
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-802757451138523212"
 	class="wsite-menu-subitem-wrap "
@@ -3336,9 +2664,9 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			3D Anaglyphs
 		</span>
 	</a>
-	
+
 </li>
- 
+
 <li id="wsite-nav-860537803288251427"
 	class="wsite-menu-subitem-wrap "
 	>
@@ -3350,7 +2678,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			3D Photos on Flickr
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-252052803303239081"
 	class="wsite-menu-subitem-wrap "
@@ -3363,7 +2691,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Find 3D Videos on Youtube
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -3377,7 +2705,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Opinion & Blog
 			</a>
-			
+
 		</li>
 		<li id="pg765675763726769427" class="wsite-menu-item-wrap">
 			<a
@@ -3386,7 +2714,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				About us
 			</a>
-			
+
 		</li>
 		<li id="pg589846066449704670" class="wsite-menu-item-wrap">
 			<a
@@ -3395,13 +2723,10 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Contact
 			</a>
-			
+
 		</li>
 </ul>
 </div>
-
-
-
 
 <div style='display:none'><div class='wsite-elements wsite-footer'>
 <div id="102545159590712656"><div><style type="text/css">
@@ -3555,18 +2880,12 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:19.232629580985%; padding:0 0px;">
-					
-						
 
 <div class="wsite-spacer" style="height:10px;"></div>
 
 <div class="paragraph" style="text-align:center;"><strong><font color="#a9b9d1" size="4">Share:</font></strong></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:27.826663358363%; padding:0 0px;">
-					
-						
 
 <div><div id="581391898368846183" align="center" style="width: 100%; " class="wcustomhtml"><link rel="stylesheet" href= "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
@@ -3607,7 +2926,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
   color: #ffffff;
 }
 
-
 .fa-pinterest {
   background: #cb2027;
   color: #ffffff;
@@ -3620,28 +2938,17 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <a class="fa fa-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://%20www.mlapplications.com&amp;title=Free%20and%20Useful%20Applications%20for%20Windows%20and%20Android&amp;summary=My%20favorite%20developers%20website&amp;source=Mobility_in_Life_Applications" target="_blank"></a>
 </div>
 
-
-
 </div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:35.179953724175%; padding:0 0px;">
-					
-						
 
 <div><div id="998866482991838868" align="center" style="width: 100%; " class="wcustomhtml"><a class="fa fa-pinterest" href="http://pinterest.com/pin/create/link/?url=http%3A%2F%2Fwww.mlapplications.com&amp;description=" target="_blank"></a>
 <a class="fa fa-google" href="https://plus.google.com/share?url=https://%20www.mlapplications.com" target="_blank"></a>
 </div>
 
-
 </div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:17.760753336477%; padding:0 0px;">
-					
-						
 
 <div><div class="wsite-image wsite-image-border-none " style="padding-top:10px;padding-bottom:10px;margin-left:0;margin-right:0;text-align:center">
 <a>
@@ -3650,8 +2957,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -3669,8 +2974,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:26.942518066303%; padding:0 15px;">
-					
-						
 
 <div id="433306533626245074"><div><style type="text/css">
 	#element-5b110cff-50c0-4dca-86e4-07d38f3516de .content-color-box-wrapper {
@@ -3924,11 +3227,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:50.108589914178%; padding:0 15px;">
-					
-						
 
 <div id="210476769210520075"><div><style type="text/css">
 	#element-8d4fb41b-44b4-46c0-bb50-01e7cefb3258 .waddons_vert_divider {
@@ -4185,7 +3484,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 </script></div></div>
 
 <div id="486082001627672347"><div><style type="text/css">
-	
+
 </style><div id="element-71605150-6990-463d-89aa-4df7ffeb559c" data-platform-element-id="698263678581730663-1.1.0" class="platform-element-contents">
 <div class="content-color-box-wrapper">
 
@@ -4296,11 +3595,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:22.948892019519%; padding:0 15px;">
-					
-						
 
 <div id="678568118291078683"><div><style type="text/css">
 	#element-55b91c17-e3a7-4f6b-8dec-a80823db0b69 .waddons_vert_divider {
@@ -4436,8 +3731,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -4449,59 +3742,52 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <hr class="styled-hr" style="width:100%;"></hr>
 <div style="height: 0px;   width: 100%;"></div></div></div></div>
 
-
 <a href="#" class="no_nu_reward2 scrollToTop"><img src="uploads/myarrow_up.png" alt="Scroll to Top"></a>
 
-      
 <script>
- 
+
   var isMobileDevice22 = window.navigator.userAgent.toLowerCase().includes("mobi");
-  
+
   if (isMobileDevice22==true)
   {
   // Nothing to do...
    }
    else
    {
-  
+
   var x = document.getElementsByClassName("container");
-   
-  // content-wrap 
+
+  // content-wrap
   var x22 = document.getElementsByClassName("content-wrap");
-   
+
    var i;
     for (i = 0; i < x.length; i++) {
-      
+
    //  x[i].style.paddingLeft = "310px";
       //x[i].style.marginRight = "320px";
-   //  
+   //
     }
-  
+
   var x3 = document.getElementsByClassName("wrapper");
-   
+
    var j;
     for (j = 0; j < x3.length; j++) {
-      
+
   //  x3[j].style.marginRight = "320px";
    //  x[i].style.paddingLeft = "310px";
     //   //x[i].style.marginRight = "320px";
-   //  
+   //
     }
-  
-  
+
   // alert("It's false...It's desktop");
-   } 
-   
-  ////////////////setTimeout(function () { displaytext(); }, 9000); 
+   }
+
+  ////////////////setTimeout(function () { displaytext(); }, 9000);
       </script>
- 
 
     <div id="customer-accounts-app"></div>
     <script src="/cdn2.editmysite.com/js/site/main-customer-accounts-site367f.js?buildTime=1751393202"></script>
 
-		<!--
-<script type="text/javascript" src="//services.brid.tv/player/build/brid.outstream.min.js"></script> <script type="text/javascript"> $bos("Brid_74170706", {"id":"10903","width":"480","height":"270"}); </script>
--->
   <style>
         #wsite-com-product-inventory {
             display: none !important;
@@ -4514,14 +3800,11 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
     <script>
 $(document).ready(function(){
 
-
- 
     //Check to see if the window is top if not then display button
     $(window).scroll(function(){
         if ($(this).scrollTop() > 50) {
             $('.scrollToTop').fadeIn();
             $('.mynextButton').fadeIn();
- 
 
         } else {
             $('.scrollToTop').fadeOut();
@@ -4534,7 +3817,7 @@ $('.mynextButton').fadeOut();
 $('.mynextButton').fadeIn();
 $('.mynextButton').fadeOut();
 $('.mynextButton').fadeIn();
- 
+
    }
 
     });
@@ -4544,7 +3827,6 @@ $('.mynextButton').fadeIn();
         $('html, body').animate({scrollTop : 0},800);
         return false;
     });
-
 
 //Click event to go next
 var xx = $(location).attr('pathname');
@@ -4623,7 +3905,7 @@ case "/hlpdvdplayer_remote_6.html": next =  "hlpdvdplayer_remote_7"; break;
 case "/hlpdvdplayer_remote_7.html": next =  "hlpdvdplayer_remote_8"; break;
 case "/hlpdvdplayer_remote_8.html": next =  "hlpdvdplayer_remote_1"; break;
 case "/hlpblurayplayer_1.html": next =  "hlpblurayplayer_2"; break;
- 
+
 case "/hlpblurayplayer_3.html": next =  "hlpblurayplayer_4"; break;
 case "/hlpblurayplayer_4.html": next =  "hlpblurayplayer_5"; break;
 case "/hlpblurayplayer_5.html": next =  "hlpblurayplayer_6"; break;
@@ -4659,9 +3941,6 @@ case "/hlpwinrare_6.html": next =  "hlpwinrare_1"; break
 }
 
 $('.mynextButton').attr("href", wheretogo + next + ".html");
-
-
-
 
 //Click event to go previous
 $('.mypreviousButton').click(function(){
@@ -4773,12 +4052,8 @@ window.location.href = wheretogonext + nextpage + ".html";;
 
     });
 
- 
- 
-
-   
 });
- 
+
     </script>
 <script>
 
@@ -4792,8 +4067,8 @@ try
 		const lala = document.getElementsByClassName("fc-cta-consent");
 		lala[0].click();
 	}
-catch (ee) 
-	{ 
+catch (ee)
+	{
 		console.log('no fc');
 	}
 try
@@ -4802,19 +4077,12 @@ try
 	//console.log('lala22' + lala22);
 	lala22.click();
 	window.location.reload(true);
-}   catch (ee22) { 
+}   catch (ee22) {
 			//console.log('no lala22'+ ee22);
 }
 
 }
 </script>
-
- 
- 
-
-
-
-
 
 <script>
 	(function(jQuery) {
@@ -4875,7 +4143,6 @@ try
 					return;
 				}
 
-
 				ccLinks.style.display = 'block';
 
 				var ccParent = ccLinks.parentElement;
@@ -4908,86 +4175,6 @@ try
 	})(window._W && _W.jQuery);
 </script>
 
-
-	
-<!-- old --adsense-- code -->
-<!--<div data-ad="mlapplications.com_sticky_video_myvid" data-devices="m:1,t:1,d:1"   class="demand-supply"></div>-->
-
-<!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code -->
-<script>
-//  googletag.cmd.push(function() { 
-    // Pass slot objects directly to display()
- //   if (window.offerwallSlot) {
-   //   googletag.display(window.offerwallSlot);
-  //  }
-    // Only call display if the slot was successfully created
-//    if (window.sideRailSlot) {
-//      googletag.display(window.sideRailSlot);
-//    } 
-//  });
-</script> 
-  <!-- ======================================================================= -->
-  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
-  <!-- ======================================================================= -->
-<!--  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const anchorNode = document.querySelector('.outstream-placement-anchor');
-      const adWrapper = document.getElementById('outstream-ad-wrapper');
-      const closeBtn = document.getElementById('outstream-close');
-      let userClosedAd = false;
-
-      if (!anchorNode || !adWrapper) return;
-
-      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
-      window.googletag = window.googletag || {cmd: []};
-      googletag.cmd.push(function() {
-        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
-            if (event.isEmpty) {
-              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
-              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
-            } else {
-              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
-              // Only trigger performance tracking cycles if demand actually filled the layout container
-              stickyObserver.observe(anchorNode);
-            }
-          }
-        });
-      });
-
-      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
-      const stickyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (userClosedAd) return;
-
-          // If the invisible inline space position completely rolls out of view
-          if (!entry.isIntersecting) {
-            const boundingBox = entry.boundingClientRect;
-            
-            // Only apply sticky docking if user scrolled past the ad DOWN the page
-            if (boundingBox.top < 0) {
-              adWrapper.classList.add('is-sticky');
-            }
-          } else {
-            // Re-dock cleanly back inline the second the user scrolls back up
-            adWrapper.classList.remove('is-sticky');
-          }
-        });
-      }, { 
-        root: null, 
-        threshold: 0 // Fires instantly the frame the boundary is crossed
-      });
-
-      // STEP C: CLOSE ICON ACTIONS
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userClosedAd = true;
-        adWrapper.classList.remove('is-sticky');
-        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
-      });
-    });
-  </script> -->
-
 <!-- WEB_ONLY_START -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
 <script>
@@ -4999,6 +4186,4 @@ try
 <!-- WEB_ONLY_END -->
 </body>
 
-
- 
 </html>
