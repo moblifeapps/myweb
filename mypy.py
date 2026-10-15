@@ -109,8 +109,8 @@ def hasMetaRobotsNoindex(f) :
 
 <!-- rewarded paywall -->
 <link rel="stylesheet" href="/rwrd/paywall.css?v=1">
-<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
-<script defer src="/rwrd/rewarded-paywall.js?v=4"></script>
+<script defer src="/rwrd/rewarded-paywall.js?v=5"></script>
+
 
 <!-- old demand -->
  
@@ -120,18 +120,10 @@ def hasMetaRobotsNoindex(f) :
 
 
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-87MTDXTF59');
-
-</script> 
+  
  
   
-<!--<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7710644763832143" crossorigin="anonymous"></script>-->
+ 
   <!-- ======================================================================= -->
   <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
   <!-- ======================================================================= -->

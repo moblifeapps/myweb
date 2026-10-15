@@ -1,5 +1,8 @@
 /* Rewarded paywall for mlapplications.com — v2 (video + display-only fallback)
- * Requires in <head>:
+ * Requires in  <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+:
 *   <link rel="stylesheet" href="/rwrd/paywall.css?v=1">
 *   <script defer src="/rwrd/rewarded-paywall.js?v=5"></script>
 *    GPT is loaded by Sulvo (up.js). This script only uses googletag.cmd and
