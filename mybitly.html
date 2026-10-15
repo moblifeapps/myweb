@@ -3,6 +3,22 @@
  <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* bfcache: turn third-party 'unload' handlers into 'pagehide' */
+(function () {
+  var add = EventTarget.prototype.addEventListener;
+  window.addEventListener = function (type, fn, opts) {
+    return add.call(this, type === 'unload' ? 'pagehide' : type, fn, opts);
+  };
+  try {
+    Object.defineProperty(window, 'onunload', {
+      configurable: true,
+      get: function () { return null; },
+      set: function (fn) { if (typeof fn === 'function') add.call(window, 'pagehide', fn); }
+    });
+  } catch (e) {}
+})();
+</script>
 
   
 

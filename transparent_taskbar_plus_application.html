@@ -1,8 +1,24 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
  <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* bfcache: turn third-party 'unload' handlers into 'pagehide' */
+(function () {
+  var add = EventTarget.prototype.addEventListener;
+  window.addEventListener = function (type, fn, opts) {
+    return add.call(this, type === 'unload' ? 'pagehide' : type, fn, opts);
+  };
+  try {
+    Object.defineProperty(window, 'onunload', {
+      configurable: true,
+      get: function () { return null; },
+      set: function (fn) { if (typeof fn === 'function') add.call(window, 'pagehide', fn); }
+    });
+  } catch (e) {}
+})();
+</script>
 
 <!-- WEB_ONLY_START -->
 
@@ -10,7 +26,9 @@
 <script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
 <!-- rewarded paywall -->
-<link rel="stylesheet" href="/rwrd/paywall.css?v=1">
+   <link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<style>#custom-paywall-overlay:not(.active){display:none}</style>
+
 <script defer src="/rwrd/rewarded-paywall.js?v=5"></script>
 
 <!-- WEB_ONLY_END -->
@@ -109,7 +127,10 @@ html, body {
   color: var(--text);
 }
 
-.app-shell { display: flex; flex-direction: column; height: 100vh; }
+.app-shell { display: flex; flex-direction: column; height: 100%; }
+/* App mode: only the content area scrolls, never the page itself
+   (an ad script can add space at the top of <body>, which made a second page scrollbar) */
+body:not(.is-offline) { overflow: hidden; }
 
 /* TOP BAR */
 .topbar {
@@ -556,7 +577,7 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
     </div>
 
     <!-- WEB_ONLY_START -->
-    <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply" style="min-height:90px"></div>
+    <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
     <!-- WEB_ONLY_END -->
 
     <div class="app-layout">

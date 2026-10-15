@@ -108,7 +108,9 @@ def hasMetaRobotsNoindex(f) :
 <script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
 <!-- rewarded paywall -->
-<link rel="stylesheet" href="/rwrd/paywall.css?v=1">
+   <link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<style>#custom-paywall-overlay:not(.active){display:none}</style>
+
 <script defer src="/rwrd/rewarded-paywall.js?v=5"></script>
 
 
