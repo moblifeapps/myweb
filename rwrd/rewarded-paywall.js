@@ -1,8 +1,10 @@
 /* Rewarded paywall for mlapplications.com — v2 (video + display-only fallback)
  * Requires in <head>:
- *   <link rel="stylesheet" href="/css/paywall.css?v=2">
- *   <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
- *   <script defer src="/js/rewarded-paywall.js?v=2"></script>
+*   <link rel="stylesheet" href="/rwrd/paywall.css?v=1">
+*   <script defer src="/rwrd/rewarded-paywall.js?v=5"></script>
+*    GPT is loaded by Sulvo (up.js). This script only uses googletag.cmd and
+*     loads gpt.js itself only if nobody else did within 5s.
+*     Never call page-wide GPT methods here; touch only rewardedSlot.
  *
  * Flow:
  *   1. Load the PRIMARY rewarded unit (video allowed, higher CPM).
@@ -291,13 +293,21 @@
   function whenGptReadyForUs(fn) {
     const start = Date.now();
     (function check() {
-      const ready = window.googletag && googletag.apiReady && googletag.pubadsReady;
-      if (ready || Date.now() - start >= WRAPPER_WAIT_MAX) {
-        fn();
-      } else {
-        setTimeout(check, WRAPPER_POLL);
-      }
-    })();
+     const ready = window.googletag && googletag.apiReady && googletag.pubadsReady;
+     if (ready || Date.now() - start >= WRAPPER_WAIT_MAX) {
+       // Nobody loaded GPT (e.g. Sulvo removed): load it ourselves, once
+       if (!(window.googletag && googletag.apiReady) &&
+           !document.querySelector('script[src*="/tag/js/gpt.js"]')) {
+         const s = document.createElement("script");
+         s.async = true;
+         s.src = "https://securepubads.g.doubleclick.net/tag/js/gpt.js";
+         document.head.appendChild(s);
+       }
+       fn();
+     } else {
+       setTimeout(check, WRAPPER_POLL);
+     }
+   })();
   }
 
   function initialLoadDisabled() {
