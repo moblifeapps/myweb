@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-	
+
    <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script>
 /* bfcache: turn third-party 'unload' handlers into 'pagehide' */
 (function () {
@@ -20,82 +21,14 @@
   } catch (e) {}
 })();
 </script>
+<!-- sulvo -->
+<link rel="preload" as="script" href="https://live.demand.supply/up.js">
+<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
- 
-
-
-
-<!--<script>
-  // Define dataLayer and the gtag function.
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-
-  // Set default consent to 'denied' as a placeholder
-  // Determine actual values based on your own requirements
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-    'analytics_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-  });
-</script>-->
- <script>console.log('here goes sulvo');</script>
-
-
- <script>console.log('here goes f59');</script>
-
-<!-- Google Tag Manager -->
- <!--
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-5BBV9FN');</script>-->
-<!-- End Google Tag Manager -->
-<!--
- <link rel="preload" as="script" href="https://live.demand.supply/up.js"><script id="analytics-script" type="text/plain" data-consent-category="statistics" async data-cfasync="false"  src="https://live.demand.supply/up.js"></script>
--->
-<!--<script>
-	function executeScriptsssssssssssOnConsent(category) {
-  // 1. Find all script elements that were blocked for this category
-  const blockedScripts = document.querySelectorAll(
-    `script[data-consent-category="${category}"]`
-  );
-
-  blockedScripts.forEach(originalScript => {
-    // 2. Change the type back to a runnable JavaScript type
-    originalScript.setAttribute('type', 'text/javascript');
-    
-    // 3. Get the source URL
-    const scriptSrc = originalScript.getAttribute('src');
-
-    // 4. Create a NEW script element to force execution
-    // Browsers often don't execute a script just by changing the type, 
-    // so we need to create a fresh element and append it.
-    if (scriptSrc) {
-      const newScript = document.createElement('script');
-      newScript.src = scriptSrc;
-      
-      // Preserve original attributes like 'async' or 'defer'
-      if (originalScript.hasAttribute('async')) {
-        newScript.setAttribute('async', 'true');
-      }
-
-	if (originalScript.hasAttribute('data-cfasync')) {
-		newScript.setAttribute('data-cfasync','false');
-	}
-      // 5. Append the new, runnable script to the document head
-      // This action triggers the browser to fetch and execute the analytics code.
-      document.head.appendChild(newScript);
-
-      // (Optional) Remove the original blocked script element to keep the DOM clean
-      originalScript.remove(); 
-    }
-  });
-}
-</script>-->
+<!-- rewarded paywall -->
+<link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<style>#custom-paywall-overlay:not(.active){display:none}</style>
+<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
 
 <link rel="icon" id="favicon" type="image/x-icon" href="/uploads/favpreview.gif">
 
@@ -111,13 +44,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta property="og:image" content="files/theme/appdvdplayerplus/logoml.html" />
 <meta property="og:url" content="breatheplusapp.html" />
 
-
 <meta name="keywords" content="breathe,breathing app,pwa,web app,mediation,personal use,personal mediation,breathe control,control your breathe,breathe animations,breathe animation" />
-<!-- <script type="application/javascript" src="https://static.viralize.tv/viralize-cmp.min.js"></script> -->
+
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="files/theme/materialize.min.css"  media="screen,projection"/>
-	  
+
 	  <link rel="manifest" href="files/theme/mymanifest.webmanifest">
 
 <link rel="stylesheet" href="files/theme/mytemplate.css">
@@ -125,350 +57,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
 <link rel="stylesheet" href= "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<!-- InMobi Choice. Consent Manager Tag v3.0 (for TCF 2.2) --><!--
-<script type="text/javascript" async=true>
-(function() {
-  var host = 'mlapplications.com';
-  var element = document.createElement('script');
-  var firstScript = document.getElementsByTagName('script')[0];
-  var url = 'https://cmp.inmobi.com'
-    .concat('/choice/', 'rFbVBARkjS_85', '/', host, '/choice.js?tag_version=V3');
-  var uspTries = 0;
-  var uspTriesLimit = 3;
-  element.async = true;
-  element.type = 'text/javascript';
-  element.src = url;
-
-  firstScript.parentNode.insertBefore(element, firstScript);
-
-  function makeStub() {
-    var TCF_LOCATOR_NAME = '__tcfapiLocator';
-    var queue = [];
-    var win = window;
-    var cmpFrame;
-
-    function addFrame() {
-      var doc = win.document;
-      var otherCMP = !!(win.frames[TCF_LOCATOR_NAME]);
-
-      if (!otherCMP) {
-        if (doc.body) {
-          var iframe = doc.createElement('iframe');
-
-          iframe.style.cssText = 'display:none';
-          iframe.name = TCF_LOCATOR_NAME;
-          doc.body.appendChild(iframe);
-        } else {
-          setTimeout(addFrame, 5);
-        }
-      }
-      return !otherCMP;
-    }
-
-    function tcfAPIHandler() {
-      var gdprApplies;
-      var args = arguments;
-
-      if (!args.length) {
-        return queue;
-      } else if (args[0] === 'setGdprApplies') {
-        if (
-          args.length > 3 &&
-          args[2] === 2 &&
-          typeof args[3] === 'boolean'
-        ) {
-          gdprApplies = args[3];
-          if (typeof args[2] === 'function') {
-            args[2]('set', true);
-          }
-        }
-      } else if (args[0] === 'ping') {
-        var retr = {
-          gdprApplies: gdprApplies,
-          cmpLoaded: false,
-          cmpStatus: 'stub'
-        };
-
-        if (typeof args[2] === 'function') {
-          args[2](retr);
-        }
-      } else {
-        if(args[0] === 'init' && typeof args[3] === 'object') {
-          args[3] = Object.assign(args[3], { tag_version: 'V3' });
-        }
-        queue.push(args);
-      }
-    }
-
-    function postMessageEventHandler(event) {
-      var msgIsString = typeof event.data === 'string';
-      var json = {};
-
-      try {
-        if (msgIsString) {
-          json = JSON.parse(event.data);
-        } else {
-          json = event.data;
-        }
-      } catch (ignore) {}
-
-      var payload = json.__tcfapiCall;
-
-      if (payload) {
-        window.__tcfapi(
-          payload.command,
-          payload.version,
-          function(retValue, success) {
-            var returnMsg = {
-              __tcfapiReturn: {
-                returnValue: retValue,
-                success: success,
-                callId: payload.callId
-              }
-            };
-            if (msgIsString) {
-              returnMsg = JSON.stringify(returnMsg);
-            }
-            if (event && event.source && event.source.postMessage) {
-              event.source.postMessage(returnMsg, '*');
-            }
-          },
-          payload.parameter
-        );
-      }
-    }
-
-    while (win) {
-      try {
-        if (win.frames[TCF_LOCATOR_NAME]) {
-          cmpFrame = win;
-          break;
-        }
-      } catch (ignore) {}
-
-      if (win === window.top) {
-        break;
-      }
-      win = win.parent;
-    }
-    if (!cmpFrame) {
-      addFrame();
-      win.__tcfapi = tcfAPIHandler;
-      win.addEventListener('message', postMessageEventHandler, false);
-    }
-  };
-
-  makeStub();
-
-  function makeGppStub() {
-    const CMP_ID = 10;
-    const SUPPORTED_APIS = [
-      '2:tcfeuv2',
-      '6:uspv1',
-      '7:usnatv1',
-      '8:usca',
-      '9:usvav1',
-      '10:uscov1',
-      '11:usutv1',
-      '12:usctv1'
-    ];
-
-    window.__gpp_addFrame = function (n) {
-      if (!window.frames[n]) {
-        if (document.body) {
-          var i = document.createElement("iframe");
-          i.style.cssText = "display:none";
-          i.name = n;
-          document.body.appendChild(i);
-        } else {
-          window.setTimeout(window.__gpp_addFrame, 10, n);
-        }
-      }
-    };
-    window.__gpp_stub = function () {
-      var b = arguments;
-      __gpp.queue = __gpp.queue || [];
-      __gpp.events = __gpp.events || [];
-
-      if (!b.length || (b.length == 1 && b[0] == "queue")) {
-        return __gpp.queue;
-      }
-
-      if (b.length == 1 && b[0] == "events") {
-        return __gpp.events;
-      }
-
-      var cmd = b[0];
-      var clb = b.length > 1 ? b[1] : null;
-      var par = b.length > 2 ? b[2] : null;
-      if (cmd === "ping") {
-        clb(
-          {
-            gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
-            cmpStatus: "stub", // possible values: stub, loading, loaded, error
-            cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
-            signalStatus: "not ready", // possible values: not ready, ready
-            supportedAPIs: SUPPORTED_APIS, // list of supported APIs
-            cmpId: CMP_ID, // IAB assigned CMP ID, may be 0 during stub/loading
-            sectionList: [],
-            applicableSections: [-1],
-            gppString: "",
-            parsedSections: {},
-          },
-          true
-        );
-      } else if (cmd === "addEventListener") {
-        if (!("lastId" in __gpp)) {
-          __gpp.lastId = 0;
-        }
-        __gpp.lastId++;
-        var lnr = __gpp.lastId;
-        __gpp.events.push({
-          id: lnr,
-          callback: clb,
-          parameter: par,
-        });
-        clb(
-          {
-            eventName: "listenerRegistered",
-            listenerId: lnr, // Registered ID of the listener
-            data: true, // positive signal
-            pingData: {
-              gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
-              cmpStatus: "stub", // possible values: stub, loading, loaded, error
-              cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
-              signalStatus: "not ready", // possible values: not ready, ready
-              supportedAPIs: SUPPORTED_APIS, // list of supported APIs
-              cmpId: CMP_ID, // list of supported APIs
-              sectionList: [],
-              applicableSections: [-1],
-              gppString: "",
-              parsedSections: {},
-            },
-          },
-          true
-        );
-      } else if (cmd === "removeEventListener") {
-        var success = false;
-        for (var i = 0; i < __gpp.events.length; i++) {
-          if (__gpp.events[i].id == par) {
-            __gpp.events.splice(i, 1);
-            success = true;
-            break;
-          }
-        }
-        clb(
-          {
-            eventName: "listenerRemoved",
-            listenerId: par, // Registered ID of the listener
-            data: success, // status info
-            pingData: {
-              gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
-              cmpStatus: "stub", // possible values: stub, loading, loaded, error
-              cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
-              signalStatus: "not ready", // possible values: not ready, ready
-              supportedAPIs: SUPPORTED_APIS, // list of supported APIs
-              cmpId: CMP_ID, // CMP ID
-              sectionList: [],
-              applicableSections: [-1],
-              gppString: "",
-              parsedSections: {},
-            },
-          },
-          true
-        );
-      } else if (cmd === "hasSection") {
-        clb(false, true);
-      } else if (cmd === "getSection" || cmd === "getField") {
-        clb(null, true);
-      }
-      //queue all other commands
-      else {
-        __gpp.queue.push([].slice.apply(b));
-      }
-    };
-    window.__gpp_msghandler = function (event) {
-      var msgIsString = typeof event.data === "string";
-      try {
-        var json = msgIsString ? JSON.parse(event.data) : event.data;
-      } catch (e) {
-        var json = null;
-      }
-      if (typeof json === "object" && json !== null && "__gppCall" in json) {
-        var i = json.__gppCall;
-        window.__gpp(
-          i.command,
-          function (retValue, success) {
-            var returnMsg = {
-              __gppReturn: {
-                returnValue: retValue,
-                success: success,
-                callId: i.callId,
-              },
-            };
-            event.source.postMessage(msgIsString ? JSON.stringify(returnMsg) : returnMsg, "*");
-          },
-          "parameter" in i ? i.parameter : null,
-          "version" in i ? i.version : "1.1"
-        );
-      }
-    };
-    if (!("__gpp" in window) || typeof window.__gpp !== "function") {
-      window.__gpp = window.__gpp_stub;
-      window.addEventListener("message", window.__gpp_msghandler, false);
-      window.__gpp_addFrame("__gppLocator");
-    }
-  };
-
-  makeGppStub();
-
-  var uspStubFunction = function() {
-    var arg = arguments;
-    if (typeof window.__uspapi !== uspStubFunction) {
-      setTimeout(function() {
-        if (typeof window.__uspapi !== 'undefined') {
-          window.__uspapi.apply(window.__uspapi, arg);
-        }
-      }, 500);
-    }
-  };
-
-  var checkIfUspIsReady = function() {
-    uspTries++;
-    if (window.__uspapi === uspStubFunction && uspTries < uspTriesLimit) {
-      console.warn('USP is not accessible');
-    } else {
-      clearInterval(uspInterval);
-    }
-  };
-
-  if (typeof window.__uspapi === 'undefined') {
-    window.__uspapi = uspStubFunction;
-    var uspInterval = setInterval(checkIfUspIsReady, 6000);
-  }
-})();
-</script>
---><!--End InMobi Choice. Consent Manager Tag v3.0 (for TCF 2.2) -->
-
- 
-
-
-
- <!-- 
- <script>console.log('here goes sulvo');</script>
--->	
-
   <script src="files/theme/mymaterialize.js"></script>
 <script>
- 
 
 function myFunctionfortitle() {
 var chromeH = window.outerHeight - window.innerHeight;
 //  alert("Page is loaded and chromeH:" + chromeH + ",window.innerHeight:" + window.innerHeight + ",window.outerHeight:" + window.outerHeight);
   //document.title = "Paparia";
-  
+
   var whttwrtttl = "[version:" + chromeH + "." +  window.innerHeight + "." + window.outerHeight +"] ";
-  
+
  var xx =  document.title;
 document.title = whttwrtttl + xx;
 
@@ -484,7 +82,7 @@ function myhdckpl()
 		}
 		catch(err) {
 	//  document.getElementById("demo").innerHTML = err.message;
-		}     
+		}
 }
 
 //$(document).ready(function(){
@@ -494,10 +92,7 @@ function myhdckpl()
 //});
 
 </script>
- 
 
-  
- 
 		<link id="wsite-base-style" rel="stylesheet" type="text/css" href="cdn2.editmysite.com/css/sites367f.css?buildTime=1751393202" />
 <link rel="stylesheet" type="text/css" href="cdn2.editmysite.com/css/old/fancybox5209.css?1751393202" />
 <link rel="stylesheet" type="text/css" href="cdn2.editmysite.com/css/social-icons9aef.css?buildtime=1751393202" media="screen,projection" />
@@ -589,7 +184,7 @@ _W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":
 			com_currentSite = "607878847879865438";
 			com_userID = "79962194";</script><script type="text/javascript">_W.configDomain = "www.weebly.com";</script><script>_W.relinquish && _W.relinquish()</script>
 <script type="text/javascript" src="cdn2.editmysite.com/js/lang/en/stld62d.js?buildTime=1751393202&amp;"></script><script> _W.themePlugins = [];</script><script type="text/javascript"> _W.recaptchaUrl = "../www.google.com/recaptcha/api.js"; </script><script type="text/javascript"><!--
-	
+
 	var DISABLE_NAV_MORE = 1;
 	function initFlyouts(){
 		initPublishedFlyoutMenus(
@@ -604,145 +199,17 @@ _W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":
 	}
 //-->
 </script>
-		
-		
-	<script>
-    console.log('here i am not from cloudflare tag setup !');
-</script>
 
-<!--<script type="text/javascript" async="async" src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=44890869"></script>-->
-  <!-- sulvo first -->
-<link rel="preload" as="script" href="https://live.demand.supply/up.js">
-<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
-
-<!-- rewarded paywall -->
-   <link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
-<style>#custom-paywall-overlay:not(.active){display:none}</style>
-
-<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
-
-
-<!-- old demand -->
-
-
- 
-  
-
-
-
-
-
-
-
- 
-<style>	
+<style>
 /* Fix fixed ad overflow */
 .stpdwrapper {
   max-width: 100vw !important;
   right: 0 !important;
 }
-</style> 
- 
+</style>
 
- 
-  <!-- ======================================================================= -->
-  <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
-  <!-- ======================================================================= -->
-  <style>
-    /* THE GHOST ANCHOR: Stays fixed in layout to completely eliminate infinite layout flickers */
-    .outstream-placement-anchor {
-      width: 336px;
-      height: 280px;
-      margin: 40px auto;
-      position: relative;
-      background: transparent;
-    }
-
-    /* THE MOVING CONTAINER: Holds the ad frame and performs transitions on scroll */
-    .outstream-main-container {
-      width: 336px;
-      height: 280px;
-      background: #fbfbfb;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transition: box-shadow 0.3s ease;
-    }
-
-    /* STICKY OVERLAY STATE: Engaged programmatically by IntersectionObserver */
-    .outstream-main-container.is-sticky {
-      position: fixed;
-      top: auto;
-      left: auto;
-      bottom: 25px;
-      right: 25px;
-      z-index: 99999;
-      background: #fff;
-      border-radius: 4px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      
-      /* Downscale slightly for clean desktop corner placement */
-      transform: scale(0.9);
-      transform-origin: bottom right;
-      
-      /* Premium entrance physics: slides up, clears blur layer, fades visibility */
-      animation: dynamicStickyShow 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    /* Keeps iframe elements isolated and clipped safely inside borders when sticky */
-    .outstream-main-container.is-sticky #div-gpt-ad-outstream-slot {
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    /* CLOSE TRIGGER MARKUP: Revealed exclusively during sticky activation mode */
-    .outstream-close-trigger {
-      display: none;
-      position: absolute;
-      top: -12px;
-      left: -12px;
-      width: 26px;
-      height: 26px;
-      background: #111;
-      color: #fff;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 23px;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-      font-size: 15px;
-      font-weight: bold;
-      border: 2px solid #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 100000;
-      transition: background 0.2s ease;
-    }
-
-    .outstream-close-trigger:hover {
-      background: #ff3b30; /* Desktop specific feedback overlay shift */
-    }
-
-    .outstream-main-container.is-sticky .outstream-close-trigger {
-      display: block;
-    }
-
-    /* BLUR ENTRANCE KEYFRAME SEQUENCING */
-    @keyframes dynamicStickyShow {
-      0% {
-        transform: translateY(60px) scale(0.85);
-        opacity: 0;
-        filter: blur(8px);
-      }
-      100% {
-        transform: translateY(0) scale(0.9);
-        opacity: 1;
-        filter: blur(0);
-      }
-    }
-  </style>
-  
   </head>
- 
+
 	<body class='  wsite-theme-light' display: flex;
 
 style= "
@@ -751,8 +218,6 @@ min-height: 100vh;
 padding: 0;
 background-color: rgb(239,240,245);
 
-
-
 background-repeat: no-repeat;
 
 background-size: cover;
@@ -760,57 +225,24 @@ background-size: cover;
 	" class=" wsite-page-breatheplusapp">
 
 	<div style="visibility: hidden;height: 1px;">
-	 <h1>Breathe+ – Deep Breathing & Relaxation App</h1>	
-	</div>	
+	 <h1>Breathe+ – Deep Breathing & Relaxation App</h1>
+	</div>
 
 <div  >
  <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
 
-  <!-- <div data-ad="mlapplications.com_sticky_video_myvidsticky" data-devices="m:1,t:1,d:1"   class="demand-supply"></div> -->
-  <!-- ======================================================================= -->
-  <!-- 3. WEB PAGE STRUCTURAL CORE HOUSING PLACEMENT MARKUP                   -->
-  <!-- ======================================================================= -->
-  <!--<div class="myyy-outstream-placement-anchor">
-    <div id="outstream-ad-wrapper" class="outstream-main-container">
-      <div id="outstream-close" class="outstream-close-trigger">&times;</div>
-      
-       
-      <div id="div-gpt-ad-outstream-slot" style="width: 336px; height: 280px; margin: 0 auto;">
-        <script>
-          googletag.cmd.push(function() { 
-            googletag.display('div-gpt-ad-outstream-slot'); 
-          });
-        </script>
-      </div>
-    </div>
-  </div>--> 
-
-
-
-<!-- old mobile sticky top code -->
 </div>
 
-<!-- Google Tag Manager (noscript) -->
-<!--<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5BBV9FN"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>-->
-<!-- End Google Tag Manager (noscript) -->
-
- 
-<!--mlapplications_com_300x600_desktop_sticky --> 
-  
-  
-<!-- Anchor ad on bottom -->
 <script>
 function removeElement(id) {
 	 try
 	 {
 	 var elem = document.getElementById(id);
      elem.parentNode.removeChild(elem);
-	} 
+	}
 	catch (err) { console.log('err here...'+err); }
 }
 </script>
-
 
 <script>
 function openNav() {
@@ -822,18 +254,15 @@ function closeNav() {
   document.getElementById('myOverlayNav').style.width = "0%";
 }
 </script>
- 
-
 
 <!-- https://m.media-amazon.com/images/M/MV5BYjJiZTcxYzEtODFlZi00M2UzLTg5NTgtYWMxMGNkMWJiNmRjXkEyXkFqcGdeQXBrZWVzZXk@. -->
 <div id="thepostertrailer"  style="z-index:-1; margin-left: auto; visibility: visible; margin-right: auto; margin-top: 100px; position:fixed; height:100%; width: 100%;
 background-image: url('files/theme/appdvdplayerplus/mytransparentimage.html');  background-size: cover;
-             
+
             background-position-x: left;
 ">
 </div>
-<!-- <canvas id="myCanvasPoster" style="z-index:-1; margin-left: auto; visibility: visible; margin-right: auto; margin-top: 100px; position:fixed; height:100%; width: 100%;" ></canvas>
--->
+
 <div >
 
 <div class="content-wrap railway-layout" style='background: transparent; background-color: transparent;'>
@@ -853,14 +282,12 @@ background-image: url('files/theme/appdvdplayerplus/mytransparentimage.html');  
 
 <div><div id="820163479836470011" align="center" style="width: 100%; " class="wcustomhtml">            <div class="row" >
 
-<p> Select the duration you want for your breathe. 
+<p> Select the duration you want for your breathe.
 Click on the "START" button to begin!
 
  </p>
 </div>
           </div>
-
-
 
 </div>
 
@@ -873,8 +300,6 @@ Click on the "START" button to begin!
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:40.771929824561%; padding:0 5px;">
-					
-						
 
 <h2 class="wsite-content-title"><font size="5"><u>Duration</u></font><br /></h2>
 
@@ -883,9 +308,9 @@ Click on the "START" button to begin!
 
 <form class="col s12">
             <div class="row">
-      
+
 	  <div class="input-field col s12">
-    
+
 	<select id="myselection">
 
     <option value="" disabled selected>select a duration from the list</option>
@@ -895,25 +320,19 @@ Click on the "START" button to begin!
       <option id="my4" value="4">4 minutes</option>
       <option id="my5" value="5">5 minutes</option>
     </select>
-    
+
 	<label>Breathe Duration:</label>
-	
+
   </div>
             </div>
           </form>
 
-</div> 
+</div>
           </div>
-
-
 
 </div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:28.509426318906%; padding:0 5px;">
-					
-						
 
 <div><div class="wsite-image wsite-image-border-none " style="padding-top:0px;padding-bottom:0px;margin-left:0px;margin-right:0px;text-align:center">
 <a>
@@ -922,25 +341,17 @@ Click on the "START" button to begin!
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:30.718643856533%; padding:0 5px;">
-					
-						
 
 <div><div id="575566734891874933" align="center" style="width: 100%; " class="wcustomhtml"><div class="action-btn active " style="width:160; height:200px; top:  1px; right:  0px;">
-       <a style=" width: 140px; height: 140px; bottom:  0px; top:35px; right:  -10px;" id="menu2" class="btn btn-floating btn-large blue darken-4 pulse" onclick="StartTheBreatheNow()"> 
+       <a style=" width: 140px; height: 140px; bottom:  0px; top:35px; right:  -10px;" id="menu2" class="btn btn-floating btn-large blue darken-4 pulse" onclick="StartTheBreatheNow()">
           <img style="height:136px; margin-top: 3px;" src="files/theme/startbreathenow.png">
           </a>
 
         </div></div>
 
-
-
 </div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -966,12 +377,8 @@ Click on the "START" button to begin!
 
 <div><div id="304427158254782021" align="right" style="width: 100%; " class="wcustomhtml"><table id="mycard_welcome_buttons" style="color: #ffffff; padding: 0px; font-size:14px; line-height:13px; text-align:center; width: auto; margin-left: auto; margin-right: auto; position: initial; visibility: visible">
 
- 
   <tbody><tr style="padding: 0px;">
-  <!--  <td  style="padding: 0px;">
 
-               <a class="waves-effect waves-light btn-large " onclick="myFunctionOpenUrl('https://www.mlapplications.com/hlpdvdplayer_1')" alt="Open Web Help.." style="background: #0076EE";><i class="material-icons left">check</i>Yes ..</a>
-</td> -->
  <td  style="padding: 20px;">
     <td  style="padding: 0px;">
 
@@ -982,8 +389,6 @@ Click on the "START" button to begin!
 </table>
 
 </div>
-
-
 
 </div>
 
@@ -1002,17 +407,16 @@ div.countdown-bar {
 }
 
 /* Loader */
-div.countdown-bar div:nth-of-type(1) {    
-    width: 0; 
+div.countdown-bar div:nth-of-type(1) {
+    width: 0;
     height: 100%
 }
 
 /* Timer */
-div.countdown-bar div:nth-of-type(2) {    
-    width: 100%; 
+div.countdown-bar div:nth-of-type(2) {
+    width: 100%;
     height: 100%
 }
-
 
 #animation {
   height: 100px;
@@ -1060,7 +464,7 @@ div.countdown-bar div:nth-of-type(2) {
 
 .mypresentationdiv
 {
- 
+
   display: flex;
  position: relative;
   align-items: center;
@@ -1073,19 +477,17 @@ div.countdown-bar div:nth-of-type(2) {
   top: 10px;
 }
 
-
 .watch-face {
   position: relative;
   animation: pulse 4s cubic-bezier(0.5, 0, 0.5, 1) infinite alternate;
   animation-name: pulse, fix;
-  
+
 }
 
-
 .myinhale {
-  
+
   border-radius: 50%;
-  
+
   background: #3c6c92;
   mix-blend-mode: screen;
   animation: circle 4s infinite alternate;
@@ -1125,8 +527,7 @@ div.countdown-bar div:nth-of-type(2) {
 }
 </style>
 
-
-<div id="myfrmforbreathing"> 
+<div id="myfrmforbreathing">
 
 <div class="mypresentationdiv" >
 <style>.circle:nth-child(-n + 3) { background: #406e92 }</style>
@@ -1158,8 +559,6 @@ div.countdown-bar div:nth-of-type(2) {
         </div>
 </div></div>
 
-
-
 </div>
 			</div>
 		</div>
@@ -1181,7 +580,7 @@ div.countdown-bar div:nth-of-type(2) {
 				>
 				Welcome
 			</a>
-			
+
 		</li>
 		<li id="pg420291035968415525" class="wsite-menu-item-wrap">
 			<a
@@ -1203,7 +602,7 @@ div.countdown-bar div:nth-of-type(2) {
 			Windows Apps
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-576387146180606075"
 	class="wsite-menu-subitem-wrap "
@@ -1216,7 +615,7 @@ div.countdown-bar div:nth-of-type(2) {
 			Windows Phone Apps
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-181564505483526232"
 	class="wsite-menu-subitem-wrap "
@@ -1229,7 +628,7 @@ div.countdown-bar div:nth-of-type(2) {
 			Android Apps
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -1243,7 +642,7 @@ div.countdown-bar div:nth-of-type(2) {
 				>
 				Help Center
 			</a>
-			
+
 		</li>
 		<li id="pg457614141667606990" class="wsite-menu-item-wrap">
 			<a
@@ -1265,7 +664,7 @@ div.countdown-bar div:nth-of-type(2) {
 			How-to Check DVDs
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -1284,8 +683,7 @@ div.countdown-bar div:nth-of-type(2) {
 		<li id="wsite-nav-164382401196655753"
 	class="wsite-menu-subitem-wrap "
 	>
-	 
-	
+
 </li>
 <li id="wsite-nav-809491643896992333"
 	class="wsite-menu-subitem-wrap "
@@ -1298,7 +696,7 @@ div.countdown-bar div:nth-of-type(2) {
 			3D F.A.Q.
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-802757451138523212"
 	class="wsite-menu-subitem-wrap "
@@ -1311,9 +709,9 @@ div.countdown-bar div:nth-of-type(2) {
 			3D Anaglyphs
 		</span>
 	</a>
-	
+
 </li>
- 
+
 <li id="wsite-nav-860537803288251427"
 	class="wsite-menu-subitem-wrap "
 	>
@@ -1325,7 +723,7 @@ div.countdown-bar div:nth-of-type(2) {
 			3D Photos on Flickr
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-252052803303239081"
 	class="wsite-menu-subitem-wrap "
@@ -1338,7 +736,7 @@ div.countdown-bar div:nth-of-type(2) {
 			Find 3D Videos on Youtube
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -1352,7 +750,7 @@ div.countdown-bar div:nth-of-type(2) {
 				>
 				Opinion & Blog
 			</a>
-			
+
 		</li>
 		<li id="pg765675763726769427" class="wsite-menu-item-wrap">
 			<a
@@ -1361,7 +759,7 @@ div.countdown-bar div:nth-of-type(2) {
 				>
 				About us
 			</a>
-			
+
 		</li>
 		<li id="pg589846066449704670" class="wsite-menu-item-wrap">
 			<a
@@ -1370,11 +768,10 @@ div.countdown-bar div:nth-of-type(2) {
 				>
 				Contact
 			</a>
-			
+
 		</li>
 </ul>
 </div>
-
 
 <div style='display:none'><div class='wsite-elements wsite-footer'>
 <div id="102545159590712656"><div><style type="text/css">
@@ -1528,18 +925,12 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:19.232629580985%; padding:0 0px;">
-					
-						
 
 <div class="wsite-spacer" style="height:10px;"></div>
 
 <div class="paragraph" style="text-align:center;"><strong><font color="#a9b9d1" size="4">Share:</font></strong></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:27.826663358363%; padding:0 0px;">
-					
-						
 
 <div><div id="581391898368846183" align="center" style="width: 100%; " class="wcustomhtml"><link rel="stylesheet" href= "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
@@ -1580,7 +971,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
   color: #ffffff;
 }
 
-
 .fa-pinterest {
   background: #cb2027;
   color: #ffffff;
@@ -1593,28 +983,17 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <a class="fa fa-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://%20www.mlapplications.com&amp;title=Free%20and%20Useful%20Applications%20for%20Windows%20and%20Android&amp;summary=My%20favorite%20developers%20website&amp;source=Mobility_in_Life_Applications" target="_blank"></a>
 </div>
 
-
-
 </div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:35.179953724175%; padding:0 0px;">
-					
-						
 
 <div><div id="998866482991838868" align="center" style="width: 100%; " class="wcustomhtml"><a class="fa fa-pinterest" href="http://pinterest.com/pin/create/link/?url=http%3A%2F%2Fwww.mlapplications.com&amp;description=" target="_blank"></a>
 <a class="fa fa-google" href="https://plus.google.com/share?url=https://%20www.mlapplications.com" target="_blank"></a>
 </div>
 
-
 </div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:17.760753336477%; padding:0 0px;">
-					
-						
 
 <div><div class="wsite-image wsite-image-border-none " style="padding-top:10px;padding-bottom:10px;margin-left:0;margin-right:0;text-align:center">
 <a>
@@ -1623,8 +1002,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -1643,8 +1020,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:26.942518066303%; padding:0 15px;">
-					
-						
 
 <div id="433306533626245074"><div><style type="text/css">
 	#element-5b110cff-50c0-4dca-86e4-07d38f3516de .content-color-box-wrapper {
@@ -1898,11 +1273,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:50.108589914178%; padding:0 15px;">
-					
-						
 
 <div id="210476769210520075"><div><style type="text/css">
 	#element-8d4fb41b-44b4-46c0-bb50-01e7cefb3258 .waddons_vert_divider {
@@ -2159,7 +1530,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 </script></div></div>
 
 <div id="486082001627672347"><div><style type="text/css">
-	
+
 </style><div id="element-71605150-6990-463d-89aa-4df7ffeb559c" data-platform-element-id="698263678581730663-1.1.0" class="platform-element-contents">
 <div class="content-color-box-wrapper">
 
@@ -2270,11 +1641,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:22.948892019519%; padding:0 15px;">
-					
-						
 
 <div id="678568118291078683"><div><style type="text/css">
 	#element-55b91c17-e3a7-4f6b-8dec-a80823db0b69 .waddons_vert_divider {
@@ -2410,8 +1777,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -2423,17 +1788,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <hr class="styled-hr" style="width:100%;"></hr>
 <div style="height: 0px;   width: 100%;"></div></div></div></div>
 
-<!--
-<a href="#" class="no_nu_reward2 scrollToTop"><img src="/uploads/myarrow_up.png" alt="Scroll to Top"></a>
--->
-
 <!-- mycode for detecting desktop and apply padding   -->
-
- 
-
-
-
-
 
 <script>
 
@@ -2441,7 +1796,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
   //  var elems = document.querySelectorAll('select');
   //  var instances = M.FormSelect.init(elems, options);
  // });
- 
+
 var isMobileDevice = window.navigator.userAgent.toLowerCase().includes("mobi");
 
 if (isMobileDevice==true)
@@ -2452,9 +1807,7 @@ if (isMobileDevice==true)
  {
 
 var x = document.getElementsByClassName("container");
- 
- 
- 
+
  var i;
   for (i = 0; i < x.length; i++) {
    //  x[i].style.paddingLeft = "280px";
@@ -2462,78 +1815,51 @@ var x = document.getElementsByClassName("container");
   }
 
  //alert("It's false...It's desktop");
- } 
- 
- 
+ }
+
     </script>
-<!-- FMX Tag Start, Do Not Modify: WebsiteID 10481 > ZoneID 66642 > Size 300x250 
-<script async type="text/javascript" src="//x.fidelity-media.com/delivery/sl.php?zoneid=66642&cb=&subid=atf&click=&layerstyle=simple&align=right&valign=bottom&shifth=0&shiftv=0&closebutton=t&backcolor=FFFFFF&bordercolor=000000"></script><ins name='fmxl-zoneid-66642'></ins>
-<!-- FMX Tag End -->
+
 <!-- End of mycode for detecting desktop and apply padding   -->
 
-<!-- FMX Tag Start, Do Not Modify: WebsiteID 10481 > ZoneID 66660 > Size 728x90 
-<script async type="text/javascript" src="//x.fidelity-media.com/delivery/sl.php?zoneid=66660&cb=&subid=atf&click=&layerstyle=simple&align=right&valign=bottom&shifth=0&shiftv=0&closebutton=t&backcolor=FFFFFF&bordercolor=000000"></script><ins name='fmxl-zoneid-66660'></ins>
--->
-<!-- FMX Tag End -->
-
-<!-- FMX Tag Start, Do Not Modify: WebsiteID 10481<script type="text/javascript">document.write('<scr' + 'ipt type="text/javascript" src="//x.fidelity-media.com/delivery/matches.php?affiliateid=10481"><\/scr' + 'ipt>');</script>
 <!-- FMX Tag End -->
 
  <!--JavaScript at end of body for optimized loading-->
- 
 
- 
  <footer class="page-footer row" position: fixed;
  style="background: #0D2E64; margin-bottom: 0px; height: 101px;" >
- 
- 
-   
+
  <div class="col s1" style="height: 101px important; "  >
       <div style="height: 110px;"  >
-     
-   
+
 </div>
-     </div>  
-  
- 
+     </div>
 
    <div class="col s11" >
- 
-   
+
 	</div>
-	
- 
+
         </footer>
- 
-     
-	 
+
 	 <div style="visibility: visible; background-color: #0D2E64; width: 100%; height: 100px; position: fixed; bottom:  -10px;  right:  0px; " >
           <div style="height:10px;"></div>
-      
+
  <table class="centered" style="color: #ffffff; font-size:14px; line-height:14px; text-align:center; width: auto; margin-left: auto;  margin-right: 140px; ">
                 <thead>
             <tr style="padding:0px">
-			
-			  
+
 				  <th style="padding:1px">
                     <a class="no_nu_reward2" alt="App's Help" onclick="myFunctionOpenUrl('hlpdvdplayer_1.html')"  >
  <img height="56"  src="files/theme/appdvdplayerplus/smdvd2.html"  />
  </a>
                 </th>
-              
-				
-				
-			
-				  
-				
-				  
+
 				<th style="padding:0px">
-                     
+
  <img height="56"  src="files/theme/appdvdplayerplus/myglossyvertical.html"  />
- 
+
                 </th>
 				  <th style="padding:1px">
-                    <a alt="Mobility in Life Applications Webpage" onclick="myFunctionOpenUrl('index.html')" class="btn-floating waves-effect waves-light  btn-large" 
+                    <a alt="Mobility in Life Applications Webpage" onclick="myFunctionOpenUrl('index.html')" class="btn-floating waves-effect waves-light  btn-large"
 					style="background: #0D2E64">
                         <svg xmlns="http://www.w3.org/2000/svg" height="56" width="56" viewBox="0 0 56 56">
                             <g>
@@ -2544,9 +1870,9 @@ var x = document.getElementsByClassName("container");
                     </a>
                 </th>
 				 <th style="padding:0px">
-                     
+
  <img height="56"  src="files/theme/appdvdplayerplus/myglossyvertical.html"  />
- 
+
                 </th>
                 <th style="padding:1px">
                     <a alt="App's Help" onclick="myFunctionOpenUrl('hlpdvdplayer_1.html')"  class="btn-floating waves-effect red pulse waves-light  btn-large" >
@@ -2561,12 +1887,12 @@ var x = document.getElementsByClassName("container");
                     </a>
                 </th>
 				<th style="padding:0px">
-                     
+
  <img height="56"  src="files/theme/appdvdplayerplus/myglossyvertical.html"  />
- 
+
                 </th>
              <th style="padding:1px">
-                    <a alt="the app Privacy Policy" onclick="myFunctionOpenUrl('dvdplayerfree_privacy.html')" class="btn-floating waves-effect waves-light  btn-large   " 
+                    <a alt="the app Privacy Policy" onclick="myFunctionOpenUrl('dvdplayerfree_privacy.html')" class="btn-floating waves-effect waves-light  btn-large   "
 					style="background: #0D2E64">
                         <svg xmlns="http://www.w3.org/2000/svg" height="56" width="56" viewBox="0 0 56 56">
                             <g>
@@ -2576,61 +1902,59 @@ var x = document.getElementsByClassName("container");
                         </svg>
                     </a>
                 </th>
-               
 
 <th style="padding:0px">
-                     
+
  <img height="56"  src="files/theme/appdvdplayerplus/myglossyvertical.html"  />
- 
+
                 </th>
 
                   <th style="padding:1px">
-                    <a alt="Mobility in Life Applications Webpage" onclick="myFunctionOpenUrl('https://play.google.com/store/apps/details?id=moblifeteam.dvdplayerplus')" class="btn-floating waves-effect waves-light  btn-large" 
+                    <a alt="Mobility in Life Applications Webpage" onclick="myFunctionOpenUrl('https://play.google.com/store/apps/details?id=moblifeteam.dvdplayerplus')" class="btn-floating waves-effect waves-light  btn-large"
 					style="background: #0D2E64">
                      <svg xmlns="http://www.w3.org/2000/svg" height="56" width="56" viewBox="0 0 56 56">
                             <g>
                                 <ellipse cy="28" cx="28" stroke-width="1.87499977648261" ry="27.0625001117587" rx="27.0625001117587" stroke="#FFFFFF" fill="transparent" />
                                 <path id="path1" transform="rotate(0,28,28) translate(20,13.9023450729436) scale(0.937499888241304,0.937499888241304)  " fill="#FFFFFF" d="M18,26.800003L18.300018,31.800003 13.5,32 13.200012,27z M7.8000183,24.600006C7.2000122,24.600006 6.7000122,25.100006 6.7000122,25.699997 6.7000122,26.300003 7.2000122,26.800003 7.8000183,26.800003 8.3999939,26.800003 8.8999939,26.300003 8.8999939,25.699997 8.8999939,25.100006 8.3999939,24.600006 7.8000183,24.600006z M15.899994,14.100006C18.700012,14.900009 19.5,18.600006 19.5,18.600006 19.899994,19.699997 19.700012,21.100006 19.700012,21.100006 19.5,22.300003 18.100006,25.900009 18.100006,25.900009L18.100006,26.199997 13.300018,26.5 13.300018,26.199997C12.800018,25.800003 12.399994,25 12.200012,24.600006 12.200012,24.5 12.100006,24.400009 12.100006,24.300003L12.100006,24.199997 12.100006,24.100006 12,22.900009 11.600006,18.400009C11.5,17.699997 11.899994,17.100006 12.399994,17 12.899994,16.900009 13.399994,17.600006 13.5,18.600006L13.5,18.699997C13.800018,19.699997 14,21.900009 14,21.900009 16.200012,22.300003 16.800018,18.900009 16.800018,18.900009 17.200012,17.199997 16.100006,16.800003 16.100006,16.800003z M6,2.1000061L6,2.8000031 9.5,2.8000031 9.5,2.1000061z M1.3999939,0L13.800018,0C14.600006,0,15.200012,0.6000061,15.200012,1.4000092L15.200012,21C14.899994,21.300003,14.600006,21.5,14.100006,21.5L14,21.5C14,21.300003,13.899994,21,13.899994,20.699997L13.899994,4.1000061 1.2000122,4.1000061 1.2000122,23.100006 11.600006,23.100006C11.700012,23.600006,11.700012,24,11.700012,24L11.800018,24.199997C11.800018,24.300003 11.899994,24.5 11.899994,24.600006 12.100006,25.100006 12.399994,25.800003 13,26.300003L13.100006,28.100006 1.3999939,28.100006C0.6000061,28.100006,0,27.5,0,26.699997L0,1.4000092C0,0.6000061,0.6000061,0,1.3999939,0z" />
                             </g>
-                        </svg> 
+                        </svg>
                     </a>
                 </th>
 				<th style="padding:0px">
-                     
+
  <img height="56"  src="files/theme/appdvdplayerplus/myglossyvertical.html"  />
- 
+
                 </th>
 
                   <th style="padding:1px">
-                    <a alt="Mobility in Life Applications Webpage" onclick="myFunctionOpenUrl('appblurayplayerplus.html')" class="btn-floating waves-effect waves-light  btn-large" 
+                    <a alt="Mobility in Life Applications Webpage" onclick="myFunctionOpenUrl('appblurayplayerplus.html')" class="btn-floating waves-effect waves-light  btn-large"
 					style="background: #0D2E64">
                         <svg xmlns="http://www.w3.org/2000/svg" height="56" width="56" viewBox="0 0 56 56">
                             <g>
                                 <ellipse cy="28" cx="28" stroke-width="1.87499977648261" ry="27.0625001117587" rx="27.0625001117587" stroke="#FFFFFF" fill="transparent" />
                                 <path id="path1" transform="rotate(0,28,28) translate(8,20) scale(0.13,0.13)  " fill="#FFFFFF" d="M16.6875,72.2808303833008L16.6875,96.4683303833008 27.375,96.4683303833008 30.64892578125,96.2632522583008 33.533203125,95.6480178833008 36.02783203125,94.6226272583008 38.1328125,93.1870803833008 39.80419921875,91.3941116333008 40.998046875,89.2964553833008 41.71435546875,86.8941116333008 41.953125,84.1870803833008 41.69970703125,81.3965530395508 40.939453125,78.9780960083008 39.67236328125,76.9317092895508 37.8984375,75.2573928833008 35.61767578125,73.9551467895508 32.830078125,73.0249710083008 29.53564453125,72.4668655395508 25.734375,72.2808303833008 16.6875,72.2808303833008z M16.6875,43.4995803833008L16.6875,65.2027053833008 24.75,65.2027053833008 27.8115234375,65.0078811645508 30.52734375,64.4234085083008 32.8974609375,63.4492874145508 34.921875,62.0855178833008 36.5419921875,60.3672561645508 37.69921875,58.3296585083008 38.3935546875,55.9727249145508 38.625,53.2964553833008 38.423583984375,51.0003128051758 37.8193359375,49.010326385498 36.812255859375,47.326488494873 35.40234375,45.948802947998 33.589599609375,44.877269744873 31.3740234375,44.111888885498 28.755615234375,43.6526565551758 25.734375,43.4995803833008 16.6875,43.4995803833008z M8.8125,36.3745803833008L27.9375,36.3745803833008 32.0712890625,36.6411819458008 35.75390625,37.4409866333008 38.9853515625,38.7739944458008 41.765625,40.6402053833008 44.0009765625,42.934154510498 45.59765625,45.550365447998 46.5556640625,48.488842010498 46.875,51.7495803833008 46.681640625,54.5152053833008 46.1015625,57.0933303833008 45.134765625,59.4839553833008 43.78125,61.6870803833008 40.1015625,65.2964553833008 35.25,67.6870803833008 35.25,67.8745803833008 38.478515625,68.4942092895508 41.3671875,69.5562210083008 43.916015625,71.0606155395508 46.125,73.0073928833008 47.9091758728027,75.3379592895508 49.1835899353027,77.9937210083008 49.9482383728027,80.9746780395508 50.203125,84.2808303833008 49.8164024353027,88.3882522583008 48.6562461853027,92.0855178833008 46.7226524353027,95.3726272583008 44.015625,98.2495803833008 40.7197265625,100.587471008301 37.01953125,102.257392883301 32.9150390625,103.259346008301 28.40625,103.593330383301 8.8125,103.593330383301 8.8125,36.3745803833008z M62.8112487792969,32.5308303833008L70.4987487792969,32.5308303833008 70.4987487792969,103.593330383301 62.8112487792969,103.593330383301 62.8112487792969,32.5308303833008z M85.0299987792969,55.5933303833008L92.6706237792969,55.5933303833008 92.6706237792969,83.0620803833008 92.8522644042969,86.6216506958008 93.3971862792969,89.7066116333008 94.3053894042969,92.3169631958008 95.5768737792969,94.4527053833008 97.2116394042969,96.1138381958008 99.2096862792969,97.3003616333008 101.571014404297,98.0122756958008 104.295623779297,98.2495803833008 106.983612060547,97.9903030395508 109.422576904297,97.2124710083008 111.612518310547,95.9160842895508 113.553436279297,94.1011428833008 115.142791748047,91.8672561645508 116.278045654297,89.3140335083008 116.959197998047,86.4414749145508 117.186248779297,83.2495803833008 117.186248779297,55.5933303833008 124.873748779297,55.5933303833008 124.873748779297,103.593330383301 117.186248779297,103.593330383301 117.186248779297,95.9995803833008 116.998748779297,95.9995803833008 114.279998779297,99.8140335083008 110.904998779297,102.538642883301 106.873748779297,104.173408508301 102.186248779297,104.718330383301 98.1652526855469,104.398994445801 94.6803894042969,103.440986633301 91.7316589355469,101.844306945801 89.3190612792969,99.6089553833008 87.4425964355469,96.7349319458008 86.1022644042969,93.2222366333008 85.2980651855469,89.0708694458008 85.0299987792969,84.2808303833008 85.0299987792969,55.5933303833008z M139.356674194336,73.8277053833008L164.950424194336,73.8277053833008 164.950424194336,79.8745803833008 139.356674194336,79.8745803833008 139.356674194336,73.8277053833008z M187.684173583984,43.4995803833008L187.684173583984,67.8745803833008 198.371673583984,67.8745803833008 201.213470458984,67.6519241333008 203.832611083984,66.9839553833008 206.170501708984,65.8999710083008 208.168548583984,64.4292678833008 209.797454833984,62.5777053833008 211.027923583984,60.3511428833008 211.801361083984,57.7905960083008 212.059173583984,54.9370803833008 211.840911865234,52.389720916748 211.186126708984,50.138256072998 210.094818115234,48.182689666748 208.566986083984,46.5230178833008 206.626068115234,45.200267791748 204.295501708984,44.255443572998 201.575286865234,43.688549041748 198.465423583984,43.4995803833008 187.684173583984,43.4995803833008z M179.809173583984,36.3745803833008L199.871673583984,36.3745803833008 204.108001708984,36.6499710083008 208.004486083984,37.4761428833008 211.484954833984,38.8648147583008 214.473236083984,40.8277053833008 216.916595458984,43.353099822998 218.762298583984,46.4292678833008 219.922454833984,50.067943572998 220.309173583984,54.2808303833008 220.045501708984,57.6499710083008 219.254486083984,60.7261428833008 217.977142333984,63.4976272583008 216.254486083984,65.9527053833008 214.109954833984,68.0796585083008 211.566986083984,69.8667678833008 205.402923583984,72.3745803833008 205.402923583984,72.5620803833008 208.332611083984,74.2730178833008 210.699798583984,76.5464553833008 212.926361083984,79.5230178833008 215.387298583984,83.3902053833008 227.996673583984,103.593330383301 218.621673583984,103.593330383301 207.371673583984,84.7495803833008 205.848236083984,82.3179397583008 204.371673583984,80.2730178833008 201.395111083984,77.2495803833008 198.113861083984,75.5386428833008 194.152923583984,74.9995803833008 187.684173583984,74.9995803833008 187.684173583984,103.593330383301 179.809173583984,103.593330383301 179.809173583984,36.3745803833008z M262.873107910156,79.3120803833008L251.294998168945,80.9058303833008 246.607498168945,81.9429397583008 243.232498168945,83.5542678833008 241.193435668945,86.1851272583008 240.513748168945,90.2808303833008 241.140701293945,93.4741897583008 243.021560668945,96.0230178833008 245.945388793945,97.6929397583008 249.701248168945,98.2495803833008 252.436111450195,97.9990921020508 254.921936035156,97.2476272583008 257.158752441406,95.9951858520508 259.146545410156,94.2417678833008 260.776916503906,92.1045608520508 261.941467285156,89.7007522583008 262.640197753906,87.0303421020508 262.873107910156,84.0933303833008 262.873107910156,79.3120803833008z M253.638748168945,54.4683303833008L257.604797363281,54.7481155395508 261.042053222656,55.587474822998 263.950500488281,56.986400604248 266.330139160156,58.944896697998 268.180969238281,61.462963104248 269.502990722656,64.5405960083008 270.296203613281,68.1778030395508 270.560607910156,72.3745803833008 270.560607910156,103.593330383301 262.873107910156,103.593330383301 262.873107910156,96.0933303833008 262.685607910156,96.0933303833008 259.881896972656,99.8667678833008 256.486389160156,102.562080383301 252.499099731445,104.179267883301 247.919998168945,104.718330383301 244.528884887695,104.481025695801 241.527420043945,103.769111633301 238.915603637695,102.582588195801 236.693435668945,100.921455383301 234.919509887695,98.8677444458008 233.652420043945,96.5034866333008 232.892166137695,93.8286819458008 232.638748168945,90.8433303833008 232.886306762695,87.6558303833008 233.628982543945,84.8198928833008 234.866775512695,82.3355178833008 236.599685668945,80.2027053833008 238.827713012695,78.4214553833008 241.550857543945,76.9917678833008 244.769119262695,75.9136428833008 248.482498168945,75.1870803833008 262.873107910156,73.1714553833008 262.718566894531,70.3040237426758 262.254943847656,67.8189163208008 261.482238769531,65.7161331176758 260.400451660156,63.9956741333008 259.009582519531,62.6575393676758 257.309631347656,61.7017288208008 255.30061340332,61.1282424926758 252.982498168945,60.9370803833008 248.752029418945,61.3062210083008 244.732498168945,62.4136428833008 240.923904418945,64.2593460083008 237.326248168945,66.8433303833008 237.326248168945,58.9683303833008 241.000076293945,56.999584197998 244.943435668945,55.593334197998 249.156326293945,54.749584197998 253.638748168945,54.4683303833008z M277.919586181641,55.5933303833008L286.450836181641,55.5933303833008 299.435211181641,92.5308303833008 299.798492431641,93.7964553833008 300.419586181641,96.1870803833008 300.700836181641,96.1870803833008 301.052398681641,94.7339553833008 301.638336181641,92.6245803833008 315.278961181641,55.5933303833008 323.247711181641,55.5933303833008 301.169586181641,111.280830383301 299.618316650391,114.774482727051 297.917633056641,117.802314758301 296.067535400391,120.364326477051 294.068023681641,122.460517883301 291.919097900391,124.090888977051 289.620758056641,125.255439758301 287.173004150391,125.954170227051 284.575836181641,126.187080383301 281.821929931641,126.034736633301 279.560211181641,125.577705383301 279.560211181641,118.687080383301 281.939117431641,119.319892883301 284.107086181641,119.530830383301 286.831695556641,119.097236633301 289.193023681641,117.796455383301 291.191070556641,115.628486633301 292.825836181641,112.593330383301 296.669586181641,103.499580383301 277.919586181641,55.5933303833008z" />
                               </g>
-							
-							  
+
                         </svg>
                     </a>
                 </th>
 <th style="padding:0px">
-                     
+
  <img height="56"  src="files/theme/appdvdplayerplus/myglossyvertical.html"  />
- 
+
                 </th>
-				
+
 				  <th style="padding:1px">
-                    <a alt="Mobility in Life Applications Webpage" onclick="mySenddd('OpenBuyAddOn');" class="btn-floating waves-effect waves-light  btn-large" 
+                    <a alt="Mobility in Life Applications Webpage" onclick="mySenddd('OpenBuyAddOn');" class="btn-floating waves-effect waves-light  btn-large"
 					style="background: #0D2E64">
                         <img style="margin-right:1px; align:center;" src="files/theme/msStore2.svg" >
 
                     </a>
                 </th>
 <th style="padding:0px">
-                     
+
  <img height="56"  src="files/theme/appdvdplayerplus/myglossyvertical.html"  />
- 
+
                 </th>
             </tr>
         </thead>
@@ -2652,59 +1976,40 @@ var x = document.getElementsByClassName("container");
 				  <td style="padding:0px">Buy PRO</td>
 				<td style="padding:0px"></td>
 				<td style="padding:0px"></td>
-               
+
 				 <td style="padding:0px"></td>
 				 <td style="padding:0px"></td>
-				 
-               
-             
-              
-               
+
             </tr>
         </tbody>
     </table>
 
-
   </div>
 
         <div id="myparent" style="visibility: visible;  width: 45%; height: 90px; position: fixed; bottom:  1px;  padding-right:  3px; margin-right: 3px; " >
-          
+
           <script>
 //var ipologismos = window.outerHeight - window.innerHeight;
 var ipologismos = window.innerWidth - 620;
 //alert('chromeH:'+chromeH);
  document.getElementById('myparent').style.width = ipologismos + "px";
  //alert('here:' + document.getElementById('parent').style.width);
-  
-</script>
- 
-        </div>
-       
 
-	 
+</script>
+
+        </div>
+
   <div class="fixed-action-btn direction-top active " style="bottom:  -15px; right:  0px;">
-       <a style=" width: 150px; height: 150px; bottom:  -15px; right:  -10px;" id="menu2" class="btn btn-floating btn-large blue darken-4 pulse" onclick="myFunctionOpenUrl('index.html')"> 
+       <a style=" width: 150px; height: 150px; bottom:  -15px; right:  -10px;" id="menu2" class="btn btn-floating btn-large blue darken-4 pulse" onclick="myFunctionOpenUrl('index.html')">
           <img style="height:56px; margin-top: 30px;" src="files/theme/appdvdplayerplus/logoml.html">
           </a>
 
         </div>
-  
- 
- 
+
 <script type="text/javascript" src="../services.brid.tv/player/build/brid.outstream.min850c.js?1749732861"></script> <script type="text/javascript"> $bos("Brid_74170706", {"id":"10903","width":"480","height":"270"}); </script>
 
- 
- 
-  
- 
-
-
     >
-    
 
-		<!--
-<script type="text/javascript" src="//services.brid.tv/player/build/brid.outstream.min.js"></script> <script type="text/javascript"> $bos("Brid_74170706", {"id":"10903","width":"480","height":"270"}); </script>
--->
   <style>
         #wsite-com-product-inventory {
             display: none !important;
@@ -2717,14 +2022,11 @@ var ipologismos = window.innerWidth - 620;
     <script>
 $(document).ready(function(){
 
-
- 
     //Check to see if the window is top if not then display button
     $(window).scroll(function(){
         if ($(this).scrollTop() > 50) {
             $('.scrollToTop').fadeIn();
             $('.mynextButton').fadeIn();
- 
 
         } else {
             $('.scrollToTop').fadeOut();
@@ -2737,7 +2039,7 @@ $('.mynextButton').fadeOut();
 $('.mynextButton').fadeIn();
 $('.mynextButton').fadeOut();
 $('.mynextButton').fadeIn();
- 
+
    }
 
     });
@@ -2747,7 +2049,6 @@ $('.mynextButton').fadeIn();
         $('html, body').animate({scrollTop : 0},800);
         return false;
     });
-
 
 //Click event to go next
 var xx = $(location).attr('pathname');
@@ -2826,7 +2127,7 @@ case "/hlpdvdplayer_remote_6.html": next =  "hlpdvdplayer_remote_7"; break;
 case "/hlpdvdplayer_remote_7.html": next =  "hlpdvdplayer_remote_8"; break;
 case "/hlpdvdplayer_remote_8.html": next =  "hlpdvdplayer_remote_1"; break;
 case "/hlpblurayplayer_1.html": next =  "hlpblurayplayer_2"; break;
- 
+
 case "/hlpblurayplayer_3.html": next =  "hlpblurayplayer_4"; break;
 case "/hlpblurayplayer_4.html": next =  "hlpblurayplayer_5"; break;
 case "/hlpblurayplayer_5.html": next =  "hlpblurayplayer_6"; break;
@@ -2862,9 +2163,6 @@ case "/hlpwinrare_6.html": next =  "hlpwinrare_1"; break
 }
 
 $('.mynextButton').attr("href", wheretogo + next + ".html");
-
-
-
 
 //Click event to go previous
 $('.mypreviousButton').click(function(){
@@ -2976,12 +2274,8 @@ window.location.href = wheretogonext + nextpage + ".html";;
 
     });
 
- 
- 
-
-   
 });
- 
+
     </script>
 <script>
 
@@ -2995,8 +2289,8 @@ try
 		const lala = document.getElementsByClassName("fc-cta-consent");
 		lala[0].click();
 	}
-catch (ee) 
-	{ 
+catch (ee)
+	{
 		console.log('no fc');
 	}
 try
@@ -3005,19 +2299,12 @@ try
 	//console.log('lala22' + lala22);
 	lala22.click();
 	window.location.reload(true);
-}   catch (ee22) { 
+}   catch (ee22) {
 			//console.log('no lala22'+ ee22);
 }
 
 }
 </script>
-
- 
- 
-
-
-
-
 
 <script>
 	(function(jQuery) {
@@ -3078,7 +2365,6 @@ try
 					return;
 				}
 
-
 				ccLinks.style.display = 'block';
 
 				var ccParent = ccLinks.parentElement;
@@ -3111,7 +2397,6 @@ try
 	})(window._W && _W.jQuery);
 </script>
 
- 
 <script>
 
 var thenumberofseconds = 60;
@@ -3139,7 +2424,7 @@ function myFunctionStopBreathe() {
 }
 
 function myTimer() {
-  
+
   metritis = metritis +1;
 
 if (metritis > thenumberofseconds)
@@ -3173,7 +2458,6 @@ try {
 
 var x = document.getElementsByClassName("selected");
 
-
 //var instance = M.FormSelect.getInstance('myselection');
 //alert('Here2....');
 console.log('Here2...');
@@ -3182,14 +2466,11 @@ console.log('Here2b:...' + x[0].innerHTML);
 
 console.log('Here2c:...thenumberofseconds:' + thenumberofseconds );
 
-
-
 metritis = 0;
 myVar = setInterval(myTimer ,1000);
 
     var tasections = document.getElementsByClassName('wsite-section');
 
-       
             tasections[1].style.visibility = 'visible';
             tasections[1].style.display = 'inline';
 
@@ -3197,7 +2478,6 @@ myVar = setInterval(myTimer ,1000);
             tasections[0].style.display = 'none';
 		 document.getElementById('myfrmforbreathing').style.visibility = 'visible';
 		 document.getElementById('myfrmforbreathing').style.display = 'inline';
-
 
 var timiselected = x[0].innerHTML; // e.g. <span>1 minute</span>
 
@@ -3228,17 +2508,14 @@ countdown('countdownB', 0, 0, 5, 00);
 }
 console.log('Here2d:...thenumberofseconds:' + thenumberofseconds );
 
-
-
 //var tt = instance.getSelectedValues();
 //alert('Here3....');
 
 		}
 		catch(err) {
 	//  document.getElementById("demo").innerHTML = err.message;
-		}     
+		}
 }
-
 
 function HideTheBreatheNow()
 {
@@ -3249,14 +2526,13 @@ try {
 		}
 		catch(err) {
 	//  document.getElementById("demo").innerHTML = err.message;
-		}     
+		}
 }
 </script>
 
 <script src="files/theme/mymaterialize.min.js"></script>
   <script src="files/theme/myjsinit.js"></script>
-  
-	 
+
 <script>
 
 $(document).ready(function(){
@@ -3265,16 +2541,13 @@ HideTheBreatheNow();
     $('select').formSelect();
 //	alert('hi2');
   });
-  
+
  //document.addEventListener('DOMContentLoaded', function() {
  //alert('hi');
  //   var elems = document.querySelectorAll('select');
 //	alert('length:' + elems.length);
   //  var instances = M.FormSelect.init(elems, options);
- // });  
-
-
-
+ // });
 
 function config() {
 
@@ -3297,7 +2570,6 @@ function config() {
 
     return $config;
 }
-
 
 /**
  * Set countdown element
@@ -3359,7 +2631,6 @@ function countdown($element, $daysAdd, $hoursAdd, $minutesAdd, $secondsAdd) {
         $timerHtmlStart = '<span style="color: ' + $config.timer_color + '; font-weight: ' + $config.timer_font_weight + '; font-family: ' + $config.timer_font + '; font-size: ' + $config.timer_font_size + 'px;">';
         $timerHtmlEnd = '</span>';
 
-
         // set loading bar background-color as set in config
         $($loadingBars_loader).css('background-color', $config.loadingBars_color);
         $($loadingBars_timer).css('width', $config.loadingBars_width);
@@ -3380,9 +2651,6 @@ function countdown($element, $daysAdd, $hoursAdd, $minutesAdd, $secondsAdd) {
         }
     }, 1000);
 }
-
-
-
 
 /**
  * Set the timer compared to what date it is and what time is set for it.
@@ -3425,87 +2693,7 @@ function setTimer($distance) {
     return timeLeftFinal;
 }
 
-
 </script>
-
-	
-<!-- old --adsense-- code -->
-<!--<div data-ad="mlapplications.com_sticky_video_myvid" data-devices="m:1,t:1,d:1"   class="demand-supply"></div>-->
-
-<!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code -->
-<script>
-//  googletag.cmd.push(function() { 
-    // Pass slot objects directly to display()
- //   if (window.offerwallSlot) {
-   //   googletag.display(window.offerwallSlot);
-  //  }
-    // Only call display if the slot was successfully created
-//    if (window.sideRailSlot) {
-//      googletag.display(window.sideRailSlot);
-//    } 
-//  });
-</script> 
-  <!-- ======================================================================= -->
-  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
-  <!-- ======================================================================= -->
-<!--  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const anchorNode = document.querySelector('.outstream-placement-anchor');
-      const adWrapper = document.getElementById('outstream-ad-wrapper');
-      const closeBtn = document.getElementById('outstream-close');
-      let userClosedAd = false;
-
-      if (!anchorNode || !adWrapper) return;
-
-      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
-      window.googletag = window.googletag || {cmd: []};
-      googletag.cmd.push(function() {
-        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
-            if (event.isEmpty) {
-              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
-              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
-            } else {
-              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
-              // Only trigger performance tracking cycles if demand actually filled the layout container
-              stickyObserver.observe(anchorNode);
-            }
-          }
-        });
-      });
-
-      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
-      const stickyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (userClosedAd) return;
-
-          // If the invisible inline space position completely rolls out of view
-          if (!entry.isIntersecting) {
-            const boundingBox = entry.boundingClientRect;
-            
-            // Only apply sticky docking if user scrolled past the ad DOWN the page
-            if (boundingBox.top < 0) {
-              adWrapper.classList.add('is-sticky');
-            }
-          } else {
-            // Re-dock cleanly back inline the second the user scrolls back up
-            adWrapper.classList.remove('is-sticky');
-          }
-        });
-      }, { 
-        root: null, 
-        threshold: 0 // Fires instantly the frame the boundary is crossed
-      });
-
-      // STEP C: CLOSE ICON ACTIONS
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userClosedAd = true;
-        adWrapper.classList.remove('is-sticky');
-        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
-      });
-    });
-  </script> -->
 
 <!-- WEB_ONLY_START -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
@@ -3517,6 +2705,5 @@ function setTimer($distance) {
 </script>
 <!-- WEB_ONLY_END -->
 </body>
-
 
  </html>

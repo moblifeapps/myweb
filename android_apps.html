@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-	
+
   <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script>
 /* bfcache: turn third-party 'unload' handlers into 'pagehide' */
 (function () {
@@ -20,31 +21,15 @@
   } catch (e) {}
 })();
 </script>
+<!-- sulvo -->
+<link rel="preload" as="script" href="https://live.demand.supply/up.js">
+<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
- 
+<!-- rewarded paywall -->
+<link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<style>#custom-paywall-overlay:not(.active){display:none}</style>
+<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
 
-
-<!--<script>
-  // Define dataLayer and the gtag function.
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-
-  // Set default consent to 'denied' as a placeholder
-  // Determine actual values based on your own requirements
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-    'analytics_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-  });
-</script>-->
- <script>console.log('here goes sulvo');</script>
-
-
- <script>console.log('here goes f59');</script>
- 
 <link rel="icon" id="favicon" type="image/x-icon" href="/uploads/favpreview.gif">
 		<title>Free Video Applications for Android - M.I.L. Team - 3D+ and more..</title><meta property="og:site_name" content="M.I.L. Team - 3D+ and more.." />
 <meta property="og:title" content="Free Video Applications for Android" />
@@ -60,396 +45,9 @@
 
 <meta name="description" content="Oud Free Video Applications for Android tablets and phones" />
 <meta name="keywords" content="DVD Player+, Android DVD Player, mobile remote control, Windows-Android connection, media player help, M.I.L. Applications, DVD Player+ support, DVD Player+ tutorial" />
- 
-<!--
- <style>
-    .kb-container
-    {
-    opacity: 0.01;
- display: none;
-    visibility: hidden;
-    }
-	.kb-remind-link
-	{
-    display: none;
-    visibility: hidden;
-	
-	}
-    </style>
-	
-<script>
 
-var ismyckexists = false;
-var thename="gdpr-kb-p";
-
-if (myckExists(thename) == true)
-{
-console.log('exists!');
-ismyckexists = true;
-}
-else
-{
-console.log(' not exists!');
-mysett('true',990);
-}
-
-function mysett(cvalue,exdays) {
-  var d = new Date();
-  d.setTime(d.getTime() + (exdays*24*60*60*1000));
-  var expires = "expires=" + d.toGMTString();
-  document.cookie = thename + "=" + cvalue + ";" + expires + ";path=/";
-}
-function myckExists(name) {
-  var cks = document.cookie.split(';');
-  for(i = 0; i < cks.length; i++)
-    if (cks[i].split('=')[0].trim() == name) return true;
-}
-</script> 
--->
-
-   
-   
-  
 <meta name="msvalidate.01" content="42DB115A8751E45435878B9B9CF5C7F5" />
 
-<!-- InMobi Choice. Consent Manager Tag v3.0 (for TCF 2.2) --><!--
-<script type="text/javascript" async=true>
-(function() {
-  var host = 'mlapplications.com';
-  var element = document.createElement('script');
-  var firstScript = document.getElementsByTagName('script')[0];
-  var url = 'https://cmp.inmobi.com'
-    .concat('/choice/', 'rFbVBARkjS_85', '/', host, '/choice.js?tag_version=V3');
-  var uspTries = 0;
-  var uspTriesLimit = 3;
-  element.async = true;
-  element.type = 'text/javascript';
-  element.src = url;
-
-  firstScript.parentNode.insertBefore(element, firstScript);
-
-  function makeStub() {
-    var TCF_LOCATOR_NAME = '__tcfapiLocator';
-    var queue = [];
-    var win = window;
-    var cmpFrame;
-
-    function addFrame() {
-      var doc = win.document;
-      var otherCMP = !!(win.frames[TCF_LOCATOR_NAME]);
-
-      if (!otherCMP) {
-        if (doc.body) {
-          var iframe = doc.createElement('iframe');
-
-          iframe.style.cssText = 'display:none';
-          iframe.name = TCF_LOCATOR_NAME;
-          doc.body.appendChild(iframe);
-        } else {
-          setTimeout(addFrame, 5);
-        }
-      }
-      return !otherCMP;
-    }
-
-    function tcfAPIHandler() {
-      var gdprApplies;
-      var args = arguments;
-
-      if (!args.length) {
-        return queue;
-      } else if (args[0] === 'setGdprApplies') {
-        if (
-          args.length > 3 &&
-          args[2] === 2 &&
-          typeof args[3] === 'boolean'
-        ) {
-          gdprApplies = args[3];
-          if (typeof args[2] === 'function') {
-            args[2]('set', true);
-          }
-        }
-      } else if (args[0] === 'ping') {
-        var retr = {
-          gdprApplies: gdprApplies,
-          cmpLoaded: false,
-          cmpStatus: 'stub'
-        };
-
-        if (typeof args[2] === 'function') {
-          args[2](retr);
-        }
-      } else {
-        if(args[0] === 'init' && typeof args[3] === 'object') {
-          args[3] = Object.assign(args[3], { tag_version: 'V3' });
-        }
-        queue.push(args);
-      }
-    }
-
-    function postMessageEventHandler(event) {
-      var msgIsString = typeof event.data === 'string';
-      var json = {};
-
-      try {
-        if (msgIsString) {
-          json = JSON.parse(event.data);
-        } else {
-          json = event.data;
-        }
-      } catch (ignore) {}
-
-      var payload = json.__tcfapiCall;
-
-      if (payload) {
-        window.__tcfapi(
-          payload.command,
-          payload.version,
-          function(retValue, success) {
-            var returnMsg = {
-              __tcfapiReturn: {
-                returnValue: retValue,
-                success: success,
-                callId: payload.callId
-              }
-            };
-            if (msgIsString) {
-              returnMsg = JSON.stringify(returnMsg);
-            }
-            if (event && event.source && event.source.postMessage) {
-              event.source.postMessage(returnMsg, '*');
-            }
-          },
-          payload.parameter
-        );
-      }
-    }
-
-    while (win) {
-      try {
-        if (win.frames[TCF_LOCATOR_NAME]) {
-          cmpFrame = win;
-          break;
-        }
-      } catch (ignore) {}
-
-      if (win === window.top) {
-        break;
-      }
-      win = win.parent;
-    }
-    if (!cmpFrame) {
-      addFrame();
-      win.__tcfapi = tcfAPIHandler;
-      win.addEventListener('message', postMessageEventHandler, false);
-    }
-  };
-
-  makeStub();
-
-  function makeGppStub() {
-    const CMP_ID = 10;
-    const SUPPORTED_APIS = [
-      '2:tcfeuv2',
-      '6:uspv1',
-      '7:usnatv1',
-      '8:usca',
-      '9:usvav1',
-      '10:uscov1',
-      '11:usutv1',
-      '12:usctv1'
-    ];
-
-    window.__gpp_addFrame = function (n) {
-      if (!window.frames[n]) {
-        if (document.body) {
-          var i = document.createElement("iframe");
-          i.style.cssText = "display:none";
-          i.name = n;
-          document.body.appendChild(i);
-        } else {
-          window.setTimeout(window.__gpp_addFrame, 10, n);
-        }
-      }
-    };
-    window.__gpp_stub = function () {
-      var b = arguments;
-      __gpp.queue = __gpp.queue || [];
-      __gpp.events = __gpp.events || [];
-
-      if (!b.length || (b.length == 1 && b[0] == "queue")) {
-        return __gpp.queue;
-      }
-
-      if (b.length == 1 && b[0] == "events") {
-        return __gpp.events;
-      }
-
-      var cmd = b[0];
-      var clb = b.length > 1 ? b[1] : null;
-      var par = b.length > 2 ? b[2] : null;
-      if (cmd === "ping") {
-        clb(
-          {
-            gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
-            cmpStatus: "stub", // possible values: stub, loading, loaded, error
-            cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
-            signalStatus: "not ready", // possible values: not ready, ready
-            supportedAPIs: SUPPORTED_APIS, // list of supported APIs
-            cmpId: CMP_ID, // IAB assigned CMP ID, may be 0 during stub/loading
-            sectionList: [],
-            applicableSections: [-1],
-            gppString: "",
-            parsedSections: {},
-          },
-          true
-        );
-      } else if (cmd === "addEventListener") {
-        if (!("lastId" in __gpp)) {
-          __gpp.lastId = 0;
-        }
-        __gpp.lastId++;
-        var lnr = __gpp.lastId;
-        __gpp.events.push({
-          id: lnr,
-          callback: clb,
-          parameter: par,
-        });
-        clb(
-          {
-            eventName: "listenerRegistered",
-            listenerId: lnr, // Registered ID of the listener
-            data: true, // positive signal
-            pingData: {
-              gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
-              cmpStatus: "stub", // possible values: stub, loading, loaded, error
-              cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
-              signalStatus: "not ready", // possible values: not ready, ready
-              supportedAPIs: SUPPORTED_APIS, // list of supported APIs
-              cmpId: CMP_ID, // list of supported APIs
-              sectionList: [],
-              applicableSections: [-1],
-              gppString: "",
-              parsedSections: {},
-            },
-          },
-          true
-        );
-      } else if (cmd === "removeEventListener") {
-        var success = false;
-        for (var i = 0; i < __gpp.events.length; i++) {
-          if (__gpp.events[i].id == par) {
-            __gpp.events.splice(i, 1);
-            success = true;
-            break;
-          }
-        }
-        clb(
-          {
-            eventName: "listenerRemoved",
-            listenerId: par, // Registered ID of the listener
-            data: success, // status info
-            pingData: {
-              gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
-              cmpStatus: "stub", // possible values: stub, loading, loaded, error
-              cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
-              signalStatus: "not ready", // possible values: not ready, ready
-              supportedAPIs: SUPPORTED_APIS, // list of supported APIs
-              cmpId: CMP_ID, // CMP ID
-              sectionList: [],
-              applicableSections: [-1],
-              gppString: "",
-              parsedSections: {},
-            },
-          },
-          true
-        );
-      } else if (cmd === "hasSection") {
-        clb(false, true);
-      } else if (cmd === "getSection" || cmd === "getField") {
-        clb(null, true);
-      }
-      //queue all other commands
-      else {
-        __gpp.queue.push([].slice.apply(b));
-      }
-    };
-    window.__gpp_msghandler = function (event) {
-      var msgIsString = typeof event.data === "string";
-      try {
-        var json = msgIsString ? JSON.parse(event.data) : event.data;
-      } catch (e) {
-        var json = null;
-      }
-      if (typeof json === "object" && json !== null && "__gppCall" in json) {
-        var i = json.__gppCall;
-        window.__gpp(
-          i.command,
-          function (retValue, success) {
-            var returnMsg = {
-              __gppReturn: {
-                returnValue: retValue,
-                success: success,
-                callId: i.callId,
-              },
-            };
-            event.source.postMessage(msgIsString ? JSON.stringify(returnMsg) : returnMsg, "*");
-          },
-          "parameter" in i ? i.parameter : null,
-          "version" in i ? i.version : "1.1"
-        );
-      }
-    };
-    if (!("__gpp" in window) || typeof window.__gpp !== "function") {
-      window.__gpp = window.__gpp_stub;
-      window.addEventListener("message", window.__gpp_msghandler, false);
-      window.__gpp_addFrame("__gppLocator");
-    }
-  };
-
-  makeGppStub();
-
-  var uspStubFunction = function() {
-    var arg = arguments;
-    if (typeof window.__uspapi !== uspStubFunction) {
-      setTimeout(function() {
-        if (typeof window.__uspapi !== 'undefined') {
-          window.__uspapi.apply(window.__uspapi, arg);
-        }
-      }, 500);
-    }
-  };
-
-  var checkIfUspIsReady = function() {
-    uspTries++;
-    if (window.__uspapi === uspStubFunction && uspTries < uspTriesLimit) {
-      console.warn('USP is not accessible');
-    } else {
-      clearInterval(uspInterval);
-    }
-  };
-
-  if (typeof window.__uspapi === 'undefined') {
-    window.__uspapi = uspStubFunction;
-    var uspInterval = setInterval(checkIfUspIsReady, 6000);
-  }
-})();
-</script>
---><!--End InMobi Choice. Consent Manager Tag v3.0 (for TCF 2.2) -->
-
-
-
-
- <!-- 
- <script>console.log('here goes sulvo');</script>
--->	
-
-
- 
- 
-
-  
- 
 		<link id="wsite-base-style" rel="stylesheet" type="text/css" href="cdn2.editmysite.com/css/sites367f.css?buildTime=1751393202" />
 <link rel="stylesheet" type="text/css" href="cdn2.editmysite.com/css/old/fancybox5209.css?1751393202" />
 <link rel="stylesheet" type="text/css" href="cdn2.editmysite.com/css/social-icons9aef.css?buildtime=1751393202" media="screen,projection" />
@@ -541,7 +139,7 @@ _W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":
 			com_currentSite = "607878847879865438";
 			com_userID = "79962194";</script><script type="text/javascript">_W.configDomain = "www.weebly.com";</script><script>_W.relinquish && _W.relinquish()</script>
 <script type="text/javascript" src="cdn2.editmysite.com/js/lang/en/stld62d.js?buildTime=1751393202&amp;"></script><script> _W.themePlugins = [];</script><script type="text/javascript"> _W.recaptchaUrl = "../www.google.com/recaptcha/api.js"; </script><script type="text/javascript"><!--
-	
+
 	var DISABLE_NAV_MORE = 1;
 	function initFlyouts(){
 		initPublishedFlyoutMenus(
@@ -556,7 +154,7 @@ _W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":
 	}
 //-->
 </script>
-		
+
 <link rel="stylesheet" href="files/theme/myw3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
 <link rel="stylesheet" href= "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -566,37 +164,8 @@ body {font-size: 16px;}
 img {margin-bottom: -8px;}
 .mySlides {display: none;}
 </style>
-		
-	<script>
-    console.log('here i am not from cloudflare tag setup !');
-</script>
 
-<!--<script type="text/javascript" async="async" src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=44890869"></script>-->
-  <!-- sulvo first -->
-<link rel="preload" as="script" href="https://live.demand.supply/up.js">
-<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
-
-<!-- rewarded paywall -->
-   <link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
-<style>#custom-paywall-overlay:not(.active){display:none}</style>
-
-<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
-
-
-<!-- old demand -->
-
-
- 
-  
-
-
-
-
-
-
-
- 
-<style>	
+<style>
 /* Fix fixed ad overflow */
 .stpdwrapper {
   max-width: 100vw !important;
@@ -604,181 +173,34 @@ img {margin-bottom: -8px;}
 }
 </style>
 
-
- 
-
- 
-  <!-- ======================================================================= -->
-  <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
-  <!-- ======================================================================= -->
-  <style>
-    /* THE GHOST ANCHOR: Stays fixed in layout to completely eliminate infinite layout flickers */
-    .outstream-placement-anchor {
-      width: 336px;
-      height: 280px;
-      margin: 40px auto;
-      position: relative;
-      background: transparent;
-    }
-
-    /* THE MOVING CONTAINER: Holds the ad frame and performs transitions on scroll */
-    .outstream-main-container {
-      width: 336px;
-      height: 280px;
-      background: #fbfbfb;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transition: box-shadow 0.3s ease;
-    }
-
-    /* STICKY OVERLAY STATE: Engaged programmatically by IntersectionObserver */
-    .outstream-main-container.is-sticky {
-      position: fixed;
-      top: auto;
-      left: auto;
-      bottom: 25px;
-      right: 25px;
-      z-index: 99999;
-      background: #fff;
-      border-radius: 4px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      
-      /* Downscale slightly for clean desktop corner placement */
-      transform: scale(0.9);
-      transform-origin: bottom right;
-      
-      /* Premium entrance physics: slides up, clears blur layer, fades visibility */
-      animation: dynamicStickyShow 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    /* Keeps iframe elements isolated and clipped safely inside borders when sticky */
-    .outstream-main-container.is-sticky #div-gpt-ad-outstream-slot {
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    /* CLOSE TRIGGER MARKUP: Revealed exclusively during sticky activation mode */
-    .outstream-close-trigger {
-      display: none;
-      position: absolute;
-      top: -12px;
-      left: -12px;
-      width: 26px;
-      height: 26px;
-      background: #111;
-      color: #fff;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 23px;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-      font-size: 15px;
-      font-weight: bold;
-      border: 2px solid #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 100000;
-      transition: background 0.2s ease;
-    }
-
-    .outstream-close-trigger:hover {
-      background: #ff3b30; /* Desktop specific feedback overlay shift */
-    }
-
-    .outstream-main-container.is-sticky .outstream-close-trigger {
-      display: block;
-    }
-
-    /* BLUR ENTRANCE KEYFRAME SEQUENCING */
-    @keyframes dynamicStickyShow {
-      0% {
-        transform: translateY(60px) scale(0.85);
-        opacity: 0;
-        filter: blur(8px);
-      }
-      100% {
-        transform: translateY(0) scale(0.9);
-        opacity: 1;
-        filter: blur(0);
-      }
-    }
-  </style>
-  
   </head>
- 
-	<body    class="header-page  wsite-theme-light  wsite-page-android_apps"> 
+
+	<body    class="header-page  wsite-theme-light  wsite-page-android_apps">
  <div style="visibility: hidden;height: 1px;">
- <h1>Help Center – DVD Player+ Android Edition</h1>	
-</div>	
-   <!-- Google Tag Manager (noscript) -->
-<!--<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5BBV9FN"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>-->
-<!-- End Google Tag Manager (noscript) -->
+ <h1>Help Center – DVD Player+ Android Edition</h1>
+</div>
+
   <!-- here is the consent management  -->
- 
+
 <div  >
        <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
 
-  <!-- <div data-ad="mlapplications.com_sticky_video_myvidsticky" data-devices="m:1,t:1,d:1"   class="demand-supply"></div> -->
-  <!-- ======================================================================= -->
-  <!-- 3. WEB PAGE STRUCTURAL CORE HOUSING PLACEMENT MARKUP                   -->
-  <!-- ======================================================================= -->
-  <!--<div class="myyy-outstream-placement-anchor">
-    <div id="outstream-ad-wrapper" class="outstream-main-container">
-      <div id="outstream-close" class="outstream-close-trigger">&times;</div>
-      
-       
-      <div id="div-gpt-ad-outstream-slot" style="width: 336px; height: 280px; margin: 0 auto;">
-        <script>
-          googletag.cmd.push(function() { 
-            googletag.display('div-gpt-ad-outstream-slot'); 
-          });
-        </script>
-      </div>
-    </div>
-  </div>--> 
+  </div>
 
-
-
-<!-- old mobile sticky top code --> 
-  </div> 
-  
 <div id="mydivforpremium" ></div>
 
  <script   async src="https://stpd.cloud/assets/stpdwrapper.js?1749732861"></script>
-<!--mlapplications_com_300x600_desktop_sticky --> 
-  
-  
-<!-- Anchor ad on bottom -->
+
 <script>
 function removeElement(id) {
 	 try
 	 {
 	 var elem = document.getElementById(id);
      elem.parentNode.removeChild(elem);
-	} 
+	}
 	catch (err) { console.log('err here...'+err); }
 }
 </script>
-
-<!-- Anchor ad on bottom - Part1
-<script>
-    function removeElement(id) {
-         try
-         {
-         var elem = document.getElementById(id);
-         elem.parentNode.removeChild(elem);
-        } 
-        catch (err) { console.log('err here...'+err); }
-    }
-</script>    
-
-  
-
--->
-
- 
-
 
 <div class="wrapper">
     <div class="cento-header">
@@ -802,7 +224,7 @@ function removeElement(id) {
 				>
 				Welcome
 			</a>
-			
+
 		</li>
 		<li id="pg420291035968415525" class="wsite-menu-item-wrap">
 			<a
@@ -824,7 +246,7 @@ function removeElement(id) {
 			Windows Apps
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-576387146180606075"
 	class="wsite-menu-subitem-wrap "
@@ -837,7 +259,7 @@ function removeElement(id) {
 			Windows Phone Apps
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-181564505483526232"
 	class="wsite-menu-subitem-wrap wsite-nav-current"
@@ -850,7 +272,7 @@ function removeElement(id) {
 			Android Apps
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -864,7 +286,7 @@ function removeElement(id) {
 				>
 				Help Center
 			</a>
-			
+
 		</li>
 		<li id="pg457614141667606990" class="wsite-menu-item-wrap">
 			<a
@@ -886,7 +308,7 @@ function removeElement(id) {
 			How-to Check DVDs
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -905,8 +327,7 @@ function removeElement(id) {
 		<li id="wsite-nav-164382401196655753"
 	class="wsite-menu-subitem-wrap "
 	>
-	 
-	
+
 </li>
 <li id="wsite-nav-809491643896992333"
 	class="wsite-menu-subitem-wrap "
@@ -919,7 +340,7 @@ function removeElement(id) {
 			3D F.A.Q.
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-802757451138523212"
 	class="wsite-menu-subitem-wrap "
@@ -932,9 +353,9 @@ function removeElement(id) {
 			3D Anaglyphs
 		</span>
 	</a>
-	
+
 </li>
- 
+
 <li id="wsite-nav-860537803288251427"
 	class="wsite-menu-subitem-wrap "
 	>
@@ -946,7 +367,7 @@ function removeElement(id) {
 			3D Photos on Flickr
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-252052803303239081"
 	class="wsite-menu-subitem-wrap "
@@ -959,7 +380,7 @@ function removeElement(id) {
 			Find 3D Videos on Youtube
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -973,7 +394,7 @@ function removeElement(id) {
 				>
 				Opinion & Blog
 			</a>
-			
+
 		</li>
 		<li id="pg765675763726769427" class="wsite-menu-item-wrap">
 			<a
@@ -982,7 +403,7 @@ function removeElement(id) {
 				>
 				About us
 			</a>
-			
+
 		</li>
 		<li id="pg589846066449704670" class="wsite-menu-item-wrap">
 			<a
@@ -991,7 +412,7 @@ function removeElement(id) {
 				>
 				Contact
 			</a>
-			
+
 		</li>
 </ul>
 </div>
@@ -1004,7 +425,7 @@ function removeElement(id) {
 	<div class="wsite-section-wrap">
 	<div  class="wsite-section wsite-header-section wsite-section-bg-image" style="height: auto;background-image: url(/uploads/1086086034.html) ;background-repeat: no-repeat ;background-position: 48.59% 50.00% ;background-size: 100% ;background-color: transparent ;background-size: cover;" >
 		<div class="wsite-section-content">
-			
+
         <div class="container">
           <div class="banner">
 				<div class="wsite-section-elements">
@@ -1021,8 +442,6 @@ function removeElement(id) {
 </style><div id="element-55d98d57-6387-4104-acca-e09a3e73e665" data-platform-element-id="698263678581730663-1.1.0" class="platform-element-contents">
 <div class="content-color-box-wrapper">
 <div style="width: 100%"><div></div><div><div id="534785026862977380" align="center" style="width: 100%; " class="wcustomhtml"><h1 style="text-align:center;color:#ffffff;font-size:25px;font-weight:400;line-height: 40px;font-family:'Quattrocento Sans'">Free Video Applications for Android</h1></div>
-
-
 
 </div>
 
@@ -1138,7 +557,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				</div>
 			</div>
         </div><!-- end container -->
-      
+
 		</div>
 		<div class=""></div>
 	</div>
@@ -1147,7 +566,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 </div>
 
     </div><!-- end banner-wrap -->
-
 
     <div class="content-wrap railway-layout">
       <div id="wsite-content" class="wsite-elements wsite-not-footer">
@@ -1170,7 +588,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <h2 class="wsite-content-title" style="text-align:center;"><font size="7">Android Applications</font></h2>
 
 <div class="paragraph" style="text-align:center;"><strong><font size="4">All our available apps for Android </font></strong><strong style="color:rgb(42, 42, 42)"><font size="4">devices, (</font></strong><strong><font size="4">Tablets and Phones).</font></strong></div>
- 
+
 <div><div style="height: 20px;   width: 100%;"></div>
 <hr class="styled-hr" style="width:100%;"></hr>
 <div style="height: 0px;   width: 100%;"></div></div>
@@ -1190,8 +608,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:50%; padding:0 15px;">
-					
-						
 
 <div id="903092025550823014"><div><style type="text/css">
 	#element-09de8478-4987-4f85-ac10-ac50ef2a3857 .content-color-box-wrapper {
@@ -1221,8 +637,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:51.039260969977%; padding:0 5px;">
-					
-						
 
 <div id="842573062411180344"><div><style type="text/css">
 	#element-dc8051e2-e35c-4ff1-b754-48e5affa0916 .waddons_vert_divider {
@@ -1373,7 +787,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 #element-de5b8c2b-0cec-4530-8f25-25b06017f868 .team-card--small .team-card__image--filled {
   margin: 0;
   border-radius: 0;
-   
+
   height: 204px;
   width: 204px;
 }
@@ -1394,7 +808,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
   border-radius: 102px;
   height: 164px;
   width: 164px;
-   
+
   margin: 20px 20px 0;
 }
 #element-de5b8c2b-0cec-4530-8f25-25b06017f868 .team-card--small .team-card__image--round img {
@@ -1480,7 +894,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 #element-de5b8c2b-0cec-4530-8f25-25b06017f868 .team-card--large .team-card__image--filled {
   margin: 0;
   border-radius: 0;
-   
+
   height: 280px;
   width: 280px;
 }
@@ -1501,7 +915,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
   border-radius: 140px;
   height: 240px;
   width: 240px;
-   
+
   margin: 20px 20px 0;
 }
 #element-de5b8c2b-0cec-4530-8f25-25b06017f868 .team-card--large .team-card__image--round img {
@@ -1731,11 +1145,11 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
                 var dy = (containerSize.height - imageSize.height) / 2;
                 $img.css({
                     'transform': 'translate(' + dx + 'px,' + dy + 'px)'
-                });                
+                });
             } else {
                 // otherwise, if the image is smaller than the container, scale it up to fit.
                 var scale = 1;
-                // depending on if which way we scale more, our origin will change 
+                // depending on if which way we scale more, our origin will change
                 var origin = 'left top'
                 if (imageSize.height < containerSize.height) {
                     scale = containerSize.height / imageSize.height;
@@ -1814,11 +1228,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:48.960739030023%; padding:0 5px;">
-					
-						
 
 <div id="589643874984747950"><div><style type="text/css">
 	#element-4d7a49b9-575a-48db-b94b-55620dd87fd0 .waddons_vert_divider {
@@ -1964,8 +1374,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 </a>
 <div style="height: 0px;  "></div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -2081,11 +1489,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:50%; padding:0 15px;">
-					
-						
 
 <div id="903773107304392676"><div><style type="text/css">
 	#element-a300e6b5-8919-4bae-b0c7-6fcad1ba18a2 .content-color-box-wrapper {
@@ -2115,8 +1519,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:51.388888888889%; padding:0 5px;">
-					
-						
 
 <div id="810350200191222066"><div><style type="text/css">
 	#element-788eb979-cb16-4912-a145-fce862a1f20e .waddons_vert_divider {
@@ -2267,7 +1669,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 #element-f1792557-2c68-4541-b01e-29053397bfb5 .team-card--small .team-card__image--filled {
   margin: 0;
   border-radius: 0;
-   
+
   height: 204px;
   width: 204px;
 }
@@ -2288,7 +1690,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
   border-radius: 102px;
   height: 164px;
   width: 164px;
-   
+
   margin: 20px 20px 0;
 }
 #element-f1792557-2c68-4541-b01e-29053397bfb5 .team-card--small .team-card__image--round img {
@@ -2374,7 +1776,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 #element-f1792557-2c68-4541-b01e-29053397bfb5 .team-card--large .team-card__image--filled {
   margin: 0;
   border-radius: 0;
-   
+
   height: 280px;
   width: 280px;
 }
@@ -2395,7 +1797,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
   border-radius: 140px;
   height: 240px;
   width: 240px;
-   
+
   margin: 20px 20px 0;
 }
 #element-f1792557-2c68-4541-b01e-29053397bfb5 .team-card--large .team-card__image--round img {
@@ -2625,11 +2027,11 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
                 var dy = (containerSize.height - imageSize.height) / 2;
                 $img.css({
                     'transform': 'translate(' + dx + 'px,' + dy + 'px)'
-                });                
+                });
             } else {
                 // otherwise, if the image is smaller than the container, scale it up to fit.
                 var scale = 1;
-                // depending on if which way we scale more, our origin will change 
+                // depending on if which way we scale more, our origin will change
                 var origin = 'left top'
                 if (imageSize.height < containerSize.height) {
                     scale = containerSize.height / imageSize.height;
@@ -2708,11 +2110,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:48.611111111111%; padding:0 5px;">
-					
-						
 
 <div id="379412530392508577"><div><style type="text/css">
 	#element-6f01dccf-36b4-4fe5-b77c-e023accdd6c4 .waddons_vert_divider {
@@ -2858,8 +2256,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 </a>
 <div style="height: 0px;  "></div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -2975,8 +2371,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -2985,8 +2379,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div class="wsite-spacer" style="height:50px;"></div>
 
 <div><div id="841858649802870698" align="center" style="width: 100%; " class="wcustomhtml"><script data-playerPro="current">(function(){var s=document.querySelector('script[data-playerPro="current"]');s.removeAttribute("data-playerPro");(playerPro=window.playerPro||[]).push({id:"fHsqtz7pNc_If1VFfYfdB-Uz8IOE1xkqgMuBFPvlYDUtYweSC0N8",after:s});})();</script> </div>
-
-
 
 </div>
 			</div>
@@ -3154,18 +2546,12 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:19.232629580985%; padding:0 0px;">
-					
-						
 
 <div class="wsite-spacer" style="height:10px;"></div>
 
 <div class="paragraph" style="text-align:center;"><strong><font color="#a9b9d1" size="4">Share:</font></strong></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:27.826663358363%; padding:0 0px;">
-					
-						
 
 <div><div id="581391898368846183" align="center" style="width: 100%; " class="wcustomhtml"><link rel="stylesheet" href= "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
@@ -3206,7 +2592,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
   color: #ffffff;
 }
 
-
 .fa-pinterest {
   background: #cb2027;
   color: #ffffff;
@@ -3219,28 +2604,17 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <a class="fa fa-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://%20www.mlapplications.com&amp;title=Free%20and%20Useful%20Applications%20for%20Windows%20and%20Android&amp;summary=My%20favorite%20developers%20website&amp;source=Mobility_in_Life_Applications" target="_blank"></a>
 </div>
 
-
-
 </div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:35.179953724175%; padding:0 0px;">
-					
-						
 
 <div><div id="998866482991838868" align="center" style="width: 100%; " class="wcustomhtml"><a class="fa fa-pinterest" href="http://pinterest.com/pin/create/link/?url=http%3A%2F%2Fwww.mlapplications.com&amp;description=" target="_blank"></a>
 <a class="fa fa-google" href="https://plus.google.com/share?url=https://%20www.mlapplications.com" target="_blank"></a>
 </div>
 
-
 </div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:17.760753336477%; padding:0 0px;">
-					
-						
 
 <div><div class="wsite-image wsite-image-border-none " style="padding-top:10px;padding-bottom:10px;margin-left:0;margin-right:0;text-align:center">
 <a>
@@ -3249,8 +2623,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -3258,8 +2630,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 </div>
 </div>
 <div style="clear:both;"></div>
- 
-
 
 </div></div>
 
@@ -3272,8 +2642,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:26.942518066303%; padding:0 15px;">
-					
-						
 
 <div id="433306533626245074"><div><style type="text/css">
 	#element-5b110cff-50c0-4dca-86e4-07d38f3516de .content-color-box-wrapper {
@@ -3527,11 +2895,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:50.108589914178%; padding:0 15px;">
-					
-						
 
 <div id="210476769210520075"><div><style type="text/css">
 	#element-8d4fb41b-44b4-46c0-bb50-01e7cefb3258 .waddons_vert_divider {
@@ -3788,7 +3152,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 </script></div></div>
 
 <div id="486082001627672347"><div><style type="text/css">
-	
+
 </style><div id="element-71605150-6990-463d-89aa-4df7ffeb559c" data-platform-element-id="698263678581730663-1.1.0" class="platform-element-contents">
 <div class="content-color-box-wrapper">
 
@@ -3899,11 +3263,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:22.948892019519%; padding:0 15px;">
-					
-						
 
 <div id="678568118291078683"><div><style type="text/css">
 	#element-55b91c17-e3a7-4f6b-8dec-a80823db0b69 .waddons_vert_divider {
@@ -4039,8 +3399,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -4063,7 +3421,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Welcome
 			</a>
-			
+
 		</li>
 		<li id="pg420291035968415525" class="wsite-menu-item-wrap">
 			<a
@@ -4085,7 +3443,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Windows Apps
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-576387146180606075"
 	class="wsite-menu-subitem-wrap "
@@ -4098,7 +3456,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Windows Phone Apps
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-181564505483526232"
 	class="wsite-menu-subitem-wrap wsite-nav-current"
@@ -4111,7 +3469,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Android Apps
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -4125,7 +3483,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Help Center
 			</a>
-			
+
 		</li>
 		<li id="pg457614141667606990" class="wsite-menu-item-wrap">
 			<a
@@ -4147,7 +3505,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			How-to Check DVDs
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -4166,8 +3524,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<li id="wsite-nav-164382401196655753"
 	class="wsite-menu-subitem-wrap "
 	>
-	 
-	
+
 </li>
 <li id="wsite-nav-809491643896992333"
 	class="wsite-menu-subitem-wrap "
@@ -4180,7 +3537,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			3D F.A.Q.
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-802757451138523212"
 	class="wsite-menu-subitem-wrap "
@@ -4193,9 +3550,9 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			3D Anaglyphs
 		</span>
 	</a>
-	
+
 </li>
- 
+
 <li id="wsite-nav-860537803288251427"
 	class="wsite-menu-subitem-wrap "
 	>
@@ -4207,7 +3564,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			3D Photos on Flickr
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-252052803303239081"
 	class="wsite-menu-subitem-wrap "
@@ -4220,7 +3577,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Find 3D Videos on Youtube
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -4234,7 +3591,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Opinion & Blog
 			</a>
-			
+
 		</li>
 		<li id="pg765675763726769427" class="wsite-menu-item-wrap">
 			<a
@@ -4243,7 +3600,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				About us
 			</a>
-			
+
 		</li>
 		<li id="pg589846066449704670" class="wsite-menu-item-wrap">
 			<a
@@ -4252,175 +3609,11 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Contact
 			</a>
-			
+
 		</li>
 </ul>
 </div>
 
-  <!--
-<script>
- 
-  var isMobileDevice22 = window.navigator.userAgent.toLowerCase().includes("mobi");
-  
-  if (isMobileDevice22==true)
-  {
-  // Nothing to do...
-   }
-   else
-   {
-  
-  var x = document.getElementsByClassName("container");
-   
-  // content-wrap 
-  var x22 = document.getElementsByClassName("content-wrap");
-   
-   var i;
-    for (i = 0; i < x.length; i++) {
-      
-   //  x[i].style.paddingLeft = "31px";
-    //   x[i].style.marginLeft = "31px";
-   //  
-    }
-  
-  var x3 = document.getElementsByClassName("wrapper");
-   
-   var j;
-    for (j = 0; j < x3.length; j++) {
-      
-    x3[j].style.marginLeft = "31px";
-   //  x[i].style.paddingLeft = "31px";
-    //   x[i].style.marginLeft = "31px";
-   //  
-    }
-  
-  
-  // alert("It's false...It's desktop");
-   } 
-   
-  ////////////////setTimeout(function () { displaytext(); }, 9000); 
-      </script>
-	  -->
-	  
-<!--
-<div id="myDiv" class="brid"  style="width:480; height:270; z-index:100000"></div> 
-
-<script async type="text/javascript" src="https://www.mlapplications.com/files/theme/mycallbridtv2.js?1749732861"></script>
--->
-
-<!--
-<script type="text/javascript" src="//services.brid.tv/player/build/brid.outstream.min.js?1749732861"></script> <script type="text/javascript"> $bos("Brid_74170706", {"id":"10903","width":"480","height":"270"}); </script>
-
-<script type="text/javascript">document.BridIframeBurst=true;</script>	<script type="text/javascript"> var _bos = _bos||[]; _bos.push({ "div": "Brid_04306468", "obj": {"id":"16283","width":"480","height":"270"}	}); </script> <script type="text/javascript" async src="//services.brid.tv/player/build/brid.outstream.min.js?1749732861"></script>
-
-
-<div id="myDiv" class="brid" style="width:480; height:270; z-index:100000;"></div> 
-<script type="text/javascript">
- var _bos = _bos||[];
-      _bos.push({
-          "div": "myDiv",
-          "obj": {"id":"10903","width":"480","height":"270"},
-          "onReady": function() {
-              console.log('AA-Einai sto onReady!');
-          }
-              });
-
-</script> -->
-<!--
-<div class="wsite-section-wrap" id="mycustomsection">
-	<div class="wsite-section wsite-body-section wsite-background-1353">
-		<div class="wsite-section-content">
-        <div class="container">
-        
-            <div class="wsite-section-elements">            
-                <div id="mytargetdivforvideo">   
-                    <script type="text/javascript">
-                        (function (v,i) {
-                          var scp = v.createElement("script"),
-                          config = {
-                            ChannelID: '5f06c6324913b92c467e4f34',
-                            AdUnitType: '2',
-                            PublisherID: '683754750358353',
-                            PlacementID: 'pltsAm3spe7Rc59QoJY',
-                            DivID: '',
-                            IAB_Category: 'IAB19-18',
-                            Keywords: '',
-                            Language: 'en-us',
-                            BG_Color: '',
-                            Text_Color: '',
-                            Font: '',
-                            FontSize: '',
-                          };
-                      
-                          scp.src='https://s.vi-serve.com/tagLoader.js';
-                          scp.type = "text/javascript";
-                          scp.async = true;
-                          scp.onload = function() {
-                            i[btoa('video intelligence start')].init(config);
-                          };
-                          (v.getElementsByTagName('head')[0] || v.documentElement.appendChild(v.createElement('head'))).appendChild(scp);
-                       
-                          setTimeout(function () {
-                                moveupper();
-                          },9000);
-                       
-                        })(document, window);
-                      </script>
-                    
-                
-                </div>
-
-            </div>
-			</div>
-		</div>
-      </div>
-
-    </div>
-    <script>
-
-        var x = document.getElementsByClassName("container");
- 
-        console.log('Total: ' + x.length);
- 
- // content-wrap 
-// var x22 = document.getElementsByClassName("content-wrap");
-  
-try
-{
-    if (x.length > 4)
-    {
-        var lastpostn= x.length -3;
-        x[lastpostn].setAttribute("id","mytarget");
-    }
-}
-catch (err) { }
-
-//  var i;
-  // for (i = 0; i < x.length; i++) {
-  //  x[i].style.paddingLeft = "31px";
-  //    x[i].style.marginLeft = "31px";
-   //   console.log('Its: ' + x[i].className);
-  //  
-  // }
-    </script>
-
-
-
-<script>
-    function moveupper() {
-        console.log('here move..');
-        $("#vi-stories-top-div").insertBefore("#mytarget");
-        console.log('here after..');
-        
-    };
-        </script>
--->
-
-
- 
-
-		<!--
-<script type="text/javascript" src="//services.brid.tv/player/build/brid.outstream.min.js"></script> <script type="text/javascript"> $bos("Brid_74170706", {"id":"10903","width":"480","height":"270"}); </script>
--->
   <style>
         #wsite-com-product-inventory {
             display: none !important;
@@ -4433,14 +3626,11 @@ catch (err) { }
     <script>
 $(document).ready(function(){
 
-
- 
     //Check to see if the window is top if not then display button
     $(window).scroll(function(){
         if ($(this).scrollTop() > 50) {
             $('.scrollToTop').fadeIn();
             $('.mynextButton').fadeIn();
- 
 
         } else {
             $('.scrollToTop').fadeOut();
@@ -4453,7 +3643,7 @@ $('.mynextButton').fadeOut();
 $('.mynextButton').fadeIn();
 $('.mynextButton').fadeOut();
 $('.mynextButton').fadeIn();
- 
+
    }
 
     });
@@ -4463,7 +3653,6 @@ $('.mynextButton').fadeIn();
         $('html, body').animate({scrollTop : 0},800);
         return false;
     });
-
 
 //Click event to go next
 var xx = $(location).attr('pathname');
@@ -4542,7 +3731,7 @@ case "/hlpdvdplayer_remote_6.html": next =  "hlpdvdplayer_remote_7"; break;
 case "/hlpdvdplayer_remote_7.html": next =  "hlpdvdplayer_remote_8"; break;
 case "/hlpdvdplayer_remote_8.html": next =  "hlpdvdplayer_remote_1"; break;
 case "/hlpblurayplayer_1.html": next =  "hlpblurayplayer_2"; break;
- 
+
 case "/hlpblurayplayer_3.html": next =  "hlpblurayplayer_4"; break;
 case "/hlpblurayplayer_4.html": next =  "hlpblurayplayer_5"; break;
 case "/hlpblurayplayer_5.html": next =  "hlpblurayplayer_6"; break;
@@ -4578,9 +3767,6 @@ case "/hlpwinrare_6.html": next =  "hlpwinrare_1"; break
 }
 
 $('.mynextButton').attr("href", wheretogo + next + ".html");
-
-
-
 
 //Click event to go previous
 $('.mypreviousButton').click(function(){
@@ -4692,12 +3878,8 @@ window.location.href = wheretogonext + nextpage + ".html";;
 
     });
 
- 
- 
-
-   
 });
- 
+
     </script>
 <script>
 
@@ -4711,8 +3893,8 @@ try
 		const lala = document.getElementsByClassName("fc-cta-consent");
 		lala[0].click();
 	}
-catch (ee) 
-	{ 
+catch (ee)
+	{
 		console.log('no fc');
 	}
 try
@@ -4721,16 +3903,12 @@ try
 	//console.log('lala22' + lala22);
 	lala22.click();
 	window.location.reload(true);
-}   catch (ee22) { 
+}   catch (ee22) {
 			//console.log('no lala22'+ ee22);
 }
 
 }
 </script>
-
- 
-
-
 
 <script>
 	(function(jQuery) {
@@ -4791,7 +3969,6 @@ try
 					return;
 				}
 
-
 				ccLinks.style.display = 'block';
 
 				var ccParent = ccLinks.parentElement;
@@ -4834,87 +4011,9 @@ function plusDivs(n) {
 }
 
 function showDivs(n) {
-   
+
 }
 </script>
-	
-<!-- old --adsense-- code -->
-<!--<div data-ad="mlapplications.com_sticky_video_myvid" data-devices="m:1,t:1,d:1"   class="demand-supply"></div>-->
-
-<!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code -->
-<script>
-//  googletag.cmd.push(function() { 
-    // Pass slot objects directly to display()
- //   if (window.offerwallSlot) {
-   //   googletag.display(window.offerwallSlot);
-  //  }
-    // Only call display if the slot was successfully created
-//    if (window.sideRailSlot) {
-//      googletag.display(window.sideRailSlot);
-//    } 
-//  });
-</script> 
-  <!-- ======================================================================= -->
-  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
-  <!-- ======================================================================= -->
-<!--  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const anchorNode = document.querySelector('.outstream-placement-anchor');
-      const adWrapper = document.getElementById('outstream-ad-wrapper');
-      const closeBtn = document.getElementById('outstream-close');
-      let userClosedAd = false;
-
-      if (!anchorNode || !adWrapper) return;
-
-      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
-      window.googletag = window.googletag || {cmd: []};
-      googletag.cmd.push(function() {
-        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
-            if (event.isEmpty) {
-              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
-              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
-            } else {
-              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
-              // Only trigger performance tracking cycles if demand actually filled the layout container
-              stickyObserver.observe(anchorNode);
-            }
-          }
-        });
-      });
-
-      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
-      const stickyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (userClosedAd) return;
-
-          // If the invisible inline space position completely rolls out of view
-          if (!entry.isIntersecting) {
-            const boundingBox = entry.boundingClientRect;
-            
-            // Only apply sticky docking if user scrolled past the ad DOWN the page
-            if (boundingBox.top < 0) {
-              adWrapper.classList.add('is-sticky');
-            }
-          } else {
-            // Re-dock cleanly back inline the second the user scrolls back up
-            adWrapper.classList.remove('is-sticky');
-          }
-        });
-      }, { 
-        root: null, 
-        threshold: 0 // Fires instantly the frame the boundary is crossed
-      });
-
-      // STEP C: CLOSE ICON ACTIONS
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userClosedAd = true;
-        adWrapper.classList.remove('is-sticky');
-        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
-      });
-    });
-  </script> -->
 
 <!-- WEB_ONLY_START -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
@@ -4926,7 +4025,5 @@ function showDivs(n) {
 </script>
 <!-- WEB_ONLY_END -->
 </body>
-
-
 
  </html>

@@ -3,6 +3,7 @@
  <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script>
 /* bfcache: turn third-party 'unload' handlers into 'pagehide' */
 (function () {
@@ -19,30 +20,14 @@
   } catch (e) {}
 })();
 </script>
-
-       <!-- sulvo first -->
+<!-- sulvo -->
 <link rel="preload" as="script" href="https://live.demand.supply/up.js">
 <script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
 <!-- rewarded paywall -->
-   <link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
 <style>#custom-paywall-overlay:not(.active){display:none}</style>
-
 <script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
-
-
-<!-- old demand -->
-
-
- 
-  
-
-
-
-
-
-     
-     
 
     <title>unReachable - Network Quality Score - Help page</title>
 
@@ -100,172 +85,45 @@
     }
     </script>
 
-    
- 
- 
-  <!-- ======================================================================= -->
-  <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
-  <!-- ======================================================================= -->
-  <style>
-    /* THE GHOST ANCHOR: Stays fixed in layout to completely eliminate infinite layout flickers */
-    .outstream-placement-anchor {
-      width: 336px;
-      height: 280px;
-      margin: 40px auto;
-      position: relative;
-      background: transparent;
-    }
-
-    /* THE MOVING CONTAINER: Holds the ad frame and performs transitions on scroll */
-    .outstream-main-container {
-      width: 336px;
-      height: 280px;
-      background: #fbfbfb;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transition: box-shadow 0.3s ease;
-    }
-
-    /* STICKY OVERLAY STATE: Engaged programmatically by IntersectionObserver */
-    .outstream-main-container.is-sticky {
-      position: fixed;
-      top: auto;
-      left: auto;
-      bottom: 25px;
-      right: 25px;
-      z-index: 99999;
-      background: #fff;
-      border-radius: 4px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      
-      /* Downscale slightly for clean desktop corner placement */
-      transform: scale(0.9);
-      transform-origin: bottom right;
-      
-      /* Premium entrance physics: slides up, clears blur layer, fades visibility */
-      animation: dynamicStickyShow 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    /* Keeps iframe elements isolated and clipped safely inside borders when sticky */
-    .outstream-main-container.is-sticky #div-gpt-ad-outstream-slot {
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    /* CLOSE TRIGGER MARKUP: Revealed exclusively during sticky activation mode */
-    .outstream-close-trigger {
-      display: none;
-      position: absolute;
-      top: -12px;
-      left: -12px;
-      width: 26px;
-      height: 26px;
-      background: #111;
-      color: #fff;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 23px;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-      font-size: 15px;
-      font-weight: bold;
-      border: 2px solid #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 100000;
-      transition: background 0.2s ease;
-    }
-
-    .outstream-close-trigger:hover {
-      background: #ff3b30; /* Desktop specific feedback overlay shift */
-    }
-
-    .outstream-main-container.is-sticky .outstream-close-trigger {
-      display: block;
-    }
-
-    /* BLUR ENTRANCE KEYFRAME SEQUENCING */
-    @keyframes dynamicStickyShow {
-      0% {
-        transform: translateY(60px) scale(0.85);
-        opacity: 0;
-        filter: blur(8px);
-      }
-      100% {
-        transform: translateY(0) scale(0.9);
-        opacity: 1;
-        filter: blur(0);
-      }
-    }
-  </style>
-  
   </head>
- 
 
 <body>
  <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
 
-  <!-- <div data-ad="mlapplications.com_sticky_video_myvidsticky" data-devices="m:1,t:1,d:1"   class="demand-supply"></div> -->
-  <!-- ======================================================================= -->
-  <!-- 3. WEB PAGE STRUCTURAL CORE HOUSING PLACEMENT MARKUP                   -->
-  <!-- ======================================================================= -->
-  <!--<div class="myyy-outstream-placement-anchor">
-    <div id="outstream-ad-wrapper" class="outstream-main-container">
-      <div id="outstream-close" class="outstream-close-trigger">&times;</div>
-      
-       
-      <div id="div-gpt-ad-outstream-slot" style="width: 336px; height: 280px; margin: 0 auto;">
-        <script>
-          googletag.cmd.push(function() { 
-            googletag.display('div-gpt-ad-outstream-slot'); 
-          });
-        </script>
-      </div>
-    </div>
-  </div>--> 
-
-
-
-<!-- old mobile sticky top code -->
     <header class="hero">
         <nav class="navbar" style="margin-bottom: 10px; margin-top: 20px;">
             <div class="container" style="margin-bottom: 10px;  width: 100%;">
-               <span style="font-size: large; font-weight:bolder; color: #0078d4; margin-left: 10px;">by:</span>    
+               <span style="font-size: large; font-weight:bolder; color: #0078d4; margin-left: 10px;">by:</span>
 
 				<a href="index.html" class="waves-effect waves-light">
 						<span class="hide-on-small-only"><img src="uploads/logo-big_2.png?123" height="50" id="appicon" style="vertical-align: middle;margin-bottom:10px;margin-right:10px;"></span>
-					 
-				</a>
-				
-				             
 
-                    <hr style="opacity: 0.5; margin-top: 10px; margin-bottom: 10px;"> 
+				</a>
+
+                    <hr style="opacity: 0.5; margin-top: 10px; margin-bottom: 10px;">
 
 			  </div>
                </nav>
-             
-            
+
     <div  style="display: flex; font-size:xx-large;
     justify-content: center;  "><span style="color: goldenrod;">un</span>Reachable</div>
     <div  style="display: flex; font-size:large;
     justify-content: center;  ">
     Network<span style="color: #1b8fff; margin-left: 10px;">Quality</span>
-<span style="color: #0078d4; margin-left: 10px;">Monitor </span>    
+<span style="color: #0078d4; margin-left: 10px;">Monitor </span>
 <span style="color: #8a94a6; margin-left: 10px;">for Windows 11</span>
 </div>
-    
+
         <p style="display: flex;
     justify-content: center;  ">
-        <img   src="uploads/unreachable.png" style=" width: 200px;">    
+        <img   src="uploads/unreachable.png" style=" width: 200px;">
         </p>
-    
-   
- 
-          <hr style="opacity: 0.5; margin-top: 10px; margin-bottom: 30px;"> 
+
+          <hr style="opacity: 0.5; margin-top: 10px; margin-bottom: 30px;">
 
         <div class="hero-content">
             <div class="hero-text">
-                
+
                 <h1>
                     How to use unReachable ?
                 </h1>
@@ -274,12 +132,11 @@
                     To achieve this, unReachable by design takes as little space as possible and the user is free to select among 3 different ways to monitor the quality.
                 </p>
                 <p>
-                    When you launch unReachable the app auto-minimizes itself in the Windows Action Center: bottom-right of the Windows Taskbar 
-                    
+                    When you launch unReachable the app auto-minimizes itself in the Windows Action Center: bottom-right of the Windows Taskbar
+
                 </p>
 
                 <div class="hero-buttons">
-                         
 
                        <div class="widget-card">
                 <img style="c: 180px;"
@@ -289,7 +146,6 @@
 
                 <h3>unReachable in Action Center</h3>
 
-               
             </div>
 
             <div class="widget-card">
@@ -300,18 +156,14 @@
 
                 <h3>unReachable icon</h3>
 
-              
             </div>
                 </div>
             </div>
 
             <div class="hero-image">
                   <section class="widgets-section">
-     
 
         <div class="widget-grid">
-
-        
 
             <div class="widget-card">
                 <img style="max-height: 580px;"
@@ -321,40 +173,37 @@
 
                 <h3>unReachable User Interface</h3>
 
-                
             </div>
 
         </div>
     </section>
-               
+
             </div>
         </div>
     </header>
 <hr>
   <div class="hero-content" style="margin-left: 50px;">
             <div class="hero-text">
-                
+
                 <h1>
                     unReachable Widgets
                 </h1>
 
-                <p> The app runs in the background and calculates the network quality. It uses three different Widgets that can displayed. 
+                <p> The app runs in the background and calculates the network quality. It uses three different Widgets that can displayed.
                 </p>
                 <p>
-                    You as a user, can switch the visibility for every widget ON or OFF. 
-                    
+                    You as a user, can switch the visibility for every widget ON or OFF.
+
                 </p>
                  <p>
-                    The Desktop Widget and the Taskbar Widget can be managed from the Application User Interface.  
-                    
+                    The Desktop Widget and the Taskbar Widget can be managed from the Application User Interface.
+
                 </p>
-                
-                
+
             </div>
 
             <div class="hero-image">
                   <section class="widgets-section">
-     
 
         <div class="widget-grid">
 
@@ -366,18 +215,16 @@
 
                 <h3>Desktop Widget</h3>
 
-               
             </div>
 
             <div class="widget-card">
-                <img 
+                <img
                     src="uploads/unreachable_widget_taskbar.png"
                     alt="Taskbar widget screenshot"
                 />
 
                 <h3>Taskbar Widget</h3>
 
-              
             </div>
   <div class="widget-card">
                 <img
@@ -387,7 +234,6 @@
 
                 <h3>Show/Hide Widgets (from the app's UI)</h3>
 
-                
             </div>
             <div class="widget-card">
                 <img
@@ -397,38 +243,33 @@
 
                 <h3>Windows Widget</h3>
 
-                
             </div>
 
         </div>
     </section>
-               
+
             </div>
         </div>
 <hr>
   <div class="hero-content" style="margin-left: 50px;">
             <div class="hero-text">
-                
+
                 <h1>
-                   How to enable the Windows 11 Widget ? 
+                   How to enable the Windows 11 Widget ?
                 </h1>
 
                   <p>
-                    The Windows Widget is handled differently: It is available and can displayed or hided inside the official Windows Widget list. 
-                    To show the Windows Widget list follow:             
+                    The Windows Widget is handled differently: It is available and can displayed or hided inside the official Windows Widget list.
+                    To show the Windows Widget list follow:
                 </p>
-                 
 
-            
             </div>
 
             <div class="hero-image">
                   <section class="widgets-section">
-     
 
-     
     </section>
-               
+
             </div>
         </div>
 
@@ -442,18 +283,16 @@
 
                 <h3>Enable the widget 11 list (if they are hidden)</h3>
 
-               
             </div>
 
             <div class="widget-card">
-                <img  
+                <img
                     src="uploads/unreachable-windows-settings.png"
                     alt="Taskbar widget screenshot"
                 />
 
                 <h3>turn Widgets ON (if they are hidden)</h3>
 
-              
             </div>
   <div class="widget-card">
                 <img
@@ -463,7 +302,6 @@
 
                 <h3>The windows 11 widget list will appear (usually with weather data)</h3>
 
-                
             </div>
             <div class="widget-card">
                 <img
@@ -473,7 +311,6 @@
 
                 <h3>Windows Widget: click on the '+' button</h3>
 
-                
             </div>
 
              <div class="widget-card">
@@ -484,7 +321,6 @@
 
                 <h3>Select the 'unReachable' and click on 'Add Widget'</h3>
 
-                
             </div>
             <div class="widget-card">
                 <img
@@ -494,7 +330,6 @@
 
                 <h3>the unReachable Widget is ON (!)</h3>
 
-                
             </div>
         </div>
 <hr>
@@ -504,42 +339,36 @@
         <div class="feature-grid">
 
             <div class="card">
-                     
+
                 <h3>Start/Stop Monitoring</h3>
 
                 <p>
                     The user is able to start/stop the network monitoring process whenever he wants.</p>
-                    <p>There are buttons to do so in the app's user interface and the Network Details view. 
+                    <p>There are buttons to do so in the app's user interface and the Network Details view.
                 </p>
             </div>
 
             <div class="card">
-                             
 
                 <h3>Auto-start the unReachable with Windows</h3>
 
                 <p>
                     There is a ON/OFF setting inside the app's User Interface to auto-start the application when Windows starts.
-                    Switch the setting to OFF and the app will start manually only. 
+                    Switch the setting to OFF and the app will start manually only.
                 </p>
             </div>
-
-            
 
         </div>
     </section>
 
-  
-  
   <section class="cta">
           <div  style="display: flex; font-size:xx-large;
     justify-content: center;  ">
-    
+
       <h2>explore more..</h2>
 <h2>
     <span style="margin-left: 14px; color: goldenrod;">un</span>Reachable</h2></div>
-    
-    
+
         <p>
             our dedicated list of articles for unReachable.
         </p>
@@ -558,7 +387,7 @@
 	Quality Score Explained ..
 </a>
   </div>
-     
+
     <div class="faq-item">
      <svg style="margin-top: 0px;margin-bottom: -19px;margin-right: 5px;height: 44px;" fill="#ffffff" viewBox="-10 15 50 25" width="40px" height="70px">
     <path d="m 33.213493,0.00354546 c -0.334402,0.00608 -0.670275,0.019248 -1.004171,0.035456 -3.50753,0.1620856 -20.753097,0.1620856 -24.2735948,0 C 5.8739996,-0.05824964 3.7274754,-0.04578804 2.2298054,1.3027634 2.132554,1.3935313 2.035505,1.4840968 1.9512206,1.5813481 0.62211949,3.0271508 0.46661719,5.2189575 0.43420009,7.183434 l -0.4280075,25.142273 c -0.032417,1.821841 0.025428,3.573028 1.10167601,4.889162 1.3744851,1.692172 3.7604402,1.854513 5.887002,1.880447 1.8218406,0.01945 7.4038764,0.03166 12.9212664,0.03166 5.27102,-0.0065 10.477523,-0.0198 12.305848,-0.03925 2.120078,-0.01945 4.506236,-0.174851 5.932588,-1.737356 1.134599,-1.238333 1.257785,-2.891052 1.296686,-4.615643 L 39.943848,9.802131 39.989434,7.630436 C 40.041301,5.4195897 39.963904,2.9303552 38.297665,1.4002681 37.675256,0.82324366 36.9288,0.47313786 36.118372,0.26566836 c -0.9093,-0.2334032 -1.901671,-0.2803576 -2.904879,-0.2621229 z M 6.7909973,3.3465623 C 7.6307015,3.3155635 8.6337592,4.1475195 8.8234002,4.8623165 9.0243852,5.6468105 8.6164362,6.5615319 7.8838092,6.8921866 7.1446993,7.229324 6.1652448,6.9039877 5.7956902,6.184328 5.5752536,5.7564219 5.5751013,5.2445852 5.6399356,4.7648122 5.691803,4.3822901 5.7897643,3.9928787 6.0426173,3.7011247 6.2500869,3.4628591 6.5110961,3.3568953 6.7909973,3.3465623 Z m 6.4517687,0 c 0.839705,-0.030999 1.842763,0.8009572 2.032403,1.5157542 0.200986,0.7909774 -0.208078,1.6990636 -0.947188,2.0362012 -0.73911,0.3371383 -1.718565,0.013067 -2.08812,-0.7065924 C 12.019425,5.7575364 12.02687,5.2445852 12.091705,4.7648122 12.143572,4.3822901 12.240267,3.9928787 12.49312,3.7011247 12.70059,3.4628591 12.962865,3.3568953 13.242766,3.3465623 Z m 6.764545,0.2127375 c 0.07136,-0.00315 0.142686,-9.624e-4 0.214003,0.00633 h 12.565438 c 0.570541,-0.058351 1.160078,0.2268191 1.477766,0.7065923 0.311204,0.479773 0.337036,1.1342963 0.05825,1.6335195 -0.278787,0.4992232 -0.848975,0.8233952 -1.419516,0.8104283 H 20.104815 C 19.534274,6.7291382 18.964086,6.4049662 18.685299,5.905743 18.406512,5.4065198 18.432344,4.7519965 18.743549,4.2722235 19.021525,3.852422 19.507821,3.5813712 20.007311,3.5592998 Z M 1.2180362,10.217475 H 39.101762 l -0.479926,22.504582 c -0.03242,1.562504 -0.136254,3.053239 -1.07635,4.071136 -1.205916,1.322617 -3.378323,1.451983 -5.329832,1.471434 -3.747417,0.03242 -21.647457,0.03257 -25.2068538,-0.0063 C 5.0702573,38.238847 2.9037766,38.096259 1.7562113,36.689357 0.86149929,35.593659 0.80952969,34.005723 0.84194689,32.345967 Z m 23.7252888,2.112179 c -0.402681,0.03252 -0.75927,0.278939 -0.92946,0.682533 l -0.517914,1.218175 c -1.283717,-0.252854 -2.594031,-0.375279 -3.916648,-0.355829 -5.219154,0.05187 -10.3020168,2.249145 -13.9456985,6.022495 -0.4149393,0.43439 -0.4149393,1.115404 0,1.556276 l 1.7639478,1.874116 c 0.4279055,0.453839 1.1274579,0.479671 1.5942639,0.05825 2.2821648,-2.035794 5.1996608,-3.371737 8.2144508,-3.767225 1.322618,-0.175053 2.658764,-0.162238 3.974898,0.0063 l -1.095345,2.561713 c -0.162085,-0.0065 -0.317839,-0.0076 -0.479925,-0.0076 -3.578848,0.0389 -6.865748,1.245682 -9.03121,3.313893 -0.45384,0.427906 -0.480787,1.12761 -0.06585,1.587933 l 1.051024,1.167523 c 0.414939,0.460323 1.102132,0.505656 1.568939,0.110167 1.400418,-1.192949 3.170043,-1.977394 4.985401,-2.21728 0.09725,-0.01297 0.187664,-0.01363 0.284916,-0.02659 l -1.8146,4.234488 c -0.49274,1.277234 -0.136252,2.813505 0.868677,3.740633 0.635376,0.583508 1.484453,0.887673 2.333781,0.887673 0.505707,0 1.00478,-0.110067 1.465103,-0.330503 0.771526,-0.376038 1.193255,-0.771731 1.608193,-1.504357 0.395489,-0.70021 0.661766,-1.510285 0.791434,-2.39203 l 0.49892,-3.410131 c 0.68076,0.389005 1.400218,0.810733 2.061527,1.284023 0.194503,0.136152 0.421423,0.207672 0.648343,0.207672 0.343621,0 0.693828,-0.156362 0.914264,-0.4546 0.136152,-0.181535 0.265264,-0.362819 0.401416,-0.550838 0.149118,-0.20747 0.305481,-0.422031 0.454599,-0.623017 0.343621,-0.453839 0.298288,-1.095092 -0.110167,-1.484097 -1.095698,-1.056797 -2.379774,-1.892907 -3.767226,-2.495865 l 0.37609,-2.541453 c 0.544607,0.226919 1.083188,0.492082 1.601862,0.783836 1.2124,0.687243 2.488928,1.43998 3.64946,2.295792 0.207469,0.155602 0.454042,0.232998 0.693929,0.232998 0.343622,0 0.674682,-0.155248 0.901602,-0.447002 0.291754,-0.382522 0.583255,-0.784546 0.875009,-1.186518 0.298237,-0.427906 0.609544,-0.85561 0.914265,-1.251099 0.343621,-0.447355 0.304315,-1.089874 -0.09117,-1.485363 -2.171946,-2.165462 -4.823116,-3.780193 -7.695271,-4.73974 l 0.187412,-1.270093 c 0.08428,-0.577024 -0.246371,-1.089165 -0.810428,-1.244767 -0.139394,-0.0389 -0.278585,-0.05136 -0.412813,-0.04052 z m -5.357691,2.374302 c 1.199433,-0.01297 2.392386,0.09755 3.565885,0.311508 l -1.639851,3.819143 c -0.771527,-0.116701 -1.56195,-0.182346 -2.346443,-0.182346 -0.687243,0 -1.382034,0.04599 -2.062794,0.13676 -3.183359,0.414939 -6.256104,1.821288 -8.6614518,3.9673 -0.129669,0.116701 -0.317638,0.11037 -0.434339,-0.0063 L 6.242692,20.875874 C 6.1324737,20.759172 6.1326254,20.578345 6.236362,20.468127 9.7244422,16.856862 14.58692,14.755823 19.585636,14.703956 Z m 6.263092,1.011768 c 2.697103,0.92713 5.186996,2.457019 7.229274,4.492813 0.103735,0.103735 0.109762,0.272051 0.01899,0.388752 -0.311204,0.408456 -0.628386,0.843454 -0.93959,1.27136 -0.278787,0.401971 -0.570745,0.79655 -0.856015,1.172588 -0.103735,0.136152 -0.291704,0.155653 -0.434339,0.05192 -1.19295,-0.881745 -2.495969,-1.652565 -3.734302,-2.352775 -0.609441,-0.343621 -1.238436,-0.648596 -1.886778,-0.907933 z m -6.230168,7.293855 h 0.116499 l -0.959851,2.236276 c -0.259337,0.01297 -0.51832,0.03216 -0.771173,0.06458 -1.97096,0.259336 -3.889805,1.109274 -5.413408,2.405958 -0.123185,0.103735 -0.305278,0.09026 -0.409013,-0.03292 l -1.049758,-1.166257 c -0.110218,-0.123185 -0.10419,-0.311306 0.01899,-0.428008 2.016344,-1.925576 5.096331,-3.04721 8.46771,-3.079628 z m 5.011993,1.070019 c 1.212399,0.551091 2.340112,1.308995 3.312626,2.242608 0.103734,0.09725 0.109762,0.259235 0.01899,0.38242 -0.155602,0.20747 -0.310394,0.421727 -0.465996,0.63568 -0.129669,0.181536 -0.266682,0.363123 -0.39635,0.538175 -0.09725,0.129669 -0.278231,0.161681 -0.401416,0.07091 -0.71966,-0.51219 -1.484959,-0.965474 -2.204618,-1.37393 -0.07132,-0.0389 -0.142686,-0.07127 -0.214004,-0.110167 z m -6.231434,6.483427 c 0.220436,0.0065 0.421676,0.180827 0.421676,0.407747 0.0065,0.382522 0.220183,0.758865 0.550838,0.959851 0.32417,0.200986 0.75932,0.214155 1.102942,0.04559 0.343621,-0.168569 0.589181,-0.525412 0.628082,-0.907934 0.01945,-0.226919 0.22768,-0.395539 0.4546,-0.376089 0.226919,0.01945 0.395539,0.226414 0.376089,0.453334 -0.06483,0.661309 -0.49269,1.278299 -1.082682,1.576536 -0.272304,0.136152 -0.577886,0.200074 -0.882607,0.200074 -0.363071,0 -0.719559,-0.09705 -1.030763,-0.278584 -0.564058,-0.343622 -0.939438,-0.99232 -0.945922,-1.660112 -0.0065,-0.22692 0.180827,-0.42041 0.407747,-0.42041 z"></path>
@@ -567,23 +396,17 @@
 	Speed Test  ..
 </a>
   </div>
-  
-      
-        
 
     </section>
-
-
 
     <section class="cta">
           <div  style="display: flex; font-size:xx-large;
     justify-content: center;  ">
-    
+
       <h2>Download</h2>
 <h2>
     <span style="margin-left: 14px; color: goldenrod;">un</span>Reachable today</h2></div>
-    
-    
+
         <p>
             Start monitoring your internet quality in real time on Windows 11.
         </p>
@@ -598,18 +421,17 @@
         <p>© 2026 unReachable. All rights reserved.</p>
     </footer>
 
-      
 <div id="bottom" style="height: 80px;">
 <a href="#" class="no_nu_reward scrollToTop"><img src="uploads/scrollupblue.png" alt="Scroll to Top"></a>
 
-<a href="#" class="no_nu_reward scrollToBottom" id="scrollBottom"><img src="uploads/scrolldownblue.png" alt="Scroll to Top"></a>  
+<a href="#" class="no_nu_reward scrollToBottom" id="scrollBottom"><img src="uploads/scrolldownblue.png" alt="Scroll to Top"></a>
 
-<a href="javascript:googlefc.callbackQueue.push(googlefc.showRevocationMessage)" class="no_nu_reward2 privacyBottom" id="scrollBottom2"><img src="uploads/privacyblue.png" alt="Scroll to Top"></a>  
- 
+<a href="javascript:googlefc.callbackQueue.push(googlefc.showRevocationMessage)" class="no_nu_reward2 privacyBottom" id="scrollBottom2"><img src="uploads/privacyblue.png" alt="Scroll to Top"></a>
+
 </div>
 <script>
 const btn = document.getElementById("scrollBottom");
- 
+
 btn.addEventListener("click", function (e) {
     e.preventDefault();
 
@@ -618,86 +440,8 @@ btn.addEventListener("click", function (e) {
         behavior: "smooth"
     });
 });
- 
+
 </script>
-
-<!-- old --adsense-- code -->
-<!--<div data-ad="mlapplications.com_sticky_video_myvid" data-devices="m:1,t:1,d:1"   class="demand-supply"></div>-->
-
-<!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code -->
-<script>
-//  googletag.cmd.push(function() { 
-    // Pass slot objects directly to display()
- //   if (window.offerwallSlot) {
-   //   googletag.display(window.offerwallSlot);
-  //  }
-    // Only call display if the slot was successfully created
-//    if (window.sideRailSlot) {
-//      googletag.display(window.sideRailSlot);
-//    } 
-//  });
-</script> 
-  <!-- ======================================================================= -->
-  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
-  <!-- ======================================================================= -->
-<!--  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const anchorNode = document.querySelector('.outstream-placement-anchor');
-      const adWrapper = document.getElementById('outstream-ad-wrapper');
-      const closeBtn = document.getElementById('outstream-close');
-      let userClosedAd = false;
-
-      if (!anchorNode || !adWrapper) return;
-
-      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
-      window.googletag = window.googletag || {cmd: []};
-      googletag.cmd.push(function() {
-        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
-            if (event.isEmpty) {
-              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
-              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
-            } else {
-              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
-              // Only trigger performance tracking cycles if demand actually filled the layout container
-              stickyObserver.observe(anchorNode);
-            }
-          }
-        });
-      });
-
-      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
-      const stickyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (userClosedAd) return;
-
-          // If the invisible inline space position completely rolls out of view
-          if (!entry.isIntersecting) {
-            const boundingBox = entry.boundingClientRect;
-            
-            // Only apply sticky docking if user scrolled past the ad DOWN the page
-            if (boundingBox.top < 0) {
-              adWrapper.classList.add('is-sticky');
-            }
-          } else {
-            // Re-dock cleanly back inline the second the user scrolls back up
-            adWrapper.classList.remove('is-sticky');
-          }
-        });
-      }, { 
-        root: null, 
-        threshold: 0 // Fires instantly the frame the boundary is crossed
-      });
-
-      // STEP C: CLOSE ICON ACTIONS
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userClosedAd = true;
-        adWrapper.classList.remove('is-sticky');
-        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
-      });
-    });
-  </script> -->
 
 <!-- WEB_ONLY_START -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
@@ -709,6 +453,5 @@ btn.addEventListener("click", function (e) {
 </script>
 <!-- WEB_ONLY_END -->
 </body>
-
 
 </html>

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-	
+
    <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script>
 /* bfcache: turn third-party 'unload' handlers into 'pagehide' */
 (function () {
@@ -20,82 +21,14 @@
   } catch (e) {}
 })();
 </script>
+<!-- sulvo -->
+<link rel="preload" as="script" href="https://live.demand.supply/up.js">
+<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
- 
-
-
-
-<!--<script>
-  // Define dataLayer and the gtag function.
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-
-  // Set default consent to 'denied' as a placeholder
-  // Determine actual values based on your own requirements
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-    'analytics_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-  });
-</script>-->
- <script>console.log('here goes sulvo');</script>
-
-
- <script>console.log('here goes f59');</script>
-
-<!-- Google Tag Manager -->
- <!--
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-5BBV9FN');</script>-->
-<!-- End Google Tag Manager -->
-<!--
- <link rel="preload" as="script" href="https://live.demand.supply/up.js"><script id="analytics-script" type="text/plain" data-consent-category="statistics" async data-cfasync="false"  src="https://live.demand.supply/up.js"></script>
--->
-<!--<script>
-	function executeScriptsssssssssssOnConsent(category) {
-  // 1. Find all script elements that were blocked for this category
-  const blockedScripts = document.querySelectorAll(
-    `script[data-consent-category="${category}"]`
-  );
-
-  blockedScripts.forEach(originalScript => {
-    // 2. Change the type back to a runnable JavaScript type
-    originalScript.setAttribute('type', 'text/javascript');
-    
-    // 3. Get the source URL
-    const scriptSrc = originalScript.getAttribute('src');
-
-    // 4. Create a NEW script element to force execution
-    // Browsers often don't execute a script just by changing the type, 
-    // so we need to create a fresh element and append it.
-    if (scriptSrc) {
-      const newScript = document.createElement('script');
-      newScript.src = scriptSrc;
-      
-      // Preserve original attributes like 'async' or 'defer'
-      if (originalScript.hasAttribute('async')) {
-        newScript.setAttribute('async', 'true');
-      }
-
-	if (originalScript.hasAttribute('data-cfasync')) {
-		newScript.setAttribute('data-cfasync','false');
-	}
-      // 5. Append the new, runnable script to the document head
-      // This action triggers the browser to fetch and execute the analytics code.
-      document.head.appendChild(newScript);
-
-      // (Optional) Remove the original blocked script element to keep the DOM clean
-      originalScript.remove(); 
-    }
-  });
-}
-</script>-->
+<!-- rewarded paywall -->
+<link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<style>#custom-paywall-overlay:not(.active){display:none}</style>
+<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
 
 <link rel="icon" id="favicon" type="image/x-icon" href="/uploads/favpreview.gif">
 		<title>DVD Player+ app. - M.I.L. Team - 3D+ and more..</title><meta property="og:site_name" content="M.I.L. Team - 3D+ and more.." />
@@ -114,340 +47,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta property="og:url" content="dvdplayerapplications.html" />
 
 <meta name="keywords" content="dvd play,dvd player,dvd player download,dvd player konstelos,Mobility,in,Life,Applications,free movie player windows 10,movie play,movie player,film player windows,dvd windows media player,vcd,audio-cd,audio cd,user media" />
- 
-
-<!-- InMobi Choice. Consent Manager Tag v3.0 (for TCF 2.2) --><!--
-<script type="text/javascript" async=true>
-(function() {
-  var host = 'mlapplications.com';
-  var element = document.createElement('script');
-  var firstScript = document.getElementsByTagName('script')[0];
-  var url = 'https://cmp.inmobi.com'
-    .concat('/choice/', 'rFbVBARkjS_85', '/', host, '/choice.js?tag_version=V3');
-  var uspTries = 0;
-  var uspTriesLimit = 3;
-  element.async = true;
-  element.type = 'text/javascript';
-  element.src = url;
-
-  firstScript.parentNode.insertBefore(element, firstScript);
-
-  function makeStub() {
-    var TCF_LOCATOR_NAME = '__tcfapiLocator';
-    var queue = [];
-    var win = window;
-    var cmpFrame;
-
-    function addFrame() {
-      var doc = win.document;
-      var otherCMP = !!(win.frames[TCF_LOCATOR_NAME]);
-
-      if (!otherCMP) {
-        if (doc.body) {
-          var iframe = doc.createElement('iframe');
-
-          iframe.style.cssText = 'display:none';
-          iframe.name = TCF_LOCATOR_NAME;
-          doc.body.appendChild(iframe);
-        } else {
-          setTimeout(addFrame, 5);
-        }
-      }
-      return !otherCMP;
-    }
-
-    function tcfAPIHandler() {
-      var gdprApplies;
-      var args = arguments;
-
-      if (!args.length) {
-        return queue;
-      } else if (args[0] === 'setGdprApplies') {
-        if (
-          args.length > 3 &&
-          args[2] === 2 &&
-          typeof args[3] === 'boolean'
-        ) {
-          gdprApplies = args[3];
-          if (typeof args[2] === 'function') {
-            args[2]('set', true);
-          }
-        }
-      } else if (args[0] === 'ping') {
-        var retr = {
-          gdprApplies: gdprApplies,
-          cmpLoaded: false,
-          cmpStatus: 'stub'
-        };
-
-        if (typeof args[2] === 'function') {
-          args[2](retr);
-        }
-      } else {
-        if(args[0] === 'init' && typeof args[3] === 'object') {
-          args[3] = Object.assign(args[3], { tag_version: 'V3' });
-        }
-        queue.push(args);
-      }
-    }
-
-    function postMessageEventHandler(event) {
-      var msgIsString = typeof event.data === 'string';
-      var json = {};
-
-      try {
-        if (msgIsString) {
-          json = JSON.parse(event.data);
-        } else {
-          json = event.data;
-        }
-      } catch (ignore) {}
-
-      var payload = json.__tcfapiCall;
-
-      if (payload) {
-        window.__tcfapi(
-          payload.command,
-          payload.version,
-          function(retValue, success) {
-            var returnMsg = {
-              __tcfapiReturn: {
-                returnValue: retValue,
-                success: success,
-                callId: payload.callId
-              }
-            };
-            if (msgIsString) {
-              returnMsg = JSON.stringify(returnMsg);
-            }
-            if (event && event.source && event.source.postMessage) {
-              event.source.postMessage(returnMsg, '*');
-            }
-          },
-          payload.parameter
-        );
-      }
-    }
-
-    while (win) {
-      try {
-        if (win.frames[TCF_LOCATOR_NAME]) {
-          cmpFrame = win;
-          break;
-        }
-      } catch (ignore) {}
-
-      if (win === window.top) {
-        break;
-      }
-      win = win.parent;
-    }
-    if (!cmpFrame) {
-      addFrame();
-      win.__tcfapi = tcfAPIHandler;
-      win.addEventListener('message', postMessageEventHandler, false);
-    }
-  };
-
-  makeStub();
-
-  function makeGppStub() {
-    const CMP_ID = 10;
-    const SUPPORTED_APIS = [
-      '2:tcfeuv2',
-      '6:uspv1',
-      '7:usnatv1',
-      '8:usca',
-      '9:usvav1',
-      '10:uscov1',
-      '11:usutv1',
-      '12:usctv1'
-    ];
-
-    window.__gpp_addFrame = function (n) {
-      if (!window.frames[n]) {
-        if (document.body) {
-          var i = document.createElement("iframe");
-          i.style.cssText = "display:none";
-          i.name = n;
-          document.body.appendChild(i);
-        } else {
-          window.setTimeout(window.__gpp_addFrame, 10, n);
-        }
-      }
-    };
-    window.__gpp_stub = function () {
-      var b = arguments;
-      __gpp.queue = __gpp.queue || [];
-      __gpp.events = __gpp.events || [];
-
-      if (!b.length || (b.length == 1 && b[0] == "queue")) {
-        return __gpp.queue;
-      }
-
-      if (b.length == 1 && b[0] == "events") {
-        return __gpp.events;
-      }
-
-      var cmd = b[0];
-      var clb = b.length > 1 ? b[1] : null;
-      var par = b.length > 2 ? b[2] : null;
-      if (cmd === "ping") {
-        clb(
-          {
-            gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
-            cmpStatus: "stub", // possible values: stub, loading, loaded, error
-            cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
-            signalStatus: "not ready", // possible values: not ready, ready
-            supportedAPIs: SUPPORTED_APIS, // list of supported APIs
-            cmpId: CMP_ID, // IAB assigned CMP ID, may be 0 during stub/loading
-            sectionList: [],
-            applicableSections: [-1],
-            gppString: "",
-            parsedSections: {},
-          },
-          true
-        );
-      } else if (cmd === "addEventListener") {
-        if (!("lastId" in __gpp)) {
-          __gpp.lastId = 0;
-        }
-        __gpp.lastId++;
-        var lnr = __gpp.lastId;
-        __gpp.events.push({
-          id: lnr,
-          callback: clb,
-          parameter: par,
-        });
-        clb(
-          {
-            eventName: "listenerRegistered",
-            listenerId: lnr, // Registered ID of the listener
-            data: true, // positive signal
-            pingData: {
-              gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
-              cmpStatus: "stub", // possible values: stub, loading, loaded, error
-              cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
-              signalStatus: "not ready", // possible values: not ready, ready
-              supportedAPIs: SUPPORTED_APIS, // list of supported APIs
-              cmpId: CMP_ID, // list of supported APIs
-              sectionList: [],
-              applicableSections: [-1],
-              gppString: "",
-              parsedSections: {},
-            },
-          },
-          true
-        );
-      } else if (cmd === "removeEventListener") {
-        var success = false;
-        for (var i = 0; i < __gpp.events.length; i++) {
-          if (__gpp.events[i].id == par) {
-            __gpp.events.splice(i, 1);
-            success = true;
-            break;
-          }
-        }
-        clb(
-          {
-            eventName: "listenerRemoved",
-            listenerId: par, // Registered ID of the listener
-            data: success, // status info
-            pingData: {
-              gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
-              cmpStatus: "stub", // possible values: stub, loading, loaded, error
-              cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
-              signalStatus: "not ready", // possible values: not ready, ready
-              supportedAPIs: SUPPORTED_APIS, // list of supported APIs
-              cmpId: CMP_ID, // CMP ID
-              sectionList: [],
-              applicableSections: [-1],
-              gppString: "",
-              parsedSections: {},
-            },
-          },
-          true
-        );
-      } else if (cmd === "hasSection") {
-        clb(false, true);
-      } else if (cmd === "getSection" || cmd === "getField") {
-        clb(null, true);
-      }
-      //queue all other commands
-      else {
-        __gpp.queue.push([].slice.apply(b));
-      }
-    };
-    window.__gpp_msghandler = function (event) {
-      var msgIsString = typeof event.data === "string";
-      try {
-        var json = msgIsString ? JSON.parse(event.data) : event.data;
-      } catch (e) {
-        var json = null;
-      }
-      if (typeof json === "object" && json !== null && "__gppCall" in json) {
-        var i = json.__gppCall;
-        window.__gpp(
-          i.command,
-          function (retValue, success) {
-            var returnMsg = {
-              __gppReturn: {
-                returnValue: retValue,
-                success: success,
-                callId: i.callId,
-              },
-            };
-            event.source.postMessage(msgIsString ? JSON.stringify(returnMsg) : returnMsg, "*");
-          },
-          "parameter" in i ? i.parameter : null,
-          "version" in i ? i.version : "1.1"
-        );
-      }
-    };
-    if (!("__gpp" in window) || typeof window.__gpp !== "function") {
-      window.__gpp = window.__gpp_stub;
-      window.addEventListener("message", window.__gpp_msghandler, false);
-      window.__gpp_addFrame("__gppLocator");
-    }
-  };
-
-  makeGppStub();
-
-  var uspStubFunction = function() {
-    var arg = arguments;
-    if (typeof window.__uspapi !== uspStubFunction) {
-      setTimeout(function() {
-        if (typeof window.__uspapi !== 'undefined') {
-          window.__uspapi.apply(window.__uspapi, arg);
-        }
-      }, 500);
-    }
-  };
-
-  var checkIfUspIsReady = function() {
-    uspTries++;
-    if (window.__uspapi === uspStubFunction && uspTries < uspTriesLimit) {
-      console.warn('USP is not accessible');
-    } else {
-      clearInterval(uspInterval);
-    }
-  };
-
-  if (typeof window.__uspapi === 'undefined') {
-    window.__uspapi = uspStubFunction;
-    var uspInterval = setInterval(checkIfUspIsReady, 6000);
-  }
-})();
-</script>
---><!--End InMobi Choice. Consent Manager Tag v3.0 (for TCF 2.2) -->
-
-
-
-
-
- <!-- 
- <script>console.log('here goes sulvo');</script>
--->	
 
 <style>
     .kb-container
@@ -460,7 +59,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	{
     display: none;
     visibility: hidden;
-	
+
 	}
     </style>
 <script>
@@ -490,22 +89,19 @@ function myckExists(name) {
   for(i = 0; i < cks.length; i++)
     if (cks[i].split('=')[0].trim() == name) return true;
 }
-</script> 
+</script>
 
- 
 <script>
- 
 
 function myFunctionfortitle() {
 var chromeH = window.outerHeight - window.innerHeight;
 
-
 //  alert("Page is loaded and chromeH:" + chromeH + ",window.innerHeight:" + window.innerHeight + ",window.outerHeight:" + window.outerHeight);
   //document.title = "Paparia";
-  
+
  // var whttwrtttl = "[version:" + chromeH + "." +  window.innerHeight + "." + window.outerHeight +"] ";
    var whttwrtttl = "[version:105." +  window.innerHeight + "." + window.outerHeight +"] ";
- 
+
  var xx =  document.title;
 document.title = whttwrtttl + xx;
 
@@ -521,7 +117,7 @@ function myhdckpl()
 		}
 		catch(err) {
 	//  document.getElementById("demo").innerHTML = err.message;
-		}     
+		}
 }
 
 //$(document).ready(function(){
@@ -531,11 +127,7 @@ function myhdckpl()
 //});
 
 </script>
-  
- 
 
-  
- 
 		<link id="wsite-base-style" rel="stylesheet" type="text/css" href="cdn2.editmysite.com/css/sites367f.css?buildTime=1751393202" />
 <link rel="stylesheet" type="text/css" href="cdn2.editmysite.com/css/old/fancybox5209.css?1751393202" />
 <link rel="stylesheet" type="text/css" href="cdn2.editmysite.com/css/social-icons9aef.css?buildtime=1751393202" media="screen,projection" />
@@ -627,7 +219,7 @@ _W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":
 			com_currentSite = "607878847879865438";
 			com_userID = "79962194";</script><script type="text/javascript">_W.configDomain = "www.weebly.com";</script><script>_W.relinquish && _W.relinquish()</script>
 <script type="text/javascript" src="cdn2.editmysite.com/js/lang/en/stld62d.js?buildTime=1751393202&amp;"></script><script> _W.themePlugins = [];</script><script type="text/javascript"> _W.recaptchaUrl = "../www.google.com/recaptcha/api.js"; </script><script type="text/javascript"><!--
-	
+
 	var DISABLE_NAV_MORE = 1;
 	function initFlyouts(){
 		initPublishedFlyoutMenus(
@@ -642,13 +234,12 @@ _W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":
 	}
 //-->
 </script>
-		 
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="files/theme/materialize.min.css"  media="screen,projection"/>
 <style>
- 
+
 .progress-ring {
   position: relative;
   margin: 0px auto;
@@ -701,7 +292,7 @@ myoverlay-content2 {
 	text-align: center;
 	margin-top: 10px;
 	}
-	
+
 	.myoverlay2 a {
 	padding: 8px;
 	text-decoration: none;
@@ -710,19 +301,17 @@ myoverlay-content2 {
 	display: block;
 	transition: 0.1s;
 	}
-	
+
 	.myoverlay2 a:hover, .myoverlay2 a:focus {
 	color: #f1f1f1;
 	}
-	
+
 	.myoverlay2 .closebtn {
 	position: absolute;
 	top: 20px;
 	right: 45px;
 	font-size: 60px;
 	}
-
-
 
 .myoverlay-content {
   position: relative;
@@ -774,7 +363,7 @@ myoverlay-content2 {
 -ms-user-select: none;
 user-select: none;
         }
-       
+
         h1 {
             font-size: 3.5rem;
             text-transform: uppercase;
@@ -791,7 +380,7 @@ user-select: none;
             text-shadow: 0 0.2rem 0.5rem rgba(0,0,0,.6);
             font-size: 1.5rem;
         }
-      
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2rem;
@@ -804,155 +393,17 @@ user-select: none;
 }
 </style>
 
-
-
 <script>
-    window.onload = function () { 
+    window.onload = function () {
     openNav();
- myFunctionfortitle();     
- 
-    }; 
-   
+ myFunctionfortitle();
+
+    };
+
   </script>
 
-
-
-
-
-
-
-
-		
-	<script>
-    console.log('here i am not from cloudflare tag setup !');
-</script>
-
-<!--<script type="text/javascript" async="async" src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=44890869"></script>-->
-  <!-- sulvo first -->
-<link rel="preload" as="script" href="https://live.demand.supply/up.js">
-<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
-
-<!-- rewarded paywall -->
-   <link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
-<style>#custom-paywall-overlay:not(.active){display:none}</style>
-
-<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
-
-
-<!-- old demand -->
-
-
- 
-  
-
-
-
-
-
-
-
-  
- 
-
- 
-  <!-- ======================================================================= -->
-  <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
-  <!-- ======================================================================= -->
-  <style>
-    /* THE GHOST ANCHOR: Stays fixed in layout to completely eliminate infinite layout flickers */
-    .outstream-placement-anchor {
-      width: 336px;
-      height: 280px;
-      margin: 40px auto;
-      position: relative;
-      background: transparent;
-    }
-
-    /* THE MOVING CONTAINER: Holds the ad frame and performs transitions on scroll */
-    .outstream-main-container {
-      width: 336px;
-      height: 280px;
-      background: #fbfbfb;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transition: box-shadow 0.3s ease;
-    }
-
-    /* STICKY OVERLAY STATE: Engaged programmatically by IntersectionObserver */
-    .outstream-main-container.is-sticky {
-      position: fixed;
-      top: auto;
-      left: auto;
-      bottom: 25px;
-      right: 25px;
-      z-index: 99999;
-      background: #fff;
-      border-radius: 4px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      
-      /* Downscale slightly for clean desktop corner placement */
-      transform: scale(0.9);
-      transform-origin: bottom right;
-      
-      /* Premium entrance physics: slides up, clears blur layer, fades visibility */
-      animation: dynamicStickyShow 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    /* Keeps iframe elements isolated and clipped safely inside borders when sticky */
-    .outstream-main-container.is-sticky #div-gpt-ad-outstream-slot {
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    /* CLOSE TRIGGER MARKUP: Revealed exclusively during sticky activation mode */
-    .outstream-close-trigger {
-      display: none;
-      position: absolute;
-      top: -12px;
-      left: -12px;
-      width: 26px;
-      height: 26px;
-      background: #111;
-      color: #fff;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 23px;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-      font-size: 15px;
-      font-weight: bold;
-      border: 2px solid #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 100000;
-      transition: background 0.2s ease;
-    }
-
-    .outstream-close-trigger:hover {
-      background: #ff3b30; /* Desktop specific feedback overlay shift */
-    }
-
-    .outstream-main-container.is-sticky .outstream-close-trigger {
-      display: block;
-    }
-
-    /* BLUR ENTRANCE KEYFRAME SEQUENCING */
-    @keyframes dynamicStickyShow {
-      0% {
-        transform: translateY(60px) scale(0.85);
-        opacity: 0;
-        filter: blur(8px);
-      }
-      100% {
-        transform: translateY(0) scale(0.9);
-        opacity: 1;
-        filter: blur(0);
-      }
-    }
-  </style>
-  
   </head>
- 
+
 	<body class='  wsite-theme-light' display: flex;
 
 style= "
@@ -961,82 +412,46 @@ min-height: 100vh;
 padding: 0;
 background-color: transparent;
 
-
-
 background-repeat: no-repeat;
 
 background-size: cover;
     flex-direction: column;
 	" class=" wsite-page-dvdplayerapplications">
 <div style="visibility: hidden;height: 1px;">
-	 <h1>DVD Player+ – Free Application for DVD, CD & Media Playback</h1>	
-	</div>	
-<!-- Google Tag Manager (noscript) -->
-<!--<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5BBV9FN"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>-->
-<!-- End Google Tag Manager (noscript) -->
+	 <h1>DVD Player+ – Free Application for DVD, CD & Media Playback</h1>
+	</div>
 
 <div  >
  <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
 
-  <!-- <div data-ad="mlapplications.com_sticky_video_myvidsticky" data-devices="m:1,t:1,d:1"   class="demand-supply"></div> -->
-  <!-- ======================================================================= -->
-  <!-- 3. WEB PAGE STRUCTURAL CORE HOUSING PLACEMENT MARKUP                   -->
-  <!-- ======================================================================= -->
-  <!--<div class="myyy-outstream-placement-anchor">
-    <div id="outstream-ad-wrapper" class="outstream-main-container">
-      <div id="outstream-close" class="outstream-close-trigger">&times;</div>
-      
-       
-      <div id="div-gpt-ad-outstream-slot" style="width: 336px; height: 280px; margin: 0 auto;">
-        <script>
-          googletag.cmd.push(function() { 
-            googletag.display('div-gpt-ad-outstream-slot'); 
-          });
-        </script>
-      </div>
-    </div>
-  </div>--> 
-
-
-
-<!-- old mobile sticky top code -->
 </div>
 
-
- 
-<!--mlapplications_com_300x600_desktop_sticky --> 
-  
-  
-
-<!-- Anchor ad on bottom -->
 <script>
 function removeElement(id) {
 	 try
 	 {
 	 var elem = document.getElementById(id);
      elem.parentNode.removeChild(elem);
-	} 
+	}
 	catch (err) { console.log('err here...'+err); }
 }
 </script>
 <div id="myOverlayNav" class="myoverlay" style="width:100%">
-<!--  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> -->
+
   <div class="myoverlay-content">
-  
+
   <img style="width: 400px; height: 400px;
 
 margin-left: auto;
     margin-right: auto;
 " src="files/theme/winrareicons/myicons/dvdhlpphoneicons/appdvdplayerplus/logoloading.jpg">
 
-
 <div  style="border-radius: 20px;
   background-color: #C80004;
    width: 500px;
    height:100px;
-   text-align:center;  
-   margin-left: auto; 
+   text-align:center;
+   margin-left: auto;
    margin-right: auto;
   border-style: Solid;
   border-color: black;
@@ -1073,35 +488,22 @@ margin-left: auto;
     </div>
 
                   </th>
-                 
+
                  <th style="padding:20px;  ">
                    <div id="thetextloadingresources" > Loading Resources ..</div>
                    <div id="thetextpreparingfirsttime" style="visibility: hidden; display: none;"> Preparing  first-time  Use .. !</div>
 
                   </th>
-                   
-                   
-
-
-
-                 
 
               </tr>
           </thead>
 
-         
       </table>
   </div>
-  
-  
+
 </div>
-  <!--  <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Clients</a>
-    <a href="#">Contact</a> -->
+
   </div>
-
-
 
 <script>
 function openNav() {
@@ -1113,8 +515,6 @@ function closeNav() {
   document.getElementById('myOverlayNav').style.width = "0%";
 }
 </script>
- 
-
 
 <div class="row"  id="myupperbuttons" style=" margin-left: auto; margin-right: auto; margin-top: 0px; position:fixed; height:94px; width: 100%;
 background-image: url('files/theme/winrareicons/myicons/dvdhlpphoneicons/appdvdplayerplus/myblueup.jpg');  background-size: cover;
@@ -1128,8 +528,7 @@ background-image: url('files/theme/winrareicons/myicons/dvdhlpphoneicons/appdvdp
   border-color: black;
   border-width: 1px;">
 
-<table id="dvdlabel" class="centered" style="color: #ffffff; font-size:14px; line-height:10px; 
- 
+<table id="dvdlabel" class="centered" style="color: #ffffff; font-size:14px; line-height:10px;
 
 text-align:center; width: auto; margin-left: auto; margin-right: auto">
           <thead>
@@ -1139,43 +538,40 @@ text-align:center; width: auto; margin-left: auto; margin-right: auto">
                           <g style="
     /* padding-left: 10px; */
 ">
-                              <!--   <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#FFFFFF" fill="transparent"></ellipse>
-                            -->
+
                               <path id="path12121" transform="rotate(0,11,11) translate(13,4) scale(2.4,2.4)  " fill="#FFFFFF" d="M14.626985,11.320995C12.622987,11.320995 11.019989,11.620995 11.019989,12.121994 11.019989,12.522994 12.622987,12.923994 14.626985,12.923994 16.629983,12.923994 18.232982,12.622994 18.232982,12.121994 18.132982,11.721995 16.529984,11.320995 14.626985,11.320995z M15.127985,9.9179956C23.442977,9.9179955 30.25597,10.819995 30.25597,12.021994 30.25597,13.223994 23.542977,14.125993 15.127985,14.125993 6.7119932,14.025993 0,13.123994 0,11.921994 0,10.819995 6.7119932,9.9179955 15.127985,9.9179956z M2.8049965,0L14.626985,0 16.229984,5.2099977 20.33698,0 27.550973,0C29.253971,0.20000076 30.65597,0.80099964 31.457969,1.9039993 32.559968,3.5059986 31.858969,5.309998 30.45597,6.4119973 30.054971,6.711997 29.553971,7.0129972 28.952971,7.212997 27.650973,7.8139966 26.448974,7.9149964 24.945976,7.9149961L20.63798,7.9149961 21.839978,2.5049992 25.045975,2.5049992 24.344976,6.2109976C24.845975,6.3119974 25.145975,6.2109976 25.646975,6.2109976 26.448974,6.2109976 27.249973,6.0109973 27.950973,5.5099978 28.151972,5.309998 28.351972,5.1089978 28.551972,4.908998 29.052971,4.0069985 29.153971,3.105999 28.251972,2.3039989 27.950973,2.0039997 27.550973,1.9039993 27.049973,1.8029995L22.140978,1.8029995 15.027985,9.8179957 12.221988,1.8029995 11.921988,1.8029995C13.123986,4.0069985 11.320989,6.0109973 9.4169903,7.0129972 8.4149914,7.5139966 7.4129925,7.8139966 6.2109928,7.9149961L0.90099907,8.0149965 2.1039963,2.5049992 5.1089935,2.5049992 4.5079956,6.1109972C5.0089951,6.2109976 5.4099941,6.2109976 5.9109936,6.1109972 6.6119928,6.0109973 7.3129921,5.8109975 7.9139919,5.5099978 8.314991,5.309998 8.715991,4.908998 8.9159908,4.507998 9.2169905,3.9069986 9.2169905,3.0059986 8.8159904,2.5049992 8.2149916,2.0039997 7.4129925,1.8029995 6.7119932,1.8029995L2.4039974,1.8029995z">
                               </path>
                           </g>
                       </svg>
 
                   </th>
-                  
 
               </tr>
           </thead>
 
           <tbody class="centered">
               <tr class="centered" style="padding:0px">
-			  
+
           		<td id="ttStatusDVD" style="padding:0px">
           			<span id="DVDSTATISTICS_GRID_LabelDriveLetteraaaaaaa" style="color: #ffffff; font-weight: bold; font-size:10px; line-height:1px; text-align:center; width: fit-content; margin-left: auto; margin-right: auto">CD/DVD Drive:</span>
-            
+
 	       </td>
               </tr>
 			   <tr class="centered" style="padding:3px">
-			  
+
           		<td id="ttStatusDVD" style="padding:3px">
-                  
+
 			<span id="DVDSTATISTICS_GRID_LabelDriveLetter" style="color: #ffffff; font-weight: bold; font-size:28px; line-height:18px; text-align:center; width: fit-content; margin-left: auto; margin-right: auto">- ? -</span>
      	   </td>
               </tr>
-			 
-            
+
               <!-- ttTotalSize-->
           </tbody>
       </table>
         <!-- Grey navigation panel -->
-		 
+
        </div>
-	   
+
       <div class="col s9 push-s1" >
         <!-- Teal page content  -->
 		  <table id="dvdstatistics" class="centered" style="color: #ffffff; font-size:14px; line-height:16px; text-align:center; width: auto; margin-left: auto; margin-right: auto">
@@ -1184,8 +580,7 @@ text-align:center; width: auto; margin-left: auto; margin-right: auto">
                   <th style="padding:0px">
                       <svg xmlns="http://www.w3.org/2000/svg" height="56" width="56" viewBox="0 0 56 56">
                           <g>
-                              <!--   <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#FFFFFF" fill="transparent"></ellipse>
-                            -->
+
                               <path id="path12121" transform="rotate(0,28,28) translate(13.0670570135117,13) scale(0.9375,0.9375)  " fill="#FFFFFF" d="M13.159147,11.683993C14.145151,11.683993 14.942157,12.479983 14.942157,13.459994 14.942157,14.44498 14.145151,15.241001 13.159147,15.241001 12.179125,15.241001 11.388131,14.44498 11.388131,13.459994 11.388131,12.479983 12.179125,11.683993 13.159147,11.683993z M30.676346,10.381991C31.00533,10.372989 31.338341,10.491 31.59936,10.735995 32.115359,11.22098 32.135348,12.037997 31.645352,12.553988L24.525275,19.759984C24.055268,20.259984 23.279257,20.295995 22.758255,19.851994 22.697251,19.815984 22.636246,19.774998 22.579237,19.724004L19.474223,17.006993C18.933199,16.543004 18.8772,15.730991 19.341195,15.188999 19.806227,14.652988 20.618216,14.591984 21.154234,15.061985L23.514246,17.12 29.776341,10.78699C30.02134,10.52698,30.346325,10.390994,30.676346,10.381991z M13.135129,9.73398C11.082127,9.73398 9.4221053,11.398989 9.4221053,13.446994 9.4221053,15.500004 11.082127,17.159978 13.135129,17.159978 15.183157,17.159978 16.848185,15.500004 16.848185,13.446994 16.848185,11.398989 15.183157,9.73398 13.135129,9.73398z M12.560141,2.3750003C11.640117,2.3739932,9.2761073,2.5639959,6.8940606,4.3149727L10.137109,9.5709856C10.137109,9.5709856 10.909121,8.8399981 11.736126,8.6049822 12.451131,8.4010027 13.585147,8.4270037 13.585147,8.4270037L12.962123,2.3899844C12.962123,2.3899844,12.817132,2.3750003,12.560141,2.3750003z M13.120145,0C20.102219,-1.7125149E-07,25.791279,5.4489759,26.205287,12.327975L23.447258,15.121982 22.11924,13.957004C21.618228,13.522982 20.980221,13.282992 20.321217,13.282992 19.519206,13.282992 18.763215,13.630984 18.243189,14.23798 17.762196,14.789982 17.528185,15.500004 17.57918,16.229985 17.635182,16.959996 17.967186,17.629002 18.518187,18.103978L21.634221,20.832005C21.721226,20.907994 21.818244,20.97498 21.915228,21.04099 22.277232,21.321996 22.701249,21.505986 23.151267,21.582005 20.740227,24.431983 17.145186,26.245002 13.120145,26.245002 5.8730531,26.245002 0,20.371983 0,13.125003 0,5.8729871 5.8730531,-1.7125149E-07 13.120145,0z">
                               </path>
                           </g>
@@ -1195,8 +590,7 @@ text-align:center; width: auto; margin-left: auto; margin-right: auto">
                   <th style="padding:0px">
                       <svg xmlns="http://www.w3.org/2000/svg" height="56" width="56" viewBox="0 0 56 56">
                           <g>
-                              <!--  <ellipse cy="28" cx="28" stroke-width="1.87499977648261" ry="27.0625001117587" rx="27.0625001117587" stroke="#FFFFFF" fill="transparent"></ellipse>
-                            -->
+
                               <path id="path1" transform="rotate(0,28,28) translate(13,13.9023450729436) scale(0.937499888241304,0.937499888241304)  " fill="#FFFFFF" d="M27.012071,15.163L25.342053,15.275 25.230052,15.286017C25.051066,15.295996 24.959056,15.346991 24.959056,15.433997 24.959056,15.521002 25.046062,15.571997 25.224071,15.587012 25.449079,15.612006 25.587079,15.664008 25.638074,15.739996 25.694074,15.816992 25.730054,16.118017 25.75105,16.644019 25.77107,17.17002 25.781079,17.747993 25.781079,18.376014 25.781079,18.866004 25.766065,19.187995 25.730054,19.346015 25.700055,19.505012 25.546063,19.596992 25.270061,19.622016 25.066051,19.642005 24.959056,19.694007 24.959056,19.790992 24.959056,19.888007 25.041057,19.933997 25.194072,19.933997 25.240062,19.933997 25.322062,19.923011 25.439069,19.907996 25.633069,19.888007 25.827069,19.883003 26.016067,19.883003 26.404067,19.883003 26.793077,19.893012 27.186082,19.918006 27.370074,19.928993 27.50307,19.933997 27.579059,19.933997 27.732074,19.933997 27.814075,19.888007 27.814075,19.790992 27.814075,19.699012 27.712085,19.642005 27.51308,19.617011 27.339068,19.59101 27.211076,19.540016 27.135056,19.463996 27.058061,19.381996 27.017076,19.229011 27.017076,18.993995L27.033067,17.845008C27.033067,16.557014,27.028062,15.664008,27.012071,15.163z M26.169082,12.578008C25.950055,12.578008 25.77107,12.655004 25.623059,12.808019 25.470075,12.957006 25.393079,13.14002 25.393079,13.355016 25.393079,13.564 25.470075,13.743017 25.623059,13.896001 25.77107,14.049016 25.950055,14.126012 26.169082,14.126012 26.379073,14.126012 26.558059,14.049016 26.711076,13.896001 26.86406,13.743017 26.941056,13.564 26.941056,13.355016 26.941056,13.14002 26.86406,12.957006 26.711076,12.808019 26.558059,12.655004 26.379073,12.578008 26.169082,12.578008z M12.873023,11.42899C13.833016,11.42899 14.614025,12.205998 14.614025,13.16599 14.614025,14.131994 13.833016,14.907995 12.873023,14.907995 11.914036,14.907995 11.138032,14.131994 11.138032,13.16599 11.138032,12.205998 11.914036,11.42899 12.873023,11.42899z M26.348067,10.83701C28.999076,10.83701 33.249089,17.906013 31.650084,20.026008 30.056087,22.144998 22.380069,22.314004 21.041045,20.026008 19.703059,17.732002 23.692054,10.83701 26.348067,10.83701z M12.848029,9.5190156C10.841035,9.5190156 9.2170067,11.148014 9.2170067,13.149999 9.2170067,15.157019 10.841035,16.781013 12.848029,16.781013 14.850049,16.781013 16.479051,15.157019 16.479051,13.149999 16.479051,11.148014 14.850049,9.5190156 12.848029,9.5190156z M12.282018,2.3240062C11.384035,2.3229991,9.0750074,2.5079966,6.7410164,4.2229937L9.9120159,9.3609956C9.9120159,9.3609956 10.673035,8.6459993 11.475039,8.4159883 12.179021,8.2170137 13.287025,8.2420076 13.287025,8.2420076L12.675024,2.3389903C12.675024,2.3389903,12.534033,2.3240062,12.282018,2.3240062z M12.833014,0C18.399039,2.2430322E-07 23.128057,3.5490127 24.90507,8.5029939 22.469058,9.3349946 20.667052,12.041996 19.931056,13.323003 19.068048,14.829992 17.230029,18.624 18.813043,21.331001 19.247033,22.071023 19.870051,22.628 20.590055,23.047006 18.43505,24.686014 15.754043,25.670999 12.833014,25.670999 5.7450113,25.670999 0,19.926002 0,12.833013 0,5.7449973 5.7450113,2.2430322E-07 12.833014,0z"></path>
                           </g>
                       </svg>
@@ -1218,8 +612,6 @@ text-align:center; width: auto; margin-left: auto; margin-right: auto">
                       </svg>
 
                   </th>
-
-
 
                   <th style="padding:0px">
                       <svg xmlns="http://www.w3.org/2000/svg" height="56" width="56" viewBox="0 0 56 56">
@@ -1253,33 +645,25 @@ text-align:center; width: auto; margin-left: auto; margin-right: auto">
       </table>
       </div>
 
-
 <div class="col s1 push-s1" style="border-radius: 20px;
   background-color: #001438;
   border-style: Solid;
   border-color: black;
   border-width: 1px;">
   <img id="graphicfordisctype" src="files/theme/winrareicons/myicons/dvdhlpphoneicons/appdvdplayerplus/unknowngraphic.jpg" alt="Nexts Page">
- 
+
   </div>
-  
 
     </div>
-
 
 <!-- https://m.media-amazon.com/images/M/MV5BYjJiZTcxYzEtODFlZi00M2UzLTg5NTgtYWMxMGNkMWJiNmRjXkEyXkFqcGdeQXBrZWVzZXk@. -->
 <div id="thepostertrailer"  style="z-index:-1; margin-left: auto; visibility: visible; margin-right: auto; margin-top: 100px; position:fixed; height:100%; width: 100%;
 background-image: url('files/theme/winrareicons/myicons/dvdhlpphoneicons/appdvdplayerplus/mytransparentimage.png');  background-size: cover;
-             
+
             background-position-x: left;
 ">
 </div>
-<!-- <canvas id="myCanvasPoster" style="z-index:-1; margin-left: auto; visibility: visible; margin-right: auto; margin-top: 100px; position:fixed; height:100%; width: 100%;" ></canvas>
--->
- 
-  
 
- 
   <div >
 
 <div class="content-wrap railway-layout" style='background: transparent; background-color: transparent;'>
@@ -1305,8 +689,7 @@ color: #ffffff;
     transition: box-shadow .25s;
     -webkit-box-shadow .25s: ;
     border: whitesmoke
-    
-   
+
 ">
               <div class="card-image">
                 <img style="width: 110px; height: 110px;
@@ -1321,17 +704,14 @@ margin-left: auto;
 <hr>
               <div class="card-content">
  <h2 class="wsite-content-title" style="text-align:center;"><font color="#d5d5d5">The app. couldn't locate a CD or DVD Drive in your device.<br>If you use an external (or portable) CD/DVD drive, make sure that you have plug it in a USB port of your computer.<br>Also, check that any power cord that the Drive may needs, is connected.</font><br></h2>
-                
+
               </div>
               <div id="mycard_nodvdfound_button"  class="card-action" style="position: initial; visibility: hidden">
-
 
                <a class="waves-effect waves-light btn-large " onclick="mySenddd('ReadDVD');" alt="Retry reading .." style="background: #0060C3";><i class="material-icons left">autorenew</i>Retry reading ..</a>
 
               </div>
             </div></div>
-
-
 
 </div>
 
@@ -1349,8 +729,7 @@ color: #ffffff;
     transition: box-shadow .25s;
     -webkit-box-shadow .25s: ;
     border: whitesmoke
-    
-   
+
 ">
               <div class="card-image">
                 <img style="width: 110px; height: 110px;
@@ -1365,14 +744,12 @@ margin-left: auto;
 <hr>
               <div class="card-content">
  <h2 class="wsite-content-title" style="text-align:center;"><font color="#d5d5d5">The app has succefully identified your Optical Drive. Now, in order for the app to be able to read and play your CD/DVD contents, you must explicitly give a permanent access to the app for reading your Optical Drive. This is only needed once! Press the button below, select your DVD folder and click on the button "Select DVD Drive".</font><br></h2>
-                
+
               </div>
               <div id="mycard_accessneeded_button" class="card-action" style="position: initial; visibility: hidden;">
                <a  class="waves-effect waves-light btn-large " alt="Give permission!" style="background: #0060C3"><i class="material-icons left">perm_media</i>Give Permission to..</a>
               </div>
             </div></div>
-
-
 
 </div>
 
@@ -1388,8 +765,7 @@ color: #ffffff;
     transition: box-shadow .25s;
     -webkit-box-shadow .25s: ;
     border: whitesmoke
-    
-   
+
 ">
               <div class="card-image">
                 <img style="width: 350px; height: 75px;
@@ -1405,11 +781,10 @@ margin-left: auto;
        </div>
 <img style="margin-right:1px; width: 50%; height: 3px; align:center; margin-top:5px; margin-bottom:5px;" src="files/theme/appdvdplayerplus/mylinefinal.html" alt="myline">
 
- <br> 
-<div>  
+ <br>
+<div>
  <table style="color: #ffffff; padding: 0px; font-size:14px; line-height:13px; text-align:center; width: auto; margin-left: auto; margin-right: auto">
 
- 
   <tbody><tr style="padding: 0px;">
     <td  style="padding: 0px;">
 
@@ -1428,18 +803,16 @@ margin-left: auto;
 </tbody>
 </table>
 
-  
      </div>
- <br> 
+ <br>
 
 <img style="margin-right:1px; width: 90%; height: 3px; align:center; margin-top:5px; margin-bottom:5px;" src="files/theme/winrareicons/myicons/dvdhlpphoneicons/appdvdplayerplus/mylinefinal.svg" alt="myline">
 
               <div class="card-content" >
  <h2 class="wsite-content-title" style="text-align:center;"><font color="#ffffff">- Read useful info and tips for playing the Media Files from your CD/DVD/BluRay discs.<br>- Read about the features that the application supports, but also what the app can't do!</font><br></h2>
-                
+
    <table id="mycard_welcome_buttons" style="color: #ffffff; padding: 0px; font-size:14px; line-height:13px; text-align:center; width: auto; margin-left: auto; margin-right: auto; position: initial; visibility: hidden">
 
- 
   <tbody><tr style="padding: 0px;">
     <td  style="padding: 0px;">
 
@@ -1454,10 +827,8 @@ margin-left: auto;
 </tbody>
 </table>
               </div>
-              
+
             </div></div>
-
-
 
 </div>
 
@@ -1475,8 +846,7 @@ color: #ffffff;
     transition: box-shadow .25s;
     -webkit-box-shadow .25s: ;
     border: whitesmoke
-    
-   
+
 ">
               <div class="card-image">
                 <img style="width: 110px; height: 110px;
@@ -1494,7 +864,7 @@ margin-left: auto;
 Probably there is no CD or DVD disc in the drive to read.<br>
 <br>
 Put a disc into the drive and click on the button below to read the contents and play!</font><br></h2>
-                
+
               </div>
               <div id="mycard_dvdnotready_button"  class="card-action" style="position: initial; visibility: hidden;">
            <a class="waves-effect waves-light btn-large " onclick="mySenddd('ReadDVD');"  alt="Retry reading !" style="background: #0060C3"><i class="material-icons left">autorenew</i>Retry reading ..</a>
@@ -1504,13 +874,10 @@ Put a disc into the drive and click on the button below to read the contents and
 <a onclick="myFunctionOpenUrl('howto-check-dvd.html')" ><strong><u>Is your DVD not recognized ?</u></font></strong></a>
 </font><br></h2>
 
-  
 </div>
 
               </div>
             </div></div>
-
-
 
 </div>
 
@@ -1526,8 +893,7 @@ color: #ffffff;
     transition: box-shadow .25s;
     -webkit-box-shadow .25s: ;
     border: whitesmoke
-    
-   
+
 ">
               <div class="card-image">
                 <img style="width: 184px; height: 70px;
@@ -1543,11 +909,10 @@ margin-left: auto;
        </div>
 <img style="margin-right:1px; width: 50%; height: 3px; align:center; margin-top:5px; margin-bottom:5px;" src="files/theme/appdvdplayerplus/mylinefinal.html" alt="myline">
 
- <br> 
-<div>  
+ <br>
+<div>
  <table style="color: #ffffff; padding: 0px; font-size:14px; line-height:13px; text-align:center; width: auto; margin-left: auto; margin-right: auto">
 
- 
   <tbody><tr style="padding: 0px;">
     <td  style="padding: 0px;">
 
@@ -1566,18 +931,16 @@ margin-left: auto;
 </tbody>
 </table>
 
-  
      </div>
- <br> 
+ <br>
 
 <img style="margin-right:1px; width: 90%; height: 3px; align:center; margin-top:5px; margin-bottom:5px;" src="files/theme/appdvdplayerplus/mylinefinal.html" alt="myline">
 
               <div class="card-content"  >
  <h2 class="wsite-content-title" style="text-align:center;"><font color="#ffffff">- Add Suport for Blu-Ray Playback to your Applications Collection in Windows 10 !<br>- Get our "Blu-Ray Player+" application from the official Microsoft Store. It's 100% Free and works together with the "DVD Player+" (automatically switching). Keep them both installed and insert for play any Disc Type you want (DVD, Blu-Ray, VCD, Audio-CD, etc.)!</font><br></h2>
-                
+
    <table id="mycard_getbluray_buttons"  style="color: #ffffff; padding: 0px; font-size:14px; line-height:13px; text-align:center; width: auto; margin-left: auto; margin-right: auto; position: initial; visibility: hidden">
 
- 
   <tbody><tr style="padding: 0px;">
     <td  style="padding: 0px;">
 
@@ -1592,16 +955,14 @@ margin-left: auto;
 </tbody>
 </table>
               </div>
-              
+
             </div></div>
-
-
 
 </div>
 
 <div class="wsite-spacer" style="height:10px;"></div>
 
-<div><div id="156082812368278511" align="left" style="width: 100%; " class="wcustomhtml"> 
+<div><div id="156082812368278511" align="left" style="width: 100%; " class="wcustomhtml">
 <div id="mycard_dvdmovie_info">
 
 <div class="wsite-spacer" style="height:54px;"></div>
@@ -1618,47 +979,34 @@ margin-left: auto;
     transition: box-shadow .25s;
     -webkit-box-shadow: inherit;
     border: whitesmoke; "
-    
-   
->
-       
- <!--
- <span style="color: #ffffff; padding: 15px; font-size:14px; line-height:13px; text-align:center; margin-left: 0px; margin-right: 0px">Movie's Extra Info</span> -->
 
- <div class="mytextslarge">Movie's Extra Info</div> 
+>
+
+ <div class="mytextslarge">Movie's Extra Info</div>
 <hr>
 
               <div class="card-action" style="padding: 0px">
 
 <table style="color: #ffffff; padding: 0px; font-size:14px; line-height:13px; text-align:center; width: auto; margin-left: auto; margin-right: auto">
 
- 
   <tbody><tr style="padding: 0px;">
     <td rowspan="3" style="padding: 0px;">
-     
+
      <img id="theDVDPoster" src="files/theme/winrareicons/myicons/dvdhlpphoneicons/appdvdplayerplus/mymovieposterdefault.jpg" style="height: 115px">
      </td>
     <td id="theDVDTitle" colspan="6" style="padding: 0px; font-size: 22px;">Citizen Toxie: The Toxic Avenger IVb </td>
-     
+
     <td rowspan="3" style="padding: 0px;">
 <a id="mycard_dvdmovie_info_button" alt="Movie info!" onclick="mySenddd('OpenMovieInfo');" class="btn-floating waves-effect waves-light  btn-large " style="width:100px; height:100px; ">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="100" width="100">
                             <g>
-                                
+
 <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#FFFFFF" fill="#003974"></ellipse>
 
  <ellipse stroke="#00338E" strokethickness="1" fill="#004C9A"></ellipse>
 
-
-                                
-
-    
-                           
-
-
-                          
     <path id="path1" d="M23.269981,21.126986L24.731043,21.126986 24.731043,26.5 23.269981,26.5z M24,17.500005C24.552,17.500005 25,17.971001 25,18.550995 25,19.13099 24.552,19.601985 24,19.601985 23.448,19.601985 23,19.13099 23,18.550995 23,17.971001 23.448,17.500005 24,17.500005z M23.984953,16C20.668899,16 17.969913,18.69101 17.969913,22 17.969913,25.30899 20.668899,28 23.984953,28 27.300885,28 29.998895,25.30899 29.998895,22 29.998895,18.69101 27.300885,16 23.984953,16z M23.984953,14C28.403917,14 31.998904,17.588989 31.998904,22 31.998904,26.411011 28.403917,30 23.984953,30 19.565867,30 15.969904,26.411011 15.969904,22 15.969904,17.588989 19.565867,14 23.984953,14z M10.000068,7.3879962L10.000068,16.621011C11.304112,15.86301 12.562155,15.114009 13.819198,14.365008 15.135243,13.580006 16.451288,12.795005 17.801334,12.013004 16.437287,11.217003 15.120242,10.430001 13.803197,9.6430001 12.546155,8.8919988 11.289112,8.1409974 10.000068,7.3879962z M9.5970545,5.0809927C9.8780642,5.0809927 10.159074,5.1609926 10.410082,5.3119926 11.916133,6.1859946 13.372183,7.0559959 14.829233,7.9259973 16.337284,8.8279986 17.846335,9.73 19.411388,10.635002 19.7614,10.828002 20.02741,11.165003 20.141413,11.574003 20.256417,11.985004 20.200415,12.432005 19.987408,12.802005 19.827403,13.064006 19.648396,13.214006 19.552393,13.295006L19.408388,13.395006C17.852335,14.288007 16.347284,15.185009 14.843233,16.082011 13.372183,16.959012 11.901133,17.836013 10.383081,18.709014 10.155074,18.851015 9.8750639,18.927015 9.5870543,18.927015 9.4540496,18.927015 9.3190451,18.910015 9.1880407,18.876015 8.7720265,18.769015 8.4140143,18.493014 8.2050071,18.120014 8.0630026,17.855013 8.0000005,17.605013 8.0000005,17.335013L8.0000005,6.6719952C8.0000005,5.7949934,8.7160244,5.0809927,9.5970545,5.0809927z M3,0L25,0C26.654,0,28,1.3459997,28,3L28,12 26,12 26,3C26,2.4490004,25.551001,2,25,2L3,2C2.4490004,2,2,2.4490004,2,3L2,21C2,21.551,2.4490004,22,3,22L14,22 14,24 3,24C1.3460007,24,0,22.654,0,21L0,3C0,1.3459997,1.3460007,0,3,0z" fill="#F5F5F5" transform="rotate(0,38,38) translate(15,14) scale(0.8,0.8)  "></path><path id="path1" fill="#FFFFFF" d="M7.9680004119873,24.2886657714844L20.064001083374,24.2886657714844 20.064001083374,90.8166656494141 7.9680004119873,90.8166656494141 7.9680004119873,24.2886657714844z M39.3583335876465,24.2886657714844L50.5453338623047,24.2886657714844 52.7773323059082,28.3446655273438 55.2493324279785,33.2166633605957 60.5293312072754,44.3046646118164 65.8573303222656,56.1126670837402 68.3893280029297,61.8846664428711 70.7053375244141,67.2006683349609 73.0093307495117,61.8846664428711 75.5053329467773,56.1126670837402 80.7853317260742,44.3046646118164 86.0653381347656,33.2166633605957 88.5373306274414,28.3446655273438 90.7693328857422,24.2886657714844 101.668334960938,24.2886657714844 102.524085998535,31.8126640319824 103.33032989502,39.7926635742188 104.747085571289,56.5926666259766 105.920082092285,73.8726654052734 106.849334716797,90.8166656494141 94.9453353881836,90.8166656494141 94.0160827636719,66.9126663208008 93.3435211181641,54.8166656494141 92.4013366699219,43.104663848877 91.2493286132813,45.5286674499512 89.9053344726563,48.3846664428711 86.8333282470703,55.0566635131836 83.5213317871094,62.4966659545898 80.2573318481445,69.9366607666016 77.3293304443359,76.6566619873047 76.0813293457031,79.5486602783203 75.0253295898438,81.9846649169922 66.0013275146484,81.9846649169922 64.9453277587891,79.5366668701172 63.6973342895508,76.6086654663086 60.7693328857422,69.8406677246094 57.5053329467773,62.4006652832031 54.1933326721191,55.0086669921875 51.1213302612305,48.3366661071777 49.7773323059082,45.4686660766602 48.6253356933594,43.104663848877 47.6831474304199,54.8166656494141 47.0105819702148,66.9126663208008 46.0813331604004,90.8166656494141 34.1773338317871,90.8166656494141 35.1065826416016,73.7286682128906 36.2795829772949,56.2086639404297 37.6963348388672,39.3606643676758 38.5025825500488,31.5126667022705 39.3583335876465,24.2886657714844z M140.640670776367,34.0806655883789L138.144668579102,34.0986671447754 136.032669067383,34.1526641845703 134.304672241211,34.2426643371582 132.960662841797,34.3686637878418 132.960662841797,80.8326644897461 135.744659423828,80.9766693115234 137.78466796875,81.0126647949219 140.448669433594,81.0246658325195 146.157669067383,80.6376647949219 151.092666625977,79.4766616821289 155.253662109375,77.5416641235352 158.640670776367,74.8326644897461 161.265670776367,71.4276657104492 163.140670776367,67.4046630859375 164.265670776367,62.7636642456055 164.640670776367,57.5046653747559 164.274673461914,52.1706657409668 163.176666259766,47.4966659545898 161.346664428711,43.482666015625 158.78466796875,40.1286659240723 155.454666137695,37.482666015625 151.320678710938,35.5926666259766 146.382675170898,34.458667755127 140.640670776367,34.0806655883789z M139.872665405273,23.6166687011719L147.864669799805,24.1086673736572 155.136672973633,25.5846633911133 161.556671142578,28.1046657562256 166.99267578125,31.7286643981934 171.372665405273,36.4566650390625 174.624664306641,42.2886657714844 176.640655517578,49.28466796875 177.31266784668,57.5046653747559 176.640655517578,65.5806655883789 174.624664306641,72.5286636352539 171.372665405273,78.3846664428711 166.99267578125,83.1846618652344 161.544677734375,86.904670715332 155.088668823242,89.5206680297852 147.75666809082,91.0686645507813 139.6806640625,91.5846633911133 135.384674072266,91.5006637573242 130.560668945313,91.248664855957 120.864669799805,89.8566665649414 120.864669799805,25.248664855957 125.616668701172,24.3846664428711 130.656661987305,23.9046630859375 135.552673339844,23.6886672973633 139.872665405273,23.6166687011719z M202.46533203125,60.8646659851074L202.46533203125,81.1206665039063 206.785339355469,81.4086685180664 211.009338378906,81.5046691894531 217.969329833984,81.0246658325195 220.969329833984,80.3646697998047 223.537338256836,79.3446655273438 225.649337768555,77.9406661987305 227.281341552734,76.128662109375 228.325332641602,73.8246612548828 228.67333984375,70.9446640014648 228.415344238281,68.3286666870117 227.641342163086,66.1446685791016 226.351333618164,64.3926620483398 224.545333862305,63.0726661682129 222.283340454102,62.1066665649414 219.625335693359,61.4166641235352 216.571334838867,61.0026664733887 213.121337890625,60.8646659851074 202.46533203125,60.8646659851074z M211.105346679688,33.5046653747559L206.161346435547,33.6006660461426 202.46533203125,33.8886642456055 202.46533203125,51.3606643676758 211.009338378906,51.3606643676758 217.177337646484,50.8686637878418 221.857330322266,49.3926658630371 223.579330444336,48.2136650085449 224.809341430664,46.6446685791016 225.547332763672,44.6856651306152 225.793334960938,42.3366661071777 225.538330078125,40.110668182373 224.773330688477,38.2326698303223 223.498336791992,36.7026672363281 221.713333129883,35.5206642150879 217.021331787109,34.0086669921875 211.105346679688,33.5046653747559z M209.5693359375,23.6166687011719L215.401336669922,23.844669342041 220.801330566406,24.5286636352539 225.637329101563,25.7406692504883 229.77734375,27.5526657104492 233.149337768555,30.0006656646729 235.681335449219,33.1206665039063 237.265335083008,36.9846649169922 237.793334960938,41.664665222168 237.229339599609,46.0326652526855 235.537338256836,49.7286643981934 232.837326049805,52.7526664733887 229.24934387207,55.104663848877 232.075347900391,56.232666015625 234.505340576172,57.6006660461426 236.539337158203,59.2086639404297 238.177337646484,61.0566635131836 240.337341308594,65.5206680297852 241.057342529297,71.0406646728516 240.589340209961,75.8556671142578 239.185333251953,80.0286636352539 236.845336914063,83.5596694946289 233.5693359375,86.4486694335938 229.327331542969,88.6956634521484 224.089340209961,90.300666809082 217.855331420898,91.2636642456055 210.625335693359,91.5846633911133 199.969329833984,91.248664855957 194.929336547852,90.732666015625 190.561340332031,89.8566665649414 190.561340332031,25.248664855957 195.073333740234,24.5286636352539 199.969329833984,24.0006637573242 204.913330078125,23.7126617431641 209.5693359375,23.6166687011719z" transform="rotate(0,28,28) translate(18,42) scale(0.08,0.08)  "></path>
-                   
+
                             </g>
                         </svg>
 
@@ -1666,7 +1014,7 @@ margin-left: auto;
 <br>
 <span style="margin-left: 20px; align-content:center margin-right:10ox;">Movie Info</span>
 </td>
-   
+
   </tr>
   <tr style="padding: 0px;">
     <td id="theDVDType" style="padding: 0px; color: #0066FF">| Movie</td>
@@ -1674,12 +1022,9 @@ margin-left: auto;
 
     <td style="padding: 0px 0px 00px 40px;"><svg xmlns="http://www.w3.org/2000/svg" height="50" width="50" viewBox="0 0 50 50">
                             <g>
-  
 
-                                
     <path id="path1" d="M16.001007,0L20.944,10.533997 32,12.223022 23.998993,20.421997 25.889008,32 16.001007,26.533997 6.1109924,32 8,20.421997 0,12.223022 11.057007,10.533997z" fill="#FFD700" transform="rotate(0,38,38) translate(0,0) scale(1.3,1.3)  "></path>
-             
-                   
+
                             </g>
                         </svg>
 
@@ -1692,13 +1037,11 @@ margin-left: auto;
 <td id="theDVDDuration" style="padding: 0px; color: #6CA7FF"> | 149 min </td>
 
     <td id="theDVDReleased" style="padding: 0px; color: #2992FF">| 12 April 2018 |</td><td style="padding: 0px; color: #C0C0C0"></td><td id="theDVDVotes" style="padding: 0px; color: #C0C0C0" colspan="2">365,369</td>
-    
-     
+
   </tr>
 </tbody></table>
- 
+
               </div>
-             
 
 <hr>
 
@@ -1707,8 +1050,6 @@ margin-left: auto;
 
 </div>
 </div>
-
-
 
 </div>
 
@@ -1724,55 +1065,41 @@ color: #ffffff;
     transition: box-shadow .25s;
     -webkit-box-shadow .25s: ;
     border: whitesmoke
-    
-   
-">
-       
-<hr>
- 
 
+">
+
+<hr>
 
               <div class="card-content">
 
-
- 
-
-
- 
               </div>
               <div class="card-action" style="position: initial;">
-         
+
 <a id="mycard_dvdmovie_button" alt="Play the movie!" onclick="LetsGoNowPlay();" class="btn-floating waves-effect waves-light  btn-large " style="width:200px; height:200px; ">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="200" width="200">
                             <g>
-                                
+
 <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#FFFFFF" fill="#003974"></ellipse>
 
  <Ellipse Stroke="#00338E" StrokeThickness="1" Fill="#004C9A"  />
 
-
                                 <path transform="rotate(0,20,28) translate(2,2) scale(1.6,1.6)  "  id="path1" d="M16,13.900007C14.800003,13.900007 13.899994,14.800032 13.899994,15.999985 13.899994,17.199999 14.800003,18.100023 16,18.100023 17.199997,18.100023 18.099991,17.199999 18.099991,15.999985 18.099991,14.800032 17.199997,13.900007 16,13.900007z M16,11.199993C18.599991,11.199993 20.800003,13.300031 20.800003,15.999985 20.800003,18.600025 18.699997,20.800039 16,20.800039 13.399994,20.800039 11.199997,18.700001 11.199997,15.999985 11.199997,13.400007 13.399994,11.199993 16,11.199993z M29.800003,7.9999774C31.199997,10.400004 32,13.100019 32,15.999985 32,24.800043 24.800003,32 16,32 7.1999969,32 0,24.800043 0,15.999985L0,14.900008 10.099991,15.600021 10.099991,15.999985C10.099991,19.200001 12.699997,21.800039 15.899994,21.800039 19.099991,21.800039 21.699997,19.200001 21.699997,15.999985 21.699997,14.900008 21.399994,13.900007 20.899994,13.100019z M16,0C18.199997,2.3098255E-07,20.399994,0.50000072,22.300003,1.2999892L18.399994,10.699992C17.699997,10.400004 16.899994,10.199992 16,10.199992 14.300003,10.199992 12.800003,10.900004 11.699997,12.100018L4.0999908,5.2999933C7.0999908,2.0000022,11.300003,2.3098255E-07,16,0z" fill="#004C9A"></path>
 
-
-
     <path id="pathforvcd" visibility="hidden" transform="rotate(0,38,38) translate(20,40) scale(0.6375,0.6375)  " d="M0.199609890580177,9.62558364868164L1.890749335289,9.62558364868164 1.890749335289,11.455340385437 0.199609890580177,11.455340385437 0.199609890580177,9.62558364868164z M2.02951502799988,2.47844004631042L4.491370677948,2.47844004631042 4.69061231613159,4.26166296005249 4.85914134979248,5.90217399597168 4.99695825576782,7.39997386932373 5.1040620803833,8.75506210327148 5.19590139389038,7.49403953552246 5.29052448272705,6.3058123588562 5.38793087005615,5.19038152694702 5.48812055587769,4.14774703979492 5.65021705627441,2.47844004631042 8.11207294464111,2.47844004631042 6.92411613464355,11.455340385437 3.37826800346375,11.455340385437 2.02951502799988,2.47844004631042z M11.1616678237915,2.28991937637329L11.6548013687134,2.31483817100525 12.1028842926025,2.38959455490112 12.5059156417847,2.51418828964233 12.8638973236084,2.68861937522888 13.1705894470215,2.90025281906128 13.4197549819946,3.1364529132843 13.6113948822021,3.39721989631653 13.7455072402954,3.68255376815796 13.8376884460449,4.02152681350708 13.9035320281982,4.44320964813232 13.9430379867554,4.94760322570801 13.9562063217163,5.53470659255981 13.9562063217163,6.38746690750122 11.6218795776367,6.38746690750122 11.6218795776367,4.82723522186279 11.6172018051147,4.51895666122437 11.6031665802002,4.27464771270752 11.5797748565674,4.09430932998657 11.5470266342163,3.97794008255005 11.4271211624146,3.85136437416077 11.2171154022217,3.80917263031006 10.9814643859863,3.86046123504639 10.8511638641357,4.01432704925537 10.8172025680542,4.1467080116272 10.7929439544678,4.33869361877441 10.7783889770508,4.5902853012085 10.7735376358032,4.90148210525513 10.7735376358032,9.07111167907715 10.7783889770508,9.36983299255371 10.7929439544678,9.61172103881836 10.8172025680542,9.79677677154541 10.8511638641357,9.92499828338623 10.9773063659668,10.0747051239014 11.2004814147949,10.124608039856 11.4160318374634,10.0745868682861 11.5414810180664,9.92452144622803 11.5766553878784,9.79078006744385 11.6017799377441,9.58963966369629 11.6168546676636,9.3211030960083 11.6218795776367,8.98516845703125 11.6218795776367,7.85681772232056 13.9562063217163,7.85681772232056 13.9562063217163,8.20665454864502 13.9439039230347,8.8528470993042 13.9069976806641,9.39770793914795 13.8454856872559,9.84123706817627 13.7593688964844,10.1834335327148 13.6311473846436,10.4659414291382 13.443320274353,10.7304010391235 13.1958875656128,10.9768133163452 12.8888483047485,11.2051782608032 12.5324268341064,11.397102355957 12.1368455886841,11.5341901779175 11.7021045684814,11.6164436340332 11.2282047271729,11.6438608169556 10.7378435134888,11.6206426620483 10.2925329208374,11.5509872436523 9.89227390289307,11.4348945617676 9.53706550598145,11.272364616394 9.23245239257813,11.0687694549561 8.98397922515869,10.8294801712036 8.79164695739746,10.5544967651367 8.65545463562012,10.2438192367554 8.56084823608398,9.87388229370117 8.49327182769775,9.42112159729004 8.45272636413574,8.88553619384766 8.43921089172363,8.26712703704834 8.43921089172363,5.64447450637817 8.44336986541748,5.18963479995728 8.45584487915039,4.79544019699097 8.476637840271,4.46189069747925 8.50574779510498,4.18898582458496 8.63812732696533,3.71283316612244 8.90219497680664,3.25470066070557 9.29586982727051,2.85340166091919 9.81707382202148,2.54774904251099 10.4457063674927,2.35437679290771 11.1616678237915,2.28991937637329z M17.1278343200684,4.01432704925537L17.1278343200684,9.91945362091064 17.3558616638184,9.90680408477783 17.5353717803955,9.86885738372803 17.6663665771484,9.80561351776123 17.7488441467285,9.71707153320313 17.7997856140137,9.57238864898682 17.8361721038818,9.34072303771973 17.8580055236816,9.02207565307617 17.8652820587158,8.61644458770752 17.8652820587158,5.12881565093994 17.8628559112549,4.851233959198 17.8555793762207,4.62840557098389 17.8434505462646,4.46033096313477 17.8264694213867,4.34701061248779 17.7627048492432,4.19799661636353 17.6490383148193,4.09472560882568 17.4494285583496,4.03442716598511 17.1278343200684,4.01432704925537z M14.7935085296631,2.47844004631042L16.5400943756104,2.47844004631042 17.3172225952148,2.4881432056427 17.9574642181396,2.51725292205811 18.4608192443848,2.56576919555664 18.8272914886475,2.63369202613831 19.3519611358643,2.8388466835022 19.7338523864746,3.14380621910095 19.9861373901367,3.51876783370972 20.1219825744629,3.93392872810364 20.1559448242188,4.20406103134155 20.1802024841309,4.57919597625732 20.1947574615479,5.05933380126953 20.1996097564697,5.64447450637817 20.1996097564697,8.78833103179932 20.1925048828125,9.34262943267822 20.1711921691895,9.79677677154541 20.1356716156006,10.1507720947266 20.0859432220459,10.404616355896 19.9299983978271,10.7677955627441 19.6894950866699,11.0422592163086 19.3734455108643,11.2377099990845 18.9908599853516,11.3638525009155 18.7565956115723,11.4038791656494 18.4696578979492,11.4324684143066 18.1300430297852,11.4496231079102 17.7377548217773,11.455340385437 14.7935085296631,11.455340385437 14.7935085296631,2.47844004631042z" fill="#F5F5F5"></path>
- 
-   <path id="pathfordvd" visibility="visible" transform="rotate(0,38,38) translate(20,40) scale(0.4375,0.4375)  " d="M23.261636,11.83176C23.462621,11.83176 23.662632,11.931763 23.863617,12.031752 23.963651,12.132764 24.063627,12.332757 24.063627,12.633745 24.063627,12.833738 23.963651,13.034738 23.863617,13.235738 23.763643,13.335726 23.562656,13.435731 23.261636,13.435731 23.061626,13.435731 22.860641,13.335726 22.660631,13.235738 22.559681,13.134742 22.459646,12.934734 22.459646,12.633745 22.459646,12.432746 22.559681,12.232752 22.660631,12.031752 22.860641,11.931763 22.960676,11.83176 23.261636,11.83176z M14.438761,11.83176L14.538797,11.83176 14.939792,11.83176C15.240753,11.83176 15.440762,11.931763 15.541773,12.031752 15.641748,12.132764 15.741783,12.332757 15.741783,12.633745 15.741783,12.833738 15.641748,13.034738 15.541773,13.134742 15.440762,13.335726 15.139741,13.435731 14.839758,13.435731L14.438761,13.435731z M23.261636,11.329771C22.760666,11.329771 22.459646,11.430767 22.158685,11.730764 21.958675,12.031752 21.75769,12.232752 21.75769,12.633745 21.75769,13.034738 21.857664,13.235738 22.158685,13.535735 22.459646,13.836724 22.760666,13.936713 23.261636,13.936713 23.662632,13.936713 24.063627,13.836724 24.364648,13.535735 24.665607,13.235738 24.765644,12.934734 24.765644,12.633745 24.765644,12.332757 24.665607,12.031752 24.364648,11.730764 24.063627,11.430767 23.662632,11.329771 23.261636,11.329771z M18.248706,11.329771L18.248706,13.936713 20.153709,13.936713 20.153709,13.435731 18.950721,13.435731 18.950721,12.833738 20.053672,12.833738 20.053672,12.332757 18.84971,12.332757 18.84971,11.83176 20.053672,11.83176 20.053672,11.329771z M13.936755,11.329771L13.936755,13.936713 15.039767,13.936713C15.541773,13.936713 15.942769,13.836724 16.142778,13.535735 16.343765,13.335726 16.543773,13.034738 16.543773,12.633745 16.543773,12.232752 16.443739,11.931763 16.142778,11.730764 15.841757,11.430767 15.541773,11.329771 15.039767,11.329771z M11.429832,11.329771L11.429832,13.936713 12.031813,13.936713 12.031813,11.329771z M7.1188575,11.329771L8.3218437,13.936713 8.6228643,13.936713 9.8258501,11.329771 9.1238342,11.329771 8.5228296,12.833738 7.8208738,11.329771z M15.641748,9.9267995C24.264612,9.9267995 31.283556,11.029774 31.283556,12.432746 31.283556,13.836724 24.264612,14.939698 15.641748,14.939698 7.0188833,15.039702 0,13.936713 0,12.533742 0,11.129779 7.0188833,9.9267995 15.641748,9.9267995z M3.8099442,0L15.039767,0 16.74476,5.0128986 20.554704,0 27.071581,0C28.876546,1.1468182E-07 30.28058,0.40099291 31.082571,1.3029827 31.8845,2.1059601 32.185522,3.1079384 31.8845,4.4119126 31.584516,5.7148954 30.88256,6.8178693 29.77955,7.5198509 28.575586,8.3218371 26.87157,8.7228295 24.866655,8.7228295L20.554704,8.7228295 22.058651,2.3059532 24.665607,2.3059532 23.662632,7.2188622 25.367624,7.2188622C26.57061,7.2188622 27.473613,6.9188654 28.275604,6.3168728 28.876546,5.8158909 29.277542,5.2138983 29.378555,4.4119126 29.578563,3.6099271 29.47859,2.9079456 28.977558,2.4059571 28.475551,1.8049713 27.673561,1.6039713 26.470636,1.6039713L22.158685,1.6039713 15.841757,9.9267995 13.335811,3.0079498 13.335811,3.1079384C13.435785,3.5089313 13.335811,4.0109197 13.234799,4.4119126 12.934816,5.7148954 12.232799,6.8178693 11.129848,7.5198509 9.9258247,8.4228322 8.2218691,8.8238255 6.2159158,8.8238255L1.9049416,8.8238255 3.3089136,2.3059532 5.9158712,2.3059532 4.9128948,7.2188622 6.6178881,7.2188622C7.8208738,7.2188622 8.722839,6.9188654 9.5248295,6.3168728 10.126811,5.8158909 10.527806,5.2138983 10.627842,4.4119126 10.828827,3.6099271 10.728853,2.9079456 10.226846,2.4059571 9.7258154,1.9049601 8.9238249,1.6039713 7.7208997,1.6039713L3.4089485,1.6039713z" fill="#F5F5F5"></path>
-    
 
-                       
+   <path id="pathfordvd" visibility="visible" transform="rotate(0,38,38) translate(20,40) scale(0.4375,0.4375)  " d="M23.261636,11.83176C23.462621,11.83176 23.662632,11.931763 23.863617,12.031752 23.963651,12.132764 24.063627,12.332757 24.063627,12.633745 24.063627,12.833738 23.963651,13.034738 23.863617,13.235738 23.763643,13.335726 23.562656,13.435731 23.261636,13.435731 23.061626,13.435731 22.860641,13.335726 22.660631,13.235738 22.559681,13.134742 22.459646,12.934734 22.459646,12.633745 22.459646,12.432746 22.559681,12.232752 22.660631,12.031752 22.860641,11.931763 22.960676,11.83176 23.261636,11.83176z M14.438761,11.83176L14.538797,11.83176 14.939792,11.83176C15.240753,11.83176 15.440762,11.931763 15.541773,12.031752 15.641748,12.132764 15.741783,12.332757 15.741783,12.633745 15.741783,12.833738 15.641748,13.034738 15.541773,13.134742 15.440762,13.335726 15.139741,13.435731 14.839758,13.435731L14.438761,13.435731z M23.261636,11.329771C22.760666,11.329771 22.459646,11.430767 22.158685,11.730764 21.958675,12.031752 21.75769,12.232752 21.75769,12.633745 21.75769,13.034738 21.857664,13.235738 22.158685,13.535735 22.459646,13.836724 22.760666,13.936713 23.261636,13.936713 23.662632,13.936713 24.063627,13.836724 24.364648,13.535735 24.665607,13.235738 24.765644,12.934734 24.765644,12.633745 24.765644,12.332757 24.665607,12.031752 24.364648,11.730764 24.063627,11.430767 23.662632,11.329771 23.261636,11.329771z M18.248706,11.329771L18.248706,13.936713 20.153709,13.936713 20.153709,13.435731 18.950721,13.435731 18.950721,12.833738 20.053672,12.833738 20.053672,12.332757 18.84971,12.332757 18.84971,11.83176 20.053672,11.83176 20.053672,11.329771z M13.936755,11.329771L13.936755,13.936713 15.039767,13.936713C15.541773,13.936713 15.942769,13.836724 16.142778,13.535735 16.343765,13.335726 16.543773,13.034738 16.543773,12.633745 16.543773,12.232752 16.443739,11.931763 16.142778,11.730764 15.841757,11.430767 15.541773,11.329771 15.039767,11.329771z M11.429832,11.329771L11.429832,13.936713 12.031813,13.936713 12.031813,11.329771z M7.1188575,11.329771L8.3218437,13.936713 8.6228643,13.936713 9.8258501,11.329771 9.1238342,11.329771 8.5228296,12.833738 7.8208738,11.329771z M15.641748,9.9267995C24.264612,9.9267995 31.283556,11.029774 31.283556,12.432746 31.283556,13.836724 24.264612,14.939698 15.641748,14.939698 7.0188833,15.039702 0,13.936713 0,12.533742 0,11.129779 7.0188833,9.9267995 15.641748,9.9267995z M3.8099442,0L15.039767,0 16.74476,5.0128986 20.554704,0 27.071581,0C28.876546,1.1468182E-07 30.28058,0.40099291 31.082571,1.3029827 31.8845,2.1059601 32.185522,3.1079384 31.8845,4.4119126 31.584516,5.7148954 30.88256,6.8178693 29.77955,7.5198509 28.575586,8.3218371 26.87157,8.7228295 24.866655,8.7228295L20.554704,8.7228295 22.058651,2.3059532 24.665607,2.3059532 23.662632,7.2188622 25.367624,7.2188622C26.57061,7.2188622 27.473613,6.9188654 28.275604,6.3168728 28.876546,5.8158909 29.277542,5.2138983 29.378555,4.4119126 29.578563,3.6099271 29.47859,2.9079456 28.977558,2.4059571 28.475551,1.8049713 27.673561,1.6039713 26.470636,1.6039713L22.158685,1.6039713 15.841757,9.9267995 13.335811,3.0079498 13.335811,3.1079384C13.435785,3.5089313 13.335811,4.0109197 13.234799,4.4119126 12.934816,5.7148954 12.232799,6.8178693 11.129848,7.5198509 9.9258247,8.4228322 8.2218691,8.8238255 6.2159158,8.8238255L1.9049416,8.8238255 3.3089136,2.3059532 5.9158712,2.3059532 4.9128948,7.2188622 6.6178881,7.2188622C7.8208738,7.2188622 8.722839,6.9188654 9.5248295,6.3168728 10.126811,5.8158909 10.527806,5.2138983 10.627842,4.4119126 10.828827,3.6099271 10.728853,2.9079456 10.226846,2.4059571 9.7258154,1.9049601 8.9238249,1.6039713 7.7208997,1.6039713L3.4089485,1.6039713z" fill="#F5F5F5"></path>
+
 <ellipse cy="26" cx="27" stroke-width="0.875" ry="11.0625" rx="11.0625" stroke="#082C69" fill="#003872"></ellipse>
 
-                          
     <path id="path1" transform="rotate(0,28,28) translate(22,20) scale(0.4,0.4)  " d="M0,0L15.825011,8.0009766 31.650999,15.997986 15.825011,23.998993 0,32 0,15.997986z" fill="#FFFFFF"></path>
-                   
+
                             </g>
 
 <svg id="pathforbluray" visibility="hidden"
   width="104.29213"
    height="55"
    viewBox="-0.744 82.256 104.29213 55"
-    
+
 transform="translate(17,38)   scale(0.2,0.2)"
 >
  <g >
@@ -1847,13 +1174,8 @@ transform="translate(17,38)   scale(0.2,0.2)"
 
                         </svg>
 
-
-
                     </a>
-					
-					
-					
-	
+
 <div id="labelforplaydvdtype" class="mytexts" >Play DVD Movie</div>
 <hr>
 <div id="labelforblurayoption" style="visibility:hidden; display:none;">
@@ -1872,35 +1194,23 @@ transform="translate(17,38)   scale(0.2,0.2)"
             </div>
 </div>
 
-
-
 </div>
 
 <div><div style="height: 20px;   width: 100%;"></div>
 <hr class="styled-hr" style="width:100%;"></hr>
 <div style="height: 20px;   width: 100%;"></div></div>
 
-<div><div id="458037419771289927" align="center" style="width: 100%; " class="wcustomhtml"> 
+<div><div id="458037419771289927" align="center" style="width: 100%; " class="wcustomhtml">
 <div id="myidforloadingprogress" style="background-color:#04519E;">
 
-
-<!--   <img style="width: 590px; height: 590px;
-
-margin-left: auto;
-    margin-right: auto;
-" src="https://www.mlapplications.com/files/theme/appdvdplayerplus/logoloading.jpg"></img> -->
- 
-
 </div>
 </div>
-
-
 
 </div>
 
 <div><div id="187864953857095690" align="center" style="width: 100%; " class="wcustomhtml"><style>
 .mywrapper {
-   text-align: center;        
+   text-align: center;
 }
 
 .trailerblock
@@ -1910,182 +1220,173 @@ margin-left: auto;
     vertical-align: top;
     zoom: 1;
     *display: inline;
-    
+
     width: 200px;
     height: 150px;
-    
+
     margin: 1%;
 }
-
-
-
 
 </style>
 <div id="mycard_dvdtrailers" style="margin-bottom: 150px;" >
 <div class="mytextslarge" id="theTrailersTitle"  style="padding: 0px; color: #ffffff; font-size: 22px;">the movie's extra  Trailers & Videos:</div>
 <hr />
 <div class="mywrapper">
- 
-				
-			 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas0');" style="width:200px; height:150px; ">			
+
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas0');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter0"  class="trailerblock"><canvas id="myCanvas0" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas1');" style="width:200px; height:150px; ">			
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas1');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter1"  class="trailerblock"><canvas id="myCanvas1" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas2');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas2');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter2"  class="trailerblock"><canvas id="myCanvas2" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas3');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas3');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter3"  class="trailerblock"><canvas id="myCanvas3" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas4');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas4');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter4"  class="trailerblock"><canvas id="myCanvas4" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas5');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas5');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter5"  class="trailerblock"><canvas id="myCanvas5" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas6');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas6');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter6"  class="trailerblock"><canvas id="myCanvas6" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas7');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas7');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter7"  class="trailerblock"><canvas id="myCanvas7" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas8');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas8');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter8"  class="trailerblock"><canvas id="myCanvas8" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas9');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas9');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter9"  class="trailerblock"><canvas id="myCanvas9" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas10');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas10');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter10"  class="trailerblock"><canvas id="myCanvas10" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas11');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas11');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter11"  class="trailerblock"><canvas id="myCanvas11" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas12');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas12');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter12"  class="trailerblock"><canvas id="myCanvas12" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas13');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas13');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter13"  class="trailerblock"><canvas id="myCanvas13" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas14');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas14');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter14"  class="trailerblock"><canvas id="myCanvas14" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas15');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas15');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter15"  class="trailerblock"><canvas id="myCanvas15" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas16');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas16');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter16"  class="trailerblock"><canvas id="myCanvas16" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas17');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas17');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter17"  class="trailerblock"><canvas id="myCanvas17" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas18');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas18');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter18"  class="trailerblock"><canvas id="myCanvas18" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas19');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas19');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter19"  class="trailerblock"><canvas id="myCanvas19" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas20');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas20');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter20"  class="trailerblock"><canvas id="myCanvas20" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas21');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas21');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter21"  class="trailerblock"><canvas id="myCanvas21" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas22');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas22');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter22"  class="trailerblock"><canvas id="myCanvas22" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas23');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas23');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter23"  class="trailerblock"><canvas id="myCanvas23" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas24');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas24');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter24"  class="trailerblock"><canvas id="myCanvas24" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas25');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas25');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter25" class="trailerblock"><canvas id="myCanvas25" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas26');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas26');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter26" class="trailerblock"><canvas id="myCanvas26" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas27');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas27');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter27" class="trailerblock"><canvas id="myCanvas27" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas28');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas28');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter28" class="trailerblock"><canvas id="myCanvas28" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas29');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas29');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter29" class="trailerblock"><canvas id="myCanvas29" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas30');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas30');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter30" class="trailerblock"><canvas id="myCanvas30" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas31');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas31');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter31" class="trailerblock"><canvas id="myCanvas31" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas32');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas32');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter32" class="trailerblock"><canvas id="myCanvas32" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas33');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas33');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter33" class="trailerblock"><canvas id="myCanvas33" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas34');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas34');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter34" class="trailerblock"><canvas id="myCanvas34" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas35');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas35');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter35" class="trailerblock"><canvas id="myCanvas35" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas36');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas36');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter36" class="trailerblock"><canvas id="myCanvas36" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas37');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas37');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter37" class="trailerblock"><canvas id="myCanvas37" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas38');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas38');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter38" class="trailerblock"><canvas id="myCanvas38" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas39');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas39');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter39" class="trailerblock"><canvas id="myCanvas39" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas40');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas40');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter40" class="trailerblock"><canvas id="myCanvas40" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas41');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas41');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter41" class="trailerblock"><canvas id="myCanvas41" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas42');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas42');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter42" class="trailerblock"><canvas id="myCanvas42" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas43');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas43');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter43" class="trailerblock"><canvas id="myCanvas43" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas44');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas44');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter44" class="trailerblock"><canvas id="myCanvas44" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas45');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas45');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter45" class="trailerblock"><canvas id="myCanvas45" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas46');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas46');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter46" class="trailerblock"><canvas id="myCanvas46" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas47');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas47');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter47" class="trailerblock"><canvas id="myCanvas47" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas48');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas48');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter48" class="trailerblock"><canvas id="myCanvas48" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
 
-<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas49');" style="width:200px; height:150px; ">	
+<a alt="Play the trailer!" onclick="mySenddd('OpenTrailerInfo:myCanvas49');" style="width:200px; height:150px; ">
 <div id="myCanvasOuter49" class="trailerblock"><canvas id="myCanvas49" width="200" height="150" style="border:2px solid #000000;"></canvas></div></a>
-
-
 
 </div>
 
 <div class="wsite-spacer" style="height:154px;"></div>
 </div></div>
-
-
 
 </div>
 			</div>
@@ -2102,11 +1403,9 @@ margin-left: auto;
 				<div class="wsite-spacer" style="height:50px;"></div>
 
 <div><div id="436756680405796511" align="center" style="width: 100%; " class="wcustomhtml">  <p style="visibility: collapse; display: none;">Send Message: <button  id="message_button">Hi there iframe</button></p>
-       <!-- <p>Got Message:</p>
-        -->
+
         <div style="visibility: collapse; display: none;" id="results"></div>
-    
-	
+
 	   <div id="the_iframe">
 
     <h2 class="text-center" style="margin-top: 0; padding-top: 30px; padding-bottom: 30px;">DVD Player+ Group mini-app</h2>
@@ -2114,9 +1413,7 @@ margin-left: auto;
         <div id="messages" style="background-color: whitesmoke; "></div>
         <div style="width: 100%; border-left-style: ridge; border-right-style: ridge;">
             <div id="themessage"></div>
-           <!-- <textarea id="message"
-                      style="width: 100%; visibility:collapse;   padding: 5px 10px; border-style: hidden;"
-                      placeholder="Type message and press Enter to send..."></textarea> -->
+
         </div>
         <div style="  border-style: ridge; border-top-style: hidden;">
             <button class="btn-warning pull-right" id="echo">Echo</button>
@@ -2140,20 +1437,14 @@ margin-left: auto;
     <p>Got Message:</p>
     <div id="results"></div>
 
-
     <!--Reference the SignalR library. -->
     <script type="text/javascript" src="../cdn.jsdelivr.net/npm/%40aspnet/signalr%401.1.0/dist/browser/signalr.min.js"></script>
-
 
     <!--- The following from: -->
     <!-- https://gist.github.com/pbojinov/8965299 -->
     <script>
 
-
         document.domain = 'mlapplications.com';
-
-
-     
 
         // Send a message to the parent
         var sendMessageToTheParent = function (msg) {
@@ -2170,7 +1461,7 @@ margin-left: auto;
 
         var username = generateRandomName();
         var theid = "-";
-    
+
     </script>
 
     <script type="text/javascript">
@@ -2181,15 +1472,9 @@ margin-left: auto;
 
     </script>
 
-
-
-
-
     <!--Add script to update the page and send messages.-->
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
-
-           
 
             function closetheconnectionnow2222() {
 
@@ -2199,7 +1484,6 @@ margin-left: auto;
 
             function myNotifyyy(sss) {
 
-    
                 try {
                 /////////    console.log("myNotifyyy: " + sss);
                     window.external.notify(sss);
@@ -2210,10 +1494,8 @@ margin-left: auto;
                 catch (errr222) { }
             }
 
-      
-           
             var einaidebug = false;
-           
+
          ///////   console.log("Random username:" + username);
 
             try {
@@ -2246,13 +1528,10 @@ margin-left: auto;
 
             }
 
- 
-
             // Set initial focus to message input box.
             //var messageInput = document.getElementById('message'); //themessage
             var messageInput = document.getElementById('themessage'); //themessage
             //messageInput.focus();
-
 
             function createMessageEntry(encodedName, encodedMsg) {
                 var entry = document.createElement('div');
@@ -2262,7 +1541,7 @@ margin-left: auto;
                     entry.classList.add("text-center");
                     entry.classList.add("system-message");
                 }
-  
+
             else {
                //     entry.innerHTML = `<div class="message-avatar pull-left">${encodedName}</div>` +
               //          `<div class="message-content pull-left">${encodedMsg}<div>`;
@@ -2303,14 +1582,13 @@ margin-left: auto;
                 /////////////    console.log("message: " + message);
                     var encodedMsg = message.split('&amp;').join('&');
 
-  
                     //      var encodedMsg = message;
               //      var encodedMsg = message;
 
                     // PROSOXI!!!!
                     // TO NAME THA EINAI PX.: WPFxxxyyyzzz
                     // TO MESSAGE THA EINAI PX.: Are tou there?
-                    // Ean to username pou tha xrisimopoiw exei to xxxyyyzzz 
+                    // Ean to username pou tha xrisimopoiw exei to xxxyyyzzz
                     // tote kanw notify, alliws den me noiazei! drop.... gia tous allous!
 
                     try {
@@ -2319,7 +1597,6 @@ margin-left: auto;
                     }
                     catch (err) {
                     }
-
 
                     var messageEntry = createMessageEntry(encodedName, encodedMsg);
 
@@ -2339,7 +1616,6 @@ margin-left: auto;
                 connection.on('echo', messageCallback);
                 connection.onclose(onConnectionError);
 
-               
             }
 
             function onConnected(connection) {
@@ -2360,13 +1636,13 @@ margin-left: auto;
                             .catch(err => {
                                 console.log(err);
                             });
- 
+
                     // Clear text box and reset focus for next comment.
                     messageInput.value = '';
                     messageInput.focus();
                     event.preventDefault();
                 });
- 
+
                 // whatsmygroup
                 document.getElementById('sendtogrouponly').addEventListener('click', function (event) {
                     // Call the echo method on the hub.
@@ -2380,17 +1656,16 @@ margin-left: auto;
                                 console.log(err);
                             });
 
- 
                     }
                     catch (err) {
                         console.log('errrorrrrr: ' + err);
                     }
-  
+
                 });
                 //clearconnection
                 document.getElementById('clearconnection').addEventListener('click', function (event) {
                      closetheconectionnow();
-  
+
                 });
 
                 window.onbeforeunload = function () {
@@ -2403,10 +1678,9 @@ margin-left: auto;
                     return undefined;
                 }
         window.addEventListener('beforeunload', (event) => {
-  
+
             closetheconectionnow();
       });
-
 
                 document.getElementById('echo').addEventListener('click', function (event) {
                     // Call the echo method on the hub.
@@ -2424,11 +1698,9 @@ margin-left: auto;
             };
             function closetheconectionnow() {
 
-
               //  alert("edw reee");
                 connection.stop();
             };
-
 
             function onConnectionError(error) {
                 if (error && error.message) {
@@ -2444,7 +1716,7 @@ margin-left: auto;
             var connection = new signalR.HubConnectionBuilder()
                 //   .withUrl('/chat')
             .withUrl('https://dvdmsg.mlapplications.com/chat')
-            
+
                 .build();
             bindConnectionMessage(connection);
 
@@ -2462,25 +1734,20 @@ margin-left: auto;
                 console.log(err);
             });;
 
-    
         });
-        
-    </script>
 
+    </script>
 
     <button id="hello-world">Hello, World!</button>
     <div id="output"></div>
 </div>
-	
-	
-	
+
     <script>
-    
+
     document.domain = 'mlapplications.com';
 
-
     var eginesubscribed = false;
-    
+
             // addEventListener support for IE8
             function bindEvent(element, eventName, eventHandler) {
                 if (element.addEventListener){
@@ -2489,14 +1756,14 @@ margin-left: auto;
                     element.attachEvent('on' + eventName, eventHandler);
                 }
             }
-    
+
           //  var iframeSource = 'https://gist.github.com/pbojinov/8965299/raw/fadf2c4058b6481646e7244994c1890f2ad81b60/iframe.html';
-    
+
     //var iframeSource = 'https://dvdmsg.mlapplications.com/?myuser=BROWSERgeorgepcdeviceid';
     //var iframeSource = 'https://dvdmsg.mlapplications.com';
-    
+
      var username = "";
-    
+
     try {
                     const queryString = window.location.search;
                     console.log("queryString:" + queryString);
@@ -2511,28 +1778,25 @@ margin-left: auto;
                     }
                 }
                 catch (ee) {
-    
+
                 }
 
   //  var iframeSource = 'https://www.mlapplications.com/myconnection.html/?myuser=' + username;
-    
-    
+
             // Create the iframe
       //      var iframe = document.createElement('iframe');
      //       iframe.setAttribute('src', iframeSource);
      //       iframe.setAttribute('id', 'the_iframe');
-   
+
      //       iframe.style.width = 10 + 'px';
      //       iframe.style.height = 10 + 'px';
      //       iframe.style.visibility = 'hidden';
      //       iframe.style.display = 'none';
-           
-    
+
       //      document.body.appendChild(iframe);
-    
-           
+
             var iframeEl = document.getElementById('the_iframe'),
-            results = document.getElementById('results');  
+            results = document.getElementById('results');
             // Send a message to the child iframe
             var sendMessage = function(msg) {
  /////////////////////   msg = 'BROWSER' + msg;
@@ -2553,9 +1817,9 @@ margin-left: auto;
           console.log('ligoprin 4');
         } catch (exxxx ) { console.log('error on: ' + exxxx); }
             };
-    
+
             // Send random messge data on every button click
-      
+
             // Listen to message from child window
             bindEvent(window, 'message', function (e) {
     aNewMessageReceived(e.data);
@@ -2564,31 +1828,30 @@ margin-left: auto;
                 var elegxos = String(e.data);
                 if (elegxos.includes(username + " JOINED"))
                 {
-                    
+
                     console.log('SIGNALR: eginesubscribed!!!');
                     eginesubscribed = true;
                 }
             });
         </script>
-       
+
         <div id="output">
             <hr>
                </div>
 
-
                <div>
                    <canvas id="canvas" height="0" width="300"></canvas>
-               </div>  
+               </div>
                <script>
                var agnoise = 'yes';
                   var theTrailerPosterDefault = 'files/theme/appdvdplayerplus/myblueback.html';
                 var theTrailerPoster = '-';
-           
+
                    var IsFirstTimeHere = 'false';
-           
+
                    var toTotalNumOfFiles = '';
                    var toTotalNumOfMediaFiles = '';
-             
+
                    var toMultipleLetters = '';
                    var theDVDTitle = '-';
                    var theDVDType = '-';
@@ -2600,7 +1863,7 @@ margin-left: auto;
                    var theDVDVotes = '-';
                    var theDVDAges = '';
                    var theDVDPoster = '';
-           
+
                    var IparxeiDVD_Drive = 'false';
                    var toName = '';
                    var toIsReady = 'false';
@@ -2616,7 +1879,7 @@ margin-left: auto;
                    var TiGrafwAudioCD_FreeDBID = '';
                    var TiGrafwAudioCD_NumOfFiles = '';
                    var TiGrafwAudioCD_XBOX_ServicesURL = '';
-           
+
                    var egineconnected = false;
              ////////////      var eginesubscribed = false;
                    // Initialize chart.
@@ -2639,34 +1902,33 @@ margin-left: auto;
                //                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                  //          }
                    //    ]
-           
+
                 //   };
                   // var myChart = new Chart(document.getElementById("canvas").getContext("2d"));
-           
+
                    // Create the duplex output channel.
             //       var myOutputChannel = new WebSocketDuplexOutputChannel("ws://127.0.0.1:8843/CpuUsage/", null);
                    // /192.168.43.7
                    //var myOutputChannel = new WebSocketDuplexOutputChannel("wss://192.168.43.7:8843/CpuUsage/", null);
                    // /192.168.43.7
-           
+
                    // Create BrokerClient
            //        var myBrokerClient = new DuplexBrokerClient();
-           
+
                    // Subscribe to notifications.
             //       myBrokerClient.onBrokerMessageReceived = onBrokerMessageReceived;
-           
-           
-            var prosperasevisibility = false; 
+
+            var prosperasevisibility = false;
            function myFunctionShowNextRfrsh() {
 
-            prosperasevisibility = true; 
+            prosperasevisibility = true;
            //alert('Here.....');
-           
+
            setCookie("firsttimehere", "-", 300);
            agnoise = 'no';
            SetFirstTimeStorage();
-           //var xxx= window.location.href; 
-           
+           //var xxx= window.location.href;
+
            //var xxx= document.location.protocol + '//' + document.location.host + document.location.pathname;
            //window.location.href = xxx;
            //window.location.reload(true);
@@ -2676,39 +1938,37 @@ margin-left: auto;
         newrefresh = newrefresh.replace('https','http');
         window.location.href = newrefresh;
            }
-           
+
            function SetFirstTimeStorage()
            {
-               if(typeof(Storage) !== "undefined") 
+               if(typeof(Storage) !== "undefined")
                {
                    localStorage.firsttimehere = '-';
                }
            }
-           
-           
-           
+
            function checkStorage() {
-               if(typeof(Storage) !== "undefined") 
+               if(typeof(Storage) !== "undefined")
                {
-                   if (localStorage.firsttimehere) 
+                   if (localStorage.firsttimehere)
                     {
                        IsFirstTimeHere = 'false';
                    }
                    else
                    {
-                       IsFirstTimeHere = 'true';	
+                       IsFirstTimeHere = 'true';
                    }
                }
-             
+
            }
-           
+
            function setCookie(cname,cvalue,exdays) {
              var d = new Date();
              d.setTime(d.getTime() + (exdays*24*60*60*1000));
              var expires = "expires=" + d.toGMTString();
              document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
            }
-           
+
            function getCookie(cname) {
              var name = cname + "=";
              var decodedCookie = decodeURIComponent(document.cookie);
@@ -2724,18 +1984,17 @@ margin-left: auto;
              }
              return "";
            }
-           
-           
+
            function checkCookie() {
              var user=getCookie("firsttimehere");
              if (user != "") {
              //  alert("Welcome again " + user);
            IsFirstTimeHere = 'false';
            SetFirstTimeStorage();
-             } 
-             
+             }
+
            }
-           
+
            function checkCookieOLD() {
              var user=getCookie("firsttimehere");
              if (user != "") {
@@ -2747,28 +2006,23 @@ margin-left: auto;
               //    setCookie("username", user, 300);
            IsFirstTimeHere = 'true';
                 }
-             
+
            }
-           
+
            function myFunctionShowNext() {
            //alert('Here.....');
-           //var xxx= window.location.href; 
+           //var xxx= window.location.href;
            //window.location.href = xxx;
-           
+
             document.getElementById('mycard_welcome').style.visibility = 'hidden';
             document.getElementById('mycard_welcome').style.display = 'none';
-            document.getElementById('mycard_welcome_buttons').style.visibility = 'hidden';      
-           
+            document.getElementById('mycard_welcome_buttons').style.visibility = 'hidden';
+
             document.getElementById('mycard_getbluray').style.visibility = 'visible';
             document.getElementById('mycard_getbluray').style.display = 'inline';
             document.getElementById('mycard_getbluray_buttons').style.visibility = 'visible';
-                      
-           
+
            }
-
-
-
-
 
                    function closeConnection() {
                        // Detach output channel and stop listening to responses.
@@ -2776,14 +2030,14 @@ margin-left: auto;
                       mySenddd('clnow');
                        egineconnected = false;
                    };
-           
+
                    function subscribe() {
-           
+
                 /////////////////       if (eginesubscribed == false) {
-           
-                         try {             
+
+                         try {
                                //  alert('Einai sto subscribe!!!');
-                       
+
                                console.log('einai sot subscribe');
                   ///////////             myBrokerClient.subscribe("MyCpuUpdate");
                                eginesubscribed = true;
@@ -2800,105 +2054,99 @@ margin-left: auto;
                          ////////////////////  }
                    };
                    function continueWithYourLife() {
-        
+
                        closeNav();
                        agnoise = 'no';
                        document.getElementById('myupperbuttons').style.visibility = 'hidden';
                        document.getElementById('myupperbuttons').style.display = 'none';
-           
+
                           var tasections = document.getElementsByClassName('wsite-section');
-           
+
                        tasections[0].style.visibility = 'hidden';
                        tasections[0].style.display = 'none';
-           
-              
+
                        tasections[1].style.visibility = 'visible';
                        tasections[1].style.display = 'inline';
-           
+
                 var myimageurl = 'files/theme/appdvdplayerplus/mytransparentimage.html';
                        tasections[1].style.backgroundColor = '#031843';
                      //  tasections[1].style.backgroundImage = 'url(' + myimageurl + ')';
-           
+
              var myimageblue = 'files/theme/appdvdplayerplus/myblueback.html';
                        var x = document.getElementsByTagName("BODY")[0];
                        x.style.backgroundImage = 'url(' + myimageblue + ')';
-           
-                       
+
                    };
-           
+
                    function unsubscribe() {
                      ///  myBrokerClient.unsubscribe("MyCpuUpdate");
                         mySenddd('clnow');
                        eginesubscribed = false;
                    };
-           
+
                    function mySenddd(the_what) {
                        ///////////////	alert('Twra Tha Steilwwwww!!!');
                        //myOutputChannel.sendMessage("Hello World.");
-                       
+
                        //myOutputChannel.sendMessage(the_what);
                        sendMessage(the_what);
                        //
                        ////////////	myBrokerClient.sendmessage("MyCpuUpdate", "papariaaaaaaaa");
                    };
-           
-           
-           function myCanvasPoster(theurl) 
+
+           function myCanvasPoster(theurl)
            {
              var c = document.getElementById('myCanvasPoster');
              var ctx = c.getContext("2d");
             // var img = document.getElementById("scream");
             // ctx.drawImage(theimage,0,0);
-           
+
            const img = new Image();
            //img.src = "./cat.jpg";
            img.src = theurl;
-           
+
                            img.onload = () => {
                                ctx.drawImage(img, 0, 0);
                            }
                    };
-           
-           
-           function myCanvasSpecific(thecanvas,theimage,thetitle,theurl) 
+
+           function myCanvasSpecific(thecanvas,theimage,thetitle,theurl)
            {
              var c = document.getElementById(thecanvas);
              var ctx = c.getContext("2d");
             // var img = document.getElementById("scream");
             // ctx.drawImage(theimage,0,0);
-           
+
            const img = new Image();
            //img.src = "./cat.jpg";
            img.src = theimage;
-           
-           img.onload = () => 
-           {  
+
+           img.onload = () =>
+           {
            ctx.drawImage(img, 0, 0);
              var grd = ctx.createLinearGradient(0, 0, 70, 0);
            grd.addColorStop(0, "#004987");
            grd.addColorStop(1, "#004987");
-           
+
            // Fill with gradient
            ctx.fillStyle = grd;
-           ctx.fillRect(1, 1, 70, 30); 
-             
-             
+           ctx.fillRect(1, 1, 70, 30);
+
               var grd2 = ctx.createLinearGradient(0, 0, 100, 0);
            grd2.addColorStop(0, "white");
            grd2.addColorStop(1, "white");
-             
+
              ctx.fillStyle = grd2;
              ctx.font = "16px Arial";
-           //  ctx.fillText("Trailer", 11, 20); 
-               ctx.fillText(thetitle, 11, 20); 
-             
-             
+           //  ctx.fillText("Trailer", 11, 20);
+               ctx.fillText(thetitle, 11, 20);
+
            //  ctx.beginPath();
              //  ctx.moveTo(25, 25);
                //ctx.lineTo(105, 25);
               // ctx.lineTo(25, 105);
               // ctx.fill();
-           
+
                // Stroked triangle
                ctx.beginPath();
            //    ctx.moveTo(125, 125);
@@ -2907,61 +2155,55 @@ margin-left: auto;
                ctx.moveTo(200, 150);
                ctx.lineTo(200, 100);
                ctx.lineTo(150, 150);
-           
+
                ctx.closePath();
                ctx.fillStyle = grd;
                ctx.fill();
-           
+
                ctx.fillStyle = grd2;
            ctx.stroke();
-           
-           
+
             ctx.beginPath();
                ctx.moveTo(190, 136);
                ctx.lineTo(180, 144);
                ctx.lineTo(180, 128);
                ctx.fill();
-               
+
                ctx.fillStyle = grd;
              ctx.stroke();
                //ctx.stroke();
            }
-             
-           
+
            };
-           
-           
-           
+
            function myCanvas() {
              var c = document.getElementById("myCanvas");
              var ctx = c.getContext("2d");
              var img = document.getElementById("scream");
              ctx.drawImage(img,0,0);
-             
+
              var grd = ctx.createLinearGradient(0, 0, 70, 0);
            grd.addColorStop(0, "#004987");
            grd.addColorStop(1, "#004987");
-           
+
            // Fill with gradient
            ctx.fillStyle = grd;
-           ctx.fillRect(1, 1, 70, 30); 
-             
-             
+           ctx.fillRect(1, 1, 70, 30);
+
               var grd2 = ctx.createLinearGradient(0, 0, 100, 0);
            grd2.addColorStop(0, "white");
            grd2.addColorStop(1, "white");
-             
+
              ctx.fillStyle = grd2;
              ctx.font = "16px Arial";
-             ctx.fillText("Trailer", 11, 20); 
-             
-             
+             ctx.fillText("Trailer", 11, 20);
+
            //  ctx.beginPath();
              //  ctx.moveTo(25, 25);
                //ctx.lineTo(105, 25);
               // ctx.lineTo(25, 105);
               // ctx.fill();
-           
+
                // Stroked triangle
                ctx.beginPath();
            //    ctx.moveTo(125, 125);
@@ -2970,62 +2212,58 @@ margin-left: auto;
                ctx.moveTo(200, 150);
                ctx.lineTo(200, 100);
                ctx.lineTo(150, 150);
-           
+
                ctx.closePath();
                ctx.fillStyle = grd;
                ctx.fill();
-           
+
                ctx.fillStyle = grd2;
            ctx.stroke();
-           
-           
+
             ctx.beginPath();
                ctx.moveTo(190, 136);
                ctx.lineTo(180, 144);
                ctx.lineTo(180, 128);
                ctx.fill();
-               
+
                ctx.fillStyle = grd;
              ctx.stroke();
                //ctx.stroke();
            };
-           
+
                    function openConnection() {
                        //    alert('Open Connection Here!!!');
-           
-           //myCanvasSpecific(thecanvas,theimage,thetitle,theurl) 
-           
-           //            myCanvasSpecific("myCanvas2", "https://m.media-amazon.com/images/M/MV5BNDAwMTdmYzAtMTBhZC00MjllLWFmY2ItZWRlODU4Y2Y5ZjE3XkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SP330,330,0,C,0,0,0_CR65,90,200,150_PIimdb-blackband-204-14,TopLeft,0,0_PIimdb-blackband-204-28,BottomLeft,0,1_CR0,0,200,150_PIimdb-bluebutton-big,BottomRight,-1,-1_ZA,4,123,16,196,verdenab,8,255,255,255,1_ZAon%2520IMDb,4,1,14,196,verdenab,7,255,255,255,1_ZA02%253A25,164,1,14,36,verdenab,7,255,255,255,1_PIimdb-HDIconMiniWhite,BottomLeft,4,-2_ZAAvengers%253A%2520Infinity%2520War,24,138,14,176,arialbd,7,255,255,255,1_.jpg", "Trailer", ""); 
-           
+
+           //myCanvasSpecific(thecanvas,theimage,thetitle,theurl)
+
+           //            myCanvasSpecific("myCanvas2", "https://m.media-amazon.com/images/M/MV5BNDAwMTdmYzAtMTBhZC00MjllLWFmY2ItZWRlODU4Y2Y5ZjE3XkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SP330,330,0,C,0,0,0_CR65,90,200,150_PIimdb-blackband-204-14,TopLeft,0,0_PIimdb-blackband-204-28,BottomLeft,0,1_CR0,0,200,150_PIimdb-bluebutton-big,BottomRight,-1,-1_ZA,4,123,16,196,verdenab,8,255,255,255,1_ZAon%2520IMDb,4,1,14,196,verdenab,7,255,255,255,1_ZA02%253A25,164,1,14,36,verdenab,7,255,255,255,1_PIimdb-HDIconMiniWhite,BottomLeft,4,-2_ZAAvengers%253A%2520Infinity%2520War,24,138,14,176,arialbd,7,255,255,255,1_.jpg", "Trailer", "");
+
            //myCanvasSpecific("myCanvas5","https://m.media-amazon.com/images/M/MV5BNDAwMTdmYzAtMTBhZC00MjllLWFmY2ItZWRlODU4Y2Y5ZjE3XkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SP330,330,0,C,0,0,0_CR65,90,200,150_PIimdb-blackband-204-14,TopLeft,0,0_PIimdb-blackband-204-28,BottomLeft,0,1_CR0,0,200,150_PIimdb-bluebutton-big,BottomRight,-1,-1_ZA,4,123,16,196,verdenab,8,255,255,255,1_ZAon%2520IMDb,4,1,14,196,verdenab,7,255,255,255,1_ZA02%253A25,164,1,14,36,verdenab,7,255,255,255,1_PIimdb-HDIconMiniWhite,BottomLeft,4,-2_ZAAvengers%253A%2520Infinity%2520War,24,138,14,176,arialbd,7,255,255,255,1_.jpg","Clip!","");
            //myCanvasSpecific("myCanvas6","https://m.media-amazon.com/images/M/MV5BNDAwMTdmYzAtMTBhZC00MjllLWFmY2ItZWRlODU4Y2Y5ZjE3XkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SP330,330,0,C,0,0,0_CR65,90,200,150_PIimdb-blackband-204-14,TopLeft,0,0_PIimdb-blackband-204-28,BottomLeft,0,1_CR0,0,200,150_PIimdb-bluebutton-big,BottomRight,-1,-1_ZA,4,123,16,196,verdenab,8,255,255,255,1_ZAon%2520IMDb,4,1,14,196,verdenab,7,255,255,255,1_ZA02%253A25,164,1,14,36,verdenab,7,255,255,255,1_PIimdb-HDIconMiniWhite,BottomLeft,4,-2_ZAAvengers%253A%2520Infinity%2520War,24,138,14,176,arialbd,7,255,255,255,1_.jpg","Clip!","");
            //myCanvasSpecific("myCanvas7","https://m.media-amazon.com/images/M/MV5BNDAwMTdmYzAtMTBhZC00MjllLWFmY2ItZWRlODU4Y2Y5ZjE3XkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SP330,330,0,C,0,0,0_CR65,90,200,150_PIimdb-blackband-204-14,TopLeft,0,0_PIimdb-blackband-204-28,BottomLeft,0,1_CR0,0,200,150_PIimdb-bluebutton-big,BottomRight,-1,-1_ZA,4,123,16,196,verdenab,8,255,255,255,1_ZAon%2520IMDb,4,1,14,196,verdenab,7,255,255,255,1_ZA02%253A25,164,1,14,36,verdenab,7,255,255,255,1_PIimdb-HDIconMiniWhite,BottomLeft,4,-2_ZAAvengers%253A%2520Infinity%2520War,24,138,14,176,arialbd,7,255,255,255,1_.jpg","Video","");
            //myCanvasSpecific("myCanvas5","https://m.media-amazon.com/images/M/MV5BNDAwMTdmYzAtMTBhZC00MjllLWFmY2ItZWRlODU4Y2Y5ZjE3XkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SP330,330,0,C,0,0,0_CR65,90,200,150_PIimdb-blackband-204-14,TopLeft,0,0_PIimdb-blackband-204-28,BottomLeft,0,1_CR0,0,200,150_PIimdb-bluebutton-big,BottomRight,-1,-1_ZA,4,123,16,196,verdenab,8,255,255,255,1_ZAon%2520IMDb,4,1,14,196,verdenab,7,255,255,255,1_ZA02%253A25,164,1,14,36,verdenab,7,255,255,255,1_PIimdb-HDIconMiniWhite,BottomLeft,4,-2_ZAAvengers%253A%2520Infinity%2520War,24,138,14,176,arialbd,7,255,255,255,1_.jpg","Trailer","");
-           
+
            //myCanvas();
                        // Attach output channel and be able to send messages and receive responses.
-            
-            
+
                     ///////////   myBrokerClient.attachDuplexOutputChannel(myOutputChannel);
                        egineconnected = true;
-           
+
                        BaleStatusLoading();
-           
+
                        setTimeout(function () { subscribe(); }, 2000);
                       //  setTimeout(function () { displaytextafterNEWNEW(); }, 9000);
                        /////   setTimeout(function () { myChangeBackgroundImage(); }, 4000);
-           
+
                        // BaleStatusLoading();
-           
-           
-           
+
                    };
-           
+
                    function aNewMessageReceived(tomessage2) {
                   //     alert('Hereeee');
                  //      var tttttttt = brokerMessageReceivedEventArgs.Message;
                   //     alert('Hereeee, tttttttt:' + tttttttt);
-           
+
                        // If the notified message is the CPU status update.
 
                        // To message tha einai: WPFxxxyyyzzz:Im here ..
@@ -3033,28 +2271,26 @@ margin-left: auto;
                        var tomessage = "";
                        tomessage = String(tomessage2);
 
-
-                       var whattosearchfor = "WPF" + username + ":"; 
+                       var whattosearchfor = "WPF" + username + ":";
                        whattosearchfor = whattosearchfor.replace("WPFBROWSER","WPF");
                        if (tomessage.startsWith(whattosearchfor) ) {
                            // Deserialize notified message content.
                           // var aValue = JSON.parse(brokerMessageReceivedEventArgs.Message);
                            var tominima = tomessage.replace(whattosearchfor,"");
                       ///     tominima = aValue.myCommand;
-           
+
                            //  alert(tominima);
                            ////      document.getElementById('mystatustext').innerHTML += " " + tominima;
-           
+
                            if (tominima == 'clnow') {
                                unsubscribe();
                             ////////   myBrokerClient.detachDuplexOutputChannel();
-           
+
                                window.location.replace('https://www.google.com/');
                                //   window.location.replace(');
-           
+
                                //
-           
-           
+
                                //window.location.href = 'https://www.google.com';
                                //   setTimeout(function ()
                                //   {
@@ -3066,13 +2302,12 @@ margin-left: auto;
                                var tolength = 'IparxeiDVD_Drive:'.length;
                                var itimi = tominima.substring(tolength);
                                IparxeiDVD_Drive = itimi.toLowerCase();
-           
-           
+
                                if (IparxeiDVD_Drive == 'true') {
                                    document.getElementById('mycard_nodvdfound').style.visibility = 'hidden';
                                    document.getElementById('mycard_nodvdfound').style.display = 'none';
                                }
-           
+
                                //document.getElementById('mystatustext').innerHTML += 'Irthe.... IparxeiDVD_Drive:' + itimi.toLowerCase();
                            }
                            else if (tominima.startsWith('toName:')) {
@@ -3167,7 +2402,7 @@ margin-left: auto;
                                var itimi = tominima.substring(tolength);
                                toTotalNumOfMediaFiles = itimi;
                                document.getElementById('DVDSTATISTICS_GRID_LabelMediaFiles').innerHTML = toTotalNumOfFiles;
-           
+
                                // DVDSTATISTICS_GRID_LabelFiles
                                // DVDSTATISTICS_GRID_LabelMediaFiles
                                //document.getElementById('mystatustext').innerHTML += 'Irthe.... TiGrafwAudioCD_XBOX_ServicesURL:' + itimi;
@@ -3181,7 +2416,7 @@ margin-left: auto;
                            /*         var toTotalNumOfFiles = '';
                var toTotalNumOfMediaFiles = '';
            */
-           
+
                            else if (tominima.startsWith('ImHere')) {
                                //alert('Hereeee');
                                MakeTheUI_ForWeb();
@@ -3252,39 +2487,39 @@ margin-left: auto;
                            else if (tominima.startsWith('theDVDPoster:default')) {
                                var tolength = 'theDVDPoster:default'.length;
                                var itimi = tominima.substring(tolength);
-           
+
                                theDVDPoster = 'files/theme/appdvdplayerplus/mymovieposterdefault.html';
                                document.getElementById('theDVDPoster').src = theDVDPoster;
                            }
                            else if (tominima.startsWith('theDVDPoster:')) {
                                var tolength = 'theDVDPoster:'.length;
                                var itimi = tominima.substring(tolength);
-                               
+
                                itimi = decodeURIComponent(itimi);
-                                
+
                                theDVDPoster = itimi;
                                //theDVDPoster = 'https://www.mlapplications.com/files/theme/appdvdplayerplus/mymovieposterdefault.jpg';
                                document.getElementById('theDVDPoster').src = theDVDPoster;
                            }
                            else if (tominima.startsWith('TrailerPoster:Defaul')) {
-           
+
                                // thepostertrailer
-           
+
                                //////////    myCanvasPoster('https://www.mlapplications.com/files/theme/appdvdplayerplus/mytransparentimage.png');
                                ////         document.getElementById('thepostertrailer').style.visibility = 'hidden';
                                //////     document.getElementById('thepostertrailer').style.display = 'none';
-           
+
                                //       PutDefaultBackgroundMovie();
                                theTrailerPoster = theTrailerPosterDefault;
                                var x = document.getElementById('thepostertrailer');
                                x.style.backgroundImage = 'url(' + theTrailerPoster + ')';
-           
+
                                //                 var tasections = document.getElementsByClassName('wsite-section');
                                //       var myimageurl = 'https://www.mlapplications.com/files/theme/appdvdplayerplus/mytransparentimage.png';
-           
+
                                //       tasections[0].style.backgroundColor = 'transparent';
                                //       tasections[0].style.backgroundImage = 'url(' + myimageurl + ')';
-           
+
                                //              var x = document.getElementsByTagName("BODY")[0];
                                //                x.style.backgroundImage = 'url(' + theTrailerPoster + ')';
                            }
@@ -3292,21 +2527,19 @@ margin-left: auto;
                                var tolength = 'TrailerPoster:'.length;
                                var itimi = tominima.substring(tolength);
                                itimi = decodeURIComponent(itimi);
-                               
+
                                theTrailerPoster = itimi;
-           
+
                                ////        myCanvasPoster(theTrailerPoster);
-           
+
                                var x = document.getElementById('thepostertrailer');
                                x.style.backgroundImage = 'url(' + theTrailerPoster + ')';
                                ////   document.getElementById('thepostertrailer').style.visibility = 'visible';
                                ////   document.getElementById('thepostertrailer').style.display = 'inline';
-           
-           
-           
+
                                //             var tasections = document.getElementsByClassName('wsite-section');
                                //     var myimageurl = 'https://www.mlapplications.com/files/theme/appdvdplayerplus/mytransparentimage.png';
-           
+
                                //     tasections[0].style.backgroundColor = 'transparent';
                                //            tasections[0].style.backgroundImage = 'url(' + myimageurl + ')';
                                //          var x = document.getElementsByTagName("BODY")[0];
@@ -3324,18 +2557,18 @@ margin-left: auto;
                                var itimi = tominima.substring(tolength);
                                // PX: ShowTrailer:myCanvas=myCanvas0&type=Trailer&vi=xx123456&thumb=https://m.media-amazon.com/images/M/MV5BNDAwMTdmYzAtMTBhZC00MjllLWFmY2ItZWRlODU4Y2Y5ZjE3XkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SP330,330,0,C,0,0,0_CR65,90,200,150_PIimdb-blackband-204-14,TopLeft,0,0_PIimdb-blackband-204-28,BottomLeft,0,1_CR0,0,200,150_PIimdb-bluebutton-big,BottomRight,-1,-1_ZA,4,123,16,196,verdenab,8,255,255,255,1_ZAon%2520IMDb,4,1,14,196,verdenab,7,255,255,255,1_ZA02%253A25,164,1,14,36,verdenab,7,255,255,255,1_PIimdb-HDIconMiniWhite,BottomLeft,4,-2_ZAAvengers%253A%2520Infinity%2520War,24,138,14,176,arialbd,7,255,255,255,1_.jpg
                                itimi = decodeURIComponent(itimi);
-                               
+
                                var thethumb = myCustomGetQueryVariable(itimi, 'thumb');
                                var thetype = myCustomGetQueryVariable(itimi, 'type');
                                var thecanvas = myCustomGetQueryVariable(itimi, 'myCanvas');
                                var thevi = myCustomGetQueryVariable(itimi, 'vi');
-           
+
                                myCanvasSpecific(thecanvas, thethumb, thetype, thevi);
-           
+
                                var theouter = thecanvas.replace('myCanvas', 'myCanvasOuter');
                                document.getElementById(theouter).style.visibility = 'visible';
                                document.getElementById(theouter).style.display = 'inline';
-           
+
                            }
                            else if (tominima.startsWith('URL:')) {
                                //  ShowGridTrailers();
@@ -3343,14 +2576,14 @@ margin-left: auto;
                                var itimi = tominima.substring(tolength);
 
                                itimi = decodeURIComponent(itimi);
-                               
+
                                //alert('itimi: ' + itimi);
                                // myFunctionOpenUrl(itimi);
                                var myWindow = window.open(itimi, "", "toolbar=1, menubar=1, scrollbars=1, resizable=1, width=1024, height=768");
-           
+
                            }
                            else if (tominima.startsWith('MultipleDrive:')) {
-           
+
                     //          alert('tominima: ' + tominima);
                            document.getElementById('mycard_dvdmovie_info').style.visibility = 'hidden';
                            document.getElementById('mycard_dvdmovie_info').style.display = 'none';
@@ -3362,7 +2595,7 @@ margin-left: auto;
                            document.getElementById('mycard_dvdnotready').style.display = 'none';
                            document.getElementById('myidforloadingprogress').style.visibility = 'hidden';
                            document.getElementById('myidforloadingprogress').style.display = 'none';
-           
+
                                var tolength = 'MultipleDrive:'.length;
                                var itimi = tominima.substring(tolength);
                                toMultipleLetters = itimi;
@@ -3372,18 +2605,14 @@ margin-left: auto;
                     //       document.getElementById('mycard_accessneeded').style.display = 'none';
                      //      document.getElementById('mycard_dvdnotready').style.visibility = 'hidden';
                       //     document.getElementById('mycard_dvdnotready').style.display = 'none';
-                  
-           
+
                                document.getElementById('DVDSTATISTICS_GRID_LabelDriveLetter').innerHTML = toMultipleLetters;
-           
+
                      //            alert('toMultipleLetters: ' + toMultipleLetters);
-                   
-           
-                           
+
                            }
                            //theDVDType
-           
-           
+
                            /*
            localSettings.Values["WhatToReadData_0"] = IparxeiDVD_Drive;
            localSettings.Values["WhatToReadData_1"] = toName;
@@ -3402,40 +2631,39 @@ margin-left: auto;
            localSettings.Values["WhatToReadData_14"] = TiGrafwAudioCD_XBOX_ServicesURL;
                             */
                            //aValue.myCommand;
-           
+
                            // Update data and draw the chart.
                            //myLineChartData.datasets[0].data.shift();
                            //myLineChartData.datasets[0].data.push(aValue.Usage);
                            //myChart.Line(myLineChartData, myChartConfig);
                        }
                    };
-           
+
                    function myCustomGetQueryVariable(query , variable)
            {
                  // var query = window.location.search.substring(1);
-           
+
                   var vars = query.split("&");
                   for (var i=0;i<vars.length;i++) {
-           
+
            //alert("i:" + i );
                           var pair = vars[i].split("=");
                           if(pair[0] == variable){return pair[1];}
                   }
                   return(false);
            }
-           
+
                    function ShowGridTrailers() {
                        document.getElementById('mycard_dvdtrailers').style.visibility = 'visible';
                        document.getElementById('mycard_dvdtrailers').style.display = 'inline';
-                       
-                  
+
                    };
-           
+
                    function HideAllTrailers() {
                    //    alert('Einai sto HideAllTrailers');
                        document.getElementById('mycard_dvdtrailers').style.visibility = 'hidden';
                        document.getElementById('mycard_dvdtrailers').style.display = 'none';
-           
+
            document.getElementById('myCanvasOuter0').style.visibility = 'hidden';
            document.getElementById('myCanvasOuter1').style.visibility = 'hidden';
            document.getElementById('myCanvasOuter2').style.visibility = 'hidden';
@@ -3486,7 +2714,7 @@ margin-left: auto;
            document.getElementById('myCanvasOuter47').style.visibility = 'hidden';
            document.getElementById('myCanvasOuter48').style.visibility = 'hidden';
            document.getElementById('myCanvasOuter49').style.visibility = 'hidden';
-           
+
            document.getElementById('myCanvasOuter0').style.display = 'none';
            document.getElementById('myCanvasOuter1').style.display = 'none';
            document.getElementById('myCanvasOuter2').style.display = 'none';
@@ -3537,55 +2765,55 @@ margin-left: auto;
            document.getElementById('myCanvasOuter47').style.display = 'none';
            document.getElementById('myCanvasOuter48').style.display = 'none';
            document.getElementById('myCanvasOuter49').style.display = 'none';
-           
+
                    };
                    function PutDefaultBackgroundMovie() {
-           
+
                        var myimageblue = 'files/theme/appdvdplayerplus/myblueback.html';
                        var x = document.getElementsByTagName("BODY")[0];
                        x.style.backgroundImage = 'url(' + myimageblue + ')';
-           
+
                    };
-           
+
                    function ContinueWithTheRest() {
-           
+
                        var thegraphic = 'files/theme/appdvdplayerplus/usercdgraphic.html';
-           
+
                        if (toMediaType == 'Unknown') {
                                thegraphic = 'files/theme/appdvdplayerplus/unknowngraphic.html';
                                document.getElementById('graphicfordisctype').src = thegraphic;
-                   
+
                        }
                        else if (toMediaType == 'VideoBD') {
                              thegraphic = 'files/theme/appdvdplayerplus/bluraygraphic.html';
                                document.getElementById('graphicfordisctype').src = thegraphic;
-             
-                       } 
+
+                       }
                        else if (toMediaType == 'VideoDVD') {
                              thegraphic = 'files/theme/appdvdplayerplus/dvdgraphic.html';
                                document.getElementById('graphicfordisctype').src = thegraphic;
-             
-                       } 
+
+                       }
                        else if (toMediaType == 'VideoCD') {
                              thegraphic = 'files/theme/appdvdplayerplus/vcdgraphic.html';
                                document.getElementById('graphicfordisctype').src = thegraphic;
-             
-                       } 
+
+                       }
                        else if (toMediaType == 'AudioCD') {
                              thegraphic = 'files/theme/appdvdplayerplus/audiocdgraphic.html';
                                document.getElementById('graphicfordisctype').src = thegraphic;
-             
-                       } 
-                        
+
+                       }
+
                        closeNav();
-           
+
                        document.getElementById('dvdstatistics').style.visibility = 'hidden';
                        document.getElementById('dvdstatistics').style.display = 'none';
                        //  BorderForLoadingScanning.Visibility = Visibility.Collapsed;
                        //alert('Here !!! and IparxeiDVD_Drive: ' + IparxeiDVD_Drive);
                        document.getElementById('myidforloadingprogress').style.visibility = 'hidden';
                        document.getElementById('myidforloadingprogress').style.display = 'none';
-           
+
                    if (IsFirstTimeHere == 'true')
                    {
                            document.getElementById('mycard_welcome').style.visibility = 'visible';
@@ -3599,8 +2827,7 @@ margin-left: auto;
                            document.getElementById('mycard_nodvdfound').style.visibility = 'visible';
                            document.getElementById('mycard_nodvdfound').style.display = 'inline';
                        document.getElementById('mycard_nodvdfound_button').style.visibility = 'visible';
-                       
-           
+
                            document.getElementById('mycard_accessneeded').style.visibility = 'hidden';
                            document.getElementById('mycard_accessneeded').style.display = 'none';
                            document.getElementById('mycard_dvdnotready').style.visibility = 'hidden';
@@ -3609,8 +2836,7 @@ margin-left: auto;
                            document.getElementById('myidforloadingprogress').style.display = 'none';
                            //alert('IparxeiDVD_Drive == false BBBB');
                            //    document.getElementById('DVDSTATISTICS_GRID_LabelDriveLetter').style.display = 'none';
-           
-           
+
                        }
                        else if (toIsReady == 'false') {
                            document.getElementById('mycard_dvdmovie_info').style.visibility = 'hidden';
@@ -3622,19 +2848,17 @@ margin-left: auto;
                            document.getElementById('mycard_dvdnotready').style.visibility = 'visible';
                            document.getElementById('mycard_dvdnotready').style.display = 'inline';
                            document.getElementById('mycard_dvdnotready_button').style.visibility = 'visible';
-           
-           
-           
+
                            document.getElementById('myidforloadingprogress').style.visibility = 'hidden';
                            document.getElementById('myidforloadingprogress').style.display = 'none';
-           
+
                            document.getElementById('DVDSTATISTICS_GRID_LabelDriveLetter').innerHTML = toName;
-           
+
                        }
                        else { // The Drive has a disc and it is ready!
                            if (toIsReady == 'true') {
                                document.getElementById('DVDSTATISTICS_GRID_LabelDriveLetter').innerHTML = toName;
-           
+
                                document.getElementById('dvdstatistics').style.visibility = 'visible';
                                document.getElementById('dvdstatistics').style.display = 'inline';
                                document.getElementById('ttItsReady').innerHTML = "Ready!!";
@@ -3642,69 +2866,65 @@ margin-left: auto;
                                document.getElementById('DVDSTATISTICS_GRID_LabelFreeSpace').innerHTML = toTotalFreeSpace;
                                //     document.getElementById('DVDSTATISTICS_GRID_LabelFiles').innerHTML =
                                //      document.getElementById('DVDSTATISTICS_GRID_LabelMediaFiles').innerHTML =
-           
-           
+
                                if (toMediaType == 'AudioCD') {
-           
+
                                }
                                else if (toMediaType == 'VideoDVD') {
                                    document.getElementById('labelforplaydvdtype').innerHTML = "Play DVD Movie";
                                    document.getElementById('labelforblurayoption').style.visibility = 'hidden';
                                    document.getElementById('labelforblurayoption').style.display = 'none';
-            
+
                                    document.getElementById('pathforvcd').visibility = 'hidden';
                                    document.getElementById('pathfordvd').visibility = 'visible';
                                    document.getElementById('pathforbluray').visibility = 'hidden';
-           
+
                                    MakeTheUI_DVDMovie();
                                }
                                else if (toMediaType == 'VideoCD') {
                                    document.getElementById('labelforplaydvdtype').innerHTML = "Play VCD";
                                    document.getElementById('labelforblurayoption').style.visibility = 'hidden';
                                    document.getElementById('labelforblurayoption').style.display = 'none';
-           
+
                                    document.getElementById('pathforvcd').visibility = 'visible';
                                    document.getElementById('pathfordvd').visibility = 'hidden';
                                    document.getElementById('pathforbluray').visibility = 'hidden';
-                                   
+
                                     MakeTheUI_DVDMovie();
                                }
                                     else if (toMediaType == 'VideoBD') {
                                    document.getElementById('labelforplaydvdtype').innerHTML = "Play Blu-Ray";
                                    document.getElementById('labelforblurayoption').style.visibility = 'visible';
                                    document.getElementById('labelforblurayoption').style.display = 'inline';
-                      
+
                                     document.getElementById('pathforvcd').visibility = 'hidden';
                                    document.getElementById('pathfordvd').visibility = 'hidden';
                                    document.getElementById('pathforbluray').visibility = 'visible';
-                                 
+
                                     MakeTheUI_DVDMovie();
                                }
-                               
+
                                // DVDSTATISTICS_GRID_LabelDriveLetter
                            }
                        }
                    };
-           
-              
-           
+
                    function MakeTheUI_ForWeb() {
-           
+
                        var tasections = document.getElementsByClassName('wsite-section');
                        var myimageurl = 'files/theme/appdvdplayerplus/mytransparentimage.html';
                        var myimageblue = 'files/theme/appdvdplayerplus/myblueback.html';
-           
+
                        tasections[0].style.backgroundColor = 'transparent';
                        tasections[0].style.backgroundImage = 'url(' + myimageurl + ')';
-           
+
                       var x = document.getElementsByTagName("BODY")[0];
                        x.style.backgroundImage = 'url(' + myimageblue + ')';
-           
-           
+
                    }
-           
+
                    function MakeTheUI_DVDMovie() {
-           
+
                        //   document.getElementById('myidforloadingprogress').style.visibility = 'visible';
                        //   document.getElementById('myidforloadingprogress').style.display = 'inline';
                        document.getElementById('mycard_dvdmovie_info').style.visibility = 'hidden';
@@ -3717,76 +2937,70 @@ margin-left: auto;
                        document.getElementById('mycard_dvdnotready').style.display = 'none';
                        document.getElementById('myidforloadingprogress').style.visibility = 'hidden';
                        document.getElementById('myidforloadingprogress').style.display = 'none';
-           
-           
-           
+
                        document.getElementById('framesup').style.visibility = 'visible';
                        document.getElementById('framesup').style.display = 'inline';
                        document.getElementById('framesdown').style.visibility = 'visible';
                        document.getElementById('framesdown').style.display = 'inline';
-           
+
                        document.getElementById('mycard_dvdmovie').style.visibility = 'visible';
                        document.getElementById('mycard_dvdmovie').style.display = 'inline';
                        // mycard_dvdmovie_info
                        document.getElementById('mycard_dvdmovie_info').style.visibility = 'hidden';
                        document.getElementById('mycard_dvdmovie_info').style.display = 'none';
-           
+
                 //////////       alert('Im going to change the background!!!!');
                        //var toidtoumystatustext = document.getElementById('mystatustext');
                        //document.getElementsByClassName("square");
                        var tasections = document.getElementsByClassName('wsite-section');
-           
+
                        //   alert('plithos:' + tasections.length);
-           
-           
+
                        //var myimageurl = 'https://www.mlapplications.com/files/theme/appdvdplayerplus/myblueback.jpg';
                        //alert('Mexri stigmis: ' + tasections[0].style.backgroundImage);
                        //tasections[0].style.backgroundImage = 'url(' + myimageurl + ')';
-           
-           
-           
+
                        var myimageurl = 'files/theme/appdvdplayerplus/mytransparentimage.html';
                        tasections[0].style.backgroundColor = 'transparent';
                        tasections[0].style.backgroundImage = 'url(' + myimageurl + ')';
-           
+
                        var myimageblue = 'files/theme/appdvdplayerplus/myblueback.html';
                        var x = document.getElementsByTagName("BODY")[0];
                        x.style.backgroundImage = 'url(' + myimageblue + ')';
-           
+
                        //var thenew= document.getElementsByClassName('content-wrap');
                        //alert('here2...');
-           
+
                        //alert('here...' + thenew.style.background);
                        //thenew.style.background = 'transparent';
                        //thenew.style["background-color"] = 'transparent';
-           
-           
+
                        // "url(" + imageUrl + ")"
                        //    tasections[0].style.backgroundImage = url('https://image.tmdb.org/t/p/w780/fudEG1VUWuOqleXv6NwCExK0VLy.jpg');
-           
+
                        //url("../../media/examples/lizard.png");
                        //try {
-           
+
                        //           }
                        //         catch () {
-           
+
                        //       }
                        //style='background-image: url("/url("/uploads/1630067915.jpg") ;
-           
+
                        //$("wsite-section").parents().css("background-color", "red");
-           
+
                        //var parentEls = $(toidtoumystatustext).parents()
                        //    .map(function () {
                        //        return this.tagName;
                        //    })
-           
+
                    };
-           
+
                    function BaleStatusLoading() {
                checkCookie();
                checkStorage();
                    openNav();
-           
+
            if (IsFirstTimeHere == 'true')
            {
               document.getElementById('thetextloadingresources').style.visibility = 'hidden';
@@ -3800,37 +3014,36 @@ margin-left: auto;
               document.getElementById('thetextloadingresources').style.display = 'inline';
               document.getElementById('thetextpreparingfirsttime').style.visibility = 'hidden';
               document.getElementById('thetextpreparingfirsttime').style.display = 'none';
-           
+
                document.getElementById('mycard_welcome').style.visibility = 'hidden';
                document.getElementById('mycard_welcome').style.display = 'none';
                document.getElementById('mycard_getbluray').style.visibility = 'hidden';
                document.getElementById('mycard_getbluray').style.display = 'none';
-           
+
            }
                      //  mycard_dvdmovie
                        // mycard_dvdmovie
                    document.getElementById('mycard_getbluray').style.visibility = 'hidden';
                        document.getElementById('mycard_getbluray').style.display = 'none';
-           
-           
+
                    document.getElementById('mycard_welcome_buttons').style.visibility = 'hidden';
                        document.getElementById('mycard_getbluray').style.visibility = 'hidden';
-           
+
                        document.getElementById('mycard_dvdtrailers').style.visibility = 'hidden';
                        document.getElementById('mycard_dvdtrailers').style.display = 'none';
-           
+
                        document.getElementById('framesup').style.visibility = 'hidden';
                        document.getElementById('framesup').style.display = 'none';
                        document.getElementById('framesdown').style.visibility = 'hidden';
                        document.getElementById('framesdown').style.display = 'none';
-                       
+
                        // mycard_dvdmovie_info
                        document.getElementById('mycard_dvdmovie_info').style.visibility = 'hidden';
                        document.getElementById('mycard_dvdmovie_info').style.display = 'none';
-           
+
                        document.getElementById('mycard_dvdmovie').style.visibility = 'hidden';
                        document.getElementById('mycard_dvdmovie').style.display = 'none';
-           
+
                        document.getElementById('mycard_nodvdfound').style.visibility = 'hidden';
                        document.getElementById('mycard_nodvdfound').style.display = 'none';
                        document.getElementById('mycard_accessneeded').style.visibility = 'hidden';
@@ -3839,20 +3052,14 @@ margin-left: auto;
                        document.getElementById('mycard_dvdnotready').style.display = 'none';
                        document.getElementById('myidforloadingprogress').style.visibility = 'visible';
                        document.getElementById('myidforloadingprogress').style.display = 'inline';
-           
-           
+
                        var tasections = document.getElementsByClassName('wsite-section');
-           
+
                        tasections[1].style.visibility = 'hidden';
                        tasections[1].style.display = 'none';
-           
-           
-           
-           
+
                    };
                </script></div>
-
-
 
 </div>
 
@@ -4011,8 +3218,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="width: 100%"><div></div><h2 class="wsite-content-title" style="text-align:center;"><font size="7">Features</font></h2>
 
 <div><div id="209814412110978284" align="center" style="width: 100%; " class="wcustomhtml"><table class="centered" style="color: #000000; font-size:14px; line-height:16px; text-align:center; width: auto; margin-left: auto; margin-right: auto">
-  
- 
+
    <tr>
    <td><img style="margin-right:1px; align:center;" src="files/theme/myicons/dvdplayermovieplayer.html" alt="DVD Player+ feature: Movie Player"></td>
   <td><img style="margin-right:1px; align:center;" src="files/theme/myicons/dvdplayermovieinfo.html" alt="DVD Player+ feature: Movie Info"></td>
@@ -4051,8 +3257,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
     <td>Support</td>
   </tr>
 </table></div>
-
-
 
 </div></div>
 </div>
@@ -4202,8 +3406,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:49.779735682819%; padding:0 15px;">
-					
-						
 
 <div style="text-align:center;"><div style="height: 10px;  "></div>
 <a class="wsite-button wsite-button-small wsite-button-normal" href="appdvdplayerplus.html" >
@@ -4211,11 +3413,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 </a>
 <div style="height: 10px;  "></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:50.220264317181%; padding:0 15px;">
-					
-						
 
 <div style="text-align:center;"><div style="height: 10px;  "></div>
 <a class="wsite-button wsite-button-small wsite-button-normal" href="hlpdvdplayer_1.html" target="_blank">
@@ -4223,8 +3421,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 </a>
 <div style="height: 10px;  "></div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -4369,7 +3565,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Welcome
 			</a>
-			
+
 		</li>
 		<li id="pg420291035968415525" class="wsite-menu-item-wrap">
 			<a
@@ -4391,7 +3587,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Windows Apps
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-576387146180606075"
 	class="wsite-menu-subitem-wrap "
@@ -4404,7 +3600,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Windows Phone Apps
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-181564505483526232"
 	class="wsite-menu-subitem-wrap "
@@ -4417,7 +3613,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Android Apps
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -4431,7 +3627,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Help Center
 			</a>
-			
+
 		</li>
 		<li id="pg457614141667606990" class="wsite-menu-item-wrap">
 			<a
@@ -4453,7 +3649,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			How-to Check DVDs
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -4472,8 +3668,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<li id="wsite-nav-164382401196655753"
 	class="wsite-menu-subitem-wrap "
 	>
-	 
-	
+
 </li>
 <li id="wsite-nav-809491643896992333"
 	class="wsite-menu-subitem-wrap "
@@ -4486,7 +3681,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			3D F.A.Q.
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-802757451138523212"
 	class="wsite-menu-subitem-wrap "
@@ -4499,9 +3694,9 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			3D Anaglyphs
 		</span>
 	</a>
-	
+
 </li>
- 
+
 <li id="wsite-nav-860537803288251427"
 	class="wsite-menu-subitem-wrap "
 	>
@@ -4513,7 +3708,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			3D Photos on Flickr
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-252052803303239081"
 	class="wsite-menu-subitem-wrap "
@@ -4526,7 +3721,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Find 3D Videos on Youtube
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -4540,7 +3735,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Opinion & Blog
 			</a>
-			
+
 		</li>
 		<li id="pg765675763726769427" class="wsite-menu-item-wrap">
 			<a
@@ -4549,7 +3744,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				About us
 			</a>
-			
+
 		</li>
 		<li id="pg589846066449704670" class="wsite-menu-item-wrap">
 			<a
@@ -4558,11 +3753,10 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Contact
 			</a>
-			
+
 		</li>
 </ul>
 </div>
-
 
 <div style='display:none'><div class='wsite-elements wsite-footer'>
 <div id="102545159590712656"><div><style type="text/css">
@@ -4716,18 +3910,12 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:19.232629580985%; padding:0 0px;">
-					
-						
 
 <div class="wsite-spacer" style="height:10px;"></div>
 
 <div class="paragraph" style="text-align:center;"><strong><font color="#a9b9d1" size="4">Share:</font></strong></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:27.826663358363%; padding:0 0px;">
-					
-						
 
 <div><div id="581391898368846183" align="center" style="width: 100%; " class="wcustomhtml"><link rel="stylesheet" href= "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
@@ -4768,7 +3956,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
   color: #ffffff;
 }
 
-
 .fa-pinterest {
   background: #cb2027;
   color: #ffffff;
@@ -4781,28 +3968,17 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <a class="fa fa-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://%20www.mlapplications.com&amp;title=Free%20and%20Useful%20Applications%20for%20Windows%20and%20Android&amp;summary=My%20favorite%20developers%20website&amp;source=Mobility_in_Life_Applications" target="_blank"></a>
 </div>
 
-
-
 </div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:35.179953724175%; padding:0 0px;">
-					
-						
 
 <div><div id="998866482991838868" align="center" style="width: 100%; " class="wcustomhtml"><a class="fa fa-pinterest" href="http://pinterest.com/pin/create/link/?url=http%3A%2F%2Fwww.mlapplications.com&amp;description=" target="_blank"></a>
 <a class="fa fa-google" href="https://plus.google.com/share?url=https://%20www.mlapplications.com" target="_blank"></a>
 </div>
 
-
 </div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:17.760753336477%; padding:0 0px;">
-					
-						
 
 <div><div class="wsite-image wsite-image-border-none " style="padding-top:10px;padding-bottom:10px;margin-left:0;margin-right:0;text-align:center">
 <a>
@@ -4811,8 +3987,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -4830,8 +4004,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:26.942518066303%; padding:0 15px;">
-					
-						
 
 <div id="433306533626245074"><div><style type="text/css">
 	#element-5b110cff-50c0-4dca-86e4-07d38f3516de .content-color-box-wrapper {
@@ -5085,11 +4257,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:50.108589914178%; padding:0 15px;">
-					
-						
 
 <div id="210476769210520075"><div><style type="text/css">
 	#element-8d4fb41b-44b4-46c0-bb50-01e7cefb3258 .waddons_vert_divider {
@@ -5346,7 +4514,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 </script></div></div>
 
 <div id="486082001627672347"><div><style type="text/css">
-	
+
 </style><div id="element-71605150-6990-463d-89aa-4df7ffeb559c" data-platform-element-id="698263678581730663-1.1.0" class="platform-element-contents">
 <div class="content-color-box-wrapper">
 
@@ -5457,11 +4625,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:22.948892019519%; padding:0 15px;">
-					
-						
 
 <div id="678568118291078683"><div><style type="text/css">
 	#element-55b91c17-e3a7-4f6b-8dec-a80823db0b69 .waddons_vert_divider {
@@ -5597,8 +4761,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -5609,43 +4771,31 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div><div style="height: 10px;   width: 100%;"></div>
 <hr class="styled-hr" style="width:100%;"></hr>
 <div style="height: 0px;   width: 100%;"></div></div></div></div>
-<!--
-  <script type="text/javascript" src="/files/theme/plugins.js?1749732861"></script>
- 
-  <script type="text/javascript" src="/files/theme/custom.js?1749732861"></script>
- -->
- 
 
-<!-- Anchor ad on bottom - Part1-->
 <script>
     function removeElement(id) {
          try
          {
          var elem = document.getElementById(id);
          elem.parentNode.removeChild(elem);
-        } 
+        }
         catch (err) { console.log('err here...'+err); }
     }
-</script>     
- 
-<!--
-<div id="dvdplaina" style="border-radius:11px 0px 0px 11px;  visibility: visible; background-color: #0D2E64; width: 80px; height: 574px; position: fixed; bottom:   0px; top:50%; margin-top: -287px;  right:  0px; ">
--->
+</script>
+
 <div id="dvdplaina" style="border-radius:11px 0px 0px 11px;  visibility: visible; background-color: #0D2E64; width: 80px; height: 654px; position: fixed; bottom:   0px; top:50%; margin-top: -287px;  right:  0px; ">
 
 <div style="padding:0px 0px 0px  0px;text-align: center;width: 80px;height: 80px;">
-    
- 
+
     <a alt="Get WinRAR+" onclick="myFunctionOpenUrl('https://www.microsoft.com/store/apps/9PG2VPDGMJ71')" class="" style="background: #0D2E64;width: 80px;height: 80px;">
              <img style="height:70px; width: 70px; margin-top: 10px; margin-right: 1px;" src="files/theme/WINRAR_GIF.gif">
 
-     
               </a>
 </div>
 
   <div style="padding:0px 0px 0px  0px;   text-align: center;">
     <img style="text-align: center;" src="files/theme/winrareicons/myicons/dvdhlpphoneicons/appdvdplayerplus/myglossyhorizontal.png" width="60">
- 
+
     <a alt="the app Privacy Policy" onclick="myFunctionOpenUrl('dvdplayerfree_privacy.html')" class="btn-floating waves-effect waves-light  btn-large   " style="background: #0D2E64">
                   <svg xmlns="http://www.w3.org/2000/svg" height="56" width="56" viewBox="0 0 56 56">
                       <g>
@@ -5657,7 +4807,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 </div>
 
 <div style="padding:0px; color: white; text-align: center;">Privacy</div>
- 
+
 <div style="padding:0px;   text-align: center;">
   <img style="text-align: center;" src="files/theme/winrareicons/myicons/dvdhlpphoneicons/appdvdplayerplus/myglossyhorizontal.png" width="60">
 
@@ -5672,40 +4822,25 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </div>
 
-
 <div style="padding:0px; color: white; text-align: center;">Help ..</div>
- 
 
 <div style="padding:0px 0px 0px  0px;   text-align: center;">
   <img style="text-align: center;" src="files/theme/winrareicons/myicons/dvdhlpphoneicons/appdvdplayerplus/myglossyhorizontal.png" width="60">
 
-  <a style=" width: 100px; height: 100px; bottom:  20px; top:0px; right:  10px;" id="menu2" class="btn btn-floating btn-large blue darken-4 pulse" 
+  <a style=" width: 100px; height: 100px; bottom:  20px; top:0px; right:  10px;" id="menu2" class="btn btn-floating btn-large blue darken-4 pulse"
   onclick="mySenddd('OpenBuyAddOn');"
-  > 
+  >
       <img style="height:auto; width: 65px; margin-top: 12px; margin-right: 15px;" src="files/theme/msStore2.svg">
      </a>
 
- <!--    <a alt="More games" onclick="myFunctionOpenUrl('/games.html')" class="btn-floating waves-effect waves-light  btn-large   " style="background: #000000">
-
- 
-    <img style="height:50px; margin-top: 25px;" src="https://www.mlapplications.com/files/theme/msStore3.svg" alt="DVD Player+ feature: Movie Info">
-   
-
-  
-            </a> -->
 </div>
-<!--
-<div style="padding:0px; color: white; text-align: center;">More ..</div>
--->
-
 
 <div style="padding:0px 0px 0px  0px;   text-align: center;">
   <img style="text-align: center;" src="files/theme/winrareicons/myicons/dvdhlpphoneicons/appdvdplayerplus/myglossyhorizontal.png" width="60">
 
  <a alt="Mobility in Life Applications Webpage" onclick="myFunctionOpenUrl('/dvdplayerfree_howtosearch')" class="btn-floating waves-effect waves-light  btn-large" style="background: #0D2E64">
      <img style="height:auto; width: 60px; margin-top: 1px; margin-right: 1px;" src="files/theme/howtosearch22.svg">
-    
-  
+
     </a>
 </div>
 
@@ -5722,24 +4857,17 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
         <path id="path1" transform="rotate(0,28,28) translate(8,20) scale(0.13,0.13)  " fill="#FFFFFF" d="M16.6875,72.2808303833008L16.6875,96.4683303833008 27.375,96.4683303833008 30.64892578125,96.2632522583008 33.533203125,95.6480178833008 36.02783203125,94.6226272583008 38.1328125,93.1870803833008 39.80419921875,91.3941116333008 40.998046875,89.2964553833008 41.71435546875,86.8941116333008 41.953125,84.1870803833008 41.69970703125,81.3965530395508 40.939453125,78.9780960083008 39.67236328125,76.9317092895508 37.8984375,75.2573928833008 35.61767578125,73.9551467895508 32.830078125,73.0249710083008 29.53564453125,72.4668655395508 25.734375,72.2808303833008 16.6875,72.2808303833008z M16.6875,43.4995803833008L16.6875,65.2027053833008 24.75,65.2027053833008 27.8115234375,65.0078811645508 30.52734375,64.4234085083008 32.8974609375,63.4492874145508 34.921875,62.0855178833008 36.5419921875,60.3672561645508 37.69921875,58.3296585083008 38.3935546875,55.9727249145508 38.625,53.2964553833008 38.423583984375,51.0003128051758 37.8193359375,49.010326385498 36.812255859375,47.326488494873 35.40234375,45.948802947998 33.589599609375,44.877269744873 31.3740234375,44.111888885498 28.755615234375,43.6526565551758 25.734375,43.4995803833008 16.6875,43.4995803833008z M8.8125,36.3745803833008L27.9375,36.3745803833008 32.0712890625,36.6411819458008 35.75390625,37.4409866333008 38.9853515625,38.7739944458008 41.765625,40.6402053833008 44.0009765625,42.934154510498 45.59765625,45.550365447998 46.5556640625,48.488842010498 46.875,51.7495803833008 46.681640625,54.5152053833008 46.1015625,57.0933303833008 45.134765625,59.4839553833008 43.78125,61.6870803833008 40.1015625,65.2964553833008 35.25,67.6870803833008 35.25,67.8745803833008 38.478515625,68.4942092895508 41.3671875,69.5562210083008 43.916015625,71.0606155395508 46.125,73.0073928833008 47.9091758728027,75.3379592895508 49.1835899353027,77.9937210083008 49.9482383728027,80.9746780395508 50.203125,84.2808303833008 49.8164024353027,88.3882522583008 48.6562461853027,92.0855178833008 46.7226524353027,95.3726272583008 44.015625,98.2495803833008 40.7197265625,100.587471008301 37.01953125,102.257392883301 32.9150390625,103.259346008301 28.40625,103.593330383301 8.8125,103.593330383301 8.8125,36.3745803833008z M62.8112487792969,32.5308303833008L70.4987487792969,32.5308303833008 70.4987487792969,103.593330383301 62.8112487792969,103.593330383301 62.8112487792969,32.5308303833008z M85.0299987792969,55.5933303833008L92.6706237792969,55.5933303833008 92.6706237792969,83.0620803833008 92.8522644042969,86.6216506958008 93.3971862792969,89.7066116333008 94.3053894042969,92.3169631958008 95.5768737792969,94.4527053833008 97.2116394042969,96.1138381958008 99.2096862792969,97.3003616333008 101.571014404297,98.0122756958008 104.295623779297,98.2495803833008 106.983612060547,97.9903030395508 109.422576904297,97.2124710083008 111.612518310547,95.9160842895508 113.553436279297,94.1011428833008 115.142791748047,91.8672561645508 116.278045654297,89.3140335083008 116.959197998047,86.4414749145508 117.186248779297,83.2495803833008 117.186248779297,55.5933303833008 124.873748779297,55.5933303833008 124.873748779297,103.593330383301 117.186248779297,103.593330383301 117.186248779297,95.9995803833008 116.998748779297,95.9995803833008 114.279998779297,99.8140335083008 110.904998779297,102.538642883301 106.873748779297,104.173408508301 102.186248779297,104.718330383301 98.1652526855469,104.398994445801 94.6803894042969,103.440986633301 91.7316589355469,101.844306945801 89.3190612792969,99.6089553833008 87.4425964355469,96.7349319458008 86.1022644042969,93.2222366333008 85.2980651855469,89.0708694458008 85.0299987792969,84.2808303833008 85.0299987792969,55.5933303833008z M139.356674194336,73.8277053833008L164.950424194336,73.8277053833008 164.950424194336,79.8745803833008 139.356674194336,79.8745803833008 139.356674194336,73.8277053833008z M187.684173583984,43.4995803833008L187.684173583984,67.8745803833008 198.371673583984,67.8745803833008 201.213470458984,67.6519241333008 203.832611083984,66.9839553833008 206.170501708984,65.8999710083008 208.168548583984,64.4292678833008 209.797454833984,62.5777053833008 211.027923583984,60.3511428833008 211.801361083984,57.7905960083008 212.059173583984,54.9370803833008 211.840911865234,52.389720916748 211.186126708984,50.138256072998 210.094818115234,48.182689666748 208.566986083984,46.5230178833008 206.626068115234,45.200267791748 204.295501708984,44.255443572998 201.575286865234,43.688549041748 198.465423583984,43.4995803833008 187.684173583984,43.4995803833008z M179.809173583984,36.3745803833008L199.871673583984,36.3745803833008 204.108001708984,36.6499710083008 208.004486083984,37.4761428833008 211.484954833984,38.8648147583008 214.473236083984,40.8277053833008 216.916595458984,43.353099822998 218.762298583984,46.4292678833008 219.922454833984,50.067943572998 220.309173583984,54.2808303833008 220.045501708984,57.6499710083008 219.254486083984,60.7261428833008 217.977142333984,63.4976272583008 216.254486083984,65.9527053833008 214.109954833984,68.0796585083008 211.566986083984,69.8667678833008 205.402923583984,72.3745803833008 205.402923583984,72.5620803833008 208.332611083984,74.2730178833008 210.699798583984,76.5464553833008 212.926361083984,79.5230178833008 215.387298583984,83.3902053833008 227.996673583984,103.593330383301 218.621673583984,103.593330383301 207.371673583984,84.7495803833008 205.848236083984,82.3179397583008 204.371673583984,80.2730178833008 201.395111083984,77.2495803833008 198.113861083984,75.5386428833008 194.152923583984,74.9995803833008 187.684173583984,74.9995803833008 187.684173583984,103.593330383301 179.809173583984,103.593330383301 179.809173583984,36.3745803833008z M262.873107910156,79.3120803833008L251.294998168945,80.9058303833008 246.607498168945,81.9429397583008 243.232498168945,83.5542678833008 241.193435668945,86.1851272583008 240.513748168945,90.2808303833008 241.140701293945,93.4741897583008 243.021560668945,96.0230178833008 245.945388793945,97.6929397583008 249.701248168945,98.2495803833008 252.436111450195,97.9990921020508 254.921936035156,97.2476272583008 257.158752441406,95.9951858520508 259.146545410156,94.2417678833008 260.776916503906,92.1045608520508 261.941467285156,89.7007522583008 262.640197753906,87.0303421020508 262.873107910156,84.0933303833008 262.873107910156,79.3120803833008z M253.638748168945,54.4683303833008L257.604797363281,54.7481155395508 261.042053222656,55.587474822998 263.950500488281,56.986400604248 266.330139160156,58.944896697998 268.180969238281,61.462963104248 269.502990722656,64.5405960083008 270.296203613281,68.1778030395508 270.560607910156,72.3745803833008 270.560607910156,103.593330383301 262.873107910156,103.593330383301 262.873107910156,96.0933303833008 262.685607910156,96.0933303833008 259.881896972656,99.8667678833008 256.486389160156,102.562080383301 252.499099731445,104.179267883301 247.919998168945,104.718330383301 244.528884887695,104.481025695801 241.527420043945,103.769111633301 238.915603637695,102.582588195801 236.693435668945,100.921455383301 234.919509887695,98.8677444458008 233.652420043945,96.5034866333008 232.892166137695,93.8286819458008 232.638748168945,90.8433303833008 232.886306762695,87.6558303833008 233.628982543945,84.8198928833008 234.866775512695,82.3355178833008 236.599685668945,80.2027053833008 238.827713012695,78.4214553833008 241.550857543945,76.9917678833008 244.769119262695,75.9136428833008 248.482498168945,75.1870803833008 262.873107910156,73.1714553833008 262.718566894531,70.3040237426758 262.254943847656,67.8189163208008 261.482238769531,65.7161331176758 260.400451660156,63.9956741333008 259.009582519531,62.6575393676758 257.309631347656,61.7017288208008 255.30061340332,61.1282424926758 252.982498168945,60.9370803833008 248.752029418945,61.3062210083008 244.732498168945,62.4136428833008 240.923904418945,64.2593460083008 237.326248168945,66.8433303833008 237.326248168945,58.9683303833008 241.000076293945,56.999584197998 244.943435668945,55.593334197998 249.156326293945,54.749584197998 253.638748168945,54.4683303833008z M277.919586181641,55.5933303833008L286.450836181641,55.5933303833008 299.435211181641,92.5308303833008 299.798492431641,93.7964553833008 300.419586181641,96.1870803833008 300.700836181641,96.1870803833008 301.052398681641,94.7339553833008 301.638336181641,92.6245803833008 315.278961181641,55.5933303833008 323.247711181641,55.5933303833008 301.169586181641,111.280830383301 299.618316650391,114.774482727051 297.917633056641,117.802314758301 296.067535400391,120.364326477051 294.068023681641,122.460517883301 291.919097900391,124.090888977051 289.620758056641,125.255439758301 287.173004150391,125.954170227051 284.575836181641,126.187080383301 281.821929931641,126.034736633301 279.560211181641,125.577705383301 279.560211181641,118.687080383301 281.939117431641,119.319892883301 284.107086181641,119.530830383301 286.831695556641,119.097236633301 289.193023681641,117.796455383301 291.191070556641,115.628486633301 292.825836181641,112.593330383301 296.669586181641,103.499580383301 277.919586181641,55.5933303833008z" />
       </g>
 
-
 </svg>
 </a>
 </div>
 
 <div style="padding:0px; color: white; text-align: center;">+Support</div>
 <img style="text-align: center;margin-left: 10px;" src="files/theme/winrareicons/myicons/dvdhlpphoneicons/appdvdplayerplus/myglossyhorizontal.png" width="60">
- 
+
 </div>
- 
-  
 
     >
-    
 
-		<!--
-<script type="text/javascript" src="//services.brid.tv/player/build/brid.outstream.min.js"></script> <script type="text/javascript"> $bos("Brid_74170706", {"id":"10903","width":"480","height":"270"}); </script>
--->
   <style>
         #wsite-com-product-inventory {
             display: none !important;
@@ -5752,14 +4880,11 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
     <script>
 $(document).ready(function(){
 
-
- 
     //Check to see if the window is top if not then display button
     $(window).scroll(function(){
         if ($(this).scrollTop() > 50) {
             $('.scrollToTop').fadeIn();
             $('.mynextButton').fadeIn();
- 
 
         } else {
             $('.scrollToTop').fadeOut();
@@ -5772,7 +4897,7 @@ $('.mynextButton').fadeOut();
 $('.mynextButton').fadeIn();
 $('.mynextButton').fadeOut();
 $('.mynextButton').fadeIn();
- 
+
    }
 
     });
@@ -5782,7 +4907,6 @@ $('.mynextButton').fadeIn();
         $('html, body').animate({scrollTop : 0},800);
         return false;
     });
-
 
 //Click event to go next
 var xx = $(location).attr('pathname');
@@ -5861,7 +4985,7 @@ case "/hlpdvdplayer_remote_6.html": next =  "hlpdvdplayer_remote_7"; break;
 case "/hlpdvdplayer_remote_7.html": next =  "hlpdvdplayer_remote_8"; break;
 case "/hlpdvdplayer_remote_8.html": next =  "hlpdvdplayer_remote_1"; break;
 case "/hlpblurayplayer_1.html": next =  "hlpblurayplayer_2"; break;
- 
+
 case "/hlpblurayplayer_3.html": next =  "hlpblurayplayer_4"; break;
 case "/hlpblurayplayer_4.html": next =  "hlpblurayplayer_5"; break;
 case "/hlpblurayplayer_5.html": next =  "hlpblurayplayer_6"; break;
@@ -5897,9 +5021,6 @@ case "/hlpwinrare_6.html": next =  "hlpwinrare_1"; break
 }
 
 $('.mynextButton').attr("href", wheretogo + next + ".html");
-
-
-
 
 //Click event to go previous
 $('.mypreviousButton').click(function(){
@@ -6011,12 +5132,8 @@ window.location.href = wheretogonext + nextpage + ".html";;
 
     });
 
- 
- 
-
-   
 });
- 
+
     </script>
 <script>
 
@@ -6030,8 +5147,8 @@ try
 		const lala = document.getElementsByClassName("fc-cta-consent");
 		lala[0].click();
 	}
-catch (ee) 
-	{ 
+catch (ee)
+	{
 		console.log('no fc');
 	}
 try
@@ -6040,19 +5157,12 @@ try
 	//console.log('lala22' + lala22);
 	lala22.click();
 	window.location.reload(true);
-}   catch (ee22) { 
+}   catch (ee22) {
 			//console.log('no lala22'+ ee22);
 }
 
 }
 </script>
-
- 
- 
-
-
-
-
 
 <script>
 	(function(jQuery) {
@@ -6113,7 +5223,6 @@ try
 					return;
 				}
 
-
 				ccLinks.style.display = 'block';
 
 				var ccParent = ccLinks.parentElement;
@@ -6150,12 +5259,12 @@ try
  function LetsGoNowPlay() {
                        ///////////////	alert('Twra Tha Steilwwwww!!!');
                        //myOutputChannel.sendMessage("Hello World.");
-                       
+
                        //myOutputChannel.sendMessage(the_what);
                        mySenddd('StartPlayMovieNow');
 					   setTimeout(function ()
                            {
-			 //   localStorage.clear();		
+			 //   localStorage.clear();
                              window.location.replace('https://www.google.com/');
                          }, 3000);
                        //
@@ -6164,8 +5273,6 @@ try
 </script>
 
 <script type="text/javascript" src="files/theme/materialize.min.js">
-
-
 
  </script>
 
@@ -6176,7 +5283,7 @@ try
         {
          mySenddd('windowvisibilitychange');
         }       //$.post("track.php", {
-             
+
 // });
 
          return undefined;
@@ -6190,9 +5297,8 @@ try
 
   //   });
 
-
 document.addEventListener("visibilitychange", handleVisibilityChange, false);
-document.addEventListener("contextmenu", function(e){ 
+document.addEventListener("contextmenu", function(e){
 if (agnoise == 'yes') { e.preventDefault(); }
 }, false);
 
@@ -6218,8 +5324,6 @@ var myWindow = window.open(theurl, "", "toolbar=1, menubar=1, scrollbars=1, resi
 
 }
 
-
-
 function handleVisibilityChange() {
  if (prosperasevisibility == false)
  {
@@ -6239,7 +5343,7 @@ pauseSimulation();
 <style>
 .fixedElementdown {
  background-image: url('files/theme/myreel2.svg');
-background-repeat: repeat-x ;    
+background-repeat: repeat-x ;
 position:fixed;
  bottom:110px;
  height:30px;
@@ -6247,7 +5351,6 @@ position:fixed;
  z-index:100;
 
 }
-
 
 .fixedElementup {
  background-image: url('files/theme/myreel2.svg');
@@ -6258,94 +5361,12 @@ height:30px;
  width:100%;
  z-index:100;
 
-
 }
 </style>
 
 <div  class="fixedElementup" id="framesup" style="visibility: hidden; display: none;"></div>
 
- 
-
 <div  class="fixedElementdown" id="framesdown" style="visibility: hidden; display: none;"></div>
-
-	
-<!-- old --adsense-- code -->
-<!--<div data-ad="mlapplications.com_sticky_video_myvid" data-devices="m:1,t:1,d:1"   class="demand-supply"></div>-->
-
-<!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code -->
-<script>
-//  googletag.cmd.push(function() { 
-    // Pass slot objects directly to display()
- //   if (window.offerwallSlot) {
-   //   googletag.display(window.offerwallSlot);
-  //  }
-    // Only call display if the slot was successfully created
-//    if (window.sideRailSlot) {
-//      googletag.display(window.sideRailSlot);
-//    } 
-//  });
-</script> 
-  <!-- ======================================================================= -->
-  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
-  <!-- ======================================================================= -->
-<!--  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const anchorNode = document.querySelector('.outstream-placement-anchor');
-      const adWrapper = document.getElementById('outstream-ad-wrapper');
-      const closeBtn = document.getElementById('outstream-close');
-      let userClosedAd = false;
-
-      if (!anchorNode || !adWrapper) return;
-
-      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
-      window.googletag = window.googletag || {cmd: []};
-      googletag.cmd.push(function() {
-        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
-            if (event.isEmpty) {
-              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
-              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
-            } else {
-              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
-              // Only trigger performance tracking cycles if demand actually filled the layout container
-              stickyObserver.observe(anchorNode);
-            }
-          }
-        });
-      });
-
-      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
-      const stickyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (userClosedAd) return;
-
-          // If the invisible inline space position completely rolls out of view
-          if (!entry.isIntersecting) {
-            const boundingBox = entry.boundingClientRect;
-            
-            // Only apply sticky docking if user scrolled past the ad DOWN the page
-            if (boundingBox.top < 0) {
-              adWrapper.classList.add('is-sticky');
-            }
-          } else {
-            // Re-dock cleanly back inline the second the user scrolls back up
-            adWrapper.classList.remove('is-sticky');
-          }
-        });
-      }, { 
-        root: null, 
-        threshold: 0 // Fires instantly the frame the boundary is crossed
-      });
-
-      // STEP C: CLOSE ICON ACTIONS
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userClosedAd = true;
-        adWrapper.classList.remove('is-sticky');
-        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
-      });
-    });
-  </script> -->
 
 <!-- WEB_ONLY_START -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
@@ -6357,7 +5378,5 @@ height:30px;
 </script>
 <!-- WEB_ONLY_END -->
 </body>
-
-
 
  </html>

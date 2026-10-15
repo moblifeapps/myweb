@@ -3,6 +3,7 @@
    <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script>
 /* bfcache: turn third-party 'unload' handlers into 'pagehide' */
 (function () {
@@ -19,84 +20,15 @@
   } catch (e) {}
 })();
 </script>
+<!-- sulvo -->
+<link rel="preload" as="script" href="https://live.demand.supply/up.js">
+<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
- 
+<!-- rewarded paywall -->
+<link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<style>#custom-paywall-overlay:not(.active){display:none}</style>
+<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
 
-
-
-<!--<script>
-  // Define dataLayer and the gtag function.
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-
-  // Set default consent to 'denied' as a placeholder
-  // Determine actual values based on your own requirements
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-    'analytics_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-  });
-</script>-->
- <script>console.log('here goes sulvo');</script>
-
-
- <script>console.log('here goes f59');</script>
-
-<!-- Google Tag Manager -->
- <!--
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-5BBV9FN');</script>-->
-<!-- End Google Tag Manager -->
-<!--
- <link rel="preload" as="script" href="https://live.demand.supply/up.js"><script id="analytics-script" type="text/plain" data-consent-category="statistics" async data-cfasync="false"  src="https://live.demand.supply/up.js"></script>
--->
-<!--<script>
-	function executeScriptsssssssssssOnConsent(category) {
-  // 1. Find all script elements that were blocked for this category
-  const blockedScripts = document.querySelectorAll(
-    `script[data-consent-category="${category}"]`
-  );
-
-  blockedScripts.forEach(originalScript => {
-    // 2. Change the type back to a runnable JavaScript type
-    originalScript.setAttribute('type', 'text/javascript');
-    
-    // 3. Get the source URL
-    const scriptSrc = originalScript.getAttribute('src');
-
-    // 4. Create a NEW script element to force execution
-    // Browsers often don't execute a script just by changing the type, 
-    // so we need to create a fresh element and append it.
-    if (scriptSrc) {
-      const newScript = document.createElement('script');
-      newScript.src = scriptSrc;
-      
-      // Preserve original attributes like 'async' or 'defer'
-      if (originalScript.hasAttribute('async')) {
-        newScript.setAttribute('async', 'true');
-      }
-
-	if (originalScript.hasAttribute('data-cfasync')) {
-		newScript.setAttribute('data-cfasync','false');
-	}
-      // 5. Append the new, runnable script to the document head
-      // This action triggers the browser to fetch and execute the analytics code.
-      document.head.appendChild(newScript);
-
-      // (Optional) Remove the original blocked script element to keep the DOM clean
-      originalScript.remove(); 
-    }
-  });
-}
-</script>-->
-
-     
 <link rel="icon" id="favicon" type="image/x-icon" href="/uploads/favpreview.gif">
 		<title>DVD Player+ app. - M.I.L. Team - 3D+ and more..</title><meta property="og:site_name" content="M.I.L. Team - 3D+ and more.." />
 <meta property="og:title" content="DVD Player+ app." />
@@ -107,350 +39,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta property="og:image" content="uploads/announce-orig_orig.webp" />
 <meta property="og:url" content="dvdremote.html" />
 
- 
-
-<!-- InMobi Choice. Consent Manager Tag v3.0 (for TCF 2.2) --><!--
-<script type="text/javascript" async=true>
-(function() {
-  var host = 'mlapplications.com';
-  var element = document.createElement('script');
-  var firstScript = document.getElementsByTagName('script')[0];
-  var url = 'https://cmp.inmobi.com'
-    .concat('/choice/', 'rFbVBARkjS_85', '/', host, '/choice.js?tag_version=V3');
-  var uspTries = 0;
-  var uspTriesLimit = 3;
-  element.async = true;
-  element.type = 'text/javascript';
-  element.src = url;
-
-  firstScript.parentNode.insertBefore(element, firstScript);
-
-  function makeStub() {
-    var TCF_LOCATOR_NAME = '__tcfapiLocator';
-    var queue = [];
-    var win = window;
-    var cmpFrame;
-
-    function addFrame() {
-      var doc = win.document;
-      var otherCMP = !!(win.frames[TCF_LOCATOR_NAME]);
-
-      if (!otherCMP) {
-        if (doc.body) {
-          var iframe = doc.createElement('iframe');
-
-          iframe.style.cssText = 'display:none';
-          iframe.name = TCF_LOCATOR_NAME;
-          doc.body.appendChild(iframe);
-        } else {
-          setTimeout(addFrame, 5);
-        }
-      }
-      return !otherCMP;
-    }
-
-    function tcfAPIHandler() {
-      var gdprApplies;
-      var args = arguments;
-
-      if (!args.length) {
-        return queue;
-      } else if (args[0] === 'setGdprApplies') {
-        if (
-          args.length > 3 &&
-          args[2] === 2 &&
-          typeof args[3] === 'boolean'
-        ) {
-          gdprApplies = args[3];
-          if (typeof args[2] === 'function') {
-            args[2]('set', true);
-          }
-        }
-      } else if (args[0] === 'ping') {
-        var retr = {
-          gdprApplies: gdprApplies,
-          cmpLoaded: false,
-          cmpStatus: 'stub'
-        };
-
-        if (typeof args[2] === 'function') {
-          args[2](retr);
-        }
-      } else {
-        if(args[0] === 'init' && typeof args[3] === 'object') {
-          args[3] = Object.assign(args[3], { tag_version: 'V3' });
-        }
-        queue.push(args);
-      }
-    }
-
-    function postMessageEventHandler(event) {
-      var msgIsString = typeof event.data === 'string';
-      var json = {};
-
-      try {
-        if (msgIsString) {
-          json = JSON.parse(event.data);
-        } else {
-          json = event.data;
-        }
-      } catch (ignore) {}
-
-      var payload = json.__tcfapiCall;
-
-      if (payload) {
-        window.__tcfapi(
-          payload.command,
-          payload.version,
-          function(retValue, success) {
-            var returnMsg = {
-              __tcfapiReturn: {
-                returnValue: retValue,
-                success: success,
-                callId: payload.callId
-              }
-            };
-            if (msgIsString) {
-              returnMsg = JSON.stringify(returnMsg);
-            }
-            if (event && event.source && event.source.postMessage) {
-              event.source.postMessage(returnMsg, '*');
-            }
-          },
-          payload.parameter
-        );
-      }
-    }
-
-    while (win) {
-      try {
-        if (win.frames[TCF_LOCATOR_NAME]) {
-          cmpFrame = win;
-          break;
-        }
-      } catch (ignore) {}
-
-      if (win === window.top) {
-        break;
-      }
-      win = win.parent;
-    }
-    if (!cmpFrame) {
-      addFrame();
-      win.__tcfapi = tcfAPIHandler;
-      win.addEventListener('message', postMessageEventHandler, false);
-    }
-  };
-
-  makeStub();
-
-  function makeGppStub() {
-    const CMP_ID = 10;
-    const SUPPORTED_APIS = [
-      '2:tcfeuv2',
-      '6:uspv1',
-      '7:usnatv1',
-      '8:usca',
-      '9:usvav1',
-      '10:uscov1',
-      '11:usutv1',
-      '12:usctv1'
-    ];
-
-    window.__gpp_addFrame = function (n) {
-      if (!window.frames[n]) {
-        if (document.body) {
-          var i = document.createElement("iframe");
-          i.style.cssText = "display:none";
-          i.name = n;
-          document.body.appendChild(i);
-        } else {
-          window.setTimeout(window.__gpp_addFrame, 10, n);
-        }
-      }
-    };
-    window.__gpp_stub = function () {
-      var b = arguments;
-      __gpp.queue = __gpp.queue || [];
-      __gpp.events = __gpp.events || [];
-
-      if (!b.length || (b.length == 1 && b[0] == "queue")) {
-        return __gpp.queue;
-      }
-
-      if (b.length == 1 && b[0] == "events") {
-        return __gpp.events;
-      }
-
-      var cmd = b[0];
-      var clb = b.length > 1 ? b[1] : null;
-      var par = b.length > 2 ? b[2] : null;
-      if (cmd === "ping") {
-        clb(
-          {
-            gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
-            cmpStatus: "stub", // possible values: stub, loading, loaded, error
-            cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
-            signalStatus: "not ready", // possible values: not ready, ready
-            supportedAPIs: SUPPORTED_APIS, // list of supported APIs
-            cmpId: CMP_ID, // IAB assigned CMP ID, may be 0 during stub/loading
-            sectionList: [],
-            applicableSections: [-1],
-            gppString: "",
-            parsedSections: {},
-          },
-          true
-        );
-      } else if (cmd === "addEventListener") {
-        if (!("lastId" in __gpp)) {
-          __gpp.lastId = 0;
-        }
-        __gpp.lastId++;
-        var lnr = __gpp.lastId;
-        __gpp.events.push({
-          id: lnr,
-          callback: clb,
-          parameter: par,
-        });
-        clb(
-          {
-            eventName: "listenerRegistered",
-            listenerId: lnr, // Registered ID of the listener
-            data: true, // positive signal
-            pingData: {
-              gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
-              cmpStatus: "stub", // possible values: stub, loading, loaded, error
-              cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
-              signalStatus: "not ready", // possible values: not ready, ready
-              supportedAPIs: SUPPORTED_APIS, // list of supported APIs
-              cmpId: CMP_ID, // list of supported APIs
-              sectionList: [],
-              applicableSections: [-1],
-              gppString: "",
-              parsedSections: {},
-            },
-          },
-          true
-        );
-      } else if (cmd === "removeEventListener") {
-        var success = false;
-        for (var i = 0; i < __gpp.events.length; i++) {
-          if (__gpp.events[i].id == par) {
-            __gpp.events.splice(i, 1);
-            success = true;
-            break;
-          }
-        }
-        clb(
-          {
-            eventName: "listenerRemoved",
-            listenerId: par, // Registered ID of the listener
-            data: success, // status info
-            pingData: {
-              gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
-              cmpStatus: "stub", // possible values: stub, loading, loaded, error
-              cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
-              signalStatus: "not ready", // possible values: not ready, ready
-              supportedAPIs: SUPPORTED_APIS, // list of supported APIs
-              cmpId: CMP_ID, // CMP ID
-              sectionList: [],
-              applicableSections: [-1],
-              gppString: "",
-              parsedSections: {},
-            },
-          },
-          true
-        );
-      } else if (cmd === "hasSection") {
-        clb(false, true);
-      } else if (cmd === "getSection" || cmd === "getField") {
-        clb(null, true);
-      }
-      //queue all other commands
-      else {
-        __gpp.queue.push([].slice.apply(b));
-      }
-    };
-    window.__gpp_msghandler = function (event) {
-      var msgIsString = typeof event.data === "string";
-      try {
-        var json = msgIsString ? JSON.parse(event.data) : event.data;
-      } catch (e) {
-        var json = null;
-      }
-      if (typeof json === "object" && json !== null && "__gppCall" in json) {
-        var i = json.__gppCall;
-        window.__gpp(
-          i.command,
-          function (retValue, success) {
-            var returnMsg = {
-              __gppReturn: {
-                returnValue: retValue,
-                success: success,
-                callId: i.callId,
-              },
-            };
-            event.source.postMessage(msgIsString ? JSON.stringify(returnMsg) : returnMsg, "*");
-          },
-          "parameter" in i ? i.parameter : null,
-          "version" in i ? i.version : "1.1"
-        );
-      }
-    };
-    if (!("__gpp" in window) || typeof window.__gpp !== "function") {
-      window.__gpp = window.__gpp_stub;
-      window.addEventListener("message", window.__gpp_msghandler, false);
-      window.__gpp_addFrame("__gppLocator");
-    }
-  };
-
-  makeGppStub();
-
-  var uspStubFunction = function() {
-    var arg = arguments;
-    if (typeof window.__uspapi !== uspStubFunction) {
-      setTimeout(function() {
-        if (typeof window.__uspapi !== 'undefined') {
-          window.__uspapi.apply(window.__uspapi, arg);
-        }
-      }, 500);
-    }
-  };
-
-  var checkIfUspIsReady = function() {
-    uspTries++;
-    if (window.__uspapi === uspStubFunction && uspTries < uspTriesLimit) {
-      console.warn('USP is not accessible');
-    } else {
-      clearInterval(uspInterval);
-    }
-  };
-
-  if (typeof window.__uspapi === 'undefined') {
-    window.__uspapi = uspStubFunction;
-    var uspInterval = setInterval(checkIfUspIsReady, 6000);
-  }
-})();
-</script>
---><!--End InMobi Choice. Consent Manager Tag v3.0 (for TCF 2.2) -->
-
-
-
-
-
- <!-- 
- <script>console.log('here goes sulvo');</script>
--->	
-
-
-
-
 		<!-- Google tag (gtag.js) -->
-<!--  <script>console.log('here goes f59');</script> -->
- 
 
-  
- 
 		<link id="wsite-base-style" rel="stylesheet" type="text/css" href="/cdn2.editmysite.com/css/sites367f.css?buildTime=1751393202" />
 <link rel="stylesheet" type="text/css" href="/cdn2.editmysite.com/css/old/fancybox5209.css?1751393202" />
 <link rel="stylesheet" type="text/css" href="/cdn2.editmysite.com/css/social-icons9aef.css?buildtime=1751393202" media="screen,projection" />
@@ -542,7 +132,7 @@ _W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":
 			com_currentSite = "607878847879865438";
 			com_userID = "79962194";</script><script type="text/javascript">_W.configDomain = "www.weebly.com";</script><script>_W.relinquish && _W.relinquish()</script>
 <script type="text/javascript" src="/cdn2.editmysite.com/js/lang/en/stld62d.js?buildTime=1751393202&amp;"></script><script> _W.themePlugins = [];</script><script type="text/javascript"> _W.recaptchaUrl = "../www.google.com/recaptcha/api.js"; </script><script type="text/javascript"><!--
-	
+
 	var DISABLE_NAV_MORE = 1;
 	function initFlyouts(){
 		initPublishedFlyoutMenus(
@@ -557,7 +147,7 @@ _W.setup_model_rpc({"rpc_namespace":"_W.CustomerAccounts.RPC","model_namespace":
 	}
 //-->
 </script>
-		
+
   <script src="cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.js" integrity="sha512-TL5A285sI9ihbWGterIw/8T1EosEaxW03ZMfjMeJGBSYHeK+i8mFw3BnqBky5JTBg4grIH3mwPZ4YONz1TSCZQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         <link rel="stylesheet" href="cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.css" integrity="sha512-zK13DHt+RvOBWVI7UsG9euzg5sl1QUhJKZVu20rrvPLaTito+K9elJBtEPWi3YJ+O6o5tYp6cdOc4lN9ePm9Lw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -605,13 +195,12 @@ border-style: solid;
     top: 6px;
 }
         </style>
- 
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="files/theme/materialize.min.css"  media="screen,projection"/>
 <style>
- 
+
 .progress-ring {
   position: relative;
   margin: 0px auto;
@@ -664,7 +253,7 @@ myoverlay-content2 {
 	text-align: center;
 	margin-top: 10px;
 	}
-	
+
 	.myoverlay2 a {
 	padding: 8px;
 	text-decoration: none;
@@ -673,19 +262,17 @@ myoverlay-content2 {
 	display: block;
 	transition: 0.1s;
 	}
-	
+
 	.myoverlay2 a:hover, .myoverlay2 a:focus {
 	color: #f1f1f1;
 	}
-	
+
 	.myoverlay2 .closebtn {
 	position: absolute;
 	top: 20px;
 	right: 45px;
 	font-size: 60px;
 	}
-
-
 
 .myoverlay-content {
   position: relative;
@@ -737,7 +324,7 @@ myoverlay-content2 {
 -ms-user-select: none;
 user-select: none;
         }
-       
+
         h1 {
             font-size: 3.5rem;
             text-transform: uppercase;
@@ -754,7 +341,7 @@ user-select: none;
             text-shadow: 0 0.2rem 0.5rem rgba(0,0,0,.6);
             font-size: 1.5rem;
         }
-      
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2rem;
@@ -767,150 +354,16 @@ user-select: none;
 }
 </style>
 
-
-
- 
-
-
-
-
-		
-	<script>
-    console.log('here i am not from cloudflare tag setup !');
-</script>
-
-<!--<script type="text/javascript" async="async" src="https://securepubads.g.doubleclick.net/tag/js/gpt.js?network-code=44890869"></script>-->
-  <!-- sulvo first -->
-<link rel="preload" as="script" href="https://live.demand.supply/up.js">
-<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
-
-<!-- rewarded paywall -->
-   <link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
-<style>#custom-paywall-overlay:not(.active){display:none}</style>
-
-<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
-
-
-<!-- old demand -->
-
-
- 
-  
-
-
-
-
-
-
-
- 
-<style>	
+<style>
 /* Fix fixed ad overflow */
 .stpdwrapper {
   max-width: 100vw !important;
   right: 0 !important;
 }
-</style> 
+</style>
 
- 
-  <!-- ======================================================================= -->
-  <!-- 2. CSS STYLING: TRANSITIONS, DOCK PHYSICS, AND BLUR ANIMATION          -->
-  <!-- ======================================================================= -->
-  <style>
-    /* THE GHOST ANCHOR: Stays fixed in layout to completely eliminate infinite layout flickers */
-    .outstream-placement-anchor {
-      width: 336px;
-      height: 280px;
-      margin: 40px auto;
-      position: relative;
-      background: transparent;
-    }
-
-    /* THE MOVING CONTAINER: Holds the ad frame and performs transitions on scroll */
-    .outstream-main-container {
-      width: 336px;
-      height: 280px;
-      background: #fbfbfb;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transition: box-shadow 0.3s ease;
-    }
-
-    /* STICKY OVERLAY STATE: Engaged programmatically by IntersectionObserver */
-    .outstream-main-container.is-sticky {
-      position: fixed;
-      top: auto;
-      left: auto;
-      bottom: 25px;
-      right: 25px;
-      z-index: 99999;
-      background: #fff;
-      border-radius: 4px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      
-      /* Downscale slightly for clean desktop corner placement */
-      transform: scale(0.9);
-      transform-origin: bottom right;
-      
-      /* Premium entrance physics: slides up, clears blur layer, fades visibility */
-      animation: dynamicStickyShow 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    /* Keeps iframe elements isolated and clipped safely inside borders when sticky */
-    .outstream-main-container.is-sticky #div-gpt-ad-outstream-slot {
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    /* CLOSE TRIGGER MARKUP: Revealed exclusively during sticky activation mode */
-    .outstream-close-trigger {
-      display: none;
-      position: absolute;
-      top: -12px;
-      left: -12px;
-      width: 26px;
-      height: 26px;
-      background: #111;
-      color: #fff;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 23px;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-      font-size: 15px;
-      font-weight: bold;
-      border: 2px solid #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 100000;
-      transition: background 0.2s ease;
-    }
-
-    .outstream-close-trigger:hover {
-      background: #ff3b30; /* Desktop specific feedback overlay shift */
-    }
-
-    .outstream-main-container.is-sticky .outstream-close-trigger {
-      display: block;
-    }
-
-    /* BLUR ENTRANCE KEYFRAME SEQUENCING */
-    @keyframes dynamicStickyShow {
-      0% {
-        transform: translateY(60px) scale(0.85);
-        opacity: 0;
-        filter: blur(8px);
-      }
-      100% {
-        transform: translateY(0) scale(0.9);
-        opacity: 1;
-        filter: blur(0);
-      }
-    }
-  </style>
-  
   </head>
- 
+
 	<body class='  wsite-theme-light' display: flex;
 
 style= "
@@ -919,8 +372,6 @@ min-height: 100vh;
 padding: 0;
 background-color: transparent;
 
-
-
 background-repeat: no-repeat;
 
 background-size: cover;
@@ -928,101 +379,40 @@ background-size: cover;
 	" class=" wsite-page-dvdremote">
 
 <div style="visibility: hidden;height: 1px;">
-		 <h1>Use Your Phone as a Remote Control for DVD Player+</h1>	
-		</div>	
+		 <h1>Use Your Phone as a Remote Control for DVD Player+</h1>
+		</div>
 <div  >
  <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
 
-  <!-- <div data-ad="mlapplications.com_sticky_video_myvidsticky" data-devices="m:1,t:1,d:1"   class="demand-supply"></div> -->
-  <!-- ======================================================================= -->
-  <!-- 3. WEB PAGE STRUCTURAL CORE HOUSING PLACEMENT MARKUP                   -->
-  <!-- ======================================================================= -->
-  <!--<div class="myyy-outstream-placement-anchor">
-    <div id="outstream-ad-wrapper" class="outstream-main-container">
-      <div id="outstream-close" class="outstream-close-trigger">&times;</div>
-      
-       
-      <div id="div-gpt-ad-outstream-slot" style="width: 336px; height: 280px; margin: 0 auto;">
-        <script>
-          googletag.cmd.push(function() { 
-            googletag.display('div-gpt-ad-outstream-slot'); 
-          });
-        </script>
-      </div>
-    </div>
-  </div>--> 
-
-
-
-<!-- old mobile sticky top code -->
 </div>
 
-<!-- Google Tag Manager (noscript) -->
-<!--<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5BBV9FN"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>-->
-<!-- End Google Tag Manager (noscript) -->
-
-<!-- 
-mlapplications_com_300x600_desktop_sticky 
-  
-  
--->
-
-<!-- Anchor ad on bottom -->
 <script>
 function removeElement(id) {
 	 try
 	 {
 	 var elem = document.getElementById(id);
      elem.parentNode.removeChild(elem);
-	} 
+	}
 	catch (err) { console.log('err here...'+err); }
 }
 </script>
-   
-	<!--
-	onload="myFunctionfortitle()">
- 
-<style >
-#mymymywrap {
-   height: 60px;
-   border:1px solid black;
-   margin-left:30px;
-   margin-right:30px;
-   margin-top:30px;
-   margin-bottom:30px;
-   box-sizing: border-box;
-   </style>  -->
- <!--
-  <nav>
-    <div class="nav-wrapper" style="background: #0D2E64; height: 90px">
-      <a onclick="myFunctionOpenUrl('https://www.mlapplications.com/appdvdplayerplus.html')" class="brand-logo"><img alt="the DVD Player+ application" height="70"  src="https://www.mlapplications.com/files/theme/appdvdplayerplus/logoupper.jpg" /></a>
-      <ul class="right hide-on-med-and-down">
-       
-        <li><a onclick="myFunctionOpenUrl('https://bit.ly/2JJyDKV')"><i class="material-icons right">help</i>Help</a></li>
-      </ul>
-    </div>
-  </nav>
-  -->
-  
 
 <div id="myOverlayNav" class="myoverlay" style="width:100%">
-<!--  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> -->
+
   <div class="myoverlay-content">
-  
+
   <img alt="the logo of dvd player+ from Mobility in Life Applications" style="width: 400px; height: 400px;
 
 margin-left: auto;
     margin-right: auto;
 " src="files/theme/appdvdplayerplus/logoloading.html">
 
-
 <div  style="border-radius: 20px;
   background-color: #C80004;
    width: 400px;
    height:100px;
-   text-align:center;  
-   margin-left: auto; 
+   text-align:center;
+   margin-left: auto;
    margin-right: auto;
   border-style: Solid;
   border-color: black;
@@ -1059,50 +449,24 @@ margin-left: auto;
     </div>
 
                   </th>
-                 
+
                  <th style="padding:20px;  ">
                    <div id="thetextloadingresources" >Contacting "DVD Player+" on your PC ..</div>
-				   
+
                    <div id="thetextpreparingfirsttime" style="visibility: hidden; display: none;"> Preparing  first-time  Use .. !</div>
 
                   </th>
-                   
-                   
-
-
-
-                 
 
               </tr>
           </thead>
 
-         
       </table>
   </div>
-  
-  
+
 </div>
-  <!--  <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Clients</a>
-    <a href="#">Contact</a> -->
+
   </div>
 
-
-
-
-
-<!--
-
-  <div id="mytopstick" style="position: fixed; width: 728px; height: 90px; left: 0%; margin-left: 324px; text-align: center; z-index: 100; display: inline-block; bottom: 0px;right: 0px;" >
-    <iframe id="mlapplications.com_728x90_top" WIDTH="1" HEIGHT="1"
-            FRAMEBORDER="0" SCROLLING="no" MARGINHEIGHT="0" MARGINWIDTH="0" TOPMARGIN="0" LEFTMARGIN="0" ALLOWTRANSPARENCY="true" >
-    </iframe>
-  </div>
--->    
-   
-
-     
 <div >
 
 <div class="content-wrap railway-layout" style='background: transparent; background-color: transparent;'>
@@ -1136,24 +500,23 @@ margin-left: auto;
 <div style="width: 100%"><div></div><div><div id="985426959150888382" align="center" style="width: 100%; " class="wcustomhtml"><span id="TheStatusHere" style="color: silver; font-weight:100; font-size:16px; line-height:1px; text-align:center; width: fit-content; top:10px; margin-left: auto; margin-right: auto">Now Playing: </span>
 
 <span id="TheTitleHere" style="color: #ffffff; font-weight: bold; font-size:20px; line-height:1px; text-align:center; width: fit-content; top:10px; margin-left: auto; margin-right: auto">Now Playing: </span>
-      
 
 <div class="row" id="myupperbuttons" style=" margin-left: auto;  margin-right: auto; margin-top: 25px;  height:14px; width: 100%;
-       
+
        ">
-       
+
        <div class="col s1" style="border-radius: 20px;
-          
+
          border-style: Solid;
          top:10px;
          border-color: black;
          border-width: 1px;">
-       
+
        <span id="TIMELINECURRENT" style="color: #ffffff; font-weight: bold; font-size:20px; line-height:1px; text-align:center; width: fit-content; top:10px; margin-left: auto; margin-right: auto">05:43</span>
        <!-- Grey navigation panel -->
-                
+
               </div>
-              
+
              <div class="col s9 push-s1" style="left: 0; right:0; top:0px; width: 70%;">
                <!-- Teal page content  -->
                <div id="slider"></div>
@@ -1164,15 +527,15 @@ margin-left: auto;
                    if (SliderApplied == false)
                    {
                    var slider = document.getElementById('slider');
-                   
+
                    noUiSlider.create(slider, {
                        start: 0,
                        animate: false,
-                       step: 1, 
+                       step: 1,
                    //    animate: true,
                    //    animationDuration: 1600,
                        connect: 'lower',
-         
+
                        range: {
                            'min': 0,
                            'max': themaximum
@@ -1182,10 +545,9 @@ margin-left: auto;
                   }
 
                   };
-       
+
                    </script>     </div>
-       
-       
+
        <div class="col s1 push-s1" style="border-radius: 20px;
          background-color: #001438;
          border-style: Solid;
@@ -1194,258 +556,151 @@ margin-left: auto;
          border-color: black;
          border-width: 1px;">
          <span id="TIMELINEDURATION" style="color: #ffffff; font-weight: bold; font-size:20px; line-height:1px; text-align:center; width: fit-content; top:10px; margin-left: auto; margin-right: auto">05:43</span>
-           
+
          </div>
-         
-       
-           </div>   
-    
+
+           </div>
+
            <div class="row" id="myupperbuttons2" style=" margin-left: auto;  margin-right: auto; margin-top: 1px;  width: 100%;
-           
+
            ">
-           
+
            <div class="col s1" style="border-radius: 20px;
              background-color: #001438;
              border-style: Solid;
              top:10px;
              border-color: black;
              border-width: 1px;">
-           
+
              <!-- Grey navigation panel -->
-                    
+
                   </div>
-                  
+
                  <div class="col s9 push-s1" style="left: 0; right:0; top:0px; text-align: center; width: 72%;">
-                 
+
                    <table id="dvdstatistics" class="centered" style="color: #ffffff; font-size:15px; line-height:16px; text-align:center; width: auto; margin-left: auto; margin-right: auto">
                        <thead>
                            <tr style="padding:0px">
-                          <!--     <th style="padding:0px; width: 85px;">
-                                   <a id="mybuttonprevious" alt="Previous Chapter"   style="width:85px; height:85px; ">
-                                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="80" width="80">
-                                           <g>
-                                               
-                           <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#FFFFFF" fill="#003974"></ellipse>
-                           
-                           <Ellipse Stroke="#00338E" StrokeThickness="1" Fill="#004C9A"  />
-                           
-                           
-                                               <path transform="rotate(0,20,28) translate(2,2) scale(1.6,1.6)  "  id="path1" d="M16,13.900007C14.800003,13.900007 13.899994,14.800032 13.899994,15.999985 13.899994,17.199999 14.800003,18.100023 16,18.100023 17.199997,18.100023 18.099991,17.199999 18.099991,15.999985 18.099991,14.800032 17.199997,13.900007 16,13.900007z M16,11.199993C18.599991,11.199993 20.800003,13.300031 20.800003,15.999985 20.800003,18.600025 18.699997,20.800039 16,20.800039 13.399994,20.800039 11.199997,18.700001 11.199997,15.999985 11.199997,13.400007 13.399994,11.199993 16,11.199993z M29.800003,7.9999774C31.199997,10.400004 32,13.100019 32,15.999985 32,24.800043 24.800003,32 16,32 7.1999969,32 0,24.800043 0,15.999985L0,14.900008 10.099991,15.600021 10.099991,15.999985C10.099991,19.200001 12.699997,21.800039 15.899994,21.800039 19.099991,21.800039 21.699997,19.200001 21.699997,15.999985 21.699997,14.900008 21.399994,13.900007 20.899994,13.100019z M16,0C18.199997,2.3098255E-07,20.399994,0.50000072,22.300003,1.2999892L18.399994,10.699992C17.699997,10.400004 16.899994,10.199992 16,10.199992 14.300003,10.199992 12.800003,10.900004 11.699997,12.100018L4.0999908,5.2999933C7.0999908,2.0000022,11.300003,2.3098255E-07,16,0z" fill="#004C9A"></path>
-                           
-                           
-                           
-                           <path id="pathforvcd" visibility="hidden" transform="rotate(0,38,38) translate(20,40) scale(0.6375,0.6375)  " d="M0.199609890580177,9.62558364868164L1.890749335289,9.62558364868164 1.890749335289,11.455340385437 0.199609890580177,11.455340385437 0.199609890580177,9.62558364868164z M2.02951502799988,2.47844004631042L4.491370677948,2.47844004631042 4.69061231613159,4.26166296005249 4.85914134979248,5.90217399597168 4.99695825576782,7.39997386932373 5.1040620803833,8.75506210327148 5.19590139389038,7.49403953552246 5.29052448272705,6.3058123588562 5.38793087005615,5.19038152694702 5.48812055587769,4.14774703979492 5.65021705627441,2.47844004631042 8.11207294464111,2.47844004631042 6.92411613464355,11.455340385437 3.37826800346375,11.455340385437 2.02951502799988,2.47844004631042z M11.1616678237915,2.28991937637329L11.6548013687134,2.31483817100525 12.1028842926025,2.38959455490112 12.5059156417847,2.51418828964233 12.8638973236084,2.68861937522888 13.1705894470215,2.90025281906128 13.4197549819946,3.1364529132843 13.6113948822021,3.39721989631653 13.7455072402954,3.68255376815796 13.8376884460449,4.02152681350708 13.9035320281982,4.44320964813232 13.9430379867554,4.94760322570801 13.9562063217163,5.53470659255981 13.9562063217163,6.38746690750122 11.6218795776367,6.38746690750122 11.6218795776367,4.82723522186279 11.6172018051147,4.51895666122437 11.6031665802002,4.27464771270752 11.5797748565674,4.09430932998657 11.5470266342163,3.97794008255005 11.4271211624146,3.85136437416077 11.2171154022217,3.80917263031006 10.9814643859863,3.86046123504639 10.8511638641357,4.01432704925537 10.8172025680542,4.1467080116272 10.7929439544678,4.33869361877441 10.7783889770508,4.5902853012085 10.7735376358032,4.90148210525513 10.7735376358032,9.07111167907715 10.7783889770508,9.36983299255371 10.7929439544678,9.61172103881836 10.8172025680542,9.79677677154541 10.8511638641357,9.92499828338623 10.9773063659668,10.0747051239014 11.2004814147949,10.124608039856 11.4160318374634,10.0745868682861 11.5414810180664,9.92452144622803 11.5766553878784,9.79078006744385 11.6017799377441,9.58963966369629 11.6168546676636,9.3211030960083 11.6218795776367,8.98516845703125 11.6218795776367,7.85681772232056 13.9562063217163,7.85681772232056 13.9562063217163,8.20665454864502 13.9439039230347,8.8528470993042 13.9069976806641,9.39770793914795 13.8454856872559,9.84123706817627 13.7593688964844,10.1834335327148 13.6311473846436,10.4659414291382 13.443320274353,10.7304010391235 13.1958875656128,10.9768133163452 12.8888483047485,11.2051782608032 12.5324268341064,11.397102355957 12.1368455886841,11.5341901779175 11.7021045684814,11.6164436340332 11.2282047271729,11.6438608169556 10.7378435134888,11.6206426620483 10.2925329208374,11.5509872436523 9.89227390289307,11.4348945617676 9.53706550598145,11.272364616394 9.23245239257813,11.0687694549561 8.98397922515869,10.8294801712036 8.79164695739746,10.5544967651367 8.65545463562012,10.2438192367554 8.56084823608398,9.87388229370117 8.49327182769775,9.42112159729004 8.45272636413574,8.88553619384766 8.43921089172363,8.26712703704834 8.43921089172363,5.64447450637817 8.44336986541748,5.18963479995728 8.45584487915039,4.79544019699097 8.476637840271,4.46189069747925 8.50574779510498,4.18898582458496 8.63812732696533,3.71283316612244 8.90219497680664,3.25470066070557 9.29586982727051,2.85340166091919 9.81707382202148,2.54774904251099 10.4457063674927,2.35437679290771 11.1616678237915,2.28991937637329z M17.1278343200684,4.01432704925537L17.1278343200684,9.91945362091064 17.3558616638184,9.90680408477783 17.5353717803955,9.86885738372803 17.6663665771484,9.80561351776123 17.7488441467285,9.71707153320313 17.7997856140137,9.57238864898682 17.8361721038818,9.34072303771973 17.8580055236816,9.02207565307617 17.8652820587158,8.61644458770752 17.8652820587158,5.12881565093994 17.8628559112549,4.851233959198 17.8555793762207,4.62840557098389 17.8434505462646,4.46033096313477 17.8264694213867,4.34701061248779 17.7627048492432,4.19799661636353 17.6490383148193,4.09472560882568 17.4494285583496,4.03442716598511 17.1278343200684,4.01432704925537z M14.7935085296631,2.47844004631042L16.5400943756104,2.47844004631042 17.3172225952148,2.4881432056427 17.9574642181396,2.51725292205811 18.4608192443848,2.56576919555664 18.8272914886475,2.63369202613831 19.3519611358643,2.8388466835022 19.7338523864746,3.14380621910095 19.9861373901367,3.51876783370972 20.1219825744629,3.93392872810364 20.1559448242188,4.20406103134155 20.1802024841309,4.57919597625732 20.1947574615479,5.05933380126953 20.1996097564697,5.64447450637817 20.1996097564697,8.78833103179932 20.1925048828125,9.34262943267822 20.1711921691895,9.79677677154541 20.1356716156006,10.1507720947266 20.0859432220459,10.404616355896 19.9299983978271,10.7677955627441 19.6894950866699,11.0422592163086 19.3734455108643,11.2377099990845 18.9908599853516,11.3638525009155 18.7565956115723,11.4038791656494 18.4696578979492,11.4324684143066 18.1300430297852,11.4496231079102 17.7377548217773,11.455340385437 14.7935085296631,11.455340385437 14.7935085296631,2.47844004631042z" fill="#F5F5F5"></path>
-                           
-                           <path id="pathfordvd" visibility="visible" transform="rotate(0,38,38) translate(20,40) scale(0.4375,0.4375)  " d="M23.261636,11.83176C23.462621,11.83176 23.662632,11.931763 23.863617,12.031752 23.963651,12.132764 24.063627,12.332757 24.063627,12.633745 24.063627,12.833738 23.963651,13.034738 23.863617,13.235738 23.763643,13.335726 23.562656,13.435731 23.261636,13.435731 23.061626,13.435731 22.860641,13.335726 22.660631,13.235738 22.559681,13.134742 22.459646,12.934734 22.459646,12.633745 22.459646,12.432746 22.559681,12.232752 22.660631,12.031752 22.860641,11.931763 22.960676,11.83176 23.261636,11.83176z M14.438761,11.83176L14.538797,11.83176 14.939792,11.83176C15.240753,11.83176 15.440762,11.931763 15.541773,12.031752 15.641748,12.132764 15.741783,12.332757 15.741783,12.633745 15.741783,12.833738 15.641748,13.034738 15.541773,13.134742 15.440762,13.335726 15.139741,13.435731 14.839758,13.435731L14.438761,13.435731z M23.261636,11.329771C22.760666,11.329771 22.459646,11.430767 22.158685,11.730764 21.958675,12.031752 21.75769,12.232752 21.75769,12.633745 21.75769,13.034738 21.857664,13.235738 22.158685,13.535735 22.459646,13.836724 22.760666,13.936713 23.261636,13.936713 23.662632,13.936713 24.063627,13.836724 24.364648,13.535735 24.665607,13.235738 24.765644,12.934734 24.765644,12.633745 24.765644,12.332757 24.665607,12.031752 24.364648,11.730764 24.063627,11.430767 23.662632,11.329771 23.261636,11.329771z M18.248706,11.329771L18.248706,13.936713 20.153709,13.936713 20.153709,13.435731 18.950721,13.435731 18.950721,12.833738 20.053672,12.833738 20.053672,12.332757 18.84971,12.332757 18.84971,11.83176 20.053672,11.83176 20.053672,11.329771z M13.936755,11.329771L13.936755,13.936713 15.039767,13.936713C15.541773,13.936713 15.942769,13.836724 16.142778,13.535735 16.343765,13.335726 16.543773,13.034738 16.543773,12.633745 16.543773,12.232752 16.443739,11.931763 16.142778,11.730764 15.841757,11.430767 15.541773,11.329771 15.039767,11.329771z M11.429832,11.329771L11.429832,13.936713 12.031813,13.936713 12.031813,11.329771z M7.1188575,11.329771L8.3218437,13.936713 8.6228643,13.936713 9.8258501,11.329771 9.1238342,11.329771 8.5228296,12.833738 7.8208738,11.329771z M15.641748,9.9267995C24.264612,9.9267995 31.283556,11.029774 31.283556,12.432746 31.283556,13.836724 24.264612,14.939698 15.641748,14.939698 7.0188833,15.039702 0,13.936713 0,12.533742 0,11.129779 7.0188833,9.9267995 15.641748,9.9267995z M3.8099442,0L15.039767,0 16.74476,5.0128986 20.554704,0 27.071581,0C28.876546,1.1468182E-07 30.28058,0.40099291 31.082571,1.3029827 31.8845,2.1059601 32.185522,3.1079384 31.8845,4.4119126 31.584516,5.7148954 30.88256,6.8178693 29.77955,7.5198509 28.575586,8.3218371 26.87157,8.7228295 24.866655,8.7228295L20.554704,8.7228295 22.058651,2.3059532 24.665607,2.3059532 23.662632,7.2188622 25.367624,7.2188622C26.57061,7.2188622 27.473613,6.9188654 28.275604,6.3168728 28.876546,5.8158909 29.277542,5.2138983 29.378555,4.4119126 29.578563,3.6099271 29.47859,2.9079456 28.977558,2.4059571 28.475551,1.8049713 27.673561,1.6039713 26.470636,1.6039713L22.158685,1.6039713 15.841757,9.9267995 13.335811,3.0079498 13.335811,3.1079384C13.435785,3.5089313 13.335811,4.0109197 13.234799,4.4119126 12.934816,5.7148954 12.232799,6.8178693 11.129848,7.5198509 9.9258247,8.4228322 8.2218691,8.8238255 6.2159158,8.8238255L1.9049416,8.8238255 3.3089136,2.3059532 5.9158712,2.3059532 4.9128948,7.2188622 6.6178881,7.2188622C7.8208738,7.2188622 8.722839,6.9188654 9.5248295,6.3168728 10.126811,5.8158909 10.527806,5.2138983 10.627842,4.4119126 10.828827,3.6099271 10.728853,2.9079456 10.226846,2.4059571 9.7258154,1.9049601 8.9238249,1.6039713 7.7208997,1.6039713L3.4089485,1.6039713z" fill="#F5F5F5"></path>
-                           
-                           
-                                      
-                           <ellipse cy="26" cx="27" stroke-width="0.875" ry="11.0625" rx="11.0625" stroke="#082C69" fill="#003872"></ellipse>
-                           
-                                         
-                           <path id="path1" transform="rotate(0,28,28) translate(21,20) scale(0.4,0.4)  " d="M0,0L6.8219922,0 6.8219922,16 25.37,0.74398804 25.37,16.001007 25.37,31.259003 6.8219922,16.001007 6.8219922,32 0,32z" fill="#FFFFFF"></path>
-                                  
-                                           </g>
-                            
-                 </svg>
-                           
-                                   </a>
-                           
-             
-                               </th> -->
+
                                <th style="padding:0px; width: 85px;">
                                    <a id="mybuttonrewind" alt="3 minutes rewind"   style="width:85px; height:85px; ">
                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="80" width="80">
                                            <g>
-                                               
+
                            <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#FFFFFF" fill="#003974"></ellipse>
-                           
+
                            <Ellipse Stroke="#00338E" StrokeThickness="1" Fill="#004C9A"  />
-                           
-                           
+
                                                <path transform="rotate(0,20,28) translate(2,2) scale(1.6,1.6)  "  id="path1" d="M16,13.900007C14.800003,13.900007 13.899994,14.800032 13.899994,15.999985 13.899994,17.199999 14.800003,18.100023 16,18.100023 17.199997,18.100023 18.099991,17.199999 18.099991,15.999985 18.099991,14.800032 17.199997,13.900007 16,13.900007z M16,11.199993C18.599991,11.199993 20.800003,13.300031 20.800003,15.999985 20.800003,18.600025 18.699997,20.800039 16,20.800039 13.399994,20.800039 11.199997,18.700001 11.199997,15.999985 11.199997,13.400007 13.399994,11.199993 16,11.199993z M29.800003,7.9999774C31.199997,10.400004 32,13.100019 32,15.999985 32,24.800043 24.800003,32 16,32 7.1999969,32 0,24.800043 0,15.999985L0,14.900008 10.099991,15.600021 10.099991,15.999985C10.099991,19.200001 12.699997,21.800039 15.899994,21.800039 19.099991,21.800039 21.699997,19.200001 21.699997,15.999985 21.699997,14.900008 21.399994,13.900007 20.899994,13.100019z M16,0C18.199997,2.3098255E-07,20.399994,0.50000072,22.300003,1.2999892L18.399994,10.699992C17.699997,10.400004 16.899994,10.199992 16,10.199992 14.300003,10.199992 12.800003,10.900004 11.699997,12.100018L4.0999908,5.2999933C7.0999908,2.0000022,11.300003,2.3098255E-07,16,0z" fill="#004C9A"></path>
-                           
-                           
-                           
+
                            <path id="pathforvcd" visibility="hidden" transform="rotate(0,38,38) translate(20,40) scale(0.6375,0.6375)  " d="M0.199609890580177,9.62558364868164L1.890749335289,9.62558364868164 1.890749335289,11.455340385437 0.199609890580177,11.455340385437 0.199609890580177,9.62558364868164z M2.02951502799988,2.47844004631042L4.491370677948,2.47844004631042 4.69061231613159,4.26166296005249 4.85914134979248,5.90217399597168 4.99695825576782,7.39997386932373 5.1040620803833,8.75506210327148 5.19590139389038,7.49403953552246 5.29052448272705,6.3058123588562 5.38793087005615,5.19038152694702 5.48812055587769,4.14774703979492 5.65021705627441,2.47844004631042 8.11207294464111,2.47844004631042 6.92411613464355,11.455340385437 3.37826800346375,11.455340385437 2.02951502799988,2.47844004631042z M11.1616678237915,2.28991937637329L11.6548013687134,2.31483817100525 12.1028842926025,2.38959455490112 12.5059156417847,2.51418828964233 12.8638973236084,2.68861937522888 13.1705894470215,2.90025281906128 13.4197549819946,3.1364529132843 13.6113948822021,3.39721989631653 13.7455072402954,3.68255376815796 13.8376884460449,4.02152681350708 13.9035320281982,4.44320964813232 13.9430379867554,4.94760322570801 13.9562063217163,5.53470659255981 13.9562063217163,6.38746690750122 11.6218795776367,6.38746690750122 11.6218795776367,4.82723522186279 11.6172018051147,4.51895666122437 11.6031665802002,4.27464771270752 11.5797748565674,4.09430932998657 11.5470266342163,3.97794008255005 11.4271211624146,3.85136437416077 11.2171154022217,3.80917263031006 10.9814643859863,3.86046123504639 10.8511638641357,4.01432704925537 10.8172025680542,4.1467080116272 10.7929439544678,4.33869361877441 10.7783889770508,4.5902853012085 10.7735376358032,4.90148210525513 10.7735376358032,9.07111167907715 10.7783889770508,9.36983299255371 10.7929439544678,9.61172103881836 10.8172025680542,9.79677677154541 10.8511638641357,9.92499828338623 10.9773063659668,10.0747051239014 11.2004814147949,10.124608039856 11.4160318374634,10.0745868682861 11.5414810180664,9.92452144622803 11.5766553878784,9.79078006744385 11.6017799377441,9.58963966369629 11.6168546676636,9.3211030960083 11.6218795776367,8.98516845703125 11.6218795776367,7.85681772232056 13.9562063217163,7.85681772232056 13.9562063217163,8.20665454864502 13.9439039230347,8.8528470993042 13.9069976806641,9.39770793914795 13.8454856872559,9.84123706817627 13.7593688964844,10.1834335327148 13.6311473846436,10.4659414291382 13.443320274353,10.7304010391235 13.1958875656128,10.9768133163452 12.8888483047485,11.2051782608032 12.5324268341064,11.397102355957 12.1368455886841,11.5341901779175 11.7021045684814,11.6164436340332 11.2282047271729,11.6438608169556 10.7378435134888,11.6206426620483 10.2925329208374,11.5509872436523 9.89227390289307,11.4348945617676 9.53706550598145,11.272364616394 9.23245239257813,11.0687694549561 8.98397922515869,10.8294801712036 8.79164695739746,10.5544967651367 8.65545463562012,10.2438192367554 8.56084823608398,9.87388229370117 8.49327182769775,9.42112159729004 8.45272636413574,8.88553619384766 8.43921089172363,8.26712703704834 8.43921089172363,5.64447450637817 8.44336986541748,5.18963479995728 8.45584487915039,4.79544019699097 8.476637840271,4.46189069747925 8.50574779510498,4.18898582458496 8.63812732696533,3.71283316612244 8.90219497680664,3.25470066070557 9.29586982727051,2.85340166091919 9.81707382202148,2.54774904251099 10.4457063674927,2.35437679290771 11.1616678237915,2.28991937637329z M17.1278343200684,4.01432704925537L17.1278343200684,9.91945362091064 17.3558616638184,9.90680408477783 17.5353717803955,9.86885738372803 17.6663665771484,9.80561351776123 17.7488441467285,9.71707153320313 17.7997856140137,9.57238864898682 17.8361721038818,9.34072303771973 17.8580055236816,9.02207565307617 17.8652820587158,8.61644458770752 17.8652820587158,5.12881565093994 17.8628559112549,4.851233959198 17.8555793762207,4.62840557098389 17.8434505462646,4.46033096313477 17.8264694213867,4.34701061248779 17.7627048492432,4.19799661636353 17.6490383148193,4.09472560882568 17.4494285583496,4.03442716598511 17.1278343200684,4.01432704925537z M14.7935085296631,2.47844004631042L16.5400943756104,2.47844004631042 17.3172225952148,2.4881432056427 17.9574642181396,2.51725292205811 18.4608192443848,2.56576919555664 18.8272914886475,2.63369202613831 19.3519611358643,2.8388466835022 19.7338523864746,3.14380621910095 19.9861373901367,3.51876783370972 20.1219825744629,3.93392872810364 20.1559448242188,4.20406103134155 20.1802024841309,4.57919597625732 20.1947574615479,5.05933380126953 20.1996097564697,5.64447450637817 20.1996097564697,8.78833103179932 20.1925048828125,9.34262943267822 20.1711921691895,9.79677677154541 20.1356716156006,10.1507720947266 20.0859432220459,10.404616355896 19.9299983978271,10.7677955627441 19.6894950866699,11.0422592163086 19.3734455108643,11.2377099990845 18.9908599853516,11.3638525009155 18.7565956115723,11.4038791656494 18.4696578979492,11.4324684143066 18.1300430297852,11.4496231079102 17.7377548217773,11.455340385437 14.7935085296631,11.455340385437 14.7935085296631,2.47844004631042z" fill="#F5F5F5"></path>
-                           
+
                            <path id="pathfordvd" visibility="visible" transform="rotate(0,38,38) translate(20,40) scale(0.4375,0.4375)  " d="M23.261636,11.83176C23.462621,11.83176 23.662632,11.931763 23.863617,12.031752 23.963651,12.132764 24.063627,12.332757 24.063627,12.633745 24.063627,12.833738 23.963651,13.034738 23.863617,13.235738 23.763643,13.335726 23.562656,13.435731 23.261636,13.435731 23.061626,13.435731 22.860641,13.335726 22.660631,13.235738 22.559681,13.134742 22.459646,12.934734 22.459646,12.633745 22.459646,12.432746 22.559681,12.232752 22.660631,12.031752 22.860641,11.931763 22.960676,11.83176 23.261636,11.83176z M14.438761,11.83176L14.538797,11.83176 14.939792,11.83176C15.240753,11.83176 15.440762,11.931763 15.541773,12.031752 15.641748,12.132764 15.741783,12.332757 15.741783,12.633745 15.741783,12.833738 15.641748,13.034738 15.541773,13.134742 15.440762,13.335726 15.139741,13.435731 14.839758,13.435731L14.438761,13.435731z M23.261636,11.329771C22.760666,11.329771 22.459646,11.430767 22.158685,11.730764 21.958675,12.031752 21.75769,12.232752 21.75769,12.633745 21.75769,13.034738 21.857664,13.235738 22.158685,13.535735 22.459646,13.836724 22.760666,13.936713 23.261636,13.936713 23.662632,13.936713 24.063627,13.836724 24.364648,13.535735 24.665607,13.235738 24.765644,12.934734 24.765644,12.633745 24.765644,12.332757 24.665607,12.031752 24.364648,11.730764 24.063627,11.430767 23.662632,11.329771 23.261636,11.329771z M18.248706,11.329771L18.248706,13.936713 20.153709,13.936713 20.153709,13.435731 18.950721,13.435731 18.950721,12.833738 20.053672,12.833738 20.053672,12.332757 18.84971,12.332757 18.84971,11.83176 20.053672,11.83176 20.053672,11.329771z M13.936755,11.329771L13.936755,13.936713 15.039767,13.936713C15.541773,13.936713 15.942769,13.836724 16.142778,13.535735 16.343765,13.335726 16.543773,13.034738 16.543773,12.633745 16.543773,12.232752 16.443739,11.931763 16.142778,11.730764 15.841757,11.430767 15.541773,11.329771 15.039767,11.329771z M11.429832,11.329771L11.429832,13.936713 12.031813,13.936713 12.031813,11.329771z M7.1188575,11.329771L8.3218437,13.936713 8.6228643,13.936713 9.8258501,11.329771 9.1238342,11.329771 8.5228296,12.833738 7.8208738,11.329771z M15.641748,9.9267995C24.264612,9.9267995 31.283556,11.029774 31.283556,12.432746 31.283556,13.836724 24.264612,14.939698 15.641748,14.939698 7.0188833,15.039702 0,13.936713 0,12.533742 0,11.129779 7.0188833,9.9267995 15.641748,9.9267995z M3.8099442,0L15.039767,0 16.74476,5.0128986 20.554704,0 27.071581,0C28.876546,1.1468182E-07 30.28058,0.40099291 31.082571,1.3029827 31.8845,2.1059601 32.185522,3.1079384 31.8845,4.4119126 31.584516,5.7148954 30.88256,6.8178693 29.77955,7.5198509 28.575586,8.3218371 26.87157,8.7228295 24.866655,8.7228295L20.554704,8.7228295 22.058651,2.3059532 24.665607,2.3059532 23.662632,7.2188622 25.367624,7.2188622C26.57061,7.2188622 27.473613,6.9188654 28.275604,6.3168728 28.876546,5.8158909 29.277542,5.2138983 29.378555,4.4119126 29.578563,3.6099271 29.47859,2.9079456 28.977558,2.4059571 28.475551,1.8049713 27.673561,1.6039713 26.470636,1.6039713L22.158685,1.6039713 15.841757,9.9267995 13.335811,3.0079498 13.335811,3.1079384C13.435785,3.5089313 13.335811,4.0109197 13.234799,4.4119126 12.934816,5.7148954 12.232799,6.8178693 11.129848,7.5198509 9.9258247,8.4228322 8.2218691,8.8238255 6.2159158,8.8238255L1.9049416,8.8238255 3.3089136,2.3059532 5.9158712,2.3059532 4.9128948,7.2188622 6.6178881,7.2188622C7.8208738,7.2188622 8.722839,6.9188654 9.5248295,6.3168728 10.126811,5.8158909 10.527806,5.2138983 10.627842,4.4119126 10.828827,3.6099271 10.728853,2.9079456 10.226846,2.4059571 9.7258154,1.9049601 8.9238249,1.6039713 7.7208997,1.6039713L3.4089485,1.6039713z" fill="#F5F5F5"></path>
-                           
-                           
-                                      
+
                            <ellipse cy="26" cx="27" stroke-width="0.875" ry="11.0625" rx="11.0625" stroke="#082C69" fill="#003872"></ellipse>
-                           
-                                         
+
                            <path id="path1" transform="rotate(0,28,28) translate(19,22) scale(0.4,0.4)  " d="M32,0L32,12.014003 32,24.027 17.397995,12.014003z M14.602997,0L14.602997,12.014003 14.602997,24.027 0,12.014003z" fill="#FFFFFF"></path>
-                                  
+
                                            </g>
-                            
+
                            </svg>
-                           
+
                                    </a>
-                           
+
                                </th>
                                <th style="padding:0px; width: 102px;">
                                    <a id="mybuttonpause" alt="Pause the movie!"  style="visibility:hidden; display:none; width:100px; height:100px; ">
                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="100" width="100">
                                            <g>
-                                               
+
                            <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#FFFFFF" fill="#003974"></ellipse>
-                           
+
                            <Ellipse Stroke="#00338E" StrokeThickness="1" Fill="#004C9A"  />
-                           
-                           
+
                                                <path transform="rotate(0,20,28) translate(2,2) scale(1.6,1.6)  "  id="path1" d="M16,13.900007C14.800003,13.900007 13.899994,14.800032 13.899994,15.999985 13.899994,17.199999 14.800003,18.100023 16,18.100023 17.199997,18.100023 18.099991,17.199999 18.099991,15.999985 18.099991,14.800032 17.199997,13.900007 16,13.900007z M16,11.199993C18.599991,11.199993 20.800003,13.300031 20.800003,15.999985 20.800003,18.600025 18.699997,20.800039 16,20.800039 13.399994,20.800039 11.199997,18.700001 11.199997,15.999985 11.199997,13.400007 13.399994,11.199993 16,11.199993z M29.800003,7.9999774C31.199997,10.400004 32,13.100019 32,15.999985 32,24.800043 24.800003,32 16,32 7.1999969,32 0,24.800043 0,15.999985L0,14.900008 10.099991,15.600021 10.099991,15.999985C10.099991,19.200001 12.699997,21.800039 15.899994,21.800039 19.099991,21.800039 21.699997,19.200001 21.699997,15.999985 21.699997,14.900008 21.399994,13.900007 20.899994,13.100019z M16,0C18.199997,2.3098255E-07,20.399994,0.50000072,22.300003,1.2999892L18.399994,10.699992C17.699997,10.400004 16.899994,10.199992 16,10.199992 14.300003,10.199992 12.800003,10.900004 11.699997,12.100018L4.0999908,5.2999933C7.0999908,2.0000022,11.300003,2.3098255E-07,16,0z" fill="#004C9A"></path>
-                           
-                           
-                           
+
                            <path id="pathforvcd" visibility="hidden" transform="rotate(0,38,38) translate(20,40) scale(0.6375,0.6375)  " d="M0.199609890580177,9.62558364868164L1.890749335289,9.62558364868164 1.890749335289,11.455340385437 0.199609890580177,11.455340385437 0.199609890580177,9.62558364868164z M2.02951502799988,2.47844004631042L4.491370677948,2.47844004631042 4.69061231613159,4.26166296005249 4.85914134979248,5.90217399597168 4.99695825576782,7.39997386932373 5.1040620803833,8.75506210327148 5.19590139389038,7.49403953552246 5.29052448272705,6.3058123588562 5.38793087005615,5.19038152694702 5.48812055587769,4.14774703979492 5.65021705627441,2.47844004631042 8.11207294464111,2.47844004631042 6.92411613464355,11.455340385437 3.37826800346375,11.455340385437 2.02951502799988,2.47844004631042z M11.1616678237915,2.28991937637329L11.6548013687134,2.31483817100525 12.1028842926025,2.38959455490112 12.5059156417847,2.51418828964233 12.8638973236084,2.68861937522888 13.1705894470215,2.90025281906128 13.4197549819946,3.1364529132843 13.6113948822021,3.39721989631653 13.7455072402954,3.68255376815796 13.8376884460449,4.02152681350708 13.9035320281982,4.44320964813232 13.9430379867554,4.94760322570801 13.9562063217163,5.53470659255981 13.9562063217163,6.38746690750122 11.6218795776367,6.38746690750122 11.6218795776367,4.82723522186279 11.6172018051147,4.51895666122437 11.6031665802002,4.27464771270752 11.5797748565674,4.09430932998657 11.5470266342163,3.97794008255005 11.4271211624146,3.85136437416077 11.2171154022217,3.80917263031006 10.9814643859863,3.86046123504639 10.8511638641357,4.01432704925537 10.8172025680542,4.1467080116272 10.7929439544678,4.33869361877441 10.7783889770508,4.5902853012085 10.7735376358032,4.90148210525513 10.7735376358032,9.07111167907715 10.7783889770508,9.36983299255371 10.7929439544678,9.61172103881836 10.8172025680542,9.79677677154541 10.8511638641357,9.92499828338623 10.9773063659668,10.0747051239014 11.2004814147949,10.124608039856 11.4160318374634,10.0745868682861 11.5414810180664,9.92452144622803 11.5766553878784,9.79078006744385 11.6017799377441,9.58963966369629 11.6168546676636,9.3211030960083 11.6218795776367,8.98516845703125 11.6218795776367,7.85681772232056 13.9562063217163,7.85681772232056 13.9562063217163,8.20665454864502 13.9439039230347,8.8528470993042 13.9069976806641,9.39770793914795 13.8454856872559,9.84123706817627 13.7593688964844,10.1834335327148 13.6311473846436,10.4659414291382 13.443320274353,10.7304010391235 13.1958875656128,10.9768133163452 12.8888483047485,11.2051782608032 12.5324268341064,11.397102355957 12.1368455886841,11.5341901779175 11.7021045684814,11.6164436340332 11.2282047271729,11.6438608169556 10.7378435134888,11.6206426620483 10.2925329208374,11.5509872436523 9.89227390289307,11.4348945617676 9.53706550598145,11.272364616394 9.23245239257813,11.0687694549561 8.98397922515869,10.8294801712036 8.79164695739746,10.5544967651367 8.65545463562012,10.2438192367554 8.56084823608398,9.87388229370117 8.49327182769775,9.42112159729004 8.45272636413574,8.88553619384766 8.43921089172363,8.26712703704834 8.43921089172363,5.64447450637817 8.44336986541748,5.18963479995728 8.45584487915039,4.79544019699097 8.476637840271,4.46189069747925 8.50574779510498,4.18898582458496 8.63812732696533,3.71283316612244 8.90219497680664,3.25470066070557 9.29586982727051,2.85340166091919 9.81707382202148,2.54774904251099 10.4457063674927,2.35437679290771 11.1616678237915,2.28991937637329z M17.1278343200684,4.01432704925537L17.1278343200684,9.91945362091064 17.3558616638184,9.90680408477783 17.5353717803955,9.86885738372803 17.6663665771484,9.80561351776123 17.7488441467285,9.71707153320313 17.7997856140137,9.57238864898682 17.8361721038818,9.34072303771973 17.8580055236816,9.02207565307617 17.8652820587158,8.61644458770752 17.8652820587158,5.12881565093994 17.8628559112549,4.851233959198 17.8555793762207,4.62840557098389 17.8434505462646,4.46033096313477 17.8264694213867,4.34701061248779 17.7627048492432,4.19799661636353 17.6490383148193,4.09472560882568 17.4494285583496,4.03442716598511 17.1278343200684,4.01432704925537z M14.7935085296631,2.47844004631042L16.5400943756104,2.47844004631042 17.3172225952148,2.4881432056427 17.9574642181396,2.51725292205811 18.4608192443848,2.56576919555664 18.8272914886475,2.63369202613831 19.3519611358643,2.8388466835022 19.7338523864746,3.14380621910095 19.9861373901367,3.51876783370972 20.1219825744629,3.93392872810364 20.1559448242188,4.20406103134155 20.1802024841309,4.57919597625732 20.1947574615479,5.05933380126953 20.1996097564697,5.64447450637817 20.1996097564697,8.78833103179932 20.1925048828125,9.34262943267822 20.1711921691895,9.79677677154541 20.1356716156006,10.1507720947266 20.0859432220459,10.404616355896 19.9299983978271,10.7677955627441 19.6894950866699,11.0422592163086 19.3734455108643,11.2377099990845 18.9908599853516,11.3638525009155 18.7565956115723,11.4038791656494 18.4696578979492,11.4324684143066 18.1300430297852,11.4496231079102 17.7377548217773,11.455340385437 14.7935085296631,11.455340385437 14.7935085296631,2.47844004631042z" fill="#F5F5F5"></path>
-                           
+
                            <path id="pathfordvd" visibility="visible" transform="rotate(0,38,38) translate(20,40) scale(0.4375,0.4375)  " d="M23.261636,11.83176C23.462621,11.83176 23.662632,11.931763 23.863617,12.031752 23.963651,12.132764 24.063627,12.332757 24.063627,12.633745 24.063627,12.833738 23.963651,13.034738 23.863617,13.235738 23.763643,13.335726 23.562656,13.435731 23.261636,13.435731 23.061626,13.435731 22.860641,13.335726 22.660631,13.235738 22.559681,13.134742 22.459646,12.934734 22.459646,12.633745 22.459646,12.432746 22.559681,12.232752 22.660631,12.031752 22.860641,11.931763 22.960676,11.83176 23.261636,11.83176z M14.438761,11.83176L14.538797,11.83176 14.939792,11.83176C15.240753,11.83176 15.440762,11.931763 15.541773,12.031752 15.641748,12.132764 15.741783,12.332757 15.741783,12.633745 15.741783,12.833738 15.641748,13.034738 15.541773,13.134742 15.440762,13.335726 15.139741,13.435731 14.839758,13.435731L14.438761,13.435731z M23.261636,11.329771C22.760666,11.329771 22.459646,11.430767 22.158685,11.730764 21.958675,12.031752 21.75769,12.232752 21.75769,12.633745 21.75769,13.034738 21.857664,13.235738 22.158685,13.535735 22.459646,13.836724 22.760666,13.936713 23.261636,13.936713 23.662632,13.936713 24.063627,13.836724 24.364648,13.535735 24.665607,13.235738 24.765644,12.934734 24.765644,12.633745 24.765644,12.332757 24.665607,12.031752 24.364648,11.730764 24.063627,11.430767 23.662632,11.329771 23.261636,11.329771z M18.248706,11.329771L18.248706,13.936713 20.153709,13.936713 20.153709,13.435731 18.950721,13.435731 18.950721,12.833738 20.053672,12.833738 20.053672,12.332757 18.84971,12.332757 18.84971,11.83176 20.053672,11.83176 20.053672,11.329771z M13.936755,11.329771L13.936755,13.936713 15.039767,13.936713C15.541773,13.936713 15.942769,13.836724 16.142778,13.535735 16.343765,13.335726 16.543773,13.034738 16.543773,12.633745 16.543773,12.232752 16.443739,11.931763 16.142778,11.730764 15.841757,11.430767 15.541773,11.329771 15.039767,11.329771z M11.429832,11.329771L11.429832,13.936713 12.031813,13.936713 12.031813,11.329771z M7.1188575,11.329771L8.3218437,13.936713 8.6228643,13.936713 9.8258501,11.329771 9.1238342,11.329771 8.5228296,12.833738 7.8208738,11.329771z M15.641748,9.9267995C24.264612,9.9267995 31.283556,11.029774 31.283556,12.432746 31.283556,13.836724 24.264612,14.939698 15.641748,14.939698 7.0188833,15.039702 0,13.936713 0,12.533742 0,11.129779 7.0188833,9.9267995 15.641748,9.9267995z M3.8099442,0L15.039767,0 16.74476,5.0128986 20.554704,0 27.071581,0C28.876546,1.1468182E-07 30.28058,0.40099291 31.082571,1.3029827 31.8845,2.1059601 32.185522,3.1079384 31.8845,4.4119126 31.584516,5.7148954 30.88256,6.8178693 29.77955,7.5198509 28.575586,8.3218371 26.87157,8.7228295 24.866655,8.7228295L20.554704,8.7228295 22.058651,2.3059532 24.665607,2.3059532 23.662632,7.2188622 25.367624,7.2188622C26.57061,7.2188622 27.473613,6.9188654 28.275604,6.3168728 28.876546,5.8158909 29.277542,5.2138983 29.378555,4.4119126 29.578563,3.6099271 29.47859,2.9079456 28.977558,2.4059571 28.475551,1.8049713 27.673561,1.6039713 26.470636,1.6039713L22.158685,1.6039713 15.841757,9.9267995 13.335811,3.0079498 13.335811,3.1079384C13.435785,3.5089313 13.335811,4.0109197 13.234799,4.4119126 12.934816,5.7148954 12.232799,6.8178693 11.129848,7.5198509 9.9258247,8.4228322 8.2218691,8.8238255 6.2159158,8.8238255L1.9049416,8.8238255 3.3089136,2.3059532 5.9158712,2.3059532 4.9128948,7.2188622 6.6178881,7.2188622C7.8208738,7.2188622 8.722839,6.9188654 9.5248295,6.3168728 10.126811,5.8158909 10.527806,5.2138983 10.627842,4.4119126 10.828827,3.6099271 10.728853,2.9079456 10.226846,2.4059571 9.7258154,1.9049601 8.9238249,1.6039713 7.7208997,1.6039713L3.4089485,1.6039713z" fill="#F5F5F5"></path>
-                           
-                           
-                                      
+
                            <ellipse cy="26" cx="27" stroke-width="0.875" ry="11.0625" rx="11.0625" stroke="#082C69" fill="#003872"></ellipse>
-                           
-                                         
+
                            <path id="path1" transform="rotate(0,28,28) translate(22,20) scale(0.4,0.4)  " d="M17.94,0L29.150001,0 29.150001,32 17.94,32z M0,0L11.210002,0 11.210002,32 0,32z" fill="#FFFFFF"></path>
-                                  
+
                                            </g>
-                            
+
                            </svg>
-                           
+
                                    </a>
                                    <a id="mybuttonplay" alt="Play the movie!"  style="width:100px; height:100px; ">
                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="100" width="100">
                                            <g>
-                                               
+
                            <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#FFFFFF" fill="#003974"></ellipse>
-                           
+
                            <Ellipse Stroke="#00338E" StrokeThickness="1" Fill="#004C9A"  />
-                           
-                           
+
                                                <path transform="rotate(0,20,28) translate(2,2) scale(1.6,1.6)  "  id="path1" d="M16,13.900007C14.800003,13.900007 13.899994,14.800032 13.899994,15.999985 13.899994,17.199999 14.800003,18.100023 16,18.100023 17.199997,18.100023 18.099991,17.199999 18.099991,15.999985 18.099991,14.800032 17.199997,13.900007 16,13.900007z M16,11.199993C18.599991,11.199993 20.800003,13.300031 20.800003,15.999985 20.800003,18.600025 18.699997,20.800039 16,20.800039 13.399994,20.800039 11.199997,18.700001 11.199997,15.999985 11.199997,13.400007 13.399994,11.199993 16,11.199993z M29.800003,7.9999774C31.199997,10.400004 32,13.100019 32,15.999985 32,24.800043 24.800003,32 16,32 7.1999969,32 0,24.800043 0,15.999985L0,14.900008 10.099991,15.600021 10.099991,15.999985C10.099991,19.200001 12.699997,21.800039 15.899994,21.800039 19.099991,21.800039 21.699997,19.200001 21.699997,15.999985 21.699997,14.900008 21.399994,13.900007 20.899994,13.100019z M16,0C18.199997,2.3098255E-07,20.399994,0.50000072,22.300003,1.2999892L18.399994,10.699992C17.699997,10.400004 16.899994,10.199992 16,10.199992 14.300003,10.199992 12.800003,10.900004 11.699997,12.100018L4.0999908,5.2999933C7.0999908,2.0000022,11.300003,2.3098255E-07,16,0z" fill="#004C9A"></path>
-                           
-                           
-                           
+
                            <path id="pathforvcd" visibility="hidden" transform="rotate(0,38,38) translate(20,40) scale(0.6375,0.6375)  " d="M0.199609890580177,9.62558364868164L1.890749335289,9.62558364868164 1.890749335289,11.455340385437 0.199609890580177,11.455340385437 0.199609890580177,9.62558364868164z M2.02951502799988,2.47844004631042L4.491370677948,2.47844004631042 4.69061231613159,4.26166296005249 4.85914134979248,5.90217399597168 4.99695825576782,7.39997386932373 5.1040620803833,8.75506210327148 5.19590139389038,7.49403953552246 5.29052448272705,6.3058123588562 5.38793087005615,5.19038152694702 5.48812055587769,4.14774703979492 5.65021705627441,2.47844004631042 8.11207294464111,2.47844004631042 6.92411613464355,11.455340385437 3.37826800346375,11.455340385437 2.02951502799988,2.47844004631042z M11.1616678237915,2.28991937637329L11.6548013687134,2.31483817100525 12.1028842926025,2.38959455490112 12.5059156417847,2.51418828964233 12.8638973236084,2.68861937522888 13.1705894470215,2.90025281906128 13.4197549819946,3.1364529132843 13.6113948822021,3.39721989631653 13.7455072402954,3.68255376815796 13.8376884460449,4.02152681350708 13.9035320281982,4.44320964813232 13.9430379867554,4.94760322570801 13.9562063217163,5.53470659255981 13.9562063217163,6.38746690750122 11.6218795776367,6.38746690750122 11.6218795776367,4.82723522186279 11.6172018051147,4.51895666122437 11.6031665802002,4.27464771270752 11.5797748565674,4.09430932998657 11.5470266342163,3.97794008255005 11.4271211624146,3.85136437416077 11.2171154022217,3.80917263031006 10.9814643859863,3.86046123504639 10.8511638641357,4.01432704925537 10.8172025680542,4.1467080116272 10.7929439544678,4.33869361877441 10.7783889770508,4.5902853012085 10.7735376358032,4.90148210525513 10.7735376358032,9.07111167907715 10.7783889770508,9.36983299255371 10.7929439544678,9.61172103881836 10.8172025680542,9.79677677154541 10.8511638641357,9.92499828338623 10.9773063659668,10.0747051239014 11.2004814147949,10.124608039856 11.4160318374634,10.0745868682861 11.5414810180664,9.92452144622803 11.5766553878784,9.79078006744385 11.6017799377441,9.58963966369629 11.6168546676636,9.3211030960083 11.6218795776367,8.98516845703125 11.6218795776367,7.85681772232056 13.9562063217163,7.85681772232056 13.9562063217163,8.20665454864502 13.9439039230347,8.8528470993042 13.9069976806641,9.39770793914795 13.8454856872559,9.84123706817627 13.7593688964844,10.1834335327148 13.6311473846436,10.4659414291382 13.443320274353,10.7304010391235 13.1958875656128,10.9768133163452 12.8888483047485,11.2051782608032 12.5324268341064,11.397102355957 12.1368455886841,11.5341901779175 11.7021045684814,11.6164436340332 11.2282047271729,11.6438608169556 10.7378435134888,11.6206426620483 10.2925329208374,11.5509872436523 9.89227390289307,11.4348945617676 9.53706550598145,11.272364616394 9.23245239257813,11.0687694549561 8.98397922515869,10.8294801712036 8.79164695739746,10.5544967651367 8.65545463562012,10.2438192367554 8.56084823608398,9.87388229370117 8.49327182769775,9.42112159729004 8.45272636413574,8.88553619384766 8.43921089172363,8.26712703704834 8.43921089172363,5.64447450637817 8.44336986541748,5.18963479995728 8.45584487915039,4.79544019699097 8.476637840271,4.46189069747925 8.50574779510498,4.18898582458496 8.63812732696533,3.71283316612244 8.90219497680664,3.25470066070557 9.29586982727051,2.85340166091919 9.81707382202148,2.54774904251099 10.4457063674927,2.35437679290771 11.1616678237915,2.28991937637329z M17.1278343200684,4.01432704925537L17.1278343200684,9.91945362091064 17.3558616638184,9.90680408477783 17.5353717803955,9.86885738372803 17.6663665771484,9.80561351776123 17.7488441467285,9.71707153320313 17.7997856140137,9.57238864898682 17.8361721038818,9.34072303771973 17.8580055236816,9.02207565307617 17.8652820587158,8.61644458770752 17.8652820587158,5.12881565093994 17.8628559112549,4.851233959198 17.8555793762207,4.62840557098389 17.8434505462646,4.46033096313477 17.8264694213867,4.34701061248779 17.7627048492432,4.19799661636353 17.6490383148193,4.09472560882568 17.4494285583496,4.03442716598511 17.1278343200684,4.01432704925537z M14.7935085296631,2.47844004631042L16.5400943756104,2.47844004631042 17.3172225952148,2.4881432056427 17.9574642181396,2.51725292205811 18.4608192443848,2.56576919555664 18.8272914886475,2.63369202613831 19.3519611358643,2.8388466835022 19.7338523864746,3.14380621910095 19.9861373901367,3.51876783370972 20.1219825744629,3.93392872810364 20.1559448242188,4.20406103134155 20.1802024841309,4.57919597625732 20.1947574615479,5.05933380126953 20.1996097564697,5.64447450637817 20.1996097564697,8.78833103179932 20.1925048828125,9.34262943267822 20.1711921691895,9.79677677154541 20.1356716156006,10.1507720947266 20.0859432220459,10.404616355896 19.9299983978271,10.7677955627441 19.6894950866699,11.0422592163086 19.3734455108643,11.2377099990845 18.9908599853516,11.3638525009155 18.7565956115723,11.4038791656494 18.4696578979492,11.4324684143066 18.1300430297852,11.4496231079102 17.7377548217773,11.455340385437 14.7935085296631,11.455340385437 14.7935085296631,2.47844004631042z" fill="#F5F5F5"></path>
-                           
+
                            <path id="pathfordvd" visibility="visible" transform="rotate(0,38,38) translate(20,40) scale(0.4375,0.4375)  " d="M23.261636,11.83176C23.462621,11.83176 23.662632,11.931763 23.863617,12.031752 23.963651,12.132764 24.063627,12.332757 24.063627,12.633745 24.063627,12.833738 23.963651,13.034738 23.863617,13.235738 23.763643,13.335726 23.562656,13.435731 23.261636,13.435731 23.061626,13.435731 22.860641,13.335726 22.660631,13.235738 22.559681,13.134742 22.459646,12.934734 22.459646,12.633745 22.459646,12.432746 22.559681,12.232752 22.660631,12.031752 22.860641,11.931763 22.960676,11.83176 23.261636,11.83176z M14.438761,11.83176L14.538797,11.83176 14.939792,11.83176C15.240753,11.83176 15.440762,11.931763 15.541773,12.031752 15.641748,12.132764 15.741783,12.332757 15.741783,12.633745 15.741783,12.833738 15.641748,13.034738 15.541773,13.134742 15.440762,13.335726 15.139741,13.435731 14.839758,13.435731L14.438761,13.435731z M23.261636,11.329771C22.760666,11.329771 22.459646,11.430767 22.158685,11.730764 21.958675,12.031752 21.75769,12.232752 21.75769,12.633745 21.75769,13.034738 21.857664,13.235738 22.158685,13.535735 22.459646,13.836724 22.760666,13.936713 23.261636,13.936713 23.662632,13.936713 24.063627,13.836724 24.364648,13.535735 24.665607,13.235738 24.765644,12.934734 24.765644,12.633745 24.765644,12.332757 24.665607,12.031752 24.364648,11.730764 24.063627,11.430767 23.662632,11.329771 23.261636,11.329771z M18.248706,11.329771L18.248706,13.936713 20.153709,13.936713 20.153709,13.435731 18.950721,13.435731 18.950721,12.833738 20.053672,12.833738 20.053672,12.332757 18.84971,12.332757 18.84971,11.83176 20.053672,11.83176 20.053672,11.329771z M13.936755,11.329771L13.936755,13.936713 15.039767,13.936713C15.541773,13.936713 15.942769,13.836724 16.142778,13.535735 16.343765,13.335726 16.543773,13.034738 16.543773,12.633745 16.543773,12.232752 16.443739,11.931763 16.142778,11.730764 15.841757,11.430767 15.541773,11.329771 15.039767,11.329771z M11.429832,11.329771L11.429832,13.936713 12.031813,13.936713 12.031813,11.329771z M7.1188575,11.329771L8.3218437,13.936713 8.6228643,13.936713 9.8258501,11.329771 9.1238342,11.329771 8.5228296,12.833738 7.8208738,11.329771z M15.641748,9.9267995C24.264612,9.9267995 31.283556,11.029774 31.283556,12.432746 31.283556,13.836724 24.264612,14.939698 15.641748,14.939698 7.0188833,15.039702 0,13.936713 0,12.533742 0,11.129779 7.0188833,9.9267995 15.641748,9.9267995z M3.8099442,0L15.039767,0 16.74476,5.0128986 20.554704,0 27.071581,0C28.876546,1.1468182E-07 30.28058,0.40099291 31.082571,1.3029827 31.8845,2.1059601 32.185522,3.1079384 31.8845,4.4119126 31.584516,5.7148954 30.88256,6.8178693 29.77955,7.5198509 28.575586,8.3218371 26.87157,8.7228295 24.866655,8.7228295L20.554704,8.7228295 22.058651,2.3059532 24.665607,2.3059532 23.662632,7.2188622 25.367624,7.2188622C26.57061,7.2188622 27.473613,6.9188654 28.275604,6.3168728 28.876546,5.8158909 29.277542,5.2138983 29.378555,4.4119126 29.578563,3.6099271 29.47859,2.9079456 28.977558,2.4059571 28.475551,1.8049713 27.673561,1.6039713 26.470636,1.6039713L22.158685,1.6039713 15.841757,9.9267995 13.335811,3.0079498 13.335811,3.1079384C13.435785,3.5089313 13.335811,4.0109197 13.234799,4.4119126 12.934816,5.7148954 12.232799,6.8178693 11.129848,7.5198509 9.9258247,8.4228322 8.2218691,8.8238255 6.2159158,8.8238255L1.9049416,8.8238255 3.3089136,2.3059532 5.9158712,2.3059532 4.9128948,7.2188622 6.6178881,7.2188622C7.8208738,7.2188622 8.722839,6.9188654 9.5248295,6.3168728 10.126811,5.8158909 10.527806,5.2138983 10.627842,4.4119126 10.828827,3.6099271 10.728853,2.9079456 10.226846,2.4059571 9.7258154,1.9049601 8.9238249,1.6039713 7.7208997,1.6039713L3.4089485,1.6039713z" fill="#F5F5F5"></path>
-                           
-                           
-                                      
+
                            <ellipse cy="26" cx="27" stroke-width="0.875" ry="11.0625" rx="11.0625" stroke="#082C69" fill="#003872"></ellipse>
-                           
-                                         
+
                            <path id="path1" transform="rotate(0,28,28) translate(22,20) scale(0.4,0.4)  " d="M0,0L15.825011,8.0009766 31.650999,15.997986 15.825011,23.998993 0,32 0,15.997986z" fill="#FFFFFF"></path>
-                                  
+
                                            </g>
-                            
+
                            </svg>
-                           
-                           
+
                                    </a>
-                               
+
                                </th>
                                <th style="padding:0px;width: 85px;">
                                    <a id="mybuttonff" alt="3 minutes forward"   style="width:85px; height:85px; ">
                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="80" width="80">
                                            <g>
-                                               
+
                            <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#FFFFFF" fill="#003974"></ellipse>
-                           
+
                            <Ellipse Stroke="#00338E" StrokeThickness="1" Fill="#004C9A"  />
-                           
-                           
+
                                                <path transform="rotate(0,20,28) translate(2,2) scale(1.6,1.6)  "  id="path1" d="M16,13.900007C14.800003,13.900007 13.899994,14.800032 13.899994,15.999985 13.899994,17.199999 14.800003,18.100023 16,18.100023 17.199997,18.100023 18.099991,17.199999 18.099991,15.999985 18.099991,14.800032 17.199997,13.900007 16,13.900007z M16,11.199993C18.599991,11.199993 20.800003,13.300031 20.800003,15.999985 20.800003,18.600025 18.699997,20.800039 16,20.800039 13.399994,20.800039 11.199997,18.700001 11.199997,15.999985 11.199997,13.400007 13.399994,11.199993 16,11.199993z M29.800003,7.9999774C31.199997,10.400004 32,13.100019 32,15.999985 32,24.800043 24.800003,32 16,32 7.1999969,32 0,24.800043 0,15.999985L0,14.900008 10.099991,15.600021 10.099991,15.999985C10.099991,19.200001 12.699997,21.800039 15.899994,21.800039 19.099991,21.800039 21.699997,19.200001 21.699997,15.999985 21.699997,14.900008 21.399994,13.900007 20.899994,13.100019z M16,0C18.199997,2.3098255E-07,20.399994,0.50000072,22.300003,1.2999892L18.399994,10.699992C17.699997,10.400004 16.899994,10.199992 16,10.199992 14.300003,10.199992 12.800003,10.900004 11.699997,12.100018L4.0999908,5.2999933C7.0999908,2.0000022,11.300003,2.3098255E-07,16,0z" fill="#004C9A"></path>
-                           
-                           
-                           
+
                            <path id="pathforvcd" visibility="hidden" transform="rotate(0,38,38) translate(20,40) scale(0.6375,0.6375)  " d="M0.199609890580177,9.62558364868164L1.890749335289,9.62558364868164 1.890749335289,11.455340385437 0.199609890580177,11.455340385437 0.199609890580177,9.62558364868164z M2.02951502799988,2.47844004631042L4.491370677948,2.47844004631042 4.69061231613159,4.26166296005249 4.85914134979248,5.90217399597168 4.99695825576782,7.39997386932373 5.1040620803833,8.75506210327148 5.19590139389038,7.49403953552246 5.29052448272705,6.3058123588562 5.38793087005615,5.19038152694702 5.48812055587769,4.14774703979492 5.65021705627441,2.47844004631042 8.11207294464111,2.47844004631042 6.92411613464355,11.455340385437 3.37826800346375,11.455340385437 2.02951502799988,2.47844004631042z M11.1616678237915,2.28991937637329L11.6548013687134,2.31483817100525 12.1028842926025,2.38959455490112 12.5059156417847,2.51418828964233 12.8638973236084,2.68861937522888 13.1705894470215,2.90025281906128 13.4197549819946,3.1364529132843 13.6113948822021,3.39721989631653 13.7455072402954,3.68255376815796 13.8376884460449,4.02152681350708 13.9035320281982,4.44320964813232 13.9430379867554,4.94760322570801 13.9562063217163,5.53470659255981 13.9562063217163,6.38746690750122 11.6218795776367,6.38746690750122 11.6218795776367,4.82723522186279 11.6172018051147,4.51895666122437 11.6031665802002,4.27464771270752 11.5797748565674,4.09430932998657 11.5470266342163,3.97794008255005 11.4271211624146,3.85136437416077 11.2171154022217,3.80917263031006 10.9814643859863,3.86046123504639 10.8511638641357,4.01432704925537 10.8172025680542,4.1467080116272 10.7929439544678,4.33869361877441 10.7783889770508,4.5902853012085 10.7735376358032,4.90148210525513 10.7735376358032,9.07111167907715 10.7783889770508,9.36983299255371 10.7929439544678,9.61172103881836 10.8172025680542,9.79677677154541 10.8511638641357,9.92499828338623 10.9773063659668,10.0747051239014 11.2004814147949,10.124608039856 11.4160318374634,10.0745868682861 11.5414810180664,9.92452144622803 11.5766553878784,9.79078006744385 11.6017799377441,9.58963966369629 11.6168546676636,9.3211030960083 11.6218795776367,8.98516845703125 11.6218795776367,7.85681772232056 13.9562063217163,7.85681772232056 13.9562063217163,8.20665454864502 13.9439039230347,8.8528470993042 13.9069976806641,9.39770793914795 13.8454856872559,9.84123706817627 13.7593688964844,10.1834335327148 13.6311473846436,10.4659414291382 13.443320274353,10.7304010391235 13.1958875656128,10.9768133163452 12.8888483047485,11.2051782608032 12.5324268341064,11.397102355957 12.1368455886841,11.5341901779175 11.7021045684814,11.6164436340332 11.2282047271729,11.6438608169556 10.7378435134888,11.6206426620483 10.2925329208374,11.5509872436523 9.89227390289307,11.4348945617676 9.53706550598145,11.272364616394 9.23245239257813,11.0687694549561 8.98397922515869,10.8294801712036 8.79164695739746,10.5544967651367 8.65545463562012,10.2438192367554 8.56084823608398,9.87388229370117 8.49327182769775,9.42112159729004 8.45272636413574,8.88553619384766 8.43921089172363,8.26712703704834 8.43921089172363,5.64447450637817 8.44336986541748,5.18963479995728 8.45584487915039,4.79544019699097 8.476637840271,4.46189069747925 8.50574779510498,4.18898582458496 8.63812732696533,3.71283316612244 8.90219497680664,3.25470066070557 9.29586982727051,2.85340166091919 9.81707382202148,2.54774904251099 10.4457063674927,2.35437679290771 11.1616678237915,2.28991937637329z M17.1278343200684,4.01432704925537L17.1278343200684,9.91945362091064 17.3558616638184,9.90680408477783 17.5353717803955,9.86885738372803 17.6663665771484,9.80561351776123 17.7488441467285,9.71707153320313 17.7997856140137,9.57238864898682 17.8361721038818,9.34072303771973 17.8580055236816,9.02207565307617 17.8652820587158,8.61644458770752 17.8652820587158,5.12881565093994 17.8628559112549,4.851233959198 17.8555793762207,4.62840557098389 17.8434505462646,4.46033096313477 17.8264694213867,4.34701061248779 17.7627048492432,4.19799661636353 17.6490383148193,4.09472560882568 17.4494285583496,4.03442716598511 17.1278343200684,4.01432704925537z M14.7935085296631,2.47844004631042L16.5400943756104,2.47844004631042 17.3172225952148,2.4881432056427 17.9574642181396,2.51725292205811 18.4608192443848,2.56576919555664 18.8272914886475,2.63369202613831 19.3519611358643,2.8388466835022 19.7338523864746,3.14380621910095 19.9861373901367,3.51876783370972 20.1219825744629,3.93392872810364 20.1559448242188,4.20406103134155 20.1802024841309,4.57919597625732 20.1947574615479,5.05933380126953 20.1996097564697,5.64447450637817 20.1996097564697,8.78833103179932 20.1925048828125,9.34262943267822 20.1711921691895,9.79677677154541 20.1356716156006,10.1507720947266 20.0859432220459,10.404616355896 19.9299983978271,10.7677955627441 19.6894950866699,11.0422592163086 19.3734455108643,11.2377099990845 18.9908599853516,11.3638525009155 18.7565956115723,11.4038791656494 18.4696578979492,11.4324684143066 18.1300430297852,11.4496231079102 17.7377548217773,11.455340385437 14.7935085296631,11.455340385437 14.7935085296631,2.47844004631042z" fill="#F5F5F5"></path>
-                           
+
                            <path id="pathfordvd" visibility="visible" transform="rotate(0,38,38) translate(20,40) scale(0.4375,0.4375)  " d="M23.261636,11.83176C23.462621,11.83176 23.662632,11.931763 23.863617,12.031752 23.963651,12.132764 24.063627,12.332757 24.063627,12.633745 24.063627,12.833738 23.963651,13.034738 23.863617,13.235738 23.763643,13.335726 23.562656,13.435731 23.261636,13.435731 23.061626,13.435731 22.860641,13.335726 22.660631,13.235738 22.559681,13.134742 22.459646,12.934734 22.459646,12.633745 22.459646,12.432746 22.559681,12.232752 22.660631,12.031752 22.860641,11.931763 22.960676,11.83176 23.261636,11.83176z M14.438761,11.83176L14.538797,11.83176 14.939792,11.83176C15.240753,11.83176 15.440762,11.931763 15.541773,12.031752 15.641748,12.132764 15.741783,12.332757 15.741783,12.633745 15.741783,12.833738 15.641748,13.034738 15.541773,13.134742 15.440762,13.335726 15.139741,13.435731 14.839758,13.435731L14.438761,13.435731z M23.261636,11.329771C22.760666,11.329771 22.459646,11.430767 22.158685,11.730764 21.958675,12.031752 21.75769,12.232752 21.75769,12.633745 21.75769,13.034738 21.857664,13.235738 22.158685,13.535735 22.459646,13.836724 22.760666,13.936713 23.261636,13.936713 23.662632,13.936713 24.063627,13.836724 24.364648,13.535735 24.665607,13.235738 24.765644,12.934734 24.765644,12.633745 24.765644,12.332757 24.665607,12.031752 24.364648,11.730764 24.063627,11.430767 23.662632,11.329771 23.261636,11.329771z M18.248706,11.329771L18.248706,13.936713 20.153709,13.936713 20.153709,13.435731 18.950721,13.435731 18.950721,12.833738 20.053672,12.833738 20.053672,12.332757 18.84971,12.332757 18.84971,11.83176 20.053672,11.83176 20.053672,11.329771z M13.936755,11.329771L13.936755,13.936713 15.039767,13.936713C15.541773,13.936713 15.942769,13.836724 16.142778,13.535735 16.343765,13.335726 16.543773,13.034738 16.543773,12.633745 16.543773,12.232752 16.443739,11.931763 16.142778,11.730764 15.841757,11.430767 15.541773,11.329771 15.039767,11.329771z M11.429832,11.329771L11.429832,13.936713 12.031813,13.936713 12.031813,11.329771z M7.1188575,11.329771L8.3218437,13.936713 8.6228643,13.936713 9.8258501,11.329771 9.1238342,11.329771 8.5228296,12.833738 7.8208738,11.329771z M15.641748,9.9267995C24.264612,9.9267995 31.283556,11.029774 31.283556,12.432746 31.283556,13.836724 24.264612,14.939698 15.641748,14.939698 7.0188833,15.039702 0,13.936713 0,12.533742 0,11.129779 7.0188833,9.9267995 15.641748,9.9267995z M3.8099442,0L15.039767,0 16.74476,5.0128986 20.554704,0 27.071581,0C28.876546,1.1468182E-07 30.28058,0.40099291 31.082571,1.3029827 31.8845,2.1059601 32.185522,3.1079384 31.8845,4.4119126 31.584516,5.7148954 30.88256,6.8178693 29.77955,7.5198509 28.575586,8.3218371 26.87157,8.7228295 24.866655,8.7228295L20.554704,8.7228295 22.058651,2.3059532 24.665607,2.3059532 23.662632,7.2188622 25.367624,7.2188622C26.57061,7.2188622 27.473613,6.9188654 28.275604,6.3168728 28.876546,5.8158909 29.277542,5.2138983 29.378555,4.4119126 29.578563,3.6099271 29.47859,2.9079456 28.977558,2.4059571 28.475551,1.8049713 27.673561,1.6039713 26.470636,1.6039713L22.158685,1.6039713 15.841757,9.9267995 13.335811,3.0079498 13.335811,3.1079384C13.435785,3.5089313 13.335811,4.0109197 13.234799,4.4119126 12.934816,5.7148954 12.232799,6.8178693 11.129848,7.5198509 9.9258247,8.4228322 8.2218691,8.8238255 6.2159158,8.8238255L1.9049416,8.8238255 3.3089136,2.3059532 5.9158712,2.3059532 4.9128948,7.2188622 6.6178881,7.2188622C7.8208738,7.2188622 8.722839,6.9188654 9.5248295,6.3168728 10.126811,5.8158909 10.527806,5.2138983 10.627842,4.4119126 10.828827,3.6099271 10.728853,2.9079456 10.226846,2.4059571 9.7258154,1.9049601 8.9238249,1.6039713 7.7208997,1.6039713L3.4089485,1.6039713z" fill="#F5F5F5"></path>
-                           
-                           
-                                      
+
                            <ellipse cy="26" cx="27" stroke-width="0.875" ry="11.0625" rx="11.0625" stroke="#082C69" fill="#003872"></ellipse>
-                           
-                                         
+
                            <path id="path1" transform="rotate(0,28,28) translate(22,22) scale(0.4,0.4)  " d="M17.397003,0L32,12.015987 17.397003,24.027 17.397003,12.015987z M0,0L14.602997,12.015987 0,24.027 0,12.015987z" fill="#FFFFFF"></path>
-                                  
+
                                            </g>
-                            
+
                             </svg>
-                           
+
                                    </a>
-                          
+
                                </th>
-             
-             
-             
-                          <!--    <th style="padding:0px; width: 85px;">
-                                   <a id="mybuttonnext" alt="Next chapter"   style="width:85px; height:85px; ">
-                                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="80" width="80">
-                                           <g>
-                                               
-                           <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#FFFFFF" fill="#003974"></ellipse>
-                           
-                           <Ellipse Stroke="#00338E" StrokeThickness="1" Fill="#004C9A"  />
-                           
-                           
-                                               <path transform="rotate(0,20,28) translate(2,2) scale(1.6,1.6)  "  id="path1" d="M16,13.900007C14.800003,13.900007 13.899994,14.800032 13.899994,15.999985 13.899994,17.199999 14.800003,18.100023 16,18.100023 17.199997,18.100023 18.099991,17.199999 18.099991,15.999985 18.099991,14.800032 17.199997,13.900007 16,13.900007z M16,11.199993C18.599991,11.199993 20.800003,13.300031 20.800003,15.999985 20.800003,18.600025 18.699997,20.800039 16,20.800039 13.399994,20.800039 11.199997,18.700001 11.199997,15.999985 11.199997,13.400007 13.399994,11.199993 16,11.199993z M29.800003,7.9999774C31.199997,10.400004 32,13.100019 32,15.999985 32,24.800043 24.800003,32 16,32 7.1999969,32 0,24.800043 0,15.999985L0,14.900008 10.099991,15.600021 10.099991,15.999985C10.099991,19.200001 12.699997,21.800039 15.899994,21.800039 19.099991,21.800039 21.699997,19.200001 21.699997,15.999985 21.699997,14.900008 21.399994,13.900007 20.899994,13.100019z M16,0C18.199997,2.3098255E-07,20.399994,0.50000072,22.300003,1.2999892L18.399994,10.699992C17.699997,10.400004 16.899994,10.199992 16,10.199992 14.300003,10.199992 12.800003,10.900004 11.699997,12.100018L4.0999908,5.2999933C7.0999908,2.0000022,11.300003,2.3098255E-07,16,0z" fill="#004C9A"></path>
-                           
-                           
-                           
-                           <path id="pathforvcd" visibility="hidden" transform="rotate(0,38,38) translate(20,40) scale(0.6375,0.6375)  " d="M0.199609890580177,9.62558364868164L1.890749335289,9.62558364868164 1.890749335289,11.455340385437 0.199609890580177,11.455340385437 0.199609890580177,9.62558364868164z M2.02951502799988,2.47844004631042L4.491370677948,2.47844004631042 4.69061231613159,4.26166296005249 4.85914134979248,5.90217399597168 4.99695825576782,7.39997386932373 5.1040620803833,8.75506210327148 5.19590139389038,7.49403953552246 5.29052448272705,6.3058123588562 5.38793087005615,5.19038152694702 5.48812055587769,4.14774703979492 5.65021705627441,2.47844004631042 8.11207294464111,2.47844004631042 6.92411613464355,11.455340385437 3.37826800346375,11.455340385437 2.02951502799988,2.47844004631042z M11.1616678237915,2.28991937637329L11.6548013687134,2.31483817100525 12.1028842926025,2.38959455490112 12.5059156417847,2.51418828964233 12.8638973236084,2.68861937522888 13.1705894470215,2.90025281906128 13.4197549819946,3.1364529132843 13.6113948822021,3.39721989631653 13.7455072402954,3.68255376815796 13.8376884460449,4.02152681350708 13.9035320281982,4.44320964813232 13.9430379867554,4.94760322570801 13.9562063217163,5.53470659255981 13.9562063217163,6.38746690750122 11.6218795776367,6.38746690750122 11.6218795776367,4.82723522186279 11.6172018051147,4.51895666122437 11.6031665802002,4.27464771270752 11.5797748565674,4.09430932998657 11.5470266342163,3.97794008255005 11.4271211624146,3.85136437416077 11.2171154022217,3.80917263031006 10.9814643859863,3.86046123504639 10.8511638641357,4.01432704925537 10.8172025680542,4.1467080116272 10.7929439544678,4.33869361877441 10.7783889770508,4.5902853012085 10.7735376358032,4.90148210525513 10.7735376358032,9.07111167907715 10.7783889770508,9.36983299255371 10.7929439544678,9.61172103881836 10.8172025680542,9.79677677154541 10.8511638641357,9.92499828338623 10.9773063659668,10.0747051239014 11.2004814147949,10.124608039856 11.4160318374634,10.0745868682861 11.5414810180664,9.92452144622803 11.5766553878784,9.79078006744385 11.6017799377441,9.58963966369629 11.6168546676636,9.3211030960083 11.6218795776367,8.98516845703125 11.6218795776367,7.85681772232056 13.9562063217163,7.85681772232056 13.9562063217163,8.20665454864502 13.9439039230347,8.8528470993042 13.9069976806641,9.39770793914795 13.8454856872559,9.84123706817627 13.7593688964844,10.1834335327148 13.6311473846436,10.4659414291382 13.443320274353,10.7304010391235 13.1958875656128,10.9768133163452 12.8888483047485,11.2051782608032 12.5324268341064,11.397102355957 12.1368455886841,11.5341901779175 11.7021045684814,11.6164436340332 11.2282047271729,11.6438608169556 10.7378435134888,11.6206426620483 10.2925329208374,11.5509872436523 9.89227390289307,11.4348945617676 9.53706550598145,11.272364616394 9.23245239257813,11.0687694549561 8.98397922515869,10.8294801712036 8.79164695739746,10.5544967651367 8.65545463562012,10.2438192367554 8.56084823608398,9.87388229370117 8.49327182769775,9.42112159729004 8.45272636413574,8.88553619384766 8.43921089172363,8.26712703704834 8.43921089172363,5.64447450637817 8.44336986541748,5.18963479995728 8.45584487915039,4.79544019699097 8.476637840271,4.46189069747925 8.50574779510498,4.18898582458496 8.63812732696533,3.71283316612244 8.90219497680664,3.25470066070557 9.29586982727051,2.85340166091919 9.81707382202148,2.54774904251099 10.4457063674927,2.35437679290771 11.1616678237915,2.28991937637329z M17.1278343200684,4.01432704925537L17.1278343200684,9.91945362091064 17.3558616638184,9.90680408477783 17.5353717803955,9.86885738372803 17.6663665771484,9.80561351776123 17.7488441467285,9.71707153320313 17.7997856140137,9.57238864898682 17.8361721038818,9.34072303771973 17.8580055236816,9.02207565307617 17.8652820587158,8.61644458770752 17.8652820587158,5.12881565093994 17.8628559112549,4.851233959198 17.8555793762207,4.62840557098389 17.8434505462646,4.46033096313477 17.8264694213867,4.34701061248779 17.7627048492432,4.19799661636353 17.6490383148193,4.09472560882568 17.4494285583496,4.03442716598511 17.1278343200684,4.01432704925537z M14.7935085296631,2.47844004631042L16.5400943756104,2.47844004631042 17.3172225952148,2.4881432056427 17.9574642181396,2.51725292205811 18.4608192443848,2.56576919555664 18.8272914886475,2.63369202613831 19.3519611358643,2.8388466835022 19.7338523864746,3.14380621910095 19.9861373901367,3.51876783370972 20.1219825744629,3.93392872810364 20.1559448242188,4.20406103134155 20.1802024841309,4.57919597625732 20.1947574615479,5.05933380126953 20.1996097564697,5.64447450637817 20.1996097564697,8.78833103179932 20.1925048828125,9.34262943267822 20.1711921691895,9.79677677154541 20.1356716156006,10.1507720947266 20.0859432220459,10.404616355896 19.9299983978271,10.7677955627441 19.6894950866699,11.0422592163086 19.3734455108643,11.2377099990845 18.9908599853516,11.3638525009155 18.7565956115723,11.4038791656494 18.4696578979492,11.4324684143066 18.1300430297852,11.4496231079102 17.7377548217773,11.455340385437 14.7935085296631,11.455340385437 14.7935085296631,2.47844004631042z" fill="#F5F5F5"></path>
-                           
-                           <path id="pathfordvd" visibility="visible" transform="rotate(0,38,38) translate(20,40) scale(0.4375,0.4375)  " d="M23.261636,11.83176C23.462621,11.83176 23.662632,11.931763 23.863617,12.031752 23.963651,12.132764 24.063627,12.332757 24.063627,12.633745 24.063627,12.833738 23.963651,13.034738 23.863617,13.235738 23.763643,13.335726 23.562656,13.435731 23.261636,13.435731 23.061626,13.435731 22.860641,13.335726 22.660631,13.235738 22.559681,13.134742 22.459646,12.934734 22.459646,12.633745 22.459646,12.432746 22.559681,12.232752 22.660631,12.031752 22.860641,11.931763 22.960676,11.83176 23.261636,11.83176z M14.438761,11.83176L14.538797,11.83176 14.939792,11.83176C15.240753,11.83176 15.440762,11.931763 15.541773,12.031752 15.641748,12.132764 15.741783,12.332757 15.741783,12.633745 15.741783,12.833738 15.641748,13.034738 15.541773,13.134742 15.440762,13.335726 15.139741,13.435731 14.839758,13.435731L14.438761,13.435731z M23.261636,11.329771C22.760666,11.329771 22.459646,11.430767 22.158685,11.730764 21.958675,12.031752 21.75769,12.232752 21.75769,12.633745 21.75769,13.034738 21.857664,13.235738 22.158685,13.535735 22.459646,13.836724 22.760666,13.936713 23.261636,13.936713 23.662632,13.936713 24.063627,13.836724 24.364648,13.535735 24.665607,13.235738 24.765644,12.934734 24.765644,12.633745 24.765644,12.332757 24.665607,12.031752 24.364648,11.730764 24.063627,11.430767 23.662632,11.329771 23.261636,11.329771z M18.248706,11.329771L18.248706,13.936713 20.153709,13.936713 20.153709,13.435731 18.950721,13.435731 18.950721,12.833738 20.053672,12.833738 20.053672,12.332757 18.84971,12.332757 18.84971,11.83176 20.053672,11.83176 20.053672,11.329771z M13.936755,11.329771L13.936755,13.936713 15.039767,13.936713C15.541773,13.936713 15.942769,13.836724 16.142778,13.535735 16.343765,13.335726 16.543773,13.034738 16.543773,12.633745 16.543773,12.232752 16.443739,11.931763 16.142778,11.730764 15.841757,11.430767 15.541773,11.329771 15.039767,11.329771z M11.429832,11.329771L11.429832,13.936713 12.031813,13.936713 12.031813,11.329771z M7.1188575,11.329771L8.3218437,13.936713 8.6228643,13.936713 9.8258501,11.329771 9.1238342,11.329771 8.5228296,12.833738 7.8208738,11.329771z M15.641748,9.9267995C24.264612,9.9267995 31.283556,11.029774 31.283556,12.432746 31.283556,13.836724 24.264612,14.939698 15.641748,14.939698 7.0188833,15.039702 0,13.936713 0,12.533742 0,11.129779 7.0188833,9.9267995 15.641748,9.9267995z M3.8099442,0L15.039767,0 16.74476,5.0128986 20.554704,0 27.071581,0C28.876546,1.1468182E-07 30.28058,0.40099291 31.082571,1.3029827 31.8845,2.1059601 32.185522,3.1079384 31.8845,4.4119126 31.584516,5.7148954 30.88256,6.8178693 29.77955,7.5198509 28.575586,8.3218371 26.87157,8.7228295 24.866655,8.7228295L20.554704,8.7228295 22.058651,2.3059532 24.665607,2.3059532 23.662632,7.2188622 25.367624,7.2188622C26.57061,7.2188622 27.473613,6.9188654 28.275604,6.3168728 28.876546,5.8158909 29.277542,5.2138983 29.378555,4.4119126 29.578563,3.6099271 29.47859,2.9079456 28.977558,2.4059571 28.475551,1.8049713 27.673561,1.6039713 26.470636,1.6039713L22.158685,1.6039713 15.841757,9.9267995 13.335811,3.0079498 13.335811,3.1079384C13.435785,3.5089313 13.335811,4.0109197 13.234799,4.4119126 12.934816,5.7148954 12.232799,6.8178693 11.129848,7.5198509 9.9258247,8.4228322 8.2218691,8.8238255 6.2159158,8.8238255L1.9049416,8.8238255 3.3089136,2.3059532 5.9158712,2.3059532 4.9128948,7.2188622 6.6178881,7.2188622C7.8208738,7.2188622 8.722839,6.9188654 9.5248295,6.3168728 10.126811,5.8158909 10.527806,5.2138983 10.627842,4.4119126 10.828827,3.6099271 10.728853,2.9079456 10.226846,2.4059571 9.7258154,1.9049601 8.9238249,1.6039713 7.7208997,1.6039713L3.4089485,1.6039713z" fill="#F5F5F5"></path>
-                           
-                           
-                                      
-                           <ellipse cy="26" cx="27" stroke-width="0.875" ry="11.0625" rx="11.0625" stroke="#082C69" fill="#003872"></ellipse>
-                           
-                                         
-                           <path id="path1" transform="rotate(0,28,28) translate(22,20) scale(0.4,0.4)  " d="M0,0.7440033L18.551971,16.002998 0,31.255997z M18.551971,0L25.368,0 25.368,32 18.551971,32 18.551971,16.002998z" fill="#FFFFFF"></path>
-                                  
-                                           </g>
-                            
-                            </svg>
-                           
-                                   </a>
-                                              </th> -->
-             
+
                            </tr>
                        </thead>
-             
+
                        <tbody class="centered">
                            <tr class="centered" style="padding:0px;width: 300px;">
-                          <!--     <td id="ttStatusDVD" style="padding:0px; width: 85px;">Previous Chapter</td>
-                           -->    <td id="ttTotalSize" style="padding:0px; width: 85px;">3 minutes rewind</td>
+                              <td id="ttTotalSize" style="padding:0px; width: 85px;">3 minutes rewind</td>
                                <td id="ttFreeSpace" style="padding:0px; width: 100px;">Play/Pause</td>
                                <td id="ttFilesDisc" style="padding:0px; width: 85px;">3 minutes forward</td>
-                          <!--     <td id="ttMediaFiles" style="padding:0px; width: 85px;">Next Chapter</td>
-                         --> 
+
                          </tr>
-                 <!--          <tr class="centered" style="padding:0px">
-                               <td id="ttItsReady" style="padding:0px">Ready!</td>
-                               <td id="DVDSTATISTICS_GRID_LabelSize" style="padding:0px">0.0 GB</td>
-                               <td id="DVDSTATISTICS_GRID_LabelFreeSpace" style="padding:0px">0.0 GB</td>
-                               <td id="DVDSTATISTICS_GRID_LabelFiles" style="padding:0px">-</td>
-                               <td id="DVDSTATISTICS_GRID_LabelMediaFiles" style="padding:0px">-</td>
-                           </tr>
-                       -->
-             
+
                            <!-- ttTotalSize-->
                        </tbody>
                    </table>
 
-            
-                 
-               
-                         
                         </div>
-           
-           
+
            <div class="col s1 push-s1" style="border-radius: 20px;
              background-color: #001438;
              border-style: Solid;
@@ -1453,191 +708,21 @@ margin-left: auto;
              right: 0px;
              border-color: black;
              border-width: 1px;">
-                 
-             </div>
-             
-           
-               </div>   
-               <hr>
-           
 
+             </div>
+
+               </div>
+               <hr>
 
            <div id="thepostertrailer" style="z-index:-1; margin-left: auto; visibility: visible; margin-right: auto; margin-top: 100px; position:fixed; height:100%; width: 100%;
 background-color:#001438;  background-size: cover;
-            
+
            background-position-x: left;
 ">
 </div>
-<!--
-<div style="height: 110px;">
 
-</div>
-
-
-
-<a id="mybuttonvolumedown" alt="Volume down"   style="width:75px; height:75px; ">
-   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="75" width="75">
-       <g>
-           
-<ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#FFFFFF" fill="#004C9A"></ellipse>
-
-
-
-
-
-
-
-
-  
-<ellipse cy="28" cx="28" stroke-width="0.875" ry="22.0625" rx="22.0625" stroke="#082C69" fill="#003872"></ellipse>
-
-   
-<path id="path1" transform="rotate(0,28,28) translate(16,16) scale(0.8,0.8)  " d="M20.004026,14.998981L31.004026,14.998981C31.557066,14.998981 32.004026,15.446979 32.004026,15.998981 32.004026,16.550982 31.557066,16.998981 31.004026,16.99898L20.004026,16.99898C19.451048,16.998981 19.004026,16.550982 19.004026,15.998981 19.004026,15.446979 19.451048,14.998981 20.004026,14.998981z M15.00403,3.2551765L7.2950153,10.863122 6.8190136,10.889122 2.0000057,10.889122 2.0000057,21.972043 7.3280153,21.972043 7.6850157,22.28204 15.00403,28.874992z M15.944742,0.00062942505C16.076629,0.0051298141 16.208407,0.033761978 16.334032,0.087199211 16.741033,0.26119804 17.004034,0.66219521 17.004034,1.1091919L17.004034,30.888978C17.004034,31.331975 16.743033,31.731973 16.339033,31.907971 16.199032,31.96897 16.051032,31.99797 15.904031,31.99797 15.632031,31.99797 15.36303,31.896972 15.15603,31.702971L6.5730133,23.972028 1.1000023,23.972028C0.49300194,23.972028,0,23.474031,0,22.863036L0,9.9991283C0,9.3871326,0.49300194,8.8891363,1.1000023,8.8891363L6.4470129,8.8891363 15.13703,0.31419754C15.363906,0.097636223,15.65459,-0.0092687607,15.944742,0.00062942505z" fill="#FFFFFF"></path>
-
-       </g>
-
-</svg>
-
-
-</a>
-
-<a id="mybuttonvolumeup" alt="Volume up"   style="width:75px; height:75px; ">
-   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="75" width="75">
-       <g>
-           
-<ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#FFFFFF" fill="#004C9A"></ellipse>
-
-
-
-
-
-
-
-
-  
-<ellipse cy="28" cx="28" stroke-width="0.875" ry="22.0625" rx="22.0625" stroke="#082C69" fill="#003872"></ellipse>
-
-   
-<path id="path1" transform="rotate(0,28,28) translate(16,16) scale(0.8,0.8)  " d="M26.004056,9.9999704C26.557055,9.9999704,27.004056,10.44797,27.004056,10.99997L27.004056,14.999996 31.004026,14.999996C31.557066,14.999996 32.004026,15.447994 32.004026,15.999996 32.004026,16.551998 31.557066,16.999996 31.004026,16.999996L27.004056,16.999996 27.004056,20.99997C27.004056,21.55197 26.557055,21.99997 26.004056,21.99997 25.451056,21.99997 25.004056,21.55197 25.004056,20.99997L25.004056,16.999996 21.004026,16.999996C20.451048,16.999996 20.004026,16.551998 20.004026,15.999996 20.004026,15.447994 20.451048,14.999996 21.004026,14.999996L25.004056,14.999996 25.004056,10.99997C25.004056,10.44797,25.451056,9.9999704,26.004056,9.9999704z M16.00403,3.1040068L7.2650137,10.864001 6.8190136,10.890001 2.0000038,10.890001 2.0000038,21.972993 7.3280144,21.972993 7.6850147,22.282993 16.00403,29.011988z M16.868352,0.00043487549C17.024282,-0.0039129257 17.183657,0.024259567 17.334033,0.088008881 17.741033,0.26200962 18.004034,0.66300869 18.004034,1.1100082L18.004034,30.889987C18.004034,31.332987 17.743033,31.732986 17.339033,31.908985 17.199032,31.969986 17.051032,31.998985 16.904032,31.998985 16.632031,31.998985 16.363031,31.897985 16.15603,31.703985L6.6010132,23.972992 1.1000023,23.972992C0.49300194,23.972992,0,23.474992,0,22.863993L0,10.000002C0,9.3880024,0.49300194,8.8900027,1.1000023,8.8900027L6.4770126,8.8900027 16.17503,0.27900887C16.358156,0.10525894,16.608469,0.0076808929,16.868352,0.00043487549z" fill="#FFFFFF"></path>
-
-       </g>
-
-
-</svg>
-
-</a>
-
-  
-<a id="mybuttonshowmenus" alt="Volume down"  style="width:75px; height:75px; ">
- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="75" width="75">
-     <g>
-         
-<ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#000000" fill="#004C9A"></ellipse>
-
-
-
-
-
-
-
-
-
-<ellipse cy="28" cx="28" stroke-width="0.875" ry="22.0625" rx="22.0625" stroke="#082C69" fill="#003872"></ellipse>
-
- 
-<path id="path1" transform="rotate(-90,28,28) translate(13,13) scale(0.6,0.6)  " d="m 40.019322 3.3241525 h -29.92 a 7.04 7.04 0 0 0 -7.04 7.0400005 v 29.92 a 7.04 7.04 0 0 0 7.04 7.04 h 29.92 a 7.04 7.04 0 0 0 7.04 -7.04 v -29.92 a 7.04 7.04 0 0 0 -7.04 -7.0400005 z M 9.326522 13.946553 a 4.3552 4.3552 0 1 1 4.3552 -4.3552005 4.3552 4.3552 0 0 1 -4.3552 4.3552005 z m 20.6128 16.2576 h -10.72 v -1.76 h 7.7472 l -13.76 -13.7408 1.2368 -1.2288 13.7408 13.76 v -7.7504 h 1.76 v 10.72 z" fill="#FFFFFF"></path>
-
-     </g>
-
-</svg>
-
-
-</a>
-
-<a id="mybuttonhidemenus" alt="Volume up"  style="width:75px; height:75px; ">
- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="75" width="75">
-     <g>
-         
-<ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#000000" fill="#004C9A"></ellipse>
-
-
-
-
-
-
-
-
-
-<ellipse cy="28" cx="28" stroke-width="0.875" ry="22.0625" rx="22.0625" stroke="#082C69" fill="#003872"></ellipse>
-
- 
-<path id="path1" transform="rotate(0,28,28) translate(13,13) scale(0.6,0.6)  " d="m 40.019322 3.3241525 h -29.92 a 7.04 7.04 0 0 0 -7.04 7.0400005 v 29.92 a 7.04 7.04 0 0 0 7.04 7.04 h 29.92 a 7.04 7.04 0 0 0 7.04 -7.04 v -29.92 a 7.04 7.04 0 0 0 -7.04 -7.0400005 z M 9.326522 13.946553 a 4.3552 4.3552 0 1 1 4.3552 -4.3552005 4.3552 4.3552 0 0 1 -4.3552 4.3552005 z m 20.6128 16.2576 h -10.72 v -1.76 h 7.7472 l -13.76 -13.7408 1.2368 -1.2288 13.7408 13.76 v -7.7504 h 1.76 v 10.72 z" fill="#FFFFFF"></path>
-
-     </g>
-
-
-</svg>
-
-</a>
-   
- 
-<a id="mybuttonfullscreenon" alt="Volume down"  style="width:75px; height:75px; ">
- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="75" width="75">
-     <g>
-         
-<ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#000000" fill="#004C9A"></ellipse>
-
-
-
-
-
-
-
-
-
-<ellipse cy="28" cx="28" stroke-width="0.875" ry="22.0625" rx="22.0625" stroke="#082C69" fill="#003872"></ellipse>
-
- 
-<path id="path1" transform="rotate(-90,28,28) translate(16,16) scale(0.7,0.7)  " d="M9.6560059,19.516005L12.484985,22.345999 6.414978,28.413002 10,32 0,32 0,21.999998 3.5849915,25.585007z M22.342987,19.512999L28.412994,25.585007 32,21.999998 32,32 22,32 25.584991,28.413002 19.513,22.345999z M22,0L32,0 32,10.000001 28.414978,6.4129991 22.342987,12.486002 19.513,9.6559991 25.584991,3.5849995z M0,0L10,0 6.414978,3.5849995 12.483978,9.6569986 9.6569824,12.485002 3.5849915,6.4129991 0,10.000001z" fill="#FFFFFF"></path>
-
-     </g>
-
-</svg>
-
-
-</a>
-
-<a id="mybuttonfullscreenoff" alt="Volume up"  style="width:75px; height:75px; ">
- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="75" width="75">
-     <g>
-         
-<ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#000000" fill="#004C9A"></ellipse>
-
-
-
-
-
-
-
-
-
-<ellipse cy="28" cx="28" stroke-width="0.875" ry="22.0625" rx="22.0625" stroke="#082C69" fill="#003872"></ellipse>
-
- 
-<path id="path1" transform="rotate(0,28,28) translate(17,17) scale(0.7,0.7)  " d="M20,19.999998L29.514984,19.999998 26.171997,23.345001 32,29.172005 29.17099,32 23.34198,26.172005 20,29.514999z M2.4839783,19.999998L12,19.999998 12,29.514999 8.6569824,26.172005 2.8279724,32 0,29.172005 5.8269958,23.345001z M29.17099,0L32,2.828999 26.171997,8.6559991 29.514984,12.000002 20,12.000002 20,2.485001 23.34198,5.8289995z M2.8279724,0L8.6569824,5.8289995 12,2.485001 12,12.000002 2.4839783,12.000002 5.8269958,8.6559991 0,2.828999z" fill="#FFFFFF"></path>
-
-     </g>
-
-
-</svg>
-
-</a>
- <button id="set-sliders" >set-sliders</button>
--->
 </div>
 </div></div>
-
-
 
 </div></div>
 </div>
@@ -1768,141 +853,96 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:50%; padding:0 15px;">
-					
-						
 
 <div class="paragraph" style="text-align:center;"><strong><font color="#d5d5d5">Volume:</font></strong><br /></div>
 
 <div><div id="859816876683968103" align="center" style="width: 100%; " class="wcustomhtml"><a id="mybuttonvolumedown" alt="Volume down"   style="width:75px; height:75px; ">
    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="75" width="75">
        <g>
-           
+
 <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#FFFFFF" fill="#004C9A"></ellipse>
 
-
-
-
-
-
-
-
-  
 <ellipse cy="28" cx="28" stroke-width="0.875" ry="22.0625" rx="22.0625" stroke="#082C69" fill="#003872"></ellipse>
 
-   
 <path id="path1" transform="rotate(0,28,28) translate(16,16) scale(0.8,0.8)  " d="M20.004026,14.998981L31.004026,14.998981C31.557066,14.998981 32.004026,15.446979 32.004026,15.998981 32.004026,16.550982 31.557066,16.998981 31.004026,16.99898L20.004026,16.99898C19.451048,16.998981 19.004026,16.550982 19.004026,15.998981 19.004026,15.446979 19.451048,14.998981 20.004026,14.998981z M15.00403,3.2551765L7.2950153,10.863122 6.8190136,10.889122 2.0000057,10.889122 2.0000057,21.972043 7.3280153,21.972043 7.6850157,22.28204 15.00403,28.874992z M15.944742,0.00062942505C16.076629,0.0051298141 16.208407,0.033761978 16.334032,0.087199211 16.741033,0.26119804 17.004034,0.66219521 17.004034,1.1091919L17.004034,30.888978C17.004034,31.331975 16.743033,31.731973 16.339033,31.907971 16.199032,31.96897 16.051032,31.99797 15.904031,31.99797 15.632031,31.99797 15.36303,31.896972 15.15603,31.702971L6.5730133,23.972028 1.1000023,23.972028C0.49300194,23.972028,0,23.474031,0,22.863036L0,9.9991283C0,9.3871326,0.49300194,8.8891363,1.1000023,8.8891363L6.4470129,8.8891363 15.13703,0.31419754C15.363906,0.097636223,15.65459,-0.0092687607,15.944742,0.00062942505z" fill="#FFFFFF"></path>
 
        </g>
 
 </svg>
 
-
-</a> 
+</a>
 <a id="mybuttonvolumeup" alt="Volume up"   style="width:75px; height:75px; ">
    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="75" width="75">
        <g>
-           
+
 <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#FFFFFF" fill="#004C9A"></ellipse>
 
-
-
-
-
-
-
-
-  
 <ellipse cy="28" cx="28" stroke-width="0.875" ry="22.0625" rx="22.0625" stroke="#082C69" fill="#003872"></ellipse>
 
-   
 <path id="path1" transform="rotate(0,28,28) translate(16,16) scale(0.8,0.8)  " d="M26.004056,9.9999704C26.557055,9.9999704,27.004056,10.44797,27.004056,10.99997L27.004056,14.999996 31.004026,14.999996C31.557066,14.999996 32.004026,15.447994 32.004026,15.999996 32.004026,16.551998 31.557066,16.999996 31.004026,16.999996L27.004056,16.999996 27.004056,20.99997C27.004056,21.55197 26.557055,21.99997 26.004056,21.99997 25.451056,21.99997 25.004056,21.55197 25.004056,20.99997L25.004056,16.999996 21.004026,16.999996C20.451048,16.999996 20.004026,16.551998 20.004026,15.999996 20.004026,15.447994 20.451048,14.999996 21.004026,14.999996L25.004056,14.999996 25.004056,10.99997C25.004056,10.44797,25.451056,9.9999704,26.004056,9.9999704z M16.00403,3.1040068L7.2650137,10.864001 6.8190136,10.890001 2.0000038,10.890001 2.0000038,21.972993 7.3280144,21.972993 7.6850147,22.282993 16.00403,29.011988z M16.868352,0.00043487549C17.024282,-0.0039129257 17.183657,0.024259567 17.334033,0.088008881 17.741033,0.26200962 18.004034,0.66300869 18.004034,1.1100082L18.004034,30.889987C18.004034,31.332987 17.743033,31.732986 17.339033,31.908985 17.199032,31.969986 17.051032,31.998985 16.904032,31.998985 16.632031,31.998985 16.363031,31.897985 16.15603,31.703985L6.6010132,23.972992 1.1000023,23.972992C0.49300194,23.972992,0,23.474992,0,22.863993L0,10.000002C0,9.3880024,0.49300194,8.8900027,1.1000023,8.8900027L6.4770126,8.8900027 16.17503,0.27900887C16.358156,0.10525894,16.608469,0.0076808929,16.868352,0.00043487549z" fill="#FFFFFF"></path>
 
        </g>
-
 
 </svg>
 
 </a></div>
 
-
-
 </div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:50%; padding:0 15px;">
-					
-						
 
 <div class="paragraph" style="text-align:center;"><strong><font color="#d5d5d5">Chapters:</font></strong><br /></div>
 
 <div><div id="657743487536639971" align="center" style="width: 100%; " class="wcustomhtml">     <a id="mybuttonprevious" alt="Previous Chapter"   style="width:85px; height:85px; ">
                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="80" width="80">
                                            <g>
-                                               
+
                            <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#FFFFFF" fill="#003974"></ellipse>
-                           
+
                            <Ellipse Stroke="#00338E" StrokeThickness="1" Fill="#004C9A"  />
-                           
-                           
+
                                                <path transform="rotate(0,20,28) translate(2,2) scale(1.6,1.6)  "  id="path1" d="M16,13.900007C14.800003,13.900007 13.899994,14.800032 13.899994,15.999985 13.899994,17.199999 14.800003,18.100023 16,18.100023 17.199997,18.100023 18.099991,17.199999 18.099991,15.999985 18.099991,14.800032 17.199997,13.900007 16,13.900007z M16,11.199993C18.599991,11.199993 20.800003,13.300031 20.800003,15.999985 20.800003,18.600025 18.699997,20.800039 16,20.800039 13.399994,20.800039 11.199997,18.700001 11.199997,15.999985 11.199997,13.400007 13.399994,11.199993 16,11.199993z M29.800003,7.9999774C31.199997,10.400004 32,13.100019 32,15.999985 32,24.800043 24.800003,32 16,32 7.1999969,32 0,24.800043 0,15.999985L0,14.900008 10.099991,15.600021 10.099991,15.999985C10.099991,19.200001 12.699997,21.800039 15.899994,21.800039 19.099991,21.800039 21.699997,19.200001 21.699997,15.999985 21.699997,14.900008 21.399994,13.900007 20.899994,13.100019z M16,0C18.199997,2.3098255E-07,20.399994,0.50000072,22.300003,1.2999892L18.399994,10.699992C17.699997,10.400004 16.899994,10.199992 16,10.199992 14.300003,10.199992 12.800003,10.900004 11.699997,12.100018L4.0999908,5.2999933C7.0999908,2.0000022,11.300003,2.3098255E-07,16,0z" fill="#004C9A"></path>
-                           
-                           
-                           
+
                            <path id="pathforvcd" visibility="hidden" transform="rotate(0,38,38) translate(20,40) scale(0.6375,0.6375)  " d="M0.199609890580177,9.62558364868164L1.890749335289,9.62558364868164 1.890749335289,11.455340385437 0.199609890580177,11.455340385437 0.199609890580177,9.62558364868164z M2.02951502799988,2.47844004631042L4.491370677948,2.47844004631042 4.69061231613159,4.26166296005249 4.85914134979248,5.90217399597168 4.99695825576782,7.39997386932373 5.1040620803833,8.75506210327148 5.19590139389038,7.49403953552246 5.29052448272705,6.3058123588562 5.38793087005615,5.19038152694702 5.48812055587769,4.14774703979492 5.65021705627441,2.47844004631042 8.11207294464111,2.47844004631042 6.92411613464355,11.455340385437 3.37826800346375,11.455340385437 2.02951502799988,2.47844004631042z M11.1616678237915,2.28991937637329L11.6548013687134,2.31483817100525 12.1028842926025,2.38959455490112 12.5059156417847,2.51418828964233 12.8638973236084,2.68861937522888 13.1705894470215,2.90025281906128 13.4197549819946,3.1364529132843 13.6113948822021,3.39721989631653 13.7455072402954,3.68255376815796 13.8376884460449,4.02152681350708 13.9035320281982,4.44320964813232 13.9430379867554,4.94760322570801 13.9562063217163,5.53470659255981 13.9562063217163,6.38746690750122 11.6218795776367,6.38746690750122 11.6218795776367,4.82723522186279 11.6172018051147,4.51895666122437 11.6031665802002,4.27464771270752 11.5797748565674,4.09430932998657 11.5470266342163,3.97794008255005 11.4271211624146,3.85136437416077 11.2171154022217,3.80917263031006 10.9814643859863,3.86046123504639 10.8511638641357,4.01432704925537 10.8172025680542,4.1467080116272 10.7929439544678,4.33869361877441 10.7783889770508,4.5902853012085 10.7735376358032,4.90148210525513 10.7735376358032,9.07111167907715 10.7783889770508,9.36983299255371 10.7929439544678,9.61172103881836 10.8172025680542,9.79677677154541 10.8511638641357,9.92499828338623 10.9773063659668,10.0747051239014 11.2004814147949,10.124608039856 11.4160318374634,10.0745868682861 11.5414810180664,9.92452144622803 11.5766553878784,9.79078006744385 11.6017799377441,9.58963966369629 11.6168546676636,9.3211030960083 11.6218795776367,8.98516845703125 11.6218795776367,7.85681772232056 13.9562063217163,7.85681772232056 13.9562063217163,8.20665454864502 13.9439039230347,8.8528470993042 13.9069976806641,9.39770793914795 13.8454856872559,9.84123706817627 13.7593688964844,10.1834335327148 13.6311473846436,10.4659414291382 13.443320274353,10.7304010391235 13.1958875656128,10.9768133163452 12.8888483047485,11.2051782608032 12.5324268341064,11.397102355957 12.1368455886841,11.5341901779175 11.7021045684814,11.6164436340332 11.2282047271729,11.6438608169556 10.7378435134888,11.6206426620483 10.2925329208374,11.5509872436523 9.89227390289307,11.4348945617676 9.53706550598145,11.272364616394 9.23245239257813,11.0687694549561 8.98397922515869,10.8294801712036 8.79164695739746,10.5544967651367 8.65545463562012,10.2438192367554 8.56084823608398,9.87388229370117 8.49327182769775,9.42112159729004 8.45272636413574,8.88553619384766 8.43921089172363,8.26712703704834 8.43921089172363,5.64447450637817 8.44336986541748,5.18963479995728 8.45584487915039,4.79544019699097 8.476637840271,4.46189069747925 8.50574779510498,4.18898582458496 8.63812732696533,3.71283316612244 8.90219497680664,3.25470066070557 9.29586982727051,2.85340166091919 9.81707382202148,2.54774904251099 10.4457063674927,2.35437679290771 11.1616678237915,2.28991937637329z M17.1278343200684,4.01432704925537L17.1278343200684,9.91945362091064 17.3558616638184,9.90680408477783 17.5353717803955,9.86885738372803 17.6663665771484,9.80561351776123 17.7488441467285,9.71707153320313 17.7997856140137,9.57238864898682 17.8361721038818,9.34072303771973 17.8580055236816,9.02207565307617 17.8652820587158,8.61644458770752 17.8652820587158,5.12881565093994 17.8628559112549,4.851233959198 17.8555793762207,4.62840557098389 17.8434505462646,4.46033096313477 17.8264694213867,4.34701061248779 17.7627048492432,4.19799661636353 17.6490383148193,4.09472560882568 17.4494285583496,4.03442716598511 17.1278343200684,4.01432704925537z M14.7935085296631,2.47844004631042L16.5400943756104,2.47844004631042 17.3172225952148,2.4881432056427 17.9574642181396,2.51725292205811 18.4608192443848,2.56576919555664 18.8272914886475,2.63369202613831 19.3519611358643,2.8388466835022 19.7338523864746,3.14380621910095 19.9861373901367,3.51876783370972 20.1219825744629,3.93392872810364 20.1559448242188,4.20406103134155 20.1802024841309,4.57919597625732 20.1947574615479,5.05933380126953 20.1996097564697,5.64447450637817 20.1996097564697,8.78833103179932 20.1925048828125,9.34262943267822 20.1711921691895,9.79677677154541 20.1356716156006,10.1507720947266 20.0859432220459,10.404616355896 19.9299983978271,10.7677955627441 19.6894950866699,11.0422592163086 19.3734455108643,11.2377099990845 18.9908599853516,11.3638525009155 18.7565956115723,11.4038791656494 18.4696578979492,11.4324684143066 18.1300430297852,11.4496231079102 17.7377548217773,11.455340385437 14.7935085296631,11.455340385437 14.7935085296631,2.47844004631042z" fill="#F5F5F5"></path>
-                           
+
                            <path id="pathfordvd" visibility="visible" transform="rotate(0,38,38) translate(20,40) scale(0.4375,0.4375)  " d="M23.261636,11.83176C23.462621,11.83176 23.662632,11.931763 23.863617,12.031752 23.963651,12.132764 24.063627,12.332757 24.063627,12.633745 24.063627,12.833738 23.963651,13.034738 23.863617,13.235738 23.763643,13.335726 23.562656,13.435731 23.261636,13.435731 23.061626,13.435731 22.860641,13.335726 22.660631,13.235738 22.559681,13.134742 22.459646,12.934734 22.459646,12.633745 22.459646,12.432746 22.559681,12.232752 22.660631,12.031752 22.860641,11.931763 22.960676,11.83176 23.261636,11.83176z M14.438761,11.83176L14.538797,11.83176 14.939792,11.83176C15.240753,11.83176 15.440762,11.931763 15.541773,12.031752 15.641748,12.132764 15.741783,12.332757 15.741783,12.633745 15.741783,12.833738 15.641748,13.034738 15.541773,13.134742 15.440762,13.335726 15.139741,13.435731 14.839758,13.435731L14.438761,13.435731z M23.261636,11.329771C22.760666,11.329771 22.459646,11.430767 22.158685,11.730764 21.958675,12.031752 21.75769,12.232752 21.75769,12.633745 21.75769,13.034738 21.857664,13.235738 22.158685,13.535735 22.459646,13.836724 22.760666,13.936713 23.261636,13.936713 23.662632,13.936713 24.063627,13.836724 24.364648,13.535735 24.665607,13.235738 24.765644,12.934734 24.765644,12.633745 24.765644,12.332757 24.665607,12.031752 24.364648,11.730764 24.063627,11.430767 23.662632,11.329771 23.261636,11.329771z M18.248706,11.329771L18.248706,13.936713 20.153709,13.936713 20.153709,13.435731 18.950721,13.435731 18.950721,12.833738 20.053672,12.833738 20.053672,12.332757 18.84971,12.332757 18.84971,11.83176 20.053672,11.83176 20.053672,11.329771z M13.936755,11.329771L13.936755,13.936713 15.039767,13.936713C15.541773,13.936713 15.942769,13.836724 16.142778,13.535735 16.343765,13.335726 16.543773,13.034738 16.543773,12.633745 16.543773,12.232752 16.443739,11.931763 16.142778,11.730764 15.841757,11.430767 15.541773,11.329771 15.039767,11.329771z M11.429832,11.329771L11.429832,13.936713 12.031813,13.936713 12.031813,11.329771z M7.1188575,11.329771L8.3218437,13.936713 8.6228643,13.936713 9.8258501,11.329771 9.1238342,11.329771 8.5228296,12.833738 7.8208738,11.329771z M15.641748,9.9267995C24.264612,9.9267995 31.283556,11.029774 31.283556,12.432746 31.283556,13.836724 24.264612,14.939698 15.641748,14.939698 7.0188833,15.039702 0,13.936713 0,12.533742 0,11.129779 7.0188833,9.9267995 15.641748,9.9267995z M3.8099442,0L15.039767,0 16.74476,5.0128986 20.554704,0 27.071581,0C28.876546,1.1468182E-07 30.28058,0.40099291 31.082571,1.3029827 31.8845,2.1059601 32.185522,3.1079384 31.8845,4.4119126 31.584516,5.7148954 30.88256,6.8178693 29.77955,7.5198509 28.575586,8.3218371 26.87157,8.7228295 24.866655,8.7228295L20.554704,8.7228295 22.058651,2.3059532 24.665607,2.3059532 23.662632,7.2188622 25.367624,7.2188622C26.57061,7.2188622 27.473613,6.9188654 28.275604,6.3168728 28.876546,5.8158909 29.277542,5.2138983 29.378555,4.4119126 29.578563,3.6099271 29.47859,2.9079456 28.977558,2.4059571 28.475551,1.8049713 27.673561,1.6039713 26.470636,1.6039713L22.158685,1.6039713 15.841757,9.9267995 13.335811,3.0079498 13.335811,3.1079384C13.435785,3.5089313 13.335811,4.0109197 13.234799,4.4119126 12.934816,5.7148954 12.232799,6.8178693 11.129848,7.5198509 9.9258247,8.4228322 8.2218691,8.8238255 6.2159158,8.8238255L1.9049416,8.8238255 3.3089136,2.3059532 5.9158712,2.3059532 4.9128948,7.2188622 6.6178881,7.2188622C7.8208738,7.2188622 8.722839,6.9188654 9.5248295,6.3168728 10.126811,5.8158909 10.527806,5.2138983 10.627842,4.4119126 10.828827,3.6099271 10.728853,2.9079456 10.226846,2.4059571 9.7258154,1.9049601 8.9238249,1.6039713 7.7208997,1.6039713L3.4089485,1.6039713z" fill="#F5F5F5"></path>
-                           
-                           
-                                      
+
                            <ellipse cy="26" cx="27" stroke-width="0.875" ry="11.0625" rx="11.0625" stroke="#082C69" fill="#003872"></ellipse>
-                           
-                                         
+
                            <path id="path1" transform="rotate(0,28,28) translate(21,20) scale(0.4,0.4)  " d="M0,0L6.8219922,0 6.8219922,16 25.37,0.74398804 25.37,16.001007 25.37,31.259003 6.8219922,16.001007 6.8219922,32 0,32z" fill="#FFFFFF"></path>
-                                  
+
                                            </g>
-                            
+
                  </svg>
-                           
+
                                    </a>
-                              
 
    <a id="mybuttonnext" alt="Next chapter"   style="width:85px; height:85px; ">
                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="80" width="80">
                                            <g>
-                                               
+
                            <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#FFFFFF" fill="#003974"></ellipse>
-                           
+
                            <Ellipse Stroke="#00338E" StrokeThickness="1" Fill="#004C9A"  />
-                           
-                           
+
                                                <path transform="rotate(0,20,28) translate(2,2) scale(1.6,1.6)  "  id="path1" d="M16,13.900007C14.800003,13.900007 13.899994,14.800032 13.899994,15.999985 13.899994,17.199999 14.800003,18.100023 16,18.100023 17.199997,18.100023 18.099991,17.199999 18.099991,15.999985 18.099991,14.800032 17.199997,13.900007 16,13.900007z M16,11.199993C18.599991,11.199993 20.800003,13.300031 20.800003,15.999985 20.800003,18.600025 18.699997,20.800039 16,20.800039 13.399994,20.800039 11.199997,18.700001 11.199997,15.999985 11.199997,13.400007 13.399994,11.199993 16,11.199993z M29.800003,7.9999774C31.199997,10.400004 32,13.100019 32,15.999985 32,24.800043 24.800003,32 16,32 7.1999969,32 0,24.800043 0,15.999985L0,14.900008 10.099991,15.600021 10.099991,15.999985C10.099991,19.200001 12.699997,21.800039 15.899994,21.800039 19.099991,21.800039 21.699997,19.200001 21.699997,15.999985 21.699997,14.900008 21.399994,13.900007 20.899994,13.100019z M16,0C18.199997,2.3098255E-07,20.399994,0.50000072,22.300003,1.2999892L18.399994,10.699992C17.699997,10.400004 16.899994,10.199992 16,10.199992 14.300003,10.199992 12.800003,10.900004 11.699997,12.100018L4.0999908,5.2999933C7.0999908,2.0000022,11.300003,2.3098255E-07,16,0z" fill="#004C9A"></path>
-                           
-                           
-                           
+
                            <path id="pathforvcd" visibility="hidden" transform="rotate(0,38,38) translate(20,40) scale(0.6375,0.6375)  " d="M0.199609890580177,9.62558364868164L1.890749335289,9.62558364868164 1.890749335289,11.455340385437 0.199609890580177,11.455340385437 0.199609890580177,9.62558364868164z M2.02951502799988,2.47844004631042L4.491370677948,2.47844004631042 4.69061231613159,4.26166296005249 4.85914134979248,5.90217399597168 4.99695825576782,7.39997386932373 5.1040620803833,8.75506210327148 5.19590139389038,7.49403953552246 5.29052448272705,6.3058123588562 5.38793087005615,5.19038152694702 5.48812055587769,4.14774703979492 5.65021705627441,2.47844004631042 8.11207294464111,2.47844004631042 6.92411613464355,11.455340385437 3.37826800346375,11.455340385437 2.02951502799988,2.47844004631042z M11.1616678237915,2.28991937637329L11.6548013687134,2.31483817100525 12.1028842926025,2.38959455490112 12.5059156417847,2.51418828964233 12.8638973236084,2.68861937522888 13.1705894470215,2.90025281906128 13.4197549819946,3.1364529132843 13.6113948822021,3.39721989631653 13.7455072402954,3.68255376815796 13.8376884460449,4.02152681350708 13.9035320281982,4.44320964813232 13.9430379867554,4.94760322570801 13.9562063217163,5.53470659255981 13.9562063217163,6.38746690750122 11.6218795776367,6.38746690750122 11.6218795776367,4.82723522186279 11.6172018051147,4.51895666122437 11.6031665802002,4.27464771270752 11.5797748565674,4.09430932998657 11.5470266342163,3.97794008255005 11.4271211624146,3.85136437416077 11.2171154022217,3.80917263031006 10.9814643859863,3.86046123504639 10.8511638641357,4.01432704925537 10.8172025680542,4.1467080116272 10.7929439544678,4.33869361877441 10.7783889770508,4.5902853012085 10.7735376358032,4.90148210525513 10.7735376358032,9.07111167907715 10.7783889770508,9.36983299255371 10.7929439544678,9.61172103881836 10.8172025680542,9.79677677154541 10.8511638641357,9.92499828338623 10.9773063659668,10.0747051239014 11.2004814147949,10.124608039856 11.4160318374634,10.0745868682861 11.5414810180664,9.92452144622803 11.5766553878784,9.79078006744385 11.6017799377441,9.58963966369629 11.6168546676636,9.3211030960083 11.6218795776367,8.98516845703125 11.6218795776367,7.85681772232056 13.9562063217163,7.85681772232056 13.9562063217163,8.20665454864502 13.9439039230347,8.8528470993042 13.9069976806641,9.39770793914795 13.8454856872559,9.84123706817627 13.7593688964844,10.1834335327148 13.6311473846436,10.4659414291382 13.443320274353,10.7304010391235 13.1958875656128,10.9768133163452 12.8888483047485,11.2051782608032 12.5324268341064,11.397102355957 12.1368455886841,11.5341901779175 11.7021045684814,11.6164436340332 11.2282047271729,11.6438608169556 10.7378435134888,11.6206426620483 10.2925329208374,11.5509872436523 9.89227390289307,11.4348945617676 9.53706550598145,11.272364616394 9.23245239257813,11.0687694549561 8.98397922515869,10.8294801712036 8.79164695739746,10.5544967651367 8.65545463562012,10.2438192367554 8.56084823608398,9.87388229370117 8.49327182769775,9.42112159729004 8.45272636413574,8.88553619384766 8.43921089172363,8.26712703704834 8.43921089172363,5.64447450637817 8.44336986541748,5.18963479995728 8.45584487915039,4.79544019699097 8.476637840271,4.46189069747925 8.50574779510498,4.18898582458496 8.63812732696533,3.71283316612244 8.90219497680664,3.25470066070557 9.29586982727051,2.85340166091919 9.81707382202148,2.54774904251099 10.4457063674927,2.35437679290771 11.1616678237915,2.28991937637329z M17.1278343200684,4.01432704925537L17.1278343200684,9.91945362091064 17.3558616638184,9.90680408477783 17.5353717803955,9.86885738372803 17.6663665771484,9.80561351776123 17.7488441467285,9.71707153320313 17.7997856140137,9.57238864898682 17.8361721038818,9.34072303771973 17.8580055236816,9.02207565307617 17.8652820587158,8.61644458770752 17.8652820587158,5.12881565093994 17.8628559112549,4.851233959198 17.8555793762207,4.62840557098389 17.8434505462646,4.46033096313477 17.8264694213867,4.34701061248779 17.7627048492432,4.19799661636353 17.6490383148193,4.09472560882568 17.4494285583496,4.03442716598511 17.1278343200684,4.01432704925537z M14.7935085296631,2.47844004631042L16.5400943756104,2.47844004631042 17.3172225952148,2.4881432056427 17.9574642181396,2.51725292205811 18.4608192443848,2.56576919555664 18.8272914886475,2.63369202613831 19.3519611358643,2.8388466835022 19.7338523864746,3.14380621910095 19.9861373901367,3.51876783370972 20.1219825744629,3.93392872810364 20.1559448242188,4.20406103134155 20.1802024841309,4.57919597625732 20.1947574615479,5.05933380126953 20.1996097564697,5.64447450637817 20.1996097564697,8.78833103179932 20.1925048828125,9.34262943267822 20.1711921691895,9.79677677154541 20.1356716156006,10.1507720947266 20.0859432220459,10.404616355896 19.9299983978271,10.7677955627441 19.6894950866699,11.0422592163086 19.3734455108643,11.2377099990845 18.9908599853516,11.3638525009155 18.7565956115723,11.4038791656494 18.4696578979492,11.4324684143066 18.1300430297852,11.4496231079102 17.7377548217773,11.455340385437 14.7935085296631,11.455340385437 14.7935085296631,2.47844004631042z" fill="#F5F5F5"></path>
-                           
+
                            <path id="pathfordvd" visibility="visible" transform="rotate(0,38,38) translate(20,40) scale(0.4375,0.4375)  " d="M23.261636,11.83176C23.462621,11.83176 23.662632,11.931763 23.863617,12.031752 23.963651,12.132764 24.063627,12.332757 24.063627,12.633745 24.063627,12.833738 23.963651,13.034738 23.863617,13.235738 23.763643,13.335726 23.562656,13.435731 23.261636,13.435731 23.061626,13.435731 22.860641,13.335726 22.660631,13.235738 22.559681,13.134742 22.459646,12.934734 22.459646,12.633745 22.459646,12.432746 22.559681,12.232752 22.660631,12.031752 22.860641,11.931763 22.960676,11.83176 23.261636,11.83176z M14.438761,11.83176L14.538797,11.83176 14.939792,11.83176C15.240753,11.83176 15.440762,11.931763 15.541773,12.031752 15.641748,12.132764 15.741783,12.332757 15.741783,12.633745 15.741783,12.833738 15.641748,13.034738 15.541773,13.134742 15.440762,13.335726 15.139741,13.435731 14.839758,13.435731L14.438761,13.435731z M23.261636,11.329771C22.760666,11.329771 22.459646,11.430767 22.158685,11.730764 21.958675,12.031752 21.75769,12.232752 21.75769,12.633745 21.75769,13.034738 21.857664,13.235738 22.158685,13.535735 22.459646,13.836724 22.760666,13.936713 23.261636,13.936713 23.662632,13.936713 24.063627,13.836724 24.364648,13.535735 24.665607,13.235738 24.765644,12.934734 24.765644,12.633745 24.765644,12.332757 24.665607,12.031752 24.364648,11.730764 24.063627,11.430767 23.662632,11.329771 23.261636,11.329771z M18.248706,11.329771L18.248706,13.936713 20.153709,13.936713 20.153709,13.435731 18.950721,13.435731 18.950721,12.833738 20.053672,12.833738 20.053672,12.332757 18.84971,12.332757 18.84971,11.83176 20.053672,11.83176 20.053672,11.329771z M13.936755,11.329771L13.936755,13.936713 15.039767,13.936713C15.541773,13.936713 15.942769,13.836724 16.142778,13.535735 16.343765,13.335726 16.543773,13.034738 16.543773,12.633745 16.543773,12.232752 16.443739,11.931763 16.142778,11.730764 15.841757,11.430767 15.541773,11.329771 15.039767,11.329771z M11.429832,11.329771L11.429832,13.936713 12.031813,13.936713 12.031813,11.329771z M7.1188575,11.329771L8.3218437,13.936713 8.6228643,13.936713 9.8258501,11.329771 9.1238342,11.329771 8.5228296,12.833738 7.8208738,11.329771z M15.641748,9.9267995C24.264612,9.9267995 31.283556,11.029774 31.283556,12.432746 31.283556,13.836724 24.264612,14.939698 15.641748,14.939698 7.0188833,15.039702 0,13.936713 0,12.533742 0,11.129779 7.0188833,9.9267995 15.641748,9.9267995z M3.8099442,0L15.039767,0 16.74476,5.0128986 20.554704,0 27.071581,0C28.876546,1.1468182E-07 30.28058,0.40099291 31.082571,1.3029827 31.8845,2.1059601 32.185522,3.1079384 31.8845,4.4119126 31.584516,5.7148954 30.88256,6.8178693 29.77955,7.5198509 28.575586,8.3218371 26.87157,8.7228295 24.866655,8.7228295L20.554704,8.7228295 22.058651,2.3059532 24.665607,2.3059532 23.662632,7.2188622 25.367624,7.2188622C26.57061,7.2188622 27.473613,6.9188654 28.275604,6.3168728 28.876546,5.8158909 29.277542,5.2138983 29.378555,4.4119126 29.578563,3.6099271 29.47859,2.9079456 28.977558,2.4059571 28.475551,1.8049713 27.673561,1.6039713 26.470636,1.6039713L22.158685,1.6039713 15.841757,9.9267995 13.335811,3.0079498 13.335811,3.1079384C13.435785,3.5089313 13.335811,4.0109197 13.234799,4.4119126 12.934816,5.7148954 12.232799,6.8178693 11.129848,7.5198509 9.9258247,8.4228322 8.2218691,8.8238255 6.2159158,8.8238255L1.9049416,8.8238255 3.3089136,2.3059532 5.9158712,2.3059532 4.9128948,7.2188622 6.6178881,7.2188622C7.8208738,7.2188622 8.722839,6.9188654 9.5248295,6.3168728 10.126811,5.8158909 10.527806,5.2138983 10.627842,4.4119126 10.828827,3.6099271 10.728853,2.9079456 10.226846,2.4059571 9.7258154,1.9049601 8.9238249,1.6039713 7.7208997,1.6039713L3.4089485,1.6039713z" fill="#F5F5F5"></path>
-                           
-                           
-                                      
+
                            <ellipse cy="26" cx="27" stroke-width="0.875" ry="11.0625" rx="11.0625" stroke="#082C69" fill="#003872"></ellipse>
-                           
-                                         
+
                            <path id="path1" transform="rotate(0,28,28) translate(22,20) scale(0.4,0.4)  " d="M0,0.7440033L18.551971,16.002998 0,31.255997z M18.551971,0L25.368,0 25.368,32 18.551971,32 18.551971,16.002998z" fill="#FFFFFF"></path>
-                                  
+
                                            </g>
-                            
+
                             </svg>
-                           
+
                                    </a></div>
-
-
 
 </div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -2021,109 +1061,66 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div><div id="997546194336867821" align="right" style="width: 100%; " class="wcustomhtml"><a id="mybuttonshowmenus" alt="Volume down"  style="width:75px; height:75px; ">
  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="75" width="75">
      <g>
-         
+
 <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#000000" fill="#004C9A"></ellipse>
-
-
-
-
-
-
-
-
 
 <ellipse cy="28" cx="28" stroke-width="0.875" ry="22.0625" rx="22.0625" stroke="#082C69" fill="#003872"></ellipse>
 
- 
 <path id="path1" transform="rotate(-90,28,28) translate(13,13) scale(0.6,0.6)  " d="m 40.019322 3.3241525 h -29.92 a 7.04 7.04 0 0 0 -7.04 7.0400005 v 29.92 a 7.04 7.04 0 0 0 7.04 7.04 h 29.92 a 7.04 7.04 0 0 0 7.04 -7.04 v -29.92 a 7.04 7.04 0 0 0 -7.04 -7.0400005 z M 9.326522 13.946553 a 4.3552 4.3552 0 1 1 4.3552 -4.3552005 4.3552 4.3552 0 0 1 -4.3552 4.3552005 z m 20.6128 16.2576 h -10.72 v -1.76 h 7.7472 l -13.76 -13.7408 1.2368 -1.2288 13.7408 13.76 v -7.7504 h 1.76 v 10.72 z" fill="#FFFFFF"></path>
 
      </g>
 
 </svg>
 
-
 </a>
 
 <a id="mybuttonhidemenus" alt="Volume up"  style="width:75px; height:75px; ">
  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="75" width="75">
      <g>
-         
+
 <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#000000" fill="#004C9A"></ellipse>
-
-
-
-
-
-
-
-
 
 <ellipse cy="28" cx="28" stroke-width="0.875" ry="22.0625" rx="22.0625" stroke="#082C69" fill="#003872"></ellipse>
 
- 
 <path id="path1" transform="rotate(0,28,28) translate(13,13) scale(0.6,0.6)  " d="m 40.019322 3.3241525 h -29.92 a 7.04 7.04 0 0 0 -7.04 7.0400005 v 29.92 a 7.04 7.04 0 0 0 7.04 7.04 h 29.92 a 7.04 7.04 0 0 0 7.04 -7.04 v -29.92 a 7.04 7.04 0 0 0 -7.04 -7.0400005 z M 9.326522 13.946553 a 4.3552 4.3552 0 1 1 4.3552 -4.3552005 4.3552 4.3552 0 0 1 -4.3552 4.3552005 z m 20.6128 16.2576 h -10.72 v -1.76 h 7.7472 l -13.76 -13.7408 1.2368 -1.2288 13.7408 13.76 v -7.7504 h 1.76 v 10.72 z" fill="#FFFFFF"></path>
 
      </g>
 
-
 </svg>
 
 </a>
-   
- 
+
 <a id="mybuttonfullscreenon" alt="Volume down"  style="width:75px; height:75px; ">
  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="75" width="75">
      <g>
-         
+
 <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#000000" fill="#004C9A"></ellipse>
-
-
-
-
-
-
-
-
 
 <ellipse cy="28" cx="28" stroke-width="0.875" ry="22.0625" rx="22.0625" stroke="#082C69" fill="#003872"></ellipse>
 
- 
 <path id="path1" transform="rotate(-90,28,28) translate(16,16) scale(0.7,0.7)  " d="M9.6560059,19.516005L12.484985,22.345999 6.414978,28.413002 10,32 0,32 0,21.999998 3.5849915,25.585007z M22.342987,19.512999L28.412994,25.585007 32,21.999998 32,32 22,32 25.584991,28.413002 19.513,22.345999z M22,0L32,0 32,10.000001 28.414978,6.4129991 22.342987,12.486002 19.513,9.6559991 25.584991,3.5849995z M0,0L10,0 6.414978,3.5849995 12.483978,9.6569986 9.6569824,12.485002 3.5849915,6.4129991 0,10.000001z" fill="#FFFFFF"></path>
 
      </g>
 
 </svg>
 
-
 </a>
 
 <a id="mybuttonfullscreenoff" alt="Volume up"  style="width:75px; height:75px; ">
  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="75" width="75">
      <g>
-         
+
 <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#000000" fill="#004C9A"></ellipse>
-
-
-
-
-
-
-
-
 
 <ellipse cy="28" cx="28" stroke-width="0.875" ry="22.0625" rx="22.0625" stroke="#082C69" fill="#003872"></ellipse>
 
- 
 <path id="path1" transform="rotate(0,28,28) translate(17,17) scale(0.7,0.7)  " d="M20,19.999998L29.514984,19.999998 26.171997,23.345001 32,29.172005 29.17099,32 23.34198,26.172005 20,29.514999z M2.4839783,19.999998L12,19.999998 12,29.514999 8.6569824,26.172005 2.8279724,32 0,29.172005 5.8269958,23.345001z M29.17099,0L32,2.828999 26.171997,8.6559991 29.514984,12.000002 20,12.000002 20,2.485001 23.34198,5.8289995z M2.8279724,0L8.6569824,5.8289995 12,2.485001 12,12.000002 2.4839783,12.000002 5.8269958,8.6559991 0,2.828999z" fill="#FFFFFF"></path>
 
      </g>
 
-
 </svg>
 
 </a></div>
-
-
 
 </div>
 
@@ -2151,7 +1148,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
            function mySenddd(the_what) {
                ///////////////	alert('Twra Tha Steilwwwww!!!');
                //myOutputChannel.sendMessage("Hello World.");
-               
+
                //myOutputChannel.sendMessage(the_what);
                console.log('mysenddd' + the_what);
                sendMessage(the_what);
@@ -2159,48 +1156,45 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
                ////////////	myBrokerClient.sendmessage("MyCpuUpdate", "papariaaaaaaaa");
            };
 
-
            document.getElementById('mybuttonprevious').addEventListener('click', function () {
-               mySenddd('COMMAND:PreviousChapter');      
+               mySenddd('COMMAND:PreviousChapter');
            });
 
            document.getElementById('mybuttonrewind').addEventListener('click', function () {
-               mySenddd('COMMAND:PlayRewind');      
+               mySenddd('COMMAND:PlayRewind');
            });
            document.getElementById('mybuttonpause').addEventListener('click', function () {
-               mySenddd('COMMAND:PlayPause');      
+               mySenddd('COMMAND:PlayPause');
            });
            document.getElementById('mybuttonplay').addEventListener('click', function () {
-               mySenddd('COMMAND:PlayPause');      
+               mySenddd('COMMAND:PlayPause');
            });
            document.getElementById('mybuttonff').addEventListener('click', function () {
-               mySenddd('COMMAND:PlayFF');      
+               mySenddd('COMMAND:PlayFF');
            });
            document.getElementById('mybuttonnext').addEventListener('click', function () {
-               mySenddd('COMMAND:NextChapter');      
+               mySenddd('COMMAND:NextChapter');
            });
            document.getElementById('mybuttonvolumedown').addEventListener('click', function () {
-               mySenddd('COMMAND:PlayVolumeDown');      
+               mySenddd('COMMAND:PlayVolumeDown');
            });
            document.getElementById('mybuttonvolumeup').addEventListener('click', function () {
-               mySenddd('COMMAND:PlayVolumeUp');      
+               mySenddd('COMMAND:PlayVolumeUp');
            });
            document.getElementById('mybuttonshowmenus').addEventListener('click', function () {
-               mySenddd('COMMAND:MenuShow');      
+               mySenddd('COMMAND:MenuShow');
            });
            document.getElementById('mybuttonhidemenus').addEventListener('click', function () {
-               mySenddd('COMMAND:MenuHide');      
+               mySenddd('COMMAND:MenuHide');
            });
            document.getElementById('mybuttonfullscreenon').addEventListener('click', function () {
-               mySenddd('COMMAND:FullScreenON');      
+               mySenddd('COMMAND:FullScreenON');
            });
            document.getElementById('mybuttonfullscreenoff').addEventListener('click', function () {
-               mySenddd('COMMAND:FullScreenOFF');      
+               mySenddd('COMMAND:FullScreenOFF');
            });
 
 /*
-
-
 
 */
            var setButton = document.getElementById('set-sliders');
@@ -2213,25 +1207,13 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
        </script>
 </div>
 
-
-
 </div>
 
-<div><div id="481063416162525755" align="center" style="width: 100%; " class="wcustomhtml"> 
+<div><div id="481063416162525755" align="center" style="width: 100%; " class="wcustomhtml">
 <div id="myidforloadingprogress" style="background-color:#04519E;">
 
-
-<!--   <img style="width: 590px; height: 590px;
-
-margin-left: auto;
-    margin-right: auto;
-" src="https://www.mlapplications.com/files/theme/appdvdplayerplus/logoloading.jpg"></img> -->
- 
-
 </div>
 </div>
-
-
 
 </div>
 
@@ -2250,8 +1232,7 @@ margin-left: auto;
         <div class="container" >
 			<div class="wsite-section-elements">
 				<div><div id="819218776811608509" align="center" style="width: 100%; " class="wcustomhtml"><p style="visibility: collapse; display: none;">Send Message: <button  id="message_button">Hi there iframe</button></p>
-<!-- <p>Got Message:</p>
- -->
+
  <div style="visibility: collapse; display: none;" id="results"></div>
 
  <script>
@@ -2294,24 +1275,20 @@ margin-left: auto;
 
       var egineconnected = false;
 
-
-var prosperasevisibility = false; 
-
-
+var prosperasevisibility = false;
 
 /*
 
-
 var  checkStorage = function() {
-  if(typeof(Storage) !== "undefined") 
+  if(typeof(Storage) !== "undefined")
   {
-      if (localStorage.firsttimehere) 
+      if (localStorage.firsttimehere)
        {
           IsFirstTimeHere = 'false';
       }
       else
       {
-          IsFirstTimeHere = 'true';	
+          IsFirstTimeHere = 'true';
       }
   }
 
@@ -2340,14 +1317,13 @@ for(var i = 0; i < ca.length; i++) {
 return "";
 };
 
-
 var checkCookie= function () {
 var user=getCookie("firsttimehere");
 if (user != "") {
 //  alert("Welcome again " + user);
 IsFirstTimeHere = 'false';
 SetFirstTimeStorage();
-} 
+}
 
 };
 
@@ -2366,8 +1342,6 @@ IsFirstTimeHere = 'true';
 };
 */
 
-
- 
 openNav =function () {
 //alert('here');
   document.getElementById('myOverlayNav').style.width = "100%";
@@ -2376,7 +1350,6 @@ openNav =function () {
 closeNav = function () {
   document.getElementById('myOverlayNav').style.width = "0%";
 };
- 
 
     var  closeConnection =function () {
           // Detach output channel and stop listening to responses.
@@ -2389,11 +1362,11 @@ closeNav = function () {
 
    /////////////////       if (eginesubscribed == false) {
 
-            try {      
-              
+            try {
+
           ///    alert('Heeeeerreeeee');
-      setTimeout(function(){ 
-        
+      setTimeout(function(){
+
      ///   alert('Heeeeerreeeee22');
         if (GotResponseFromWindows10PC == false)
           {
@@ -2402,9 +1375,8 @@ closeNav = function () {
           }
        }, 10000);
 
-
               ///       alert('Einai sto subscribe!!!');
-          
+
                   console.log('einai sot subscribe');
      ///////////             myBrokerClient.subscribe("MyCpuUpdate");
                   eginesubscribed = true;
@@ -2433,7 +1405,6 @@ closeNav = function () {
           tasections[0].style.visibility = 'hidden';
           tasections[0].style.display = 'none';
 
- 
           tasections[1].style.visibility = 'visible';
           tasections[1].style.display = 'inline';
 
@@ -2445,7 +1416,6 @@ var myimageblue = 'files/theme/appdvdplayerplus/myblueback.html';
           var x = document.getElementsByTagName("BODY")[0];
           x.style.backgroundImage = 'url(' + myimageblue + ')';
 
-          
       };
 
      var unsubscribe = function () {
@@ -2457,20 +1427,19 @@ var myimageblue = 'files/theme/appdvdplayerplus/myblueback.html';
      var mySenddd =function (the_what) {
           ///////////////	alert('Twra Tha Steilwwwww!!!');
           //myOutputChannel.sendMessage("Hello World.");
-          
+
           //myOutputChannel.sendMessage(the_what);
           sendMessage(the_what);
           //
           ////////////	myBrokerClient.sendmessage("MyCpuUpdate", "papariaaaaaaaa");
       };
 
-
 var     openConnection=  function () {
        //       alert('Open Connection Hereaasdasdsadaas!!!');
 
-//myCanvasSpecific(thecanvas,theimage,thetitle,theurl) 
+//myCanvasSpecific(thecanvas,theimage,thetitle,theurl)
 
-//            myCanvasSpecific("myCanvas2", "https://m.media-amazon.com/images/M/MV5BNDAwMTdmYzAtMTBhZC00MjllLWFmY2ItZWRlODU4Y2Y5ZjE3XkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SP330,330,0,C,0,0,0_CR65,90,200,150_PIimdb-blackband-204-14,TopLeft,0,0_PIimdb-blackband-204-28,BottomLeft,0,1_CR0,0,200,150_PIimdb-bluebutton-big,BottomRight,-1,-1_ZA,4,123,16,196,verdenab,8,255,255,255,1_ZAon%2520IMDb,4,1,14,196,verdenab,7,255,255,255,1_ZA02%253A25,164,1,14,36,verdenab,7,255,255,255,1_PIimdb-HDIconMiniWhite,BottomLeft,4,-2_ZAAvengers%253A%2520Infinity%2520War,24,138,14,176,arialbd,7,255,255,255,1_.jpg", "Trailer", ""); 
+//            myCanvasSpecific("myCanvas2", "https://m.media-amazon.com/images/M/MV5BNDAwMTdmYzAtMTBhZC00MjllLWFmY2ItZWRlODU4Y2Y5ZjE3XkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SP330,330,0,C,0,0,0_CR65,90,200,150_PIimdb-blackband-204-14,TopLeft,0,0_PIimdb-blackband-204-28,BottomLeft,0,1_CR0,0,200,150_PIimdb-bluebutton-big,BottomRight,-1,-1_ZA,4,123,16,196,verdenab,8,255,255,255,1_ZAon%2520IMDb,4,1,14,196,verdenab,7,255,255,255,1_ZA02%253A25,164,1,14,36,verdenab,7,255,255,255,1_PIimdb-HDIconMiniWhite,BottomLeft,4,-2_ZAAvengers%253A%2520Infinity%2520War,24,138,14,176,arialbd,7,255,255,255,1_.jpg", "Trailer", "");
 
 //myCanvasSpecific("myCanvas5","https://m.media-amazon.com/images/M/MV5BNDAwMTdmYzAtMTBhZC00MjllLWFmY2ItZWRlODU4Y2Y5ZjE3XkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SP330,330,0,C,0,0,0_CR65,90,200,150_PIimdb-blackband-204-14,TopLeft,0,0_PIimdb-blackband-204-28,BottomLeft,0,1_CR0,0,200,150_PIimdb-bluebutton-big,BottomRight,-1,-1_ZA,4,123,16,196,verdenab,8,255,255,255,1_ZAon%2520IMDb,4,1,14,196,verdenab,7,255,255,255,1_ZA02%253A25,164,1,14,36,verdenab,7,255,255,255,1_PIimdb-HDIconMiniWhite,BottomLeft,4,-2_ZAAvengers%253A%2520Infinity%2520War,24,138,14,176,arialbd,7,255,255,255,1_.jpg","Clip!","");
 //myCanvasSpecific("myCanvas6","https://m.media-amazon.com/images/M/MV5BNDAwMTdmYzAtMTBhZC00MjllLWFmY2ItZWRlODU4Y2Y5ZjE3XkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SP330,330,0,C,0,0,0_CR65,90,200,150_PIimdb-blackband-204-14,TopLeft,0,0_PIimdb-blackband-204-28,BottomLeft,0,1_CR0,0,200,150_PIimdb-bluebutton-big,BottomRight,-1,-1_ZA,4,123,16,196,verdenab,8,255,255,255,1_ZAon%2520IMDb,4,1,14,196,verdenab,7,255,255,255,1_ZA02%253A25,164,1,14,36,verdenab,7,255,255,255,1_PIimdb-HDIconMiniWhite,BottomLeft,4,-2_ZAAvengers%253A%2520Infinity%2520War,24,138,14,176,arialbd,7,255,255,255,1_.jpg","Clip!","");
@@ -2479,7 +1448,6 @@ var     openConnection=  function () {
 
 //myCanvas();
           // Attach output channel and be able to send messages and receive responses.
-
 
        ///////////   myBrokerClient.attachDuplexOutputChannel(myOutputChannel);
        ///   egineconnected = true;
@@ -2492,19 +1460,17 @@ var     openConnection=  function () {
 
           // BaleStatusLoading();
 
-
-
       };
       var myParseFullStatusMessage = function(tominima) {
         var vars = tominima.split("$");
-     
+
         for (var i=0;i<vars.length;i++) {
 
           // PART 1: Status!
           if (vars[i].startsWith("STATUS:"))
           {
             var tolength = 'STATUS:'.length;
-            var itimi = vars[i].substring(tolength);           
+            var itimi = vars[i].substring(tolength);
             document.getElementById('TheStatusHere').innerHTML = itimi;
 
             if (itimi.startsWith("Playing"))
@@ -2541,7 +1507,7 @@ var     openConnection=  function () {
             document.getElementById('mybuttonfullscreenoff').style.display = 'none';
           }
 
-            // 3o PART: SHOWMENUORNOT, 
+            // 3o PART: SHOWMENUORNOT,
           if (vars[i].startsWith("MENU:Yes"))
           {
             document.getElementById('mybuttonshowmenus').style.visibility = 'hidden';
@@ -2561,25 +1527,25 @@ var     openConnection=  function () {
           if (vars[i].startsWith("TIMELINECURRENT:"))
           {
             var tolength = 'TIMELINECURRENT:'.length;
-            var itimi = vars[i].substring(tolength);           
+            var itimi = vars[i].substring(tolength);
             document.getElementById('TIMELINECURRENT').innerHTML = itimi;
           }
           // 5o PART: TIMELINEDURATION
           if (vars[i].startsWith("TIMELINEDURATION:"))
           {
             var tolength = 'TIMELINEDURATION:'.length;
-            var itimi = vars[i].substring(tolength);           
+            var itimi = vars[i].substring(tolength);
             document.getElementById('TIMELINEDURATION').innerHTML = itimi;
           }
 
            // 6o PART: SliderValue
            if (vars[i].startsWith("POSITION:"))
           {
-            var tolength = 'POSITION:'.length; 
-            var itimi = vars[i].substring(tolength); 
+            var tolength = 'POSITION:'.length;
+            var itimi = vars[i].substring(tolength);
             var timifloat =  parseFloat(itimi);
             {
-              try 
+              try
               {
                 console.log("ligo prin diabasw xxx");
                 var xxx = slider.noUiSlider.get();
@@ -2590,7 +1556,7 @@ var     openConnection=  function () {
                 }
             } catch (err) { }
            //     slider.noUiSlider.set(60);
-            }         
+            }
             //document.getElementById('TIMELINEDURATION').innerHTML = itimi;
           }
 //BaleTwraSlider
@@ -2598,26 +1564,23 @@ var     openConnection=  function () {
           if (vars[i].startsWith("MAXIMUM:"))
           {
             var tolength = 'MAXIMUM:'.length;
-            var itimi = vars[i].substring(tolength);   
+            var itimi = vars[i].substring(tolength);
             var timiint = parseInt(itimi);
             BaleTwraSlider(timiint);
           //  document.getElementById('TheTitleHere').innerHTML   =  itimi;
-          }  
-
+          }
 
           // 8o PART: Title
           if (vars[i].startsWith("TITLE:"))
           {
             var tolength = 'TITLE:'.length;
-            var itimi = vars[i].substring(tolength);           
+            var itimi = vars[i].substring(tolength);
             document.getElementById('TheTitleHere').innerHTML   =  itimi;
-          }  
+          }
      }
 //     return(false);
 
       };
-
-
 
      var aNewMessageReceived = function(tomessage2) {
      //     alert('Hereeee');
@@ -2632,8 +1595,7 @@ var     openConnection=  function () {
           var tomessage = "";
           tomessage = String(tomessage2);
 
-
-          var whattosearchfor = "WPF" + username + ":"; 
+          var whattosearchfor = "WPF" + username + ":";
           whattosearchfor = whattosearchfor.replace("WPFBROWSER","WPF");
           if (tomessage.startsWith(whattosearchfor) ) {
               // Deserialize notified message content.
@@ -2653,7 +1615,6 @@ var     openConnection=  function () {
 
                   //
 
-
                   //window.location.href = 'https://www.google.com';
                   //   setTimeout(function ()
                   //   {
@@ -2670,7 +1631,6 @@ var     openConnection=  function () {
                   var tolength = 'IparxeiDVD_Drive:'.length;
                   var itimi = tominima.substring(tolength);
                   IparxeiDVD_Drive = itimi.toLowerCase();
-
 
                   if (IparxeiDVD_Drive == 'true') {
                       document.getElementById('mycard_nodvdfound').style.visibility = 'hidden';
@@ -2790,28 +1750,28 @@ var     openConnection=  function () {
 else if (tominima.startsWith('TimeLineDuration:')) {
                   var tolength = 'TimeLineDuration:'.length;
                   var itimi = tominima.substring(tolength);
-           
+
                   document.getElementById('TimeLineDuration').innerHTML = itimi;
                   document.getElementById('TimeLineDuration').innerHTML = itimi;
               }
 else if (tominima.startsWith('TimeLineCurrent:')) {
                   var tolength = 'TimeLineCurrent:'.length;
                   var itimi = tominima.substring(tolength);
-           
+
                   document.getElementById('TimeLineCurrent').innerHTML = itimi;
                   document.getElementById('TimeLineCurrent').innerHTML = itimi;
               }
               else if (tominima.startsWith('TheTitleHere:')) {
                   var tolength = 'TheTitleHere:'.length;
                   var itimi = tominima.substring(tolength);
-           
+
                   document.getElementById('TheTitleHere').innerHTML = itimi;
                   document.getElementById('TheTitleHere').innerHTML = itimi;
               }
               else if (tominima.startsWith('StopRemoteNow')) {
                   //alert('Hereeee');
                   alert('The Windows 10 PC stopped the Remote Connection!');
-              
+
                   MakeTheUI_ForConnection();
                   //MakeTheUI_ForWeb();
                //   mySenddd('ReadDVD');
@@ -2896,9 +1856,9 @@ else if (tominima.startsWith('TimeLineCurrent:')) {
               else if (tominima.startsWith('theDVDPoster:')) {
                   var tolength = 'theDVDPoster:'.length;
                   var itimi = tominima.substring(tolength);
-                  
+
                   itimi = decodeURIComponent(itimi);
-                   
+
                   theDVDPoster = itimi;
                   //theDVDPoster = 'https://www.mlapplications.com/files/theme/appdvdplayerplus/mymovieposterdefault.jpg';
                   document.getElementById('theDVDPoster').src = theDVDPoster;
@@ -2929,7 +1889,7 @@ else if (tominima.startsWith('TimeLineCurrent:')) {
                   var tolength = 'TrailerPoster:'.length;
                   var itimi = tominima.substring(tolength);
                   itimi = decodeURIComponent(itimi);
-                  
+
                   theTrailerPoster = itimi;
 
                   ////        myCanvasPoster(theTrailerPoster);
@@ -2938,8 +1898,6 @@ else if (tominima.startsWith('TimeLineCurrent:')) {
                   x.style.backgroundImage = 'url(' + theTrailerPoster + ')';
                   ////   document.getElementById('thepostertrailer').style.visibility = 'visible';
                   ////   document.getElementById('thepostertrailer').style.display = 'inline';
-
-
 
                   //             var tasections = document.getElementsByClassName('wsite-section');
                   //     var myimageurl = 'https://www.mlapplications.com/files/theme/appdvdplayerplus/mytransparentimage.png';
@@ -2961,7 +1919,7 @@ else if (tominima.startsWith('TimeLineCurrent:')) {
                   var itimi = tominima.substring(tolength);
                   // PX: ShowTrailer:myCanvas=myCanvas0&type=Trailer&vi=xx123456&thumb=https://m.media-amazon.com/images/M/MV5BNDAwMTdmYzAtMTBhZC00MjllLWFmY2ItZWRlODU4Y2Y5ZjE3XkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SP330,330,0,C,0,0,0_CR65,90,200,150_PIimdb-blackband-204-14,TopLeft,0,0_PIimdb-blackband-204-28,BottomLeft,0,1_CR0,0,200,150_PIimdb-bluebutton-big,BottomRight,-1,-1_ZA,4,123,16,196,verdenab,8,255,255,255,1_ZAon%2520IMDb,4,1,14,196,verdenab,7,255,255,255,1_ZA02%253A25,164,1,14,36,verdenab,7,255,255,255,1_PIimdb-HDIconMiniWhite,BottomLeft,4,-2_ZAAvengers%253A%2520Infinity%2520War,24,138,14,176,arialbd,7,255,255,255,1_.jpg
                   itimi = decodeURIComponent(itimi);
-                  
+
                   var thethumb = myCustomGetQueryVariable(itimi, 'thumb');
                   var thetype = myCustomGetQueryVariable(itimi, 'type');
                   var thecanvas = myCustomGetQueryVariable(itimi, 'myCanvas');
@@ -2980,7 +1938,7 @@ else if (tominima.startsWith('TimeLineCurrent:')) {
                   var itimi = tominima.substring(tolength);
 
                   itimi = decodeURIComponent(itimi);
-                  
+
                   //alert('itimi: ' + itimi);
                   // myFunctionOpenUrl(itimi);
                   var myWindow = window.open(itimi, "", "toolbar=1, menubar=1, scrollbars=1, resizable=1, width=1024, height=768");
@@ -3009,17 +1967,13 @@ else if (tominima.startsWith('TimeLineCurrent:')) {
        //       document.getElementById('mycard_accessneeded').style.display = 'none';
         //      document.getElementById('mycard_dvdnotready').style.visibility = 'hidden';
          //     document.getElementById('mycard_dvdnotready').style.display = 'none';
-     
 
                   document.getElementById('DVDSTATISTICS_GRID_LabelDriveLetter').innerHTML = toMultipleLetters;
 
         //            alert('toMultipleLetters: ' + toMultipleLetters);
-      
 
-              
               }
               //theDVDType
-
 
               /*
 localSettings.Values["WhatToReadData_0"] = IparxeiDVD_Drive;
@@ -3053,7 +2007,7 @@ var myParseTheConnectionCode= function (thecodetocheck) {
 
 //alert("thecodetocheck:" + thecodetocheck);
 var apotelesma = true;
-var patt =/[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9][0-9]/; //-[0-9][0-9][0-9]-[0-9][0-9][0-9]; 
+var patt =/[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9][0-9]/; //-[0-9][0-9][0-9]-[0-9][0-9][0-9];
 try
 {
      var result = thecodetocheck.match(patt);
@@ -3065,7 +2019,6 @@ try
   {
     apotelesma = false;
   }
-
 
   }
 catch (err)
@@ -3085,7 +2038,7 @@ return apotelesma;
             if (thecodetocheck.length == 11)
             {
           //    alert("Einai 11!");
-          
+
         //      alert(thecodetocheck.substring(3,4)) ;
 
               if (thecodetocheck.substring(3,4)=='-')
@@ -3096,11 +2049,11 @@ return apotelesma;
              //     alert("Einai8,1 == - !");
                    var therest = thecodetocheck.substring(0,3) + thecodetocheck.subscribe(5,7) + thecodetocheck.substring(8,10);
             //       alert("therest:" + therest);
-                   
+
                    for (var i=0; i< therest.length; i++)
                    if (therest.substring(i,i+1).match([0-9])== false)
                    {
-                     apotelesma = false;  
+                     apotelesma = false;
                    }
                //   if (thecodetocheck.match() .MakeTheUI_ForConnection()) // value.match(/\d/g).length===10;
 
@@ -3126,7 +2079,7 @@ return apotelesma;
      //       tasections[1].style.backgroundColor = 'transparent';
       //      tasections[1].style.backgroundImage = 'url(' + myimageurl + ')';
     //  tasections[1].style.backgroundImage = 'url(' + myimageblue + ')';
-      
+
            tasections[0].style.visibility = 'hidden';
            tasections[0].style.display = 'none'; // inline
 
@@ -3139,13 +2092,10 @@ return apotelesma;
           var x = document.getElementsByTagName("BODY")[0];
            x.style.backgroundImage = 'url(' + myimageblue + ')';
 
-
       //    var x = document.getElementsByTagName("BODY")[0];
         //  x.style.backgroundImage = 'url(' + myimageblue + ')';
 
-
        }
-
 
 var MakeTheUI_ForWeb= function () {
           GotResponseFromWindows10PC = true;
@@ -3159,7 +2109,6 @@ var MakeTheUI_ForWeb= function () {
 
           var x = document.getElementsByTagName("BODY")[0];
            x.style.backgroundImage = 'url(' + myimageblue + ')';
-
 
        }
 
@@ -3177,20 +2126,12 @@ var MakeTheUI_ForWeb= function () {
      return(false);
 };
 
-
-        
- 
-
-   
-
-  
      var BaleStatusLoading= function () {
 
       var tasections = document.getElementsByClassName('wsite-section');
 
 tasections[1].style.visibility = 'hidden';
 tasections[1].style.display = 'none';
-
 
 /*
   checkCookie();
@@ -3222,7 +2163,6 @@ else
       document.getElementById('mycard_getbluray').style.visibility = 'hidden';
           document.getElementById('mycard_getbluray').style.display = 'none';
 
-
       document.getElementById('mycard_welcome_buttons').style.visibility = 'hidden';
           document.getElementById('mycard_getbluray').style.visibility = 'hidden';
 
@@ -3233,7 +2173,7 @@ else
           document.getElementById('framesup').style.display = 'none';
           document.getElementById('framesdown').style.visibility = 'hidden';
           document.getElementById('framesdown').style.display = 'none';
-          
+
           // mycard_dvdmovie_info
           document.getElementById('mycard_dvdmovie_info').style.visibility = 'hidden';
           document.getElementById('mycard_dvdmovie_info').style.display = 'none';
@@ -3250,7 +2190,6 @@ else
           document.getElementById('myidforloadingprogress').style.visibility = 'visible';
           document.getElementById('myidforloadingprogress').style.display = 'inline';
 
-
           var tasections = document.getElementsByClassName('wsite-section');
 
           tasections[1].style.visibility = 'hidden';
@@ -3258,12 +2197,9 @@ else
 
  */
 
-
       };
-   
 
 document.domain = 'mlapplications.com';
-
 
 //var eginesubscribed = false;
 
@@ -3293,21 +2229,18 @@ try {
                   if (myParseTheConnectionCode(myuser) == true)
                   {
 
-                  
-
                  username = myuser;
                  username = "BROWSER" + username;
 
        //      alert('Open Connection Here!!!');
 egineconnected = true;
-    
-               
+
 setTimeout(function () { subscribe(); }, 2000);
  BaleStatusLoading();
 }
-else { 
-  
-  alert("The Connect Code must have the form: XXX-XXX-XXX   , where X represents a number!"); 
+else {
+
+  alert("The Connect Code must have the form: XXX-XXX-XXX   , where X represents a number!");
   MakeTheUI_ForConnection();
 }
 //openConnection();
@@ -3315,7 +2248,7 @@ else {
               //   document.getElementById('mycard_dvdmovie_button').setAttribute('href', targetsourcehref);
 
              }
-             else 
+             else
              {
                 MakeTheUI_ForConnection();
              }
@@ -3340,17 +2273,15 @@ var iframeSource = 'https://dvdmsg.mlapplications.com/?myuser=' + username;
      iframe.style.height = 10 + 'px';
      iframe.style.visibility = 'hidden';
      iframe.style.display = 'none';
-    
+
 //        iframe.style.height = 800 + 'px';
 
      document.body.appendChild(iframe);
 
-    
      var iframeEl = document.getElementById('the_iframe'),
      ///////////////////    messageButton = document.getElementById('message_button'),
           results = document.getElementById('results');
 
-  
      // Send a message to the child iframe
      var sendMessage = function(msg) {
 /////////////////////   msg = 'BROWSER' + msg;
@@ -3384,21 +2315,21 @@ aNewMessageReceived(e.data);
          var elegxos = String(e.data);
          if (elegxos.includes(username + " JOINED"))
          {
-             
+
              console.log('SIGNALR: eginesubscribed!!!');
              eginesubscribed = true;
 
              mySenddd('AreYouThere?');
          }
-     });  
+     });
 
      var GotResponseFromWindows10PC = false;
 
-     var myWait10SecsForConnection = function() 
+     var myWait10SecsForConnection = function()
      {
    //    alert('Heeeeerreeeee');
-      setTimeout(function(){ 
-        
+      setTimeout(function(){
+
     //   alert('Heeeeerreeeee22');
         if (GotResponseFromWindows10PC == false)
           {
@@ -3410,10 +2341,8 @@ aNewMessageReceived(e.data);
      };
 
  </script>
- 
+
 </div>
-
-
 
 </div>
 
@@ -3435,8 +2364,6 @@ aNewMessageReceived(e.data);
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:19.793100490148%; padding:0 15px;">
-					
-						
 
 <div id="366920622497927052"><div><style type="text/css">
 	#element-441b184e-2847-4e26-8f43-93c5b1dc80a3 .waddons_vert_divider {
@@ -3572,11 +2499,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:61.576163009532%; padding:0 15px;">
-					
-						
 
 <div id="601727918115903455"><div><style type="text/css">
 	#element-ab140bf6-d263-4eeb-af11-f3530b7baa77 .content-color-box-wrapper {
@@ -3596,7 +2519,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <hr class="styled-hr" style="width:100%;"></hr>
 <div style="height: 10px;   width: 100%;"></div></div>
 
-<div><div id="926008387843574154" align="center" style="width: 100%; " class="wcustomhtml"> 
+<div><div id="926008387843574154" align="center" style="width: 100%; " class="wcustomhtml">
 
 <input style="color: silver; font-weight:100; font-size:26px; line-height:1px; text-align:center; width: 100px; top:10px; margin-left: auto; margin-right: auto" id="intLimitTextBox1">
 
@@ -3605,8 +2528,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <input style="color: silver; font-weight:100; font-size:26px; line-height:1px; text-align:center; width: 100px; top:10px; margin-left: auto; margin-right: auto" id="intLimitTextBox3">
 
 <hr></div>
-
-
 
 </div>
 
@@ -3622,40 +2543,28 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <hr class="styled-hr" style="width:100%;"></hr>
 <div style="height: 20px;   width: 100%;"></div></div>
 
-<div><div id="970234961884425239" align="center" style="width: 100%; " class="wcustomhtml"> 
+<div><div id="970234961884425239" align="center" style="width: 100%; " class="wcustomhtml">
 <div style="height:80px;">
 <a id="mybuttonconnect" alt="Volume up" style="width:75px; height:75px; ">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" height="75" width="75">
         <g>
-            
+
    <ellipse cy="28" cx="28" stroke-width="1.875" ry="27.0625" rx="27.0625" stroke="#000000" fill="#004C9A"></ellipse>
-   
-   
-   
-   
-   
-   
-   
-   
-   
+
    <ellipse cy="28" cx="28" stroke-width="0.875" ry="22.0625" rx="22.0625" stroke="#082C69" fill="#003872"></ellipse>
-   
-   
-   <path id="path1" transform="rotate(0,28,28) translate(11,0) scale(0.4,0.4)  " d="m 53.754915,78.432562 3.187494,-3.179994 1.057498,1.064998 -1.432497,1.432497 h 5.932488 V 79.25006 H 56.56741 l 1.432497,1.432497 -1.057498,1.064998 -3.187494,-3.179994 0.0675,-0.0675 z m 8.489984,-11.999977 -3.187494,-3.179994 -1.057498,1.064998 1.432497,1.432497 h -5.932488 v 1.499997 h 5.932488 l -1.432497,1.432497 1.057498,1.064998 3.187494,-3.179994 -0.0675,-0.0675 z M 84.249856,53.58511 a 1.4999971,1.4999971 0 0 0 -0.749998,-0.21 H 65.874892 a 1.4999971,1.4999971 0 0 0 -1.499997,1.499997 v 35.249932 0 a 1.4999971,1.4999971 0 0 0 1.499997,1.499997 h 17.624966 a 1.4999971,1.4999971 0 0 0 1.499997,-1.499997 V 54.905107 A 1.4999971,1.4999971 0 0 0 84.249856,53.58511 Z M 83.499858,89.33004 H 65.844892 V 55.677606 H 83.499858 Z M 47.499927,35.000146 H 12.999994 A 2.9999942,2.9999942 0 0 0 10,38.00014 v 68.99987 A 2.9999942,2.9999942 0 0 0 12.999994,110 h 34.499933 a 2.9999942,2.9999942 0 0 0 2.999995,-2.99999 V 38.00014 A 2.9999942,2.9999942 0 0 0 47.499927,35.000146 Z M 11.499997,104.00001 V 41.000134 a 1.4999971,1.4999971 0 0 1 1.499997,-1.499997 h 34.499933 a 1.4999971,1.4999971 0 0 1 1.499998,1.499997 v 62.999876 a 1.4999971,1.4999971 0 0 1 -1.499998,1.5 H 12.999994 a 1.4999971,1.4999971 0 0 1 -1.499997,-1.5 z" fill="#FFFFFF"></path> 
-   
+
+   <path id="path1" transform="rotate(0,28,28) translate(11,0) scale(0.4,0.4)  " d="m 53.754915,78.432562 3.187494,-3.179994 1.057498,1.064998 -1.432497,1.432497 h 5.932488 V 79.25006 H 56.56741 l 1.432497,1.432497 -1.057498,1.064998 -3.187494,-3.179994 0.0675,-0.0675 z m 8.489984,-11.999977 -3.187494,-3.179994 -1.057498,1.064998 1.432497,1.432497 h -5.932488 v 1.499997 h 5.932488 l -1.432497,1.432497 1.057498,1.064998 3.187494,-3.179994 -0.0675,-0.0675 z M 84.249856,53.58511 a 1.4999971,1.4999971 0 0 0 -0.749998,-0.21 H 65.874892 a 1.4999971,1.4999971 0 0 0 -1.499997,1.499997 v 35.249932 0 a 1.4999971,1.4999971 0 0 0 1.499997,1.499997 h 17.624966 a 1.4999971,1.4999971 0 0 0 1.499997,-1.499997 V 54.905107 A 1.4999971,1.4999971 0 0 0 84.249856,53.58511 Z M 83.499858,89.33004 H 65.844892 V 55.677606 H 83.499858 Z M 47.499927,35.000146 H 12.999994 A 2.9999942,2.9999942 0 0 0 10,38.00014 v 68.99987 A 2.9999942,2.9999942 0 0 0 12.999994,110 h 34.499933 a 2.9999942,2.9999942 0 0 0 2.999995,-2.99999 V 38.00014 A 2.9999942,2.9999942 0 0 0 47.499927,35.000146 Z M 11.499997,104.00001 V 41.000134 a 1.4999971,1.4999971 0 0 1 1.499997,-1.499997 h 34.499933 a 1.4999971,1.4999971 0 0 1 1.499998,1.499997 v 62.999876 a 1.4999971,1.4999971 0 0 1 -1.499998,1.5 H 12.999994 a 1.4999971,1.4999971 0 0 1 -1.499997,-1.5 z" fill="#FFFFFF"></path>
+
         </g>
-   
-   
+
    </svg>
-   
+
    </a>
 </div>
 
 <span style="color: silver; font-weight:100; font-size:16px; line-height:1px; text-align:center; width: fit-content; top:10px; margin-left: auto; margin-right: auto">Connect</span>
 
 <hr></div>
-
-
 
 </div></div>
 </div>
@@ -3765,11 +2674,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:18.63073650032%; padding:0 15px;">
-					
-						
 
 <div id="300296812729576061"><div><style type="text/css">
 	#element-4dc14d06-135e-4803-987d-44b41fc300ef .waddons_vert_divider {
@@ -3905,8 +2810,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -3932,7 +2835,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
         try
         {
             var theconnnn = "dvdremote13d9.html?connectcode=";
-            
+
             theconnnn += document.getElementById("intLimitTextBox1").value;
             theconnnn += "-";
             theconnnn += document.getElementById("intLimitTextBox2").value;
@@ -3940,7 +2843,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
             theconnnn += document.getElementById("intLimitTextBox3").value;
 
          //   alert("theconnid so far:" + theconnnn);
-
 
             // mybuttonconnect
             document.getElementById('mybuttonconnect').setAttribute('href', theconnnn);
@@ -3950,12 +2852,11 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
         {
 
         }
-        
 
       });
     });
   }
-  
+
   setInputFilter(document.getElementById("intLimitTextBox1"), function(value) {
     return /^\d*$/.test(value) && (value === "" || parseInt(value) <= 999); });
     setInputFilter(document.getElementById("intLimitTextBox2"), function(value) {
@@ -3963,8 +2864,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
     setInputFilter(document.getElementById("intLimitTextBox3"), function(value) {
     return /^\d*$/.test(value) && (value === "" || parseInt(value) <= 999); });
   </script></div>
-
-
 
 </div>
 
@@ -3997,7 +2896,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Welcome
 			</a>
-			
+
 		</li>
 		<li id="pg420291035968415525" class="wsite-menu-item-wrap">
 			<a
@@ -4019,7 +2918,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Windows Apps
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-576387146180606075"
 	class="wsite-menu-subitem-wrap "
@@ -4032,7 +2931,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Windows Phone Apps
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-181564505483526232"
 	class="wsite-menu-subitem-wrap "
@@ -4045,7 +2944,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Android Apps
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -4059,7 +2958,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Help Center
 			</a>
-			
+
 		</li>
 		<li id="pg457614141667606990" class="wsite-menu-item-wrap">
 			<a
@@ -4081,7 +2980,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			How-to Check DVDs
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -4100,8 +2999,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<li id="wsite-nav-164382401196655753"
 	class="wsite-menu-subitem-wrap "
 	>
-	 
-	
+
 </li>
 <li id="wsite-nav-809491643896992333"
 	class="wsite-menu-subitem-wrap "
@@ -4114,7 +3012,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			3D F.A.Q.
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-802757451138523212"
 	class="wsite-menu-subitem-wrap "
@@ -4127,9 +3025,9 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			3D Anaglyphs
 		</span>
 	</a>
-	
+
 </li>
- 
+
 <li id="wsite-nav-860537803288251427"
 	class="wsite-menu-subitem-wrap "
 	>
@@ -4141,7 +3039,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			3D Photos on Flickr
 		</span>
 	</a>
-	
+
 </li>
 <li id="wsite-nav-252052803303239081"
 	class="wsite-menu-subitem-wrap "
@@ -4154,7 +3052,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 			Find 3D Videos on Youtube
 		</span>
 	</a>
-	
+
 </li>
 
 	</ul>
@@ -4168,7 +3066,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Opinion & Blog
 			</a>
-			
+
 		</li>
 		<li id="pg765675763726769427" class="wsite-menu-item-wrap">
 			<a
@@ -4177,7 +3075,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				About us
 			</a>
-			
+
 		</li>
 		<li id="pg589846066449704670" class="wsite-menu-item-wrap">
 			<a
@@ -4186,11 +3084,10 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 				>
 				Contact
 			</a>
-			
+
 		</li>
 </ul>
 </div>
-
 
 <div style='display:none'><div class='wsite-elements wsite-footer'>
 <div id="102545159590712656"><div><style type="text/css">
@@ -4344,18 +3241,12 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:19.232629580985%; padding:0 0px;">
-					
-						
 
 <div class="wsite-spacer" style="height:10px;"></div>
 
 <div class="paragraph" style="text-align:center;"><strong><font color="#a9b9d1" size="4">Share:</font></strong></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:27.826663358363%; padding:0 0px;">
-					
-						
 
 <div><div id="581391898368846183" align="center" style="width: 100%; " class="wcustomhtml"><link rel="stylesheet" href= "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
@@ -4396,7 +3287,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
   color: #ffffff;
 }
 
-
 .fa-pinterest {
   background: #cb2027;
   color: #ffffff;
@@ -4409,28 +3299,17 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <a class="fa fa-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://%20www.mlapplications.com&amp;title=Free%20and%20Useful%20Applications%20for%20Windows%20and%20Android&amp;summary=My%20favorite%20developers%20website&amp;source=Mobility_in_Life_Applications" target="_blank"></a>
 </div>
 
-
-
 </div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:35.179953724175%; padding:0 0px;">
-					
-						
 
 <div><div id="998866482991838868" align="center" style="width: 100%; " class="wcustomhtml"><a class="fa fa-pinterest" href="http://pinterest.com/pin/create/link/?url=http%3A%2F%2Fwww.mlapplications.com&amp;description=" target="_blank"></a>
 <a class="fa fa-google" href="https://plus.google.com/share?url=https://%20www.mlapplications.com" target="_blank"></a>
 </div>
 
-
 </div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:17.760753336477%; padding:0 0px;">
-					
-						
 
 <div><div class="wsite-image wsite-image-border-none " style="padding-top:10px;padding-bottom:10px;margin-left:0;margin-right:0;text-align:center">
 <a>
@@ -4439,8 +3318,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 <div style="display:block;font-size:90%"></div>
 </div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -4459,8 +3336,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 		<tbody class="wsite-multicol-tbody">
 			<tr class="wsite-multicol-tr">
 				<td class="wsite-multicol-col" style="width:26.942518066303%; padding:0 15px;">
-					
-						
 
 <div id="433306533626245074"><div><style type="text/css">
 	#element-5b110cff-50c0-4dca-86e4-07d38f3516de .content-color-box-wrapper {
@@ -4714,11 +3589,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:50.108589914178%; padding:0 15px;">
-					
-						
 
 <div id="210476769210520075"><div><style type="text/css">
 	#element-8d4fb41b-44b4-46c0-bb50-01e7cefb3258 .waddons_vert_divider {
@@ -4975,7 +3846,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 </script></div></div>
 
 <div id="486082001627672347"><div><style type="text/css">
-	
+
 </style><div id="element-71605150-6990-463d-89aa-4df7ffeb559c" data-platform-element-id="698263678581730663-1.1.0" class="platform-element-contents">
 <div class="content-color-box-wrapper">
 
@@ -5086,11 +3957,7 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>				<td class="wsite-multicol-col" style="width:22.948892019519%; padding:0 15px;">
-					
-						
 
 <div id="678568118291078683"><div><style type="text/css">
 	#element-55b91c17-e3a7-4f6b-8dec-a80823db0b69 .waddons_vert_divider {
@@ -5226,8 +4093,6 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
 </script></div></div>
 
-
-					
 				</td>			</tr>
 		</tbody>
 	</table>
@@ -5241,21 +4106,9 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
 
   <script type="text/javascript" src="files/theme/plugins850c.html?1749732861"></script>
   <script type="text/javascript" src="files/theme/custom850c.js?1749732861"></script>
- 
-<!--
-  <script type="text/javascript" src="/files/theme/plugins.js?1749732861"></script>
- 
-  <script type="text/javascript" src="/files/theme/custom.js?1749732861"></script>
- -->
-
-    
 
     >
-    
 
-		<!--
-<script type="text/javascript" src="//services.brid.tv/player/build/brid.outstream.min.js"></script> <script type="text/javascript"> $bos("Brid_74170706", {"id":"10903","width":"480","height":"270"}); </script>
--->
   <style>
         #wsite-com-product-inventory {
             display: none !important;
@@ -5268,14 +4121,11 @@ if (document.documentElement.appReady || (window.inEditor && window.inEditor()))
     <script>
 $(document).ready(function(){
 
-
- 
     //Check to see if the window is top if not then display button
     $(window).scroll(function(){
         if ($(this).scrollTop() > 50) {
             $('.scrollToTop').fadeIn();
             $('.mynextButton').fadeIn();
- 
 
         } else {
             $('.scrollToTop').fadeOut();
@@ -5288,7 +4138,7 @@ $('.mynextButton').fadeOut();
 $('.mynextButton').fadeIn();
 $('.mynextButton').fadeOut();
 $('.mynextButton').fadeIn();
- 
+
    }
 
     });
@@ -5298,7 +4148,6 @@ $('.mynextButton').fadeIn();
         $('html, body').animate({scrollTop : 0},800);
         return false;
     });
-
 
 //Click event to go next
 var xx = $(location).attr('pathname');
@@ -5377,7 +4226,7 @@ case "/hlpdvdplayer_remote_6.html": next =  "hlpdvdplayer_remote_7"; break;
 case "/hlpdvdplayer_remote_7.html": next =  "hlpdvdplayer_remote_8"; break;
 case "/hlpdvdplayer_remote_8.html": next =  "hlpdvdplayer_remote_1"; break;
 case "/hlpblurayplayer_1.html": next =  "hlpblurayplayer_2"; break;
- 
+
 case "/hlpblurayplayer_3.html": next =  "hlpblurayplayer_4"; break;
 case "/hlpblurayplayer_4.html": next =  "hlpblurayplayer_5"; break;
 case "/hlpblurayplayer_5.html": next =  "hlpblurayplayer_6"; break;
@@ -5413,9 +4262,6 @@ case "/hlpwinrare_6.html": next =  "hlpwinrare_1"; break
 }
 
 $('.mynextButton').attr("href", wheretogo + next + ".html");
-
-
-
 
 //Click event to go previous
 $('.mypreviousButton').click(function(){
@@ -5527,12 +4373,8 @@ window.location.href = wheretogonext + nextpage + ".html";;
 
     });
 
- 
- 
-
-   
 });
- 
+
     </script>
 <script>
 
@@ -5546,8 +4388,8 @@ try
 		const lala = document.getElementsByClassName("fc-cta-consent");
 		lala[0].click();
 	}
-catch (ee) 
-	{ 
+catch (ee)
+	{
 		console.log('no fc');
 	}
 try
@@ -5556,18 +4398,12 @@ try
 	//console.log('lala22' + lala22);
 	lala22.click();
 	window.location.reload(true);
-}   catch (ee22) { 
+}   catch (ee22) {
 			//console.log('no lala22'+ ee22);
 }
 
 }
 </script>
-
- 
- 
-
-
-
 
 <script>
 	(function(jQuery) {
@@ -5628,7 +4464,6 @@ try
 					return;
 				}
 
-
 				ccLinks.style.display = 'block';
 
 				var ccParent = ccLinks.parentElement;
@@ -5663,8 +4498,6 @@ try
 
 <script type="text/javascript" src="files/theme/materialize.min.js">
 
-
-
  </script>
 
  <script>
@@ -5674,7 +4507,7 @@ try
         {
          mySenddd('windowvisibilitychange');
         }       //$.post("track.php", {
-             
+
 // });
 
          return undefined;
@@ -5688,9 +4521,8 @@ try
 
   //   });
 
-
 document.addEventListener("visibilitychange", handleVisibilityChange, false);
-document.addEventListener("contextmenu", function(e){ 
+document.addEventListener("contextmenu", function(e){
 if (agnoise == 'yes') { e.preventDefault(); }
 }, false);
 
@@ -5716,8 +4548,6 @@ var myWindow = window.open(theurl, "", "toolbar=1, menubar=1, scrollbars=1, resi
 
 }
 
-
-
 function handleVisibilityChange() {
  if (prosperasevisibility == false)
  {
@@ -5738,7 +4568,7 @@ mySenddd('documentvisible');
 <style>
 .fixedElementdown {
  background-image: url('files/theme/myreel2.svg');
-background-repeat: repeat-x ;    
+background-repeat: repeat-x ;
 position:fixed;
  bottom:110px;
  height:30px;
@@ -5746,7 +4576,6 @@ position:fixed;
  z-index:100;
 
 }
-
 
 .fixedElementup {
  background-image: url('files/theme/myreel2.svg');
@@ -5757,94 +4586,12 @@ height:30px;
  width:100%;
  z-index:100;
 
-
 }
 </style>
 
 <div  class="fixedElementup" id="framesup" style="visibility: hidden; display: none;"></div>
 
- 
-
 <div  class="fixedElementdown" id="framesdown" style="visibility: hidden; display: none;"></div>
-
-	
-<!-- old --adsense-- code -->
-<!--<div data-ad="mlapplications.com_sticky_video_myvid" data-devices="m:1,t:1,d:1"   class="demand-supply"></div>-->
-
-<!-- /423204242/Eretria_Offerwall_Rewarded_AdX_code -->
-<script>
-//  googletag.cmd.push(function() { 
-    // Pass slot objects directly to display()
- //   if (window.offerwallSlot) {
-   //   googletag.display(window.offerwallSlot);
-  //  }
-    // Only call display if the slot was successfully created
-//    if (window.sideRailSlot) {
-//      googletag.display(window.sideRailSlot);
-//    } 
-//  });
-</script> 
-  <!-- ======================================================================= -->
-  <!-- 4. RUNTIME JAVASCRIPT: NO-FILL HANDLING & COHESIVE VIEWPORT TRACKING   -->
-  <!-- ======================================================================= -->
-<!--  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const anchorNode = document.querySelector('.outstream-placement-anchor');
-      const adWrapper = document.getElementById('outstream-ad-wrapper');
-      const closeBtn = document.getElementById('outstream-close');
-      let userClosedAd = false;
-
-      if (!anchorNode || !adWrapper) return;
-
-      // STEP A: GPT AD LISTENER - HIDES BLOCKS IF AUCTION COMES BACK WITHOUT FILL
-      window.googletag = window.googletag || {cmd: []};
-      googletag.cmd.push(function() {
-        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-          if (event.slot.getSlotElementId() === 'div-gpt-ad-outstream-slot') {
-            if (event.isEmpty) {
-              console.log('Outstream space inventory returned empty. Collapsing placeholder structural elements.');
-              anchorNode.style.display = 'none'; // Completely collapses block to bypass blank whitespace
-            } else {
-              console.log('Outstream ad successfully rendered. Engaging layout viewport tracker.');
-              // Only trigger performance tracking cycles if demand actually filled the layout container
-              stickyObserver.observe(anchorNode);
-            }
-          }
-        });
-      });
-
-      // STEP B: CORE SCROLL OBSERVATION PHYSICS ENGINE
-      const stickyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (userClosedAd) return;
-
-          // If the invisible inline space position completely rolls out of view
-          if (!entry.isIntersecting) {
-            const boundingBox = entry.boundingClientRect;
-            
-            // Only apply sticky docking if user scrolled past the ad DOWN the page
-            if (boundingBox.top < 0) {
-              adWrapper.classList.add('is-sticky');
-            }
-          } else {
-            // Re-dock cleanly back inline the second the user scrolls back up
-            adWrapper.classList.remove('is-sticky');
-          }
-        });
-      }, { 
-        root: null, 
-        threshold: 0 // Fires instantly the frame the boundary is crossed
-      });
-
-      // STEP C: CLOSE ICON ACTIONS
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userClosedAd = true;
-        adWrapper.classList.remove('is-sticky');
-        anchorNode.remove(); // Safely detaches elements to keep client footprint clean
-      });
-    });
-  </script> -->
 
 <!-- WEB_ONLY_START -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
@@ -5856,6 +4603,5 @@ height:30px;
 </script>
 <!-- WEB_ONLY_END -->
 </body>
-
 
  </html>
