@@ -1,31 +1,11 @@
-/* Rewarded paywall for mlapplications.com — v2 (video + display-only fallback)
- * Requires in  <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>
-/* bfcache: turn third-party 'unload' handlers into 'pagehide' */
-(function () {
-  var add = EventTarget.prototype.addEventListener;
-  window.addEventListener = function (type, fn, opts) {
-    return add.call(this, type === 'unload' ? 'pagehide' : type, fn, opts);
-  };
-  try {
-    Object.defineProperty(window, 'onunload', {
-      configurable: true,
-      get: function () { return null; },
-      set: function (fn) { if (typeof fn === 'function') add.call(window, 'pagehide', fn); }
-    });
-  } catch (e) {}
-})();
-</script>
-:
-*      <link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
-<style>#custom-paywall-overlay:not(.active){display:none}</style>
-
-*   <script defer src="/rwrd/rewarded-paywall.js?v=5"></script>
-*    GPT is loaded by Sulvo (up.js). This script only uses googletag.cmd and
-*     loads gpt.js itself only if nobody else did within 5s.
-*     Never call page-wide GPT methods here; touch only rewardedSlot.
+/* Rewarded paywall for mlapplications.com - v2 (video + display-only fallback)
+ *
+ * Requires in <head> of every page (HTML, not here):
+ *   paywall.css (non-blocking) + this file with defer.
+ *
+ * GPT is loaded by Sulvo (up.js). This script only uses googletag.cmd and
+ * loads gpt.js itself only if nobody else did within 5s.
+ * Never call page-wide GPT methods here; touch only rewardedSlot.
  *
  * Flow:
  *   1. Load the PRIMARY rewarded unit (video allowed, higher CPM).
