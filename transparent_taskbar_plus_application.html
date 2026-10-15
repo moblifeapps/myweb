@@ -1,13 +1,11 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
  <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- WEB_ONLY_START -->
-<!-- old demand -->
 
-  <!-- sulvo first -->
 <link rel="preload" as="script" href="https://live.demand.supply/up.js">
 <script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
 
@@ -15,20 +13,53 @@
 <link rel="stylesheet" href="/rwrd/paywall.css?v=1">
 <script defer src="/rwrd/rewarded-paywall.js?v=5"></script>
 
-
-<!-- old demand -->
-
-
- 
-  
-
-
-
-
 <!-- WEB_ONLY_END -->
- 
- 
-<title>Transparent Taskbar+</title>
+
+<title>Transparent Taskbar+ for Windows 11 &amp; 10 – Free Taskbar Customizer | MLApplications</title>
+<script>document.documentElement.classList.add('js');</script>
+<!-- WEB_ONLY_START -->
+<meta name="description" content="Transparent Taskbar+ is a free Windows taskbar customizer: transparent, gradient, pattern or picture backgrounds, glass buttons, a macOS-style dock and mouse effects. No registry changes. Get it from the Microsoft Store.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mlapplications.com/transparent_taskbar_plus_application.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mlapplications.com/transparent_taskbar_plus_application.html">
+<meta property="og:title" content="Transparent Taskbar+ – Free Taskbar Customizer for Windows">
+<meta property="og:description" content="Make your Windows taskbar transparent, add gradients, patterns, your own picture, glass buttons or a macOS-style dock. Free, no registry changes.">
+<meta property="og:image" content="https://mlapplications.com/uploads/ttbplus_screen1-800.webp">
+<meta property="og:site_name" content="MLApplications">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Transparent Taskbar+ – Free Taskbar Customizer for Windows">
+<meta name="twitter:description" content="Transparent, gradient, pattern or picture taskbars, glass buttons and a macOS-style dock. Free from the Microsoft Store.">
+<meta name="twitter:image" content="https://mlapplications.com/uploads/ttbplus_screen1-800.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mlapplications.com/index.html" },
+        { "@type": "ListItem", "position": 2, "name": "Store Apps", "item": "https://mlapplications.com/store-apps.html" },
+        { "@type": "ListItem", "position": 3, "name": "Transparent Taskbar+", "item": "https://mlapplications.com/transparent_taskbar_plus_application.html" }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Transparent Taskbar+",
+      "operatingSystem": "Windows 10, Windows 11",
+      "applicationCategory": "UtilitiesApplication",
+      "description": "Free Windows taskbar customizer: transparent, gradient, pattern or picture backgrounds, border lines, glass or colored buttons, a macOS-style dock and mouse effects, without registry changes.",
+      "url": "https://mlapplications.com/transparent_taskbar_plus_application.html",
+      "downloadUrl": "https://apps.microsoft.com/detail/9P7HB1KDTTT8",
+      "installUrl": "https://apps.microsoft.com/detail/9P7HB1KDTTT8",
+      "image": "https://mlapplications.com/uploads/ttbplus_screen1-800.webp",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+      "publisher": { "@type": "Organization", "name": "MLApplications", "url": "https://mlapplications.com/" }
+    }
+  ]
+}
+</script>
+<!-- WEB_ONLY_END -->
 <style>
 /* ══════════════════════════════════════════════════════════════════
    THEME TOKENS - same variable names/values as AI Video Upscaler+ and the
@@ -424,10 +455,31 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
 
 /* "App not found" screen (browser mode only) */
 .offline-screen {
-  display: none; position: fixed; inset: 0; z-index: 100; background: var(--bg);
-  align-items: center; justify-content: center; padding: 40px 20px;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 40px 20px 60px; background: var(--bg);
 }
-.offline-screen.show { display: flex; }
+/* JS hides it until showOffline() runs; crawlers without JS still see the text */
+.js .offline-screen { display: none; }
+.js .offline-screen.show { display: flex; }
+/* App not reachable: keep the top bar + ad, then the offline message and the description.
+   (It used to be a full-screen overlay that covered the ad.) */
+.is-offline .app-shell { height: auto; }
+.is-offline .app-layout { display: none; }
+/* App description, under the "open the app" message */
+.app-about { max-width: 760px; width: 100%; margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border);
+  color: var(--text2); font-size: 15px; line-height: 1.7; text-align: left; }
+.app-about h1 { color: var(--text); font-size: 24px; line-height: 1.3; margin: 0 0 12px; }
+.app-about h2 { color: var(--text); font-size: 18px; margin: 28px 0 10px; }
+.app-about p { margin: 0 0 12px; }
+.app-about ul, .app-about ol { margin: 0 0 12px; padding-left: 22px; }
+.app-about li { margin-bottom: 6px; }
+.app-about strong { color: var(--text); }
+.app-about a { color: var(--accent); }
+.breadcrumb { font-size: 13px; margin-bottom: 14px; }
+.breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 0; }
+.breadcrumb li + li::before { content: "›"; margin-right: 6px; color: var(--text3); }
+.breadcrumb a { color: var(--text2); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); }
 .offline-box { max-width: 500px; text-align: center; color: var(--text2); }
 .offline-box img.app-icon { width: 64px; height: 64px; border-radius: 14px; margin-bottom: 18px; }
 .offline-box h2 { color: var(--text); font-size: 20px; margin: 0 0 12px; }
@@ -479,7 +531,7 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
 .topbar-art { height: 40px; width: auto; flex-shrink: 0; display: block; }
 .topbar-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 </style>
- 
+
 </head>
 <body>
   <div class="app-shell">
@@ -504,7 +556,7 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
     </div>
 
     <!-- WEB_ONLY_START -->
-    <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
+    <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply" style="min-height:90px"></div>
     <!-- WEB_ONLY_END -->
 
     <div class="app-layout">
@@ -859,6 +911,56 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
         <button class="secondary-btn" id="retryConnectBtn">I've opened it - try again</button>
       </div>
     </div>
+    <!-- WEB_ONLY_START -->
+    <section class="app-about" aria-labelledby="aboutTitle">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="https://mlapplications.com/index.html">Home</a></li>
+          <li><a href="https://mlapplications.com/store-apps.html">Store Apps</a></li>
+          <li aria-current="page">Transparent Taskbar+</li>
+        </ol>
+      </nav>
+
+      <h1 id="aboutTitle">Transparent Taskbar+ – free taskbar customizer for Windows 11 and Windows 10</h1>
+      <p><strong>Transparent Taskbar+</strong> changes the look of the Windows taskbar in a few clicks: make it transparent, give it a gradient, a pattern or your own picture, add glass or colored buttons, or turn it into a macOS-style dock. It is 100% free, makes <strong>no registry changes</strong>, and every change can be undone with one click.</p>
+      <p>This page is the app's control panel in your browser. When Transparent Taskbar+ is running on your PC, the page connects to it automatically and you can style your taskbar from here.</p>
+
+      <h2>Features</h2>
+      <ul>
+        <li><strong>Three layers, combined freely</strong> – pick a border line, a background and a button style; they are applied together.</li>
+        <li><strong>Border line</strong> – none, or a 1 px / 2 px line in an automatic or custom color.</li>
+        <li><strong>Background</strong> – fully transparent, two gradient styles, more than 50 built-in patterns (Dark, Light, Thin Glow and Heavy Glow), or your own PNG/JPG picture.</li>
+        <li><strong>Your own picture</strong> – Fill, Stretch, Tile or Center, adjustable opacity, an automatic or custom backing color, and a separate picture for left/right side taskbars.</li>
+        <li><strong>Buttons</strong> – glass buttons, colored buttons, or a glass or colored macOS-style dock.</li>
+        <li><strong>Live preview</strong> – every choice is shown on your real taskbar for 5 seconds; press <strong>Apply</strong> to keep it or <strong>Undo changes</strong> to go back.</li>
+        <li><strong>Mouse effects</strong> – taskbar highlight on hover, a bursting-bubble click effect and a soft light that follows the mouse.</li>
+        <li><strong>Start with Windows</strong> – your taskbar style is applied automatically every time you sign in.</li>
+        <li><strong>Light and dark theme</strong>, plus one-click <strong>Reset Default Values</strong> and <strong>Reload Taskbar</strong>.</li>
+      </ul>
+
+      <h2>How to install Transparent Taskbar+</h2>
+      <ol>
+        <li>Click <strong>Get it from Microsoft</strong> above, or open the <a href="https://apps.microsoft.com/detail/9P7HB1KDTTT8" target="_blank" rel="noopener">Transparent Taskbar+ page on the Microsoft Store</a>.</li>
+        <li>Click <strong>Get</strong> (or <strong>Install</strong>). The app is free; the Microsoft Store downloads and installs it for you.</li>
+        <li>There is no setup wizard and no registry change – the app is ready as soon as the Store finishes.</li>
+      </ol>
+
+      <h2>How to open the app</h2>
+      <ol>
+        <li>Open the <strong>Start</strong> menu, type <strong>Transparent Taskbar+</strong> and press Enter – or click <strong>Open Transparent Taskbar+</strong> above.</li>
+        <li>Come back to this page and click <strong>I've opened it – try again</strong>. The page connects to the app on your PC and shows the taskbar styles.</li>
+        <li>Pick a border line, a background and buttons, then press <strong>Apply</strong>. Your taskbar changes immediately and the app remembers your choice.</li>
+      </ol>
+      <p>Tip: turn on <strong>Start with Windows</strong> in Settings so your taskbar style comes back after every restart.</p>
+
+      <h2>More help</h2>
+      <ul>
+        <li><a href="https://mlapplications.com/transparent_taskbar_windows.html">Transparent Taskbar+ – overview and screenshots</a></li>
+        <li><a href="https://mlapplications.com/hlp_ttbplus.html">Transparent Taskbar+ help guide</a></li>
+        <li><a href="https://mlapplications.com/hlp_ttbplus_effects.html">Taskbar effects guide</a></li>
+      </ul>
+    </section>
+    <!-- WEB_ONLY_END -->
   </div>
 
   <div class="toast" id="toast"></div>
@@ -1504,7 +1606,6 @@ function renderAll() {
   document.getElementById('footerVersion').textContent = state.appVersion ? `v${state.appVersion} · mlapplications.com` : 'mlapplications.com';
 }
 
-
 /* ───────────────────────── patterns ─────────────────────────
    The picker stays hidden until "Choose pattern". Clicking a pattern previews it on the real
    taskbar for 5 seconds (the app then goes back to the saved style); Apply keeps it. */
@@ -2062,6 +2163,7 @@ function showOffline(title, text, showLaunch) {
   document.getElementById('offlineText').textContent = text;
   document.getElementById('launchAppBtn').style.display = showLaunch ? '' : 'none';
   document.getElementById('offlineScreen').classList.add('show');
+  document.body.classList.add('is-offline');
 }
 
 document.getElementById('launchAppBtn').addEventListener('click', () => {
