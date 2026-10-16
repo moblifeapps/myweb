@@ -34,9 +34,9 @@
 <!-- WEB_ONLY_END -->
 
 <title>AI Video Upscaler+ in Your Browser – Free 4K/8K &amp; 60 fps Upscaling</title>
+<meta name="description" content="Control AI Video Upscaler+ from your browser: upscale videos to 4K or 8K, boost them to 60 fps and restore faces. Free, no watermark, processed on your PC.">
 <script>document.documentElement.classList.add('js');</script>
 <!-- WEB_ONLY_START -->
-<meta name="description" content="Control AI Video Upscaler+ from your browser: upscale videos to 1080p, 2K, 4K or 8K, boost them to 45 or 60 fps with AI frame interpolation and restore faces – free, no watermark, processed locally on your Windows PC.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://mlapplications.com/ai_videoupscaler_plus_application.html">
 <meta property="og:type" content="website">
@@ -473,7 +473,7 @@ select {
 
 /* SETTINGS VIEW */
 .settings-header { margin-bottom: 24px; position: relative; z-index: 1; }
-.settings-header h1 { font-size: 24px; margin: 0 0 4px; }
+.settings-header h1, .settings-header h2 { font-size: 24px; margin: 0 0 4px; }
 .settings-header p { font-size: 13px; color: var(--text2); margin: 0; }
 
 .settings-section { margin-bottom: 28px; position: relative; z-index: 1; }
@@ -677,7 +677,7 @@ select {
             <div id="previewPanel" class="preview-panel hidden">
               <div class="preview-card">
                 <div class="preview-section source-info-card">
-                  <img id="previewThumb" class="source-thumb" src="" alt="">
+                  <img id="previewThumb" class="source-thumb" src="" alt="Preview of the selected video">
                   <div class="source-info-text">
                     <div class="pending-filename" id="previewFilename"></div>
                     <div class="source-details" id="previewDetails"></div>
@@ -699,7 +699,7 @@ select {
 
             <div id="pendingSettings" class="pending-settings hidden">
               <div class="source-info-card">
-                <img id="pendingThumb" class="source-thumb" src="" alt="">
+                <img id="pendingThumb" class="source-thumb" src="" alt="Preview of the selected video">
                 <div class="source-info-text">
                   <div class="pending-filename" id="pendingFilename"></div>
                   <div class="source-details" id="sourceDetails"></div>
@@ -752,7 +752,7 @@ select {
         <section id="view-settings" class="view">
           <div class="view-bg-icon icon-square" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
           <div class="settings-header">
-            <h1>Settings</h1>
+            <h2>Settings</h2>
             <p>Customize your AI Video Upscaler+ experience.</p>
           </div>
 
@@ -835,7 +835,7 @@ select {
         <section id="view-contact" class="view">
           <div class="view-bg-icon icon-square" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1.5"></rect><path d="m4 7 8 6 8-6"></path></svg></div>
           <div class="settings-header">
-            <h1>Contact</h1>
+            <h2>Contact</h2>
             <p>Get in touch, report a bug or request a feature.</p>
           </div>
 
@@ -1523,7 +1523,7 @@ function renderJobCard(job) {
   const mainDetail = detailText ? detailText : (job.progressPercent || 0) + '%';
 
   const thumb = job.thumbnailDataUri
-    ? `<img class="job-thumb" src="${job.thumbnailDataUri}" alt="">`
+    ? `<img class="job-thumb" src="${job.thumbnailDataUri}" alt="Video thumbnail">`
     : `<div class="job-thumb job-thumb-placeholder"></div>`;
 
   return `
@@ -1597,7 +1597,7 @@ function renderHistoryCard(job) {
   const name = job.inputPath ? job.inputPath.split('\\').pop() : '';
   const elapsed = job.elapsed ? formatElapsed(job.elapsed) : '';
   const thumb = job.thumbnailDataUri
-    ? `<img class="job-thumb" src="${job.thumbnailDataUri}" alt="">`
+    ? `<img class="job-thumb" src="${job.thumbnailDataUri}" alt="Video thumbnail">`
     : `<div class="job-thumb job-thumb-placeholder"></div>`;
 
   const detailParts = [];
