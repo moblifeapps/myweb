@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://mlapplications.com/about-us.html</loc>
     <lastmod>2026-09-29</lastmod>
@@ -825,13 +826,6 @@
     <image:image><image:loc>https://mlapplications.com/uploads/ttbplus/ttbplus-image-picker.webp</image:loc></image:image>
     <image:image><image:loc>https://mlapplications.com/uploads/ttbplus/ttbplus-pattern-picker.webp</image:loc></image:image>
   </url>
-  <url>
-    <loc>https://mlapplications.com/transparent_taskbar_windows.html</loc>
-    <lastmod>2026-09-29</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
- 
   <url>
     <loc>https://mlapplications.com/unreachable_application.html</loc>
     <lastmod>2026-09-29</lastmod>
