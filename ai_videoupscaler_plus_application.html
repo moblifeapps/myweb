@@ -2,7 +2,6 @@
 <html lang="en">
  <head>
 <meta charset="UTF-8">
-<meta name="robots" content="noindex, follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
 /* bfcache: turn third-party 'unload' handlers into 'pagehide' */
@@ -34,7 +33,51 @@
 
 <!-- WEB_ONLY_END -->
 
-<title>AI Video Upscaler+</title>
+<title>AI Video Upscaler+ in Your Browser – Free AI Upscaling to 4K/8K &amp; 60 fps on Windows</title>
+<script>document.documentElement.classList.add('js');</script>
+<!-- WEB_ONLY_START -->
+<meta name="description" content="Control AI Video Upscaler+ from your browser: upscale videos to 1080p, 2K, 4K or 8K, boost them to 45 or 60 fps with AI frame interpolation and restore faces – free, no watermark, processed locally on your Windows PC.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mlapplications.com/ai_videoupscaler_plus_application.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mlapplications.com/ai_videoupscaler_plus_application.html">
+<meta property="og:title" content="AI Video Upscaler+ – Free AI Video Upscaler for Windows, in Your Browser">
+<meta property="og:description" content="Upscale videos to 4K or 8K, convert 30 fps to 60 fps and restore faces. Free, no watermark, and your videos never leave your PC.">
+<meta property="og:image" content="https://mlapplications.com/uploads/aivideoupscaler_icon.png">
+<meta property="og:site_name" content="MLApplications">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AI Video Upscaler+ – Free AI Video Upscaler for Windows">
+<meta name="twitter:description" content="Upscale to 4K/8K, interpolate to 60 fps and restore faces – free, local, no watermark.">
+<meta name="twitter:image" content="https://mlapplications.com/uploads/aivideoupscaler_icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mlapplications.com/" },
+        { "@type": "ListItem", "position": 2, "name": "AI Video Upscaler+", "item": "https://mlapplications.com/ai_videoupscaler_plus.html" },
+        { "@type": "ListItem", "position": 3, "name": "Use it in your browser", "item": "https://mlapplications.com/ai_videoupscaler_plus_application.html" }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "AI Video Upscaler+",
+      "operatingSystem": "Windows 10, Windows 11",
+      "applicationCategory": "MultimediaApplication",
+      "description": "Free AI video upscaler and frame-rate booster for Windows. Upscales videos to 720p, 1080p, 1440p, 4K or 8K with Real-ESRGAN, interpolates to 45 or 60 fps, and restores faces with GFPGAN. Everything runs locally on the PC's GPU; no watermark.",
+      "url": "https://mlapplications.com/ai_videoupscaler_plus.html",
+      "downloadUrl": "https://apps.microsoft.com/detail/9P54F81N7R30",
+      "installUrl": "https://apps.microsoft.com/detail/9P54F81N7R30",
+      "image": "https://mlapplications.com/uploads/aivideoupscaler_icon.png",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+      "publisher": { "@type": "Organization", "name": "MLApplications", "url": "https://mlapplications.com/" }
+    }
+  ]
+}
+</script>
+<!-- WEB_ONLY_END -->
 <style>
 /* ══════════════════════════════════════════════════════════════════
    THEME TOKENS - same variable names/values as mlapplications.com's other apps.
@@ -496,6 +539,33 @@ select {
 }
 .contact-card-icon svg { width: 17px; height: 17px; }
 .contact-card-text { font-size: 14px; font-weight: 600; }
+
+/* ── App not running: in-page offline screen + description (crawlers without JS see it too) ── */
+.offline-screen { display: flex; flex-direction: column; align-items: center; padding: 48px 20px 60px; background: var(--bg); color: var(--text2); }
+.js .offline-screen { display: none; }
+.js .offline-screen.show { display: flex; }
+.is-offline .app-shell { height: auto; min-height: 100vh; }
+.is-offline .app-layout { display: none; }
+.offline-box { text-align: center; max-width: 480px; }
+.offline-box img.offline-icon { width: 64px; height: 64px; border-radius: 14px; margin-bottom: 18px; }
+.offline-box h2 { color: var(--text); font-size: 20px; margin: 0 0 12px; }
+.offline-box p { margin: 0 0 24px; line-height: 1.5; }
+.offline-launch { display: inline-flex; align-items: center; gap: 8px; background: #5b7fff; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; cursor: pointer; margin: 0 8px 12px; }
+.offline-retry { display: inline-flex; align-items: center; gap: 7px; background: transparent; color: var(--text2); border: 1px solid var(--border); padding: 10px 20px; border-radius: 8px; font-size: 13px; cursor: pointer; margin-top: 8px; }
+.app-about { max-width: 760px; width: 100%; margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border);
+  color: var(--text2); font-size: 15px; line-height: 1.7; text-align: left; }
+.app-about h1 { color: var(--text); font-size: 24px; line-height: 1.3; margin: 0 0 12px; }
+.app-about h2 { color: var(--text); font-size: 18px; margin: 28px 0 10px; }
+.app-about p { margin: 0 0 12px; }
+.app-about ul, .app-about ol { margin: 0 0 12px; padding-left: 22px; }
+.app-about li { margin-bottom: 6px; }
+.app-about strong { color: var(--text); }
+.app-about a { color: var(--accent); }
+.breadcrumb { font-size: 13px; margin-bottom: 14px; }
+.breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 0; }
+.breadcrumb li + li::before { content: "\203A"; margin-right: 6px; color: var(--text3); }
+.breadcrumb a { color: var(--text2); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); }
 </style>
 
   </head>
@@ -793,6 +863,78 @@ select {
         </section>
       </main>
     </div>
+    <!-- WEB_ONLY_START -->
+    <div class="offline-screen" id="offlineScreen">
+      <div class="offline-box">
+        <img class="offline-icon" src="https://mlapplications.com/uploads/aivideoupscaler_icon.png" alt="AI Video Upscaler+ icon" width="64" height="64">
+        <h2>Could not find AI Video Upscaler+ running on this PC</h2>
+        <p>If the app is installed, click below to launch it, then try again. If not, you can get it from the Microsoft Store.</p>
+        <button class="offline-launch" id="launchAppBtn" type="button"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M6.5 2H3a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1V9.5"/><path d="M9.5 2H14v4.5M14 2L7 9"/></svg> Open AI Video Upscaler+</button>
+        <br>
+        <a href="https://apps.microsoft.com/detail/9P54F81N7R30?referrer=appbadge&amp;cid=browserfallback&amp;mode=full" target="_blank" rel="noopener" style="display:inline-block;margin:4px 8px 12px;">
+          <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get AI Video Upscaler+ from Microsoft" height="38">
+        </a>
+        <br>
+        <button class="offline-retry" id="retryConnectBtn" type="button"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M13.5 8A5.5 5.5 0 113 5.5"/><path d="M13.5 2.5V6H10"/></svg> I've opened it - try again</button>
+      </div>
+
+      <section class="app-about" aria-labelledby="aboutTitle">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="https://mlapplications.com/">Home</a></li>
+            <li><a href="https://mlapplications.com/ai_videoupscaler_plus.html">AI Video Upscaler+</a></li>
+            <li aria-current="page">Use it in your browser</li>
+          </ol>
+        </nav>
+
+        <h1 id="aboutTitle">AI Video Upscaler+ in your browser – free AI video upscaling to 4K/8K and 60 fps on Windows</h1>
+        <p><strong>AI Video Upscaler+</strong> is a free Windows app that turns old, low-resolution or choppy videos into sharp, smooth footage. It upscales with real AI models (Real-ESRGAN), restores faces with GFPGAN and adds in-between frames with AI frame interpolation, so a 30 fps clip plays back at 60 fps. There is <strong>no watermark</strong>, and every video is processed <strong>locally on your own PC</strong> – nothing is uploaded.</p>
+        <p>This page is the app's control panel in your browser. When AI Video Upscaler+ is running on your PC, the page connects to it automatically over a secure local connection, and you can add videos, choose the settings and follow the progress from here.</p>
+
+        <h2>What you can do</h2>
+        <ul>
+          <li><strong>Upscale resolution</strong> – choose the native 4× of your source, or a fixed 720p, 1080p, 1440p (2K), 2160p (4K) or 4320p (8K) output.</li>
+          <li><strong>Boost the frame rate</strong> – keep the source frame rate or interpolate to 45 or 60 fps for smoother motion.</li>
+          <li><strong>FPS+ mode</strong> – change only the frame rate and keep the resolution exactly as it is in the source video.</li>
+          <li><strong>Face restoration</strong> – detects faces (SCRFD) and restores them with GFPGAN, with an adjustable strength slider.</li>
+          <li><strong>Trim and rotate</strong> – cut the part you need and fix the orientation before the video is processed.</li>
+          <li><strong>Queue and Projects</strong> – queue several videos and find every finished video again in Projects.</li>
+          <li><strong>Choose your GPU</strong> – runs on NVIDIA, AMD and Intel graphics, including the integrated GPU of an ordinary laptop; pick which card to use if your PC has more than one.</li>
+          <li><strong>Video codec</strong> – Auto (H.264, switching to HEVC for very large resolutions such as 8K), always H.264 for maximum compatibility, or always HEVC.</li>
+          <li><strong>Start with Windows</strong> and a light or dark theme.</li>
+        </ul>
+
+        <h2>How to install AI Video Upscaler+</h2>
+        <ol>
+          <li>Click <strong>Get it from Microsoft</strong> above, or open the <a href="https://apps.microsoft.com/detail/9P54F81N7R30" target="_blank" rel="noopener">AI Video Upscaler+ page on the Microsoft Store</a>.</li>
+          <li>Click <strong>Get</strong> (or <strong>Install</strong>). The app is free; the Microsoft Store downloads and installs it for you.</li>
+          <li>The AI models run on your own graphics card, so you don't need an account, a subscription or an internet upload.</li>
+        </ol>
+
+        <h2>How to open the app and upscale a video</h2>
+        <ol>
+          <li>Open the <strong>Start</strong> menu, type <strong>AI Video Upscaler+</strong> and press Enter – or click <strong>Open AI Video Upscaler+</strong> above.</li>
+          <li>Come back to this page and click <strong>I've opened it – try again</strong>. The page connects to the app on your PC.</li>
+          <li>Click <strong>+ Add Video</strong>, pick the output resolution, the frame rate and the face restoration strength, then click <strong>Add to Queue</strong>.</li>
+          <li>When the video is ready, open it from <strong>Projects</strong>.</li>
+        </ol>
+        <p>Processing time depends on the length of the video, the output size and your GPU. Short clips on an average integrated GPU take minutes, not hours.</p>
+
+        <h2>Your videos stay on your PC</h2>
+        <p>AI Video Upscaler+ enhances your own existing video files. It does not generate new footage or add people who were not in the original video, and your files are never uploaded to a server. Only process videos you have the rights to.</p>
+
+        <h2>More about AI Video Upscaler+</h2>
+        <ul>
+          <li><a href="https://mlapplications.com/ai_videoupscaler_plus.html">AI Video Upscaler+ – overview and screenshots</a></li>
+          <li><a href="https://mlapplications.com/ai_videoupscaler_plus_videos_samples.html">Before &amp; after video samples (720p to 4K, 30 to 60 fps, face restoration)</a></li>
+          <li><a href="https://mlapplications.com/ai_videoupscaler_plus_faq_4k_60fps.html">How to turn 1080p 30 fps video into 4K 60 fps for free</a></li>
+          <li><a href="https://mlapplications.com/ai_videoupscaler_plus_how_to.html">How to use AI Video Upscaler+</a></li>
+          <li><a href="https://mlapplications.com/ai_videoupscaler_plus_tips_and_tricks.html">Tips &amp; tricks</a></li>
+          <li><a href="https://mlapplications.com/ai_videoupscaler_plus_help.html">Help</a></li>
+        </ul>
+      </section>
+    </div>
+    <!-- WEB_ONLY_END -->
   </div>
 
 <script>
@@ -961,25 +1103,11 @@ if (IS_DESKTOP) {
       connectWs(data.wssPort, true);
     })
     .catch(() => {
-      document.body.innerHTML = `
-        <div style="padding:60px 20px;text-align:center;color:#a0a0a8;font-family:Segoe UI,sans-serif;max-width:480px;margin:0 auto;">
-          <img src="https://mlapplications.com/uploads/aivideoupscaler_icon.png" alt="AI Video Upscaler+" style="width:64px;height:64px;border-radius:14px;margin-bottom:18px;">
-          <h2 style="color:#e2e8f0;font-size:20px;margin-bottom:12px;">Could not find AI Video Upscaler+ running on this PC</h2>
-          <p style="margin-bottom:24px;">If the app is installed, click below to launch it, then try again. If not, you can get it from the Microsoft Store.</p>
-          <button id="launchAppBtn" style="display:inline-flex;align-items:center;gap:8px;background:#5b7fff;color:white;border:none;padding:12px 24px;border-radius:8px;font-size:14px;cursor:pointer;margin:0 8px 12px;">
-            <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M6.5 2H3a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1V9.5"/><path d="M9.5 2H14v4.5M14 2L7 9"/></svg>
-            Open AI Video Upscaler+
-          </button>
-          <br>
-          <a href="https://apps.microsoft.com/detail/9P54F81N7R30?referrer=appbadge&cid=browserfallback&mode=full" target="_blank" rel="noopener" style="display:inline-block;margin:4px 8px 12px;">
-            <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get it from Microsoft" height="38">
-          </a>
-          <br>
-          <button id="retryConnectBtn" style="display:inline-flex;align-items:center;gap:7px;background:transparent;color:#8a94a8;border:1px solid #2a3148;padding:10px 20px;border-radius:8px;font-size:13px;cursor:pointer;margin-top:8px;">
-            <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M13.5 8A5.5 5.5 0 113 5.5"/><path d="M13.5 2.5V6H10"/></svg>
-            I've opened it - try again
-          </button>
-        </div>`;
+      // App not reachable: keep the top bar (and the ad), show the in-page offline screen + description
+      const off = document.getElementById('offlineScreen');
+      if (!off) return;
+      off.classList.add('show');
+      document.body.classList.add('is-offline');
 
       // Protocol activation - requires the desktop app to have registered "aivideoupscalerplus"
       // as a URI scheme handler (see App.xaml.cs). If the app isn't installed at all, Windows will
