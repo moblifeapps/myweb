@@ -174,6 +174,11 @@ footer a:hover{color:var(--text)}
 .btn-primary{background:var(--accent);color:#fff}
 .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
 .btn:hover{opacity:.88}
+.related{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.related a{display:block;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px;color:var(--text);text-decoration:none;font-size:14px}
+.related a:hover{border-color:var(--accent)}
+@media(max-width:640px){.related{grid-template-columns:1fr}}
+
 </style>
 
   </head>
@@ -266,6 +271,19 @@ footer a:hover{color:var(--text)}
         <h3><span class="tag">AI</span> Motion-estimated interpolation (RIFE)</h3>
         <p>An AI interpolation model looks at frame A and frame B together, estimates the motion of every region between them (optical flow), and synthesizes a new frame that shows objects <strong>where they actually would have been</strong> at the halfway point in time. A moving hand lands in a single sharp position, not two overlapping ones. That's what makes the output read as smoother motion rather than a smeared or stuttering version of the same clip.</p>
       </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="kicker">More guides</p>
+      <h2>Related AI Video Upscaler+ guides</h2>
+    </div>
+    <div class="related">
+      <a href="https://mlapplications.com/ai_videoupscaler_plus_upscale_old_video_4k.html">Upscale an old, low-resolution video to 4K for free</a>
+      <a href="https://mlapplications.com/ai_videoupscaler_plus_without_nvidia_gpu.html">AI video upscaling on Intel or AMD graphics (no NVIDIA needed)</a>
+      <a href="https://mlapplications.com/ai_videoupscaler_plus_fix_blurry_faces.html">Fix blurry faces in old videos with AI</a>
+      <a href="https://mlapplications.com/ai_videoupscaler_plus_free_topaz_alternative.html">A free alternative to Topaz Video AI</a>
     </div>
   </div>
 

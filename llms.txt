@@ -14,6 +14,14 @@ MLApplications develops native Windows apps using C# WPF and MSIX/Desktop Bridge
 - [AI Video Upscaler+](https://mlapplications.com/ai_videoupscaler_plus.html): Free AI video upscaler and frame interpolator for Windows. Upscales old or low-resolution videos to 2K, 4K or 8K, converts 24–30 fps to 45 or 60 fps, and restores faces with GFPGAN. Every AI model runs locally; works on ordinary Intel, AMD and NVIDIA GPUs, including integrated graphics.
 - [unReachable](https://mlapplications.com/unreachable): Windows utility app (see product page for current feature set) where you can track with one number only in your taskbar the quality of your network connection. 
 
+## AI Video Upscaler+ guides
+
+- [Upscale an old, low-resolution video to 4K for free](https://mlapplications.com/ai_videoupscaler_plus_upscale_old_video_4k.html)
+- [AI video upscaling on Intel or AMD graphics (no NVIDIA needed)](https://mlapplications.com/ai_videoupscaler_plus_without_nvidia_gpu.html)
+- [Fix blurry faces in old videos with AI](https://mlapplications.com/ai_videoupscaler_plus_fix_blurry_faces.html)
+- [A free alternative to Topaz Video AI](https://mlapplications.com/ai_videoupscaler_plus_free_topaz_alternative.html)
+- [1080p 30 fps to 4K 60 fps, free, no watermark](https://mlapplications.com/ai_videoupscaler_plus_faq_4k_60fps.html)
+
 ## Transparent Taskbar+ Lite
 
 Free taskbar customizer for Windows 11 and Windows 10 (Microsoft Store ID 9P7HB1KDTTT8). Makes the taskbar transparent, tinted, blurred or acrylic, and adds styles TranslucentTB does not have: a border line (none, thin or thick, automatic or custom colour), one- and two-colour gradients, 50+ patterns, your own picture as the background (fill, stretch, tile, center, opacity, backing colour), glass or coloured buttons and docks behind app icons, a dock-style icon magnifier (the icon under the mouse grows, on by default), and mouse effects (taskbar highlight, click bubbles, mouse light). One line, one background and one button style are combined. Works with top, bottom, left and right taskbars and multiple monitors. Settings open in the app window or in a browser and preview each change on the real taskbar for 5 seconds.

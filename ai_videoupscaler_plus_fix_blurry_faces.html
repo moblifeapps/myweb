@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* bfcache: turn third-party 'unload' handlers into 'pagehide' */
+(function () {
+  var add = EventTarget.prototype.addEventListener;
+  window.addEventListener = function (type, fn, opts) {
+    return add.call(this, type === 'unload' ? 'pagehide' : type, fn, opts);
+  };
+  try {
+    Object.defineProperty(window, 'onunload', {
+      configurable: true,
+      get: function () { return null; },
+      set: function (fn) { if (typeof fn === 'function') add.call(window, 'pagehide', fn); }
+    });
+  } catch (e) {}
+})();
+</script>
+
+<!-- WEB_ONLY_START -->
+<link rel="preload" as="script" href="https://live.demand.supply/up.js">
+<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
+
+<!-- rewarded paywall -->
+<link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<style>#custom-paywall-overlay:not(.active){display:none}</style>
+<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
+<!-- WEB_ONLY_END -->
+
+<title>Fix Blurry Faces in Old Videos with AI – Free on Windows</title>
+<meta name="description" content="Restore blurry faces in old family videos with AI face restoration (GFPGAN): free on Windows, adjustable strength, processed locally so videos stay private.">
+<link rel="canonical" href="https://mlapplications.com/ai_videoupscaler_plus_fix_blurry_faces.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://mlapplications.com/ai_videoupscaler_plus_fix_blurry_faces.html">
+<meta property="og:title" content="Fix Blurry Faces in Old Videos with AI – Free on Windows">
+<meta property="og:description" content="Restore blurry faces in old family videos with AI face restoration (GFPGAN): free on Windows, adjustable strength, processed locally so videos stay private.">
+<meta property="og:image" content="https://mlapplications.com/uploads/aivideoupscaler_icon.png">
+<meta property="og:site_name" content="MLApplications">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fix Blurry Faces in Old Videos with AI – Free on Windows">
+<meta name="twitter:description" content="Restore blurry faces in old family videos with AI face restoration (GFPGAN): free on Windows, adjustable strength, processed locally so videos stay private.">
+<meta name="twitter:image" content="https://mlapplications.com/uploads/aivideoupscaler_icon.png">
+
+<!-- FAQPage + BreadcrumbList structured data: direct answers for search engines and AI assistants -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How can I fix blurry faces in an old video for free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use AI Video Upscaler+, a free Windows app from the Microsoft Store. It detects faces in every frame (SCRFD), restores them with the GFPGAN face-restoration model and blends them back into the video, with an adjustable strength. It can upscale the video to 4K at the same time, and everything is processed locally on your PC."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What face restoration strength should I use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Start with the default (80%). For very blurry, low-resolution faces keep it high; for faces that are already fairly clear, a lower strength looks more natural. Trim a few seconds, compare, then process the full video."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does AI face restoration change the person's face?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "GFPGAN reconstructs plausible facial detail from what is in the frame. It works best on faces that are reasonably large and visible. Tiny faces in a crowd or strongly motion-blurred faces gain less, and very fine features can look slightly different from the original, so review the result. It enhances existing faces only; it does not add or swap people."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are my family videos uploaded anywhere?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. AI Video Upscaler+ runs every AI model locally on your PC, works offline, and never uploads your videos."
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://mlapplications.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI Video Upscaler+",
+      "item": "https://mlapplications.com/ai_videoupscaler_plus.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Fix blurry faces in old videos",
+      "item": "https://mlapplications.com/ai_videoupscaler_plus_fix_blurry_faces.html"
+    }
+  ]
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0e0f11;--surface:#18191d;--surface2:#21222a;--border:#2a2b35;
+  --text:#e8e9f0;--text2:#9899a8;--text3:#5a5b6a;
+  --accent:#5b7fff;--accent2:#a78bfa;--green:#3ecf8e;--amber:#f5a623;
+  --radius:10px;--font:system-ui,-apple-system,sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.6;min-height:100vh}
+a{color:var(--accent)}
+
+/* ── NAV ── */
+.topnav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);font-weight:700;font-size:17px}
+.nav-brand img{width:36px;height:36px;border-radius:8px}
+.nav-links{display:flex;gap:4px}
+.nav-links a{color:var(--text2);text-decoration:none;padding:6px 12px;border-radius:6px;font-size:13px;transition:color .15s,background .15s}
+.nav-links a:hover{color:var(--text);background:var(--surface2)}
+.nav-badge img{height:28px;opacity:.9;transition:opacity .15s}
+.nav-badge img:hover{opacity:1}
+
+/* ── BREADCRUMB ── */
+.breadcrumb-bar{max-width:900px;margin:0 auto;padding:18px 24px 0}
+.breadcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:13px;color:var(--text3)}
+.breadcrumb a{color:var(--text2);text-decoration:none}
+.breadcrumb a:hover{color:var(--text);text-decoration:underline}
+.breadcrumb .current{color:var(--text)}
+
+/* ── HERO ── */
+.hero{text-align:center;padding:32px 24px 40px;max-width:760px;margin:0 auto}
+.hero h1{font-size:27px;font-weight:700;margin-bottom:12px;letter-spacing:-.3px}
+.hero p{color:var(--text2);font-size:15px;max-width:620px;margin:0 auto}
+
+/* ── SECTIONS ── */
+.sections{max-width:800px;margin:0 auto;padding:0 24px 80px}
+.section{margin-bottom:48px}
+.section-header{margin-bottom:16px}
+.section-header h2{font-size:19px;font-weight:700;margin-bottom:6px;letter-spacing:-.2px}
+.section-header p{color:var(--text2)}
+.section-header p.kicker{color:var(--accent);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+
+.answer-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px}
+.answer-card p{color:var(--text);font-size:15px;margin-bottom:12px}
+.answer-card p:last-child{margin-bottom:0}
+.answer-card .lede{font-size:16px;font-weight:600;color:var(--green)}
+.answer-card ul.plain{margin:0 0 12px 20px;color:var(--text)}
+.answer-card ul.plain li{margin-bottom:6px}
+
+.spec-list{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.spec-list li{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--text2)}
+.spec-list li strong{display:block;color:var(--text);font-size:13.5px;margin-bottom:2px}
+
+/* ── STEPS ── */
+.steps{list-style:none;counter-reset:step;padding:0}
+.steps li{position:relative;counter-increment:step;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px 16px 62px;margin-bottom:10px;color:var(--text2);font-size:14.5px}
+.steps li::before{content:counter(step);position:absolute;left:18px;top:15px;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center}
+.steps li strong{color:var(--text);display:block;margin-bottom:2px;font-size:15px}
+
+/* ── NOTE / PROOF ── */
+.note{border-left:3px solid var(--amber);background:var(--surface);border-radius:0 var(--radius) var(--radius) 0;padding:16px 20px;color:var(--text2);font-size:14px}
+.note strong{color:var(--text)}
+.proof{border-left:3px solid var(--green);background:var(--surface);border-radius:0 var(--radius) var(--radius) 0;padding:16px 20px;color:var(--text2);font-size:14px}
+.proof strong{color:var(--text)}
+
+/* ── COMPARE ── */
+.compare-panel{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.compare-panel .card{border:1px solid var(--border);border-radius:8px;padding:16px;background:var(--surface2)}
+.compare-panel .card h3{font-size:14px;font-weight:700;margin-bottom:8px}
+.compare-panel .card.bad h3{color:var(--amber)}
+.compare-panel .card.good h3{color:var(--green)}
+.compare-panel .card ul{margin-left:18px;font-size:13.5px;color:var(--text2)}
+.compare-panel .card li{margin-bottom:5px}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius)}
+table.cmp{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}
+table.cmp th,table.cmp td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+table.cmp thead th{background:var(--surface2);color:var(--text);font-size:13px}
+table.cmp tbody th{color:var(--text2);font-weight:600;width:28%}
+table.cmp td{color:var(--text)}
+table.cmp tr:last-child th,table.cmp tr:last-child td{border-bottom:none}
+
+/* ── RELATED ── */
+.related{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.related a{display:block;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px;color:var(--text);text-decoration:none;font-size:14px}
+.related a:hover{border-color:var(--accent)}
+.related a span{display:block;color:var(--text3);font-size:12px;margin-top:2px}
+
+.cta-row{display:flex;justify-content:center;gap:12px;margin-top:28px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:opacity .15s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.btn:hover{opacity:.88}
+
+footer{text-align:center;padding:32px 24px;border-top:1px solid var(--border);color:var(--text3);font-size:13px}
+footer a{color:var(--text2);text-decoration:none}
+footer a:hover{color:var(--text)}
+footer p + p{margin-top:6px}
+
+@media(max-width:640px){
+  .topnav{padding:12px 16px}
+  .nav-links{display:none}
+  .compare-panel,.spec-list,.related{grid-template-columns:1fr}
+  .hero h1{font-size:23px}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a class="nav-brand" href="https://mlapplications.com/ai_videoupscaler_plus.html">
+    <img src="https://mlapplications.com/uploads/aivideoupscaler_icon.png" alt="AI Video Upscaler+ icon" width="36" height="36">
+    AI Video Upscaler+
+  </a>
+  <div class="nav-links">
+    <a href="https://mlapplications.com/ai_videoupscaler_plus_how_to.html">How-To Guide</a>
+    <a href="https://mlapplications.com/ai_videoupscaler_plus_videos_samples.html">Video Samples</a>
+    <a href="https://mlapplications.com/ai_videoupscaler_plus_help.html">Help &amp; Reference</a>
+    <a href="https://mlapplications.com/ai_videoupscaler_plus_tips_and_tricks.html">Tips &amp; Tricks</a>
+  </div>
+  <a class="nav-badge" href="https://apps.microsoft.com/detail/9P54F81N7R30?referrer=appbadge&amp;cid=web_faces&amp;mode=full" target="_blank" rel="noopener">
+    <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get AI Video Upscaler+ from Microsoft" height="28">
+  </a>
+</nav>
+
+<!-- WEB_ONLY_START -->
+<div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
+<!-- WEB_ONLY_END -->
+
+<div class="breadcrumb-bar">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="https://mlapplications.com/">Home</a>
+    <span class="sep">/</span>
+    <a href="https://mlapplications.com/ai_videoupscaler_plus.html">AI Video Upscaler+</a>
+    <span class="sep">/</span>
+    <span class="current">Fix blurry faces in old videos</span>
+  </nav>
+</div>
+
+<div class="hero">
+  <h1>How to fix blurry faces in old videos with AI</h1>
+  <p>Faces are the first thing that looks wrong in old, low-resolution footage. AI face restoration can bring back clean, sharp faces, privately, on your own PC.</p>
+</div>
+
+<div class="sections">
+
+  <div class="section">
+    <div class="section-header">
+      <p class="kicker">Short answer</p>
+      <h2>Can AI sharpen faces in an old video?</h2>
+    </div>
+    <div class="answer-card">
+      <p class="lede">Yes. AI face restoration (GFPGAN) can make blurry faces sharp and clean again, for free.</p>
+      <p>AI Video Upscaler+ finds every face in every frame (SCRFD face detection), restores it with <strong>GFPGAN</strong>, a face-restoration AI model, and blends it back into the picture. You control how strong the effect is, and you can upscale the whole video to 4K at the same time.</p>
+      <ul class="spec-list">
+        <li><strong>Every frame</strong>Faces are restored throughout the video, not just in one still.</li>
+        <li><strong>Adjustable</strong>A strength slider from subtle to strong (default 80%).</li>
+        <li><strong>Together with 4K</strong>Combine with upscaling and 60 fps in one pass.</li>
+        <li><strong>Private</strong>Runs offline on your PC. Nothing is uploaded.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="kicker">Step by step</p>
+      <h2>How to restore faces in a video</h2>
+    </div>
+    <ol class="steps">
+      <li><strong>Add the video</strong>In AI Video Upscaler+, click <em>+ Add Video</em> and choose the clip.</li>
+      <li><strong>Choose the output size</strong>Pick the output resolution, for example 1080p or 4K. Upscaling and face restoration work best together on low-resolution footage.</li>
+      <li><strong>Set face restoration strength</strong>Use the <em>Face restoration strength</em> slider. Keep it high for very blurry faces and lower for a more natural look.</li>
+      <li><strong>Test a few seconds first</strong>Use <em>Trim / Rotate</em> on a part where faces are clearly visible, compare the result, then process the whole video.</li>
+      <li><strong>Add to Queue</strong>Processing runs in the background. Face restoration runs on every frame, so it adds some time.</li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="kicker">Before you start</p>
+      <h2>What face restoration can and can't do</h2>
+    </div>
+    <div class="compare-panel">
+      <div class="card good">
+        <h3>Works best on</h3>
+        <ul>
+          <li>Faces that are reasonably large and visible</li>
+          <li>Soft, low-resolution faces from old phones and camcorders</li>
+          <li>Family videos, interviews, talks and vlogs</li>
+        </ul>
+      </div>
+      <div class="card bad">
+        <h3>Gains less on</h3>
+        <ul>
+          <li>Tiny faces far away or in a crowd</li>
+          <li>Faces with strong motion blur or in deep shadow</li>
+          <li>Faces turned far away from the camera</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note" style="margin-top:14px"><strong>Good to know:</strong> GFPGAN reconstructs plausible facial detail, so very fine features can look slightly different from the original. Review the result. AI Video Upscaler+ only enhances people who are already in your video; it never adds or swaps faces. Only process videos you have the rights to.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="kicker">See the difference</p>
+      <h2>Face restoration on vs off</h2>
+    </div>
+    <div class="proof">
+      <p>On our <a href="https://mlapplications.com/ai_videoupscaler_plus_videos_samples.html">before &amp; after samples page</a>, toggle face restoration on and off on the same clip and zoom in on the face, where GFPGAN's effect is most visible. The samples were made on an ordinary laptop with an Intel Core i7-11800H, Intel UHD integrated graphics and 16 GB RAM, with no dedicated graphics card.</p>
+    </div>
+  </div>
+
+  <div class="cta-row">
+    <a class="btn btn-primary" href="https://apps.microsoft.com/detail/9P54F81N7R30?referrer=appbadge&amp;cid=web_faces&amp;mode=full" target="_blank" rel="noopener">Get AI Video Upscaler+ free on Microsoft Store</a>
+    <a class="btn btn-secondary" href="https://mlapplications.com/ai_videoupscaler_plus_videos_samples.html">See before &amp; after samples</a>
+  </div>
+
+  <div class="section" style="margin-top:56px">
+    <div class="section-header">
+      <p class="kicker">More guides</p>
+      <h2>Related AI Video Upscaler+ guides</h2>
+    </div>
+    <div class="related">
+      <a href="https://mlapplications.com/ai_videoupscaler_plus_upscale_old_video_4k.html">Upscale an old, low-resolution video to 4K<span>AI Video Upscaler+ guide</span></a>
+      <a href="https://mlapplications.com/ai_videoupscaler_plus_without_nvidia_gpu.html">AI upscaling on Intel or AMD graphics (no NVIDIA needed)<span>AI Video Upscaler+ guide</span></a>
+      <a href="https://mlapplications.com/ai_videoupscaler_plus_free_topaz_alternative.html">A free alternative to Topaz Video AI<span>AI Video Upscaler+ guide</span></a>
+      <a href="https://mlapplications.com/ai_videoupscaler_plus_faq_4k_60fps.html">1080p 30 fps to 4K 60 fps, free, no watermark<span>AI Video Upscaler+ guide</span></a>
+    </div>
+  </div>
+
+</div><!-- /sections -->
+
+<footer>
+  <p>© 2026 AI Video Upscaler+ by MLApplications · <a href="https://mlapplications.com/">mlapplications.com</a> ·
+  <a href="https://mlapplications.com/ai_videoupscaler_plus_privacy.html">Privacy</a> ·
+  <a href="https://mlapplications.com/ai_videoupscaler_plus_contactus.html">Contact</a></p>
+
+</footer>
+
+<!-- WEB_ONLY_START -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-87MTDXTF59');
+</script>
+<!-- WEB_ONLY_END -->
+</body>
+</html>

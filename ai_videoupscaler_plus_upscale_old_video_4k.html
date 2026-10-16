@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* bfcache: turn third-party 'unload' handlers into 'pagehide' */
+(function () {
+  var add = EventTarget.prototype.addEventListener;
+  window.addEventListener = function (type, fn, opts) {
+    return add.call(this, type === 'unload' ? 'pagehide' : type, fn, opts);
+  };
+  try {
+    Object.defineProperty(window, 'onunload', {
+      configurable: true,
+      get: function () { return null; },
+      set: function (fn) { if (typeof fn === 'function') add.call(window, 'pagehide', fn); }
+    });
+  } catch (e) {}
+})();
+</script>
+
+<!-- WEB_ONLY_START -->
+<link rel="preload" as="script" href="https://live.demand.supply/up.js">
+<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
+
+<!-- rewarded paywall -->
+<link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<style>#custom-paywall-overlay:not(.active){display:none}</style>
+<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
+<!-- WEB_ONLY_END -->
+
+<title>Upscale Old Video to 4K Free on Windows – AI Video Upscaler+</title>
+<meta name="description" content="Upscale old, low-resolution videos to 4K for free on Windows with AI: sharper detail, smoother 60 fps motion, no watermark, processed locally on your PC.">
+<link rel="canonical" href="https://mlapplications.com/ai_videoupscaler_plus_upscale_old_video_4k.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://mlapplications.com/ai_videoupscaler_plus_upscale_old_video_4k.html">
+<meta property="og:title" content="Upscale Old Video to 4K Free on Windows – AI Video Upscaler+">
+<meta property="og:description" content="Upscale old, low-resolution videos to 4K for free on Windows with AI: sharper detail, smoother 60 fps motion, no watermark, processed locally on your PC.">
+<meta property="og:image" content="https://mlapplications.com/uploads/aivideoupscaler_icon.png">
+<meta property="og:site_name" content="MLApplications">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Upscale Old Video to 4K Free on Windows – AI Video Upscaler+">
+<meta name="twitter:description" content="Upscale old, low-resolution videos to 4K for free on Windows with AI: sharper detail, smoother 60 fps motion, no watermark, processed locally on your PC.">
+<meta name="twitter:image" content="https://mlapplications.com/uploads/aivideoupscaler_icon.png">
+
+<!-- FAQPage + BreadcrumbList structured data: direct answers for search engines and AI assistants -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can I upscale an old, low-resolution video to 4K for free on Windows?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. AI Video Upscaler+ is a free Windows app from the Microsoft Store that upscales old or low-resolution videos (for example 640×480 phone videos or 480p DVD rips) to 4K with an AI super-resolution model (Real-ESRGAN). It can also raise the frame rate to 45 or 60 fps with AI frame interpolation (RIFE) in the same pass, adds no watermark, and processes everything locally on your PC."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which old videos improve the most with AI upscaling?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Low-resolution, low-frame-rate videos improve the most: old phone videos (such as 640×480 at 24–30 fps), DVD rips at 480p or 576p, digitized camcorder tapes and low-quality web clips. Videos with very heavy compression blocks, strong motion blur or very dark scenes improve less, because the AI can only reconstruct detail that is partly present in the original."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does it take to upscale a video to 4K?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on the video length, the target resolution and frame rate, whether face restoration is on, and your GPU. On an ordinary laptop with Intel UHD integrated graphics (Core i7-11800H, 16 GB RAM, no dedicated graphics card), each sample clip on the AI Video Upscaler+ samples page took about 10–12 minutes. A dedicated graphics card is faster."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does AI Video Upscaler+ add a watermark or need a subscription?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. AI Video Upscaler+ is free, with no watermark, no subscription and no length limit. It runs offline, and your videos are never uploaded."
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://mlapplications.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI Video Upscaler+",
+      "item": "https://mlapplications.com/ai_videoupscaler_plus.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Upscale an old video to 4K",
+      "item": "https://mlapplications.com/ai_videoupscaler_plus_upscale_old_video_4k.html"
+    }
+  ]
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0e0f11;--surface:#18191d;--surface2:#21222a;--border:#2a2b35;
+  --text:#e8e9f0;--text2:#9899a8;--text3:#5a5b6a;
+  --accent:#5b7fff;--accent2:#a78bfa;--green:#3ecf8e;--amber:#f5a623;
+  --radius:10px;--font:system-ui,-apple-system,sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.6;min-height:100vh}
+a{color:var(--accent)}
+
+/* ── NAV ── */
+.topnav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);font-weight:700;font-size:17px}
+.nav-brand img{width:36px;height:36px;border-radius:8px}
+.nav-links{display:flex;gap:4px}
+.nav-links a{color:var(--text2);text-decoration:none;padding:6px 12px;border-radius:6px;font-size:13px;transition:color .15s,background .15s}
+.nav-links a:hover{color:var(--text);background:var(--surface2)}
+.nav-badge img{height:28px;opacity:.9;transition:opacity .15s}
+.nav-badge img:hover{opacity:1}
+
+/* ── BREADCRUMB ── */
+.breadcrumb-bar{max-width:900px;margin:0 auto;padding:18px 24px 0}
+.breadcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:13px;color:var(--text3)}
+.breadcrumb a{color:var(--text2);text-decoration:none}
+.breadcrumb a:hover{color:var(--text);text-decoration:underline}
+.breadcrumb .current{color:var(--text)}
+
+/* ── HERO ── */
+.hero{text-align:center;padding:32px 24px 40px;max-width:760px;margin:0 auto}
+.hero h1{font-size:27px;font-weight:700;margin-bottom:12px;letter-spacing:-.3px}
+.hero p{color:var(--text2);font-size:15px;max-width:620px;margin:0 auto}
+
+/* ── SECTIONS ── */
+.sections{max-width:800px;margin:0 auto;padding:0 24px 80px}
+.section{margin-bottom:48px}
+.section-header{margin-bottom:16px}
+.section-header h2{font-size:19px;font-weight:700;margin-bottom:6px;letter-spacing:-.2px}
+.section-header p{color:var(--text2)}
+.section-header p.kicker{color:var(--accent);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+
+.answer-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px}
+.answer-card p{color:var(--text);font-size:15px;margin-bottom:12px}
+.answer-card p:last-child{margin-bottom:0}
+.answer-card .lede{font-size:16px;font-weight:600;color:var(--green)}
+.answer-card ul.plain{margin:0 0 12px 20px;color:var(--text)}
+.answer-card ul.plain li{margin-bottom:6px}
+
+.spec-list{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.spec-list li{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--text2)}
+.spec-list li strong{display:block;color:var(--text);font-size:13.5px;margin-bottom:2px}
+
+/* ── STEPS ── */
+.steps{list-style:none;counter-reset:step;padding:0}
+.steps li{position:relative;counter-increment:step;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px 16px 62px;margin-bottom:10px;color:var(--text2);font-size:14.5px}
+.steps li::before{content:counter(step);position:absolute;left:18px;top:15px;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center}
+.steps li strong{color:var(--text);display:block;margin-bottom:2px;font-size:15px}
+
+/* ── NOTE / PROOF ── */
+.note{border-left:3px solid var(--amber);background:var(--surface);border-radius:0 var(--radius) var(--radius) 0;padding:16px 20px;color:var(--text2);font-size:14px}
+.note strong{color:var(--text)}
+.proof{border-left:3px solid var(--green);background:var(--surface);border-radius:0 var(--radius) var(--radius) 0;padding:16px 20px;color:var(--text2);font-size:14px}
+.proof strong{color:var(--text)}
+
+/* ── COMPARE ── */
+.compare-panel{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.compare-panel .card{border:1px solid var(--border);border-radius:8px;padding:16px;background:var(--surface2)}
+.compare-panel .card h3{font-size:14px;font-weight:700;margin-bottom:8px}
+.compare-panel .card.bad h3{color:var(--amber)}
+.compare-panel .card.good h3{color:var(--green)}
+.compare-panel .card ul{margin-left:18px;font-size:13.5px;color:var(--text2)}
+.compare-panel .card li{margin-bottom:5px}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius)}
+table.cmp{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}
+table.cmp th,table.cmp td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+table.cmp thead th{background:var(--surface2);color:var(--text);font-size:13px}
+table.cmp tbody th{color:var(--text2);font-weight:600;width:28%}
+table.cmp td{color:var(--text)}
+table.cmp tr:last-child th,table.cmp tr:last-child td{border-bottom:none}
+
+/* ── RELATED ── */
+.related{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.related a{display:block;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px;color:var(--text);text-decoration:none;font-size:14px}
+.related a:hover{border-color:var(--accent)}
+.related a span{display:block;color:var(--text3);font-size:12px;margin-top:2px}
+
+.cta-row{display:flex;justify-content:center;gap:12px;margin-top:28px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:opacity .15s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.btn:hover{opacity:.88}
+
+footer{text-align:center;padding:32px 24px;border-top:1px solid var(--border);color:var(--text3);font-size:13px}
+footer a{color:var(--text2);text-decoration:none}
+footer a:hover{color:var(--text)}
+footer p + p{margin-top:6px}
+
+@media(max-width:640px){
+  .topnav{padding:12px 16px}
+  .nav-links{display:none}
+  .compare-panel,.spec-list,.related{grid-template-columns:1fr}
+  .hero h1{font-size:23px}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a class="nav-brand" href="https://mlapplications.com/ai_videoupscaler_plus.html">
+    <img src="https://mlapplications.com/uploads/aivideoupscaler_icon.png" alt="AI Video Upscaler+ icon" width="36" height="36">
+    AI Video Upscaler+
+  </a>
+  <div class="nav-links">
+    <a href="https://mlapplications.com/ai_videoupscaler_plus_how_to.html">How-To Guide</a>
+    <a href="https://mlapplications.com/ai_videoupscaler_plus_videos_samples.html">Video Samples</a>
+    <a href="https://mlapplications.com/ai_videoupscaler_plus_help.html">Help &amp; Reference</a>
+    <a href="https://mlapplications.com/ai_videoupscaler_plus_tips_and_tricks.html">Tips &amp; Tricks</a>
+  </div>
+  <a class="nav-badge" href="https://apps.microsoft.com/detail/9P54F81N7R30?referrer=appbadge&amp;cid=web_old4k&amp;mode=full" target="_blank" rel="noopener">
+    <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get AI Video Upscaler+ from Microsoft" height="28">
+  </a>
+</nav>
+
+<!-- WEB_ONLY_START -->
+<div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
+<!-- WEB_ONLY_END -->
+
+<div class="breadcrumb-bar">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="https://mlapplications.com/">Home</a>
+    <span class="sep">/</span>
+    <a href="https://mlapplications.com/ai_videoupscaler_plus.html">AI Video Upscaler+</a>
+    <span class="sep">/</span>
+    <span class="current">Upscale an old video to 4K</span>
+  </nav>
+</div>
+
+<div class="hero">
+  <h1>How to upscale an old, low-resolution video to 4K for free</h1>
+  <p>Old phone clips, DVD rips and early camcorder videos look soft and choppy on today's screens. Here is the short answer, the exact steps, and what to expect from AI upscaling on an ordinary Windows PC.</p>
+</div>
+
+<div class="sections">
+
+  <div class="section">
+    <div class="section-header">
+      <p class="kicker">Short answer</p>
+      <h2>Can I upscale an old video to 4K for free on Windows?</h2>
+    </div>
+    <div class="answer-card">
+      <p class="lede">Yes. AI Video Upscaler+ does it for free, with no watermark, on your own PC.</p>
+      <p>AI Video Upscaler+ is a free Windows app from the Microsoft Store. It rebuilds detail with a real AI super-resolution model (Real-ESRGAN) instead of just stretching the pixels, and it can make choppy 24–30 fps footage smooth at 45 or 60 fps with AI frame interpolation (RIFE) in the same pass.</p>
+      <ul class="spec-list">
+        <li><strong>Output sizes</strong>Native 4× of the source, 720p, 1080p, 1440p (2K), 2160p (4K) or 4320p (8K).</li>
+        <li><strong>Frame rate</strong>Keep the source frame rate, or interpolate to 45 or 60 fps.</li>
+        <li><strong>Formats</strong>MP4, MOV, 3GP, AVI and other common video files.</li>
+        <li><strong>Cost and privacy</strong>Free, no watermark, works offline, nothing is uploaded.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="kicker">Step by step</p>
+      <h2>How to upscale an old video to 4K</h2>
+    </div>
+    <ol class="steps">
+      <li><strong>Install AI Video Upscaler+</strong>Get it free from the Microsoft Store and open it from the Start menu.</li>
+      <li><strong>Add your video</strong>Click <em>+ Add Video</em> and pick the file: an old phone clip, a DVD rip, a digitized tape, anything. Lower-quality sources are where the difference is biggest.</li>
+      <li><strong>Choose 4K and the frame rate</strong>Set <em>Output resolution</em> to 2160p (4K). For choppy footage, set <em>Frame rate</em> to <em>Interpolate to 60 fps</em>.</li>
+      <li><strong>Optional: faces, trim and rotate</strong>Turn up <em>Face restoration</em> if people are the focus, and use <em>Trim / Rotate</em> to keep only the part you need. That also saves processing time.</li>
+      <li><strong>Add to Queue and keep working</strong>Processing runs in the background on your PC. A Windows notification tells you when it's done, and the finished video is in <em>Projects</em> and in your Videos\AI Video Upscaler+ folder.</li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="kicker">What to expect</p>
+      <h2>Which old videos improve the most?</h2>
+    </div>
+    <div class="answer-card">
+      <ul class="plain">
+        <li><strong>Old phone videos</strong> (640×480, 24–30 fps): the biggest visible change, since both resolution and motion improve.</li>
+        <li><strong>DVD rips</strong> (480p / 576p): cleaner edges and text, ready for a 4K TV.</li>
+        <li><strong>Digitized camcorder tapes</strong> and <strong>low-quality web clips</strong> (360p–480p).</li>
+      </ul>
+      <p>AI reconstructs detail that is partly there. Videos with very heavy compression blocks, strong motion blur or very dark scenes improve less, so try a short trimmed part first.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="kicker">Real numbers</p>
+      <h2>How long does it take?</h2>
+    </div>
+    <div class="proof">
+      <p><strong>Tested on an ordinary laptop with an Intel Core i7-11800H, Intel UHD integrated graphics and 16 GB RAM, with no dedicated graphics card.</strong> Each clip on our <a href="https://mlapplications.com/ai_videoupscaler_plus_videos_samples.html">before &amp; after samples page</a> took about 10–12 minutes to process, including the old phone video taken to 4K at 60 fps. Every AI model ran locally. A dedicated graphics card is faster, and shorter clips or lower targets (1080p, 1440p) finish sooner.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="kicker">Good to know</p>
+      <h2>Is it really free, with no watermark?</h2>
+    </div>
+    <div class="answer-card">
+      <p>Yes. The full app is free: no watermark, no subscription, no length cap and no premium tier. All AI models ship inside the app, so it works offline, and your videos never leave your PC.</p>
+    </div>
+  </div>
+
+  <div class="cta-row">
+    <a class="btn btn-primary" href="https://apps.microsoft.com/detail/9P54F81N7R30?referrer=appbadge&amp;cid=web_old4k&amp;mode=full" target="_blank" rel="noopener">Get AI Video Upscaler+ free on Microsoft Store</a>
+    <a class="btn btn-secondary" href="https://mlapplications.com/ai_videoupscaler_plus_videos_samples.html">See before &amp; after samples</a>
+  </div>
+
+  <div class="section" style="margin-top:56px">
+    <div class="section-header">
+      <p class="kicker">More guides</p>
+      <h2>Related AI Video Upscaler+ guides</h2>
+    </div>
+    <div class="related">
+      <a href="https://mlapplications.com/ai_videoupscaler_plus_without_nvidia_gpu.html">AI upscaling on Intel or AMD graphics (no NVIDIA needed)<span>AI Video Upscaler+ guide</span></a>
+      <a href="https://mlapplications.com/ai_videoupscaler_plus_fix_blurry_faces.html">Fix blurry faces in old videos with AI<span>AI Video Upscaler+ guide</span></a>
+      <a href="https://mlapplications.com/ai_videoupscaler_plus_free_topaz_alternative.html">A free alternative to Topaz Video AI<span>AI Video Upscaler+ guide</span></a>
+      <a href="https://mlapplications.com/ai_videoupscaler_plus_faq_4k_60fps.html">1080p 30 fps to 4K 60 fps, free, no watermark<span>AI Video Upscaler+ guide</span></a>
+    </div>
+  </div>
+
+</div><!-- /sections -->
+
+<footer>
+  <p>© 2026 AI Video Upscaler+ by MLApplications · <a href="https://mlapplications.com/">mlapplications.com</a> ·
+  <a href="https://mlapplications.com/ai_videoupscaler_plus_privacy.html">Privacy</a> ·
+  <a href="https://mlapplications.com/ai_videoupscaler_plus_contactus.html">Contact</a></p>
+
+</footer>
+
+<!-- WEB_ONLY_START -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-87MTDXTF59');
+</script>
+<!-- WEB_ONLY_END -->
+</body>
+</html>

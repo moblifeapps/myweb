@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* bfcache: turn third-party 'unload' handlers into 'pagehide' */
+(function () {
+  var add = EventTarget.prototype.addEventListener;
+  window.addEventListener = function (type, fn, opts) {
+    return add.call(this, type === 'unload' ? 'pagehide' : type, fn, opts);
+  };
+  try {
+    Object.defineProperty(window, 'onunload', {
+      configurable: true,
+      get: function () { return null; },
+      set: function (fn) { if (typeof fn === 'function') add.call(window, 'pagehide', fn); }
+    });
+  } catch (e) {}
+})();
+</script>
+
+<!-- WEB_ONLY_START -->
+<link rel="preload" as="script" href="https://live.demand.supply/up.js">
+<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
+
+<!-- rewarded paywall -->
+<link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<style>#custom-paywall-overlay:not(.active){display:none}</style>
+<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
+<!-- WEB_ONLY_END -->
+
+<title>Free Alternative to Topaz Video AI for Windows | AI Video Upscaler+</title>
+<meta name="description" content="Looking for a free alternative to Topaz Video AI? AI Video Upscaler+ upscales to 4K/8K and 60 fps on Windows with no watermark. An honest comparison.">
+<link rel="canonical" href="https://mlapplications.com/ai_videoupscaler_plus_free_topaz_alternative.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://mlapplications.com/ai_videoupscaler_plus_free_topaz_alternative.html">
+<meta property="og:title" content="Free Alternative to Topaz Video AI for Windows | AI Video Upscaler+">
+<meta property="og:description" content="Looking for a free alternative to Topaz Video AI? AI Video Upscaler+ upscales to 4K/8K and 60 fps on Windows with no watermark. An honest comparison.">
+<meta property="og:image" content="https://mlapplications.com/uploads/aivideoupscaler_icon.png">
+<meta property="og:site_name" content="MLApplications">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Free Alternative to Topaz Video AI for Windows | AI Video Upscaler+">
+<meta name="twitter:description" content="Looking for a free alternative to Topaz Video AI? AI Video Upscaler+ upscales to 4K/8K and 60 fps on Windows with no watermark. An honest comparison.">
+<meta name="twitter:image" content="https://mlapplications.com/uploads/aivideoupscaler_icon.png">
+
+<!-- FAQPage + BreadcrumbList structured data: direct answers for search engines and AI assistants -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is there a free alternative to Topaz Video AI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. AI Video Upscaler+ is a free Windows app from the Microsoft Store that upscales video to 2K, 4K or 8K with Real-ESRGAN, raises the frame rate to 45 or 60 fps with RIFE frame interpolation, and restores faces with GFPGAN. It has no watermark and no subscription, and runs locally on NVIDIA, AMD and Intel GPUs through DirectML. Topaz Video AI is a paid product with a wider range of specialised models and professional controls."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When should I choose Topaz Video AI instead?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Choose Topaz Video AI if you need a professional toolkit: many specialised enhancement models, fine-grained controls, macOS support, or features beyond upscaling, frame interpolation and face restoration, and if a paid license fits your budget."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When is AI Video Upscaler+ enough?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AI Video Upscaler+ is enough when you want to upscale personal or old videos to 4K, make 24–30 fps footage smooth at 60 fps, or restore faces, for free, on a Windows PC, including laptops with only integrated graphics."
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://mlapplications.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI Video Upscaler+",
+      "item": "https://mlapplications.com/ai_videoupscaler_plus.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Free alternative to Topaz Video AI",
+      "item": "https://mlapplications.com/ai_videoupscaler_plus_free_topaz_alternative.html"
+    }
+  ]
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0e0f11;--surface:#18191d;--surface2:#21222a;--border:#2a2b35;
+  --text:#e8e9f0;--text2:#9899a8;--text3:#5a5b6a;
+  --accent:#5b7fff;--accent2:#a78bfa;--green:#3ecf8e;--amber:#f5a623;
+  --radius:10px;--font:system-ui,-apple-system,sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.6;min-height:100vh}
+a{color:var(--accent)}
+
+/* ── NAV ── */
+.topnav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);font-weight:700;font-size:17px}
+.nav-brand img{width:36px;height:36px;border-radius:8px}
+.nav-links{display:flex;gap:4px}
+.nav-links a{color:var(--text2);text-decoration:none;padding:6px 12px;border-radius:6px;font-size:13px;transition:color .15s,background .15s}
+.nav-links a:hover{color:var(--text);background:var(--surface2)}
+.nav-badge img{height:28px;opacity:.9;transition:opacity .15s}
+.nav-badge img:hover{opacity:1}
+
+/* ── BREADCRUMB ── */
+.breadcrumb-bar{max-width:900px;margin:0 auto;padding:18px 24px 0}
+.breadcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:13px;color:var(--text3)}
+.breadcrumb a{color:var(--text2);text-decoration:none}
+.breadcrumb a:hover{color:var(--text);text-decoration:underline}
+.breadcrumb .current{color:var(--text)}
+
+/* ── HERO ── */
+.hero{text-align:center;padding:32px 24px 40px;max-width:760px;margin:0 auto}
+.hero h1{font-size:27px;font-weight:700;margin-bottom:12px;letter-spacing:-.3px}
+.hero p{color:var(--text2);font-size:15px;max-width:620px;margin:0 auto}
+
+/* ── SECTIONS ── */
+.sections{max-width:800px;margin:0 auto;padding:0 24px 80px}
+.section{margin-bottom:48px}
+.section-header{margin-bottom:16px}
+.section-header h2{font-size:19px;font-weight:700;margin-bottom:6px;letter-spacing:-.2px}
+.section-header p{color:var(--text2)}
+.section-header p.kicker{color:var(--accent);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+
+.answer-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px}
+.answer-card p{color:var(--text);font-size:15px;margin-bottom:12px}
+.answer-card p:last-child{margin-bottom:0}
+.answer-card .lede{font-size:16px;font-weight:600;color:var(--green)}
+.answer-card ul.plain{margin:0 0 12px 20px;color:var(--text)}
+.answer-card ul.plain li{margin-bottom:6px}
+
+.spec-list{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.spec-list li{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--text2)}
+.spec-list li strong{display:block;color:var(--text);font-size:13.5px;margin-bottom:2px}
+
+/* ── STEPS ── */
+.steps{list-style:none;counter-reset:step;padding:0}
+.steps li{position:relative;counter-increment:step;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px 16px 62px;margin-bottom:10px;color:var(--text2);font-size:14.5px}
+.steps li::before{content:counter(step);position:absolute;left:18px;top:15px;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center}
+.steps li strong{color:var(--text);display:block;margin-bottom:2px;font-size:15px}
+
+/* ── NOTE / PROOF ── */
+.note{border-left:3px solid var(--amber);background:var(--surface);border-radius:0 var(--radius) var(--radius) 0;padding:16px 20px;color:var(--text2);font-size:14px}
+.note strong{color:var(--text)}
+.proof{border-left:3px solid var(--green);background:var(--surface);border-radius:0 var(--radius) var(--radius) 0;padding:16px 20px;color:var(--text2);font-size:14px}
+.proof strong{color:var(--text)}
+
+/* ── COMPARE ── */
+.compare-panel{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.compare-panel .card{border:1px solid var(--border);border-radius:8px;padding:16px;background:var(--surface2)}
+.compare-panel .card h3{font-size:14px;font-weight:700;margin-bottom:8px}
+.compare-panel .card.bad h3{color:var(--amber)}
+.compare-panel .card.good h3{color:var(--green)}
+.compare-panel .card ul{margin-left:18px;font-size:13.5px;color:var(--text2)}
+.compare-panel .card li{margin-bottom:5px}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius)}
+table.cmp{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}
+table.cmp th,table.cmp td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+table.cmp thead th{background:var(--surface2);color:var(--text);font-size:13px}
+table.cmp tbody th{color:var(--text2);font-weight:600;width:28%}
+table.cmp td{color:var(--text)}
+table.cmp tr:last-child th,table.cmp tr:last-child td{border-bottom:none}
+
+/* ── RELATED ── */
+.related{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.related a{display:block;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px;color:var(--text);text-decoration:none;font-size:14px}
+.related a:hover{border-color:var(--accent)}
+.related a span{display:block;color:var(--text3);font-size:12px;margin-top:2px}
+
+.cta-row{display:flex;justify-content:center;gap:12px;margin-top:28px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:opacity .15s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.btn:hover{opacity:.88}
+
+footer{text-align:center;padding:32px 24px;border-top:1px solid var(--border);color:var(--text3);font-size:13px}
+footer a{color:var(--text2);text-decoration:none}
+footer a:hover{color:var(--text)}
+footer p + p{margin-top:6px}
+
+@media(max-width:640px){
+  .topnav{padding:12px 16px}
+  .nav-links{display:none}
+  .compare-panel,.spec-list,.related{grid-template-columns:1fr}
+  .hero h1{font-size:23px}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a class="nav-brand" href="https://mlapplications.com/ai_videoupscaler_plus.html">
+    <img src="https://mlapplications.com/uploads/aivideoupscaler_icon.png" alt="AI Video Upscaler+ icon" width="36" height="36">
+    AI Video Upscaler+
+  </a>
+  <div class="nav-links">
+    <a href="https://mlapplications.com/ai_videoupscaler_plus_how_to.html">How-To Guide</a>
+    <a href="https://mlapplications.com/ai_videoupscaler_plus_videos_samples.html">Video Samples</a>
+    <a href="https://mlapplications.com/ai_videoupscaler_plus_help.html">Help &amp; Reference</a>
+    <a href="https://mlapplications.com/ai_videoupscaler_plus_tips_and_tricks.html">Tips &amp; Tricks</a>
+  </div>
+  <a class="nav-badge" href="https://apps.microsoft.com/detail/9P54F81N7R30?referrer=appbadge&amp;cid=web_topazalt&amp;mode=full" target="_blank" rel="noopener">
+    <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Get AI Video Upscaler+ from Microsoft" height="28">
+  </a>
+</nav>
+
+<!-- WEB_ONLY_START -->
+<div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
+<!-- WEB_ONLY_END -->
+
+<div class="breadcrumb-bar">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="https://mlapplications.com/">Home</a>
+    <span class="sep">/</span>
+    <a href="https://mlapplications.com/ai_videoupscaler_plus.html">AI Video Upscaler+</a>
+    <span class="sep">/</span>
+    <span class="current">Free alternative to Topaz Video AI</span>
+  </nav>
+</div>
+
+<div class="hero">
+  <h1>A free alternative to Topaz Video AI for Windows</h1>
+  <p>Topaz Video AI is a powerful, paid tool for professionals. If you mainly want to upscale and smooth your own videos for free, AI Video Upscaler+ may be all you need. Here is an honest comparison.</p>
+</div>
+
+<div class="sections">
+
+  <div class="section">
+    <div class="section-header">
+      <p class="kicker">Short answer</p>
+      <h2>Is there a free alternative to Topaz Video AI?</h2>
+    </div>
+    <div class="answer-card">
+      <p class="lede">Yes. AI Video Upscaler+ is free, with no watermark, for the most common upscaling jobs.</p>
+      <p>AI Video Upscaler+ covers the three things most people want from an AI video enhancer: <strong>upscaling</strong> (Real-ESRGAN, up to 8K), <strong>smoother motion</strong> (RIFE frame interpolation to 45 or 60 fps) and <strong>face restoration</strong> (GFPGAN). It is free with no watermark and runs locally on Windows. Topaz Video AI is a paid, professional tool with many more models and controls.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="kicker">Side by side</p>
+      <h2>AI Video Upscaler+ vs Topaz Video AI</h2>
+    </div>
+    <div class="table-wrap">
+      <table class="cmp">
+        <thead><tr><th scope="col"></th><th scope="col">AI Video Upscaler+</th><th scope="col">Topaz Video AI</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Price</th><td>Free, no subscription, no watermark</td><td>Paid (see <a href="https://www.topazlabs.com/" target="_blank" rel="noopener nofollow">topazlabs.com</a> for current pricing)</td></tr>
+          <tr><th scope="row">Platforms</th><td>Windows 10 and 11</td><td>Windows and macOS</td></tr>
+          <tr><th scope="row">Upscaling</th><td>Real-ESRGAN, up to 2K, 4K or 8K</td><td>Several specialised upscaling and enhancement models</td></tr>
+          <tr><th scope="row">Frame rate</th><td>RIFE interpolation to 45 or 60 fps</td><td>Frame interpolation, including slow motion</td></tr>
+          <tr><th scope="row">Face restoration</th><td>GFPGAN with a strength slider</td><td>Handled within its enhancement models</td></tr>
+          <tr><th scope="row">GPUs</th><td>Any DirectX 12 GPU via DirectML: NVIDIA, AMD, Intel, including integrated</td><td>See Topaz's system requirements</td></tr>
+          <tr><th scope="row">Controls</th><td>Simple: pick size, fps and face strength; sensible defaults</td><td>Detailed professional controls</td></tr>
+          <tr><th scope="row">Where it runs</th><td>Locally on your PC, offline, nothing uploaded</td><td>Locally on your computer</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="kicker">Which one?</p>
+      <h2>How to choose</h2>
+    </div>
+    <div class="compare-panel">
+      <div class="card good">
+        <h3>AI Video Upscaler+ is enough if you…</h3>
+        <ul>
+          <li>want old or personal videos in 4K, for free</li>
+          <li>want choppy 24–30 fps footage smooth at 60 fps</li>
+          <li>want sharper faces in family videos</li>
+          <li>have an ordinary PC or a laptop with integrated graphics</li>
+        </ul>
+      </div>
+      <div class="card bad">
+        <h3>Topaz Video AI is better if you…</h3>
+        <ul>
+          <li>need many specialised models and fine control</li>
+          <li>work professionally on client or film footage</li>
+          <li>need macOS, or features beyond upscaling, fps and faces</li>
+          <li>are happy to pay for a professional tool</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="kicker">Try it on your own video</p>
+      <h2>See the results first</h2>
+    </div>
+    <div class="proof">
+      <p>Every clip on our <a href="https://mlapplications.com/ai_videoupscaler_plus_videos_samples.html">before &amp; after samples page</a> was made with the free AI Video Upscaler+ on an ordinary laptop with an Intel Core i7-11800H, Intel UHD integrated graphics and 16 GB RAM, with no dedicated graphics card: 720p to 4K, 30 to 60 fps, face restoration on and off, and an old phone video upscaled and smoothed in one pass.</p>
+    </div>
+  </div>
+
+  <div class="cta-row">
+    <a class="btn btn-primary" href="https://apps.microsoft.com/detail/9P54F81N7R30?referrer=appbadge&amp;cid=web_topazalt&amp;mode=full" target="_blank" rel="noopener">Get AI Video Upscaler+ free on Microsoft Store</a>
+    <a class="btn btn-secondary" href="https://mlapplications.com/ai_videoupscaler_plus_videos_samples.html">See before &amp; after samples</a>
+  </div>
+
+  <div class="section" style="margin-top:56px">
+    <div class="section-header">
+      <p class="kicker">More guides</p>
+      <h2>Related AI Video Upscaler+ guides</h2>
+    </div>
+    <div class="related">
+      <a href="https://mlapplications.com/ai_videoupscaler_plus_upscale_old_video_4k.html">Upscale an old, low-resolution video to 4K<span>AI Video Upscaler+ guide</span></a>
+      <a href="https://mlapplications.com/ai_videoupscaler_plus_without_nvidia_gpu.html">AI upscaling on Intel or AMD graphics (no NVIDIA needed)<span>AI Video Upscaler+ guide</span></a>
+      <a href="https://mlapplications.com/ai_videoupscaler_plus_fix_blurry_faces.html">Fix blurry faces in old videos with AI<span>AI Video Upscaler+ guide</span></a>
+      <a href="https://mlapplications.com/ai_videoupscaler_plus_faq_4k_60fps.html">1080p 30 fps to 4K 60 fps, free, no watermark<span>AI Video Upscaler+ guide</span></a>
+    </div>
+  </div>
+
+</div><!-- /sections -->
+
+<footer>
+  <p>© 2026 AI Video Upscaler+ by MLApplications · <a href="https://mlapplications.com/">mlapplications.com</a> ·
+  <a href="https://mlapplications.com/ai_videoupscaler_plus_privacy.html">Privacy</a> ·
+  <a href="https://mlapplications.com/ai_videoupscaler_plus_contactus.html">Contact</a></p>
+  <p>Topaz Video AI is a trademark of Topaz Labs. MLApplications is not affiliated with Topaz Labs; information about Topaz Video AI is general and may change, so check topazlabs.com for current details.</p>
+</footer>
+
+<!-- WEB_ONLY_START -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-87MTDXTF59');
+</script>
+<!-- WEB_ONLY_END -->
+</body>
+</html>

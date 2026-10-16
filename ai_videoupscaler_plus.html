@@ -297,6 +297,11 @@ section { padding: 64px 0; }
 .faq-list { max-width: 720px; margin: 0 auto; }
 .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
 .faq-item:last-child { border-bottom: none; }
+.guide-links { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:8px; }
+.guide-links a { display:block; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px; color:var(--text); text-decoration:none; font-weight:600; font-size:14px; }
+.guide-links a:hover { border-color:var(--accent); }
+@media (max-width:640px){ .guide-links { grid-template-columns:1fr; } }
+
 .faq-q { font-size: 15px; font-weight: 700; margin-bottom: 7px; }
 .faq-a { font-size: 13.5px; color: var(--text2); line-height: 1.7; }
 
@@ -576,6 +581,22 @@ footer { border-top: 1px solid var(--border); margin-top: 60px; padding: 40px 32
     </div>
   </div>
 </section>
+
+<section id="guides" class="wrap">
+  <div class="section-head">
+    <div class="section-eyebrow">Guides</div>
+    <h2>Step-by-step guides</h2>
+  </div>
+  <div class="guide-links">
+    <a href="https://mlapplications.com/ai_videoupscaler_plus_upscale_old_video_4k.html">Upscale an old, low-resolution video to 4K for free</a>
+    <a href="https://mlapplications.com/ai_videoupscaler_plus_without_nvidia_gpu.html">AI video upscaling on Intel or AMD graphics (no NVIDIA needed)</a>
+    <a href="https://mlapplications.com/ai_videoupscaler_plus_fix_blurry_faces.html">Fix blurry faces in old videos with AI</a>
+    <a href="https://mlapplications.com/ai_videoupscaler_plus_free_topaz_alternative.html">A free alternative to Topaz Video AI</a>
+    <a href="https://mlapplications.com/ai_videoupscaler_plus_faq_4k_60fps.html">1080p 30 fps to 4K 60 fps, free, no watermark</a>
+    <a href="https://mlapplications.com/ai_videoupscaler_plus_videos_samples.html">Before &amp; after video samples</a>
+  </div>
+</section>
+
 
 <div class="wrap">
   <div class="final-cta">
