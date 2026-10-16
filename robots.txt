@@ -41,6 +41,7 @@ User-agent: AmazonAdBot
 Allow: /
 
 Sitemap: https://mlapplications.com/sitemap.xml
+Sitemap: https://mlapplications.com/video-sitemap.xml
 
 # As a condition of accessing this website, you agree to abide by the following
 # content signals:

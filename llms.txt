@@ -11,6 +11,7 @@ MLApplications develops native Windows apps using C# WPF and MSIX/Desktop Bridge
 - [Desktop Live Wallpaper+](https://mlapplications.com/desktop-live-wallpaper): Sets animated and interactive live wallpapers on the Windows desktop. use your videos and make them play as a desktop background. supports fantastic transition effects from media to media.
 - [Screen Recorder+](https://mlapplications.com/screen-recorder): Records the screen, webcam, and audio on Windows with editing and export options and with or without the cursor move.
 - [DVD Player+](https://mlapplications.com/dvd-player): Plays DVDs and Blu-Ray discs on modern Windows systems that lack built-in DVD playback. completely free without any limitation.
+- [AI Video Upscaler+](https://mlapplications.com/ai_videoupscaler_plus.html): Free AI video upscaler and frame interpolator for Windows. Upscales old or low-resolution videos to 2K, 4K or 8K, converts 24–30 fps to 45 or 60 fps, and restores faces with GFPGAN. Every AI model runs locally; works on ordinary Intel, AMD and NVIDIA GPUs, including integrated graphics.
 - [unReachable](https://mlapplications.com/unreachable): Windows utility app (see product page for current feature set) where you can track with one number only in your taskbar the quality of your network connection. 
 
 ## Transparent Taskbar+ Lite
@@ -23,6 +24,13 @@ Free taskbar customizer for Windows 11 and Windows 10 (Microsoft Store ID 9P7HB1
 - [Tips & Tricks](https://mlapplications.com/hlp_ttbplus_tipsnandtricks.html)
 - [Privacy](https://mlapplications.com/ttbplus_privacy.html)
 - [Microsoft Store](https://apps.microsoft.com/detail/9P7HB1KDTTT8)
+
+## Video samples
+
+Real, unedited results from the apps, rendered on an ordinary laptop (Intel Core i7-11800H, Intel UHD integrated graphics, 16 GB RAM, no dedicated GPU); each clip took about 10–12 minutes.
+
+- [AI Video Upscaler+ before/after samples](https://mlapplications.com/ai_videoupscaler_plus_videos_samples.html): 720p to 4K, 30 fps to 60 fps, GFPGAN face restoration on/off, and an old 640×480 phone video upscaled to 2160p at 60 fps.
+- [ImTalking talking-avatar samples](https://mlapplications.com/imtalking_videos_samples.html): talking-avatar videos generated from a single photo, comparing GFPGAN enhancement, 512 vs 1024 px upscale and still mode on/off.
 
 ## Docs
 

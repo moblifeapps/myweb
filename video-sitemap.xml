@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>https://mlapplications.com/ai_videoupscaler_plus_videos_samples.html</loc>
+    <video:video>
+      <video:thumbnail_loc>https://mlapplications.com/video_upscale_video_samples/thumbs/Example1_218_1280x720.jpg</video:thumbnail_loc>
+      <video:title>AI Video Upscaler+ sample: original 720p clip (before upscaling)</video:title>
+      <video:description>Original 1280×720 home video used as input for the AI Video Upscaler+ resolution test. Compare it with the 4K result upscaled locally on a Windows PC.</video:description>
+      <video:content_loc>https://mlapplications.com/video_upscale_video_samples/Example1_218_1280x720.mp4</video:content_loc>
+      <video:duration>6</video:duration>
+      <video:publication_date>2026-09-23T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://mlapplications.com/video_upscale_video_samples/thumbs/Example1_218_3840x2160_4K.jpg</video:thumbnail_loc>
+      <video:title>AI Video Upscaler+ sample: 720p upscaled to 4K (3840×2160)</video:title>
+      <video:description>The same clip upscaled from 720p to 4K (3840×2160) by AI Video Upscaler+, a free Windows app. The AI model restores edges, textures and fine detail instead of just stretching pixels. Processed in about 10–12 minutes on an ordinary laptop with Intel UHD integrated graphics (Core i7-11800H, 16 GB RAM).</video:description>
+      <video:content_loc>https://mlapplications.com/video_upscale_video_samples/Example1_218_3840x2160_(4K).mp4</video:content_loc>
+      <video:duration>6</video:duration>
+      <video:publication_date>2026-09-23T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://mlapplications.com/video_upscale_video_samples/thumbs/Example3_MOV00044_30fps.jpg</video:thumbnail_loc>
+      <video:title>AI Video Upscaler+ sample: original 30 fps video (before frame interpolation)</video:title>
+      <video:description>Original 30 fps clip used for the AI Video Upscaler+ frame-rate test. Compare its motion with the 60 fps version created by AI frame interpolation.</video:description>
+      <video:content_loc>https://mlapplications.com/video_upscale_video_samples/Example3_MOV00044_30fps.mp4</video:content_loc>
+      <video:duration>10</video:duration>
+      <video:publication_date>2026-09-23T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://mlapplications.com/video_upscale_video_samples/thumbs/Example3_MOV00044_60fps.jpg</video:thumbnail_loc>
+      <video:title>AI Video Upscaler+ sample: 30 fps converted to smooth 60 fps</video:title>
+      <video:description>The same clip converted from 30 to 60 fps by AI Video Upscaler+. AI-generated in-between frames make motion noticeably smoother rather than duplicating frames. Runs locally on Windows. Processed in about 10–12 minutes on an ordinary laptop with Intel UHD integrated graphics (Core i7-11800H, 16 GB RAM).</video:description>
+      <video:content_loc>https://mlapplications.com/video_upscale_video_samples/Example3_MOV00044_60fps.mp4</video:content_loc>
+      <video:duration>10</video:duration>
+      <video:publication_date>2026-09-23T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://mlapplications.com/video_upscale_video_samples/thumbs/face_restoration_off.jpg</video:thumbnail_loc>
+      <video:title>AI Video Upscaler+ sample: upscaled video without face restoration</video:title>
+      <video:description>Upscaled video with GFPGAN face restoration turned off, for comparison with the face-restored version in AI Video Upscaler+. Processed in about 10–12 minutes on an ordinary laptop with Intel UHD integrated graphics (Core i7-11800H, 16 GB RAM).</video:description>
+      <video:content_loc>https://mlapplications.com/video_upscale_video_samples/face_restoration_off.mp4</video:content_loc>
+      <video:duration>6</video:duration>
+      <video:publication_date>2026-09-24T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://mlapplications.com/video_upscale_video_samples/thumbs/face_restoration_on.jpg</video:thumbnail_loc>
+      <video:title>AI Video Upscaler+ sample: GFPGAN face restoration on every frame</video:title>
+      <video:description>The same upscaled video with GFPGAN face restoration enabled in AI Video Upscaler+: sharper, cleaner faces on every frame, processed locally on a Windows PC. Processed in about 10–12 minutes on an ordinary laptop with Intel UHD integrated graphics (Core i7-11800H, 16 GB RAM).</video:description>
+      <video:content_loc>https://mlapplications.com/video_upscale_video_samples/face_restoration_on.mp4</video:content_loc>
+      <video:duration>6</video:duration>
+      <video:publication_date>2026-09-24T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://mlapplications.com/video_upscale_video_samples/thumbs/full_transform_before_640x480_30fps.jpg</video:thumbnail_loc>
+      <video:title>Old phone video before AI enhancement (640×480, 30 fps)</video:title>
+      <video:description>A low-resolution 640×480, 30 fps video from an old phone, used as input for the full AI Video Upscaler+ transformation.</video:description>
+      <video:content_loc>https://mlapplications.com/video_upscale_video_samples/full_transform_before_640x480_30fps.mp4</video:content_loc>
+      <video:duration>25</video:duration>
+      <video:publication_date>2026-09-23T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://mlapplications.com/video_upscale_video_samples/thumbs/full_transform_after_4k_60fps.jpg</video:thumbnail_loc>
+      <video:title>Old phone video upscaled to 4K 60 fps with AI Video Upscaler+</video:title>
+      <video:description>The old 640×480 phone video upscaled to 2160p (2880×2160) and converted to 60 fps in a single pass by AI Video Upscaler+, a free Windows app that runs every AI model locally on your GPU. Processed in about 10–12 minutes on an ordinary laptop with Intel UHD integrated graphics (Core i7-11800H, 16 GB RAM).</video:description>
+      <video:content_loc>https://mlapplications.com/video_upscale_video_samples/full_transform_after_4k_60fps.mp4</video:content_loc>
+      <video:duration>25</video:duration>
+      <video:publication_date>2026-09-23T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://mlapplications.com/imtalking_videos_samples.html</loc>
+    <video:video>
+      <video:thumbnail_loc>https://mlapplications.com/video_samples/thumbs/enhance_off.jpg</video:thumbnail_loc>
+      <video:title>ImTalking sample: AI talking avatar without GFPGAN enhancement</video:title>
+      <video:description>Talking-avatar video generated from a single photo by ImTalking, with GFPGAN enhancement off: faster rendering, slightly softer facial detail. Rendered in about 10–12 minutes on an ordinary laptop with Intel UHD integrated graphics (Core i7-11800H, 16 GB RAM), no dedicated GPU.</video:description>
+      <video:content_loc>https://mlapplications.com/video_samples/enhance_off.mp4</video:content_loc>
+      <video:duration>2</video:duration>
+      <video:publication_date>2026-07-06T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://mlapplications.com/video_samples/thumbs/enhance_on.jpg</video:thumbnail_loc>
+      <video:title>ImTalking sample: AI talking avatar with GFPGAN face enhancement</video:title>
+      <video:description>The same ImTalking talking-avatar video with GFPGAN face restoration on every frame: noticeably crisper facial detail. Generated locally on a Windows PC. Rendered in about 10–12 minutes on an ordinary laptop with Intel UHD integrated graphics (Core i7-11800H, 16 GB RAM), no dedicated GPU.</video:description>
+      <video:content_loc>https://mlapplications.com/video_samples/enhance_on.mp4</video:content_loc>
+      <video:duration>2</video:duration>
+      <video:publication_date>2026-07-06T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://mlapplications.com/video_samples/thumbs/enhance_off2.jpg</video:thumbnail_loc>
+      <video:title>ImTalking sample: second avatar without GFPGAN enhancement</video:title>
+      <video:description>A second ImTalking talking-avatar example rendered without GFPGAN face restoration, showing the baseline lip-sync output. Rendered in about 10–12 minutes on an ordinary laptop with Intel UHD integrated graphics (Core i7-11800H, 16 GB RAM), no dedicated GPU.</video:description>
+      <video:content_loc>https://mlapplications.com/video_samples/enhance_off2.mp4</video:content_loc>
+      <video:duration>7</video:duration>
+      <video:publication_date>2026-07-07T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://mlapplications.com/video_samples/thumbs/enhance_on2.jpg</video:thumbnail_loc>
+      <video:title>ImTalking sample: second avatar with GFPGAN enhancement</video:title>
+      <video:description>The second ImTalking avatar rendered with GFPGAN face restoration for sharper facial detail. Rendered in about 10–12 minutes on an ordinary laptop with Intel UHD integrated graphics (Core i7-11800H, 16 GB RAM), no dedicated GPU.</video:description>
+      <video:content_loc>https://mlapplications.com/video_samples/enhance_on2.mp4</video:content_loc>
+      <video:duration>6</video:duration>
+      <video:publication_date>2026-07-07T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://mlapplications.com/video_samples/thumbs/upscale_512.jpg</video:thumbnail_loc>
+      <video:title>ImTalking sample: talking avatar with 512 px upscale (recommended)</video:title>
+      <video:description>ImTalking talking-avatar output upscaled to 512 px: the recommended balance of quality and file size for most uses. Rendered in about 10–12 minutes on an ordinary laptop with Intel UHD integrated graphics (Core i7-11800H, 16 GB RAM), no dedicated GPU.</video:description>
+      <video:content_loc>https://mlapplications.com/video_samples/upscale_512.mp4</video:content_loc>
+      <video:duration>2</video:duration>
+      <video:publication_date>2026-07-13T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://mlapplications.com/video_samples/thumbs/upscale_1024.jpg</video:thumbnail_loc>
+      <video:title>ImTalking sample: talking avatar with 1024 px upscale (sharpest)</video:title>
+      <video:description>ImTalking talking-avatar output upscaled to 1024 px for maximum clarity, suited to presentations and high-resolution exports. Rendered in about 10–12 minutes on an ordinary laptop with Intel UHD integrated graphics (Core i7-11800H, 16 GB RAM), no dedicated GPU.</video:description>
+      <video:content_loc>https://mlapplications.com/video_samples/upscale_1024.mp4</video:content_loc>
+      <video:duration>2</video:duration>
+      <video:publication_date>2026-07-13T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://mlapplications.com/video_samples/thumbs/still_on.jpg</video:thumbnail_loc>
+      <video:title>ImTalking sample: talking avatar with still mode on</video:title>
+      <video:description>ImTalking still mode keeps the head stable with minimal drift, ideal for explainer and presentation-style videos. Rendered in about 10–12 minutes on an ordinary laptop with Intel UHD integrated graphics (Core i7-11800H, 16 GB RAM), no dedicated GPU.</video:description>
+      <video:content_loc>https://mlapplications.com/video_samples/still_on.mp4</video:content_loc>
+      <video:duration>6</video:duration>
+      <video:publication_date>2026-07-07T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://mlapplications.com/video_samples/thumbs/still_off.jpg</video:thumbnail_loc>
+      <video:title>ImTalking sample: talking avatar with natural head motion</video:title>
+      <video:description>ImTalking with still mode off: more natural head movement, better for conversational talking avatars. Rendered in about 10–12 minutes on an ordinary laptop with Intel UHD integrated graphics (Core i7-11800H, 16 GB RAM), no dedicated GPU.</video:description>
+      <video:content_loc>https://mlapplications.com/video_samples/still_off.mp4</video:content_loc>
+      <video:duration>6</video:duration>
+      <video:publication_date>2026-07-07T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+</urlset>
