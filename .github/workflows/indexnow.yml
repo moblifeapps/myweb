@@ -1,0 +1,71 @@
+name: IndexNow ping
+
+# After every push to main, tell Bing / Yandex / Seznam / Naver (via IndexNow)
+# which pages changed. Run it by hand ("Run workflow") to submit every URL in sitemap.xml.
+on:
+  push:
+    branches: [ main ]
+    paths: [ '**.html', 'sitemap.xml' ]
+  workflow_dispatch:
+
+env:
+  SITE: https://mlapplications.com
+  INDEXNOW_KEY: 3c16a9d65c8949bb942766adbbf6bb31   # must match the file /3c16a9d65c8949bb942766adbbf6bb31.txt
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Wait for GitHub Pages to publish the push
+        if: github.event_name == 'push'
+        run: sleep 120
+
+      - name: Build the URL list
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          python3 - <<'PY'
+          import os, re, subprocess, json
+          site = os.environ['SITE']
+          if os.environ['EVENT'] == 'push' and not os.environ['BEFORE'].startswith('0000'):
+              out = subprocess.run(['git', 'diff', '--name-only', '--diff-filter=AMR',
+                                    os.environ['BEFORE'], os.environ['AFTER'], '--', '*.html'],
+                                   capture_output=True, text=True, check=True).stdout.split()
+              urls = []
+              for f in out:
+                  if '/' in f or not os.path.exists(f):
+                      continue                      # only top-level pages that still exist
+                  head = open(f, encoding='utf-8', errors='ignore').read(20000)
+                  if re.search(r'<meta[^>]+name="robots"[^>]+noindex', head, re.I):
+                      continue                      # noindex pages are not submitted
+                  urls.append(site + '/' if f == 'index.html' else f'{site}/{f}')
+          else:                                     # manual run: everything in the sitemap
+              urls = re.findall(r'<loc>([^<]+)</loc>', open('sitemap.xml', encoding='utf-8').read())
+          urls = sorted(set(urls))[:10000]
+          print('\n'.join(urls) or 'no changed pages')
+          json.dump(urls, open('urls.json', 'w'))
+          PY
+
+      - name: Send to IndexNow
+        run: |
+          python3 - <<'PY'
+          import os, json, urllib.request
+          urls = json.load(open('urls.json'))
+          if not urls:
+              raise SystemExit(0)
+          host = os.environ['SITE'].split('//')[1]
+          key = os.environ['INDEXNOW_KEY']
+          body = json.dumps({'host': host, 'key': key,
+                             'keyLocation': f"{os.environ['SITE']}/{key}.txt",
+                             'urlList': urls}).encode()
+          req = urllib.request.Request('https://api.indexnow.org/indexnow', data=body,
+                                       headers={'Content-Type': 'application/json; charset=utf-8'})
+          with urllib.request.urlopen(req) as r:
+              print('IndexNow answered', r.status, 'for', len(urls), 'URLs')   # 200 or 202 = accepted
+          PY
