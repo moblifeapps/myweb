@@ -273,6 +273,37 @@ footer { border-top:1px solid var(--border); background:var(--surface); }
 .foot nav a { color:var(--text2); }
 .foot img { height:24px; width:auto; vertical-align:middle; }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "How to Make the Windows 11 Taskbar Transparent – Free (50+ Styles, Mac Dock)",
+  "description": "Real Windows 11 recording of Transparent Taskbar+ Lite: a transparent taskbar, border line, icon magnifier (Mac dock effect), gradients, 50+ patterns, glass and colour docks, top/left/right taskbars, your own picture and mouse effects.",
+  "thumbnailUrl": [
+    "https://mlapplications.com/uploads/ttbplus/ttbplus-video-thumb.jpg",
+    "https://i.ytimg.com/vi/Dph8tzZ0VDU/maxresdefault.jpg"
+  ],
+  "uploadDate": "2026-10-19T14:20:00+00:00",
+  "duration": "PT1M56S",
+  "embedUrl": "https://www.youtube.com/embed/Dph8tzZ0VDU",
+  "url": "https://www.youtube.com/watch?v=Dph8tzZ0VDU",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MLApplications",
+    "url": "https://mlapplications.com/"
+  }
+}
+</script>
+<style>
+.yt-facade{position:relative;aspect-ratio:16/9;border-radius:var(--radius,10px);overflow:hidden;background:#000;border:1px solid var(--border,#2a3148);margin:18px 0 8px}
+.yt-facade button{all:unset;cursor:pointer;display:block;width:100%;height:100%;position:relative}
+.yt-facade img{width:100%;height:100%;object-fit:cover;display:block;border:0;border-radius:0;box-shadow:none}
+.yt-facade .yt-play{position:absolute;left:50%;top:50%;width:78px;height:54px;margin:-27px 0 0 -39px;border-radius:14px;background:rgba(255,0,0,.92);box-shadow:0 6px 24px rgba(0,0,0,.45);transition:transform .15s}
+.yt-facade .yt-play::after{content:"";position:absolute;left:31px;top:15px;border-style:solid;border-width:12px 0 12px 20px;border-color:transparent transparent transparent #fff}
+.yt-facade button:hover .yt-play,.yt-facade button:focus-visible .yt-play{transform:scale(1.08)}
+.yt-facade iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.yt-caption{font-size:13px;color:var(--text2,#8a94a8);margin:0 0 18px}
+</style>
 </head>
 <body>
 <header class="site-header">
@@ -301,6 +332,11 @@ footer { border-top:1px solid var(--border); background:var(--surface); }
 <p class="lead">Windows has a "Transparency effects" switch, but it only makes the taskbar slightly see-through. For a truly clear taskbar you need a small free app. Here is how, in about a minute.</p>
 <p class="meta-line">Updated 2026-10-19 · Windows 11 and Windows 10</p>
 <div class="note ok"><p><strong>Short answer:</strong> install the free <strong>Transparent Taskbar+ Lite</strong> from the Microsoft Store, choose <strong>Transparent</strong> in the Background row and press <strong>Apply</strong>. Your wallpaper then shows straight through the taskbar, on Windows 11 and Windows 10, with no registry changes.</p></div>
+
+<h2 id="video">Watch it on a real Windows 11 taskbar</h2>
+<div class="yt-facade" data-id="Dph8tzZ0VDU"><button type="button" aria-label="Play video: How to Make the Windows 11 Taskbar Transparent – Free (50+ Styles, Mac Dock)"><img src="https://mlapplications.com/uploads/ttbplus/ttbplus-video-thumb.jpg" alt="Transparent Taskbar+ styles on the Windows 11 taskbar: patterns, gradient, light and picture backgrounds" width="1280" height="720" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span></button><noscript><a href="https://www.youtube.com/watch?v=Dph8tzZ0VDU">Watch on YouTube</a></noscript></div>
+<p class="yt-caption">Every style in this 2-minute video is a real recording on Windows 11. <a href="https://www.youtube.com/watch?v=Dph8tzZ0VDU" target="_blank" rel="noopener">Watch on YouTube</a></p>
+
 
 <h2 id="windows-setting">What the built-in Windows setting does</h2>
 <p>In <strong>Settings &gt; Personalization &gt; Colors</strong>, <strong>Transparency effects</strong> gives the taskbar and Start menu a light, tinted blur. It never becomes fully clear, and there is no slider for how transparent it is. That is why most people who search for a transparent taskbar end up using a small app.</p>
@@ -351,5 +387,17 @@ footer { border-top:1px solid var(--border); background:var(--surface); }
   gtag('config', 'G-87MTDXTF59');
 </script>
 <!-- WEB_ONLY_END -->
+<script>
+document.querySelectorAll('.yt-facade button').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var box = b.parentNode, f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + box.dataset.id + '?autoplay=1&rel=0' + (box.dataset.start ? '&start=' + box.dataset.start : '');
+    f.title = b.getAttribute('aria-label');
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    f.allowFullscreen = true;
+    box.replaceChild(f, b);
+  });
+});
+</script>
 </body>
 </html>

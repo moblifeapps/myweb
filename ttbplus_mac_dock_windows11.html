@@ -265,6 +265,37 @@ footer { border-top:1px solid var(--border); background:var(--surface); }
 .foot nav a { color:var(--text2); }
 .foot img { height:24px; width:auto; vertical-align:middle; }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "How to Make the Windows 11 Taskbar Transparent – Free (50+ Styles, Mac Dock)",
+  "description": "Real Windows 11 recording of Transparent Taskbar+ Lite: a transparent taskbar, border line, icon magnifier (Mac dock effect), gradients, 50+ patterns, glass and colour docks, top/left/right taskbars, your own picture and mouse effects.",
+  "thumbnailUrl": [
+    "https://mlapplications.com/uploads/ttbplus/ttbplus-video-thumb.jpg",
+    "https://i.ytimg.com/vi/Dph8tzZ0VDU/maxresdefault.jpg"
+  ],
+  "uploadDate": "2026-10-19T14:20:00+00:00",
+  "duration": "PT1M56S",
+  "embedUrl": "https://www.youtube.com/embed/Dph8tzZ0VDU",
+  "url": "https://www.youtube.com/watch?v=Dph8tzZ0VDU",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MLApplications",
+    "url": "https://mlapplications.com/"
+  }
+}
+</script>
+<style>
+.yt-facade{position:relative;aspect-ratio:16/9;border-radius:var(--radius,10px);overflow:hidden;background:#000;border:1px solid var(--border,#2a3148);margin:18px 0 8px}
+.yt-facade button{all:unset;cursor:pointer;display:block;width:100%;height:100%;position:relative}
+.yt-facade img{width:100%;height:100%;object-fit:cover;display:block;border:0;border-radius:0;box-shadow:none}
+.yt-facade .yt-play{position:absolute;left:50%;top:50%;width:78px;height:54px;margin:-27px 0 0 -39px;border-radius:14px;background:rgba(255,0,0,.92);box-shadow:0 6px 24px rgba(0,0,0,.45);transition:transform .15s}
+.yt-facade .yt-play::after{content:"";position:absolute;left:31px;top:15px;border-style:solid;border-width:12px 0 12px 20px;border-color:transparent transparent transparent #fff}
+.yt-facade button:hover .yt-play,.yt-facade button:focus-visible .yt-play{transform:scale(1.08)}
+.yt-facade iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.yt-caption{font-size:13px;color:var(--text2,#8a94a8);margin:0 0 18px}
+</style>
 </head>
 <body>
 <header class="site-header">
@@ -293,6 +324,11 @@ footer { border-top:1px solid var(--border); background:var(--surface); }
 <p class="lead">You don't need a separate dock app that replaces the taskbar. Transparent Taskbar+ Lite styles the taskbar you already have: a glass panel behind your icons, and icons that grow under the mouse like on a Mac.</p>
 <p class="meta-line">Updated 2026-10-19 · Windows 11 and Windows 10</p>
 <div class="note ok"><p><strong>Short answer:</strong> in the free <strong>Transparent Taskbar+ Lite</strong>, set the Background to <strong>Transparent</strong>, choose <strong>Glass dock</strong> in the Buttons row and press <strong>Apply</strong>. The <strong>Icon magnifier</strong> (on by default) makes the icon under the mouse grow like a dock.</p></div>
+
+<h2 id="video">See the dock and the icon magnifier in action</h2>
+<div class="yt-facade" data-id="Dph8tzZ0VDU" data-start="18"><button type="button" aria-label="Play video: How to Make the Windows 11 Taskbar Transparent – Free (50+ Styles, Mac Dock)"><img src="https://mlapplications.com/uploads/ttbplus/ttbplus-video-thumb.jpg" alt="Transparent Taskbar+ styles on the Windows 11 taskbar: patterns, gradient, light and picture backgrounds" width="1280" height="720" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span></button><noscript><a href="https://www.youtube.com/watch?v=Dph8tzZ0VDU&t=18s">Watch on YouTube</a></noscript></div>
+<p class="yt-caption">Starts at the icon magnifier; the glass docks follow at 1:01. <a href="https://www.youtube.com/watch?v=Dph8tzZ0VDU&t=18s" target="_blank" rel="noopener">Watch on YouTube</a></p>
+
 
 <h2 id="steps">Step by step</h2>
 <ol class="steps">
@@ -341,5 +377,17 @@ footer { border-top:1px solid var(--border); background:var(--surface); }
   gtag('config', 'G-87MTDXTF59');
 </script>
 <!-- WEB_ONLY_END -->
+<script>
+document.querySelectorAll('.yt-facade button').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var box = b.parentNode, f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + box.dataset.id + '?autoplay=1&rel=0' + (box.dataset.start ? '&start=' + box.dataset.start : '');
+    f.title = b.getAttribute('aria-label');
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    f.allowFullscreen = true;
+    box.replaceChild(f, b);
+  });
+});
+</script>
 </body>
 </html>
