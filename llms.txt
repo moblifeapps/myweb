@@ -31,6 +31,10 @@ Free taskbar customizer for Windows 11 and Windows 10 (Microsoft Store ID 9P7HB1
 - [Effects Guide](https://mlapplications.com/hlp_ttbplus_effects.html)
 - [Tips & Tricks](https://mlapplications.com/hlp_ttbplus_tipsnandtricks.html)
 - [Privacy](https://mlapplications.com/ttbplus_privacy.html)
+- [Make the Windows 11 taskbar transparent](https://mlapplications.com/ttbplus_make_taskbar_transparent_windows11.html)
+- [Put your own picture on the taskbar](https://mlapplications.com/ttbplus_picture_taskbar_background.html)
+- [Get a Mac-style dock on the Windows 11 taskbar](https://mlapplications.com/ttbplus_mac_dock_windows11.html)
+- [Change the taskbar colour or add a gradient](https://mlapplications.com/ttbplus_change_taskbar_color_windows11.html)
 - [Microsoft Store](https://apps.microsoft.com/detail/9P7HB1KDTTT8)
 
 ## Video samples
