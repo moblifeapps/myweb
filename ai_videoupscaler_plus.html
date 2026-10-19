@@ -331,6 +331,37 @@ footer { border-top: 1px solid var(--border); margin-top: 60px; padding: 40px 32
 }
 </style>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "Upscale Old Video to 4K for Free on Windows (AI, No Watermark)",
+  "description": "Before and after: an old 640×480 phone video upscaled to 4K at 60 fps, 720p to 4K, 30 fps to 60 fps with AI frame interpolation, and AI face restoration, all made with the free AI Video Upscaler+ on an ordinary laptop with Intel integrated graphics.",
+  "thumbnailUrl": [
+    "https://mlapplications.com/aivideoupscaler_screenshots/FirstScreenshot.webp",
+    "https://i.ytimg.com/vi/0BZgkePSRhA/maxresdefault.jpg"
+  ],
+  "uploadDate": "2026-10-19T08:50:00+00:00",
+  "duration": "PT1M7S",
+  "embedUrl": "https://www.youtube.com/embed/0BZgkePSRhA",
+  "url": "https://www.youtube.com/watch?v=0BZgkePSRhA",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MLApplications",
+    "url": "https://mlapplications.com/"
+  }
+}
+</script>
+<style>
+.yt-facade{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;border:1px solid rgba(255,255,255,.08)}
+.yt-facade button{all:unset;cursor:pointer;display:block;width:100%;height:100%;position:relative}
+.yt-facade img{width:100%;height:100%;object-fit:cover;display:block}
+.yt-facade .yt-play{position:absolute;left:50%;top:50%;width:78px;height:54px;margin:-27px 0 0 -39px;border-radius:14px;background:rgba(255,0,0,.92);box-shadow:0 6px 24px rgba(0,0,0,.45);transition:transform .15s}
+.yt-facade .yt-play::after{content:"";position:absolute;left:31px;top:15px;border-style:solid;border-width:12px 0 12px 20px;border-color:transparent transparent transparent #fff}
+.yt-facade button:hover .yt-play,.yt-facade button:focus-visible .yt-play{transform:scale(1.08)}
+.yt-facade iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.yt-caption{font-size:13px;margin-top:8px;opacity:.75}
+</style>
   </head>
 
 <body>
@@ -501,6 +532,15 @@ footer { border-top: 1px solid var(--border); margin-top: 60px; padding: 40px 32
   </div>
 </section>
 
+<section id="video" class="wrap">
+  <div class="section-head">
+    <div class="section-eyebrow">Watch</div>
+    <h2>Before &amp; after in 67 seconds</h2>
+  </div>
+  <div class="yt-facade" data-id="0BZgkePSRhA"><button type="button" aria-label="Play video: Upscale Old Video to 4K for Free on Windows (AI, No Watermark)"><img src="https://mlapplications.com/aivideoupscaler_screenshots/FirstScreenshot.webp" alt="AI Video Upscaler+ before and after: 480p 30 fps versus 4K 60 fps" width="1067" height="600" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span></button><noscript><a href="https://www.youtube.com/watch?v=0BZgkePSRhA">Watch on YouTube</a></noscript></div>
+<p class="yt-caption">Every result made with the free AI Video Upscaler+ on an ordinary laptop, no dedicated graphics card. <a href="https://www.youtube.com/watch?v=0BZgkePSRhA" target="_blank" rel="noopener">Watch on YouTube</a></p>
+</section>
+
 <section class="wrap">
   <div class="section-head">
     <div class="section-eyebrow">See it in action</div>
@@ -632,6 +672,18 @@ footer { border-top: 1px solid var(--border); margin-top: 60px; padding: 40px 32
   gtag('config', 'G-87MTDXTF59');
 </script>
 <!-- WEB_ONLY_END -->
+<script>
+document.querySelectorAll('.yt-facade button').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var box = b.parentNode, f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + box.dataset.id + '?autoplay=1&rel=0';
+    f.title = b.getAttribute('aria-label');
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    f.allowFullscreen = true;
+    box.replaceChild(f, b);
+  });
+});
+</script>
 </body>
 
 </html>

@@ -151,4 +151,16 @@
       <video:family_friendly>yes</video:family_friendly>
     </video:video>
   </url>
+  <url>
+    <loc>https://mlapplications.com/ai_videoupscaler_plus_upscale_old_video_4k.html</loc>
+    <video:video>
+      <video:thumbnail_loc>https://mlapplications.com/aivideoupscaler_screenshots/FirstScreenshot.webp</video:thumbnail_loc>
+      <video:title>Upscale Old Video to 4K for Free on Windows (AI, No Watermark)</video:title>
+      <video:description>Before and after: an old 640×480 phone video upscaled to 4K at 60 fps, 720p to 4K, 30 fps to 60 fps with AI frame interpolation, and AI face restoration, all made with the free AI Video Upscaler+ on an ordinary laptop with Intel integrated graphics.</video:description>
+      <video:player_loc>https://www.youtube.com/embed/0BZgkePSRhA</video:player_loc>
+      <video:duration>67</video:duration>
+      <video:publication_date>2026-10-19T08:50:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
 </urlset>
