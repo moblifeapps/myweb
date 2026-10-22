@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complete Taskbar Patterns – Thin + Heavy Glow</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #050505; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #111; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+  </style>
+</head>
+<body class="min-h-screen text-zinc-100">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-black/90 backdrop-blur border-b border-white/10 px-6 py-4">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div>
+        <h1 class="text-xl font-bold">Complete Taskbar Patterns</h1>
+        <p class="text-xs text-zinc-400 mt-1">Thin Optimized + Heavy Glow & Fancy Beams • 32 styles</p>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="expandAll(true)" class="px-3 py-1.5 text-xs rounded-lg bg-zinc-800 hover:bg-zinc-700 border border-white/10">Expand All</button>
+        <button onclick="expandAll(false)" class="px-3 py-1.5 text-xs rounded-lg bg-zinc-800 hover:bg-zinc-700 border border-white/10">Collapse</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Tabs -->
+  <div class="max-w-6xl mx-auto px-6 pt-6">
+    <div class="flex gap-2 border-b border-white/10">
+      <button id="tab-thin" onclick="switchTab('thin')" class="px-5 py-2.5 text-sm font-medium rounded-t-lg bg-sky-600 text-white">
+        Thin Optimized (16)
+      </button>
+      <button id="tab-heavy" onclick="switchTab('heavy')" class="px-5 py-2.5 text-sm font-medium rounded-t-lg bg-zinc-800 text-zinc-300 hover:bg-zinc-700">
+        Heavy Glow & Beams (16)
+      </button>
+    </div>
+  </div>
+
+  <main class="max-w-6xl mx-auto px-6 py-8">
+    <div id="container" class="space-y-6"></div>
+  </main>
+
+  <script>
+    const thinPatterns = [
+      {id:1, name:"Soft Cyan Beam + Fine Grid", css:`background-color: #020617;\nbackground-image:\n  linear-gradient(90deg, transparent 0%, rgba(34,211,238,0.28) 45%, rgba(34,211,238,0.18) 55%, transparent 100%),\n  linear-gradient(rgba(56,189,248,0.09) 1px, transparent 1px),\n  linear-gradient(90deg, rgba(56,189,248,0.09) 1px, transparent 1px);\nbackground-size: 100% 100%, 28px 28px, 28px 28px;`},
+      {id:2, name:"Classic Blue Grid + Soft Glow", css:`background-color: #0c1929;\nbackground-image:\n  radial-gradient(ellipse at center, rgba(59,130,246,0.4) 0%, transparent 70%),\n  linear-gradient(rgba(59,130,246,0.1) 1px, transparent 1px),\n  linear-gradient(90deg, rgba(59,130,246,0.1) 1px, transparent 1px);\nbackground-size: 100% 100%, 24px 24px, 24px 24px;`},
+      {id:3, name:"Deep Navy Subtle Grid", css:`background-color: #020617;\nbackground-image:\n  linear-gradient(rgba(30,58,138,0.18) 1px, transparent 1px),\n  linear-gradient(90deg, rgba(30,58,138,0.18) 1px, transparent 1px);\nbackground-size: 22px 22px;`},
+      {id:4, name:"Strong Horizontal Cyan Glow", css:`background-color: #020617;\nbackground-image: linear-gradient(90deg,\n  transparent 0%,\n  rgba(34,211,238,0.12) 25%,\n  rgba(34,211,238,0.4) 50%,\n  rgba(34,211,238,0.12) 75%,\n  transparent 100%);`},
+      {id:5, name:"Diagonal Light Rays", css:`background-color: #0c1a2e;\nbackground-image:\n  linear-gradient(125deg, transparent 15%, rgba(96,165,250,0.3) 48%, transparent 75%),\n  linear-gradient(105deg, transparent 25%, rgba(59,130,246,0.18) 50%, transparent 75%);`},
+      {id:6, name:"Atmospheric Soft Rays + Grid", css:`background-color: #020617;\nbackground-image:\n  linear-gradient(160deg, rgba(30,64,175,0.35) 0%, transparent 55%),\n  linear-gradient(200deg, rgba(14,165,233,0.22) 0%, transparent 45%),\n  linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),\n  linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);\nbackground-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;`},
+      {id:7, name:"Soft Radial Pulse + Grid", css:`background-color: #0f172a;\nbackground-image:\n  radial-gradient(ellipse at 50% 50%, rgba(56,189,248,0.35) 0%, transparent 65%),\n  linear-gradient(rgba(56,189,248,0.08) 1px, transparent 1px),\n  linear-gradient(90deg, rgba(56,189,248,0.08) 1px, transparent 1px);\nbackground-size: 100% 100%, 26px 26px, 26px 26px;`},
+      {id:8, name:"Green-tinted Grid", css:`background-color: #022c22;\nbackground-image:\n  radial-gradient(ellipse at center, rgba(16,185,129,0.28) 0%, transparent 70%),\n  linear-gradient(rgba(16,185,129,0.12) 1px, transparent 1px),\n  linear-gradient(90deg, rgba(16,185,129,0.12) 1px, transparent 1px);\nbackground-size: 100% 100%, 24px 24px, 24px 24px;`},
+      {id:9, name:"Strong Multi-Ray Spotlight", css:`background-color: #020617;\nbackground-image:\n  linear-gradient(110deg, transparent 10%, rgba(56,189,248,0.35) 48%, transparent 55%),\n  linear-gradient(70deg, transparent 20%, rgba(34,211,238,0.2) 50%, transparent 70%),\n  linear-gradient(150deg, transparent 30%, rgba(96,165,250,0.15) 55%, transparent 80%);`},
+      {id:10, name:"Soft Starfield + Grid", css:`background-color: #020617;\nbackground-image:\n  radial-gradient(circle, rgba(255,255,255,0.35) 1px, transparent 1px),\n  radial-gradient(circle, rgba(56,189,248,0.25) 1px, transparent 1px),\n  linear-gradient(rgba(56,189,248,0.06) 1px, transparent 1px),\n  linear-gradient(90deg, rgba(56,189,248,0.06) 1px, transparent 1px);\nbackground-size: 48px 48px, 72px 72px, 28px 28px, 28px 28px;\nbackground-position: 0 0, 24px 24px, 0 0, 0 0;`},
+      {id:11, name:"Noise + Soft Glow", css:`background-color: #0c1929;\nbackground-image:\n  radial-gradient(circle at 20% 50%, rgba(56,189,248,0.25) 0%, transparent 50%),\n  radial-gradient(circle at 80% 50%, rgba(34,211,238,0.18) 0%, transparent 50%),\n  url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");`},
+      {id:12, name:"Intense Horizontal Beam", css:`background-color: #020617;\nbackground-image: linear-gradient(90deg,\n  rgba(14,165,233,0.05) 0%,\n  rgba(34,211,238,0.25) 30%,\n  rgba(56,189,248,0.5) 50%,\n  rgba(34,211,238,0.25) 70%,\n  rgba(14,165,233,0.05) 100%);`},
+      {id:13, name:"Crossed Diagonal Rays", css:`background-color: #0c1a2e;\nbackground-image:\n  linear-gradient(135deg, transparent 25%, rgba(96,165,250,0.28) 50%, transparent 75%),\n  linear-gradient(45deg, transparent 25%, rgba(56,189,248,0.2) 50%, transparent 75%);`},
+      {id:14, name:"Soft Mesh + Glow", css:`background-color: #0f172a;\nbackground-image:\n  radial-gradient(circle at 50% 50%, transparent 38%, rgba(59,130,246,0.12) 40%, transparent 42%),\n  linear-gradient(30deg, rgba(59,130,246,0.08) 1px, transparent 1px),\n  linear-gradient(150deg, rgba(59,130,246,0.08) 1px, transparent 1px);\nbackground-size: 32px 32px, 32px 56px, 32px 56px;`},
+      {id:15, name:"Dreamy Soft Blue Rays", css:`background-color: #0c1929;\nbackground-image:\n  linear-gradient(135deg, rgba(96,165,250,0.28) 0%, transparent 45%),\n  linear-gradient(45deg, rgba(56,189,248,0.18) 0%, transparent 50%),\n  linear-gradient(225deg, rgba(37,99,235,0.22) 0%, transparent 50%);`},
+      {id:16, name:"Ultra-fine Carbon + Cyan Glow", css:`background-color: #020617;\nbackground-image:\n  linear-gradient(90deg, transparent 20%, rgba(34,211,238,0.3) 50%, transparent 80%),\n  radial-gradient(rgba(255,255,255,0.12) 0.6px, transparent 0.6px);\nbackground-size: 100% 100%, 8px 8px;`}
+    ];
+
+    const heavyPatterns = [
+      {id:1, name:"Heavy Cyan Core Beam", css:`background-color: #020617;\nbackground-image: linear-gradient(90deg,\n  transparent 0%,\n  rgba(34,211,238,0.15) 20%,\n  rgba(34,211,238,0.55) 50%,\n  rgba(34,211,238,0.15) 80%,\n  transparent 100%);`},
+      {id:2, name:"Triple Diagonal Ray Burst", css:`background-color: #0c1929;\nbackground-image:\n  linear-gradient(125deg, transparent 10%, rgba(56,189,248,0.45) 48%, transparent 60%),\n  linear-gradient(105deg, transparent 20%, rgba(14,165,233,0.3) 50%, transparent 70%),\n  linear-gradient(145deg, transparent 30%, rgba(96,165,250,0.22) 55%, transparent 80%);`},
+      {id:3, name:"Intense Spotlight + Grid", css:`background-color: #020617;\nbackground-image:\n  radial-gradient(ellipse at 50% 50%, rgba(34,211,238,0.5) 0%, transparent 65%),\n  linear-gradient(rgba(56,189,248,0.12) 1px, transparent 1px),\n  linear-gradient(90deg, rgba(56,189,248,0.12) 1px, transparent 1px);\nbackground-size: 100% 100%, 22px 22px, 22px 22px;`},
+      {id:4, name:"Crossing Power Rays", css:`background-color: #0a1628;\nbackground-image:\n  linear-gradient(135deg, transparent 20%, rgba(59,130,246,0.4) 50%, transparent 80%),\n  linear-gradient(45deg, transparent 20%, rgba(14,165,233,0.35) 50%, transparent 80%);`},
+      {id:5, name:"Deep Glow Horizon Beam", css:`background-color: #020617;\nbackground-image:\n  linear-gradient(0deg, rgba(14,165,233,0.35) 0%, transparent 50%),\n  linear-gradient(90deg, transparent 15%, rgba(56,189,248,0.4) 50%, transparent 85%);`},
+      {id:6, name:"Fancy Multi-Angle Beams", css:`background-color: #0c1a2e;\nbackground-image:\n  linear-gradient(110deg, transparent 5%, rgba(34,211,238,0.4) 45%, transparent 55%),\n  linear-gradient(70deg, transparent 15%, rgba(59,130,246,0.3) 50%, transparent 70%),\n  linear-gradient(160deg, transparent 25%, rgba(96,165,250,0.2) 55%, transparent 85%);`},
+      {id:7, name:"Heavy Radial Core + Rays", css:`background-color: #020617;\nbackground-image:\n  radial-gradient(circle at 50% 50%, rgba(34,211,238,0.45) 0%, transparent 55%),\n  linear-gradient(120deg, transparent 20%, rgba(56,189,248,0.25) 50%, transparent 80%),\n  linear-gradient(60deg, transparent 20%, rgba(14,165,233,0.2) 50%, transparent 80%);`},
+      {id:8, name:"Dramatic Diagonal Sweep", css:`background-color: #0f172a;\nbackground-image:\n  linear-gradient(130deg, transparent 0%, rgba(56,189,248,0.5) 40%, transparent 60%),\n  linear-gradient(50deg, transparent 10%, rgba(14,165,233,0.3) 50%, transparent 70%);`},
+      {id:9, name:"Luminous Edge Beams", css:`background-color: #020617;\nbackground-image:\n  linear-gradient(90deg, rgba(34,211,238,0.4) 0%, transparent 25%),\n  linear-gradient(270deg, rgba(34,211,238,0.4) 0%, transparent 25%),\n  linear-gradient(0deg, rgba(56,189,248,0.15) 0%, transparent 40%);`},
+      {id:10, name:"Rich Prismatic Rays", css:`background-color: #0c1929;\nbackground-image:\n  linear-gradient(115deg, transparent 15%, rgba(34,211,238,0.4) 48%, transparent 58%),\n  linear-gradient(75deg, transparent 25%, rgba(59,130,246,0.28) 50%, transparent 75%),\n  linear-gradient(155deg, transparent 35%, rgba(96,165,250,0.18) 55%, transparent 85%);`},
+      {id:11, name:"Heavy Glow Mesh", css:`background-color: #020617;\nbackground-image:\n  radial-gradient(ellipse at center, rgba(34,211,238,0.4) 0%, transparent 60%),\n  linear-gradient(30deg, rgba(56,189,248,0.15) 1px, transparent 1px),\n  linear-gradient(150deg, rgba(56,189,248,0.15) 1px, transparent 1px);\nbackground-size: 100% 100%, 28px 48px, 28px 48px;`},
+      {id:12, name:"Ultra Intense Center Beam", css:`background-color: #020617;\nbackground-image: linear-gradient(90deg,\n  transparent 10%,\n  rgba(14,165,233,0.2) 30%,\n  rgba(34,211,238,0.65) 50%,\n  rgba(14,165,233,0.2) 70%,\n  transparent 90%);`},
+      {id:13, name:"Criss-Cross Power Rays", css:`background-color: #0a1628;\nbackground-image:\n  linear-gradient(140deg, transparent 15%, rgba(56,189,248,0.4) 50%, transparent 85%),\n  linear-gradient(40deg, transparent 15%, rgba(14,165,233,0.35) 50%, transparent 85%),\n  linear-gradient(90deg, transparent 40%, rgba(96,165,250,0.15) 50%, transparent 60%);`},
+      {id:14, name:"Deep Atmospheric Rays", css:`background-color: #020617;\nbackground-image:\n  linear-gradient(160deg, rgba(30,64,175,0.5) 0%, transparent 50%),\n  linear-gradient(20deg, rgba(14,165,233,0.35) 0%, transparent 45%),\n  linear-gradient(200deg, rgba(56,189,248,0.25) 0%, transparent 40%);`},
+      {id:15, name:"Fancy Edge + Core Glow", css:`background-color: #0c1a2e;\nbackground-image:\n  linear-gradient(90deg, rgba(34,211,238,0.35) 0%, transparent 20%),\n  linear-gradient(270deg, rgba(34,211,238,0.35) 0%, transparent 20%),\n  radial-gradient(ellipse at center, rgba(56,189,248,0.4) 0%, transparent 60%);`},
+      {id:16, name:"Maximum Drama Diagonal", css:`background-color: #020617;\nbackground-image:\n  linear-gradient(125deg, transparent 5%, rgba(34,211,238,0.55) 45%, transparent 55%),\n  linear-gradient(55deg, transparent 15%, rgba(59,130,246,0.35) 50%, transparent 70%),\n  linear-gradient(165deg, transparent 25%, rgba(14,165,233,0.25) 55%, transparent 80%);`}
+    ];
+
+    let current = 'thin';
+
+    function switchTab(tab) {
+      current = tab;
+      document.getElementById('tab-thin').className = tab === 'thin'
+        ? 'px-5 py-2.5 text-sm font-medium rounded-t-lg bg-sky-600 text-white'
+        : 'px-5 py-2.5 text-sm font-medium rounded-t-lg bg-zinc-800 text-zinc-300 hover:bg-zinc-700';
+      document.getElementById('tab-heavy').className = tab === 'heavy'
+        ? 'px-5 py-2.5 text-sm font-medium rounded-t-lg bg-sky-600 text-white'
+        : 'px-5 py-2.5 text-sm font-medium rounded-t-lg bg-zinc-800 text-zinc-300 hover:bg-zinc-700';
+      render();
+    }
+
+    function render() {
+      const patterns = current === 'thin' ? thinPatterns : heavyPatterns;
+      const container = document.getElementById('container');
+      container.innerHTML = '';
+
+      patterns.forEach(p => {
+        const card = document.createElement('div');
+        card.className = "bg-[#111] border border-white/10 rounded-xl overflow-hidden";
+        card.innerHTML = `
+          <div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/5">
+            <div class="flex items-center gap-3">
+              <span class="text-xs font-mono bg-zinc-800 px-2 py-1 rounded border border-white/5">#${p.id}</span>
+              <h3 class="font-medium text-sm sm:text-base">${p.name}</h3>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="copyCSS(${p.id})" class="px-3 py-1.5 text-xs rounded-lg bg-zinc-800 hover:bg-zinc-700 border border-white/10">Copy CSS</button>
+              <button onclick="toggleCode(${p.id})" class="px-3 py-1.5 text-xs rounded-lg bg-zinc-800 hover:bg-zinc-700 border border-white/10">Code</button>
+            </div>
+          </div>
+          <div class="p-4 bg-black">
+            <div class="text-[10px] text-zinc-500 mb-2 font-mono flex justify-between">
+              <span>50px LIVE PREVIEW</span>
+              <span>${current === 'thin' ? 'Thin Optimized' : 'Heavy Glow'}</span>
+            </div>
+            <div style="${p.css}" class="w-full h-[50px] rounded-md flex items-center px-5 shadow-inner">
+              <div class="flex gap-3">
+                <div class="w-6 h-6 rounded bg-white/10 flex items-center justify-center">
+                  <div class="w-3 h-3 grid grid-cols-2 gap-0.5">
+                    <div class="bg-sky-400 rounded-[1px]"></div>
+                    <div class="bg-sky-400 rounded-[1px]"></div>
+                    <div class="bg-sky-400 rounded-[1px]"></div>
+                    <div class="bg-sky-400 rounded-[1px]"></div>
+                  </div>
+                </div>
+                <div class="w-6 h-6 rounded bg-white/5"></div>
+                <div class="w-6 h-6 rounded bg-white/5"></div>
+              </div>
+            </div>
+          </div>
+          <div id="code-${p.id}" class="hidden p-4 bg-[#0a0a0a] border-t border-white/5">
+            <pre class="text-xs font-mono text-zinc-300 overflow-x-auto whitespace-pre-wrap"><code>${p.css.replace(/</g,'&lt;')}</code></pre>
+          </div>`;
+        container.appendChild(card);
+      });
+    }
+
+    function toggleCode(id) {
+      document.getElementById('code-' + id).classList.toggle('hidden');
+    }
+
+    function expandAll(show) {
+      const patterns = current === 'thin' ? thinPatterns : heavyPatterns;
+      patterns.forEach(p => {
+        const el = document.getElementById('code-' + p.id);
+        if (show) el.classList.remove('hidden');
+        else el.classList.add('hidden');
+      });
+    }
+
+    function copyCSS(id) {
+      const patterns = current === 'thin' ? thinPatterns : heavyPatterns;
+      const p = patterns.find(x => x.id === id);
+      navigator.clipboard.writeText(p.css).then(() => {
+        alert('CSS copied to clipboard!');
+      });
+    }
+
+    // Init
+    render();
+  </script>
+</body>
+</html>

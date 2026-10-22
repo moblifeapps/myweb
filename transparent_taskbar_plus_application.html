@@ -1,83 +1,34 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
- <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>
-/* bfcache: turn third-party 'unload' handlers into 'pagehide' */
-(function () {
-  var add = EventTarget.prototype.addEventListener;
-  window.addEventListener = function (type, fn, opts) {
-    return add.call(this, type === 'unload' ? 'pagehide' : type, fn, opts);
-  };
-  try {
-    Object.defineProperty(window, 'onunload', {
-      configurable: true,
-      get: function () { return null; },
-      set: function (fn) { if (typeof fn === 'function') add.call(window, 'pagehide', fn); }
-    });
-  } catch (e) {}
-})();
-</script>
-
+<head>
+<!-- Page version: the app window shows the highest version it has (bundled / cached / website).
+     Bump it whenever this page changes. See Bridge/TtbHtmlSyncService.cs -->
+<meta name="ttb-page-version" content="2026.10.14.1">
 <!-- WEB_ONLY_START -->
+<!-- old demand -->
 
+  <!-- sulvo first -->
 <link rel="preload" as="script" href="https://live.demand.supply/up.js">
-<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
+<script async data-cfasync="false" src="https://live.demand.supply/up.js"></script>
 
 <!-- rewarded paywall -->
-   <link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
-<style>#custom-paywall-overlay:not(.active){display:none}</style>
+<link rel="stylesheet" href="/rwrd/paywall.css?v=1">
+<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+<script defer src="/rwrd/rewarded-paywall.js?v=4"></script>
 
-<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
+<!-- old demand -->
+
+
+ 
+  
+
+
+
 
 <!-- WEB_ONLY_END -->
-
-<title>Transparent Taskbar+ – Free Taskbar Customizer for Windows 11 &amp; 10</title>
-<meta name="description" content="Transparent Taskbar+ is a free Windows taskbar customizer: transparent, gradient, pattern or picture backgrounds, glass buttons and a macOS-style dock.">
-<script>document.documentElement.classList.add('js');</script>
-<!-- WEB_ONLY_START -->
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://mlapplications.com/transparent_taskbar_plus_application.html">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://mlapplications.com/transparent_taskbar_plus_application.html">
-<meta property="og:title" content="Transparent Taskbar+ – Free Taskbar Customizer for Windows">
-<meta property="og:description" content="Make your Windows taskbar transparent, add gradients, patterns, your own picture, glass buttons or a macOS-style dock. Free, no registry changes.">
-<meta property="og:image" content="https://mlapplications.com/uploads/ttbplus_screen1-800.webp">
-<meta property="og:site_name" content="MLApplications">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Transparent Taskbar+ – Free Taskbar Customizer for Windows">
-<meta name="twitter:description" content="Transparent, gradient, pattern or picture taskbars, glass buttons and a macOS-style dock. Free from the Microsoft Store.">
-<meta name="twitter:image" content="https://mlapplications.com/uploads/ttbplus_screen1-800.webp">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mlapplications.com/index.html" },
-        { "@type": "ListItem", "position": 2, "name": "Store Apps", "item": "https://mlapplications.com/store-apps.html" },
-        { "@type": "ListItem", "position": 3, "name": "Transparent Taskbar+", "item": "https://mlapplications.com/transparent_taskbar_plus_application.html" }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "Transparent Taskbar+",
-      "operatingSystem": "Windows 10, Windows 11",
-      "applicationCategory": "UtilitiesApplication",
-      "description": "Free Windows taskbar customizer: transparent, gradient, pattern or picture backgrounds, border lines, glass or colored buttons, a macOS-style dock and mouse effects, without registry changes.",
-      "url": "https://mlapplications.com/transparent_taskbar_plus_application.html",
-      "downloadUrl": "https://apps.microsoft.com/detail/9P7HB1KDTTT8",
-      "installUrl": "https://apps.microsoft.com/detail/9P7HB1KDTTT8",
-      "image": "https://mlapplications.com/uploads/ttbplus_screen1-800.webp",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
-      "publisher": { "@type": "Organization", "name": "MLApplications", "url": "https://mlapplications.com/" }
-    }
-  ]
-}
-</script>
-<!-- WEB_ONLY_END -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transparent Taskbar+</title>
 <style>
 /* ══════════════════════════════════════════════════════════════════
    THEME TOKENS - same variable names/values as AI Video Upscaler+ and the
@@ -127,10 +78,7 @@ html, body {
   color: var(--text);
 }
 
-.app-shell { display: flex; flex-direction: column; height: 100%; }
-/* App mode: only the content area scrolls, never the page itself
-   (an ad script can add space at the top of <body>, which made a second page scrollbar) */
-body:not(.is-offline) { overflow: hidden; }
+.app-shell { display: flex; flex-direction: column; height: 100vh; }
 
 /* TOP BAR */
 .topbar {
@@ -247,7 +195,7 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
 
 /* HEADERS / SECTIONS / CARDS (shared with AI Video Upscaler+) */
 .settings-header { margin-bottom: 24px; position: relative; z-index: 1; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-.settings-header h1, .settings-header h2 { font-size: 24px; margin: 0 0 4px; }
+.settings-header h1 { font-size: 24px; margin: 0 0 4px; }
 .settings-header p { font-size: 13px; color: var(--text2); margin: 0; }
 
 .settings-section { margin-bottom: 28px; position: relative; z-index: 1; }
@@ -476,31 +424,10 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
 
 /* "App not found" screen (browser mode only) */
 .offline-screen {
-  display: flex; flex-direction: column; align-items: center;
-  padding: 40px 20px 60px; background: var(--bg);
+  display: none; position: fixed; inset: 0; z-index: 100; background: var(--bg);
+  align-items: center; justify-content: center; padding: 40px 20px;
 }
-/* JS hides it until showOffline() runs; crawlers without JS still see the text */
-.js .offline-screen { display: none; }
-.js .offline-screen.show { display: flex; }
-/* App not reachable: keep the top bar + ad, then the offline message and the description.
-   (It used to be a full-screen overlay that covered the ad.) */
-.is-offline .app-shell { height: auto; }
-.is-offline .app-layout { display: none; }
-/* App description, under the "open the app" message */
-.app-about { max-width: 760px; width: 100%; margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border);
-  color: var(--text2); font-size: 15px; line-height: 1.7; text-align: left; }
-.app-about h1 { color: var(--text); font-size: 24px; line-height: 1.3; margin: 0 0 12px; }
-.app-about h2 { color: var(--text); font-size: 18px; margin: 28px 0 10px; }
-.app-about p { margin: 0 0 12px; }
-.app-about ul, .app-about ol { margin: 0 0 12px; padding-left: 22px; }
-.app-about li { margin-bottom: 6px; }
-.app-about strong { color: var(--text); }
-.app-about a { color: var(--accent); }
-.breadcrumb { font-size: 13px; margin-bottom: 14px; }
-.breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 0; }
-.breadcrumb li + li::before { content: "›"; margin-right: 6px; color: var(--text3); }
-.breadcrumb a { color: var(--text2); text-decoration: none; }
-.breadcrumb a:hover { color: var(--accent); }
+.offline-screen.show { display: flex; }
 .offline-box { max-width: 500px; text-align: center; color: var(--text2); }
 .offline-box img.app-icon { width: 64px; height: 64px; border-radius: 14px; margin-bottom: 18px; }
 .offline-box h2 { color: var(--text); font-size: 20px; margin: 0 0 12px; }
@@ -528,6 +455,12 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
 .tb-preview[data-btn="buttons_color"] .tb-btn { background: var(--c-buttons); }
 .tb-preview[data-btn="dock_color"] .tb-dock { background: var(--c-dock); }
 .seg-sm button { padding: 5px 10px; font-size: 11.5px; }
+.magnify-tile { display: flex; align-items: center; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+.magnify-tile > span { font-size: 12px; color: var(--text2); }
+.layer-range { display: flex; align-items: center; gap: 6px; flex: 1 1 100%; min-width: 0; }
+.layer-range span { font-size: 11.5px; color: var(--text2); min-width: 30px; }
+.layer-range input[type="range"] { flex: 1 1 0; width: 0; min-width: 0; accent-color: var(--accent); }
+.layer-range output { font-size: 11px; color: var(--text2); min-width: 32px; text-align: right; font-variant-numeric: tabular-nums; }
 .layer-card .color-row { row-gap: 6px; }
 .layers-apply { position: sticky; bottom: 0; z-index: 3; margin-top: 18px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 14px;
@@ -552,7 +485,15 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
 .topbar-art { height: 40px; width: auto; flex-shrink: 0; display: block; }
 .topbar-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 </style>
-
+<!-- WEB_ONLY_START -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-87MTDXTF59');
+</script>
+<!-- WEB_ONLY_END -->
 </head>
 <body>
   <div class="app-shell">
@@ -568,7 +509,7 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
         Pick a border line, a background and buttons, then press <strong>Apply</strong>. Changes take effect on your taskbar immediately and are remembered by the app.
       </div>
       <div class="topbar-right">
-        <img class="topbar-art" src="data:image/png;base64,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" alt="Transparent Taskbar+ artwork" aria-hidden="true">
+        <img class="topbar-art" src="data:image/png;base64,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" alt="" aria-hidden="true">
         <div class="topbar-status">
           <span class="ws-dot connecting" id="wsDot"></span>
           <span id="wsStatusText">Connecting...</span>
@@ -662,7 +603,7 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
           </div>
           <div class="settings-header">
             <div>
-              <h2 id="taskbarViewTitle">Bottom Taskbar</h2>
+              <h1 id="taskbarViewTitle">Bottom Taskbar</h1>
               <p>Pick one option in each row - they are combined. Every click shows it on your taskbar for 5 seconds; press Apply to keep it.</p>
             </div>
             <div id="headerActions" class="header-actions">
@@ -796,13 +737,24 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
           </div>
           <div class="settings-header">
             <div>
-              <h2>Taskbar Effects</h2>
+              <h1>Taskbar Effects</h1>
               <p>Effects triggered by the mouse on your taskbar.</p>
             </div>
           </div>
 
           <div class="settings-section">
             <div class="settings-section-title">Mouse effects</div>
+            <div class="settings-card" id="magnifyCard">
+              <div>
+                <div class="settings-card-title">Icon magnifier</div>
+                <div class="settings-card-desc">The app icon under the mouse grows out of the taskbar, like a dock.</div>
+                <div class="magnify-tile" id="magnifyTileRow">
+                  <span>Tile behind the icon</span>
+                  <div class="seg seg-sm" id="magnifyTile"><button data-tile="auto" title="Follows Windows' light / dark mode, so light and dark icons stay readable">Auto</button><button data-tile="light">Light</button><button data-tile="dark">Dark</button></div>
+                </div>
+              </div>
+              <label class="toggle-switch"><input type="checkbox" id="effectMagnify" data-effect="magnify"><span class="toggle-slider"></span></label>
+            </div>
             <div class="settings-card">
               <div>
                 <div class="settings-card-title">Taskbar highlight</div>
@@ -845,7 +797,7 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
           </div>
           <div class="settings-header">
             <div>
-              <h2>Settings</h2>
+              <h1>Settings</h1>
               <p>Customize your Transparent Taskbar+ experience.</p>
             </div>
           </div>
@@ -897,7 +849,7 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
           </div>
           <div class="settings-header">
             <div>
-              <h2>Contact</h2>
+              <h1>Contact</h1>
               <p>Get in touch, report a bug or request a feature.</p>
             </div>
           </div>
@@ -932,60 +884,6 @@ main { flex: 1; padding: 24px; overflow-y: auto; position: relative; }
         <button class="secondary-btn" id="retryConnectBtn">I've opened it - try again</button>
       </div>
     </div>
-    <!-- WEB_ONLY_START -->
-    <section class="app-about" aria-labelledby="aboutTitle">
-      <nav class="breadcrumb" aria-label="Breadcrumb">
-        <ol>
-          <li><a href="https://mlapplications.com/">Home</a></li>
-          <li><a href="https://mlapplications.com/store-apps.html">Store Apps</a></li>
-          <li aria-current="page">Transparent Taskbar+</li>
-        </ol>
-      </nav>
-
-      <h1 id="aboutTitle">Transparent Taskbar+ – free taskbar customizer for Windows 11 and Windows 10</h1>
-      <p><strong>Transparent Taskbar+</strong> changes the look of the Windows taskbar in a few clicks: make it transparent, give it a gradient, a pattern or your own picture, add glass or colored buttons, or turn it into a macOS-style dock. It is 100% free, makes <strong>no registry changes</strong>, and every change can be undone with one click.</p>
-      <p>This page is the app's control panel in your browser. When Transparent Taskbar+ is running on your PC, the page connects to it automatically and you can style your taskbar from here.</p>
-
-      <h2>Features</h2>
-      <ul>
-        <li><strong>Three layers, combined freely</strong> – pick a border line, a background and a button style; they are applied together.</li>
-        <li><strong>Border line</strong> – none, or a 1 px / 2 px line in an automatic or custom color.</li>
-        <li><strong>Background</strong> – fully transparent, two gradient styles, more than 50 built-in patterns (Dark, Light, Thin Glow and Heavy Glow), or your own PNG/JPG picture.</li>
-        <li><strong>Your own picture</strong> – Fill, Stretch, Tile or Center, adjustable opacity, an automatic or custom backing color, and a separate picture for left/right side taskbars.</li>
-        <li><strong>Buttons</strong> – glass buttons, colored buttons, or a glass or colored macOS-style dock.</li>
-        <li><strong>Live preview</strong> – every choice is shown on your real taskbar for 5 seconds; press <strong>Apply</strong> to keep it or <strong>Undo changes</strong> to go back.</li>
-        <li><strong>Mouse effects</strong> – taskbar highlight on hover, a bursting-bubble click effect and a soft light that follows the mouse.</li>
-        <li><strong>Start with Windows</strong> – your taskbar style is applied automatically every time you sign in.</li>
-        <li><strong>Light and dark theme</strong>, plus one-click <strong>Reset Default Values</strong> and <strong>Reload Taskbar</strong>.</li>
-      </ul>
-
-      <h2>How to install Transparent Taskbar+</h2>
-      <ol>
-        <li>Click <strong>Get it from Microsoft</strong> above, or open the <a href="https://apps.microsoft.com/detail/9P7HB1KDTTT8" target="_blank" rel="noopener">Transparent Taskbar+ page on the Microsoft Store</a>.</li>
-        <li>Click <strong>Get</strong> (or <strong>Install</strong>). The app is free; the Microsoft Store downloads and installs it for you.</li>
-        <li>There is no setup wizard and no registry change – the app is ready as soon as the Store finishes.</li>
-      </ol>
-
-      <h2>How to open the app</h2>
-      <ol>
-        <li>Open the <strong>Start</strong> menu, type <strong>Transparent Taskbar+</strong> and press Enter – or click <strong>Open Transparent Taskbar+</strong> above.</li>
-        <li>Come back to this page and click <strong>I've opened it – try again</strong>. The page connects to the app on your PC and shows the taskbar styles.</li>
-        <li>Pick a border line, a background and buttons, then press <strong>Apply</strong>. Your taskbar changes immediately and the app remembers your choice.</li>
-      </ol>
-      <p>Tip: turn on <strong>Start with Windows</strong> in Settings so your taskbar style comes back after every restart.</p>
-
-      <h2>More help</h2>
-      <ul>
-        <li><a href="https://mlapplications.com/transparent_taskbar_windows.html">Transparent Taskbar+ – overview and screenshots</a></li>
-        <li><a href="https://mlapplications.com/hlp_ttbplus.html">Transparent Taskbar+ help guide</a></li>
-        <li><a href="https://mlapplications.com/hlp_ttbplus_effects.html">Taskbar effects guide</a></li>
-        <li><a href="https://mlapplications.com/ttbplus_make_taskbar_transparent_windows11.html">Make the Windows 11 taskbar transparent</a></li>
-        <li><a href="https://mlapplications.com/ttbplus_picture_taskbar_background.html">Put your own picture on the taskbar</a></li>
-        <li><a href="https://mlapplications.com/ttbplus_mac_dock_windows11.html">Get a Mac-style dock on the Windows 11 taskbar</a></li>
-        <li><a href="https://mlapplications.com/ttbplus_change_taskbar_color_windows11.html">Change the taskbar colour or add a gradient</a></li>
-      </ul>
-    </section>
-    <!-- WEB_ONLY_END -->
   </div>
 
   <div class="toast" id="toast"></div>
@@ -1073,7 +971,9 @@ const TTB_PATTERNS = [{"id":"d1","theme":"dark","name":"Luminous Diagonal Light 
      previewImage  { image, seconds }                 show picture settings on the taskbar for a few seconds
      applyLayers   { layers, colors, pattern, image } the three rows together (apps with "layers" in state):
                                                       layers: { line: none|line, lineWidth: 1|2, lineColor: "auto"|"#RRGGBB",
-                                                                background: transparent|gradient1|gradient2|pattern|image,
+                                                                background: transparent|gradient1|gradient2|pattern|image|acrylic,
+                                                                acrylic: blurStrength 0..100 (0 = plain tint),
+                                                                acrylicColor "auto"|"#RRGGBB", acrylicStrength 0..95 (0 = plain blur),
                                                                 buttons: none|buttons_glass|buttons_color|dock_glass|dock_color }
      previewLayers { layers, colors, pattern, image, seconds }  the same, shown for a few seconds
      applyStyle    { style, colors, pattern, image }  (older apps) style: transparent|clean|buttons_glass|
@@ -1083,7 +983,8 @@ const TTB_PATTERNS = [{"id":"d1","theme":"dark","name":"Luminous Diagonal Light 
                                                                opacity: 10..100, backing: "auto"|"#RRGGBB" }
                                                       colors: {color1,color2,color3,buttons,dock} ("#RRGGBB")
                                                       pattern: "d.." dark | "l.." light | "t.." thin glow | "h.." heavy glow
-     setEffect     { effect: "blink"|"clicks"|"shadow", enabled }
+     setEffect     { effect: "blink"|"clicks"|"shadow"|"magnify", enabled }
+     setMagnifierTile { tile: "auto"|"light"|"dark" }     the tile behind the magnified icon
      setAutostart  { enabled }
      setAutoshow   { enabled }
      resetDefaults
@@ -1121,7 +1022,7 @@ const IS_DESKTOP = _urlParams.get('mode') === 'desktop' || window.__FORCE_DESKTO
 const DEFAULTS = {
   style: 'transparent',
   colors: { color1: '#0A7B08', color2: '#0A7B08', color3: '#0B560B', buttons: '#EFB240', dock: '#001359' },
-  effects: { blink: false, clicks: false, shadow: false },
+  effects: { blink: false, clicks: false, shadow: false, magnify: true, magnifyTile: 'auto' },
   autostart: false,
   autoshow: false,
   appVersion: '',
@@ -1238,8 +1139,12 @@ function onState(p) {
     effects: {
       blink:  !!p.effects?.blink,
       clicks: !!p.effects?.clicks,
-      shadow: !!p.effects?.shadow
+      shadow: !!p.effects?.shadow,
+      magnify: p.effects?.magnify !== false,
+      magnifyTile: ['auto', 'light', 'dark'].includes(p.effects?.magnifyTile) ? p.effects.magnifyTile : 'auto'
     },
+    hasMagnifyTile: !!(p.effects && 'magnifyTile' in p.effects),
+    hasMagnify: !!(p.effects && 'magnify' in p.effects),   // an older app has no magnifier
     autostart: !!p.autostart,
     autoshow: !!p.autoshow,
     appVersion: p.appVersion || '',
@@ -1248,7 +1153,9 @@ function onState(p) {
     taskbarSize: p.taskbarSize && p.taskbarSize.width > 0 && p.taskbarSize.height > 0
       ? { width: p.taskbarSize.width, height: p.taskbarSize.height } : null,
     layers: p.layers ? cleanLayers(p.layers) : null,                 // null: an older app (one style at a time)
-    lineAutoColor: normalizeColor(p.lineAutoColor, '#FFFFFF')
+    lineAutoColor: normalizeColor(p.lineAutoColor, '#FFFFFF'),
+    acrylicAutoColor: normalizeColor(p.acrylicAutoColor, '#202020'),
+    backdrops: !!(p.layers && p.layers.blurStrength !== undefined)   // the app knows Tint / Blur / Acrylic
   };
   // no theme picked on this page yet: use the app's
   if (!themeChosenHere && (p.theme === 'light' || p.theme === 'dark')) applyTheme(p.theme === 'light', false);
@@ -1274,8 +1181,9 @@ function onState(p) {
    Three independent rows; one option per row, all drawn together on the taskbar.
    Clicking an option shows the whole combination on the real taskbar for 5 s; Apply saves it.
    An app that predates combined styles (no "layers" in its state) gets the closest single style. */
-const LAYER_DEFAULTS = { line: 'none', lineWidth: 1, lineColor: 'auto', background: 'transparent', buttons: 'none' };
-const RESET_LAYERS = { line: 'line', lineWidth: 1, lineColor: 'auto', background: 'transparent', buttons: 'none' };
+const LAYER_DEFAULTS = { line: 'none', lineWidth: 1, lineColor: 'auto', background: 'transparent', buttons: 'none', tintColor: '#000000', tintStrength: 40, blurStrength: 60, acrylicColor: 'auto', acrylicStrength: 55 };
+const RESET_LAYERS = { line: 'line', lineWidth: 1, lineColor: 'auto', background: 'transparent', buttons: 'none', tintColor: '#000000', tintStrength: 40, blurStrength: 60, acrylicColor: 'auto', acrylicStrength: 55 };
+const BACKDROP_TYPES = ['acrylic'];
 const LAYER_ROWS = [
   { id: 'line', step: 1, title: 'Border line', desc: 'A line along the desktop side of the taskbar', options: [
       { value: 'none', name: 'No line', desc: 'Nothing on the edge' },
@@ -1285,7 +1193,8 @@ const LAYER_ROWS = [
       { value: 'gradient1', name: 'Gradient', desc: 'One colour, darker at the edge', colors: [{ key: 'color1', label: 'Color' }] },
       { value: 'gradient2', name: 'Gradient (50-50)', desc: 'Two colours, half and half', colors: [{ key: 'color2', label: 'Inner' }, { key: 'color3', label: 'Edge' }] },
       { value: 'pattern', name: 'Pattern', desc: 'A background pattern', extra: 'pattern' },
-      { value: 'image', name: 'Image', desc: 'Your own picture', extra: 'image' } ] },
+      { value: 'image', name: 'Image', desc: 'Your own picture', extra: 'image' },
+      { value: 'acrylic', name: 'Acrylic', desc: 'Frosted glass with a tint, like Windows', extra: 'acrylic' } ] },
   { id: 'buttons', step: 3, title: 'Buttons', desc: 'How the app icons are shown', options: [
       { value: 'none', name: 'Transparent', desc: 'Plain icons' },
       { value: 'buttons_glass', name: 'Glass buttons', desc: 'A glass tile behind each icon' },
@@ -1298,6 +1207,8 @@ let draftLayers = structuredClone(LAYER_DEFAULTS);
 let layersPreviewTimer = null;
 let layersPreviewDebounce = null;
 
+function isHexColor(c) { return typeof c === 'string' && /^#[0-9a-fA-F]{6}$/.test(c); }
+function clampNum(v, lo, hi, d) { v = Number(v); return Number.isFinite(v) ? Math.min(hi, Math.max(lo, Math.round(v))) : d; }
 function cleanLayers(l) {
   l = l || {};
   const ok = (row, v) => LAYER_ROWS.find(r => r.id === row).options.some(o => o.value === v);
@@ -1306,7 +1217,12 @@ function cleanLayers(l) {
     lineWidth: l.lineWidth === 2 ? 2 : 1,
     lineColor: typeof l.lineColor === 'string' && /^#[0-9a-fA-F]{6}$/.test(l.lineColor) ? l.lineColor.toUpperCase() : 'auto',
     background: ok('background', l.background) ? l.background : 'transparent',
-    buttons: ok('buttons', l.buttons) ? l.buttons : 'none'
+    buttons: ok('buttons', l.buttons) ? l.buttons : 'none',
+    tintColor: isHexColor(l.tintColor) ? l.tintColor.toUpperCase() : '#000000',
+    tintStrength: clampNum(l.tintStrength, 5, 95, 40),
+    blurStrength: clampNum(l.blurStrength, 0, 100, 60),
+    acrylicColor: isHexColor(l.acrylicColor) ? l.acrylicColor.toUpperCase() : 'auto',
+    acrylicStrength: clampNum(l.acrylicStrength, 0, 95, 55)
   };
 }
 
@@ -1320,11 +1236,13 @@ function layersFromStyle(style) {
 }
 function legacyStyleFor(l) {
   if (l.buttons !== 'none') return l.buttons;
-  if (l.background !== 'transparent') return l.background;
+  if (l.background !== 'transparent' && !BACKDROP_TYPES.includes(l.background)) return l.background;
   return l.line === 'line' ? 'transparent' : 'clean';
 }
 function supportsLayers() { return !!(hasState && state.layers); }
 function appliedLayers() { return state.layers || layersFromStyle(state.style); }
+function acrylicColorOf(l) { return l.acrylicColor === 'auto' ? (state.acrylicAutoColor || '#202020') : l.acrylicColor; }
+function hexA(hex, a) { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16 & 255}, ${n >> 8 & 255}, ${n & 255}, ${a})`; }
 function lineColorOf(l) { return l.lineColor === 'auto' ? (state.lineAutoColor || '#FFFFFF') : l.lineColor; }
 
 function layersDirty() {
@@ -1361,6 +1279,12 @@ function layerCardHtml(row, o) {
   if (o.extra === 'pattern') extra = `
       <button class="secondary-btn choose-pattern-btn" data-choose-pattern>Choose pattern</button>
       <span class="pattern-current-name" id="patternCurrentName"></span>`;
+  const range = (key, label, max, title) => `<label class="layer-range" title="${title}"><span>${label}</span><input type="range" min="0" max="${max}" step="5" data-layer-range="${key}"><output data-layer-out="${key}"></output></label>`;
+  if (o.extra === 'acrylic') extra = `
+      <div class="seg seg-sm" data-acrylic-colormode><button data-mode="auto" title="Windows' own acrylic: dark in dark mode, light in light mode">Auto</button><button data-mode="custom">Custom</button></div>
+      <label class="color-chip" id="acrylicColorChip" title="Acrylic tint"><input type="color" data-layer-color="acrylicColor"></label>
+      ${range('blurStrength', 'Blur', 100, 'How much the desktop is blurred - 0 for a plain see-through tint')}
+      ${range('acrylicStrength', 'Tint', 95, 'How strong the tint colour is - 0 for plain frosted glass')}`;
   if (o.extra === 'image') extra = `
       <button class="secondary-btn choose-pattern-btn" data-choose-image>Choose picture</button>
       <span class="pattern-current-name" id="imageCurrentName"></span>`;
@@ -1419,6 +1343,18 @@ function buildStyleGrid() {
     });
   });
 
+  grid.querySelectorAll('input[data-layer-color]').forEach(input => input.addEventListener('input', () => {
+    draftLayers[input.dataset.layerColor] = input.value.toUpperCase();
+    chooseLayer('background', input.closest('.layer-card').dataset.value, 500);
+  }));
+  grid.querySelectorAll('input[data-layer-range]').forEach(input => input.addEventListener('input', () => {
+    draftLayers[input.dataset.layerRange] = Number(input.value);
+    chooseLayer('background', input.closest('.layer-card').dataset.value, 500);
+  }));
+  grid.querySelectorAll('[data-acrylic-colormode] [data-mode]').forEach(b => b.addEventListener('click', () => {
+    draftLayers.acrylicColor = b.dataset.mode === 'auto' ? 'auto' : acrylicColorOf(cleanLayers(draftLayers));
+    chooseLayer('background', 'acrylic');
+  }));
   grid.querySelectorAll('[data-line-width] [data-w]').forEach(b => b.addEventListener('click', () => {
     draftLayers.lineWidth = Number(b.dataset.w);
     chooseLayer('line', 'line');
@@ -1467,6 +1403,13 @@ function paintLayerPreview(preview, l) {
     case 'image':
       if (draftImage.image) paintImageBar(bar, draftImage); else bar.style.background = '#202020';
       break;
+    case 'acrylic': {
+      // the mini preview is ~10x smaller than the real taskbar: a matching, smaller blur
+      const r = l.blurStrength > 0 ? Math.max(1, Math.round(l.blurStrength / 10)) : 0;
+      if (r) bg.style.backdropFilter = bg.style.webkitBackdropFilter = `blur(${r}px)`;
+      bg.style.background = hexA(acrylicColorOf(l), l.acrylicStrength / 100);
+      break;
+    }
   }
   line.style.display = l.line === 'line' ? 'block' : 'none';
   line.style.height = (l.lineWidth === 2 ? 2 : 1) + 'px';
@@ -1490,6 +1433,24 @@ function renderLayers() {
   if (chip) chip.style.display = auto ? 'none' : '';
   const input = document.getElementById('lineColorInput');
   if (input && !auto && input.value.toUpperCase() !== draftLayers.lineColor) input.value = draftLayers.lineColor.toLowerCase();
+
+  // acrylic controls (only an app that knows acrylic gets the card)
+  document.querySelectorAll('.layer-card[data-value="acrylic"]')
+    .forEach(card => { card.style.display = !hasState || state.backdrops ? '' : 'none'; });
+  const dl = cleanLayers(draftLayers);
+  document.querySelectorAll('input[data-layer-range]').forEach(i => {
+    const v = dl[i.dataset.layerRange]; if (Number(i.value) !== v) i.value = v;
+    const o = document.querySelector(`[data-layer-out="${i.dataset.layerRange}"]`); if (o) o.textContent = v + '%';
+  });
+  document.querySelectorAll('input[data-layer-color]').forEach(i => {
+    const key = i.dataset.layerColor;
+    const v = key === 'acrylicColor' ? acrylicColorOf(dl) : dl[key];
+    if (i.value.toUpperCase() !== v) i.value = v.toLowerCase();
+  });
+  const acrAuto = dl.acrylicColor === 'auto';
+  document.querySelectorAll('[data-acrylic-colormode] [data-mode]').forEach(b => b.classList.toggle('on', (b.dataset.mode === 'auto') === acrAuto));
+  const acrChip = document.getElementById('acrylicColorChip');
+  if (acrChip) acrChip.style.display = acrAuto ? 'none' : '';
 
   // names under Pattern / Image
   const pn = document.getElementById('patternCurrentName');
@@ -1618,6 +1579,9 @@ function renderAll() {
   renderLayers();
 
   document.querySelectorAll('[data-effect]').forEach(t => { t.checked = !!state.effects[t.dataset.effect]; });
+  document.getElementById('magnifyCard').style.display = !hasState || state.hasMagnify ? '' : 'none';
+  document.getElementById('magnifyTileRow').style.display = (!hasState || state.hasMagnifyTile) && state.effects.magnify ? '' : 'none';
+  document.querySelectorAll('#magnifyTile [data-tile]').forEach(b => b.classList.toggle('on', b.dataset.tile === (state.effects.magnifyTile || 'auto')));
   document.getElementById('settingsAutostartToggle').checked = state.autostart;
   document.getElementById('settingsAutoshowToggle').checked = state.autoshow;
 
@@ -1630,6 +1594,7 @@ function renderAll() {
   document.getElementById('aboutVersion').textContent = v;
   document.getElementById('footerVersion').textContent = state.appVersion ? `v${state.appVersion} · mlapplications.com` : 'mlapplications.com';
 }
+
 
 /* ───────────────────────── patterns ─────────────────────────
    The picker stays hidden until "Choose pattern". Clicking a pattern previews it on the real
@@ -2037,6 +2002,12 @@ document.getElementById('resetDefaultsBtn').addEventListener('click', () => {
   postToHost('resetDefaults');
 });
 
+document.querySelectorAll('#magnifyTile [data-tile]').forEach(b => b.addEventListener('click', () => {
+  state.effects.magnifyTile = b.dataset.tile;                       // shown at once; the app confirms with "state"
+  document.querySelectorAll('#magnifyTile [data-tile]').forEach(x => x.classList.toggle('on', x === b));
+  postToHost('setMagnifierTile', { tile: b.dataset.tile });
+}));
+
 document.querySelectorAll('[data-effect]').forEach(t => {
   t.addEventListener('change', () => postToHost('setEffect', { effect: t.dataset.effect, enabled: t.checked }));
 });
@@ -2188,7 +2159,6 @@ function showOffline(title, text, showLaunch) {
   document.getElementById('offlineText').textContent = text;
   document.getElementById('launchAppBtn').style.display = showLaunch ? '' : 'none';
   document.getElementById('offlineScreen').classList.add('show');
-  document.body.classList.add('is-offline');
 }
 
 document.getElementById('launchAppBtn').addEventListener('click', () => {
@@ -2218,14 +2188,5 @@ if (IS_DESKTOP) {
       true));
 }
 </script>
-<!-- WEB_ONLY_START -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-87MTDXTF59');
-</script>
-<!-- WEB_ONLY_END -->
 </body>
 </html>
