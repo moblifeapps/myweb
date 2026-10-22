@@ -3,7 +3,7 @@
 <head>
 <!-- Page version: the app window shows the highest version it has (bundled / cached / website).
      Bump it whenever this page changes. See Bridge/TtbHtmlSyncService.cs -->
-<meta name="ttb-page-version" content="2026.10.14.1">
+<meta name="ttb-page-version" content="2026.10.22.1">
 <!-- WEB_ONLY_START -->
 <!-- old demand -->
 
@@ -1121,7 +1121,21 @@ function normalizeColor(c, fallback) {
   return /^#[0-9a-fA-F]{6}$/.test(c) ? c.toUpperCase() : fallback;
 }
 
+// GA4: which app version this visitor runs. Sent once per version when the page connects to the app.
+// Only on the website: inside the app window the analytics block (WEB_ONLY) is removed, so gtag is missing.
+// Reports need a user-scoped custom dimension "app_version" (GA4 > Admin > Custom definitions).
+let ttbReportedVersion = '';
+function ttbReportAppVersion(v) {
+  if (!v || v === ttbReportedVersion || typeof gtag !== 'function') return;
+  ttbReportedVersion = v;
+  try {
+    gtag('set', 'user_properties', { app_version: v });
+    gtag('event', 'app_connected', { app_version: v });
+  } catch (e) { }
+}
+
 function onState(p) {
+  ttbReportAppVersion(p && p.appVersion ? String(p.appVersion) : '');
   const prevStyle = state.style;
   const prevPattern = state.pattern;
   const prevLayers = JSON.stringify(state.layers || null);
