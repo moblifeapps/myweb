@@ -1,14 +1,18 @@
 name: Update Pixabay Wallpaper Catalog
 
 on:
+  # Enables manual execution via the GitHub Actions tab
   workflow_dispatch:
+  
+  # Runs automatically once every day at 02:00 UTC
   schedule:
-    - cron: '0 2 * * *' # Runs daily at 02:00 UTC
+    - cron: '0 2 * * *'
 
 jobs:
   update-catalog:
     runs-on: ubuntu-latest
     
+    # Required permission to write git commits back to your repository
     permissions:
       contents: write
 
@@ -24,17 +28,18 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Run Pixabay Fetcher Script
+      - name: Run Pixabay Catalog Generator Script
         env:
+          # Injects your Repository Secret securely into environment variables
           PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
         run: python scripts/update_pixabay_wallpapers.py
 
-      - name: Commit and push changes if updated
+      - name: Commit and push wallpapers_cache.json if updated
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
           git add wallpapers_cache.json
           
-          # Check if changes exist, then commit & push
+          # Only commit and push if the file actually changed
           git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update Pixabay wallpaper catalog [skip ci]" && git push)
