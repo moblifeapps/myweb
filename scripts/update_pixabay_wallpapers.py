@@ -8,6 +8,8 @@ API_KEY = os.environ.get("PIXABAY_API_KEY")
 BASE_URL = "https://pixabay.com/api/videos/"
 OUTPUT_FILE = "wallpapers_cache.json"
 
+
+
 # Categories relevant to desktop live wallpapers mapped to Pixabay's supported category terms
 CATEGORIES = {
     "nature": "nature",
@@ -94,9 +96,17 @@ def fetch_pixabay_videos():
     except Exception as e:
       print(f"Exception occurred while fetching {category_key}: {e}")
 
+# Inside your script where it saves the file:
+    output_path = os.path.abspath(OUTPUT_FILE)
+    print(f"Attempting to write to: {output_path}")
+
   # Save master database to JSON file
   with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
     json.dump(categorized_catalog, f, ensure_ascii=False, indent=2)
+
+
+
+
 
   total_saved = sum(len(v) for v in categorized_catalog.values())
   print(
