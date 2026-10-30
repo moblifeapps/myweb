@@ -14,6 +14,19 @@
 <link rel="icon" href="favicon.ico">
 <link rel="preconnect" href="https://cdn.pixabay.com" crossorigin>
 <link rel="stylesheet" href="desktop_live_gallery.css">
+
+<!-- WEB_ONLY_START -->
+
+<link rel="preload" as="script" href="https://live.demand.supply/up.js">
+<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
+
+<!-- rewarded paywall -->
+   <link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<style>#custom-paywall-overlay:not(.active){display:none}</style>
+
+<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
+
+<!-- WEB_ONLY_END -->
 </head>
 <body data-kind="photos">
 
@@ -36,6 +49,11 @@
 </header>
 
 <div class="chips-wrap"><nav class="chips" id="chips" aria-label="Categories"></nav></div>
+
+<!-- WEB_ONLY_START -->
+ <div data-ad="mlapplications.com_728x90_sticky_display_custom_top_1" data-devices="m:0,t:1,d:1" class="demand-supply"></div>
+
+<!-- WEB_ONLY_END -->
 
 <main>
   <div class="resultbar">
@@ -118,5 +136,14 @@
 </div>
 
 <script src="desktop_live_gallery.js" defer></script>
+<!-- WEB_ONLY_START -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-87MTDXTF59"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-87MTDXTF59');
+</script>
+<!-- WEB_ONLY_END -->
 </body>
 </html>
