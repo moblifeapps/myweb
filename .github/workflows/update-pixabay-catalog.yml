@@ -1,5 +1,6 @@
 name: Update Pixabay Wallpaper Catalog
 
+# Once a day (Pixabay: refresh API results at most every 24 hours), and by hand from the Actions tab.
 on:
   workflow_dispatch:
   schedule:
@@ -8,8 +9,7 @@ on:
 jobs:
   update-catalog:
     runs-on: ubuntu-latest
-    
-    # 1. Define the secret at the JOB level so it is globally available to steps
+
     env:
       PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
 
@@ -23,18 +23,18 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
       - name: Install dependencies
         run: pip install requests
 
-      - name: Run Pixabay Catalog Generator Script
+      # Writes pixabay_videos.json and pixabay_photos.json (links only, all categories)
+      - name: Build the catalogs
         run: python scripts/update_pixabay_wallpapers.py
 
-      - name: Commit and push wallpapers_cache.json if updated
+      - name: Commit and push the catalogs if they changed
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
-          git add wallpapers_cache.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update Pixabay wallpaper catalog [skip ci]" && git push)
+          git add pixabay_videos.json pixabay_photos.json
+          git diff --staged --quiet || (git commit -m "Auto-update Pixabay gallery catalogs [skip ci]" && git push)

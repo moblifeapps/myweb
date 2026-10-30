@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free HD Wallpaper Photos for Windows – Wallpaper Gallery | Desktop Live Wallpaper+</title>
+<meta name="description" content="Free high-resolution wallpaper photos in 20 categories – landscapes, space, animals, architecture and more. Preview, download and use them as your desktop wallpaper with Desktop Live Wallpaper+.">
+<link rel="canonical" href="https://mlapplications.com/desktop_live_gallery_photos.html">
+<meta property="og:title" content="Free HD Wallpaper Photos for Windows – Wallpaper Gallery | Desktop Live Wallpaper+">
+<meta property="og:description" content="Free high-resolution wallpaper photos in 20 categories – landscapes, space, animals, architecture and more. Preview, download and use them as your desktop wallpaper with Desktop Live Wallpaper+.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mlapplications.com/desktop_live_gallery_photos.html">
+<meta name="theme-color" content="#0f1117">
+<link rel="icon" href="favicon.ico">
+<link rel="preconnect" href="https://cdn.pixabay.com" crossorigin>
+<link rel="stylesheet" href="desktop_live_gallery.css">
+</head>
+<body data-kind="photos">
+
+<header class="topbar">
+  <a class="brand" href="desktop_live_wallpaper_plus_application.html" title="Desktop Live Wallpaper+">
+    <img src="images/dlw_gallery_logo.png" alt="" width="38" height="30">
+    <span><b><span>Desktop Live</span> Wallpaper+</b><small>Free wallpaper gallery</small></span>
+  </a>
+  <nav class="seg" aria-label="Gallery">
+    <a href="desktop_live_gallery_videos.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10.5 5-3v9l-5-3z"/></svg><span>Videos</span></a>
+    <a href="desktop_live_gallery_photos.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg><span>Photos</span></a>
+  </nav>
+  <div class="search" role="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <label class="sr-only" for="q">Search photos</label>
+    <input id="q" type="search" placeholder="Search photos – mountains, beach, northern lights…" autocomplete="off" spellcheck="false" enterkeyhint="search">
+    <button class="clear" type="button" aria-label="Clear search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <button class="btn cat-open" type="button" aria-haspopup="dialog" title="Browse categories"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.6"/></svg><span class="lbl">Categories</span></button>
+</header>
+
+<div class="chips-wrap"><nav class="chips" id="chips" aria-label="Categories"></nav></div>
+
+<main>
+  <div class="resultbar">
+    <h1 id="title">All photos</h1>
+    <span class="count" id="count"></span>
+    <span class="more" id="more"></span>
+  </div>
+  <div class="grid" id="grid" aria-live="polite"></div>
+  <div id="sentinel"></div>
+  <p class="loading-more" id="more-note" hidden>Loading more…</p>
+  <div class="empty" id="empty" hidden></div>
+</main>
+
+<footer class="footer">
+  Photos come from <a href="https://pixabay.com/" target="_blank" rel="noopener">Pixabay</a>, free to use under the
+  <a href="https://pixabay.com/service/license-summary/" target="_blank" rel="noopener">Pixabay Content License</a>.
+  Credit goes to each author – thank you!<span id="updated"></span><br>
+  Play them behind your desktop icons with <a href="desktop_live_wallpaper_plus_application.html">Desktop Live Wallpaper+</a> – free on the Microsoft Store.
+</footer>
+
+<!-- categories -->
+<div class="overlay" id="cats" role="dialog" aria-modal="true" aria-labelledby="cats-title" aria-hidden="true">
+  <div class="panel cats-panel">
+    <button class="x" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <h2 id="cats-title">Browse categories</h2>
+    <p>Pick a category to see all its photos.</p>
+    <div class="cat-grid" id="cat-grid"></div>
+  </div>
+</div>
+
+<!-- preview window -->
+<div class="overlay" id="viewer" role="dialog" aria-modal="true" aria-labelledby="v-title" aria-hidden="true">
+  <div class="panel viewer-panel">
+    <button class="x" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="stage" id="stage">
+      <button class="nav prev" type="button" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg></button>
+      <button class="nav next" type="button" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></button>
+    </div>
+    <div class="info">
+      <h2 id="v-title"></h2>
+      <dl class="facts" id="v-facts"></dl>
+      <div class="actions">
+        <button class="btn primary big" id="v-download" type="button" data-autofocus><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>Download photo</button>
+        <a class="btn" id="v-pixabay" href="https://pixabay.com/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>View on Pixabay</a>
+        <p class="note">Free to use, no attribution required – but credit to the author is always appreciated.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- download pop-up -->
+<div class="overlay" id="dlpop" role="dialog" aria-modal="true" aria-labelledby="dl-title" aria-hidden="true">
+  <div class="panel dl-panel" data-state="start">
+    <button class="x" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="dl-icon" id="dl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg></div>
+    <h2 id="dl-title">Your photo is downloading…</h2>
+    <p class="sub" id="dl-sub"></p>
+    <div class="progress" id="dl-bar"><i></i></div>
+    <div class="progress-text" id="dl-progress-text"></div>
+    <div class="dl-body">
+      <div>
+        <div class="where">
+          It is saved to your <b>Downloads</b> folder – usually <code>C:\Users\<i>your-name</i>\Downloads</code>
+        </div>
+        <ol class="steps">
+          <li><span>When the download is complete, open your <b>Downloads</b> folder.</span></li>
+          <li><span><b>Right-click</b> the photo file.</span></li>
+          <li><span>Choose <b>Add to Desktop Live Wallpaper+</b> – it starts playing behind your icons.</span></li>
+        </ol>
+      </div>
+      <img class="howto" id="dl-howto" alt="In the Downloads folder, right-click the file and choose Add to Desktop Live Wallpaper+" width="1200" height="640">
+    </div>
+    <div class="dl-actions">
+      <button class="btn primary big" id="dl-close" type="button" data-autofocus>OK, got it</button>
+      <button class="btn big" id="dl-cancel" type="button">Cancel download</button>
+      <a class="btn big" id="dl-store" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10.5 4.4v7.1H3zm0 13 7.5 1.1v-7H3zm8.5 1.25L21 21v-8.5h-9.5zm0-15.5v7.25H21V3z"/></svg>Get the app – free</a>
+    </div>
+    <p class="credit" id="dl-credit"></p>
+  </div>
+</div>
+
+<script src="desktop_live_gallery.js" defer></script>
+</body>
+</html>
