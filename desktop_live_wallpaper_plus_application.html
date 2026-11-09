@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Page version: the app window shows the highest version it has (bundled / cached / website).
      Bump it whenever this page changes. See Bridge/DlwHtmlSyncService.cs -->
-<meta name="dlw-page-version" content="2026.10.30.2">
+<meta name="dlw-page-version" content="2026.11.06.1">
 <script>
 /* bfcache: turn third-party 'unload' handlers into 'pagehide' */
 (function () {
@@ -484,6 +484,16 @@ select.select:focus-visible { outline: 2px solid var(--accent); outline-offset: 
 
 /* ═══════════════ FRAMING ═══════════════ */
 .fit-row { display: flex; align-items: center; gap: 16px; }
+/* transition style: buttons + a looping sample of the chosen style */
+.style-row { display: flex; align-items: center; gap: 16px; margin-left: 54px; flex-wrap: wrap; }
+.style-sample { position: relative; margin-left: 54px; width: min(480px, calc(100% - 54px)); aspect-ratio: 16 / 9;
+  border-radius: 10px; overflow: hidden; background: #000; border: 1px solid var(--border); }
+.style-sample video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.style-sample .style-tag { position: absolute; left: 8px; bottom: 8px; font-size: 11px; font-weight: 600; padding: 3px 9px;
+  border-radius: 6px; background: rgba(0, 0, 0, .55); color: #fff; letter-spacing: .02em; }
+.style-sample.missing video, .style-sample.missing .style-tag { display: none; }
+.style-sample.missing::after { content: 'Sample not available'; position: absolute; inset: 0; display: grid; place-items: center;
+  font-size: 12px; color: var(--text2); background: var(--surface); }
 .fit-icons { display: flex; gap: 6px; }
 .fit-icon { width: 44px; height: 26px; border-radius: 4px; border: 1px solid var(--border); background: #0b0d12; position: relative; overflow: hidden; }
 .fit-icon i { position: absolute; background: linear-gradient(135deg, #f5a623, #e64980); border-radius: 50%; }
@@ -815,6 +825,27 @@ html:not(.is-desktop) .only-desktop { display: none !important; }
               </div>
             </div>
             <label class="toggle-switch"><input type="checkbox" data-setting="transitions"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="settings-card stack" id="styleCard">
+            <div class="sc-head">
+              <span class="sc-icon ic-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 4v16M17 4v16M2 9h5M2 15h5M17 9h5M17 15h5"/></svg></span>
+              <div>
+                <div class="settings-card-title">Transition style</div>
+                <div class="settings-card-desc" id="styleDesc">The motion graphic with a glowing edge, a light effect or two and a touch of film grain.</div>
+              </div>
+            </div>
+            <div class="style-row">
+              <div class="seg" id="styleSeg" role="radiogroup" aria-label="Transition style">
+                <button data-style="clean" role="radio">Clean</button>
+                <button data-style="cinematic" role="radio">Cinematic</button>
+                <button data-style="vivid" role="radio">Vivid</button>
+                <button data-style="classic" role="radio">Classic</button>
+              </div>
+            </div>
+            <div class="style-sample" id="styleSampleWrap">
+              <video id="styleSample" muted loop autoplay playsinline preload="auto"></video>
+              <span class="style-tag" id="styleTag">Cinematic</span>
+            </div>
           </div>
           <div class="settings-card">
             <div class="sc-head">
@@ -1515,6 +1546,7 @@ function onState(p) {
   if (!sliderActive && typeof s.photoDuration === 'number') { r.value = s.photoDuration; showDuration(); }
 
   renderFitMode();
+  renderStyle();
   renderPromo();
   syncThemeFromApp(s);
 
@@ -2036,6 +2068,52 @@ document.querySelectorAll('#fitSeg button').forEach(b => b.addEventListener('cli
   postToHost('setSetting', { key: 'fitMode', value: b.dataset.fit });
   showToast('Saved - transitions are made again in the new way', 'ok');
 }));
+
+/* ───────────────────────── transition style (Settings) ───────────────────────── */
+// Samples: dlw_presets/<style>.mp4 next to the page (the app copies them there; on the web page they live
+// at https://mlapplications.com/dlw_presets/). 2 s of one video, the transition, 2 s of the next.
+const STYLE_TEXT = {
+  clean: 'Only the motion graphic reveals the next item - no extra effects. Calm, for working.',
+  cinematic: 'The motion graphic with a glowing edge, a light effect or two and a touch of film grain.',
+  vivid: 'Like Cinematic, with one more effect and everything stronger. The most eye-catching.',
+  classic: 'The simple fades and slides of earlier versions.'
+};
+const STYLE_LABEL = { clean: 'Clean', cinematic: 'Cinematic', vivid: 'Vivid', classic: 'Classic' };
+function currentStyle() { return (state && state.settings && state.settings.transitionStyle) || 'cinematic'; }
+function transitionsOn() {
+  const cb = document.querySelector('input[data-setting="transitions"]');
+  return cb ? cb.checked : !(state && state.settings && state.settings.transitions === false);
+}
+function renderStyle() {
+  const m = STYLE_TEXT[currentStyle()] ? currentStyle() : 'cinematic';
+  document.querySelectorAll('#styleSeg button').forEach(b => {
+    const on = b.dataset.style === m;
+    b.classList.toggle('on', on); b.setAttribute('aria-checked', on ? 'true' : 'false');
+  });
+  $('styleDesc').textContent = STYLE_TEXT[m];
+  $('styleTag').textContent = STYLE_LABEL[m];
+  $('styleCard').classList.toggle('disabled', !transitionsOn());
+  const v = $('styleSample');
+  if (v.dataset.style !== m) {
+    v.dataset.style = m;
+    $('styleSampleWrap').classList.remove('missing');
+    v.src = 'dlw_presets/' + m + '.mp4';
+    const p = v.play(); if (p && p.catch) p.catch(() => {});
+  }
+}
+$('styleSample').addEventListener('error', () => $('styleSampleWrap').classList.add('missing'));
+document.querySelectorAll('#styleSeg button').forEach(b => b.addEventListener('click', () => {
+  const old = currentStyle(), m = b.dataset.style;
+  if (m === old) return;
+  if (state && state.settings) state.settings.transitionStyle = m;
+  renderStyle();
+  postToHost('setSetting', { key: 'transitionStyle', value: m });
+  // to or from Classic the playlist timing changes too - that needs a restart of playback
+  const needsApply = (old === 'classic') !== (m === 'classic');
+  showToast(needsApply ? 'Saved - press Apply changes to switch to the new style'
+                       : 'Saved - transitions are made again in the new style', 'ok');
+}));
+(() => { const cb = document.querySelector('input[data-setting="transitions"]'); if (cb) cb.addEventListener('change', renderStyle); })();
 
 /* ───────────────────────── Frame editor (per item) ───────────────────────── */
 // x, y = the centre of the visible part (0..1 of the picture), zoom 1 = the picture just fills the screen.
