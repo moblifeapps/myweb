@@ -78,6 +78,15 @@
     }
   }
 
+  // ---------- Page name for the Ad Manager "page" key-value ----------
+  // "/desktop_live_wallpaper_plus_application.html" -> "desktop_live_wallpaper_plus_application"
+  // Ad Manager free-form values: max 40 chars, letters/digits/_/- only.
+  function pageKeyValue() {
+    let p = (location.pathname || "/").toLowerCase();
+    p = p.replace(/^\/+/, "").replace(/\.html?$/, "").replace(/[^a-z0-9_-]/g, "_");
+    return (p || "index").slice(0, 40);
+  }
+
   // ---------- Unlock state: { until: timestamp, pagesLeft: number } ----------
   function readUnlock() {
     try { return JSON.parse(localStorage.getItem(UNLOCK_KEY)) || null; }
@@ -372,6 +381,15 @@
         console.warn("[paywall] Rewarded not supported on this page");
         giveUp("unsupported");
         return;
+      }
+
+      // Page key-value, so Ad Manager reports can show revenue per page
+      // (needs a free-form key "page" in Ad Manager > Inventory > Key-values).
+      const pageKey = pageKeyValue();
+      if (typeof rewardedSlot.setConfig === "function") {
+        rewardedSlot.setConfig({ targeting: { page: pageKey } });
+      } else {
+        rewardedSlot.setTargeting("page", pageKey);
       }
 
       rewardedSlot.addService(googletag.pubads());
