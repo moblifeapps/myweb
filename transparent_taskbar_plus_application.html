@@ -1,33 +1,40 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Page version: the app window shows the highest version it has (bundled / cached / website).
-     Bump it whenever this page changes. See Bridge/TtbHtmlSyncService.cs -->
-<meta name="ttb-page-version" content="2026.10.22.2">
-<!-- WEB_ONLY_START -->
-<!-- old demand -->
-
-  <!-- sulvo first -->
-<link rel="preload" as="script" href="https://live.demand.supply/up.js">
-<script async data-cfasync="false" src="https://live.demand.supply/up.js"></script>
-
-<!-- rewarded paywall -->
-<link rel="stylesheet" href="/rwrd/paywall.css?v=1">
-<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
-<script defer src="/rwrd/rewarded-paywall.js?v=4"></script>
-
-<!-- old demand -->
-
-
- 
-  
-
-
-
-
-<!-- WEB_ONLY_END -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Page version: the app window shows the highest version it has (bundled / cached / website).
+     Bump it whenever this page changes. See Bridge/TtbHtmlSyncService.cs -->
+<meta name="ttb-page-version" content="2026.11.13.1">
+<script>
+/* bfcache: turn third-party 'unload' handlers into 'pagehide' */
+(function () {
+  var add = EventTarget.prototype.addEventListener;
+  window.addEventListener = function (type, fn, opts) {
+    return add.call(this, type === 'unload' ? 'pagehide' : type, fn, opts);
+  }
+  try {
+    Object.defineProperty(window, 'onunload', {
+      configurable: true,
+      get: function () { return null; },
+      set: function (fn) { if (typeof fn === 'function') add.call(window, 'pagehide', fn); }
+    });
+  } catch (e) {}
+})();
+</script>
+
+<!-- WEB_ONLY_START -->
+
+<link rel="preload" as="script" href="https://live.demand.supply/up.js">
+<script async data-cfasync="false" type="text/javascript" src="https://live.demand.supply/up.js"></script>
+
+<!-- rewarded paywall -->
+<link rel="stylesheet" href="/rwrd/paywall.css?v=1" media="print" onload="this.media='all'">
+<style>#custom-paywall-overlay:not(.active){display:none}</style>
+
+<script defer src="/rwrd/rewarded-paywall.js?v=6"></script>
+
+<!-- WEB_ONLY_END -->
 <title>Transparent Taskbar+</title>
 <style>
 /* ══════════════════════════════════════════════════════════════════
