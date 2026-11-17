@@ -510,6 +510,19 @@ export class PptxVideo {
   }
 
   /**
+   * Render one finished slide (all animations done) over a still background
+   * (an <img>, canvas or paused <video>) into this.out. Used for instant previews.
+   */
+  async renderStill(slideIndex, bgSrc = null) {
+    const seg = { kind: 'slide', i: slideIndex, ms: 1, t0: 0 };
+    await this._ensure(seg);
+    const w = bgSrc?.naturalWidth || bgSrc?.videoWidth || bgSrc?.width || 0;
+    const h = bgSrc?.naturalHeight || bgSrc?.videoHeight || bgSrc?.height || 0;
+    this._compose(seg, Number.MAX_SAFE_INTEGER, bgSrc, w, h);
+    return this.out;
+  }
+
+  /**
    * Real-time playback onto this.out (preview or MediaRecorder recording).
    * hooks: { recorder?, bgVideo? (HTMLVideoElement, playing), signal?, onProgress?(ms,total,slide) }
    */

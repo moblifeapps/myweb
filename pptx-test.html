@@ -7,181 +7,97 @@
 <meta name="robots" content="noindex, nofollow">
 <style>
   :root {
-    --bg: #f4f5f7;
-    --panel: #ffffff;
-    --border: #dfe2e7;
-    --text: #1d2330;
-    --muted: #697184;
-    --accent: #2563eb;
-    --accent-dark: #1d4ed8;
-    --danger: #dc2626;
-    --ok: #16a34a;
-    --radius: 10px;
+    --bg: #f4f5f7; --panel: #ffffff; --border: #dfe2e7; --text: #1d2330; --muted: #697184;
+    --accent: #2563eb; --accent-dark: #1d4ed8; --danger: #dc2626; --radius: 10px;
   }
   * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 15px;
-    line-height: 1.45;
-  }
-  header {
-    padding: 18px 24px;
-    background: var(--panel);
-    border-bottom: 1px solid var(--border);
-  }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.45; }
+  header { padding: 18px 24px; background: var(--panel); border-bottom: 1px solid var(--border); }
   header h1 { margin: 0; font-size: 20px; }
   header p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
-  main {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 20px 24px 60px;
-    display: grid;
-    gap: 18px;
-  }
-  .panel {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px 18px;
-  }
+  main { max-width: 1280px; margin: 0 auto; padding: 20px 24px 60px; display: grid; gap: 18px; }
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; }
   .panel h2 { margin: 0 0 12px; font-size: 16px; }
+  .panel h3 { margin: 16px 0 8px; font-size: 14px; }
 
-  /* Drop zone */
-  #dropZone {
-    border: 2px dashed var(--border);
-    border-radius: var(--radius);
-    padding: 28px;
-    text-align: center;
-    color: var(--muted);
-    cursor: pointer;
-    transition: border-color .15s, background .15s;
-  }
+  #dropZone { border: 2px dashed var(--border); border-radius: var(--radius); padding: 28px; text-align: center;
+    color: var(--muted); cursor: pointer; transition: border-color .15s, background .15s; }
   #dropZone.drag { border-color: var(--accent); background: #eef3ff; }
   #dropZone strong { color: var(--text); }
-  #fileInput { display: none; }
+  .hidden-input { display: none; }
 
-  .progress {
-    margin-top: 12px;
-    height: 6px;
-    background: #e8eaee;
-    border-radius: 3px;
-    overflow: hidden;
-    display: none;
-  }
+  .progress { margin-top: 12px; height: 6px; background: #e8eaee; border-radius: 3px; overflow: hidden; display: none; }
   .progress > div { height: 100%; width: 0; background: var(--accent); transition: width .15s; }
-  #status { margin-top: 8px; font-size: 13px; color: var(--muted); min-height: 18px; }
-  #status.error { color: var(--danger); }
+  .status { margin-top: 8px; font-size: 13px; color: var(--muted); min-height: 18px; }
+  .status.error { color: var(--danger); }
 
-  /* Viewer */
-  #viewer { display: none; }
-  .viewer-grid {
-    display: grid;
-    grid-template-columns: 170px 1fr;
-    gap: 14px;
-  }
-  #thumbs {
-    max-height: 560px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding-right: 4px;
-  }
-  .thumb {
-    position: relative;
-    border: 2px solid transparent;
-    border-radius: 6px;
-    cursor: pointer;
-    background: #e8eaee;
-    line-height: 0;
-  }
+  #viewer, #videoPanel { display: none; }
+  .viewer-grid { display: grid; grid-template-columns: 170px 1fr; gap: 14px; }
+  #thumbs { max-height: 560px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 4px; }
+  .thumb { position: relative; border: 2px solid transparent; border-radius: 6px; cursor: pointer; background: #e8eaee; line-height: 0; }
   .thumb canvas { width: 100%; height: auto; border-radius: 4px; }
-  .thumb span {
-    position: absolute; left: 4px; top: 4px;
-    background: rgba(0,0,0,.6); color: #fff;
-    font-size: 11px; line-height: 1; padding: 3px 5px; border-radius: 3px;
-  }
+  .thumb span { position: absolute; left: 4px; top: 4px; background: rgba(0,0,0,.6); color: #fff;
+    font-size: 11px; line-height: 1; padding: 3px 5px; border-radius: 3px; }
+  .thumb span.anim { left: auto; right: 4px; background: rgba(37,99,235,.85); }
   .thumb.active { border-color: var(--accent); }
 
-  .stage {
-    background: #11141a;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    min-height: 200px;
-  }
+  .stage { background: #11141a; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 10px; min-height: 200px; }
   .stage canvas { max-width: 100%; height: auto; box-shadow: 0 2px 12px rgba(0,0,0,.4); }
 
-  .toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-    margin-top: 10px;
-  }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px; }
   .toolbar .spacer { flex: 1; }
   #slideLabel { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 14px; }
 
-  button {
-    font: inherit;
-    font-size: 14px;
-    padding: 7px 14px;
-    border-radius: 7px;
-    border: 1px solid var(--border);
-    background: #fff;
-    color: var(--text);
-    cursor: pointer;
-  }
+  button { font: inherit; font-size: 14px; padding: 7px 14px; border-radius: 7px; border: 1px solid var(--border);
+    background: #fff; color: var(--text); cursor: pointer; }
   button:hover:not(:disabled) { background: #f1f3f6; }
   button:disabled { opacity: .45; cursor: not-allowed; }
   button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
   button.primary:hover:not(:disabled) { background: var(--accent-dark); }
   button.danger { background: var(--danger); border-color: var(--danger); color: #fff; }
 
-  #notes {
-    margin-top: 10px;
-    font-size: 13px;
-    color: var(--muted);
-    white-space: pre-wrap;
-    border-top: 1px solid var(--border);
-    padding-top: 8px;
-    min-height: 20px;
-  }
+  #notes, #animInfo { font-size: 13px; color: var(--muted); white-space: pre-wrap; }
+  #notes { margin-top: 10px; border-top: 1px solid var(--border); padding-top: 8px; min-height: 20px; }
 
-  /* Video section */
-  #videoPanel { display: none; }
-  .form-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px 22px;
-    align-items: flex-end;
-  }
+  .form-row { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: flex-end; }
   label.field { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); }
-  label.field input, label.field select {
-    font: inherit; font-size: 14px; color: var(--text);
-    padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; background: #fff;
-    min-width: 120px;
-  }
-  label.check { display: flex; gap: 6px; align-items: center; font-size: 14px; }
-  .video-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-top: 14px;
-  }
+  label.field input, label.field select { font: inherit; font-size: 14px; color: var(--text); padding: 6px 8px;
+    border: 1px solid var(--border); border-radius: 6px; background: #fff; min-width: 120px; }
+  label.check { display: flex; gap: 6px; align-items: center; font-size: 14px; padding-bottom: 6px; }
+  .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
   .video-grid h3 { margin: 0 0 6px; font-size: 14px; color: var(--muted); font-weight: 600; }
-  #videoCanvas, #resultVideo { width: 100%; background: #000; border-radius: 6px; display: block; }
+  #liveWrap canvas, #resultVideo { width: 100%; background: #000; border-radius: 6px; display: block; }
   #resultVideo { aspect-ratio: 16/9; }
-  #videoStatus { margin-top: 10px; font-size: 13px; color: var(--muted); }
   #downloadLink { display: none; margin-top: 8px; }
   .hint { font-size: 12px; color: var(--muted); margin-top: 8px; }
-
   #info { font-size: 13px; color: var(--muted); }
+  #bgName { font-size: 13px; color: var(--muted); }
+  .muted-off { opacity: .45; pointer-events: none; }
+
+  /* Background gallery */
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; margin-bottom: 12px; }
+  .vcard { border: 2px solid transparent; border-radius: 8px; cursor: pointer; background: #f1f3f6; overflow: hidden;
+    transition: border-color .12s, transform .12s; }
+  .vcard:hover { transform: translateY(-1px); }
+  .vcard.selected { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,.18); }
+  .vthumb { position: relative; aspect-ratio: 16 / 9; background: #1d2330; }
+  .vthumb img, .vthumb video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .vthumb video { opacity: 0; transition: opacity .15s; }
+  .vcard:hover .vthumb video.ready { opacity: 1; }
+  .vthumb .badge { position: absolute; bottom: 5px; font-size: 11px; line-height: 1; padding: 3px 5px; border-radius: 3px;
+    background: rgba(0,0,0,.65); color: #fff; }
+  .vthumb .dur { right: 5px; }
+  .vthumb .res { left: 5px; }
+  .vthumb .check { position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; border-radius: 50%; background: var(--accent);
+    color: #fff; font-size: 13px; display: none; align-items: center; justify-content: center; }
+  .vcard.selected .check { display: flex; }
+  .vthumb .loading { position: absolute; left: 0; bottom: 0; height: 3px; background: var(--accent); width: 0; transition: width .1s; }
+  .vtitle { font-size: 13px; padding: 6px 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .vcard.none .vthumb { display: flex; align-items: center; justify-content: center; color: #9aa3b5; font-size: 13px;
+    background: repeating-linear-gradient(45deg, #2a3040 0 10px, #252a38 10px 20px); }
+  .vcard.upload .vthumb { display: flex; align-items: center; justify-content: center; color: #9aa3b5; font-size: 28px; background: #2a3040; }
+  #liveLabel { font-weight: 400; }
 
   @media (max-width: 800px) {
     .viewer-grid { grid-template-columns: 1fr; }
@@ -195,7 +111,7 @@
 
 <header>
   <h1>PPTX to Video – test page</h1>
-  <p>Loads a PowerPoint file entirely in your browser (nothing is uploaded to a server), renders the slides on a canvas and records them to a video.</p>
+  <p>Loads a PowerPoint file entirely in your browser (nothing is uploaded), renders slides with their animations and transitions, and exports a video.</p>
 </header>
 
 <main>
@@ -203,12 +119,10 @@
   <!-- 1. Load -->
   <section class="panel">
     <h2>1. Choose a .pptx file</h2>
-    <div id="dropZone" tabindex="0">
-      <strong>Click to choose</strong> or drag &amp; drop a PowerPoint (.pptx) file here
-    </div>
-    <input type="file" id="fileInput" accept=".pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation">
+    <div id="dropZone" tabindex="0"><strong>Click to choose</strong> or drag &amp; drop a PowerPoint (.pptx) file here</div>
+    <input type="file" id="fileInput" class="hidden-input" accept=".pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation">
     <div class="progress" id="progress"><div></div></div>
-    <div id="status"></div>
+    <div class="status" id="status"></div>
   </section>
 
   <!-- 2. Viewer -->
@@ -223,11 +137,13 @@
           <button id="prevBtn">&larr; Prev</button>
           <span id="slideLabel">–</span>
           <button id="nextBtn">Next &rarr;</button>
+          <button id="playAnimBtn">&#9654; Play animations</button>
           <span class="spacer"></span>
           <button id="showBtn">Slide show</button>
           <button id="pngBtn">Download PNG</button>
           <button id="pdfBtn">Download PDF</button>
         </div>
+        <div id="animInfo"></div>
         <div id="notes"></div>
       </div>
     </div>
@@ -236,9 +152,15 @@
   <!-- 3. Video -->
   <section class="panel" id="videoPanel">
     <h2>3. Create video</h2>
+
+    <h3>Timing</h3>
     <div class="form-row">
-      <label class="field">Seconds per slide
-        <input type="number" id="secPerSlide" min="0.5" max="120" step="0.5" value="4">
+      <label class="field">Hold each slide (s)
+        <input type="number" id="holdSec" min="0" max="120" step="0.5" value="3">
+      </label>
+      <label class="check"><input type="checkbox" id="animChk" checked> Play shape animations</label>
+      <label class="field">Pause before "on click" animations (s)
+        <input type="number" id="clickGapSec" min="0" max="10" step="0.1" value="0.6">
       </label>
       <label class="field">Transition
         <select id="transitionSel">
@@ -256,6 +178,33 @@
       <label class="field">Transition length (ms)
         <input type="number" id="transMs" min="0" max="5000" step="100" value="700">
       </label>
+    </div>
+
+    <h3>Background video</h3>
+    <div id="gallery" class="gallery"></div>
+    <input type="file" id="bgInput" class="hidden-input" accept="video/*">
+    <div class="form-row">
+      <div id="bgName">No background video</div>
+    </div>
+    <div class="form-row" style="margin-top:10px">
+      <label class="field">Slide over video
+        <select id="bgMode">
+          <option value="transparent">Transparent slide background</option>
+          <option value="inset">Inset frame</option>
+          <option value="blend">Blend (semi-transparent slide)</option>
+        </select>
+      </label>
+      <label class="field" id="insetField">Frame size (%)
+        <input type="number" id="insetPct" min="40" max="100" step="1" value="80">
+      </label>
+      <label class="field" id="blendField">Slide opacity (%)
+        <input type="number" id="blendPct" min="10" max="100" step="1" value="85">
+      </label>
+      <label class="check"><input type="checkbox" id="bgLoop" checked> Loop video</label>
+    </div>
+
+    <h3>Output</h3>
+    <div class="form-row">
       <label class="field">Resolution
         <select id="resSel">
           <option value="1280">1280 px wide (720p)</option>
@@ -271,26 +220,37 @@
         </select>
       </label>
       <label class="field">Format
-        <select id="formatSel"></select>
+        <select id="containerSel">
+          <option value="mp4">MP4</option>
+          <option value="webm">WebM</option>
+        </select>
+      </label>
+      <label class="field">Export engine
+        <select id="engineSel">
+          <option value="fast">Fast (WebCodecs)</option>
+          <option value="realtime">Real-time (MediaRecorder)</option>
+        </select>
       </label>
     </div>
+
     <div class="toolbar" style="margin-top:14px">
-      <button id="previewVideoBtn">Preview (no recording)</button>
-      <button id="recordBtn" class="primary">Record video</button>
+      <button id="previewVideoBtn">Preview (real time)</button>
+      <button id="exportBtn" class="primary">Export video</button>
       <button id="stopBtn" class="danger" disabled>Stop</button>
     </div>
-    <div id="videoStatus"></div>
-    <p class="hint">Recording happens in real time, so a 10-slide deck at 4 s per slide takes about 40 s. Keep this tab visible while it records – browsers pause drawing in background tabs.</p>
+    <div class="progress" id="videoProgress"><div></div></div>
+    <div class="status" id="videoStatus"></div>
+    <p class="hint" id="engineHint"></p>
 
     <div class="video-grid">
-      <div>
-        <h3>Live canvas</h3>
-        <canvas id="videoCanvas" width="1920" height="1080"></canvas>
+      <div id="liveWrap">
+        <h3>Live canvas <span id="liveLabel"></span></h3>
+        <canvas id="livePlaceholder" width="1920" height="1080"></canvas>
       </div>
       <div>
-        <h3>Recorded result</h3>
+        <h3>Result</h3>
         <video id="resultVideo" controls playsinline></video>
-        <a id="downloadLink" download="presentation.webm"><button class="primary">Download video</button></a>
+        <a id="downloadLink"><button class="primary">Download video</button></a>
       </div>
     </div>
   </section>
@@ -298,436 +258,543 @@
 </main>
 
 <script type="module">
-  // The package sits in ./pptxpackage/pptxsrc relative to this page.
-  import { PptxRenderer, renderTransitionFrame } from './pptxpackage/pptxsrc/index.js';
+  import { PptxRenderer } from './pptxpackage/pptxsrc/index.js';
+  import { PptxVideo, parseSlideAnimations, previewSlide, webCodecsAvailable, loadMediabunny } from './pptxvideo/pptx-video.js';
 
-  // ── Elements ───────────────────────────────────────────────────────────────
   const $ = (id) => document.getElementById(id);
-  const dropZone   = $('dropZone');
-  const fileInput  = $('fileInput');
-  const progress   = $('progress');
-  const progressBar = progress.firstElementChild;
-  const statusEl   = $('status');
-  const viewer     = $('viewer');
-  const videoPanel = $('videoPanel');
-  const thumbsEl   = $('thumbs');
-  const slideCanvas = $('slideCanvas');
-  const slideLabel = $('slideLabel');
-  const notesEl    = $('notes');
-  const infoEl     = $('info');
-  const prevBtn    = $('prevBtn');
-  const nextBtn    = $('nextBtn');
-  const videoCanvas = $('videoCanvas');
-  const videoStatus = $('videoStatus');
-  const resultVideo = $('resultVideo');
-  const downloadLink = $('downloadLink');
-  const recordBtn  = $('recordBtn');
-  const previewVideoBtn = $('previewVideoBtn');
-  const stopBtn    = $('stopBtn');
-  const formatSel  = $('formatSel');
 
   // ── State ──────────────────────────────────────────────────────────────────
   let renderer = null;
-  let current  = 0;
+  let current = 0;
   let fileBaseName = 'presentation';
-  let renderToken = 0;          // ignore stale slide renders when clicking fast
-  let playback = null;          // { stop: () => void } while previewing/recording
+  let renderToken = 0;
+  let job = null;               // AbortController of a running preview/export
+  let bgFile = null;            // File/Blob of the chosen background (gallery clips are fetched into one)
+  let bgUrl = null;             // object URL of bgFile (real-time preview/recording)
+  let bgReady = null;           // Promise that resolves when a gallery clip has finished downloading
+  let bgEntry = null;           // selected gallery entry, or { upload: true }
+  let gallery = [];
+  const GALLERY_DIR = './video-backgrounds/';
   let lastVideoUrl = null;
 
-  // ── Feature check ──────────────────────────────────────────────────────────
-  if (typeof DecompressionStream === 'undefined') {
+  // ── Environment checks ─────────────────────────────────────────────────────
+  if (typeof DecompressionStream === 'undefined')
     setStatus('This browser does not support DecompressionStream. Please use a recent Chrome, Edge, Firefox or Safari.', true);
-  }
-  if (location.protocol === 'file:') {
-    setStatus('This page must be opened through a web server (http:// or https://), not as a file:// path – ES modules are blocked on file://.', true);
-  }
+  if (location.protocol === 'file:')
+    setStatus('Open this page through a web server (http:// or https://), not as a file:// path – ES modules are blocked on file://.', true);
 
-  // ── Video formats supported by this browser ────────────────────────────────
-  const FORMAT_CANDIDATES = [
-    { mime: 'video/mp4;codecs=avc1.640028', ext: 'mp4', label: 'MP4 (H.264)' },
-    { mime: 'video/mp4;codecs=avc1.42E01F', ext: 'mp4', label: 'MP4 (H.264 baseline)' },
-    { mime: 'video/mp4',                    ext: 'mp4', label: 'MP4' },
-    { mime: 'video/webm;codecs=vp9',        ext: 'webm', label: 'WebM (VP9)' },
-    { mime: 'video/webm;codecs=vp8',        ext: 'webm', label: 'WebM (VP8)' },
-    { mime: 'video/webm',                   ext: 'webm', label: 'WebM' },
-  ];
-  const supportedFormats = (typeof MediaRecorder !== 'undefined')
-    ? FORMAT_CANDIDATES.filter(f => MediaRecorder.isTypeSupported(f.mime))
-    : [];
-  // Keep only the first of each container to keep the list short
-  const seenExt = new Set();
-  for (const f of supportedFormats) {
-    if (seenExt.has(f.ext)) continue;
-    seenExt.add(f.ext);
-    const opt = document.createElement('option');
-    opt.value = f.mime;
-    opt.textContent = f.label;
-    opt.dataset.ext = f.ext;
-    formatSel.appendChild(opt);
+  const MR_FORMATS = {
+    mp4: ['video/mp4;codecs=avc1.640028', 'video/mp4;codecs=avc1.42E01F', 'video/mp4'],
+    webm: ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'],
+  };
+  const mrMime = (c) => typeof MediaRecorder === 'undefined' ? null
+    : (MR_FORMATS[c].find(m => MediaRecorder.isTypeSupported(m)) || null);
+
+  if (!webCodecsAvailable()) {
+    $('engineSel').value = 'realtime';
+    $('engineSel').options[0].disabled = true;
   }
-  if (!formatSel.options.length) {
-    const opt = document.createElement('option');
-    opt.textContent = 'Recording not supported in this browser';
-    formatSel.appendChild(opt);
-    formatSel.disabled = true;
-    recordBtn.disabled = true;
+  function updateEngineHint() {
+    $('engineHint').textContent = $('engineSel').value === 'fast'
+      ? 'Fast export renders frame by frame as quickly as your PC allows (usually much faster than real time). You can switch tabs while it runs.'
+      : 'Real-time export plays the video and records it, so it takes as long as the video. Keep this tab visible while recording.';
   }
+  $('engineSel').addEventListener('change', updateEngineHint);
+  updateEngineHint();
 
   // ── Helpers ────────────────────────────────────────────────────────────────
-  function setStatus(msg, isError = false) {
-    statusEl.textContent = msg;
-    statusEl.classList.toggle('error', isError);
-  }
-  function setProgress(p) {
-    progress.style.display = p === null ? 'none' : 'block';
-    if (p !== null) progressBar.style.width = Math.round(p * 100) + '%';
-  }
+  function setStatus(msg, isError = false) { $('status').textContent = msg; $('status').classList.toggle('error', isError); }
+  function setVStatus(msg, isError = false) { $('videoStatus').textContent = msg; $('videoStatus').classList.toggle('error', isError); }
+  function setBar(el, p) { el.style.display = p === null ? 'none' : 'block'; if (p !== null) el.firstElementChild.style.width = Math.round(p * 100) + '%'; }
   function downloadBlob(blob, name) {
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = name;
+    const a = Object.assign(document.createElement('a'), { href: url, download: name });
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 5000);
   }
-  function setBusy(busy) {
-    for (const b of [prevBtn, nextBtn, $('showBtn'), $('pngBtn'), $('pdfBtn')]) b.disabled = busy;
-    dropZone.style.pointerEvents = busy ? 'none' : '';
-    if (!busy) updateNavButtons();
-  }
+  const fmtTime = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+  const fmtSize = (b) => b >= 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB';
+  const fxCountOf = (i) => parseSlideAnimations(renderer, i).groups.reduce((s, g) => s + g.effects.length, 0);
 
   // ── Loading ────────────────────────────────────────────────────────────────
-  dropZone.addEventListener('click', () => fileInput.click());
-  dropZone.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
-  fileInput.addEventListener('change', () => { if (fileInput.files[0]) loadFile(fileInput.files[0]); });
-  ['dragenter', 'dragover'].forEach(ev => dropZone.addEventListener(ev, (e) => {
-    e.preventDefault(); dropZone.classList.add('drag');
-  }));
-  ['dragleave', 'drop'].forEach(ev => dropZone.addEventListener(ev, (e) => {
-    e.preventDefault(); dropZone.classList.remove('drag');
-  }));
-  dropZone.addEventListener('drop', (e) => {
-    const f = e.dataTransfer.files[0];
-    if (f) loadFile(f);
-  });
+  const dropZone = $('dropZone');
+  dropZone.addEventListener('click', () => $('fileInput').click());
+  dropZone.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') $('fileInput').click(); });
+  $('fileInput').addEventListener('change', (e) => { if (e.target.files[0]) loadFile(e.target.files[0]); e.target.value = ''; });
+  ['dragenter', 'dragover'].forEach(ev => dropZone.addEventListener(ev, (e) => { e.preventDefault(); dropZone.classList.add('drag'); }));
+  ['dragleave', 'drop'].forEach(ev => dropZone.addEventListener(ev, (e) => { e.preventDefault(); dropZone.classList.remove('drag'); }));
+  dropZone.addEventListener('drop', (e) => { const f = e.dataTransfer.files[0]; if (f) loadFile(f); });
 
   async function loadFile(file) {
-    if (!/\.pptx$/i.test(file.name)) {
-      setStatus('Please choose a .pptx file (old .ppt files are not supported).', true);
-      return;
-    }
-    stopPlayback();
-    // A fresh renderer per file – the package does not reset slide lists between loads.
+    if (!/\.pptx$/i.test(file.name)) { setStatus('Please choose a .pptx file (old .ppt files are not supported).', true); return; }
+    job?.abort();
     if (renderer) renderer.destroy();
     renderer = new PptxRenderer();
     fileBaseName = file.name.replace(/\.pptx$/i, '') || 'presentation';
-
     setStatus('Loading ' + file.name + '…');
-    setProgress(0);
+    setBar($('progress'), 0);
     try {
-      await renderer.load(file, (p, msg) => { setProgress(p * 0.5); setStatus(msg); });
+      await renderer.load(file, (p, msg) => { setBar($('progress'), p * 0.5); setStatus(msg); });
       if (!renderer.slideCount) throw new Error('No slides found in this file.');
-
       const info = renderer.getInfo();
-      infoEl.textContent = `${file.name} · ${info.slideCount} slide${info.slideCount === 1 ? '' : 's'} · ` +
-        `${info.width.toFixed(2)}″ × ${info.height.toFixed(2)}″ (aspect ${info.aspectRatio.toFixed(3)})`;
-
-      viewer.style.display = 'block';
-      videoPanel.style.display = 'block';
+      let animTotal = 0;
+      for (let i = 0; i < renderer.slideCount; i++) animTotal += fxCountOf(i);
+      $('info').textContent = `${file.name} · ${info.slideCount} slide${info.slideCount === 1 ? '' : 's'} · ` +
+        `${info.width.toFixed(2)}″ × ${info.height.toFixed(2)}″ · ${animTotal} animation effect${animTotal === 1 ? '' : 's'}`;
+      $('viewer').style.display = 'block';
+      $('videoPanel').style.display = 'block';
       current = 0;
       await showSlide(0);
       await buildThumbnails();
-      setProgress(null);
+      setBar($('progress'), null);
       setStatus('Ready.');
-      resizeVideoCanvas();
     } catch (err) {
       console.error(err);
-      setProgress(null);
+      setBar($('progress'), null);
       setStatus('Could not open file: ' + (err?.message || err), true);
     }
   }
 
   async function buildThumbnails() {
-    thumbsEl.innerHTML = '';
+    const thumbs = $('thumbs');
+    thumbs.innerHTML = '';
     const n = renderer.slideCount;
     for (let i = 0; i < n; i++) {
       const wrap = document.createElement('div');
       wrap.className = 'thumb' + (i === current ? ' active' : '');
       wrap.dataset.index = i;
       const c = document.createElement('canvas');
-      const label = document.createElement('span');
-      label.textContent = i + 1;
-      wrap.append(c, label);
-      wrap.addEventListener('click', () => showSlide(i));
-      thumbsEl.appendChild(wrap);
-      try {
-        await renderer.renderSlide(i, c, 320);
-      } catch (err) {
-        console.warn('Thumbnail ' + (i + 1) + ' failed', err);
-      }
-      setProgress(0.5 + 0.5 * (i + 1) / n);
+      wrap.append(c, Object.assign(document.createElement('span'), { textContent: i + 1 }));
+      const fx = fxCountOf(i);
+      if (fx) wrap.append(Object.assign(document.createElement('span'), { className: 'anim', textContent: '★ ' + fx, title: fx + ' animation effects' }));
+      wrap.addEventListener('click', () => { if (!job) showSlide(i); });
+      thumbs.appendChild(wrap);
+      try { await renderer.renderSlide(i, c, 320); } catch (err) { console.warn('Thumbnail ' + (i + 1) + ' failed', err); }
+      setBar($('progress'), 0.5 + 0.5 * (i + 1) / n);
       setStatus(`Rendering thumbnails ${i + 1}/${n}…`);
     }
   }
 
-  // ── Slide viewer ───────────────────────────────────────────────────────────
+  // ── Viewer ─────────────────────────────────────────────────────────────────
   async function showSlide(i) {
     if (!renderer) return;
     i = Math.max(0, Math.min(i, renderer.slideCount - 1));
     current = i;
     const token = ++renderToken;
-    updateNavButtons();
+    updateNav();
     document.querySelectorAll('.thumb').forEach(t => t.classList.toggle('active', +t.dataset.index === i));
     document.querySelector(`.thumb[data-index="${i}"]`)?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+
+    const groups = parseSlideAnimations(renderer, i).groups;
+    const fx = groups.flatMap(g => g.effects);
+    $('animInfo').textContent = fx.length
+      ? `Animations: ${fx.length} effect${fx.length === 1 ? '' : 's'} in ${groups.length} step${groups.length === 1 ? '' : 's'} – ` +
+        [...new Set(fx.map(e => `${e.cls === 'entr' ? 'in' : e.cls === 'exit' ? 'out' : 'emphasis'}:${e.kind}`))].join(', ')
+      : '';
+    $('playAnimBtn').disabled = !fx.length || !!job;
 
     try {
       const off = document.createElement('canvas');
       await renderer.renderSlide(i, off, 1280);
-      if (token !== renderToken) return;              // a newer request has started
-      slideCanvas.width = off.width;
-      slideCanvas.height = off.height;
-      slideCanvas.getContext('2d').drawImage(off, 0, 0);
+      if (token !== renderToken) return;
+      const sc = $('slideCanvas');
+      sc.width = off.width; sc.height = off.height;
+      sc.getContext('2d').drawImage(off, 0, 0);
     } catch (err) {
       console.error(err);
       setStatus(`Slide ${i + 1} failed to render: ${err?.message || err}`, true);
     }
+    renderStillPreview();
     try {
       const notes = await renderer.getSlideNotes(i);
-      if (token === renderToken) notesEl.textContent = notes ? 'Notes: ' + notes : '';
-    } catch { notesEl.textContent = ''; }
+      if (token === renderToken) $('notes').textContent = notes ? 'Notes: ' + notes : '';
+    } catch { $('notes').textContent = ''; }
   }
 
-  function updateNavButtons() {
+  function updateNav() {
     if (!renderer) return;
-    slideLabel.textContent = `Slide ${current + 1} / ${renderer.slideCount}`;
-    prevBtn.disabled = current <= 0;
-    nextBtn.disabled = current >= renderer.slideCount - 1;
+    $('slideLabel').textContent = `Slide ${current + 1} / ${renderer.slideCount}`;
+    $('prevBtn').disabled = current <= 0 || !!job;
+    $('nextBtn').disabled = current >= renderer.slideCount - 1 || !!job;
   }
 
-  prevBtn.addEventListener('click', () => showSlide(current - 1));
-  nextBtn.addEventListener('click', () => showSlide(current + 1));
+  $('prevBtn').addEventListener('click', () => showSlide(current - 1));
+  $('nextBtn').addEventListener('click', () => showSlide(current + 1));
   document.addEventListener('keydown', (e) => {
-    if (!renderer || playback || e.target.matches('input, select, textarea')) return;
-    if (e.key === 'ArrowLeft')  showSlide(current - 1);
+    if (!renderer || job || e.target.matches('input, select, textarea')) return;
+    if (e.key === 'ArrowLeft') showSlide(current - 1);
     if (e.key === 'ArrowRight') showSlide(current + 1);
+  });
+
+  $('playAnimBtn').addEventListener('click', async () => {
+    const btn = $('playAnimBtn');
+    btn.disabled = true;
+    ++renderToken;
+    try {
+      await previewSlide(renderer, current, $('slideCanvas'), { width: 1280, clickGapMs: +$('clickGapSec').value * 1000 });
+    } catch (err) {
+      console.error(err);
+      setStatus('Animation preview failed: ' + (err?.message || err), true);
+    } finally { btn.disabled = false; }
   });
 
   $('showBtn').addEventListener('click', async () => {
     const show = renderer.createShow(document.body, { fullscreen: true, showHud: true });
     await show.start(current);
   });
-
   $('pngBtn').addEventListener('click', async () => {
-    const blob = await renderer.toBlob(current, 1920, 'image/png');
-    downloadBlob(blob, `${fileBaseName}-slide${current + 1}.png`);
+    downloadBlob(await renderer.toBlob(current, 1920, 'image/png'), `${fileBaseName}-slide${current + 1}.png`);
   });
-
   $('pdfBtn').addEventListener('click', async () => {
     const btn = $('pdfBtn');
     btn.disabled = true;
     try {
-      await renderer.downloadPdf(fileBaseName + '.pdf', {
-        dpi: 150,
-        onProgress: (d, t) => setStatus(`Building PDF ${d}/${t}…`),
-      });
+      await renderer.downloadPdf(fileBaseName + '.pdf', { dpi: 150, onProgress: (d, t) => setStatus(`Building PDF ${d}/${t}…`) });
       setStatus('PDF downloaded.');
-    } catch (err) {
-      setStatus('PDF export failed: ' + (err?.message || err), true);
-    } finally {
-      btn.disabled = false;
-    }
+    } catch (err) { setStatus('PDF export failed: ' + (err?.message || err), true); }
+    finally { btn.disabled = false; }
   });
 
-  // ── Video ──────────────────────────────────────────────────────────────────
-  function resizeVideoCanvas() {
-    if (!renderer) return;
-    const w = +$('resSel').value;
-    const info = renderer.getInfo();
-    let h = Math.round(w / info.aspectRatio);
-    if (h % 2) h += 1;                 // encoders prefer even dimensions
-    videoCanvas.width = w;
-    videoCanvas.height = h;
-    resultVideo.style.aspectRatio = `${w} / ${h}`;
-  }
-  $('resSel').addEventListener('change', resizeVideoCanvas);
+  // ── Background video gallery ───────────────────────────────────────────────
+  const VIDEO_RE = /\.(mp4|webm|mov|m4v)$/i;
 
-  /** Render every slide once at video resolution so playback is smooth. */
-  async function prerenderSlides(width) {
-    const frames = [];
-    for (let i = 0; i < renderer.slideCount; i++) {
-      videoStatus.textContent = `Preparing slide ${i + 1}/${renderer.slideCount}…`;
-      const c = document.createElement('canvas');
-      await renderer.renderSlide(i, c, width);
-      // Normalise to the exact video canvas size (height rounded to even)
-      if (c.width !== videoCanvas.width || c.height !== videoCanvas.height) {
-        const n = document.createElement('canvas');
-        n.width = videoCanvas.width; n.height = videoCanvas.height;
-        const nctx = n.getContext('2d');
-        nctx.fillStyle = '#000';
-        nctx.fillRect(0, 0, n.width, n.height);
-        nctx.drawImage(c, 0, 0, n.width, n.height);
-        frames.push(n);
-      } else {
-        frames.push(c);
-      }
-    }
-    return frames;
-  }
-
-  function transitionFor(slideIndex) {
-    const choice = $('transitionSel').value;
-    const ms = Math.max(0, +$('transMs').value || 0);
-    if (choice === 'file') {
-      const t = renderer.getTransition(slideIndex);
-      if (t) return { ...t, duration: t.duration || ms };
-      return { type: 'fade', duration: ms, dir: 'l' };
-    }
-    return { type: choice, duration: choice === 'cut' ? 0 : ms, dir: 'l' };
-  }
-
-  /** Build a timeline: [{ kind:'hold', slide, ms } | { kind:'trans', from, to, t, ms }] */
-  function buildTimeline(count) {
-    const holdMs = Math.max(500, (+$('secPerSlide').value || 4) * 1000);
-    const segs = [];
-    for (let i = 0; i < count; i++) {
-      if (i > 0) {
-        const t = transitionFor(i);
-        if (t.duration > 0 && t.type !== 'cut') segs.push({ kind: 'trans', from: i - 1, to: i, t, ms: t.duration });
-      }
-      segs.push({ kind: 'hold', slide: i, ms: holdMs });
-    }
-    return segs;
-  }
-
-  /**
-   * Plays the timeline on the video canvas. Draws every frame (even during holds)
-   * so that captureStream() keeps producing frames for the encoder.
-   */
-  function playTimeline(frames, segs, fps, onDone) {
-    const ctx = videoCanvas.getContext('2d');
-    const total = segs.reduce((s, x) => s + x.ms, 0);
-    const frameInterval = 1000 / fps;
-    let start = null, lastDraw = -Infinity, raf = 0, stopped = false;
-
-    function drawAt(elapsed) {
-      let acc = 0;
-      for (const seg of segs) {
-        if (elapsed < acc + seg.ms) {
-          const local = elapsed - acc;
-          if (seg.kind === 'hold') {
-            ctx.drawImage(frames[seg.slide], 0, 0);
-            return seg.slide;
-          }
-          renderTransitionFrame(ctx, frames[seg.from], frames[seg.to], seg.t, Math.min(1, local / seg.ms));
-          return seg.to;
-        }
-        acc += seg.ms;
-      }
-      ctx.drawImage(frames[frames.length - 1], 0, 0);
-      return frames.length - 1;
-    }
-
-    function tick(now) {
-      if (stopped) return;
-      if (start === null) start = now;
-      const elapsed = now - start;
-      if (now - lastDraw >= frameInterval - 1) {
-        const s = drawAt(elapsed);
-        lastDraw = now;
-        videoStatus.textContent = `Slide ${s + 1}/${frames.length} · ${(elapsed / 1000).toFixed(1)} s / ${(total / 1000).toFixed(1)} s`;
-      }
-      if (elapsed >= total) { stopped = true; onDone(true); return; }
-      raf = requestAnimationFrame(tick);
-    }
-    raf = requestAnimationFrame(tick);
-
-    return { stop() { if (stopped) return; stopped = true; cancelAnimationFrame(raf); onDone(false); } };
-  }
-
-  function stopPlayback() {
-    if (playback) playback.stop();
-  }
-
-  function setVideoBusy(busy) {
-    recordBtn.disabled = busy || !supportedFormats.length;
-    previewVideoBtn.disabled = busy;
-    stopBtn.disabled = !busy;
-    for (const id of ['secPerSlide', 'transitionSel', 'transMs', 'resSel', 'fpsSel', 'formatSel']) $(id).disabled = busy || (id === 'formatSel' && !supportedFormats.length);
-    setBusy(busy);
-  }
-
-  previewVideoBtn.addEventListener('click', async () => {
-    if (!renderer) return;
-    setVideoBusy(true);
+  /** Read video-backgrounds/videos.json; fall back to the server's directory listing. */
+  async function loadGallery() {
     try {
-      resizeVideoCanvas();
-      const frames = await prerenderSlides(videoCanvas.width);
-      const segs = buildTimeline(frames.length);
-      await new Promise((resolve) => {
-        playback = playTimeline(frames, segs, +$('fpsSel').value, (finished) => {
-          videoStatus.textContent = finished ? 'Preview finished.' : 'Preview stopped.';
-          resolve();
+      const r = await fetch(GALLERY_DIR + 'videos.json', { cache: 'no-cache' });
+      if (r.ok) return (await r.json()).videos || [];
+    } catch {}
+    try {
+      const r = await fetch(GALLERY_DIR);
+      if (r.ok) {
+        const html = await r.text();
+        const files = [...html.matchAll(/href="([^"?#]+)"/gi)].map(m => decodeURIComponent(m[1].split('/').pop())).filter(f => VIDEO_RE.test(f));
+        return [...new Set(files)].map(f => ({ file: f, title: f.replace(VIDEO_RE, '') }));
+      }
+    } catch {}
+    return [];
+  }
+
+  function card(cls, inner, onClick) {
+    const el = document.createElement('div');
+    el.className = 'vcard ' + cls;
+    el.innerHTML = inner;
+    el.addEventListener('click', () => { if (!job) onClick(el); });
+    $('gallery').appendChild(el);
+    return el;
+  }
+
+  async function buildGallery() {
+    gallery = await loadGallery();
+    $('gallery').innerHTML = '';
+    card('none selected', '<div class="vthumb">No background</div><div class="vtitle">None</div>', () => selectBg(null));
+    gallery.forEach((v, i) => {
+      const res = v.height >= 2160 ? '4K' : v.height >= 1440 ? '1440p' : v.height >= 1080 ? 'HD' : v.height ? v.height + 'p' : '';
+      const el = card('', `
+        <div class="vthumb">
+          ${v.poster ? `<img loading="lazy" alt="">` : `<video class="ready" muted playsinline preload="metadata" style="opacity:1"></video>`}
+          ${v.preview ? '<video muted loop playsinline preload="none"></video>' : ''}
+          ${res ? `<span class="badge res">${res}</span>` : ''}
+          ${v.duration ? `<span class="badge dur">${fmtTime(v.duration)}</span>` : ''}
+          <span class="check">✓</span>
+          <div class="loading"></div>
+        </div>
+        <div class="vtitle"></div>`, (el) => selectBg(v, el));
+      el.dataset.idx = i;
+      el.querySelector('.vtitle').textContent = v.title || v.file;
+      el.title = `${v.title || v.file}${v.size ? ' · ' + fmtSize(v.size) : ''}`;
+      if (v.poster) el.querySelector('img').src = GALLERY_DIR + v.poster;
+      else el.querySelector('video').src = GALLERY_DIR + encodeURI(v.file) + '#t=1';
+      if (v.preview) {
+        const pv = el.querySelectorAll('video')[el.querySelector('img') ? 0 : 1];
+        el.addEventListener('mouseenter', () => {
+          if (!pv.src) { pv.src = GALLERY_DIR + v.preview; pv.oncanplay = () => pv.classList.add('ready'); }
+          pv.play().catch(() => {});
         });
-      });
-    } catch (err) {
-      console.error(err);
-      videoStatus.textContent = 'Preview failed: ' + (err?.message || err);
-    } finally {
-      playback = null;
-      setVideoBusy(false);
+        el.addEventListener('mouseleave', () => { pv.pause(); });
+      }
+    });
+    card('upload', '<div class="vthumb">＋</div><div class="vtitle">Upload your own…</div>', () => $('bgInput').click());
+    if (!gallery.length) $('bgName').textContent = 'No clips found in video-backgrounds/ (add videos.json or enable directory listing).';
+  }
+
+  function markSelected(el) {
+    document.querySelectorAll('#gallery .vcard').forEach(c => c.classList.toggle('selected', c === el));
+  }
+
+  /** Download a gallery clip into a Blob with progress on its card. */
+  async function fetchClip(v, el) {
+    const bar = el?.querySelector('.loading');
+    const r = await fetch(GALLERY_DIR + encodeURI(v.file));
+    if (!r.ok) throw new Error(`Could not load ${v.file} (HTTP ${r.status})`);
+    const total = +r.headers.get('content-length') || v.size || 0;
+    const reader = r.body.getReader();
+    const parts = [];
+    let got = 0;
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      parts.push(value);
+      got += value.length;
+      if (bar && total) bar.style.width = Math.min(100, got / total * 100) + '%';
     }
+    if (bar) bar.style.width = '0';
+    return new File(parts, v.file, { type: 'video/mp4' });
+  }
+
+  function setBgFile(file) {
+    if (bgUrl) URL.revokeObjectURL(bgUrl);
+    bgFile = file;
+    bgUrl = file ? URL.createObjectURL(file) : null;
+  }
+
+  async function selectBg(v, el = null) {
+    bgEntry = v;
+    bgReady = null;
+    setBgFile(null);
+    markSelected(el || document.querySelector('#gallery .vcard.none'));
+    updateBgFields();
+    renderStillPreview();
+    if (!v) return;
+    $('bgName').textContent = `Loading ${v.title || v.file}…`;
+    const p = fetchClip(v, el).then((file) => {
+      if (bgEntry !== v) return;           // user picked something else meanwhile
+      setBgFile(file);
+      updateBgFields();
+    }).catch((err) => {
+      if (bgEntry !== v) return;
+      console.error(err);
+      $('bgName').textContent = 'Could not load the clip: ' + (err?.message || err);
+      bgEntry = null;
+      markSelected(document.querySelector('#gallery .vcard.none'));
+      updateBgFields();
+    });
+    bgReady = p;
+  }
+
+  $('bgInput').addEventListener('change', (e) => {
+    const f = e.target.files[0];
+    e.target.value = '';
+    if (!f) return;
+    bgEntry = { upload: true, title: f.name };
+    bgReady = null;
+    setBgFile(f);
+    markSelected(document.querySelector('#gallery .vcard.upload'));
+    updateBgFields();
+    renderStillPreview();
   });
 
-  recordBtn.addEventListener('click', async () => {
-    if (!renderer || !supportedFormats.length) return;
-    setVideoBusy(true);
-    downloadLink.style.display = 'none';
+  function updateBgFields() {
+    const has = !!bgEntry, mode = $('bgMode').value;
+    if (!has) $('bgName').textContent = 'No background video';
+    else if (bgFile) $('bgName').textContent = `Background: ${bgEntry.title || bgFile.name} (${fmtSize(bgFile.size)})`;
+    for (const id of ['bgMode', 'bgLoop']) $(id).closest('label').classList.toggle('muted-off', !has);
+    $('insetField').classList.toggle('muted-off', !has || mode !== 'inset');
+    $('blendField').classList.toggle('muted-off', !has || mode !== 'blend');
+  }
+
+  /** Instantly show the current slide over the background's poster frame. */
+  let stillTimer = 0, stillToken = 0;
+  function renderStillPreview() {
+    clearTimeout(stillTimer);
+    stillTimer = setTimeout(async () => {
+      if (!renderer || job) return;
+      const token = ++stillToken;
+      try {
+        let bgImg = null;
+        if (bgEntry?.poster) {
+          bgImg = new Image();
+          bgImg.src = GALLERY_DIR + bgEntry.poster;
+          await bgImg.decode();
+        } else if (bgEntry && bgUrl) {
+          bgImg = document.createElement('video');
+          Object.assign(bgImg, { src: bgUrl, muted: true, preload: 'auto' });
+          await new Promise((res, rej) => { bgImg.onloadeddata = res; bgImg.onerror = rej; });
+          bgImg.currentTime = Math.min(1, (bgImg.duration || 2) / 2);
+          await new Promise(res => { bgImg.onseeked = res; });
+        }
+        const s = readSettings();
+        s.width = 1280;
+        if (bgEntry) { s.bg.file = bgFile || new Blob(); s.bg.mode = $('bgMode').value; }
+        const pv = new PptxVideo(renderer, s);
+        await pv.renderStill(current, bgImg);
+        if (token !== stillToken || job) return;
+        showLive(pv.out);
+        $('liveLabel').textContent = `– slide ${current + 1} preview`;
+      } catch (err) { console.warn('Still preview failed', err); }
+    }, 120);
+  }
+  for (const id of ['bgMode', 'insetPct', 'blendPct']) $(id).addEventListener('input', () => { updateBgFields(); renderStillPreview(); });
+  $('bgMode').addEventListener('change', updateBgFields);
+  buildGallery();
+  updateBgFields();
+
+  /** An HTMLVideoElement for real-time preview/recording (muted, ready to play). */
+  async function makeBgVideoElement() {
+    if (!bgFile) return null;
+    const v = document.createElement('video');
+    Object.assign(v, { src: bgUrl, muted: true, loop: $('bgLoop').checked, playsInline: true, preload: 'auto' });
+    await new Promise((res, rej) => {
+      v.onloadeddata = res;
+      v.onerror = () => rej(new Error('This browser cannot play the background video.'));
+    });
+    return v;
+  }
+
+  // ── Video jobs ─────────────────────────────────────────────────────────────
+  /** Make sure a selected gallery clip has finished downloading. */
+  async function bgPrepared() {
+    if (bgReady) { setVStatus('Downloading background video…'); await bgReady; }
+    return !bgEntry || !!bgFile;
+  }
+
+  function readSettings() {
+    return {
+      width: +$('resSel').value,
+      fps: +$('fpsSel').value,
+      holdMs: Math.max(0, +$('holdSec').value || 0) * 1000,
+      clickGapMs: Math.max(0, +$('clickGapSec').value || 0) * 1000,
+      animate: $('animChk').checked,
+      transition: { choice: $('transitionSel').value, ms: Math.max(0, +$('transMs').value || 0) },
+      bg: {
+        file: bgEntry ? bgFile : null,
+        mode: bgEntry && bgFile ? $('bgMode').value : 'none',
+        scale: Math.min(1, Math.max(0.4, (+$('insetPct').value || 80) / 100)),
+        opacity: Math.min(1, Math.max(0.1, (+$('blendPct').value || 85) / 100)),
+        loop: $('bgLoop').checked,
+      },
+    };
+  }
+
+  function showLive(canvas) {
+    const wrap = $('liveWrap');
+    wrap.querySelector('canvas')?.remove();
+    wrap.appendChild(canvas);
+    $('resultVideo').style.aspectRatio = `${canvas.width} / ${canvas.height}`;
+  }
+
+  function setJobUI(running) {
+    $('gallery').classList.toggle('muted-off', running);
+    for (const id of ['previewVideoBtn', 'exportBtn', 'pdfBtn', 'showBtn', 'pngBtn', 'playAnimBtn'])
+      $(id).disabled = running;
+    $('stopBtn').disabled = !running;
+    dropZone.style.pointerEvents = running ? 'none' : '';
+    document.querySelectorAll('#videoPanel input, #videoPanel select').forEach(el => el.disabled = running);
+    if (!running) {
+      if (!webCodecsAvailable()) $('engineSel').options[0].disabled = true;
+      $('playAnimBtn').disabled = !fxCountOf(current);
+    }
+    updateBgFields();
+    updateNav();
+  }
+
+  function showResult(blob, ext, extra = '') {
+    if (lastVideoUrl) URL.revokeObjectURL(lastVideoUrl);
+    lastVideoUrl = URL.createObjectURL(blob);
+    $('resultVideo').src = lastVideoUrl;
+    const a = $('downloadLink');
+    a.href = lastVideoUrl;
+    a.download = `${fileBaseName}.${ext}`;
+    a.style.display = 'inline-block';
+    setVStatus(`Done – ${fmtSize(blob.size)} ${ext.toUpperCase()}${extra}.`);
+  }
+
+  $('stopBtn').addEventListener('click', () => job?.abort());
+
+  $('previewVideoBtn').addEventListener('click', async () => {
+    if (!renderer) return;
+    job = new AbortController();
+    setJobUI(true);
+    let bgVideo = null;
     try {
-      resizeVideoCanvas();
-      const fps = +$('fpsSel').value;
-      const frames = await prerenderSlides(videoCanvas.width);
-      const segs = buildTimeline(frames.length);
-
-      // Paint the first frame before the recorder starts so the video doesn't begin black.
-      videoCanvas.getContext('2d').drawImage(frames[0], 0, 0);
-
-      const mime = formatSel.value;
-      const ext = formatSel.selectedOptions[0].dataset.ext;
-      const stream = videoCanvas.captureStream(fps);
-      const bitrate = Math.round(videoCanvas.width * videoCanvas.height * fps * 0.15); // ~9 Mbps at 1080p30
-      const recorder = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: bitrate });
-      const chunks = [];
-      recorder.ondataavailable = (e) => { if (e.data && e.data.size) chunks.push(e.data); };
-      const stopped = new Promise(res => { recorder.onstop = res; });
-
-      recorder.start(1000);
-      const finished = await new Promise((resolve) => {
-        playback = playTimeline(frames, segs, fps, resolve);
+      if (!(await bgPrepared())) throw new Error('The background video is not available.');
+      const pv = new PptxVideo(renderer, readSettings());
+      showLive(pv.out);
+      $('liveLabel').textContent = '';
+      setVStatus('Preparing…');
+      bgVideo = await makeBgVideoElement();
+      setBar($('videoProgress'), 0);
+      const done = await pv.playRealtime({
+        bgVideo, signal: job.signal,
+        onProgress: (t, total, s) => { setBar($('videoProgress'), t / total); setVStatus(`Slide ${s + 1}/${renderer.slideCount} · ${fmtTime(t / 1000)} / ${fmtTime(total / 1000)}`); },
       });
-      // Hold the last frame briefly so the encoder flushes it.
-      await new Promise(r => setTimeout(r, 300));
-      recorder.stop();
-      await stopped;
-      stream.getTracks().forEach(t => t.stop());
-
-      const blob = new Blob(chunks, { type: mime.split(';')[0] });
-      if (lastVideoUrl) URL.revokeObjectURL(lastVideoUrl);
-      lastVideoUrl = URL.createObjectURL(blob);
-      resultVideo.src = lastVideoUrl;
-      downloadLink.href = lastVideoUrl;
-      downloadLink.download = `${fileBaseName}.${ext}`;
-      downloadLink.style.display = 'inline-block';
-      videoStatus.textContent = (finished ? 'Recording complete' : 'Recording stopped early') +
-        ` – ${blob.size >= 1048576 ? (blob.size / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(blob.size / 1024)) + ' KB'} ${ext.toUpperCase()}.`;
+      setVStatus(done ? 'Preview finished.' : 'Preview stopped.');
     } catch (err) {
       console.error(err);
-      videoStatus.textContent = 'Recording failed: ' + (err?.message || err);
+      setVStatus('Preview failed: ' + (err?.message || err), true);
     } finally {
-      playback = null;
-      setVideoBusy(false);
+      bgVideo?.pause();
+      setBar($('videoProgress'), null);
+      job = null;
+      setJobUI(false);
     }
   });
 
-  stopBtn.addEventListener('click', stopPlayback);
+  $('exportBtn').addEventListener('click', async () => {
+    if (!renderer) return;
+    job = new AbortController();
+    setJobUI(true);
+    $('downloadLink').style.display = 'none';
+    setVStatus('Preparing…');
+    const container = $('containerSel').value;
+    const engine = $('engineSel').value;
+    let bgVideo = null;
+    try {
+      if (!(await bgPrepared())) throw new Error('The background video is not available.');
+      const pv = new PptxVideo(renderer, readSettings());
+      showLive(pv.out);
+      $('liveLabel').textContent = '';
+      setBar($('videoProgress'), 0);
+
+      if (engine === 'fast') {
+        setVStatus('Loading encoder…');
+        await loadMediabunny();
+        const t0 = performance.now();
+        const blob = await pv.exportFast({
+          container, signal: job.signal,
+          onProgress: (done, total, s) => {
+            setBar($('videoProgress'), done / total);
+            const el = (performance.now() - t0) / 1000;
+            const speed = (done / pv.s.fps) / Math.max(el, 0.001);
+            setVStatus(`Encoding slide ${s + 1}/${renderer.slideCount} · frame ${done}/${total} · ${speed.toFixed(1)}× real time`);
+          },
+        });
+        if (!blob) { setVStatus('Export cancelled.'); return; }
+        const secs = (performance.now() - t0) / 1000;
+        showResult(blob, container, ` · ${fmtTime(pv.totalMs / 1000)} of video made in ${secs.toFixed(1)} s`);
+      } else {
+        const mime = mrMime(container) || mrMime(container === 'mp4' ? 'webm' : 'mp4');
+        if (!mime) throw new Error('MediaRecorder recording is not supported in this browser.');
+        const ext = mime.startsWith('video/mp4') ? 'mp4' : 'webm';
+        bgVideo = await makeBgVideoElement();
+        const stream = pv.out.captureStream(pv.s.fps);
+        const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: Math.round(pv.W * pv.H * pv.s.fps * 0.15) });
+        const chunks = [];
+        rec.ondataavailable = (e) => { if (e.data?.size) chunks.push(e.data); };
+        const stopped = new Promise(r => { rec.onstop = r; });
+        rec.start(1000);
+        rec.pause();                                     // the engine resumes once the first slide is ready
+        const done = await pv.playRealtime({
+          recorder: rec, bgVideo, signal: job.signal,
+          onProgress: (t, total, s) => { setBar($('videoProgress'), t / total); setVStatus(`Recording slide ${s + 1}/${renderer.slideCount} · ${fmtTime(t / 1000)} / ${fmtTime(total / 1000)}`); },
+        });
+        if (rec.state === 'paused') rec.resume();
+        await new Promise(r => setTimeout(r, 300));     // let the last frame flush
+        rec.stop();
+        await stopped;
+        stream.getTracks().forEach(t => t.stop());
+        showResult(new Blob(chunks, { type: mime.split(';')[0] }), ext, done ? '' : ' (stopped early)');
+      }
+    } catch (err) {
+      console.error(err);
+      setVStatus('Export failed: ' + (err?.message || err), true);
+    } finally {
+      bgVideo?.pause();
+      setBar($('videoProgress'), null);
+      job = null;
+      setJobUI(false);
+    }
+  });
 </script>
 </body>
 </html>

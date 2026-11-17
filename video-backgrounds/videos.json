@@ -1,0 +1,84 @@
+{
+  "videos": [
+    {
+      "file": "12421439_3840_2160_30fps.mp4",
+      "title": "Abstract blue waves",
+      "poster": "thumbs/12421439_3840_2160_30fps.jpg",
+      "preview": "thumbs/12421439_3840_2160_30fps.preview.mp4",
+      "width": 3840,
+      "height": 2160,
+      "duration": 20.02,
+      "size": 68042268
+    },
+    {
+      "file": "20591098-hd_1920_1080_30fps.mp4",
+      "title": "Santorini by day",
+      "poster": "thumbs/20591098-hd_1920_1080_30fps.jpg",
+      "preview": "thumbs/20591098-hd_1920_1080_30fps.preview.mp4",
+      "width": 1920,
+      "height": 1080,
+      "duration": 14.36,
+      "size": 10412767
+    },
+    {
+      "file": "3209989-uhd_3840_2160_25fps.mp4",
+      "title": "Mountain waterfall",
+      "poster": "thumbs/3209989-uhd_3840_2160_25fps.jpg",
+      "preview": "thumbs/3209989-uhd_3840_2160_25fps.preview.mp4",
+      "width": 3840,
+      "height": 2160,
+      "duration": 15.96,
+      "size": 46965018
+    },
+    {
+      "file": "6412529-hd_1920_1080_30fps.mp4",
+      "title": "Kids at a café",
+      "poster": "thumbs/6412529-hd_1920_1080_30fps.jpg",
+      "preview": "thumbs/6412529-hd_1920_1080_30fps.preview.mp4",
+      "width": 1920,
+      "height": 1080,
+      "duration": 9.51,
+      "size": 6172696
+    },
+    {
+      "file": "6554524-hd_1920_1080_25fps.mp4",
+      "title": "Santorini at sunset",
+      "poster": "thumbs/6554524-hd_1920_1080_25fps.jpg",
+      "preview": "thumbs/6554524-hd_1920_1080_25fps.preview.mp4",
+      "width": 1920,
+      "height": 1080,
+      "duration": 15.49,
+      "size": 9865651
+    },
+    {
+      "file": "9242198-hd_1920_1080_30fps.mp4",
+      "title": "Couple reading",
+      "poster": "thumbs/9242198-hd_1920_1080_30fps.jpg",
+      "preview": "thumbs/9242198-hd_1920_1080_30fps.preview.mp4",
+      "width": 1920,
+      "height": 1080,
+      "duration": 8.44,
+      "size": 5340753
+    },
+    {
+      "file": "forest-49981-pixabay.mp4",
+      "title": "Misty meadow tree",
+      "poster": "thumbs/forest-49981-pixabay.jpg",
+      "preview": "thumbs/forest-49981-pixabay.preview.mp4",
+      "width": 1920,
+      "height": 1080,
+      "duration": 41.22,
+      "size": 29753626
+    },
+    {
+      "file": "netherlands-382582-pixabay.mp4",
+      "title": "Sunlit forest",
+      "poster": "thumbs/netherlands-382582-pixabay.jpg",
+      "preview": "thumbs/netherlands-382582-pixabay.preview.mp4",
+      "width": 3840,
+      "height": 2160,
+      "duration": 12.21,
+      "size": 49956850
+    }
+  ]
+}
