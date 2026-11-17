@@ -99,6 +99,25 @@
   .vcard.upload .vthumb { display: flex; align-items: center; justify-content: center; color: #9aa3b5; font-size: 28px; background: #2a3040; }
   #liveLabel { font-weight: 400; }
 
+  /* Narration */
+  #narrBody { display: none; margin-top: 10px; }
+  .nrow { display: grid; grid-template-columns: 150px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid var(--border); }
+  .nrow canvas { width: 150px; height: auto; border-radius: 4px; background: #e8eaee; }
+  .nrow.recording { background: #fff5f5; }
+  .nrow.busy { background: #f3f6ff; }
+  .nhead { display: flex; gap: 10px; align-items: baseline; font-size: 13px; margin-bottom: 4px; }
+  .nhead b { font-size: 14px; }
+  .nstat { color: var(--muted); }
+  .nstat.ok { color: #15803d; }
+  .nstat.warn { color: #b45309; }
+  .nrow textarea { width: 100%; min-height: 64px; font: inherit; font-size: 14px; padding: 6px 8px; border: 1px solid var(--border);
+    border-radius: 6px; resize: vertical; }
+  .nbtns { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .nbtns button { padding: 4px 10px; font-size: 13px; }
+  button.rec { color: var(--danger); }
+  button.rec.on { background: var(--danger); color: #fff; border-color: var(--danger); }
+  #narrTotal { font-size: 13px; color: var(--muted); }
+
   @media (max-width: 800px) {
     .viewer-grid { grid-template-columns: 1fr; }
     #thumbs { flex-direction: row; max-height: none; overflow-x: auto; }
@@ -149,13 +168,62 @@
     </div>
   </section>
 
-  <!-- 3. Video -->
+  <!-- 3. Narration -->
+  <section class="panel" id="narrPanel" style="display:none">
+    <h2>3. Narration <span class="hint" style="font-weight:400">(optional)</span></h2>
+    <label class="check"><input type="checkbox" id="narrChk"> Add a spoken narration – each slide then lasts as long as its audio</label>
+    <div id="narrBody">
+      <h3>Voice for generated narration</h3>
+      <div class="form-row">
+        <label class="field">Engine
+          <select id="ttsEngine">
+            <option value="piper">Piper – 30+ languages incl. Greek (20–75 MB per voice)</option>
+            <option value="kokoro">Kokoro – English only, most natural</option>
+          </select>
+        </label>
+        <label class="field" id="langField">Language <select id="ttsLang"></select></label>
+        <label class="field">Voice <select id="ttsVoice"></select></label>
+        <label class="field" id="speakerField">Speaker <select id="ttsSpeaker"></select></label>
+        <label class="field" id="kokoroQField">Model
+          <select id="kokoroQ">
+            <option value="q8|wasm">Standard (≈90 MB, CPU)</option>
+            <option value="fp32|webgpu">High quality (≈330 MB, GPU)</option>
+          </select>
+        </label>
+        <label class="field">Speed <span><input type="range" id="ttsSpeed" min="0.7" max="1.3" step="0.05" value="1"> <span id="ttsSpeedVal">1.00×</span></span></label>
+        <button id="ttsTestBtn">▶ Test voice</button>
+      </div>
+      <div class="progress" id="ttsProgress"><div></div></div>
+      <div class="status" id="ttsStatus">The voice model downloads once, then your browser keeps it.</div>
+
+      <h3>Timing</h3>
+      <div class="form-row">
+        <label class="field">Pause before narration (s)
+          <input type="number" id="leadSec" min="0" max="5" step="0.1" value="0.4">
+        </label>
+        <label class="field">Pause after narration (s)
+          <input type="number" id="tailSec" min="0" max="5" step="0.1" value="0.8">
+        </label>
+      </div>
+
+      <div class="toolbar" style="margin-top:14px">
+        <button id="genAllBtn" class="primary">Generate all with this voice</button>
+        <button id="genStopBtn" disabled>Stop</button>
+        <span class="spacer"></span>
+        <span id="narrTotal"></span>
+      </div>
+      <p class="hint">Edit the text of any slide below. "Generate all" skips slides you recorded yourself. Slides with no text use the normal hold time.</p>
+      <div id="narrList"></div>
+    </div>
+  </section>
+
+  <!-- 4. Video -->
   <section class="panel" id="videoPanel">
-    <h2>3. Create video</h2>
+    <h2>4. Create video</h2>
 
     <h3>Timing</h3>
     <div class="form-row">
-      <label class="field">Hold each slide (s)
+      <label class="field"><span id="holdLabel">Hold each slide (s)</span>
         <input type="number" id="holdSec" min="0" max="120" step="0.5" value="3">
       </label>
       <label class="check"><input type="checkbox" id="animChk" checked> Play shape animations</label>
@@ -275,6 +343,7 @@
 <script type="module">
   import { PptxRenderer } from './pptxpackage/pptxsrc/index.js';
   import { PptxVideo, parseSlideAnimations, previewSlide, webCodecsAvailable, loadMediabunny } from './pptxvideo/pptx-video.js';
+  import { TtsClient, cleanForSpeech, slideNotes } from './pptxvideo/tts.js';
 
   const $ = (id) => document.getElementById(id);
 
@@ -301,8 +370,12 @@
     mp4: ['video/mp4;codecs=avc1.640028', 'video/mp4;codecs=avc1.42E01F', 'video/mp4'],
     webm: ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'],
   };
-  const mrMime = (c) => typeof MediaRecorder === 'undefined' ? null
-    : (MR_FORMATS[c].find(m => MediaRecorder.isTypeSupported(m)) || null);
+  const MR_FORMATS_AUDIO = {
+    mp4: ['video/mp4;codecs=avc1.640028,mp4a.40.2', 'video/mp4;codecs=avc1.42E01F,mp4a.40.2', 'video/mp4;codecs=avc1,opus'],
+    webm: ['video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus'],
+  };
+  const mrMime = (c, withAudio = false) => typeof MediaRecorder === 'undefined' ? null
+    : ((withAudio ? MR_FORMATS_AUDIO : MR_FORMATS)[c].find(m => MediaRecorder.isTypeSupported(m)) || null);
 
   if (!webCodecsAvailable()) {
     $('engineSel').value = 'realtime';
@@ -360,6 +433,7 @@
       current = 0;
       await showSlide(0);
       await buildThumbnails();
+      await loadNarrationNotes();
       setBar($('progress'), null);
       setStatus('Ready.');
     } catch (err) {
@@ -622,6 +696,392 @@
     return v;
   }
 
+  // ── Narration ──────────────────────────────────────────────────────────────
+  // narr[i] = { text, buffer: AudioBuffer|null, kind: 'tts'|'rec'|null, label, spokenText }
+  const tts = new TtsClient();
+  let narr = [];
+  let actx = null;                    // shared AudioContext (decoding, playback, recording mix)
+  let playingSrc = null;
+  let micStream = null, micRec = null, recIndex = -1;
+  let genAbort = false, genBusy = false;
+
+  const audioCtx = () => (actx ||= new (window.AudioContext || window.webkitAudioContext)());
+  const KOKORO_VOICES = ['af_heart','af_alloy','af_aoede','af_bella','af_jessica','af_kore','af_nicole','af_nova','af_river',
+    'af_sarah','af_sky','am_adam','am_echo','am_eric','am_fenrir','am_liam','am_michael','am_onyx','am_puck','am_santa',
+    'bf_alice','bf_emma','bf_isabella','bf_lily','bm_daniel','bm_fable','bm_george','bm_lewis'];
+  const SAMPLE = {
+    en: 'Hello! This is how the narration of your presentation will sound.',
+    el: 'Γεια σας! Έτσι θα ακούγεται η αφήγηση της παρουσίασής σας.',
+    de: 'Hallo! So wird die Erzählung Ihrer Präsentation klingen.',
+    fr: 'Bonjour ! Voici comment sonnera la narration de votre présentation.',
+    es: '¡Hola! Así sonará la narración de tu presentación.',
+    it: 'Ciao! Ecco come suonerà la narrazione della tua presentazione.',
+    pt: 'Olá! É assim que a narração da sua apresentação vai soar.',
+    nl: 'Hallo! Zo klinkt de vertelling van je presentatie.',
+    ru: 'Здравствуйте! Так будет звучать озвучка вашей презентации.',
+    tr: 'Merhaba! Sunumunuzun anlatımı böyle duyulacak.',
+    pl: 'Cześć! Tak będzie brzmiała narracja Twojej prezentacji.',
+  };
+
+  function setTtsStatus(msg, isError = false) { $('ttsStatus').textContent = msg; $('ttsStatus').classList.toggle('error', isError); }
+
+  // ── voice pickers
+  async function fillLanguages() {
+    const list = await tts.piperVoices();
+    const langs = new Map();
+    for (const v of list) langs.set(v.language.code, `${v.language.name_english} – ${v.language.name_native} (${v.language.country_english})`);
+    const sel = $('ttsLang');
+    sel.innerHTML = '';
+    [...langs.entries()].sort((a, b) => a[1].localeCompare(b[1])).forEach(([code, label]) =>
+      sel.append(new Option(label, code)));
+    const pref = (navigator.language || 'en-US').replace('-', '_');
+    const guess = [...langs.keys()].find(c => c.toLowerCase() === pref.toLowerCase())
+      || [...langs.keys()].find(c => c.startsWith(pref.slice(0, 2))) || 'en_US';
+    sel.value = langs.has(guess) ? guess : 'en_US';
+  }
+
+  async function fillVoices() {
+    const engine = $('ttsEngine').value, sel = $('ttsVoice');
+    sel.innerHTML = '';
+    $('langField').style.display = engine === 'piper' ? '' : 'none';
+    $('kokoroQField').style.display = engine === 'kokoro' ? '' : 'none';
+    if (engine === 'kokoro') {
+      const voices = tts.kokoroVoices || KOKORO_VOICES.map(key => ({ key, name: key.slice(3).replace(/^./, c => c.toUpperCase()),
+        language: key[0] === 'a' ? 'en-us' : 'en-gb', gender: key[1] === 'f' ? 'Female' : 'Male' }));
+      for (const v of voices) {
+        const g = /^f/i.test(v.gender) ? 'F' : 'M';
+        sel.append(new Option(`${v.name} · ${g} · ${/gb/i.test(v.language) ? 'UK' : 'US'}${v.overallGrade ? ' · grade ' + v.overallGrade : ''}`, v.key));
+      }
+      sel.value = 'af_heart';
+    } else {
+      const lang = $('ttsLang').value;
+      const qOrder = { high: 0, medium: 1, low: 2, x_low: 3 };
+      const voices = (await tts.piperVoices()).filter(v => v.language.code === lang)
+        .sort((a, b) => (qOrder[a.quality] ?? 9) - (qOrder[b.quality] ?? 9) || a.name.localeCompare(b.name));
+      for (const v of voices) {
+        const mb = Object.entries(v.files).find(([f]) => f.endsWith('.onnx'))?.[1]?.size_bytes || 0;
+        const g = v.gender ? ` · ${v.gender}` : '';
+        const multi = v.num_speakers > 1 ? ` · ${v.num_speakers} speakers` : '';
+        sel.append(new Option(`${v.name}${g} · ${v.quality}${multi} · ${Math.round(mb / 1048576)} MB`, v.key));
+      }
+    }
+    fillSpeakers();
+  }
+
+  async function fillSpeakers() {
+    const sel = $('ttsSpeaker');
+    sel.innerHTML = '';
+    let show = false;
+    if ($('ttsEngine').value === 'piper') {
+      const v = (await tts.piperVoices()).find(x => x.key === $('ttsVoice').value);
+      const ids = Object.entries(v?.speaker_id_map || {}).sort((a, b) => a[1] - b[1]);
+      if (ids.length > 1) {
+        show = true;
+        for (const [name, id] of ids) sel.append(new Option(`${id} – ${name}`, id));
+      }
+    }
+    $('speakerField').style.display = show ? '' : 'none';
+  }
+
+  $('ttsEngine').addEventListener('change', fillVoices);
+  $('ttsLang').addEventListener('change', fillVoices);
+  $('ttsVoice').addEventListener('change', fillSpeakers);
+  $('ttsSpeed').addEventListener('input', () => { $('ttsSpeedVal').textContent = (+$('ttsSpeed').value).toFixed(2) + '×'; });
+
+  /** Load the selected model (downloads once). Returns what speak() needs. */
+  async function ensureVoice() {
+    const engine = $('ttsEngine').value;
+    const bar = $('ttsProgress');
+    const onProgress = (p) => {
+      if (p.label === 'speaking') return;
+      setBar(bar, p.total ? p.loaded / p.total : null);
+      setTtsStatus(`Downloading ${p.label}… ${fmtSize(p.loaded)}${p.total ? ' / ' + fmtSize(p.total) : ''}`);
+    };
+    try {
+      if (engine === 'kokoro') {
+        const [dtype, device] = $('kokoroQ').value.split('|');
+        if (device === 'webgpu' && !navigator.gpu) throw new Error('WebGPU is not available in this browser – choose the Standard model.');
+        const key = 'kokoro|' + $('kokoroQ').value;
+        if (ensureVoice.loaded !== key) {
+          setTtsStatus('Loading Kokoro…');
+          const voices = await tts.load('kokoro', { dtype, device }, onProgress);
+          ensureVoice.loaded = key;
+          const cur = $('ttsVoice').value;
+          if (voices?.length) { await fillVoices(); $('ttsVoice').value = cur; }
+        }
+        const voice = $('ttsVoice').value;
+        return { engine, voice, speed: +$('ttsSpeed').value, label: 'Kokoro ' + voice };
+      }
+      const v = (await tts.piperVoices()).find(x => x.key === $('ttsVoice').value);
+      if (!v) throw new Error('Choose a voice first.');
+      if (ensureVoice.loaded !== 'piper|' + v.key) {
+        setTtsStatus('Loading ' + v.key + '…');
+        await tts.load('piper', v, onProgress);
+        ensureVoice.loaded = 'piper|' + v.key;
+      }
+      return { engine, speed: +$('ttsSpeed').value, speaker: +($('ttsSpeaker').value || 0), label: v.key };
+    } finally {
+      setBar(bar, null);
+    }
+  }
+
+  async function speakText(text, onProgress) {
+    const cfg = await ensureVoice();
+    setTtsStatus(`Voice ready: ${cfg.label}.`);
+    const buf = await tts.speak(cfg.engine, { text, voice: cfg.voice, speed: cfg.speed, speaker: cfg.speaker }, audioCtx(), onProgress);
+    return { buf, label: cfg.label };
+  }
+
+  $('ttsTestBtn').addEventListener('click', async () => {
+    const btn = $('ttsTestBtn');
+    btn.disabled = true;
+    try {
+      const fam = $('ttsEngine').value === 'kokoro' ? 'en' : ($('ttsLang').value || 'en').slice(0, 2);
+      const text = SAMPLE[fam] || SAMPLE.en;
+      setTtsStatus('Generating a sample…');
+      const { buf } = await speakText(text);
+      playBuffer(buf);
+      setTtsStatus(`Sample: ${buf.duration.toFixed(1)} s. The voice is ready.`);
+    } catch (err) {
+      console.error(err);
+      setTtsStatus('Voice failed: ' + (err?.message || err), true);
+    } finally { btn.disabled = false; }
+  });
+
+  // ── playback
+  function playBuffer(buf) {
+    stopPlayback();
+    const ctx = audioCtx();
+    ctx.resume?.();
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    src.connect(ctx.destination);
+    src.start();
+    playingSrc = src;
+    src.onended = () => { if (playingSrc === src) playingSrc = null; };
+  }
+  function stopPlayback() { try { playingSrc?.stop(); } catch {} playingSrc = null; }
+
+  // ── notes list
+  async function loadNarrationNotes() {
+    narr = [];
+    for (let i = 0; i < renderer.slideCount; i++) {
+      let text = '';
+      try { text = await slideNotes(renderer, i); } catch {}
+      narr.push({ text, buffer: null, kind: null, label: '', spokenText: '' });
+    }
+    $('narrPanel').style.display = 'block';
+    const withNotes = narr.filter(n => n.text.trim()).length;
+    if (withNotes) setTtsStatus(`${withNotes} of ${narr.length} slides have speaker notes. The voice model downloads once, then your browser keeps it.`);
+    buildNarrList();
+  }
+
+  function buildNarrList() {
+    const list = $('narrList');
+    list.innerHTML = '';
+    narr.forEach((n, i) => {
+      const row = document.createElement('div');
+      row.className = 'nrow';
+      row.dataset.i = i;
+      row.innerHTML = `
+        <canvas></canvas>
+        <div>
+          <div class="nhead"><b>Slide ${i + 1}</b><span class="nstat"></span></div>
+          <textarea placeholder="Type what should be said on this slide (or leave empty)."></textarea>
+          <div class="nbtns">
+            <button class="rec">● Record</button>
+            <button class="gen">Generate</button>
+            <button class="play">▶ Play</button>
+            <button class="clear">✕ Remove audio</button>
+          </div>
+        </div>`;
+      const thumb = document.querySelector(`.thumb[data-index="${i}"] canvas`);
+      const c = row.querySelector('canvas');
+      if (thumb?.width) { c.width = thumb.width; c.height = thumb.height; c.getContext('2d').drawImage(thumb, 0, 0); }
+      const ta = row.querySelector('textarea');
+      ta.value = n.text;
+      ta.addEventListener('input', () => { n.text = ta.value; updateRow(i); });
+      row.querySelector('.rec').addEventListener('click', () => toggleRecord(i));
+      row.querySelector('.gen').addEventListener('click', () => generateOne(i));
+      row.querySelector('.play').addEventListener('click', () => n.buffer && playBuffer(n.buffer));
+      row.querySelector('.clear').addEventListener('click', () => { n.buffer = null; n.kind = null; updateRow(i); });
+      list.appendChild(row);
+      updateRow(i);
+    });
+    updateNarrTotal();
+  }
+
+  function rowEl(i) { return document.querySelector(`#narrList .nrow[data-i="${i}"]`); }
+
+  function updateRow(i) {
+    const n = narr[i], row = rowEl(i);
+    if (!row) return;
+    const st = row.querySelector('.nstat');
+    st.className = 'nstat';
+    if (n.buffer) {
+      const stale = n.kind === 'tts' && cleanForSpeech(n.text) !== n.spokenText;
+      st.textContent = `${n.kind === 'rec' ? '🎙 Your recording' : '🔊 ' + n.label} · ${n.buffer.duration.toFixed(1)} s${stale ? ' · text changed, generate again' : ''}`;
+      st.classList.add(stale ? 'warn' : 'ok');
+    } else {
+      st.textContent = n.text.trim() ? 'No audio yet' : 'No text – uses the normal hold time';
+    }
+    row.querySelector('.play').disabled = !n.buffer;
+    row.querySelector('.clear').disabled = !n.buffer;
+    row.querySelector('.gen').disabled = !n.text.trim() || genBusy || recIndex >= 0;
+    row.querySelector('.rec').disabled = genBusy || (recIndex >= 0 && recIndex !== i);
+    updateNarrTotal();
+  }
+
+  function updateNarrTotal() {
+    const clips = narr.filter(n => n.buffer);
+    const secs = clips.reduce((s, n) => s + n.buffer.duration, 0);
+    $('narrTotal').textContent = clips.length ? `${clips.length}/${narr.length} slides have audio · ${fmtTime(secs)} of narration` : '';
+  }
+
+  // ── generate
+  async function generateOne(i, quiet = false) {
+    const n = narr[i];
+    const text = cleanForSpeech(n.text);
+    if (!text) return;
+    const row = rowEl(i);
+    row?.classList.add('busy');
+    try {
+      row.querySelector('.nstat').textContent = 'Generating…';
+      const { buf, label } = await speakText(text, (p) => {
+        if (p.label === 'speaking' && row) row.querySelector('.nstat').textContent = `Generating… sentence ${p.loaded}${p.total ? '/' + p.total : ''}`;
+      });
+      Object.assign(n, { buffer: buf, kind: 'tts', label, spokenText: text });
+      if (!quiet) playBuffer(buf);
+    } catch (err) {
+      console.error(err);
+      setTtsStatus(`Slide ${i + 1}: ${err?.message || err}`, true);
+      throw err;
+    } finally {
+      row?.classList.remove('busy');
+      updateRow(i);
+    }
+  }
+
+  function setGenBusy(b) {
+    genBusy = b;
+    $('genAllBtn').disabled = b;
+    $('genStopBtn').disabled = !b;
+    for (const id of ['ttsEngine', 'ttsLang', 'ttsVoice', 'ttsSpeaker', 'kokoroQ', 'ttsSpeed', 'ttsTestBtn', 'exportBtn', 'previewVideoBtn'])
+      $(id).disabled = b;
+    narr.forEach((_, i) => updateRow(i));
+  }
+
+  $('genAllBtn').addEventListener('click', async () => {
+    genAbort = false;
+    setGenBusy(true);
+    let done = 0;
+    try {
+      for (let i = 0; i < narr.length && !genAbort; i++) {
+        const n = narr[i];
+        if (!cleanForSpeech(n.text) || n.kind === 'rec') continue;          // keep the user's own recordings
+        if (n.kind === 'tts' && n.spokenText === cleanForSpeech(n.text) && n.label === (await ensureVoice()).label) continue;
+        rowEl(i)?.scrollIntoView({ block: 'nearest' });
+        await generateOne(i, true);
+        done++;
+      }
+      setTtsStatus(genAbort ? `Stopped after ${done} slide(s).` : `Done – generated ${done} slide(s).`);
+    } catch { /* message already shown */ }
+    finally { setGenBusy(false); }
+  });
+  $('genStopBtn').addEventListener('click', () => { genAbort = true; setTtsStatus('Stopping after the current slide…'); });
+
+  // ── record your own voice
+  async function toggleRecord(i) {
+    if (recIndex === i) { micRec?.stop(); return; }
+    try {
+      micStream ||= await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
+    } catch (err) {
+      setTtsStatus('Microphone not available: ' + (err?.message || err), true);
+      return;
+    }
+    stopPlayback();
+    const chunks = [];
+    const mime = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4'].find(m => MediaRecorder.isTypeSupported(m)) || '';
+    micRec = new MediaRecorder(micStream, mime ? { mimeType: mime } : undefined);
+    micRec.ondataavailable = (e) => { if (e.data?.size) chunks.push(e.data); };
+    const row = rowEl(i), btn = row.querySelector('.rec');
+    const t0 = performance.now();
+    const timer = setInterval(() => { row.querySelector('.nstat').textContent = `● Recording… ${((performance.now() - t0) / 1000).toFixed(1)} s – click Stop when done`; }, 200);
+    micRec.onstop = async () => {
+      clearInterval(timer);
+      recIndex = -1;
+      btn.classList.remove('on'); btn.textContent = '● Record';
+      row.classList.remove('recording');
+      try {
+        const raw = await new Blob(chunks, { type: micRec.mimeType }).arrayBuffer();
+        const buf = trimSilence(await audioCtx().decodeAudioData(raw));
+        Object.assign(narr[i], { buffer: buf, kind: 'rec', label: 'Your recording' });
+      } catch (err) { setTtsStatus('Could not read the recording: ' + (err?.message || err), true); }
+      narr.forEach((_, k) => updateRow(k));
+    };
+    recIndex = i;
+    btn.classList.add('on'); btn.textContent = '■ Stop';
+    row.classList.add('recording');
+    narr.forEach((_, k) => updateRow(k));
+    micRec.start();
+  }
+
+  /** Cut silence at both ends of a recording (keeps 0.15 s of air). */
+  function trimSilence(buf, threshold = 0.02, keep = 0.15) {
+    const d = buf.getChannelData(0), sr = buf.sampleRate;
+    let a = 0, b = d.length - 1;
+    while (a < d.length && Math.abs(d[a]) < threshold) a++;
+    while (b > a && Math.abs(d[b]) < threshold) b--;
+    if (b <= a) return buf;
+    a = Math.max(0, a - Math.round(keep * sr));
+    b = Math.min(d.length - 1, b + Math.round(keep * sr));
+    const out = audioCtx().createBuffer(buf.numberOfChannels, b - a + 1, sr);
+    for (let c = 0; c < buf.numberOfChannels; c++) out.copyToChannel(buf.getChannelData(c).subarray(a, b + 1), c);
+    return out;
+  }
+
+  // ── on / off
+  function updateNarrUI() {
+    const on = $('narrChk').checked;
+    $('narrBody').style.display = on ? 'block' : 'none';
+    $('holdLabel').textContent = on ? 'Hold slides without narration (s)' : 'Hold each slide (s)';
+    if (on && !$('ttsLang').options.length) fillLanguages().then(fillVoices).catch(err => setTtsStatus(String(err), true));
+  }
+  $('narrChk').addEventListener('change', updateNarrUI);
+
+  function narrationSettings() {
+    if (!$('narrChk').checked || !narr.some(n => n.buffer)) return null;
+    return {
+      clips: narr.map(n => n.buffer || null),
+      leadMs: Math.max(0, +$('leadSec').value || 0) * 1000,
+      tailMs: Math.max(0, +$('tailSec').value || 0) * 1000,
+    };
+  }
+
+  /**
+   * Plays each slide's clip in real time when its segment starts (preview + MediaRecorder export).
+   * With `record` it also exposes an audio track to add to the recorded stream.
+   */
+  function narrationPlayer(record) {
+    const ctx = audioCtx();
+    ctx.resume?.();
+    const dest = record ? ctx.createMediaStreamDestination() : null;
+    const live = [];
+    return {
+      track: dest ? dest.stream.getAudioTracks()[0] : null,
+      onSegmentStart: (seg) => {
+        if (!seg.audio) return;
+        const src = ctx.createBufferSource();
+        src.buffer = seg.audio.buffer;
+        src.connect(ctx.destination);
+        if (dest) src.connect(dest);
+        src.start(ctx.currentTime + seg.audio.lead / 1000);
+        live.push(src);
+      },
+      stop: () => { for (const s of live) { try { s.stop(); } catch {} } },
+    };
+  }
+
   // ── Video jobs ─────────────────────────────────────────────────────────────
   /** A background is usable when nothing is selected or a source is set. */
   async function bgPrepared() {
@@ -636,6 +1096,7 @@
       clickGapMs: Math.max(0, +$('clickGapSec').value || 0) * 1000,
       animate: $('animChk').checked,
       readability: { mode: $('readMode').value, strength: (+$('readStrength').value || 0) / 100 },
+      narration: narrationSettings(),
       transition: { choice: $('transitionSel').value, ms: Math.max(0, +$('transMs').value || 0) },
       bg: {
         file: bgEntry ? bgFile : null,
@@ -656,6 +1117,7 @@
 
   function setJobUI(running) {
     $('gallery').classList.toggle('muted-off', running);
+    $('narrPanel').classList.toggle('muted-off', running);
     for (const id of ['previewVideoBtn', 'exportBtn', 'pdfBtn', 'showBtn', 'pngBtn', 'playAnimBtn'])
       $(id).disabled = running;
     $('stopBtn').disabled = !running;
@@ -695,10 +1157,12 @@
       setVStatus('Preparing…');
       bgVideo = await makeBgVideoElement();
       setBar($('videoProgress'), 0);
+      const voice = narrationPlayer(null);
       const done = await pv.playRealtime({
-        bgVideo, signal: job.signal,
+        bgVideo, signal: job.signal, onSegmentStart: voice.onSegmentStart,
         onProgress: (t, total, s) => { setBar($('videoProgress'), t / total); setVStatus(`Slide ${s + 1}/${renderer.slideCount} · ${fmtTime(t / 1000)} / ${fmtTime(total / 1000)}`); },
       });
+      voice.stop();
       setVStatus(done ? 'Preview finished.' : 'Preview stopped.');
     } catch (err) {
       console.error(err);
@@ -742,13 +1206,16 @@
         });
         if (!blob) { setVStatus('Export cancelled.'); return; }
         const secs = (performance.now() - t0) / 1000;
-        showResult(blob, container, ` · ${fmtTime(pv.totalMs / 1000)} of video made in ${secs.toFixed(1)} s`);
+        showResult(blob, container, ` · ${fmtTime(pv.totalMs / 1000)} of video${pv.hasNarration ? ' with narration (' + pv.audioCodec.toUpperCase() + ')' : ''} made in ${secs.toFixed(1)} s`);
       } else {
-        const mime = mrMime(container) || mrMime(container === 'mp4' ? 'webm' : 'mp4');
+        const wantAudio = pv.hasNarration;
+        const mime = mrMime(container, wantAudio) || mrMime(container === 'mp4' ? 'webm' : 'mp4', wantAudio);
         if (!mime) throw new Error('MediaRecorder recording is not supported in this browser.');
         const ext = mime.startsWith('video/mp4') ? 'mp4' : 'webm';
         bgVideo = await makeBgVideoElement();
+        const voice = narrationPlayer(wantAudio);
         const stream = pv.out.captureStream(pv.s.fps);
+        if (voice.track) stream.addTrack(voice.track);
         const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: Math.round(pv.W * pv.H * pv.s.fps * 0.15) });
         const chunks = [];
         rec.ondataavailable = (e) => { if (e.data?.size) chunks.push(e.data); };
@@ -756,13 +1223,14 @@
         rec.start(1000);
         rec.pause();                                     // the engine resumes once the first slide is ready
         const done = await pv.playRealtime({
-          recorder: rec, bgVideo, signal: job.signal,
+          recorder: rec, bgVideo, signal: job.signal, onSegmentStart: voice.onSegmentStart,
           onProgress: (t, total, s) => { setBar($('videoProgress'), t / total); setVStatus(`Recording slide ${s + 1}/${renderer.slideCount} · ${fmtTime(t / 1000)} / ${fmtTime(total / 1000)}`); },
         });
         if (rec.state === 'paused') rec.resume();
         await new Promise(r => setTimeout(r, 300));     // let the last frame flush
         rec.stop();
         await stopped;
+        voice.stop();
         stream.getTracks().forEach(t => t.stop());
         showResult(new Blob(chunks, { type: mime.split(';')[0] }), ext, done ? '' : ' (stopped early)');
       }

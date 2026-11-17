@@ -615,11 +615,35 @@ export class PptxVideo {
       }
       const animEnd = this.s.animate
         ? buildTimeline(parseSlideAnimations(this.r, i).groups, this.s.clickGapMs).end : 0;
-      const len = animEnd + this.s.holdMs;
-      segs.push({ kind: 'slide', i, ms: len, t0 });
+      // Narration: the slide lasts as long as its audio (plus pauses), but never cuts animations short
+      const nar = this.s.narration;
+      const clip = nar?.clips?.[i] || null;
+      let len = animEnd + this.s.holdMs, audio = null;
+      if (clip) {
+        const lead = nar.leadMs ?? 400, tail = nar.tailMs ?? 800;
+        len = Math.max(animEnd + 300, lead + clip.duration * 1000 + tail);
+        audio = { buffer: clip, at: t0 + lead, lead };
+      }
+      segs.push({ kind: 'slide', i, ms: len, t0, audio });
       t0 += len;
     }
     return segs;
+  }
+
+  get hasNarration() { return this.segs.some(s => s.audio); }
+
+  /** Mix every slide's clip at its time into one mono track for the whole video. */
+  async narrationTrack(sampleRate = 48000) {
+    const length = Math.max(1, Math.ceil(this.totalMs / 1000 * sampleRate));
+    const ctx = new OfflineAudioContext(1, length, sampleRate);
+    for (const seg of this.segs) {
+      if (!seg.audio) continue;
+      const src = ctx.createBufferSource();
+      src.buffer = seg.audio.buffer;
+      src.connect(ctx.destination);
+      src.start(seg.audio.at / 1000);
+    }
+    return await ctx.startRendering();
   }
 
   async _scene(i) {
@@ -707,7 +731,7 @@ export class PptxVideo {
    * Real-time playback onto this.out (preview or MediaRecorder recording).
    * hooks: { recorder?, bgVideo? (HTMLVideoElement, playing), signal?, onProgress?(ms,total,slide) }
    */
-  async playRealtime({ recorder = null, bgVideo = null, signal = null, onProgress = null } = {}) {
+  async playRealtime({ recorder = null, bgVideo = null, signal = null, onProgress = null, onSegmentStart = null } = {}) {
     for (const seg of this.segs) {
       if (signal?.aborted) return false;
       // Rendering the next scene can take a moment: pause recording meanwhile
@@ -718,6 +742,7 @@ export class PptxVideo {
       this._compose(seg, 0, bgVideo, bgVideo?.videoWidth, bgVideo?.videoHeight);
       if (bgVideo) await bgVideo.play().catch(() => {});
       if (recorder?.state === 'paused') recorder.resume();
+      onSegmentStart?.(seg);
 
       await new Promise((resolve) => {
         let start = null;
@@ -753,7 +778,20 @@ export class PptxVideo {
     });
     const source = new CanvasSource(this.out, { codec, quality: QUALITY_HIGH, keyFrameInterval: 2 });
     output.addVideoTrack(source, { frameRate: this.s.fps });
+
+    let audioSource = null, narration = null;
+    if (this.hasNarration) {
+      const { AudioBufferSource, getFirstEncodableAudioCodec } = MB;
+      const acodec = await getFirstEncodableAudioCodec(container === 'mp4' ? ['aac', 'opus'] : ['opus', 'vorbis'],
+        { numberOfChannels: 1, sampleRate: 48000 });
+      if (!acodec) throw new Error('No audio encoder is available in this browser for ' + container.toUpperCase() + '.');
+      narration = await this.narrationTrack(48000);
+      audioSource = new AudioBufferSource({ codec: acodec, quality: QUALITY_HIGH });
+      output.addAudioTrack(audioSource);
+      this.audioCodec = acodec;
+    }
     await output.start();
+    if (audioSource) { await audioSource.add(narration); audioSource.close?.(); }
 
     let bg = null;
     if (this.hasBg) { bg = new BgReader(this.s.bg.file, this.W, this.H, this.s.bg.loop); await bg.init(); }
