@@ -596,6 +596,9 @@ export async function renderTextBody(ctx, txBody, bx, by, bw, bh, scale, themeCo
     const marL = attrInt(pPr, 'marL', 0) * scale;
     const indent = attrInt(pPr, 'indent', 0) * scale;
 
+    // Fix: declared before parseBullet() uses it (was a TDZ ReferenceError)
+    const defRPr = g1(pPr, 'defRPr');
+
     // ── Bullet / list marker ─────────────────────────────────────────────────
     const bullet = pPr ? parseBullet(pPr, defRPr, themeColors, themeData) : null;
 
@@ -603,7 +606,6 @@ export async function renderTextBody(ctx, txBody, bx, by, bw, bh, scale, themeCo
     const spcBef = g1(pPr, 'spcBef');
     const spcAft = g1(pPr, 'spcAft');
     const lnSpc = g1(pPr, 'lnSpc');
-    const defRPr = g1(pPr, 'defRPr');
 
     // Default font size: lstStyle (lowest) → pPr defRPr (higher) → run rPr (highest)
     let paraDefSz = defaultFontSz;
@@ -1947,10 +1949,15 @@ export async function renderGraphicFrame(ctx, graphicFrame, themeColors, themeDa
 //  SHAPE TREE RENDERING
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export async function renderSpTree(ctx, spTreeEl, rels, imageCache, themeColors, themeData, scale, placeholderMap, files) {
+export async function renderSpTree(ctx, spTreeEl, rels, imageCache, themeColors, themeData, scale, placeholderMap, files, filter = null) {
   if (!spTreeEl) return;
   for (const child of spTreeEl.children) {
     const ln = child.localName;
+    // [MLApplications] optional per-shape filter (used for layered animation rendering)
+    if (filter && ['sp', 'pic', 'grpSp', 'graphicFrame', 'cxnSp'].includes(ln)) {
+      const cNvPr = g1(child, 'cNvPr');
+      if (!filter(child, cNvPr ? cNvPr.getAttribute('id') : null)) continue;
+    }
     try {
       if (ln === 'sp') await renderShape(ctx, child, rels, imageCache, themeColors, themeData, scale, null, placeholderMap);
       else if (ln === 'pic') await renderPicture(ctx, child, rels, imageCache, themeColors, scale);

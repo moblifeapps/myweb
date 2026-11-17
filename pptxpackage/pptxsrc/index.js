@@ -76,6 +76,10 @@ export default class PptxRenderer {
    * @param {(progress: number, message: string) => void} [onProgress]
    */
   async load(source, onProgress = () => {}) {
+    // [MLApplications] reset per-file state so a renderer can load a second file
+    this.slidePaths = [];
+    this.slideCount = 0;
+
     // Normalise input to ArrayBuffer
     let buf;
     if (source instanceof Uint8Array) {
@@ -170,8 +174,13 @@ export default class PptxRenderer {
    * @param {number}            slideIndex  0-based slide index
    * @param {HTMLCanvasElement} canvas
    * @param {number}            [width=1280]  output canvas width in pixels
+   * @param {object}            [opts]        [MLApplications] layered rendering options
+   * @param {boolean}           [opts.background=true]    draw the slide/layout/master background
+   * @param {boolean}           [opts.masterShapes=true]  draw master + layout decorative shapes
+   * @param {(el: Element, id: string|null) => boolean} [opts.filter]  draw only top-level slide shapes for which this returns true
    */
-  async renderSlide(slideIndex, canvas, width = 1280) {
+  async renderSlide(slideIndex, canvas, width = 1280, opts = {}) {
+    const { background = true, masterShapes = true, filter = null } = opts;
     if (slideIndex < 0 || slideIndex >= this.slidePaths.length) {
       throw new RangeError(`Slide ${slideIndex} out of range (0–${this.slidePaths.length - 1})`);
     }
@@ -214,25 +223,27 @@ export default class PptxRenderer {
     ctx.clearRect(0, 0, width, height);
 
     // Background
-    await renderBackground(
+    if (background) await renderBackground(
       ctx, slideDoc, this.masterDoc, layoutDoc,
       slideRels, this.masterRels,
       allImages, this.themeColors,
       scale, this.slideSize.cx, this.slideSize.cy,
     );
 
-    // Master decorative shapes (non-placeholder)
-    await this._renderNonPlaceholders(ctx, this.masterDoc, this.masterRels, this.masterImages, scale);
+    if (masterShapes) {
+      // Master decorative shapes (non-placeholder)
+      await this._renderNonPlaceholders(ctx, this.masterDoc, this.masterRels, this.masterImages, scale);
 
-    // Layout decorative shapes (non-placeholder)
-    await this._renderNonPlaceholders(ctx, layoutDoc, layoutRels, layoutImages, scale);
+      // Layout decorative shapes (non-placeholder)
+      await this._renderNonPlaceholders(ctx, layoutDoc, layoutRels, layoutImages, scale);
+    }
 
     // Slide content
     const cSld   = g1(slideDoc, 'cSld');
     const spTree = cSld ? g1(cSld, 'spTree') : null;
     if (spTree) {
       await renderSpTree(ctx, spTree, slideRels, allImages,
-        this.themeColors, this.themeData, scale, placeholderMap, this._files);
+        this.themeColors, this.themeData, scale, placeholderMap, this._files, filter);
     }
   }
 
