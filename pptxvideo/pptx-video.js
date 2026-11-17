@@ -273,10 +273,14 @@ function shapeState(effects, t) {
   return { visible, fx };
 }
 
-function drawAnimLayer(ctx, L, t, W, H) {
+function drawAnimLayer(ctx, L, t, W, H, deco = null) {
   const { visible, fx } = shapeState(L.effects, t);
   if (!visible) return;
-  if (!fx) { ctx.drawImage(L.canvas, L.x, L.y); return; }
+  if (!fx) {
+    if (deco && L.panels) drawPanels(ctx, L.panels, L.x, L.y, deco, 0, 0);
+    ctx.drawImage(L.canvas, L.x, L.y);
+    return;
+  }
 
   const kind = fx.e.kind, dir = fx.e.dir;
   const p = fx.mode === 'out' ? 1 - fx.p : fx.p;   // amount "shown"
@@ -324,17 +328,171 @@ function drawAnimLayer(ctx, L, t, W, H) {
   ctx.translate(cx + dx, cy + dy);
   if (rot) ctx.rotate(rot);
   if (sc !== 1) ctx.scale(sc, sc);
+  // panels follow the shape; their blurred backdrop is aligned for moves (approximate while scaling/rotating)
+  if (deco && L.panels) drawPanels(ctx, L.panels, -L.w / 2, -L.h / 2, deco, cx + dx, cy + dy);
   ctx.drawImage(L.canvas, -L.w / 2, -L.h / 2);
   ctx.restore();
 }
 
 /** Draw a scene at time t (ms from slide start) onto ctx (cleared first). */
-export function drawScene(ctx, scene, t) {
+export function drawScene(ctx, scene, t, deco = null) {
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   for (const L of scene.layers) {
-    if (L.type === 'static') ctx.drawImage(L.canvas, 0, 0);
-    else drawAnimLayer(ctx, L, t, scene.w, scene.h);
+    if (L.type === 'static') {
+      const x = L.x || 0, y = L.y || 0;
+      if (deco && L.panels) drawPanels(ctx, L.panels, x, y, deco, 0, 0);
+      ctx.drawImage(L.canvas, x, y);
+    } else drawAnimLayer(ctx, L, t, scene.w, scene.h, deco);
   }
+}
+
+// ── Text readability over video ──────────────────────────────────────────────
+const FILTER_OK = (() => {
+  try { const c = document.createElement('canvas').getContext('2d'); c.filter = 'blur(2px)'; return c.filter === 'blur(2px)'; }
+  catch { return false; }
+})();
+const DARK_LUM = 140;   // pixels darker than this get a light halo, lighter ones a dark halo
+const lum = (r, g, b) => 0.2126 * r + 0.7152 * g + 0.0722 * b;
+
+/**
+ * "Contrast silhouette": same alpha as the layer, colour white where the content is dark and
+ * black where it is light. Halos drawn from it always contrast with the pixel they surround.
+ */
+function contrastSilhouette(src, pad) {
+  const w = src.width, h = src.height;
+  const sctx = src.getContext('2d', { willReadFrequently: true });
+  const img = sctx.getImageData(0, 0, w, h);
+  const d = img.data;
+  for (let i = 0; i < d.length; i += 4) {
+    if (!d[i + 3]) continue;
+    const c = lum(d[i], d[i + 1], d[i + 2]) < DARK_LUM ? 255 : 0;
+    d[i] = d[i + 1] = d[i + 2] = c;
+  }
+  const sil = makeCanvas(w + pad * 2, h + pad * 2);
+  sil.getContext('2d').putImageData(img, pad, pad);
+  return sil;
+}
+
+/** Returns a new, padded canvas: halo (outline / shadow / glow) + the original on top. */
+function haloLayer(src, mode, k, W) {
+  const u = W / 1920;                                   // scale effects with output size
+  const pad = Math.ceil(u * 14 * Math.max(k, 0.2)) + 2;
+  const sil = contrastSilhouette(src, pad);
+  const out = makeCanvas(sil.width, sil.height);
+  const o = out.getContext('2d');
+  const ring = (r, n, alpha = 1) => {
+    o.globalAlpha = alpha;
+    for (let a = 0; a < n; a++) {
+      const ang = (a / n) * Math.PI * 2;
+      o.drawImage(sil, Math.cos(ang) * r, Math.sin(ang) * r);
+    }
+    o.globalAlpha = 1;
+  };
+  const blurred = (b, times, dx = 0, dy = 0) => {
+    if (FILTER_OK) {
+      o.filter = `blur(${b}px)`;
+      for (let i = 0; i < times; i++) o.drawImage(sil, dx, dy);
+      o.filter = 'none';
+    } else {                                             // fallback: soft multi-ring
+      for (let r = b; r > 0; r -= Math.max(1, b / 3)) ring(r, 16, 0.25);
+    }
+  };
+  if (mode === 'outline') {
+    ring(Math.max(1, Math.round(u * 3 * k)), 16);
+  } else if (mode === 'shadow') {
+    blurred(Math.max(1, u * 7 * k), 2, u * 2.5 * k, u * 2.5 * k);
+  } else {                                               // auto: soft glow + hairline edge
+    blurred(Math.max(1, u * 6 * k), 2);
+    ring(Math.max(1, Math.round(u * 1.2 * k)), 12, 0.9);
+  }
+  o.drawImage(src, pad, pad);
+  return { canvas: out, pad };
+}
+
+/** Find blocks of content (text boxes etc.) in a layer → rounded panel rectangles. */
+function contentPanels(src, W) {
+  const cell = Math.max(4, Math.round(W / 240));
+  const gw = Math.ceil(src.width / cell), gh = Math.ceil(src.height / cell);
+  const small = makeCanvas(gw, gh);
+  const sc = small.getContext('2d', { willReadFrequently: true });
+  sc.drawImage(src, 0, 0, gw, gh);
+  const d = sc.getImageData(0, 0, gw, gh).data;
+  const occ = new Uint8Array(gw * gh);
+  for (let i = 0; i < gw * gh; i++) if (d[i * 4 + 3] > 10) occ[i] = 1;
+  // dilate so letters/lines of one text box join into a block
+  const dil = new Uint8Array(gw * gh), R = 2;
+  for (let y = 0; y < gh; y++) for (let x = 0; x < gw; x++) {
+    if (!occ[y * gw + x]) continue;
+    for (let yy = Math.max(0, y - R); yy <= Math.min(gh - 1, y + R); yy++)
+      for (let xx = Math.max(0, x - R); xx <= Math.min(gw - 1, x + R); xx++) dil[yy * gw + xx] = 1;
+  }
+  const seen = new Uint8Array(gw * gh);
+  let boxes = [];
+  for (let i = 0; i < gw * gh; i++) {
+    if (!dil[i] || seen[i]) continue;
+    let x0 = gw, y0 = gh, x1 = 0, y1 = 0, lumSum = 0, lumN = 0;
+    const stack = [i];
+    seen[i] = 1;
+    while (stack.length) {
+      const j = stack.pop(), x = j % gw, y = (j / gw) | 0;
+      if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
+      if (occ[j]) { lumSum += lum(d[j * 4], d[j * 4 + 1], d[j * 4 + 2]); lumN++; }
+      for (const n of [j - 1, j + 1, j - gw, j + gw]) {
+        if (n < 0 || n >= gw * gh || seen[n] || !dil[n]) continue;
+        if ((n === j - 1 && x === 0) || (n === j + 1 && x === gw - 1)) continue;
+        seen[n] = 1; stack.push(n);
+      }
+    }
+    if ((x1 - x0) < 2 && (y1 - y0) < 2) continue;
+    boxes.push({ x: x0 * cell, y: y0 * cell, w: (x1 - x0 + 1) * cell, h: (y1 - y0 + 1) * cell,
+      darkText: lumN ? lumSum / lumN < DARK_LUM : false });
+  }
+  // merge overlapping boxes
+  for (let merged = true; merged;) {
+    merged = false;
+    outer: for (let a = 0; a < boxes.length; a++) for (let b = a + 1; b < boxes.length; b++) {
+      const A = boxes[a], B = boxes[b];
+      if (A.x < B.x + B.w && B.x < A.x + A.w && A.y < B.y + B.h && B.y < A.y + A.h) {
+        const x = Math.min(A.x, B.x), y = Math.min(A.y, B.y);
+        boxes[a] = { x, y, w: Math.max(A.x + A.w, B.x + B.w) - x, h: Math.max(A.y + A.h, B.y + B.h) - y, darkText: A.darkText && B.darkText };
+        boxes.splice(b, 1); merged = true; break outer;
+      }
+    }
+  }
+  return boxes.map(b => ({ ...b, r: Math.round(cell * 1.5) }));
+}
+
+/**
+ * Frosted-glass panels under content. ox/oy = layer origin in the current ctx;
+ * wx/wy = where ctx's origin sits in frame space (0,0 when untransformed).
+ */
+function drawPanels(ctx, panels, ox, oy, deco, wx, wy) {
+  for (const p of panels) {
+    ctx.save();
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(ox + p.x, oy + p.y, p.w, p.h, p.r); else ctx.rect(ox + p.x, oy + p.y, p.w, p.h);
+    ctx.clip();
+    ctx.drawImage(deco.src, -wx, -wy, deco.W, deco.H);
+    ctx.fillStyle = p.darkText ? `rgba(255,255,255,${deco.tint})` : `rgba(0,0,0,${deco.tint})`;
+    ctx.fillRect(ox + p.x, oy + p.y, p.w, p.h);
+    ctx.strokeStyle = p.darkText ? 'rgba(255,255,255,.35)' : 'rgba(255,255,255,.18)';
+    ctx.lineWidth = Math.max(1, deco.W / 1600);
+    ctx.stroke();
+    ctx.restore();
+  }
+}
+
+/** Apply readability to all layers of a scene (once per scene). */
+export function decorateScene(scene, mode, k) {
+  if (!mode || mode === 'off') return scene;
+  for (const L of scene.layers) {
+    if (mode === 'frosted') { L.panels = contentPanels(L.canvas, scene.w); continue; }
+    const { canvas, pad } = haloLayer(L.canvas, mode, k, scene.w);
+    L.canvas = canvas;
+    if (L.type === 'static') { L.x = -pad; L.y = -pad; }
+    else { L.x -= pad; L.y -= pad; L.w += pad * 2; L.h += pad * 2; }
+  }
+  return scene;
 }
 
 /** Play one slide's animations on a canvas (viewer preview). */
@@ -366,12 +524,16 @@ function drawCover(ctx, src, sw, sh, W, H) {
   ctx.drawImage(src, (W - w) / 2, (H - h) / 2, w, h);
 }
 
-/** Sequential frame reader for the fast exporter (Mediabunny CanvasSink). */
+/** Sequential frame reader for the fast exporter (Mediabunny CanvasSink). `file` = File/Blob or URL string. */
 class BgReader {
   constructor(file, W, H, loop) { this.file = file; this.W = W; this.H = H; this.loop = loop; }
   async init() {
-    const { Input, BlobSource, ALL_FORMATS, CanvasSink } = await loadMediabunny();
-    this.input = new Input({ source: new BlobSource(this.file), formats: ALL_FORMATS });
+    const { Input, BlobSource, UrlSource, ALL_FORMATS, CanvasSink } = await loadMediabunny();
+    // A URL string streams from the server with HTTP range requests (no full download first)
+    const source = typeof this.file === 'string'
+      ? new UrlSource(this.file, { maxCacheSize: 32 * 1024 * 1024, parallelism: 2 })
+      : new BlobSource(this.file);
+    this.input = new Input({ source, formats: ALL_FORMATS });
     const track = await this.input.getPrimaryVideoTrack();
     if (!track) throw new Error('The background file has no video track.');
     if (!(await track.canDecode())) throw new Error('This browser cannot decode the background video codec.');
@@ -422,6 +584,14 @@ export class PptxVideo {
     this.scenes = new Map();
     this.hasBg = !!(settings.bg?.file && settings.bg.mode !== 'none');
     this.transparent = this.hasBg && settings.bg.mode === 'transparent';
+    // readability only matters when slide content sits directly on the video
+    const rd = settings.readability || { mode: 'off', strength: 0.6 };
+    this.readMode = this.transparent ? rd.mode : 'off';
+    this.readK = Math.max(0, Math.min(1, rd.strength ?? 0.6));
+    if (this.readMode === 'frosted') {
+      this.blurSmall = makeCanvas(Math.max(2, Math.round(this.W / 4)), Math.max(2, Math.round(this.slideH / 4)));
+      this.deco = { src: this.blurSmall, W: this.W, H: this.slideH, tint: 0.15 + 0.35 * this.readK };
+    }
     this.segs = this._plan();
     this.totalMs = this.segs.reduce((s, x) => s + x.ms, 0);
   }
@@ -456,7 +626,7 @@ export class PptxVideo {
     if (!this.scenes.has(i)) {
       this.scenes.set(i, buildScene(this.r, i, {
         width: this.W, transparent: this.transparent, animate: this.s.animate, clickGapMs: this.s.clickGapMs,
-      }));
+      }).then(sc => decorateScene(sc, this.readMode, this.readK)));
     }
     return this.scenes.get(i);
   }
@@ -467,16 +637,23 @@ export class PptxVideo {
     for (const i of need) got.push(await this._scene(i));
     if (seg.kind === 'trans') {
       // static "from" (end state) and "to" (start state) for the transition
-      drawScene(this.tA.getContext('2d'), got[0], Number.MAX_SAFE_INTEGER);
-      drawScene(this.tB.getContext('2d'), got[1], 0);
+      drawScene(this.tA.getContext('2d'), got[0], Number.MAX_SAFE_INTEGER, this.deco);
+      drawScene(this.tB.getContext('2d'), got[1], 0, this.deco);
     }
     seg.scene = got[got.length - 1];
   }
 
   /** Compose the output frame for a segment at local time t (ms); bgSrc = canvas/video or null. */
   _compose(seg, t, bgSrc, bgW, bgH) {
+    // frosted panels: a small blurred copy of the current background frame
+    if (this.deco && bgSrc) {
+      const b = this.blurSmall.getContext('2d');
+      if (FILTER_OK) b.filter = `blur(${Math.max(1, 2 + 4 * this.readK)}px)`;
+      drawCover(b, bgSrc, bgW, bgH, this.blurSmall.width, this.blurSmall.height);
+      b.filter = 'none';
+    }
     const fctx = this.frame.getContext('2d');
-    if (seg.kind === 'slide') drawScene(fctx, seg.scene, t);
+    if (seg.kind === 'slide') drawScene(fctx, seg.scene, t, this.deco);
     else renderTransitionFrame(fctx, this.tA, this.tB, seg.t, Math.min(1, t / seg.ms));
 
     const ctx = this.out.getContext('2d');
@@ -486,6 +663,10 @@ export class PptxVideo {
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, W, H);
     if (this.hasBg && bgSrc) drawCover(ctx, bgSrc, bgW, bgH, W, H);
+    if (this.readMode === 'auto' && this.readK > 0) {      // gentle overall dim of the footage
+      ctx.fillStyle = `rgba(0,0,0,${0.3 * this.readK})`;
+      ctx.fillRect(0, 0, W, H);
+    }
 
     const mode = this.hasBg ? this.s.bg.mode : 'none';
     if (mode === 'inset') {

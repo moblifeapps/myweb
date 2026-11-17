@@ -32,7 +32,7 @@ import {
   renderBackground,
   renderShape, renderPicture, renderGroupShape,
   renderGraphicFrame, renderConnector,
-  renderSpTree, buildPlaceholderMap,
+  renderSpTree, buildPlaceholderMap, buildPlaceholderTextMap,
 } from './render.js';
 import { PptxWriter } from './writer.js';
 import { exportToPdf, downloadAsPdf, exportSlideToPdf } from './pdf.js';
@@ -118,6 +118,8 @@ export default class PptxRenderer {
       console.info('[pptx-browser] PPTX contains embedded fonts: ' + names + '. Use registerFont() to supply woff2/ttf versions.');
     }
 
+    this._defaultTextStyle = g1(presDoc, 'defaultTextStyle');   // [MLApplications]
+
     const sldIdLst = g1(presDoc, 'sldIdLst');
     if (sldIdLst) {
       for (const sldId of sldIdLst.children) {
@@ -146,6 +148,7 @@ export default class PptxRenderer {
     if (!this.themeData) {
       this.themeData = { colors: {}, majorFont: 'Calibri Light', minorFont: 'Calibri' };
     }
+    this.themeData.defaultTextStyle = this._defaultTextStyle || null;
     this.themeColors = { ...this.themeData.colors };
 
     // ── Slide master ──────────────────────────────────────────────────────
@@ -158,6 +161,8 @@ export default class PptxRenderer {
         this.masterRels   = await getRels(this._files, masterRel.fullPath);
         this.masterImages = await loadImages(this._files, this.masterRels);
         this._trackBlobs(this.masterImages);
+        // [MLApplications] master text styles for inheritance (title/body/other)
+        this.themeData.masterTxStyles = g1(this.masterDoc, 'txStyles');
         const clrMap = parseClrMap(this.masterDoc);
         this.themeColors = buildThemeColors(this.themeData, clrMap);
       }
@@ -209,6 +214,11 @@ export default class PptxRenderer {
 
     const allImages = { ...this.masterImages, ...layoutImages, ...slideImages };
     const placeholderMap = buildPlaceholderMap([layoutDoc, this.masterDoc]);
+    // [MLApplications] placeholder text styles: [layout, master]
+    Object.defineProperty(placeholderMap, '_tx', {
+      value: [buildPlaceholderTextMap(layoutDoc), buildPlaceholderTextMap(this.masterDoc)],
+      enumerable: false,
+    });
 
     // Load Google Font substitutes for MS fonts used in this slide
     const usedFonts = collectUsedFonts([slideDoc, layoutDoc, this.masterDoc]);

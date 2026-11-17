@@ -483,13 +483,12 @@ function toRoman(n) {
  * Draw a bullet marker at the given position.
  * autoNumCounters: shared map from (numType+startAt) → current count
  */
-function drawBullet(ctx, bullet, x, baseline, autoNumCounters) {
+function drawBullet(ctx, bullet, x, baseline, autoNumCounters, lineSzPx = null, textColor = null, textFont = null) {
   if (!bullet) return;
 
-  // Derive the font size from the current ctx.font (set by the line's first run)
-  // We read szPx from ctx.font using a rough parse
-  const fontMatch = ctx.font.match(/(d+(?:.d+)?)px/);
-  const baseSzPx = fontMatch ? parseFloat(fontMatch[1]) : 16;
+  // [MLApplications] use the line's real font size (the old regex lacked backslashes and never matched)
+  const fontMatch = (textFont || ctx.font).match(/(\d+(?:\.\d+)?)px/);
+  const baseSzPx = lineSzPx || (fontMatch ? parseFloat(fontMatch[1]) : 16);
 
   const szPx = bullet.sizePts != null
     ? bullet.sizePts * (baseSzPx / 12) // rough approximation
@@ -502,7 +501,10 @@ function drawBullet(ctx, bullet, x, baseline, autoNumCounters) {
   if (bullet.color) {
     ctx.fillStyle = colorToCss(bullet.color);
     ctx.strokeStyle = ctx.fillStyle;
+  } else if (textColor) {                    // [MLApplications] default: same colour as the text
+    ctx.fillStyle = typeof textColor === 'string' ? textColor : colorToCss(textColor);
   }
+  if (textFont) ctx.font = textFont;
 
   // Bullet font
   const family = bullet.fontFamily ? '"' + bullet.fontFamily + '", sans-serif' : ctx.font.split(/\d+px\s+/)[1] || 'sans-serif';
@@ -521,10 +523,125 @@ function drawBullet(ctx, bullet, x, baseline, autoNumCounters) {
   ctx.restore();
 }
 
-export async function renderTextBody(ctx, txBody, bx, by, bw, bh, scale, themeColors, themeData, defaultFontSz = 1800) {
+// ═══════════════════════════════════════════════════════════════════════════════
+//  [MLApplications] TEXT STYLE INHERITANCE
+//  paragraph pPr → shape lstStyle → layout placeholder → master placeholder →
+//  master txStyles (title/body/other) → presentation defaultTextStyle → theme tx1
+// ═══════════════════════════════════════════════════════════════════════════════
+const A_NS = 'http://schemas.openxmlformats.org/drawingml/2006/main';
+const PROP_GROUP = {
+  solidFill: 'fill', gradFill: 'fill', noFill: 'fill', pattFill: 'fill', blipFill: 'fill', grpFill: 'fill',
+  buNone: 'bu', buChar: 'bu', buAutoNum: 'bu', buBlip: 'bu',
+  buFont: 'buFont', buFontTx: 'buFont', buClr: 'buClr', buClrTx: 'buClr',
+  buSzPct: 'buSz', buSzPts: 'buSz', buSzTx: 'buSz',
+};
+function directChild(el, name) {
+  if (!el) return null;
+  for (const c of el.children) if (c.localName === name) return c;
+  return null;
+}
+/** First-wins merge of attributes and child properties of several elements into a new element. */
+function mergeProps(doc, tag, els, { attrsOnly = false } = {}) {
+  const list = els.filter(Boolean);
+  const out = doc.createElementNS(A_NS, 'a:' + tag);
+  const seen = new Set();
+  list.forEach((el, i) => {
+    for (const at of el.attributes) if (!out.hasAttribute(at.name)) out.setAttribute(at.name, at.value);
+    if (attrsOnly && i > 0) return;
+    for (const ch of el.children) {
+      if (ch.localName === 'defRPr') continue;          // merged separately
+      const grp = PROP_GROUP[ch.localName] || ch.localName;
+      if (seen.has(grp)) continue;
+      seen.add(grp);
+      out.appendChild(doc.importNode(ch, true));
+    }
+  });
+  return out;
+}
+/** Merged pPr (with merged defRPr inside) for a paragraph at a given level. */
+function inheritedPPr(doc, pPr, lvl, styles) {
+  const lvlName = `lvl${Math.min(9, lvl + 1)}pPr`;
+  const levels = styles.map(st => directChild(st, lvlName));
+  const merged = mergeProps(doc, 'pPr', [pPr, ...levels]);
+  const defRPr = mergeProps(doc, 'defRPr', [directChild(pPr, 'defRPr'), ...levels.map(l => directChild(l, 'defRPr'))]);
+  let hasFill = false;
+  for (const c of defRPr.children) if (PROP_GROUP[c.localName] === 'fill') hasFill = true;
+  if (!hasFill) {                                         // PowerPoint's ultimate default text colour
+    const f = doc.createElementNS(A_NS, 'a:solidFill');
+    const sc = doc.createElementNS(A_NS, 'a:schemeClr');
+    sc.setAttribute('val', 'tx1');
+    f.appendChild(sc);
+    defRPr.appendChild(f);
+  }
+  merged.appendChild(defRPr);
+  return merged;
+}
+
+/** Index layout/master placeholders' txBody by key, type and idx. */
+export function buildPlaceholderTextMap(doc) {
+  const m = { byKey: {}, byType: {}, byIdx: {} };
+  const spTree = doc ? g1(g1(doc, 'cSld'), 'spTree') : null;
+  if (!spTree) return m;
+  for (const sp of gtn(spTree, 'sp')) {
+    const ph = g1(g1(g1(sp, 'nvSpPr'), 'nvPr'), 'ph');
+    const txBody = g1(sp, 'txBody');
+    if (!ph || !txBody) continue;
+    const t = attr(ph, 'type', 'body'), idx = attr(ph, 'idx', '0');
+    m.byKey[`${t}:${idx}`] ??= txBody;
+    m.byType[t] ??= txBody;
+    m.byIdx[idx] ??= txBody;
+  }
+  return m;
+}
+
+/** List styles and bodyPrs a slide shape inherits from (layout, master, txStyles). */
+export function textInheritance(spEl, placeholderMap, themeData) {
+  const ph = g1(g1(g1(spEl, 'nvSpPr'), 'nvPr'), 'ph');
+  const styles = [], bodyPrs = [];
+  // Shape style font colour (<p:style><a:fontRef><a:schemeClr val="lt1"/>) — e.g. text in drawn shapes
+  const fontRef = directChild(directChild(spEl, 'style'), 'fontRef');
+  const refColor = fontRef ? fontRef.firstElementChild : null;
+  if (refColor) {
+    const doc = spEl.ownerDocument;
+    const lst = doc.createElementNS(A_NS, 'a:lstStyle');
+    for (let l = 1; l <= 9; l++) {
+      const p = doc.createElementNS(A_NS, `a:lvl${l}pPr`);
+      const r = doc.createElementNS(A_NS, 'a:defRPr');
+      const f = doc.createElementNS(A_NS, 'a:solidFill');
+      f.appendChild(refColor.cloneNode(true));
+      r.appendChild(f); p.appendChild(r); lst.appendChild(p);
+    }
+    styles.push(lst);
+  }
+  const txStyles = themeData?.masterTxStyles || null;
+  if (ph) {
+    const t = attr(ph, 'type', 'body'), idx = attr(ph, 'idx', '0');
+    const isTitle = t === 'title' || t === 'ctrTitle';
+    const maps = placeholderMap?._tx || [];
+    maps.forEach((m, level) => {
+      const master = level === maps.length - 1;
+      const hit = m.byKey[`${t}:${idx}`]
+        || (isTitle ? (m.byType[t] || m.byType.title || m.byType.ctrTitle) : null)
+        || (!master && idx !== '0' ? m.byIdx[idx] : null)
+        || m.byType[t]
+        || (!isTitle && master ? m.byType.body : null);
+      if (hit) { styles.push(directChild(hit, 'lstStyle')); bodyPrs.push(directChild(hit, 'bodyPr')); }
+    });
+    styles.push(directChild(txStyles, isTitle ? 'titleStyle' : 'bodyStyle'));
+  } else {
+    styles.push(directChild(txStyles, 'otherStyle'));
+  }
+  styles.push(themeData?.defaultTextStyle || null);
+  return { styles: styles.filter(Boolean), bodyPrs: bodyPrs.filter(Boolean) };
+}
+
+export async function renderTextBody(ctx, txBody, bx, by, bw, bh, scale, themeColors, themeData, defaultFontSz = 1800, inherit = null) {
   if (!txBody) return;
 
-  const bodyPr = g1(txBody, 'bodyPr');
+  const doc = txBody.ownerDocument;
+  const styleChain = [directChild(txBody, 'lstStyle'), ...(inherit?.styles || [])].filter(Boolean);
+  const bodyPr = mergeProps(doc, 'bodyPr', [directChild(txBody, 'bodyPr'), ...(inherit?.bodyPrs || [])], { attrsOnly: true });
+  const mergedPPrs = new Map();
   const anchor = attr(bodyPr, 'anchor', 't'); // t, ctr, b
   const wrap = attr(bodyPr, 'wrap', 'square');
   const vert = attr(bodyPr, 'vert', 'horz'); // horz, vert, vert270, eaVert
@@ -590,14 +707,16 @@ export async function renderTextBody(ctx, txBody, bx, by, bw, bh, scale, themeCo
   let totalHeight = 0;
 
   for (const para of paragraphs) {
-    const pPr = g1(para, 'pPr');
+    const rawPPr = directChild(para, 'pPr');
+    const pPr = inheritedPPr(doc, rawPPr, attrInt(rawPPr, 'lvl', 0), styleChain);
+    mergedPPrs.set(para, pPr);
     const algn = attr(pPr, 'algn', 'l'); // l, ctr, r, just, dist
     const lvl = attrInt(pPr, 'lvl', 0);
     const marL = attrInt(pPr, 'marL', 0) * scale;
     const indent = attrInt(pPr, 'indent', 0) * scale;
 
     // Fix: declared before parseBullet() uses it (was a TDZ ReferenceError)
-    const defRPr = g1(pPr, 'defRPr');
+    const defRPr = directChild(pPr, 'defRPr');
 
     // ── Bullet / list marker ─────────────────────────────────────────────────
     const bullet = pPr ? parseBullet(pPr, defRPr, themeColors, themeData) : null;
@@ -737,7 +856,7 @@ export async function renderTextBody(ctx, txBody, bx, by, bw, bh, scale, themeCo
       // Recompute totalHeight with this scale
       let testH = 0;
       for (const para of paragraphs) {
-        const pPr2 = g1(para, 'pPr');
+        const pPr2 = mergedPPrs.get(para) || g1(para, 'pPr');
         const defRPr2 = pPr2 ? g1(pPr2, 'defRPr') : null;
         let pSz = defaultFontSz;
         if (lstDefRPr) { const v = lstDefRPr.getAttribute('sz'); if (v) pSz = parseInt(v, 10); }
@@ -817,7 +936,9 @@ export async function renderTextBody(ctx, txBody, bx, by, bw, bh, scale, themeCo
       const isFirstLineOfPara = lineObj === lines[0];
       if (bullet && isFirstLineOfPara) {
         const bulletX = tx + marL + indent; // indent is typically negative (hanging)
-        drawBullet(ctx, bullet, bulletX, baseline, autoNumCounters);
+        const firstRun = (lineObj.runs || [])[0];
+        drawBullet(ctx, bullet, bulletX, baseline, autoNumCounters,
+          lineObj.maxSzPx || null, firstRun?.color || null, firstRun?.fontInfo?.fontStr || null);
       }
 
       // ── Justified text: distribute extra space across word gaps ───────────
@@ -871,7 +992,8 @@ export async function renderTextBody(ctx, txBody, bx, by, bw, bh, scale, themeCo
       // ── Draw each run ──────────────────────────────────────────────────────
       for (const run of runs) {
         const c = run.color;
-        ctx.fillStyle = c ? colorToCss(c) : '#000000';
+        // [MLApplications] run.color is already a CSS string (getRunColor returns colorToCss(...))
+        ctx.fillStyle = c ? (typeof c === 'string' ? c : colorToCss(c)) : '#000000';
 
         // Superscript / subscript: smaller font + vertical offset
         let drawY = baseline;
@@ -970,6 +1092,7 @@ export function applyEffects(ctx, spPr, themeColors, scale) {
 }
 
 export async function renderShape(ctx, spEl, rels, imageCache, themeColors, themeData, scale, parentGroup = null, placeholderMap = null) {
+  const textInherit = textInheritance(spEl, placeholderMap, themeData);   // [MLApplications]
   const spPr = g1(spEl, 'spPr');
   const xfrm = g1(spPr, 'xfrm');
 
@@ -1181,7 +1304,7 @@ export async function renderShape(ctx, spEl, rels, imageCache, themeColors, them
       ctx.rect(x, y, w, h);
       ctx.clip();
       const defSz = getDefaultFontSize(spEl, themeData);
-      await renderTextBody(ctx, txBody, x, y, w, h, scale, themeColors, themeData, defSz);
+      await renderTextBody(ctx, txBody, x, y, w, h, scale, themeColors, themeData, defSz, textInherit);
       ctx.restore();
     }
     return;
@@ -1249,7 +1372,7 @@ export async function renderShape(ctx, spEl, rels, imageCache, themeColors, them
     ctx.rect(x, y, w, h);
     ctx.clip();
     const defSz = getDefaultFontSize(spEl, themeData);
-    await renderTextBody(ctx, txBody, x, y, w, h, scale, themeColors, themeData, defSz);
+    await renderTextBody(ctx, txBody, x, y, w, h, scale, themeColors, themeData, defSz, textInherit);
     ctx.restore();
   }
 }

@@ -202,6 +202,21 @@
       </label>
       <label class="check"><input type="checkbox" id="bgLoop" checked> Loop video</label>
     </div>
+    <div class="form-row" style="margin-top:10px" id="readRow">
+      <label class="field">Text readability
+        <select id="readMode">
+          <option value="auto" selected>Auto (contrast glow + light dim)</option>
+          <option value="outline">Outline</option>
+          <option value="shadow">Shadow</option>
+          <option value="frosted">Frosted panels</option>
+          <option value="off">Off</option>
+        </select>
+      </label>
+      <label class="field">Strength (%)
+        <input type="range" id="readStrength" min="0" max="100" step="5" value="60" style="min-width:160px">
+      </label>
+      <span class="hint" style="margin:0 0 6px">Used with "Transparent slide background". Halo colours adapt automatically: dark text gets a light halo, light text a dark one.</span>
+    </div>
 
     <h3>Output</h3>
     <div class="form-row">
@@ -269,9 +284,8 @@
   let fileBaseName = 'presentation';
   let renderToken = 0;
   let job = null;               // AbortController of a running preview/export
-  let bgFile = null;            // File/Blob of the chosen background (gallery clips are fetched into one)
-  let bgUrl = null;             // object URL of bgFile (real-time preview/recording)
-  let bgReady = null;           // Promise that resolves when a gallery clip has finished downloading
+  let bgFile = null;            // background source: uploaded File, or URL string of a gallery clip (streamed)
+  let bgUrl = null;             // URL for <video> playback (object URL for uploads, the clip URL for gallery)
   let bgEntry = null;           // selected gallery entry, or { upload: true }
   let gallery = [];
   const GALLERY_DIR = './video-backgrounds/';
@@ -522,54 +536,19 @@
     document.querySelectorAll('#gallery .vcard').forEach(c => c.classList.toggle('selected', c === el));
   }
 
-  /** Download a gallery clip into a Blob with progress on its card. */
-  async function fetchClip(v, el) {
-    const bar = el?.querySelector('.loading');
-    const r = await fetch(GALLERY_DIR + encodeURI(v.file));
-    if (!r.ok) throw new Error(`Could not load ${v.file} (HTTP ${r.status})`);
-    const total = +r.headers.get('content-length') || v.size || 0;
-    const reader = r.body.getReader();
-    const parts = [];
-    let got = 0;
-    for (;;) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      parts.push(value);
-      got += value.length;
-      if (bar && total) bar.style.width = Math.min(100, got / total * 100) + '%';
-    }
-    if (bar) bar.style.width = '0';
-    return new File(parts, v.file, { type: 'video/mp4' });
+  function setBgFile(src) {
+    if (bgUrl && bgUrl.startsWith('blob:')) URL.revokeObjectURL(bgUrl);
+    bgFile = src;
+    bgUrl = !src ? null : typeof src === 'string' ? src : URL.createObjectURL(src);
   }
 
-  function setBgFile(file) {
-    if (bgUrl) URL.revokeObjectURL(bgUrl);
-    bgFile = file;
-    bgUrl = file ? URL.createObjectURL(file) : null;
-  }
-
-  async function selectBg(v, el = null) {
+  /** Gallery clips are not downloaded: the exporter streams them from the server (HTTP range requests). */
+  function selectBg(v, el = null) {
     bgEntry = v;
-    bgReady = null;
-    setBgFile(null);
+    setBgFile(v ? new URL(GALLERY_DIR + encodeURI(v.web || v.file), location.href).href : null);
     markSelected(el || document.querySelector('#gallery .vcard.none'));
     updateBgFields();
     renderStillPreview();
-    if (!v) return;
-    $('bgName').textContent = `Loading ${v.title || v.file}…`;
-    const p = fetchClip(v, el).then((file) => {
-      if (bgEntry !== v) return;           // user picked something else meanwhile
-      setBgFile(file);
-      updateBgFields();
-    }).catch((err) => {
-      if (bgEntry !== v) return;
-      console.error(err);
-      $('bgName').textContent = 'Could not load the clip: ' + (err?.message || err);
-      bgEntry = null;
-      markSelected(document.querySelector('#gallery .vcard.none'));
-      updateBgFields();
-    });
-    bgReady = p;
   }
 
   $('bgInput').addEventListener('change', (e) => {
@@ -577,7 +556,6 @@
     e.target.value = '';
     if (!f) return;
     bgEntry = { upload: true, title: f.name };
-    bgReady = null;
     setBgFile(f);
     markSelected(document.querySelector('#gallery .vcard.upload'));
     updateBgFields();
@@ -587,10 +565,13 @@
   function updateBgFields() {
     const has = !!bgEntry, mode = $('bgMode').value;
     if (!has) $('bgName').textContent = 'No background video';
-    else if (bgFile) $('bgName').textContent = `Background: ${bgEntry.title || bgFile.name} (${fmtSize(bgFile.size)})`;
+    else if (bgEntry.upload) $('bgName').textContent = `Background: ${bgEntry.title} (${fmtSize(bgFile.size)}, uploaded)`;
+    else $('bgName').textContent = `Background: ${bgEntry.title || bgEntry.file}` +
+      ((bgEntry.webSize || bgEntry.size) ? ` (${fmtSize(bgEntry.webSize || bgEntry.size)}, streamed from the server)` : '');
     for (const id of ['bgMode', 'bgLoop']) $(id).closest('label').classList.toggle('muted-off', !has);
     $('insetField').classList.toggle('muted-off', !has || mode !== 'inset');
     $('blendField').classList.toggle('muted-off', !has || mode !== 'blend');
+    $('readRow').classList.toggle('muted-off', !has || mode !== 'transparent');
   }
 
   /** Instantly show the current slide over the background's poster frame. */
@@ -615,7 +596,7 @@
         }
         const s = readSettings();
         s.width = 1280;
-        if (bgEntry) { s.bg.file = bgFile || new Blob(); s.bg.mode = $('bgMode').value; }
+        if (bgEntry) { s.bg.file = bgFile || 'poster'; s.bg.mode = $('bgMode').value; }
         const pv = new PptxVideo(renderer, s);
         await pv.renderStill(current, bgImg);
         if (token !== stillToken || job) return;
@@ -624,7 +605,7 @@
       } catch (err) { console.warn('Still preview failed', err); }
     }, 120);
   }
-  for (const id of ['bgMode', 'insetPct', 'blendPct']) $(id).addEventListener('input', () => { updateBgFields(); renderStillPreview(); });
+  for (const id of ['bgMode', 'insetPct', 'blendPct', 'readMode', 'readStrength']) $(id).addEventListener('input', () => { updateBgFields(); renderStillPreview(); });
   $('bgMode').addEventListener('change', updateBgFields);
   buildGallery();
   updateBgFields();
@@ -642,9 +623,8 @@
   }
 
   // ── Video jobs ─────────────────────────────────────────────────────────────
-  /** Make sure a selected gallery clip has finished downloading. */
+  /** A background is usable when nothing is selected or a source is set. */
   async function bgPrepared() {
-    if (bgReady) { setVStatus('Downloading background video…'); await bgReady; }
     return !bgEntry || !!bgFile;
   }
 
@@ -655,6 +635,7 @@
       holdMs: Math.max(0, +$('holdSec').value || 0) * 1000,
       clickGapMs: Math.max(0, +$('clickGapSec').value || 0) * 1000,
       animate: $('animChk').checked,
+      readability: { mode: $('readMode').value, strength: (+$('readStrength').value || 0) / 100 },
       transition: { choice: $('transitionSel').value, ms: Math.max(0, +$('transMs').value || 0) },
       bg: {
         file: bgEntry ? bgFile : null,
