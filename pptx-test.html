@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PPTX to Video – Test Page | MLApplications</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --panel: #ffffff;
+    --border: #dfe2e7;
+    --text: #1d2330;
+    --muted: #697184;
+    --accent: #2563eb;
+    --accent-dark: #1d4ed8;
+    --danger: #dc2626;
+    --ok: #16a34a;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.45;
+  }
+  header {
+    padding: 18px 24px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 { margin: 0; font-size: 20px; }
+  header p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+  main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 20px 24px 60px;
+    display: grid;
+    gap: 18px;
+  }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+  }
+  .panel h2 { margin: 0 0 12px; font-size: 16px; }
+
+  /* Drop zone */
+  #dropZone {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+    color: var(--muted);
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+  }
+  #dropZone.drag { border-color: var(--accent); background: #eef3ff; }
+  #dropZone strong { color: var(--text); }
+  #fileInput { display: none; }
+
+  .progress {
+    margin-top: 12px;
+    height: 6px;
+    background: #e8eaee;
+    border-radius: 3px;
+    overflow: hidden;
+    display: none;
+  }
+  .progress > div { height: 100%; width: 0; background: var(--accent); transition: width .15s; }
+  #status { margin-top: 8px; font-size: 13px; color: var(--muted); min-height: 18px; }
+  #status.error { color: var(--danger); }
+
+  /* Viewer */
+  #viewer { display: none; }
+  .viewer-grid {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 14px;
+  }
+  #thumbs {
+    max-height: 560px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-right: 4px;
+  }
+  .thumb {
+    position: relative;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #e8eaee;
+    line-height: 0;
+  }
+  .thumb canvas { width: 100%; height: auto; border-radius: 4px; }
+  .thumb span {
+    position: absolute; left: 4px; top: 4px;
+    background: rgba(0,0,0,.6); color: #fff;
+    font-size: 11px; line-height: 1; padding: 3px 5px; border-radius: 3px;
+  }
+  .thumb.active { border-color: var(--accent); }
+
+  .stage {
+    background: #11141a;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    min-height: 200px;
+  }
+  .stage canvas { max-width: 100%; height: auto; box-shadow: 0 2px 12px rgba(0,0,0,.4); }
+
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-top: 10px;
+  }
+  .toolbar .spacer { flex: 1; }
+  #slideLabel { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 14px; }
+
+  button {
+    font: inherit;
+    font-size: 14px;
+    padding: 7px 14px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--text);
+    cursor: pointer;
+  }
+  button:hover:not(:disabled) { background: #f1f3f6; }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button.primary:hover:not(:disabled) { background: var(--accent-dark); }
+  button.danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+
+  #notes {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--muted);
+    white-space: pre-wrap;
+    border-top: 1px solid var(--border);
+    padding-top: 8px;
+    min-height: 20px;
+  }
+
+  /* Video section */
+  #videoPanel { display: none; }
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 22px;
+    align-items: flex-end;
+  }
+  label.field { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); }
+  label.field input, label.field select {
+    font: inherit; font-size: 14px; color: var(--text);
+    padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; background: #fff;
+    min-width: 120px;
+  }
+  label.check { display: flex; gap: 6px; align-items: center; font-size: 14px; }
+  .video-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .video-grid h3 { margin: 0 0 6px; font-size: 14px; color: var(--muted); font-weight: 600; }
+  #videoCanvas, #resultVideo { width: 100%; background: #000; border-radius: 6px; display: block; }
+  #resultVideo { aspect-ratio: 16/9; }
+  #videoStatus { margin-top: 10px; font-size: 13px; color: var(--muted); }
+  #downloadLink { display: none; margin-top: 8px; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 8px; }
+
+  #info { font-size: 13px; color: var(--muted); }
+
+  @media (max-width: 800px) {
+    .viewer-grid { grid-template-columns: 1fr; }
+    #thumbs { flex-direction: row; max-height: none; overflow-x: auto; }
+    .thumb { min-width: 120px; }
+    .video-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>PPTX to Video – test page</h1>
+  <p>Loads a PowerPoint file entirely in your browser (nothing is uploaded to a server), renders the slides on a canvas and records them to a video.</p>
+</header>
+
+<main>
+
+  <!-- 1. Load -->
+  <section class="panel">
+    <h2>1. Choose a .pptx file</h2>
+    <div id="dropZone" tabindex="0">
+      <strong>Click to choose</strong> or drag &amp; drop a PowerPoint (.pptx) file here
+    </div>
+    <input type="file" id="fileInput" accept=".pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation">
+    <div class="progress" id="progress"><div></div></div>
+    <div id="status"></div>
+  </section>
+
+  <!-- 2. Viewer -->
+  <section class="panel" id="viewer">
+    <h2>2. Preview slides</h2>
+    <div id="info"></div>
+    <div class="viewer-grid" style="margin-top:10px">
+      <div id="thumbs"></div>
+      <div>
+        <div class="stage"><canvas id="slideCanvas"></canvas></div>
+        <div class="toolbar">
+          <button id="prevBtn">&larr; Prev</button>
+          <span id="slideLabel">–</span>
+          <button id="nextBtn">Next &rarr;</button>
+          <span class="spacer"></span>
+          <button id="showBtn">Slide show</button>
+          <button id="pngBtn">Download PNG</button>
+          <button id="pdfBtn">Download PDF</button>
+        </div>
+        <div id="notes"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Video -->
+  <section class="panel" id="videoPanel">
+    <h2>3. Create video</h2>
+    <div class="form-row">
+      <label class="field">Seconds per slide
+        <input type="number" id="secPerSlide" min="0.5" max="120" step="0.5" value="4">
+      </label>
+      <label class="field">Transition
+        <select id="transitionSel">
+          <option value="file">From the PPTX (fade if none)</option>
+          <option value="fade">Fade</option>
+          <option value="push">Push</option>
+          <option value="wipe">Wipe</option>
+          <option value="cover">Cover</option>
+          <option value="uncover">Uncover</option>
+          <option value="zoom">Zoom</option>
+          <option value="dissolve">Dissolve</option>
+          <option value="cut">None (cut)</option>
+        </select>
+      </label>
+      <label class="field">Transition length (ms)
+        <input type="number" id="transMs" min="0" max="5000" step="100" value="700">
+      </label>
+      <label class="field">Resolution
+        <select id="resSel">
+          <option value="1280">1280 px wide (720p)</option>
+          <option value="1920" selected>1920 px wide (1080p)</option>
+          <option value="2560">2560 px wide (1440p)</option>
+        </select>
+      </label>
+      <label class="field">FPS
+        <select id="fpsSel">
+          <option value="24">24</option>
+          <option value="30" selected>30</option>
+          <option value="60">60</option>
+        </select>
+      </label>
+      <label class="field">Format
+        <select id="formatSel"></select>
+      </label>
+    </div>
+    <div class="toolbar" style="margin-top:14px">
+      <button id="previewVideoBtn">Preview (no recording)</button>
+      <button id="recordBtn" class="primary">Record video</button>
+      <button id="stopBtn" class="danger" disabled>Stop</button>
+    </div>
+    <div id="videoStatus"></div>
+    <p class="hint">Recording happens in real time, so a 10-slide deck at 4 s per slide takes about 40 s. Keep this tab visible while it records – browsers pause drawing in background tabs.</p>
+
+    <div class="video-grid">
+      <div>
+        <h3>Live canvas</h3>
+        <canvas id="videoCanvas" width="1920" height="1080"></canvas>
+      </div>
+      <div>
+        <h3>Recorded result</h3>
+        <video id="resultVideo" controls playsinline></video>
+        <a id="downloadLink" download="presentation.webm"><button class="primary">Download video</button></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script type="module">
+  // The package sits in ./pptxpackage/pptxsrc relative to this page.
+  import { PptxRenderer, renderTransitionFrame } from './pptxpackage/pptxsrc/index.js';
+
+  // ── Elements ───────────────────────────────────────────────────────────────
+  const $ = (id) => document.getElementById(id);
+  const dropZone   = $('dropZone');
+  const fileInput  = $('fileInput');
+  const progress   = $('progress');
+  const progressBar = progress.firstElementChild;
+  const statusEl   = $('status');
+  const viewer     = $('viewer');
+  const videoPanel = $('videoPanel');
+  const thumbsEl   = $('thumbs');
+  const slideCanvas = $('slideCanvas');
+  const slideLabel = $('slideLabel');
+  const notesEl    = $('notes');
+  const infoEl     = $('info');
+  const prevBtn    = $('prevBtn');
+  const nextBtn    = $('nextBtn');
+  const videoCanvas = $('videoCanvas');
+  const videoStatus = $('videoStatus');
+  const resultVideo = $('resultVideo');
+  const downloadLink = $('downloadLink');
+  const recordBtn  = $('recordBtn');
+  const previewVideoBtn = $('previewVideoBtn');
+  const stopBtn    = $('stopBtn');
+  const formatSel  = $('formatSel');
+
+  // ── State ──────────────────────────────────────────────────────────────────
+  let renderer = null;
+  let current  = 0;
+  let fileBaseName = 'presentation';
+  let renderToken = 0;          // ignore stale slide renders when clicking fast
+  let playback = null;          // { stop: () => void } while previewing/recording
+  let lastVideoUrl = null;
+
+  // ── Feature check ──────────────────────────────────────────────────────────
+  if (typeof DecompressionStream === 'undefined') {
+    setStatus('This browser does not support DecompressionStream. Please use a recent Chrome, Edge, Firefox or Safari.', true);
+  }
+  if (location.protocol === 'file:') {
+    setStatus('This page must be opened through a web server (http:// or https://), not as a file:// path – ES modules are blocked on file://.', true);
+  }
+
+  // ── Video formats supported by this browser ────────────────────────────────
+  const FORMAT_CANDIDATES = [
+    { mime: 'video/mp4;codecs=avc1.640028', ext: 'mp4', label: 'MP4 (H.264)' },
+    { mime: 'video/mp4;codecs=avc1.42E01F', ext: 'mp4', label: 'MP4 (H.264 baseline)' },
+    { mime: 'video/mp4',                    ext: 'mp4', label: 'MP4' },
+    { mime: 'video/webm;codecs=vp9',        ext: 'webm', label: 'WebM (VP9)' },
+    { mime: 'video/webm;codecs=vp8',        ext: 'webm', label: 'WebM (VP8)' },
+    { mime: 'video/webm',                   ext: 'webm', label: 'WebM' },
+  ];
+  const supportedFormats = (typeof MediaRecorder !== 'undefined')
+    ? FORMAT_CANDIDATES.filter(f => MediaRecorder.isTypeSupported(f.mime))
+    : [];
+  // Keep only the first of each container to keep the list short
+  const seenExt = new Set();
+  for (const f of supportedFormats) {
+    if (seenExt.has(f.ext)) continue;
+    seenExt.add(f.ext);
+    const opt = document.createElement('option');
+    opt.value = f.mime;
+    opt.textContent = f.label;
+    opt.dataset.ext = f.ext;
+    formatSel.appendChild(opt);
+  }
+  if (!formatSel.options.length) {
+    const opt = document.createElement('option');
+    opt.textContent = 'Recording not supported in this browser';
+    formatSel.appendChild(opt);
+    formatSel.disabled = true;
+    recordBtn.disabled = true;
+  }
+
+  // ── Helpers ────────────────────────────────────────────────────────────────
+  function setStatus(msg, isError = false) {
+    statusEl.textContent = msg;
+    statusEl.classList.toggle('error', isError);
+  }
+  function setProgress(p) {
+    progress.style.display = p === null ? 'none' : 'block';
+    if (p !== null) progressBar.style.width = Math.round(p * 100) + '%';
+  }
+  function downloadBlob(blob, name) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+  }
+  function setBusy(busy) {
+    for (const b of [prevBtn, nextBtn, $('showBtn'), $('pngBtn'), $('pdfBtn')]) b.disabled = busy;
+    dropZone.style.pointerEvents = busy ? 'none' : '';
+    if (!busy) updateNavButtons();
+  }
+
+  // ── Loading ────────────────────────────────────────────────────────────────
+  dropZone.addEventListener('click', () => fileInput.click());
+  dropZone.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
+  fileInput.addEventListener('change', () => { if (fileInput.files[0]) loadFile(fileInput.files[0]); });
+  ['dragenter', 'dragover'].forEach(ev => dropZone.addEventListener(ev, (e) => {
+    e.preventDefault(); dropZone.classList.add('drag');
+  }));
+  ['dragleave', 'drop'].forEach(ev => dropZone.addEventListener(ev, (e) => {
+    e.preventDefault(); dropZone.classList.remove('drag');
+  }));
+  dropZone.addEventListener('drop', (e) => {
+    const f = e.dataTransfer.files[0];
+    if (f) loadFile(f);
+  });
+
+  async function loadFile(file) {
+    if (!/\.pptx$/i.test(file.name)) {
+      setStatus('Please choose a .pptx file (old .ppt files are not supported).', true);
+      return;
+    }
+    stopPlayback();
+    // A fresh renderer per file – the package does not reset slide lists between loads.
+    if (renderer) renderer.destroy();
+    renderer = new PptxRenderer();
+    fileBaseName = file.name.replace(/\.pptx$/i, '') || 'presentation';
+
+    setStatus('Loading ' + file.name + '…');
+    setProgress(0);
+    try {
+      await renderer.load(file, (p, msg) => { setProgress(p * 0.5); setStatus(msg); });
+      if (!renderer.slideCount) throw new Error('No slides found in this file.');
+
+      const info = renderer.getInfo();
+      infoEl.textContent = `${file.name} · ${info.slideCount} slide${info.slideCount === 1 ? '' : 's'} · ` +
+        `${info.width.toFixed(2)}″ × ${info.height.toFixed(2)}″ (aspect ${info.aspectRatio.toFixed(3)})`;
+
+      viewer.style.display = 'block';
+      videoPanel.style.display = 'block';
+      current = 0;
+      await showSlide(0);
+      await buildThumbnails();
+      setProgress(null);
+      setStatus('Ready.');
+      resizeVideoCanvas();
+    } catch (err) {
+      console.error(err);
+      setProgress(null);
+      setStatus('Could not open file: ' + (err?.message || err), true);
+    }
+  }
+
+  async function buildThumbnails() {
+    thumbsEl.innerHTML = '';
+    const n = renderer.slideCount;
+    for (let i = 0; i < n; i++) {
+      const wrap = document.createElement('div');
+      wrap.className = 'thumb' + (i === current ? ' active' : '');
+      wrap.dataset.index = i;
+      const c = document.createElement('canvas');
+      const label = document.createElement('span');
+      label.textContent = i + 1;
+      wrap.append(c, label);
+      wrap.addEventListener('click', () => showSlide(i));
+      thumbsEl.appendChild(wrap);
+      try {
+        await renderer.renderSlide(i, c, 320);
+      } catch (err) {
+        console.warn('Thumbnail ' + (i + 1) + ' failed', err);
+      }
+      setProgress(0.5 + 0.5 * (i + 1) / n);
+      setStatus(`Rendering thumbnails ${i + 1}/${n}…`);
+    }
+  }
+
+  // ── Slide viewer ───────────────────────────────────────────────────────────
+  async function showSlide(i) {
+    if (!renderer) return;
+    i = Math.max(0, Math.min(i, renderer.slideCount - 1));
+    current = i;
+    const token = ++renderToken;
+    updateNavButtons();
+    document.querySelectorAll('.thumb').forEach(t => t.classList.toggle('active', +t.dataset.index === i));
+    document.querySelector(`.thumb[data-index="${i}"]`)?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+
+    try {
+      const off = document.createElement('canvas');
+      await renderer.renderSlide(i, off, 1280);
+      if (token !== renderToken) return;              // a newer request has started
+      slideCanvas.width = off.width;
+      slideCanvas.height = off.height;
+      slideCanvas.getContext('2d').drawImage(off, 0, 0);
+    } catch (err) {
+      console.error(err);
+      setStatus(`Slide ${i + 1} failed to render: ${err?.message || err}`, true);
+    }
+    try {
+      const notes = await renderer.getSlideNotes(i);
+      if (token === renderToken) notesEl.textContent = notes ? 'Notes: ' + notes : '';
+    } catch { notesEl.textContent = ''; }
+  }
+
+  function updateNavButtons() {
+    if (!renderer) return;
+    slideLabel.textContent = `Slide ${current + 1} / ${renderer.slideCount}`;
+    prevBtn.disabled = current <= 0;
+    nextBtn.disabled = current >= renderer.slideCount - 1;
+  }
+
+  prevBtn.addEventListener('click', () => showSlide(current - 1));
+  nextBtn.addEventListener('click', () => showSlide(current + 1));
+  document.addEventListener('keydown', (e) => {
+    if (!renderer || playback || e.target.matches('input, select, textarea')) return;
+    if (e.key === 'ArrowLeft')  showSlide(current - 1);
+    if (e.key === 'ArrowRight') showSlide(current + 1);
+  });
+
+  $('showBtn').addEventListener('click', async () => {
+    const show = renderer.createShow(document.body, { fullscreen: true, showHud: true });
+    await show.start(current);
+  });
+
+  $('pngBtn').addEventListener('click', async () => {
+    const blob = await renderer.toBlob(current, 1920, 'image/png');
+    downloadBlob(blob, `${fileBaseName}-slide${current + 1}.png`);
+  });
+
+  $('pdfBtn').addEventListener('click', async () => {
+    const btn = $('pdfBtn');
+    btn.disabled = true;
+    try {
+      await renderer.downloadPdf(fileBaseName + '.pdf', {
+        dpi: 150,
+        onProgress: (d, t) => setStatus(`Building PDF ${d}/${t}…`),
+      });
+      setStatus('PDF downloaded.');
+    } catch (err) {
+      setStatus('PDF export failed: ' + (err?.message || err), true);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  // ── Video ──────────────────────────────────────────────────────────────────
+  function resizeVideoCanvas() {
+    if (!renderer) return;
+    const w = +$('resSel').value;
+    const info = renderer.getInfo();
+    let h = Math.round(w / info.aspectRatio);
+    if (h % 2) h += 1;                 // encoders prefer even dimensions
+    videoCanvas.width = w;
+    videoCanvas.height = h;
+    resultVideo.style.aspectRatio = `${w} / ${h}`;
+  }
+  $('resSel').addEventListener('change', resizeVideoCanvas);
+
+  /** Render every slide once at video resolution so playback is smooth. */
+  async function prerenderSlides(width) {
+    const frames = [];
+    for (let i = 0; i < renderer.slideCount; i++) {
+      videoStatus.textContent = `Preparing slide ${i + 1}/${renderer.slideCount}…`;
+      const c = document.createElement('canvas');
+      await renderer.renderSlide(i, c, width);
+      // Normalise to the exact video canvas size (height rounded to even)
+      if (c.width !== videoCanvas.width || c.height !== videoCanvas.height) {
+        const n = document.createElement('canvas');
+        n.width = videoCanvas.width; n.height = videoCanvas.height;
+        const nctx = n.getContext('2d');
+        nctx.fillStyle = '#000';
+        nctx.fillRect(0, 0, n.width, n.height);
+        nctx.drawImage(c, 0, 0, n.width, n.height);
+        frames.push(n);
+      } else {
+        frames.push(c);
+      }
+    }
+    return frames;
+  }
+
+  function transitionFor(slideIndex) {
+    const choice = $('transitionSel').value;
+    const ms = Math.max(0, +$('transMs').value || 0);
+    if (choice === 'file') {
+      const t = renderer.getTransition(slideIndex);
+      if (t) return { ...t, duration: t.duration || ms };
+      return { type: 'fade', duration: ms, dir: 'l' };
+    }
+    return { type: choice, duration: choice === 'cut' ? 0 : ms, dir: 'l' };
+  }
+
+  /** Build a timeline: [{ kind:'hold', slide, ms } | { kind:'trans', from, to, t, ms }] */
+  function buildTimeline(count) {
+    const holdMs = Math.max(500, (+$('secPerSlide').value || 4) * 1000);
+    const segs = [];
+    for (let i = 0; i < count; i++) {
+      if (i > 0) {
+        const t = transitionFor(i);
+        if (t.duration > 0 && t.type !== 'cut') segs.push({ kind: 'trans', from: i - 1, to: i, t, ms: t.duration });
+      }
+      segs.push({ kind: 'hold', slide: i, ms: holdMs });
+    }
+    return segs;
+  }
+
+  /**
+   * Plays the timeline on the video canvas. Draws every frame (even during holds)
+   * so that captureStream() keeps producing frames for the encoder.
+   */
+  function playTimeline(frames, segs, fps, onDone) {
+    const ctx = videoCanvas.getContext('2d');
+    const total = segs.reduce((s, x) => s + x.ms, 0);
+    const frameInterval = 1000 / fps;
+    let start = null, lastDraw = -Infinity, raf = 0, stopped = false;
+
+    function drawAt(elapsed) {
+      let acc = 0;
+      for (const seg of segs) {
+        if (elapsed < acc + seg.ms) {
+          const local = elapsed - acc;
+          if (seg.kind === 'hold') {
+            ctx.drawImage(frames[seg.slide], 0, 0);
+            return seg.slide;
+          }
+          renderTransitionFrame(ctx, frames[seg.from], frames[seg.to], seg.t, Math.min(1, local / seg.ms));
+          return seg.to;
+        }
+        acc += seg.ms;
+      }
+      ctx.drawImage(frames[frames.length - 1], 0, 0);
+      return frames.length - 1;
+    }
+
+    function tick(now) {
+      if (stopped) return;
+      if (start === null) start = now;
+      const elapsed = now - start;
+      if (now - lastDraw >= frameInterval - 1) {
+        const s = drawAt(elapsed);
+        lastDraw = now;
+        videoStatus.textContent = `Slide ${s + 1}/${frames.length} · ${(elapsed / 1000).toFixed(1)} s / ${(total / 1000).toFixed(1)} s`;
+      }
+      if (elapsed >= total) { stopped = true; onDone(true); return; }
+      raf = requestAnimationFrame(tick);
+    }
+    raf = requestAnimationFrame(tick);
+
+    return { stop() { if (stopped) return; stopped = true; cancelAnimationFrame(raf); onDone(false); } };
+  }
+
+  function stopPlayback() {
+    if (playback) playback.stop();
+  }
+
+  function setVideoBusy(busy) {
+    recordBtn.disabled = busy || !supportedFormats.length;
+    previewVideoBtn.disabled = busy;
+    stopBtn.disabled = !busy;
+    for (const id of ['secPerSlide', 'transitionSel', 'transMs', 'resSel', 'fpsSel', 'formatSel']) $(id).disabled = busy || (id === 'formatSel' && !supportedFormats.length);
+    setBusy(busy);
+  }
+
+  previewVideoBtn.addEventListener('click', async () => {
+    if (!renderer) return;
+    setVideoBusy(true);
+    try {
+      resizeVideoCanvas();
+      const frames = await prerenderSlides(videoCanvas.width);
+      const segs = buildTimeline(frames.length);
+      await new Promise((resolve) => {
+        playback = playTimeline(frames, segs, +$('fpsSel').value, (finished) => {
+          videoStatus.textContent = finished ? 'Preview finished.' : 'Preview stopped.';
+          resolve();
+        });
+      });
+    } catch (err) {
+      console.error(err);
+      videoStatus.textContent = 'Preview failed: ' + (err?.message || err);
+    } finally {
+      playback = null;
+      setVideoBusy(false);
+    }
+  });
+
+  recordBtn.addEventListener('click', async () => {
+    if (!renderer || !supportedFormats.length) return;
+    setVideoBusy(true);
+    downloadLink.style.display = 'none';
+    try {
+      resizeVideoCanvas();
+      const fps = +$('fpsSel').value;
+      const frames = await prerenderSlides(videoCanvas.width);
+      const segs = buildTimeline(frames.length);
+
+      // Paint the first frame before the recorder starts so the video doesn't begin black.
+      videoCanvas.getContext('2d').drawImage(frames[0], 0, 0);
+
+      const mime = formatSel.value;
+      const ext = formatSel.selectedOptions[0].dataset.ext;
+      const stream = videoCanvas.captureStream(fps);
+      const bitrate = Math.round(videoCanvas.width * videoCanvas.height * fps * 0.15); // ~9 Mbps at 1080p30
+      const recorder = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: bitrate });
+      const chunks = [];
+      recorder.ondataavailable = (e) => { if (e.data && e.data.size) chunks.push(e.data); };
+      const stopped = new Promise(res => { recorder.onstop = res; });
+
+      recorder.start(1000);
+      const finished = await new Promise((resolve) => {
+        playback = playTimeline(frames, segs, fps, resolve);
+      });
+      // Hold the last frame briefly so the encoder flushes it.
+      await new Promise(r => setTimeout(r, 300));
+      recorder.stop();
+      await stopped;
+      stream.getTracks().forEach(t => t.stop());
+
+      const blob = new Blob(chunks, { type: mime.split(';')[0] });
+      if (lastVideoUrl) URL.revokeObjectURL(lastVideoUrl);
+      lastVideoUrl = URL.createObjectURL(blob);
+      resultVideo.src = lastVideoUrl;
+      downloadLink.href = lastVideoUrl;
+      downloadLink.download = `${fileBaseName}.${ext}`;
+      downloadLink.style.display = 'inline-block';
+      videoStatus.textContent = (finished ? 'Recording complete' : 'Recording stopped early') +
+        ` – ${blob.size >= 1048576 ? (blob.size / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(blob.size / 1024)) + ' KB'} ${ext.toUpperCase()}.`;
+    } catch (err) {
+      console.error(err);
+      videoStatus.textContent = 'Recording failed: ' + (err?.message || err);
+    } finally {
+      playback = null;
+      setVideoBusy(false);
+    }
+  });
+
+  stopBtn.addEventListener('click', stopPlayback);
+</script>
+</body>
+</html>
