@@ -162,3 +162,95 @@ export async function slideNotes(renderer, i) {
   }
   return paras.join('\n');
 }
+
+/**
+ * Text written ON slide i, in natural reading order (top → bottom, left → right),
+ * ready to use as narration. Boxes side by side (overlapping vertically) are read left to right;
+ * tables row by row; slide number, date and footer placeholders are skipped.
+ */
+export async function slideText(renderer, i) {
+  const files = renderer._files, path = renderer.slidePaths[i];
+  if (!files || !path) return '';
+  const dec = (p) => files[p] ? new DOMParser().parseFromString(new TextDecoder().decode(files[p]), 'application/xml') : null;
+  const kids = (n, name) => n ? [...n.children].filter(e => e.localName === name) : [];
+  const kid = (n, name) => kids(n, name)[0] || null;
+  const all = (n, name) => n ? [...n.getElementsByTagName('*')].filter(e => e.localName === name) : [];
+  const num = (e, a) => +(e?.getAttribute(a) || 0);
+
+  const slide = dec(path);
+  if (!slide) return '';
+  // placeholder positions inherited from the layout and the master
+  const rels = await getRels(files, path);
+  const layoutRel = Object.values(rels).find(r => r.type?.includes('slideLayout'));
+  const layout = layoutRel && dec(layoutRel.fullPath);
+  let master = null;
+  if (layoutRel) {
+    const lr = await getRels(files, layoutRel.fullPath);
+    const mr = Object.values(lr).find(r => r.type?.includes('slideMaster'));
+    master = mr && dec(mr.fullPath);
+  }
+  const phInfo = (sp) => { const ph = all(kid(sp, 'nvSpPr') || sp, 'ph')[0]; return ph ? { type: ph.getAttribute('type') || 'body', idx: ph.getAttribute('idx') } : null; };
+  const findPh = (doc, ph) => {
+    if (!doc) return null;
+    const list = all(doc, 'sp').map(sp => ({ sp, p: phInfo(sp) })).filter(x => x.p);
+    return (ph.idx != null && list.find(x => x.p.idx === ph.idx)) || list.find(x => x.p.type === ph.type)
+      || (/^(ctrTitle|title)$/.test(ph.type) && list.find(x => /title/i.test(x.p.type))) || null;
+  };
+  const xfrmOf = (sp) => all(kid(sp, 'spPr') || kid(sp, 'grpSpPr') || sp, 'xfrm')[0] || kid(sp, 'xfrm');
+  const boxOf = (sp) => {
+    let x = xfrmOf(sp);
+    if (!x || !kid(x, 'off')) {
+      const ph = phInfo(sp);
+      if (ph) for (const d of [layout, master]) { const m = findPh(d, ph); x = m && xfrmOf(m.sp); if (x && kid(x, 'off')) break; }
+    }
+    if (!x || !kid(x, 'off')) return null;
+    const off = kid(x, 'off'), ext = kid(x, 'ext');
+    return { x: num(off, 'x'), y: num(off, 'y'), w: num(ext, 'cx'), h: num(ext, 'cy') };
+  };
+  const paraText = (p) => all(p, 't').map(t => t.textContent).join('').replace(/\s+/g, ' ').trim();
+  const finish = (t) => /[.!?;:…»"”)]$/.test(t) ? t : t + '.';     // a pause after every title / bullet
+
+  const items = [];
+  const walk = (tree, map) => {
+    for (const el of tree.children) {
+      const n = el.localName;
+      if (n === 'grpSp') {
+        const x = xfrmOf(el);
+        const off = kid(x, 'off'), ext = kid(x, 'ext'), co = kid(x, 'chOff'), ce = kid(x, 'chExt');
+        const sx = num(ce, 'cx') ? num(ext, 'cx') / num(ce, 'cx') : 1, sy = num(ce, 'cy') ? num(ext, 'cy') / num(ce, 'cy') : 1;
+        walk(el, (b) => map({ x: num(off, 'x') + (b.x - num(co, 'x')) * sx, y: num(off, 'y') + (b.y - num(co, 'y')) * sy, w: b.w * sx, h: b.h * sy }));
+      } else if (n === 'sp') {
+        const ph = phInfo(el);
+        if (ph && /^(sldNum|dt|ftr|hdr)$/.test(ph.type)) continue;
+        const body = kid(el, 'txBody');
+        const lines = kids(body, 'p').map(paraText).filter(Boolean);
+        if (!lines.length) continue;
+        const b = boxOf(el);
+        items.push({ ...(b ? map(b) : { x: 0, y: 1e12, w: 0, h: 0 }), text: lines.map(finish).join('\n') });
+      } else if (n === 'graphicFrame') {
+        const tbl = all(el, 'tbl')[0];
+        if (!tbl) continue;
+        const rows = all(tbl, 'tr').map(tr => all(tr, 'tc').map(tc => kids(kid(tc, 'txBody'), 'p').map(paraText).filter(Boolean).join(' ')).filter(Boolean).join(', '))
+          .filter(Boolean).map(finish);
+        if (!rows.length) continue;
+        const x = kid(el, 'xfrm'), off = kid(x, 'off'), ext = kid(x, 'ext');
+        items.push({ ...map({ x: num(off, 'x'), y: num(off, 'y'), w: num(ext, 'cx'), h: num(ext, 'cy') }), text: rows.join('\n') });
+      }
+    }
+  };
+  const tree = all(slide, 'spTree')[0];
+  if (!tree) return '';
+  walk(tree, b => b);
+
+  // reading order: group boxes into "lines" whose vertical extents overlap, read each line left to right
+  items.sort((a, b) => a.y - b.y || a.x - b.x);
+  const rowsOut = [];
+  for (const it of items) {
+    const row = rowsOut[rowsOut.length - 1];
+    const overlap = row ? Math.min(row.bottom, it.y + it.h) - Math.max(row.top, it.y) : -1;
+    if (row && overlap > 0.4 * Math.min(it.h || 1, row.bottom - row.top || 1)) {
+      row.items.push(it); row.bottom = Math.max(row.bottom, it.y + it.h);
+    } else rowsOut.push({ top: it.y, bottom: it.y + it.h, items: [it] });
+  }
+  return rowsOut.flatMap(r => r.items.sort((a, b) => a.x - b.x)).map(it => it.text).join('\n');
+}

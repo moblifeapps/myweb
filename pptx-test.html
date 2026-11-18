@@ -192,6 +192,20 @@
     background: linear-gradient(180deg, var(--accent-hi), var(--accent)); }
   .tpill span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
 
+  /* AI narration */
+  #aiBox { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 12px; }
+  #aiBox summary { cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px; list-style: none; }
+  #aiBox summary::-webkit-details-marker { display: none; }
+  #aiBox summary .ic { width: 18px; height: 18px; color: var(--accent); }
+  #aiBox summary::after { content: '▸'; margin-left: auto; color: var(--muted); transition: transform .15s; }
+  #aiBox[open] summary::after { transform: rotate(90deg); }
+  #aiBox .form-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px 14px; margin-top: 10px; }
+  .aisteps { margin: 10px 0 0; padding-left: 20px; font-size: 13.5px; color: var(--muted); }
+  .aisteps li { margin: 3px 0; }
+  #aiPaste { display: none; margin-top: 10px; }
+  #aiPaste textarea { width: 100%; min-height: 150px; resize: vertical; font: 13px/1.45 ui-monospace, Consolas, monospace;
+    padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel); color: var(--text); box-sizing: border-box; }
+
   /* transition picker */
   #transCard { display: none; }
   .tgroup { margin-top: 12px; }
@@ -459,6 +473,7 @@
                 <button class="sm stop icon-only" title="Stop"><svg class="ic f"><use href="#i-stop"/></svg></button>
                 <span class="ntime"></span>
                 <span style="flex:1"></span>
+                <button class="sm fromslide" title="Use the text written on the slide (read top to bottom, left to right)"><svg class="ic"><use href="#i-file"/></svg>From slide text</button>
                 <button class="sm clear" title="Remove this slide's audio"><svg class="ic"><use href="#i-trash"/></svg>Remove</button>
               </div>
             </div>
@@ -472,6 +487,63 @@
             <span id="narrTotal" class="muted"></span>
           </div>
           <p class="hint" style="margin-bottom:0">"Generate all" voices every slide with narration on, each with its own voice, and skips slides you recorded yourself.</p>
+
+          <details id="aiBox">
+            <summary><svg class="ic"><use href="#i-spark"/></svg>Write the narration with AI (Claude, ChatGPT, Gemini, DeepSeek)</summary>
+            <div class="form-row">
+              <label class="field">AI assistant
+                <select id="aiProvider">
+                  <option value="claude">Claude</option>
+                  <option value="chatgpt">ChatGPT</option>
+                  <option value="gemini">Gemini</option>
+                  <option value="deepseek">DeepSeek</option>
+                </select>
+              </label>
+              <label class="field">Language
+                <select id="aiLang"></select>
+              </label>
+              <label class="field">Tone
+                <select id="aiTone">
+                  <option value="friendly">Friendly and clear</option>
+                  <option value="formal">Formal / business</option>
+                  <option value="teaching">Teaching / explaining</option>
+                  <option value="energetic">Energetic / promotional</option>
+                  <option value="calm">Calm / documentary</option>
+                </select>
+              </label>
+              <label class="field">Length per slide
+                <select id="aiLength">
+                  <option value="auto">Depends on the slide</option>
+                  <option value="short">Short (about 15 s)</option>
+                  <option value="medium" selected>Medium (about 30 s)</option>
+                  <option value="long">Long (about 60 s)</option>
+                </select>
+              </label>
+            </div>
+            <label class="field" style="margin-top:10px">Extra instructions (optional)
+              <input type="text" id="aiExtra" placeholder="e.g. the audience is high-school students; mention our website mlapplications.com at the end">
+            </label>
+            <label class="check" style="margin-top:8px"><input type="checkbox" id="aiKeep"> Keep the narration I already wrote (only fill empty slides)</label>
+            <ol class="aisteps">
+              <li><b>Copy prompt</b> – copies the instructions and the text of every slide, and opens the AI in a new tab.</li>
+              <li>Paste it there (Ctrl+V) and send.</li>
+              <li>Copy the AI's whole answer, come back and press <b>Paste answer</b>.</li>
+            </ol>
+            <div class="toolbar" style="margin-top:10px">
+              <button id="aiCopyBtn" class="primary"><svg class="ic"><use href="#i-copy"/></svg>Copy prompt &amp; open AI</button>
+              <button id="aiPasteBtn"><svg class="ic"><use href="#i-down"/></svg>Paste answer</button>
+              <button id="aiSaveBtn" class="sm" title="Save the prompt as a .txt file instead"><svg class="ic"><use href="#i-file"/></svg>Save as .txt</button>
+              <span class="spacer"></span>
+              <span id="aiStatus" class="muted"></span>
+            </div>
+            <div id="aiPaste">
+              <textarea id="aiAnswer" placeholder="Paste the AI's answer here (it contains === SLIDE 1 === … markers)."></textarea>
+              <div class="toolbar" style="margin-top:8px">
+                <button id="aiApplyBtn" class="primary">Use this narration</button>
+                <button id="aiCancelBtn" class="sm">Cancel</button>
+              </div>
+            </div>
+          </details>
         </div>
 
         <!-- transition picker (shown when a pill between two thumbnails is clicked) -->
@@ -635,7 +707,7 @@
 <script type="module">
   import { PptxRenderer } from './pptxpackage/pptxsrc/index.js';
   import { PptxVideo, parseSlideAnimations, webCodecsAvailable, loadMediabunny } from './pptxvideo/pptx-video.js';
-  import { TtsClient, cleanForSpeech, slideNotes } from './pptxvideo/tts.js';
+  import { TtsClient, cleanForSpeech, slideNotes, slideText } from './pptxvideo/tts.js';
   import { TransitionGL, GL_TRANSITIONS, sampleFrames } from './pptxvideo/transitions.js';
 
   const $ = (id) => document.getElementById(id);
@@ -1477,6 +1549,20 @@
     });
     ed.querySelector('.play').addEventListener('click', () => playRow(current));
     ed.querySelector('.stop').addEventListener('click', () => { if (player.key === current) playerStop(); });
+    ed.querySelector('.fromslide').addEventListener('click', async () => {
+      const s = slides[current], i = current;
+      if (!s) return;
+      let t = '';
+      try { t = await slideText(renderer, i); } catch (err) { console.warn(err); }
+      if (!t.trim()) { setTtsStatus(`Slide ${i + 1} has no text to read.`); return; }
+      if (s.text.trim() && s.text.trim() !== t.trim() && !confirm('Replace the narration text of this slide with the text written on the slide?')) return;
+      s.text = t;
+      if (!s.narrOn) { s.narrOn = true; }
+      await loadNarrationUI();
+      paintHL(i, []);
+      updateRow(i);
+      setTtsStatus(`Slide ${i + 1}: narration text taken from the slide – edit it if needed, then Generate.`);
+    });
     ed.querySelector('.clear').addEventListener('click', () => {
       if (player.key === current) playerStop();
       Object.assign(slides[current], { buffer: null, kind: null, marks: null });
@@ -1507,6 +1593,7 @@
     row.querySelector('.stop').disabled = !mine;
     if (!mine) row.querySelector('.ntime').textContent = n.buffer ? fmtTime(n.buffer.duration) : '';
     row.querySelector('.clear').disabled = !n.buffer || row.classList.contains('busy');
+    row.querySelector('.fromslide').disabled = row.classList.contains('busy') || recIndex >= 0;
     const gb = row.querySelector('.gen');
     const generatingHere = genCurrent && genCurrent.i === i;
     gb.classList.toggle('danger', !!generatingHere);
@@ -1711,6 +1798,155 @@
       stop: () => { for (const s of live) { try { s.stop(); } catch {} } },
     };
   }
+
+  // ── Narration written by an AI assistant (copy prompt → paste answer) ───────
+  const AI_URLS = { claude: 'https://claude.ai/new', chatgpt: 'https://chatgpt.com/', gemini: 'https://gemini.google.com/app', deepseek: 'https://chat.deepseek.com/' };
+  const AI_LANGS = ['English', 'Greek', 'German', 'French', 'Spanish', 'Italian', 'Portuguese', 'Dutch', 'Polish', 'Romanian',
+    'Bulgarian', 'Czech', 'Hungarian', 'Swedish', 'Norwegian', 'Danish', 'Finnish', 'Turkish', 'Russian', 'Ukrainian',
+    'Arabic', 'Hindi', 'Chinese', 'Japanese', 'Korean', 'Vietnamese', 'Indonesian'];
+  const KOKORO_LANG = { a: 'en', b: 'en', e: 'es', f: 'fr', h: 'hi', i: 'it', j: 'ja', p: 'pt', z: 'zh' };
+
+  /** English name of the language the current voice speaks. */
+  function voiceLanguage() {
+    try {
+      const v = readVoiceControls();
+      const code = v.engine === 'kokoro' ? KOKORO_LANG[(v.kokoroVoice || 'a')[0]] : (v.lang || 'en').slice(0, 2);
+      return new Intl.DisplayNames(['en'], { type: 'language' }).of(code || 'en');
+    } catch { return 'English'; }
+  }
+  function fillAiLangs() {
+    const sel = $('aiLang'), keep = sel.value;
+    const vl = voiceLanguage();
+    sel.innerHTML = '';
+    sel.append(new Option(`Same as the voice (${vl})`, 'voice'), new Option('Same as the slide text', 'slides'));
+    AI_LANGS.forEach(l => sel.append(new Option(l, l)));
+    sel.value = keep || 'voice';
+  }
+  $('aiBox').addEventListener('toggle', () => { if ($('aiBox').open) fillAiLangs(); });
+  try { $('aiProvider').value = localStorage.getItem('pptxAiProvider') || 'claude'; } catch {}
+  $('aiProvider').addEventListener('change', () => { try { localStorage.setItem('pptxAiProvider', $('aiProvider').value); } catch {} });
+
+  async function buildAiPrompt() {
+    if (!renderer) throw new Error('Open a presentation first.');
+    const n = renderer.slideCount;
+    const langSel = $('aiLang').value;
+    const lang = langSel === 'voice' ? voiceLanguage() : langSel === 'slides' ? null : langSel;
+    const LEN = {
+      auto: 'Adapt the length to the content: about 20–60 seconds of speech per slide (roughly 50–140 words); a title or section slide needs only one or two sentences.',
+      short: 'About 15 seconds of speech per slide (roughly 30–40 words).',
+      medium: 'About 30 seconds of speech per slide (roughly 65–80 words).',
+      long: 'About 60 seconds of speech per slide (roughly 130–150 words).',
+    };
+    const TONE = {
+      friendly: 'friendly, clear and natural, like a confident presenter talking to the audience',
+      formal: 'formal and professional, suitable for a business or corporate audience',
+      teaching: 'like a good teacher: explain the ideas simply, step by step, with short examples where useful',
+      energetic: 'energetic and persuasive, like a product presentation, but never exaggerated',
+      calm: 'calm and measured, like a documentary narrator',
+    };
+    const parts = [];
+    for (let i = 0; i < n; i++) {
+      let text = '';
+      try { text = await slideText(renderer, i); } catch {}
+      let notes = '';
+      try { notes = await slideNotes(renderer, i); } catch {}
+      parts.push(`=== SLIDE ${i + 1} ===\nText on the slide:\n${text.trim() || '(no text – probably a picture or chart)'}` +
+        (notes.trim() ? `\nPresenter notes:\n${notes.trim()}` : ''));
+    }
+    const extra = $('aiExtra').value.trim();
+    return `You are an expert presentation scriptwriter. Write the voice-over narration for a video made from a ${n}-slide PowerPoint presentation${fileBaseName ? ` called "${fileBaseName}"` : ''}. Each slide is shown on screen while its narration is read aloud by a text-to-speech voice.
+
+RULES
+- Language: write the narration in ${lang || 'the same language as the slide text'}${lang ? ', even if the slides are in another language' : ''}.
+- Tone: ${TONE[$('aiTone').value]}.
+- Length: ${LEN[$('aiLength').value]}
+- Do NOT just read the bullet points aloud. Explain and connect them in natural spoken sentences, as a human presenter would. The viewer can see the slide, so complement it rather than repeat it word for word.
+- Treat the presentation as one story: open with a short welcome/introduction on slide 1, link each slide naturally to the next, and close with a brief conclusion on the last slide. Do not repeat the same information on several slides.
+- Use the presenter notes, when given, as the main source for what the speaker wants to say.
+- Write for the ear: short sentences, plain words. Write numbers, dates, units, currencies and abbreviations the way they should be pronounced (e.g. "twelve percent", "two thousand twenty-six"), unless an acronym is normally spoken letter by letter.
+- Plain text only: no markdown, no bullet points, no emojis, no stage directions like [pause] or (music), no headings, no "Slide 3 shows…".
+- Do not invent facts, figures or names that are not on the slides or in the notes.${extra ? `\n- Additional instructions: ${extra}` : ''}
+
+OUTPUT FORMAT (very important – the answer is read back by a program)
+Return the narration for every slide, from slide 1 to slide ${n}, each starting with its marker line exactly like this:
+=== SLIDE 1 ===
+narration for slide 1
+=== SLIDE 2 ===
+narration for slide 2
+…and so on. Put nothing before the first marker and nothing after the last narration. If you use a code block, put the whole answer in one single code block.
+
+THE SLIDES
+${parts.join('\n\n')}
+`;
+  }
+
+  const aiStatus = (m) => { $('aiStatus').textContent = m; };
+  $('aiCopyBtn').addEventListener('click', async () => {
+    try {
+      const prompt = await buildAiPrompt();
+      await navigator.clipboard.writeText(prompt);
+      window.open(AI_URLS[$('aiProvider').value], '_blank', 'noopener');
+      aiStatus(`Prompt copied (${prompt.length.toLocaleString()} characters) – paste it in the AI with Ctrl+V.`);
+    } catch (err) {
+      aiStatus('Could not copy: ' + (err?.message || err) + ' – use "Save as .txt" instead.');
+    }
+  });
+  $('aiSaveBtn').addEventListener('click', async () => {
+    try {
+      const blob = new Blob([await buildAiPrompt()], { type: 'text/plain;charset=utf-8' });
+      const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: `${fileBaseName || 'presentation'} - AI narration prompt.txt` });
+      a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+      aiStatus('Prompt saved – upload or paste it into the AI.');
+    } catch (err) { aiStatus(err?.message || String(err)); }
+  });
+  $('aiPasteBtn').addEventListener('click', async () => {
+    $('aiPaste').style.display = 'block';
+    try { const t = await navigator.clipboard.readText(); if (/===\s*SLIDE\s+\d+/i.test(t) && !t.includes('OUTPUT FORMAT (very important')) $('aiAnswer').value = t; } catch {}
+    $('aiAnswer').focus();
+  });
+  $('aiCancelBtn').addEventListener('click', () => { $('aiPaste').style.display = 'none'; });
+
+  /** Split the AI's answer on the "=== SLIDE n ===" markers. */
+  function parseAiAnswer(raw) {
+    const out = new Map();
+    const text = raw.replace(/```[a-z]*\n?/gi, '').replace(/\r/g, '');
+    const re = /^[ \t>#*_]*={2,}\s*SLIDE\s+(\d+)\s*={2,}[ \t*_]*$/gim;
+    const marks = [...text.matchAll(re)];
+    marks.forEach((m, k) => {
+      const end = k + 1 < marks.length ? marks[k + 1].index : text.length;
+      const body = text.slice(m.index + m[0].length, end)
+        .replace(/\*\*|__|^#+\s*/gm, '').replace(/^\s*[-•]\s+/gm, '')
+        .split('\n').map(l => l.trim()).filter(Boolean).join('\n').trim();
+      if (body) out.set(+m[1] - 1, body);
+    });
+    return out;
+  }
+  $('aiApplyBtn').addEventListener('click', async () => {
+    const map = parseAiAnswer($('aiAnswer').value);
+    if (!map.size) { aiStatus('No "=== SLIDE n ===" markers found in the answer – paste the whole reply.'); return; }
+    if ($('aiAnswer').value.includes('OUTPUT FORMAT (very important')) { aiStatus('That is the prompt, not the answer – copy the AI\'s reply and paste it here.'); return; }
+    const keep = $('aiKeep').checked;
+    let used = 0, kept = 0;
+    const voice = slides[current]?.voice || readVoiceControls();
+    for (const [i, text] of map) {
+      const s = slides[i];
+      if (!s) continue;
+      if (keep && s.text.trim()) { kept++; continue; }
+      if (s.kind === 'tts' && s.spokenText !== cleanForSpeech(text)) { /* audio becomes stale – updateRow marks it */ }
+      s.text = text;
+      s.narrOn = true;
+      if (!s.voice) s.voice = { ...voice };
+      used++;
+      updateThumbBadges(i);
+    }
+    await loadNarrationUI();
+    updateRow(current);
+    $('aiPaste').style.display = 'none';
+    $('aiAnswer').value = '';
+    const missing = renderer.slideCount - map.size;
+    aiStatus(`Narration added to ${used} slide${used === 1 ? '' : 's'}` + (kept ? `, ${kept} kept as you wrote them` : '') +
+      (missing > 0 ? ` · ${missing} slide${missing === 1 ? ' was' : 's were'} missing in the answer` : '') + ' – now press "Generate all slides".');
+  });
 
   // ── Transitions between slides ─────────────────────────────────────────────
   // slides[i].trans = transition INTO slide i: { type, ms, url?, mduration?, glow? } or null (= the default)
