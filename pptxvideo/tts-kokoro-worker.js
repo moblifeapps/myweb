@@ -16,6 +16,7 @@ async function load(id, dtype, device) {
   const key = dtype + '|' + device;
   if (tts && loadedKey === key) return;
   const files = new Map();
+  if (tts) { try { await tts.model?.dispose?.(); } catch {} tts = null; loadedKey = ''; }
   tts = await KokoroTTS.from_pretrained(MODEL, {
     dtype, device,
     progress_callback: (p) => {
@@ -48,15 +49,18 @@ async function speak(id, text, voice, speed) {
   if (!tts) throw new Error('Kokoro is not loaded');
   const list = sentences(text);
   const chunks = [];
-  let sr = 24000;
+  let sr = 24000, offset = 0;
   for (let k = 0; k < list.length; k++) {
     postMessage({ type: 'progress', id, label: 'sentence', index: k + 1, total: list.length, text: list[k] });
     const t0 = performance.now();
     const a = await tts.generate(list[k], { voice, speed });
     sr = a.sampling_rate || sr;
-    chunks.push(a.audio, new Float32Array(Math.round(sr * 0.12)));
-    postMessage({ type: 'progress', id, label: 'sentence-done', index: k + 1, total: list.length,
-      ms: performance.now() - t0, audioSec: a.audio.length / sr, chars: list[k].length });
+    const start = offset / sr;
+    const gap = new Float32Array(Math.round(sr * 0.12));
+    chunks.push(a.audio, gap);
+    offset += a.audio.length + gap.length;
+    postMessage({ type: 'progress', id, label: 'sentence-done', index: k + 1, total: list.length, text: list[k],
+      ms: performance.now() - t0, start, audioSec: a.audio.length / sr, chars: list[k].length });
   }
   const len = chunks.reduce((s, c) => s + c.length, 0);
   const pcm = new Float32Array(len);

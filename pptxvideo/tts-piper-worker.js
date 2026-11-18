@@ -101,6 +101,7 @@ async function speak(id, text, speed = 1, speaker = 0) {
   const gap = new Float32Array(Math.round(sr * 0.18));     // short pause between sentences
   const chunks = [];
   const list = sentences(text);
+  let offset = 0;
   const allIds = await phonemeIdsMany(list, config.espeak.voice);
   for (let k = 0; k < list.length; k++) {
     postMessage({ type: 'progress', id, label: 'sentence', index: k + 1, total: list.length, text: list[k] });
@@ -113,9 +114,11 @@ async function speak(id, text, speed = 1, speaker = 0) {
     };
     if (multi) feeds.sid = new ort.Tensor('int64', BigInt64Array.from([BigInt(speaker || 0)]), [1]);
     const res = await session.run(feeds);
+    const start = offset / sr;
     chunks.push(res.output.data, gap);
-    postMessage({ type: 'progress', id, label: 'sentence-done', index: k + 1, total: list.length,
-      ms: performance.now() - t0, audioSec: res.output.data.length / sr, chars: list[k].length });
+    offset += res.output.data.length + gap.length;
+    postMessage({ type: 'progress', id, label: 'sentence-done', index: k + 1, total: list.length, text: list[k],
+      ms: performance.now() - t0, start, audioSec: res.output.data.length / sr, chars: list[k].length });
   }
   const len = chunks.reduce((s, c) => s + c.length, 0);
   const pcm = new Float32Array(len);

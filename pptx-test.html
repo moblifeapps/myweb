@@ -6,6 +6,10 @@
 <title>PPTX to Video – Test Page | MLApplications</title>
 <meta name="robots" content="noindex, nofollow">
 <script>
+  // Apply the saved theme before first paint (light / dark; nothing = follow the system)
+  (function () { try { var t = localStorage.getItem('pptxTheme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {} })();
+</script>
+<script>
   // Multi-threaded WebAssembly needs a "cross-origin isolated" page. pptx-coi-sw.js adds the two headers
   // for pages under /pptx… only (one automatic reload the first time).
   (function () {
@@ -20,9 +24,36 @@
   })();
 </script>
 <style>
+  /* ── Themes: light (default), dark, or follow the system (no data-theme attribute) ── */
   :root {
-    --bg: #f4f5f7; --panel: #ffffff; --border: #dfe2e7; --text: #1d2330; --muted: #697184;
-    --accent: #2563eb; --accent-dark: #1d4ed8; --danger: #dc2626; --radius: 10px;
+    color-scheme: light;
+    --bg: #f3f5f8; --panel: #ffffff; --panel-2: #f5f7fa; --border: #dde1e7; --text: #1b2230; --muted: #667085;
+    --accent: #2563eb; --accent-dark: #1d4ed8; --accent-hi: #5b93ff; --accent-soft: rgba(37,99,235,.12);
+    --danger: #dc2626; --danger-dark: #b91c1c; --danger-hi: #f26464; --ok: #15803d; --warn: #b45309;
+    --input-bg: #ffffff; --track: #e6e9ee; --row-busy: #f2f6ff; --row-rec: #fff4f4;
+    --btn-top: #ffffff; --btn-bot: #eceff4; --btn-border: #cbd2dc; --gloss: rgba(255,255,255,.95); --shadow: rgba(16,24,40,.10);
+    --hl-done: rgba(22,163,74,.20); --hl-cur: rgba(250,204,21,.60);
+    --radius: 10px;
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0e1117; --panel: #161b24; --panel-2: #1c222d; --border: #2a3140; --text: #e6e9ef; --muted: #98a2b3;
+    --accent: #3b82f6; --accent-dark: #2563eb; --accent-hi: #6ea2ff; --accent-soft: rgba(59,130,246,.20);
+    --danger: #ef4444; --danger-dark: #dc2626; --danger-hi: #f87171; --ok: #4ade80; --warn: #fbbf24;
+    --input-bg: #10141b; --track: #252b36; --row-busy: #18213a; --row-rec: #2b1619;
+    --btn-top: #2b3342; --btn-bot: #1f2531; --btn-border: #3a4456; --gloss: rgba(255,255,255,.10); --shadow: rgba(0,0,0,.45);
+    --hl-done: rgba(74,222,128,.20); --hl-cur: rgba(250,204,21,.38);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+      color-scheme: dark;
+      --bg: #0e1117; --panel: #161b24; --panel-2: #1c222d; --border: #2a3140; --text: #e6e9ef; --muted: #98a2b3;
+      --accent: #3b82f6; --accent-dark: #2563eb; --accent-hi: #6ea2ff; --accent-soft: rgba(59,130,246,.20);
+      --danger: #ef4444; --danger-dark: #dc2626; --danger-hi: #f87171; --ok: #4ade80; --warn: #fbbf24;
+      --input-bg: #10141b; --track: #252b36; --row-busy: #18213a; --row-rec: #2b1619;
+      --btn-top: #2b3342; --btn-bot: #1f2531; --btn-border: #3a4456; --gloss: rgba(255,255,255,.10); --shadow: rgba(0,0,0,.45);
+      --hl-done: rgba(74,222,128,.20); --hl-cur: rgba(250,204,21,.38);
+    }
   }
   * { box-sizing: border-box; }
   body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -37,11 +68,11 @@
 
   #dropZone { border: 2px dashed var(--border); border-radius: var(--radius); padding: 28px; text-align: center;
     color: var(--muted); cursor: pointer; transition: border-color .15s, background .15s; }
-  #dropZone.drag { border-color: var(--accent); background: #eef3ff; }
+  #dropZone.drag { border-color: var(--accent); background: var(--accent-soft); }
   #dropZone strong { color: var(--text); }
   .hidden-input { display: none; }
 
-  .progress { margin-top: 12px; height: 6px; background: #e8eaee; border-radius: 3px; overflow: hidden; display: none; }
+  .progress { margin-top: 12px; height: 6px; background: var(--track); border-radius: 3px; overflow: hidden; display: none; }
   .progress > div { height: 100%; width: 0; background: var(--accent); transition: width .15s; }
   .status { margin-top: 8px; font-size: 13px; color: var(--muted); min-height: 18px; }
   .status.error { color: var(--danger); }
@@ -49,7 +80,7 @@
   #viewer, #videoPanel { display: none; }
   .viewer-grid { display: grid; grid-template-columns: 170px 1fr; gap: 14px; }
   #thumbs { max-height: 560px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 4px; }
-  .thumb { position: relative; border: 2px solid transparent; border-radius: 6px; cursor: pointer; background: #e8eaee; line-height: 0; }
+  .thumb { position: relative; border: 2px solid transparent; border-radius: 6px; cursor: pointer; background: var(--track); line-height: 0; }
   .thumb canvas { width: 100%; height: auto; border-radius: 4px; }
   .thumb span { position: absolute; left: 4px; top: 4px; background: rgba(0,0,0,.6); color: #fff;
     font-size: 11px; line-height: 1; padding: 3px 5px; border-radius: 3px; }
@@ -63,21 +94,63 @@
   .toolbar .spacer { flex: 1; }
   #slideLabel { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 14px; }
 
-  button { font: inherit; font-size: 14px; padding: 7px 14px; border-radius: 7px; border: 1px solid var(--border);
-    background: #fff; color: var(--text); cursor: pointer; }
-  button:hover:not(:disabled) { background: #f1f3f6; }
+  /* Buttons: glossy gradient + top highlight, icon + label */
+  button {
+    display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+    font: inherit; font-size: 14.5px; font-weight: 550; line-height: 1;
+    min-height: 38px; padding: 8px 15px; border-radius: 10px;
+    border: 1px solid var(--btn-border); color: var(--text); cursor: pointer;
+    background: linear-gradient(180deg, var(--btn-top), var(--btn-bot));
+    box-shadow: inset 0 1px 0 var(--gloss), 0 1px 2px var(--shadow);
+    transition: filter .12s, box-shadow .12s, transform .06s;
+  }
+  button:hover:not(:disabled) { filter: brightness(1.05); box-shadow: inset 0 1px 0 var(--gloss), 0 3px 8px var(--shadow); }
+  button:active:not(:disabled) { transform: translateY(1px); box-shadow: inset 0 1px 2px var(--shadow); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   button:disabled { opacity: .45; cursor: not-allowed; }
-  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-  button.primary:hover:not(:disabled) { background: var(--accent-dark); }
-  button.danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+  button.primary {
+    color: #fff; border-color: var(--accent-dark);
+    background: linear-gradient(180deg, var(--accent-hi), var(--accent) 52%, var(--accent-dark));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.38), 0 2px 8px rgba(37,99,235,.35);
+    text-shadow: 0 1px 0 rgba(0,0,0,.18);
+  }
+  button.danger {
+    color: #fff; border-color: var(--danger-dark);
+    background: linear-gradient(180deg, var(--danger-hi), var(--danger) 52%, var(--danger-dark));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.32), 0 2px 8px rgba(220,38,38,.30);
+    text-shadow: 0 1px 0 rgba(0,0,0,.18);
+  }
+  button.sm { min-height: 34px; padding: 6px 12px; font-size: 13.5px; border-radius: 9px; }
+  button.icon-only { padding: 6px 9px; }
+  .ic { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round; }
+  button.sm .ic { width: 16px; height: 16px; }
+  .ic.f { fill: currentColor; stroke: none; }
+  button.rec .ic { color: var(--danger); }
+  button.rec.on { color: #fff; border-color: var(--danger-dark);
+    background: linear-gradient(180deg, var(--danger-hi), var(--danger) 52%, var(--danger-dark)); }
+  button.rec.on .ic { color: #fff; animation: pulse 1s infinite; }
+  @keyframes pulse { 50% { opacity: .35; } }
+
+  /* Theme switch (header) */
+  header { display: flex; align-items: center; gap: 16px; }
+  header .htext { flex: 1; }
+  .seg { display: inline-flex; border: 1px solid var(--btn-border); border-radius: 10px; overflow: hidden;
+    box-shadow: 0 1px 2px var(--shadow); }
+  .seg button { border: 0; border-radius: 0; min-height: 34px; padding: 6px 11px; box-shadow: none; font-size: 13px; }
+  .seg button + button { border-left: 1px solid var(--btn-border); }
+  .seg button.on { color: #fff; background: linear-gradient(180deg, var(--accent-hi), var(--accent)); }
 
   #notes, #animInfo { font-size: 13px; color: var(--muted); white-space: pre-wrap; }
   #notes { margin-top: 10px; border-top: 1px solid var(--border); padding-top: 8px; min-height: 20px; }
 
   .form-row { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: flex-end; }
   label.field { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); }
-  label.field input, label.field select { font: inherit; font-size: 14px; color: var(--text); padding: 6px 8px;
-    border: 1px solid var(--border); border-radius: 6px; background: #fff; min-width: 120px; }
+  label.field input, label.field select { font: inherit; font-size: 14px; color: var(--text); padding: 7px 9px;
+    border: 1px solid var(--border); border-radius: 8px; background: var(--input-bg); min-width: 120px; }
+  label.field input:focus, label.field select:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+  input[type=range] { accent-color: var(--accent); }
+  input[type=checkbox] { accent-color: var(--accent); width: 16px; height: 16px; }
   label.check { display: flex; gap: 6px; align-items: center; font-size: 14px; padding-bottom: 6px; }
   .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
   .video-grid h3 { margin: 0 0 6px; font-size: 14px; color: var(--muted); font-weight: 600; }
@@ -91,7 +164,7 @@
 
   /* Background gallery */
   .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; margin-bottom: 12px; }
-  .vcard { border: 2px solid transparent; border-radius: 8px; cursor: pointer; background: #f1f3f6; overflow: hidden;
+  .vcard { border: 2px solid transparent; border-radius: 8px; cursor: pointer; background: var(--panel-2); overflow: hidden;
     transition: border-color .12s, transform .12s; }
   .vcard:hover { transform: translateY(-1px); }
   .vcard.selected { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,.18); }
@@ -116,20 +189,31 @@
   /* Narration */
   #narrBody { display: none; margin-top: 10px; }
   .nrow { display: grid; grid-template-columns: 150px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid var(--border); }
-  .nrow canvas { width: 150px; height: auto; border-radius: 4px; background: #e8eaee; }
-  .nrow.recording { background: #fff5f5; }
-  .nrow.busy { background: #f3f6ff; }
+  .nrow canvas { width: 150px; height: auto; border-radius: 6px; background: var(--track); }
+  .nrow.recording { background: var(--row-rec); }
+  .nrow.busy { background: var(--row-busy); }
   .nhead { display: flex; gap: 10px; align-items: baseline; font-size: 13px; margin-bottom: 4px; }
   .nhead b { font-size: 14px; }
   .nstat { color: var(--muted); }
-  .nstat.ok { color: #15803d; }
-  .nstat.warn { color: #b45309; }
-  .nrow textarea { width: 100%; min-height: 64px; font: inherit; font-size: 14px; padding: 6px 8px; border: 1px solid var(--border);
-    border-radius: 6px; resize: vertical; }
+  .nstat.ok { color: var(--ok); }
+  .nstat.warn { color: var(--warn); }
+  .nedit { position: relative; }
+  .nedit .nhl, .nedit textarea {
+    font: inherit; font-size: 14.5px; line-height: 1.55; letter-spacing: normal;
+    padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px;
+    white-space: pre-wrap; overflow-wrap: break-word; word-break: normal; tab-size: 4;
+  }
+  .nedit .nhl { position: absolute; inset: 0; color: transparent; background: var(--input-bg); overflow: hidden; pointer-events: none; }
+  .nedit textarea { position: relative; display: block; width: 100%; min-height: 64px; resize: none; overflow: hidden;
+    background: transparent; color: var(--text); }
+  .nedit textarea:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+  .nedit textarea[readonly] { cursor: default; }
+  .nhl mark { color: transparent; border-radius: 4px; }
+  .nhl mark.done { background: var(--hl-done); }
+  .nhl mark.cur { background: var(--hl-cur); box-shadow: 0 0 0 2px var(--hl-cur); }
+  .ntime { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; margin-left: 4px; align-self: center; }
   .nbtns { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
-  .nbtns button { padding: 4px 10px; font-size: 13px; }
-  button.rec { color: var(--danger); }
-  button.rec.on { background: var(--danger); color: #fff; border-color: var(--danger); }
+
   #narrTotal { font-size: 13px; color: var(--muted); }
 
   @media (max-width: 800px) {
@@ -142,9 +226,42 @@
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4.5" width="4" height="15" rx="1.2"/><rect x="14" y="4.5" width="4" height="15" rx="1.2"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="5.5" y="5.5" width="13" height="13" rx="2.5"/></symbol>
+    <symbol id="i-rec" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M11 3.5l1.7 4.3 4.3 1.7-4.3 1.7L11 15.5l-1.7-4.3L5 9.5l4.3-1.7z"/><path d="M18.5 14l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+    <symbol id="i-show" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="M21 16l-5-5-9 8"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z M14 3v4h4M9 13h6M9 17h6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7.5 4v16M16.5 4v16M3 9h4.5M3 15h4.5M16.5 9H21M16.5 15H21"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9.5v5h4l5 4v-13l-5 4z"/><path d="M16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/></symbol>
+    <symbol id="i-anim" viewBox="0 0 24 24"><path d="M4 18c3-8 6-12 9-12s4 4 7 4"/><circle cx="20" cy="10" r="1.6"/><path d="M4 21h16"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-auto" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M12 4v12" /></symbol>
+    <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M4 16a8 8 0 1 1 16 0"/><path d="M12 16l4-5"/></symbol>
+  </defs>
+</svg>
+
 <header>
-  <h1>PPTX to Video – test page</h1>
-  <p>Loads a PowerPoint file entirely in your browser (nothing is uploaded), renders slides with their animations and transitions, and exports a video.</p>
+  <div class="htext">
+    <h1>PPTX to Video – test page</h1>
+    <p>Loads a PowerPoint file entirely in your browser (nothing is uploaded), renders slides with their animations and transitions, and exports a video.</p>
+  </div>
+  <div class="seg" id="themeSeg" role="group" aria-label="Theme">
+    <button data-theme-set="light" title="Light theme"><svg class="ic"><use href="#i-sun"/></svg>Light</button>
+    <button data-theme-set="dark" title="Dark theme"><svg class="ic"><use href="#i-moon"/></svg>Dark</button>
+    <button data-theme-set="auto" title="Follow Windows setting"><svg class="ic"><use href="#i-auto"/></svg>Auto</button>
+  </div>
 </header>
 
 <main>
@@ -167,14 +284,14 @@
       <div>
         <div class="stage"><canvas id="slideCanvas"></canvas></div>
         <div class="toolbar">
-          <button id="prevBtn">&larr; Prev</button>
+          <button id="prevBtn"><svg class="ic"><use href="#i-left"/></svg>Prev</button>
           <span id="slideLabel">–</span>
-          <button id="nextBtn">Next &rarr;</button>
-          <button id="playAnimBtn">&#9654; Play animations</button>
+          <button id="nextBtn">Next<svg class="ic"><use href="#i-right"/></svg></button>
+          <button id="playAnimBtn"><svg class="ic"><use href="#i-anim"/></svg>Play animations</button>
           <span class="spacer"></span>
-          <button id="showBtn">Slide show</button>
-          <button id="pngBtn">Download PNG</button>
-          <button id="pdfBtn">Download PDF</button>
+          <button id="showBtn"><svg class="ic"><use href="#i-show"/></svg>Slide show</button>
+          <button id="pngBtn"><svg class="ic"><use href="#i-image"/></svg>PNG</button>
+          <button id="pdfBtn"><svg class="ic"><use href="#i-file"/></svg>PDF</button>
         </div>
         <div id="animInfo"></div>
         <div id="notes"></div>
@@ -200,13 +317,15 @@
         <label class="field" id="speakerField">Speaker <select id="ttsSpeaker"></select></label>
         <label class="field" id="kokoroQField">Model
           <select id="kokoroQ">
+            <option value="auto">Auto – fastest on this PC (tests GPU and CPU once)</option>
             <option value="q8|wasm">Compact (≈90 MB, CPU, 1 thread speed)</option>
             <option value="fp32|wasm">Full (≈330 MB, CPU, uses all threads)</option>
             <option value="fp32|webgpu">Full on GPU (≈330 MB, WebGPU)</option>
           </select>
         </label>
         <label class="field">Speed <span><input type="range" id="ttsSpeed" min="0.7" max="1.3" step="0.05" value="1"> <span id="ttsSpeedVal">1.00×</span></span></label>
-        <button id="ttsTestBtn">▶ Test voice</button>
+        <button id="kokoroRetest" class="sm" title="Measure GPU and CPU speed again"><svg class="ic"><use href="#i-gauge"/></svg>Re-test speed</button>
+        <button id="ttsTestBtn"><svg class="ic"><use href="#i-sound"/></svg>Test voice</button>
       </div>
       <div class="progress" id="ttsProgress"><div></div></div>
       <div class="status" id="ttsStatus">The voice model downloads once, then your browser keeps it.</div>
@@ -222,8 +341,8 @@
       </div>
 
       <div class="toolbar" style="margin-top:14px">
-        <button id="genAllBtn" class="primary">Generate all with this voice</button>
-        <button id="genStopBtn" disabled>Stop</button>
+        <button id="genAllBtn" class="primary"><svg class="ic"><use href="#i-spark"/></svg>Generate all with this voice</button>
+        <button id="genStopBtn" disabled><svg class="ic f"><use href="#i-stop"/></svg>Stop</button>
         <span class="spacer"></span>
         <span id="narrTotal"></span>
       </div>
@@ -332,9 +451,9 @@
     </div>
 
     <div class="toolbar" style="margin-top:14px">
-      <button id="previewVideoBtn">Preview (real time)</button>
-      <button id="exportBtn" class="primary">Export video</button>
-      <button id="stopBtn" class="danger" disabled>Stop</button>
+      <button id="previewVideoBtn"><svg class="ic"><use href="#i-eye"/></svg>Preview (real time)</button>
+      <button id="exportBtn" class="primary"><svg class="ic"><use href="#i-film"/></svg>Export video</button>
+      <button id="stopBtn" class="danger" disabled><svg class="ic f"><use href="#i-stop"/></svg>Stop</button>
     </div>
     <div class="progress" id="videoProgress"><div></div></div>
     <div class="status" id="videoStatus"></div>
@@ -348,7 +467,7 @@
       <div>
         <h3>Result</h3>
         <video id="resultVideo" controls playsinline></video>
-        <a id="downloadLink"><button class="primary">Download video</button></a>
+        <a id="downloadLink"><button class="primary"><svg class="ic"><use href="#i-down"/></svg>Download video</button></a>
       </div>
     </div>
   </section>
@@ -509,7 +628,7 @@
     }
     renderStillPreview();
     try {
-      const notes = await renderer.getSlideNotes(i);
+      const notes = await slideNotes(renderer, i);
       if (token === renderToken) $('notes').textContent = notes ? 'Notes: ' + notes : '';
     } catch { $('notes').textContent = ''; }
   }
@@ -814,9 +933,10 @@
     };
     try {
       if (engine === 'kokoro') {
-        const [dtype, device] = $('kokoroQ').value.split('|');
-        if (device === 'webgpu' && !navigator.gpu) throw new Error('WebGPU is not available in this browser – choose the Standard model.');
-        const key = 'kokoro|' + $('kokoroQ').value;
+        const cfg = await kokoroConfig(onProgress);
+        const [dtype, device] = cfg.split('|');
+        if (device === 'webgpu' && !navigator.gpu) throw new Error('WebGPU is not available in this browser – choose a CPU model.');
+        const key = 'kokoro|' + cfg;
         if (ensureVoice.loaded !== key) {
           setTtsStatus('Loading Kokoro…');
           const voices = await tts.load('kokoro', { dtype, device }, onProgress);
@@ -825,7 +945,7 @@
           if (voices?.length) { await fillVoices(); $('ttsVoice').value = cur; }
         }
         const voice = $('ttsVoice').value;
-        return { engine, voice, speed: +$('ttsSpeed').value, label: 'Kokoro ' + voice };
+        return { engine, voice, speed: +$('ttsSpeed').value, label: 'Kokoro ' + voice + (device === 'webgpu' ? ' (GPU)' : ' (CPU)') };
       }
       const v = (await tts.piperVoices()).find(x => x.key === $('ttsVoice').value);
       if (!v) throw new Error('Choose a voice first.');
@@ -839,6 +959,76 @@
       setBar(bar, null);
     }
   }
+
+  // ── Kokoro: pick GPU or CPU automatically (measured once per PC, remembered)
+  const KOKORO_CPU = () => (self.crossOriginIsolated && (navigator.hardwareConcurrency || 2) >= 4) ? 'fp32|wasm' : 'q8|wasm';
+  const AUTO_KEY = 'pptxKokoroAuto';
+  function savedAuto() { try { const s = JSON.parse(localStorage.getItem(AUTO_KEY) || 'null'); return s && s.cpu === KOKORO_CPU() ? s : null; } catch { return null; } }
+  const autoLabel = (c) => c.endsWith('webgpu') ? 'GPU' : c.startsWith('fp32') ? 'CPU (full, multi-thread)' : 'CPU (compact)';
+  function describeAuto(s) {
+    const parts = Object.entries(s.results).map(([c, r]) => `${autoLabel(c)} ${r ? r.toFixed(2) + '×' : 'failed'}`);
+    return `Auto uses ${autoLabel(s.choice)} on this PC (measured: ${parts.join(', ')} real time).`;
+  }
+
+  async function kokoroConfig(onProgress) {
+    const sel = $('kokoroQ').value;
+    if (sel !== 'auto') return sel;
+    const s = savedAuto();
+    if (s) return s.choice;
+    return await calibrateKokoro(onProgress);
+  }
+
+  async function calibrateKokoro(onProgress) {
+    const cands = [];
+    try { if (navigator.gpu && await navigator.gpu.requestAdapter()) cands.push('fp32|webgpu'); } catch {}
+    cands.push(KOKORO_CPU());
+    const results = {};
+    let lastErr = null;
+    const text = 'This is a short speed test, so we can choose the fastest way to speak on this computer.';
+    for (const c of cands) {
+      const [dtype, device] = c.split('|');
+      try {
+        setTtsStatus(`Auto: loading Kokoro for the ${autoLabel(c)} test…`);
+        await tts.load('kokoro', { dtype, device }, onProgress);
+        ensureVoice.loaded = 'kokoro|' + c;
+        setTtsStatus(`Auto: measuring ${autoLabel(c)} speed…`);
+        await tts.speak('kokoro', { text: 'Hello.', voice: 'af_heart' }, audioCtx());     // warm-up (GPU shader compile)
+        const t0 = performance.now();
+        const buf = await tts.speak('kokoro', { text, voice: 'af_heart' }, audioCtx());
+        results[c] = buf.duration / ((performance.now() - t0) / 1000);
+      } catch (err) {
+        console.warn('Kokoro test failed for', c, err);
+        results[c] = 0;
+        lastErr = err;
+      }
+    }
+    const best = Object.entries(results).sort((a, b) => b[1] - a[1])[0];
+    if (!best || !best[1]) {
+      if (lastErr && /download|internet/i.test(lastErr.message)) throw lastErr;   // a network problem, not the PC
+      throw new Error('Kokoro could not run on this PC (GPU and CPU tests failed). Try Piper.');
+    }
+    const s = { choice: best[0], cpu: KOKORO_CPU(), results, at: Date.now() };
+    try { localStorage.setItem(AUTO_KEY, JSON.stringify(s)); } catch {}
+    setTtsStatus(describeAuto(s));
+    return s.choice;
+  }
+
+  function updateKokoroAutoUI() {
+    const auto = $('ttsEngine').value === 'kokoro' && $('kokoroQ').value === 'auto';
+    $('kokoroRetest').style.display = auto && savedAuto() ? '' : 'none';
+    if (auto && savedAuto()) setTtsStatus(describeAuto(savedAuto()));
+  }
+  $('kokoroQ').addEventListener('change', updateKokoroAutoUI);
+  $('ttsEngine').addEventListener('change', updateKokoroAutoUI);
+  $('kokoroRetest').addEventListener('click', async () => {
+    const b = $('kokoroRetest');
+    b.disabled = true;
+    try { localStorage.removeItem(AUTO_KEY); } catch {}
+    ensureVoice.loaded = null;
+    try { await calibrateKokoro((p) => setTtsStatus(`Downloading ${p.label}… ${fmtSize(p.loaded)}${p.total ? ' / ' + fmtSize(p.total) : ''}`)); }
+    catch (err) { setTtsStatus(String(err?.message || err), true); }
+    finally { b.disabled = false; updateKokoroAutoUI(); }
+  });
 
   async function speakText(text, onProgress) {
     const cfg = await ensureVoice();
@@ -855,7 +1045,7 @@
       const text = SAMPLE[fam] || SAMPLE.en;
       setTtsStatus('Generating a sample…');
       const { buf } = await speakText(text);
-      playBuffer(buf);
+      playerPlay('test', buf);
       setTtsStatus(`Sample: ${buf.duration.toFixed(1)} s. The voice is ready.`);
     } catch (err) {
       console.error(err);
@@ -863,27 +1053,113 @@
     } finally { btn.disabled = false; }
   });
 
-  // ── playback
-  function playBuffer(buf) {
-    stopPlayback();
+  // ── Audio player (one at a time): play / pause / resume / stop with a time display
+  const icon = (n, f = false) => `<svg class="ic${f ? ' f' : ''}"><use href="#i-${n}"/></svg>`;
+  const player = { key: null, buf: null, src: null, startAt: 0, offset: 0, playing: false, raf: 0, hooks: {} };
+  const playerPos = () => player.playing ? audioCtx().currentTime - player.startAt : player.offset;
+
+  function playerPlay(key, buf, hooks = {}) {
     const ctx = audioCtx();
     ctx.resume?.();
+    if (player.key !== key || player.buf !== buf) { playerStop(); Object.assign(player, { key, buf, offset: 0, hooks }); }
+    if (player.playing) return;
     const src = ctx.createBufferSource();
     src.buffer = buf;
     src.connect(ctx.destination);
-    src.start();
-    playingSrc = src;
-    src.onended = () => { if (playingSrc === src) playingSrc = null; };
+    src.start(0, Math.min(player.offset, buf.duration - 0.01));
+    Object.assign(player, { src, startAt: ctx.currentTime - player.offset, playing: true });
+    src.onended = () => { if (player.src === src) playerStop(); };
+    const tick = () => { if (!player.playing) return; player.hooks.onTick?.(playerPos()); player.raf = requestAnimationFrame(tick); };
+    tick();
+    player.hooks.onState?.();
   }
-  function stopPlayback() { try { playingSrc?.stop(); } catch {} playingSrc = null; }
+  function playerPause() {
+    if (!player.playing) return;
+    player.offset = playerPos();
+    player.playing = false;
+    const s = player.src; player.src = null;
+    try { s?.stop(); } catch {}
+    cancelAnimationFrame(player.raf);
+    player.hooks.onState?.();
+  }
+  function playerStop() {
+    const hooks = player.hooks;
+    const s = player.src;
+    Object.assign(player, { key: null, buf: null, src: null, offset: 0, playing: false, hooks: {} });
+    try { s?.stop(); } catch {}
+    cancelAnimationFrame(player.raf);
+    hooks.onTick?.(null);
+    hooks.onState?.();
+  }
+  const stopPlayback = playerStop;
+
+  /** Play a slide's narration with live time and sentence highlight. */
+  function playRow(i) {
+    const n = narr[i];
+    if (!n.buffer) return;
+    if (player.key === i && player.playing) { playerPause(); return; }
+    playerPlay(i, n.buffer, {
+      onTick: (pos) => {
+        const row = rowEl(i);
+        if (!row) return;
+        row.querySelector('.ntime').textContent = pos == null ? fmtTime(n.buffer.duration) : `${fmtTime(pos)} / ${fmtTime(n.buffer.duration)}`;
+        if (pos == null || !n.marks || cleanForSpeech(n.text) !== n.spokenText) { if (pos == null) paintHL(i, []); return; }
+        let k = -1;
+        n.marks.forEach((m, j) => { if (pos >= m.t0) k = j; });
+        paintHL(i, n.marks.filter(Boolean).map((m, j) => j < k ? { ...m, cls: 'done' } : j === k ? { ...m, cls: 'cur' } : null).filter(Boolean));
+      },
+      onState: () => updateRow(i),
+    });
+  }
+
+  // ── Highlight backdrop behind each notes box
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  function paintHL(i, ranges) {
+    const row = rowEl(i);
+    if (!row) return;
+    const ta = row.querySelector('textarea'), hl = row.querySelector('.nhl');
+    const text = ta.value;
+    let html = '', p = 0;
+    for (const r of [...ranges].sort((a, b) => a.start - b.start)) {
+      if (r.start < p || r.end <= r.start) continue;
+      html += esc(text.slice(p, r.start)) + `<mark class="${r.cls}">${esc(text.slice(r.start, r.end))}</mark>`;
+      p = r.end;
+    }
+    hl.innerHTML = html + esc(text.slice(p)) + '\n';
+    hl.scrollTop = ta.scrollTop;
+  }
+  function autosize(ta) { ta.style.height = 'auto'; ta.style.height = (ta.scrollHeight + 2) + 'px'; }
+  window.addEventListener('resize', () => document.querySelectorAll('#narrList textarea').forEach(autosize));
+
+  /** Find a spoken sentence inside the original notes text (which may contain bullets, line breaks…). */
+  function locateSentence(raw, sentence, from = 0) {
+    let norm = '', map = [], sp = false;
+    for (let k = 0; k < raw.length; k++) {
+      let c = raw[k];
+      if (/\s/.test(c)) { if (sp) continue; c = ' '; sp = true; } else sp = false;
+      norm += c.toLowerCase(); map.push(k);
+    }
+    const core = sentence.toLowerCase().replace(/^[^\p{L}\p{N}]+/u, '').replace(/[^\p{L}\p{N}]+$/u, '');
+    if (!core) return null;
+    const startN = map.findIndex(x => x >= from);
+    const head = core.slice(0, Math.min(24, core.length));
+    const a = norm.indexOf(head, Math.max(0, startN));
+    if (a < 0) return null;
+    const tail = core.slice(-Math.min(16, core.length));
+    let b = norm.indexOf(tail, a + Math.max(0, core.length - tail.length - 30));
+    b = (b < 0 ? a + core.length - tail.length : b) + tail.length;
+    while (b < norm.length && /[.!?;:…"'’”»)\]]/.test(norm[b])) b++;
+    return { start: map[a], end: (map[Math.min(b, map.length) - 1] ?? map[map.length - 1]) + 1 };
+  }
 
   // ── notes list
   async function loadNarrationNotes() {
+    playerStop();
     narr = [];
     for (let i = 0; i < renderer.slideCount; i++) {
       let text = '';
       try { text = await slideNotes(renderer, i); } catch {}
-      narr.push({ text, buffer: null, kind: null, label: '', spokenText: '' });
+      narr.push({ text, buffer: null, kind: null, label: '', spokenText: '', marks: null });
     }
     $('narrPanel').style.display = 'block';
     const withNotes = narr.filter(n => n.text.trim()).length;
@@ -902,12 +1178,15 @@
         <canvas></canvas>
         <div>
           <div class="nhead"><b>Slide ${i + 1}</b><span class="nstat"></span></div>
-          <textarea placeholder="Type what should be said on this slide (or leave empty)."></textarea>
+          <div class="nedit"><div class="nhl"></div><textarea rows="2" placeholder="Type what should be said on this slide (or leave empty)."></textarea></div>
           <div class="nbtns">
-            <button class="rec">● Record</button>
-            <button class="gen">Generate</button>
-            <button class="play">▶ Play</button>
-            <button class="clear">✕ Remove audio</button>
+            <button class="sm rec" title="Record your own voice for this slide">${icon('rec', true)}<span>Record</span></button>
+            <button class="sm gen" title="Generate speech with the selected voice">${icon('spark')}Generate</button>
+            <button class="sm play" title="Play / pause">${icon('play', true)}<span>Play</span></button>
+            <button class="sm stop icon-only" title="Stop">${icon('stop', true)}</button>
+            <span class="ntime"></span>
+            <span style="flex:1"></span>
+            <button class="sm clear" title="Remove this slide's audio">${icon('trash')}Remove</button>
           </div>
         </div>`;
       const thumb = document.querySelector(`.thumb[data-index="${i}"] canvas`);
@@ -915,12 +1194,20 @@
       if (thumb?.width) { c.width = thumb.width; c.height = thumb.height; c.getContext('2d').drawImage(thumb, 0, 0); }
       const ta = row.querySelector('textarea');
       ta.value = n.text;
-      ta.addEventListener('input', () => { n.text = ta.value; updateRow(i); });
+      ta.addEventListener('input', () => { n.text = ta.value; autosize(ta); paintHL(i, []); updateRow(i); });
+      ta.addEventListener('scroll', () => { row.querySelector('.nhl').scrollTop = ta.scrollTop; });
       row.querySelector('.rec').addEventListener('click', () => toggleRecord(i));
       row.querySelector('.gen').addEventListener('click', () => generateOne(i));
-      row.querySelector('.play').addEventListener('click', () => n.buffer && playBuffer(n.buffer));
-      row.querySelector('.clear').addEventListener('click', () => { n.buffer = null; n.kind = null; updateRow(i); });
+      row.querySelector('.play').addEventListener('click', () => playRow(i));
+      row.querySelector('.stop').addEventListener('click', () => { if (player.key === i) playerStop(); });
+      row.querySelector('.clear').addEventListener('click', () => {
+        if (player.key === i) playerStop();
+        Object.assign(n, { buffer: null, kind: null, marks: null });
+        updateRow(i);
+      });
       list.appendChild(row);
+      requestAnimationFrame(() => autosize(ta));
+      paintHL(i, []);
       updateRow(i);
     });
     updateNarrTotal();
@@ -932,16 +1219,23 @@
     const n = narr[i], row = rowEl(i);
     if (!row) return;
     const st = row.querySelector('.nstat');
-    st.className = 'nstat';
-    if (n.buffer) {
-      const stale = n.kind === 'tts' && cleanForSpeech(n.text) !== n.spokenText;
-      st.textContent = `${n.kind === 'rec' ? '🎙 Your recording' : '🔊 ' + n.label} · ${n.buffer.duration.toFixed(1)} s${stale ? ' · text changed, generate again' : ''}`;
-      st.classList.add(stale ? 'warn' : 'ok');
-    } else {
-      st.textContent = n.text.trim() ? 'No audio yet' : 'No text – uses the normal hold time';
+    if (!row.classList.contains('busy')) {
+      st.className = 'nstat';
+      if (n.buffer) {
+        const stale = n.kind === 'tts' && cleanForSpeech(n.text) !== n.spokenText;
+        st.textContent = `${n.kind === 'rec' ? 'Your recording' : n.label} · ${n.buffer.duration.toFixed(1)} s${stale ? ' · text changed, generate again' : ''}`;
+        st.classList.add(stale ? 'warn' : 'ok');
+      } else {
+        st.textContent = n.text.trim() ? 'No audio yet' : 'No text – uses the normal hold time';
+      }
     }
-    row.querySelector('.play').disabled = !n.buffer;
-    row.querySelector('.clear').disabled = !n.buffer;
+    const mine = player.key === i, playing = mine && player.playing;
+    const pb = row.querySelector('.play');
+    pb.innerHTML = playing ? `${icon('pause', true)}<span>Pause</span>` : `${icon('play', true)}<span>${mine ? 'Resume' : 'Play'}</span>`;
+    pb.disabled = !n.buffer;
+    row.querySelector('.stop').disabled = !mine;
+    if (!mine) row.querySelector('.ntime').textContent = n.buffer ? fmtTime(n.buffer.duration) : '';
+    row.querySelector('.clear').disabled = !n.buffer || row.classList.contains('busy');
     row.querySelector('.gen').disabled = !n.text.trim() || genBusy || recIndex >= 0;
     row.querySelector('.rec').disabled = genBusy || (recIndex >= 0 && recIndex !== i);
     updateNarrTotal();
@@ -959,18 +1253,19 @@
   const short = (t, n = 70) => t.length > n ? t.slice(0, n - 1) + '…' : t;
 
   /**
-   * Shows live progress: which sentence, its text, elapsed time, real-time factor and time left.
-   * `charsAfter` = characters still waiting in later slides (Generate all).
+   * Live progress: highlights the sentence being generated (yellow) and finished ones (green),
+   * shows sentence k/N, elapsed time, real-time factor and time left; collects sentence timings.
    */
-  function progressReporter(i, text, charsAfter = 0) {
+  function progressReporter(i, raw, cleaned, charsAfter = 0) {
     const row = rowEl(i);
     const t0 = performance.now();
-    let cur = null, doneChars = 0;
+    let cur = null, curLoc = null, cursor = 0, doneChars = 0;
+    const done = [], marks = [];
     const paint = () => {
       const el = (performance.now() - t0) / 1000;
       const rtf = speed.ms ? speed.audio / (speed.ms / 1000) : 0;
       const msPerChar = speed.chars ? speed.ms / speed.chars : 0;
-      const left = msPerChar ? ((text.length - doneChars) + charsAfter) * msPerChar / 1000 : 0;
+      const left = msPerChar ? ((cleaned.length - doneChars) + charsAfter) * msPerChar / 1000 : 0;
       if (row && cur) row.querySelector('.nstat').textContent = `Generating sentence ${cur.index}/${cur.total} · ${fmtTime(el)}`;
       setTtsStatus(
         (cur ? `Slide ${i + 1}, sentence ${cur.index}/${cur.total}: “${short(cur.text)}”` : `Slide ${i + 1}: preparing…`) +
@@ -981,10 +1276,20 @@
     const timer = setInterval(paint, 500);
     return {
       onProgress: (p) => {
-        if (p.label === 'sentence') cur = p;
-        else if (p.label === 'sentence-done') { speed.ms += p.ms; speed.chars += p.chars; speed.audio += p.audioSec; doneChars += p.chars; }
+        if (p.label === 'sentence') {
+          cur = p;
+          curLoc = locateSentence(raw, p.text, cursor);
+          if (curLoc) cursor = curLoc.end;
+          paintHL(i, [...done.map(d => ({ ...d, cls: 'done' })), ...(curLoc ? [{ ...curLoc, cls: 'cur' }] : [])]);
+        } else if (p.label === 'sentence-done') {
+          speed.ms += p.ms; speed.chars += p.chars; speed.audio += p.audioSec; doneChars += p.chars;
+          if (curLoc) done.push(curLoc);
+          marks.push(curLoc ? { ...curLoc, t0: p.start, t1: p.start + p.audioSec } : null);
+          paintHL(i, done.map(d => ({ ...d, cls: 'done' })));
+        }
         paint();
       },
+      marks,
       done: () => clearInterval(timer),
     };
   }
@@ -994,22 +1299,27 @@
     const text = cleanForSpeech(n.text);
     if (!text) return;
     const row = rowEl(i);
+    if (player.key === i) playerStop();
     row?.classList.add('busy');
-    const rep = progressReporter(i, text, charsAfter);
+    const ta = row?.querySelector('textarea');
+    if (ta) ta.readOnly = true;                     // keep the text stable while it is highlighted
+    const rep = progressReporter(i, n.text, text, charsAfter);
     try {
       row.querySelector('.nstat').textContent = 'Preparing…';
       const { buf, label } = await speakText(text, rep.onProgress);
-      Object.assign(n, { buffer: buf, kind: 'tts', label, spokenText: text });
-      if (!quiet) playBuffer(buf);
+      Object.assign(n, { buffer: buf, kind: 'tts', label, spokenText: text, marks: rep.marks });
     } catch (err) {
       console.error(err);
       setTtsStatus(`Slide ${i + 1}: ${err?.message || err}`, true);
       throw err;
     } finally {
       rep.done();
+      if (ta) ta.readOnly = false;
       row?.classList.remove('busy');
+      setTimeout(() => { if (player.key !== i) paintHL(i, []); }, 1200);   // let the green "done" linger a moment
       updateRow(i);
     }
+    if (!quiet) playRow(i);
   }
 
   function setGenBusy(b) {
@@ -1061,17 +1371,17 @@
     micRec.onstop = async () => {
       clearInterval(timer);
       recIndex = -1;
-      btn.classList.remove('on'); btn.textContent = '● Record';
+      btn.classList.remove('on'); btn.innerHTML = `${icon('rec', true)}<span>Record</span>`;
       row.classList.remove('recording');
       try {
         const raw = await new Blob(chunks, { type: micRec.mimeType }).arrayBuffer();
         const buf = trimSilence(await audioCtx().decodeAudioData(raw));
-        Object.assign(narr[i], { buffer: buf, kind: 'rec', label: 'Your recording' });
+        Object.assign(narr[i], { buffer: buf, kind: 'rec', label: 'Your recording', marks: null });
       } catch (err) { setTtsStatus('Could not read the recording: ' + (err?.message || err), true); }
       narr.forEach((_, k) => updateRow(k));
     };
     recIndex = i;
-    btn.classList.add('on'); btn.textContent = '■ Stop';
+    btn.classList.add('on'); btn.innerHTML = `${icon('stop', true)}<span>Stop recording</span>`;
     row.classList.add('recording');
     narr.forEach((_, k) => updateRow(k));
     micRec.start();
@@ -1095,11 +1405,23 @@
   function updateNarrUI() {
     const on = $('narrChk').checked;
     $('narrBody').style.display = on ? 'block' : 'none';
+    if (on) requestAnimationFrame(() => document.querySelectorAll('#narrList textarea').forEach(autosize));
     $('holdLabel').textContent = on ? 'Hold slides without narration (s)' : 'Hold each slide (s)';
     if (on && !$('ttsLang').options.length) fillLanguages().then(fillVoices).catch(err => setTtsStatus(String(err), true));
   }
   $('narrChk').addEventListener('change', updateNarrUI);
-  $('kokoroQ').value = (self.crossOriginIsolated && (navigator.hardwareConcurrency || 2) >= 4) ? 'fp32|wasm' : 'q8|wasm';
+  $('kokoroQ').value = navigator.gpu ? 'auto' : KOKORO_CPU();
+  updateKokoroAutoUI();
+
+  // ── Theme switch (light / dark / follow Windows)
+  function applyTheme(t) {
+    if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+    else { delete document.documentElement.dataset.theme; t = 'auto'; }
+    try { localStorage.setItem('pptxTheme', t); } catch {}
+    document.querySelectorAll('#themeSeg button').forEach(b => b.classList.toggle('on', b.dataset.themeSet === t));
+  }
+  document.querySelectorAll('#themeSeg button').forEach(b => b.addEventListener('click', () => applyTheme(b.dataset.themeSet)));
+  applyTheme((() => { try { return localStorage.getItem('pptxTheme'); } catch { return null; } })() || 'auto');
 
   function narrationSettings() {
     if (!$('narrChk').checked || !narr.some(n => n.buffer)) return null;
