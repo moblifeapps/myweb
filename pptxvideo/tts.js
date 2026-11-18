@@ -94,6 +94,7 @@ export class TtsClient {
     return null;
   }
 
+
   /** Synthesize text → AudioBuffer (mono). */
   async speak(engine, { text, voice, speed = 1, speaker = 0 }, audioCtx, onProgress) {
     const m = await this._call(engine, { type: 'speak', text, voice, speed, speaker }, onProgress);
@@ -254,3 +255,4 @@ export async function slideText(renderer, i) {
   }
   return rowsOut.flatMap(r => r.items.sort((a, b) => a.x - b.x)).map(it => it.text).join('\n');
 }
+

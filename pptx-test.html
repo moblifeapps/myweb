@@ -206,6 +206,19 @@
   #aiPaste textarea { width: 100%; min-height: 150px; resize: vertical; font: 13px/1.45 ui-monospace, Consolas, monospace;
     padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel); color: var(--text); box-sizing: border-box; }
 
+  /* Edge voices test */
+  #edgeBox { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 12px; }
+  #edgeBox summary { cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px; list-style: none; }
+  #edgeBox summary::-webkit-details-marker { display: none; }
+  #edgeBox summary .ic { width: 18px; height: 18px; color: var(--accent); }
+  #edgeBox summary::after { content: '▸'; margin-left: auto; color: var(--muted); transition: transform .15s; }
+  #edgeBox[open] summary::after { transform: rotate(90deg); }
+  #edgeBox .form-row { display: grid; grid-template-columns: 2fr 1fr; gap: 10px 14px; margin-top: 10px; }
+  #edgeBox input[type=text], #edgeBox input[type=url] { width: 100%; box-sizing: border-box; }
+  #edgeLog { margin-top: 8px; font: 12.5px/1.5 ui-monospace, Consolas, monospace; white-space: pre-wrap; color: var(--muted);
+    background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; display: none; max-height: 180px; overflow: auto; }
+  #edgeLog .ok { color: #16a34a; } #edgeLog .bad { color: #dc2626; }
+
   /* transition picker */
   #transCard { display: none; }
   .tgroup { margin-top: 12px; }
@@ -447,6 +460,7 @@
                   <option value="kokoro">Kokoro – English, most natural</option>
                 </select>
               </label>
+
               <label class="field" id="langField">Language <select id="ttsLang"></select></label>
               <label class="field">Voice <select id="ttsVoice"></select></label>
               <label class="field" id="speakerField">Speaker <select id="ttsSpeaker"></select></label>
@@ -543,6 +557,34 @@
                 <button id="aiCancelBtn" class="sm">Cancel</button>
               </div>
             </div>
+          </details>
+
+          <details id="edgeBox">
+            <summary><svg class="ic"><use href="#i-sound"/></svg>Edge online voices – connection test</summary>
+            <div class="form-row">
+              <label class="field">Worker address
+                <input type="url" id="edgeUrl" placeholder="https://tts.mlapplications.com">
+              </label>
+              <label class="field">Voice
+                <select id="edgeVoice">
+                  <option value="el-GR-AthinaNeural">Greek – Athina (female)</option>
+                  <option value="el-GR-NestorasNeural">Greek – Nestoras (male)</option>
+                  <option value="en-US-EmmaMultilingualNeural">English – Emma (multilingual)</option>
+                  <option value="en-US-AndrewMultilingualNeural">English – Andrew (multilingual)</option>
+                  <option value="en-GB-SoniaNeural">English UK – Sonia</option>
+                </select>
+              </label>
+            </div>
+            <label class="field" style="margin-top:10px">Text
+              <input type="text" id="edgeText" value="Καλημέρα σε όλους. Αυτό είναι ένα πρώτο τεστ.">
+            </label>
+            <div class="toolbar" style="margin-top:10px">
+              <button id="edgeHealthBtn" class="sm"><svg class="ic"><use href="#i-gauge"/></svg>1. Check Worker</button>
+              <button id="edgeTestBtn" class="primary"><svg class="ic f"><use href="#i-play"/></svg>2. Speak with Edge</button>
+              <span class="spacer"></span>
+              <audio id="edgeAudio" controls style="height:32px; display:none"></audio>
+            </div>
+            <div id="edgeLog"></div>
           </details>
         </div>
 
@@ -1946,6 +1988,62 @@ ${parts.join('\n\n')}
     const missing = renderer.slideCount - map.size;
     aiStatus(`Narration added to ${used} slide${used === 1 ? '' : 's'}` + (kept ? `, ${kept} kept as you wrote them` : '') +
       (missing > 0 ? ` · ${missing} slide${missing === 1 ? ' was' : 's were'} missing in the answer` : '') + ' – now press "Generate all slides".');
+  });
+
+  // ── Edge online voices (via the Cloudflare Worker) – connection test ───────────
+  try { $('edgeUrl').value = localStorage.getItem('pptxEdgeUrl') || 'https://tts.mlapplications.com'; } catch { $('edgeUrl').value = 'https://tts.mlapplications.com'; }
+  $('edgeUrl').addEventListener('change', () => { try { localStorage.setItem('pptxEdgeUrl', $('edgeUrl').value.trim()); } catch {} });
+  const edgeBase = () => $('edgeUrl').value.trim().replace(/\/+$/, '');
+  function edgeLog(msg, cls = '') {
+    const el = $('edgeLog');
+    el.style.display = 'block';
+    const line = document.createElement('div');
+    if (cls) line.className = cls;
+    line.textContent = `${new Date().toLocaleTimeString()}  ${msg}`;
+    el.appendChild(line);
+    el.scrollTop = el.scrollHeight;
+  }
+  async function edgeFetch(path, opts = {}, ms = 35000) {
+    const base = edgeBase();
+    if (!/^https?:\/\//.test(base)) throw new Error('Enter the Worker address first (https://…).');
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), ms);
+    try { return await fetch(base + path, { ...opts, signal: ctrl.signal }); }
+    catch (err) {
+      if (err.name === 'AbortError') throw new Error(`No answer within ${ms / 1000} s.`);
+      throw new Error('Could not reach the Worker (wrong address, Worker not deployed, or this site is not in ALLOWED_ORIGINS). ' + err.message);
+    } finally { clearTimeout(timer); }
+  }
+  $('edgeHealthBtn').addEventListener('click', async () => {
+    try {
+      const t0 = performance.now();
+      const r = await edgeFetch('/health', {}, 10000);
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(j.error || 'HTTP ' + r.status);
+      edgeLog(`Worker reachable (${Math.round(performance.now() - t0)} ms) · ${j.version} · origin ${location.origin}`, 'ok');
+    } catch (err) { edgeLog('✗ ' + err.message, 'bad'); }
+  });
+  $('edgeTestBtn').addEventListener('click', async () => {
+    const btn = $('edgeTestBtn');
+    btn.disabled = true;
+    try {
+      const text = $('edgeText').value.trim(), voice = $('edgeVoice').value;
+      edgeLog(`Asking Microsoft for ${voice}…`);
+      const t0 = performance.now();
+      const r = await edgeFetch('/tts', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ text, voice }) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(`${j.error || 'HTTP ' + r.status}${j.stage ? ' [' + j.stage + ']' : ''}`);
+      const bin = Uint8Array.from(atob(j.audio), c => c.charCodeAt(0));
+      const url = URL.createObjectURL(new Blob([bin], { type: 'audio/mpeg' }));
+      const a = $('edgeAudio');
+      if (a.dataset.url) URL.revokeObjectURL(a.dataset.url);
+      a.dataset.url = url; a.src = url; a.style.display = '';
+      await a.play().catch(() => {});
+      edgeLog(`✓ ${Math.round(bin.length / 1024)} KB MP3 in ${Math.round(performance.now() - t0)} ms (Microsoft ${j.ms} ms) · ${j.words.length} word timings` +
+        (j.words.length ? ` · first: “${j.words[0].text}” at ${j.words[0].offset.toFixed(2)} s` : ''), 'ok');
+    } catch (err) { edgeLog('✗ ' + err.message, 'bad'); }
+    finally { btn.disabled = false; }
   });
 
   // ── Transitions between slides ─────────────────────────────────────────────
