@@ -104,6 +104,7 @@ async function speak(id, text, speed = 1, speaker = 0) {
   let offset = 0;
   const allIds = await phonemeIdsMany(list, config.espeak.voice);
   for (let k = 0; k < list.length; k++) {
+    if (cancelled.has(id)) { cancelled.delete(id); throw new Error('Cancelled'); }
     postMessage({ type: 'progress', id, label: 'sentence', index: k + 1, total: list.length, text: list[k] });
     const t0 = performance.now();
     const ids = allIds[k];
@@ -127,8 +128,10 @@ async function speak(id, text, speed = 1, speaker = 0) {
   return { pcm, sampleRate: sr };
 }
 
+const cancelled = new Set();
 self.onmessage = async (e) => {
   const m = e.data;
+  if (m.type === 'cancel') { cancelled.add(m.target); return; }
   try {
     if (m.type === 'load') {
       await load(m.id, m.voice, m.base);

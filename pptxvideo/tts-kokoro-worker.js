@@ -51,6 +51,7 @@ async function speak(id, text, voice, speed) {
   const chunks = [];
   let sr = 24000, offset = 0;
   for (let k = 0; k < list.length; k++) {
+    if (cancelled.has(id)) { cancelled.delete(id); throw new Error('Cancelled'); }
     postMessage({ type: 'progress', id, label: 'sentence', index: k + 1, total: list.length, text: list[k] });
     const t0 = performance.now();
     const a = await tts.generate(list[k], { voice, speed });
@@ -69,8 +70,10 @@ async function speak(id, text, voice, speed) {
   return { pcm, sampleRate: sr };
 }
 
+const cancelled = new Set();
 self.onmessage = async (e) => {
   const m = e.data;
+  if (m.type === 'cancel') { cancelled.add(m.target); return; }
   try {
     if (m.type === 'load') {
       await load(m.id, m.dtype || 'q8', m.device || 'wasm');

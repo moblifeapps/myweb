@@ -62,7 +62,7 @@ export class TtsClient {
   _call(engine, msg, onProgress, transfer) {
     const id = ++this.seq;
     return new Promise((resolve, reject) => {
-      this.pending.set(id, { resolve, reject, onProgress });
+      this.pending.set(id, { resolve, reject, onProgress, engine });
       this._worker(engine).postMessage({ ...msg, id }, transfer || []);
     });
   }
@@ -98,6 +98,21 @@ export class TtsClient {
   async speak(engine, { text, voice, speed = 1, speaker = 0 }, audioCtx, onProgress) {
     const m = await this._call(engine, { type: 'speak', text, voice, speed, speaker }, onProgress);
     return pcmToBuffer(m.pcm, m.sampleRate, audioCtx);
+  }
+
+  /**
+   * Cancel what an engine is generating: the promise rejects at once with "Cancelled",
+   * and the worker stops before its next sentence.
+   */
+  cancel(engine) {
+    const w = this.workers[engine];
+    if (!w) return;
+    for (const [id, p] of this.pending) {
+      if (p.engine !== engine) continue;
+      w.postMessage({ type: 'cancel', target: id });
+      this.pending.delete(id);
+      p.reject(new Error('Cancelled'));
+    }
   }
 }
 

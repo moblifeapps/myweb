@@ -12,6 +12,7 @@
  */
 
 import { renderTransitionFrame } from '../pptxpackage/pptxsrc/index.js';
+import { TransitionGL, GL_TRANSITIONS } from './transitions.js';
 
 // ── Mediabunny (loaded only when the fast exporter is used) ──────────────────
 let mbPromise = null;
@@ -627,13 +628,28 @@ export class PptxVideo {
   isTransparent(i) { return this.bgs[i]?.mode === 'transparent'; }
   decoFor(i) { return this.isTransparent(i) ? this.decoObj || null : null; }
 
+  /**
+   * Transition INTO slide i. Per-slide choice: settings.slides[i].trans = { type, ms, url?, mduration? }
+   *   type: 'file' (from the PPTX) | 'cut' | a GL_TRANSITIONS id | 'matte:<id>' (url = matte video)
+   * otherwise the default: settings.transition = { choice, ms }.
+   */
   _transition(i) {
-    const { choice, ms: len } = this.s.transition;
-    if (choice === 'file') {
+    const per = this.s.slides?.[i]?.trans || null;
+    const type = per ? per.type : this.s.transition.choice;
+    const len = per ? per.ms : this.s.transition.ms;
+    const LEGACY = { push: 'slideleft', wipe: 'wipeleft', cover: 'coverleft', uncover: 'uncoverleft', zoom: 'zoomin' };
+    if (type === 'cut') return { type: 'cut', duration: 0 };
+    if (type === 'file') {
       const t = this.r.getTransition(i);
-      return t ? { ...t, duration: t.duration || len } : { type: 'fade', duration: len, dir: 'l' };
+      return t ? { ...t, duration: t.duration || len } : { kind: 'gl', name: 'fade', type: 'fade', duration: len };
     }
-    return { type: choice, duration: choice === 'cut' ? 0 : len, dir: 'l' };
+    if (type.startsWith('matte:')) {
+      return { kind: 'matte', type, id: type.slice(6), url: per?.url, mduration: per?.mduration || 1.33,
+        glow: per?.glow ?? 0, duration: len };
+    }
+    const name = LEGACY[type] || type;
+    if (GL_TRANSITIONS.some(t => t.id === name)) return { kind: 'gl', name, type: name, duration: len };
+    return { type, duration: len, dir: 'l' };          // the package's own canvas transitions
   }
 
   _plan() {
@@ -758,7 +774,13 @@ export class PptxVideo {
     } else {
       this._composeSlide(this.cA.getContext('2d'), seg.from, this.tA, bgs[seg.from]);
       this._composeSlide(this.cB.getContext('2d'), seg.to, this.tB, bgs[seg.to]);
-      renderTransitionFrame(out, this.cA, this.cB, seg.t, Math.min(1, t / seg.ms));
+      const p = Math.min(1, t / seg.ms);
+      let done = false;
+      if (seg.t.kind) {
+        this._gl ||= new TransitionGL();
+        try { done = this._gl.render(out, this.cA, this.cB, seg.t, p, seg.t.kind === 'matte' ? this._matteFor(seg, t) : null); } catch (e) { console.warn(e); }
+      }
+      if (!done) renderTransitionFrame(out, this.cA, this.cB, seg.t.kind ? { type: 'fade' } : seg.t, p);
     }
   }
 
@@ -804,6 +826,82 @@ export class PptxVideo {
     this.videos.clear();
   }
 
+  // ── matte transitions: every matte frame decoded once (small, ~1–2 s clips), then picked synchronously
+  _matteFrames(url) {
+    this.mattes ||= new Map();
+    if (!this.mattes.has(url)) {
+      this.mattes.set(url, (async () => {
+        const r = new BgReader(url, 640, Math.round(640 * this.H / this.W), false);
+        await r.init();
+        const frames = [];
+        try {
+          for await (const f of r.sink.canvases(0)) frames.push({ t: f.timestamp, img: await createImageBitmap(f.canvas) });
+        } finally { await r.close(); }
+        return { dur: r.dur, frames };
+      })());
+    }
+    return this.mattes.get(url);
+  }
+  /** Make sure the matte of segment `seg` is decoded (await before playing/exporting it). */
+  async _loadMatte(seg) {
+    if (seg?.kind !== 'trans' || seg.t.kind !== 'matte' || !seg.t.url) return;
+    seg.matte = await this._matteFrames(seg.t.url);
+  }
+  /** Matte frame for local time t (ms) of the transition – the matte is stretched over the transition length. */
+  _matteFor(seg, t) {
+    const m = seg.matte;
+    if (!m?.frames.length) return null;
+    const mt = Math.min(Math.max(0, t / seg.ms), 1) * m.dur;
+    let k = 0;
+    while (k + 1 < m.frames.length && m.frames[k + 1].t <= mt) k++;
+    return m.frames[k].img;
+  }
+  async _closeMattes() {
+    if (!this.mattes) return;
+    for (const p of this.mattes.values()) { try { (await p).frames.forEach(f => f.img.close?.()); } catch {} }
+    this.mattes.clear();
+  }
+
+  /**
+   * Loop the transition INTO slide `to` (for picking): hold slide A, transition, hold slide B, repeat.
+   * Draws into this.out; onFrame() is called after every frame. Ends when signal aborts.
+   */
+  async playTransitionLoop(to, { signal, holdMs = 700, onFrame = null } = {}) {
+    const from = to - 1;
+    const seg = this.segs.find(s => s.kind === 'trans' && s.to === to)
+      || { kind: 'trans', from, to, t: { type: 'cut' }, ms: 0, t0: this.segs.find(s => s.kind === 'slide' && s.i === to)?.t0 || 0 };
+    await this._ensure({ kind: 'trans', from, to, t: seg.t, ms: seg.ms, t0: seg.t0 });
+    await this._syncVideos([from, to], seg.t0, true);
+    await this._loadMatte(seg).catch(e => console.warn(e));
+    const total = holdMs * 2 + seg.ms;
+    try {
+      await new Promise((resolve) => {
+        let start = null;
+        const tick = (now) => {
+          if (signal?.aborted) return resolve();
+          if (start === null) start = now;
+          const t = (now - start) % total;
+          const frames = this._videoFrames([from, to]);
+          const out = this.out.getContext('2d');
+          if (t < holdMs || !seg.ms) {
+            this._composeSlide(out, from, this.tA, frames[from]);
+            if (!seg.ms && t >= holdMs) this._composeSlide(out, to, this.tB, frames[to]);
+          } else if (t < holdMs + seg.ms) {
+            this._compose(seg, t - holdMs, frames);
+          } else {
+            this._composeSlide(out, to, this.tB, frames[to]);
+          }
+          onFrame?.();
+          requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+    } finally {
+      this.pauseVideos();
+      await this._closeMattes();
+    }
+  }
+
   /** Prepare slide i for liveFrame() (renders its layers). */
   async prepareSlide(i) {
     this._live = { kind: 'slide', i, ms: 1, t0: 0 };
@@ -844,6 +942,7 @@ export class PptxVideo {
         if (signal?.aborted) return false;
         const idx = seg.kind === 'slide' ? [seg.i] : [seg.from, seg.to];
         await this._syncVideos(idx, seg.t0, true);
+        if (seg.kind === 'trans') await this._loadMatte(seg).catch(e => console.warn(e));
         this._compose(seg, 0, this._videoFrames(idx));
         if (recorder?.state === 'paused') recorder.resume();
         onSegmentStart?.(seg);
@@ -866,6 +965,7 @@ export class PptxVideo {
       return !signal?.aborted;
     } finally {
       this.pauseVideos();
+      await this._closeMattes();
     }
   }
 
@@ -931,6 +1031,7 @@ export class PptxVideo {
             bgs[i] = c ? { src: c, w: c.width, h: c.height } : null;
             perSource.set(key, { t, bg: bgs[i] });
           }
+          if (seg.kind === 'trans' && seg.t.kind === 'matte' && !seg.matte) await this._loadMatte(seg);
           this._compose(seg, tGlobal - seg.t0, bgs);
           await source.add(n / fps, 1 / fps);
           n++;
@@ -942,6 +1043,7 @@ export class PptxVideo {
     } finally {
       for (const p of this.readers.values()) { try { (await p).close(); } catch {} }
       this.readers.clear();
+      await this._closeMattes();
     }
     onProgress?.(totalFrames, totalFrames, this.r.slideCount - 1);
     return new Blob([output.target.buffer], { type: container === 'mp4' ? 'video/mp4' : 'video/webm' });
