@@ -187,7 +187,6 @@
   #liveLabel { font-weight: 400; }
 
   /* Narration */
-  #narrBody { display: none; margin-top: 10px; }
   .nrow { display: grid; grid-template-columns: 150px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid var(--border); }
   .nrow canvas { width: 150px; height: auto; border-radius: 6px; background: var(--track); }
   .nrow.recording { background: var(--row-rec); }
@@ -222,6 +221,72 @@
     .thumb { min-width: 120px; }
     .video-grid { grid-template-columns: 1fr; }
   }
+
+  /* ── Slide editor: thumbnails | live canvas + narration | background + avatar ── */
+  #editor, #videoPanel { display: none; }
+  .editor { display: grid; grid-template-columns: 150px minmax(0, 1fr) 330px; gap: 16px; align-items: stretch; margin-top: 10px; }
+  .thumbcol { position: relative; min-height: 300px; }
+  #thumbs { position: absolute; inset: 0; overflow-y: auto; max-height: none; padding-right: 4px; }
+  .thumb .badges { position: absolute; right: 4px; bottom: 4px; display: flex; gap: 3px; }
+  .thumb .badges i { font-style: normal; font-size: 10px; line-height: 1; padding: 3px 4px; border-radius: 3px; color: #fff; background: rgba(0,0,0,.65); }
+  .thumb .badges i.on { background: rgba(37,99,235,.9); }
+  .stage { aspect-ratio: 16 / 9; padding: 0; overflow: hidden; position: relative; }
+  .stage canvas { width: 100%; height: 100%; object-fit: contain; box-shadow: none; display: block; }
+  .stage .stage-msg { position: absolute; left: 10px; bottom: 8px; font-size: 12px; color: #cfd6e4; background: rgba(0,0,0,.55);
+    padding: 3px 8px; border-radius: 6px; pointer-events: none; }
+  .center { min-width: 0; }
+
+  .card { border: 1px solid var(--border); border-radius: 12px; background: var(--panel-2); padding: 12px 14px; margin-top: 12px; }
+  .card-h { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .card-h b { font-size: 15px; }
+  .card-h .spacer { flex: 1; }
+  .card-body { margin-top: 12px; }
+  .muted { color: var(--muted); font-size: 13px; }
+
+  .side { display: flex; flex-direction: column; gap: 12px; min-height: 640px; }
+  .side-card { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; gap: 10px;
+    border: 1px solid var(--border); border-radius: 12px; background: var(--panel-2); padding: 12px; }
+  .side-card .gallery { flex: 1 1 0; min-height: 0; overflow-y: auto; margin: 0; padding: 2px;
+    grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; align-content: start; }
+  .side-card .vtitle { font-size: 12px; padding: 4px 6px; }
+  .side-card .form-row { gap: 8px 12px; }
+  .side-card label.field select, .side-card label.field input { min-width: 0; width: 100%; }
+  .side-card label.field { flex: 1 1 120px; }
+  #bgName { font-size: 12px; }
+  .soon { font-size: 11px; padding: 3px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 650; }
+  .avatar-empty { flex: 1; border: 2px dashed var(--border); border-radius: 10px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center; gap: 8px; padding: 14px; color: var(--muted); font-size: 13px; }
+  .avatar-empty .ic { width: 40px; height: 40px; stroke-width: 1.5; opacity: .7; }
+
+  /* toggle switch */
+  .switch { position: relative; width: 42px; height: 24px; flex: none; display: inline-block; }
+  .switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+  .switch span { position: absolute; inset: 0; border-radius: 12px; background: var(--track); border: 1px solid var(--btn-border); transition: .15s; cursor: pointer; }
+  .switch span::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%;
+    background: linear-gradient(180deg, #fff, #e6eaf0); box-shadow: 0 1px 2px rgba(0,0,0,.35); transition: .15s; }
+  .switch input:checked + span { background: linear-gradient(180deg, var(--accent-hi), var(--accent)); border-color: var(--accent-dark); }
+  .switch input:checked + span::after { transform: translateX(18px); }
+  .switch input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  #narrBody > .form-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px 14px; align-items: end; }
+  #narrBody > .form-row label.field select, #narrBody > .form-row label.field input:not([type=range]) { width: 100%; min-width: 0; }
+  #narrBody > .form-row button { justify-self: start; }
+  #narrEditor.busy .nedit textarea { cursor: progress; }
+  #narrEditor.recording .nedit .nhl { background: var(--row-rec); }
+  #narrEditor .nhead { margin: 12px 0 6px; }
+
+  @media (max-width: 1150px) {
+    .editor { grid-template-columns: 130px minmax(0, 1fr); }
+    .side { grid-column: 1 / -1; min-height: 0; flex-direction: row; }
+    .side-card { min-height: 380px; }
+  }
+  @media (max-width: 760px) {
+    .editor { grid-template-columns: 1fr; }
+    .thumbcol { min-height: 0; }
+    #thumbs { position: static; flex-direction: row; overflow-x: auto; }
+    .thumb { min-width: 110px; }
+    .side { flex-direction: column; }
+  }
 </style>
 </head>
 <body>
@@ -248,6 +313,8 @@
     <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
     <symbol id="i-auto" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M12 4v12" /></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20.5c1.6-4 4.6-6 8-6s6.4 2 8 6"/></symbol>
     <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M4 16a8 8 0 1 1 16 0"/><path d="M12 16l4-5"/></symbol>
   </defs>
 </svg>
@@ -275,90 +342,142 @@
     <div class="status" id="status"></div>
   </section>
 
-  <!-- 2. Viewer -->
-  <section class="panel" id="viewer">
-    <h2>2. Preview slides</h2>
-    <div id="info"></div>
-    <div class="viewer-grid" style="margin-top:10px">
-      <div id="thumbs"></div>
-      <div>
-        <div class="stage"><canvas id="slideCanvas"></canvas></div>
+  <!-- 2. Slide editor -->
+  <section class="panel" id="editor">
+    <h2>2. Slides</h2>
+    <div id="info" class="muted"></div>
+    <div class="editor">
+      <!-- left: slides -->
+      <div class="thumbcol"><div id="thumbs"></div></div>
+
+      <!-- center: live canvas + narration -->
+      <div class="center">
+        <div class="stage" id="stage"><canvas id="slideCanvas"></canvas><div class="stage-msg" id="stageMsg"></div></div>
         <div class="toolbar">
-          <button id="prevBtn"><svg class="ic"><use href="#i-left"/></svg>Prev</button>
+          <button id="prevBtn" class="icon-only" title="Previous slide"><svg class="ic"><use href="#i-left"/></svg></button>
           <span id="slideLabel">–</span>
-          <button id="nextBtn">Next<svg class="ic"><use href="#i-right"/></svg></button>
-          <button id="playAnimBtn"><svg class="ic"><use href="#i-anim"/></svg>Play animations</button>
+          <button id="nextBtn" class="icon-only" title="Next slide"><svg class="ic"><use href="#i-right"/></svg></button>
+          <button id="playSlideBtn" class="primary" title="Play this slide with animations, background and narration"><svg class="ic f"><use href="#i-play"/></svg>Play slide</button>
+          <button id="stopSlideBtn" disabled title="Stop"><svg class="ic f"><use href="#i-stop"/></svg>Stop</button>
           <span class="spacer"></span>
-          <button id="showBtn"><svg class="ic"><use href="#i-show"/></svg>Slide show</button>
-          <button id="pngBtn"><svg class="ic"><use href="#i-image"/></svg>PNG</button>
-          <button id="pdfBtn"><svg class="ic"><use href="#i-file"/></svg>PDF</button>
+          <button id="showBtn" class="sm icon-only" title="Slide show (full screen)"><svg class="ic"><use href="#i-show"/></svg></button>
+          <button id="pngBtn" class="sm icon-only" title="Save this frame as PNG"><svg class="ic"><use href="#i-image"/></svg></button>
+          <button id="pdfBtn" class="sm icon-only" title="Save all slides as PDF"><svg class="ic"><use href="#i-file"/></svg></button>
         </div>
         <div id="animInfo"></div>
-        <div id="notes"></div>
+
+        <!-- narration for this slide -->
+        <div class="card" id="narrCard">
+          <div class="card-h">
+            <label class="switch" title="Narration for this slide"><input type="checkbox" id="narrOn"><span></span></label>
+            <b>Narration</b>
+            <span class="muted" id="narrHint"></span>
+            <span class="spacer"></span>
+            <button id="narrApplyAll" class="sm" title="Use this narration on/off setting and voice on every slide"><svg class="ic"><use href="#i-copy"/></svg>Apply to all slides</button>
+          </div>
+          <div class="card-body" id="narrBody">
+            <div class="form-row">
+              <label class="field">Engine
+                <select id="ttsEngine">
+                  <option value="piper">Piper – 30+ languages incl. Greek</option>
+                  <option value="kokoro">Kokoro – English, most natural</option>
+                </select>
+              </label>
+              <label class="field" id="langField">Language <select id="ttsLang"></select></label>
+              <label class="field">Voice <select id="ttsVoice"></select></label>
+              <label class="field" id="speakerField">Speaker <select id="ttsSpeaker"></select></label>
+              <label class="field" id="kokoroQField">Model
+                <select id="kokoroQ">
+                  <option value="auto">Auto – fastest on this PC (tests GPU and CPU once)</option>
+                  <option value="q8|wasm">Compact (≈90 MB, CPU, 1 thread speed)</option>
+                  <option value="fp32|wasm">Full (≈330 MB, CPU, uses all threads)</option>
+                  <option value="fp32|webgpu">Full on GPU (≈330 MB, WebGPU)</option>
+                </select>
+              </label>
+              <label class="field">Speed <span><input type="range" id="ttsSpeed" min="0.7" max="1.3" step="0.05" value="1"> <span id="ttsSpeedVal">1.00×</span></span></label>
+              <button id="kokoroRetest" class="sm" title="Measure GPU and CPU speed again"><svg class="ic"><use href="#i-gauge"/></svg>Re-test speed</button>
+              <button id="ttsTestBtn" class="sm"><svg class="ic"><use href="#i-sound"/></svg>Test voice</button>
+            </div>
+
+            <div id="narrEditor">
+              <div class="nhead"><b id="narrTitle">Slide 1</b><span class="nstat"></span></div>
+              <div class="nedit"><div class="nhl"></div><textarea rows="2" placeholder="Type what should be said on this slide (or leave empty)."></textarea></div>
+              <div class="nbtns">
+                <button class="sm rec" title="Record your own voice for this slide"><svg class="ic f"><use href="#i-rec"/></svg><span>Record</span></button>
+                <button class="sm gen" title="Generate speech with the selected voice"><svg class="ic"><use href="#i-spark"/></svg>Generate</button>
+                <button class="sm play" title="Play / pause"><svg class="ic f"><use href="#i-play"/></svg><span>Play</span></button>
+                <button class="sm stop icon-only" title="Stop"><svg class="ic f"><use href="#i-stop"/></svg></button>
+                <span class="ntime"></span>
+                <span style="flex:1"></span>
+                <button class="sm clear" title="Remove this slide's audio"><svg class="ic"><use href="#i-trash"/></svg>Remove</button>
+              </div>
+            </div>
+          </div>
+          <div class="progress" id="ttsProgress"><div></div></div>
+          <div class="status" id="ttsStatus">The voice model downloads once, then your browser keeps it.</div>
+          <div class="toolbar" style="margin-top:10px; border-top:1px solid var(--border); padding-top:12px">
+            <button id="genAllBtn"><svg class="ic"><use href="#i-spark"/></svg>Generate all slides</button>
+            <button id="genStopBtn" disabled><svg class="ic f"><use href="#i-stop"/></svg>Stop</button>
+            <span class="spacer"></span>
+            <span id="narrTotal" class="muted"></span>
+          </div>
+          <p class="hint" style="margin-bottom:0">"Generate all" voices every slide with narration on, each with its own voice, and skips slides you recorded yourself.</p>
+        </div>
+      </div>
+
+      <!-- right: background (top half) + AI avatar (bottom half) -->
+      <div class="side">
+        <div class="side-card" id="bgCard">
+          <div class="card-h">
+            <b>Background video</b>
+            <span class="spacer"></span>
+            <button id="bgApplyAll" class="sm" title="Use this background and its settings on every slide"><svg class="ic"><use href="#i-copy"/></svg>Apply to all</button>
+          </div>
+          <div id="gallery" class="gallery"></div>
+          <input type="file" id="bgInput" class="hidden-input" accept="video/*">
+          <div id="bgName" class="muted"></div>
+          <div class="form-row" id="bgOpts">
+            <label class="field">Slide over video
+              <select id="bgMode">
+                <option value="transparent">Transparent background</option>
+                <option value="inset">Inset frame</option>
+                <option value="blend">Blend</option>
+              </select>
+            </label>
+            <label class="field" id="insetField">Frame size (%)
+              <input type="number" id="insetPct" min="40" max="100" step="1" value="80">
+            </label>
+            <label class="field" id="blendField">Slide opacity (%)
+              <input type="number" id="blendPct" min="10" max="100" step="1" value="85">
+            </label>
+          </div>
+        </div>
+
+        <div class="side-card" id="avatarCard">
+          <div class="card-h"><b>AI avatar</b><span class="spacer"></span><span class="soon">Coming soon</span></div>
+          <div class="avatar-empty">
+            <svg class="ic"><use href="#i-user"/></svg>
+            <div>A talking presenter over this slide's video will be added here.</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- 3. Narration -->
-  <section class="panel" id="narrPanel" style="display:none">
-    <h2>3. Narration <span class="hint" style="font-weight:400">(optional)</span></h2>
-    <label class="check"><input type="checkbox" id="narrChk"> Add a spoken narration – each slide then lasts as long as its audio</label>
-    <div id="narrBody">
-      <h3>Voice for generated narration</h3>
-      <div class="form-row">
-        <label class="field">Engine
-          <select id="ttsEngine">
-            <option value="piper">Piper – 30+ languages incl. Greek (20–75 MB per voice)</option>
-            <option value="kokoro">Kokoro – English only, most natural, slow on CPU</option>
-          </select>
-        </label>
-        <label class="field" id="langField">Language <select id="ttsLang"></select></label>
-        <label class="field">Voice <select id="ttsVoice"></select></label>
-        <label class="field" id="speakerField">Speaker <select id="ttsSpeaker"></select></label>
-        <label class="field" id="kokoroQField">Model
-          <select id="kokoroQ">
-            <option value="auto">Auto – fastest on this PC (tests GPU and CPU once)</option>
-            <option value="q8|wasm">Compact (≈90 MB, CPU, 1 thread speed)</option>
-            <option value="fp32|wasm">Full (≈330 MB, CPU, uses all threads)</option>
-            <option value="fp32|webgpu">Full on GPU (≈330 MB, WebGPU)</option>
-          </select>
-        </label>
-        <label class="field">Speed <span><input type="range" id="ttsSpeed" min="0.7" max="1.3" step="0.05" value="1"> <span id="ttsSpeedVal">1.00×</span></span></label>
-        <button id="kokoroRetest" class="sm" title="Measure GPU and CPU speed again"><svg class="ic"><use href="#i-gauge"/></svg>Re-test speed</button>
-        <button id="ttsTestBtn"><svg class="ic"><use href="#i-sound"/></svg>Test voice</button>
-      </div>
-      <div class="progress" id="ttsProgress"><div></div></div>
-      <div class="status" id="ttsStatus">The voice model downloads once, then your browser keeps it.</div>
-
-      <h3>Timing</h3>
-      <div class="form-row">
-        <label class="field">Pause before narration (s)
-          <input type="number" id="leadSec" min="0" max="5" step="0.1" value="0.4">
-        </label>
-        <label class="field">Pause after narration (s)
-          <input type="number" id="tailSec" min="0" max="5" step="0.1" value="0.8">
-        </label>
-      </div>
-
-      <div class="toolbar" style="margin-top:14px">
-        <button id="genAllBtn" class="primary"><svg class="ic"><use href="#i-spark"/></svg>Generate all with this voice</button>
-        <button id="genStopBtn" disabled><svg class="ic f"><use href="#i-stop"/></svg>Stop</button>
-        <span class="spacer"></span>
-        <span id="narrTotal"></span>
-      </div>
-      <p class="hint">Edit the text of any slide below. "Generate all" skips slides you recorded yourself. Slides with no text use the normal hold time.</p>
-      <div id="narrList"></div>
-    </div>
-  </section>
-
-  <!-- 4. Video -->
+  <!-- 3. Video -->
   <section class="panel" id="videoPanel">
-    <h2>4. Create video</h2>
+    <h2>3. Create video</h2>
 
     <h3>Timing</h3>
     <div class="form-row">
-      <label class="field"><span id="holdLabel">Hold each slide (s)</span>
+      <label class="field">Hold slides without narration (s)
         <input type="number" id="holdSec" min="0" max="120" step="0.5" value="3">
+      </label>
+      <label class="field">Pause before narration (s)
+        <input type="number" id="leadSec" min="0" max="5" step="0.1" value="0.4">
+      </label>
+      <label class="field">Pause after narration (s)
+        <input type="number" id="tailSec" min="0" max="5" step="0.1" value="0.8">
       </label>
       <label class="check"><input type="checkbox" id="animChk" checked> Play shape animations</label>
       <label class="field">Pause before "on click" animations (s)
@@ -382,29 +501,8 @@
       </label>
     </div>
 
-    <h3>Background video</h3>
-    <div id="gallery" class="gallery"></div>
-    <input type="file" id="bgInput" class="hidden-input" accept="video/*">
+    <h3>Text over video</h3>
     <div class="form-row">
-      <div id="bgName">No background video</div>
-    </div>
-    <div class="form-row" style="margin-top:10px">
-      <label class="field">Slide over video
-        <select id="bgMode">
-          <option value="transparent">Transparent slide background</option>
-          <option value="inset">Inset frame</option>
-          <option value="blend">Blend (semi-transparent slide)</option>
-        </select>
-      </label>
-      <label class="field" id="insetField">Frame size (%)
-        <input type="number" id="insetPct" min="40" max="100" step="1" value="80">
-      </label>
-      <label class="field" id="blendField">Slide opacity (%)
-        <input type="number" id="blendPct" min="10" max="100" step="1" value="85">
-      </label>
-      <label class="check"><input type="checkbox" id="bgLoop" checked> Loop video</label>
-    </div>
-    <div class="form-row" style="margin-top:10px" id="readRow">
       <label class="field">Text readability
         <select id="readMode">
           <option value="auto" selected>Auto (contrast glow + light dim)</option>
@@ -417,7 +515,8 @@
       <label class="field">Strength (%)
         <input type="range" id="readStrength" min="0" max="100" step="5" value="60" style="min-width:160px">
       </label>
-      <span class="hint" style="margin:0 0 6px">Used with "Transparent slide background". Halo colours adapt automatically: dark text gets a light halo, light text a dark one.</span>
+      <label class="check"><input type="checkbox" id="bgLoop" checked> Loop background videos</label>
+      <span class="hint" style="margin:0 0 6px">Readability applies to slides whose background is set to "Transparent background".</span>
     </div>
 
     <h3>Output</h3>
@@ -451,7 +550,7 @@
     </div>
 
     <div class="toolbar" style="margin-top:14px">
-      <button id="previewVideoBtn"><svg class="ic"><use href="#i-eye"/></svg>Preview (real time)</button>
+      <button id="previewVideoBtn"><svg class="ic"><use href="#i-eye"/></svg>Preview whole video</button>
       <button id="exportBtn" class="primary"><svg class="ic"><use href="#i-film"/></svg>Export video</button>
       <button id="stopBtn" class="danger" disabled><svg class="ic f"><use href="#i-stop"/></svg>Stop</button>
     </div>
@@ -461,7 +560,7 @@
 
     <div class="video-grid">
       <div id="liveWrap">
-        <h3>Live canvas <span id="liveLabel"></span></h3>
+        <h3>Live canvas</h3>
         <canvas id="livePlaceholder" width="1920" height="1080"></canvas>
       </div>
       <div>
@@ -476,23 +575,29 @@
 
 <script type="module">
   import { PptxRenderer } from './pptxpackage/pptxsrc/index.js';
-  import { PptxVideo, parseSlideAnimations, previewSlide, webCodecsAvailable, loadMediabunny } from './pptxvideo/pptx-video.js';
+  import { PptxVideo, parseSlideAnimations, webCodecsAvailable, loadMediabunny } from './pptxvideo/pptx-video.js';
   import { TtsClient, cleanForSpeech, slideNotes } from './pptxvideo/tts.js';
 
   const $ = (id) => document.getElementById(id);
+  const icon = (n, f = false) => `<svg class="ic${f ? ' f' : ''}"><use href="#i-${n}"/></svg>`;
 
   // ── State ──────────────────────────────────────────────────────────────────
+  // Every slide has its own settings: narration on/off + voice + text + audio, and background + mode.
   let renderer = null;
   let current = 0;
   let fileBaseName = 'presentation';
-  let renderToken = 0;
-  let job = null;               // AbortController of a running preview/export
-  let bgFile = null;            // background source: uploaded File, or URL string of a gallery clip (streamed)
-  let bgUrl = null;             // URL for <video> playback (object URL for uploads, the clip URL for gallery)
-  let bgEntry = null;           // selected gallery entry, or { upload: true }
+  let job = null;               // AbortController of a running whole-video preview/export
+  let slideJob = null;          // AbortController of "Play slide"
+  let slides = [];
   let gallery = [];
   const GALLERY_DIR = './video-backgrounds/';
   let lastVideoUrl = null;
+
+  const newSlideState = (text = '') => ({
+    narrOn: false, voice: null,                               // voice: { engine, lang, piperKey, speaker, kokoroVoice, kokoroQ, speed }
+    text, buffer: null, kind: null, label: '', spokenText: '', voiceSig: '', marks: null,
+    bg: null, mode: 'transparent', inset: 80, blend: 85,      // bg: { title, source (URL string | File), poster?, upload?, size? }
+  });
 
   // ── Environment checks ─────────────────────────────────────────────────────
   if (typeof DecompressionStream === 'undefined')
@@ -526,6 +631,7 @@
   // ── Helpers ────────────────────────────────────────────────────────────────
   function setStatus(msg, isError = false) { $('status').textContent = msg; $('status').classList.toggle('error', isError); }
   function setVStatus(msg, isError = false) { $('videoStatus').textContent = msg; $('videoStatus').classList.toggle('error', isError); }
+  function setTtsStatus(msg, isError = false) { $('ttsStatus').textContent = msg; $('ttsStatus').classList.toggle('error', isError); }
   function setBar(el, p) { el.style.display = p === null ? 'none' : 'block'; if (p !== null) el.firstElementChild.style.width = Math.round(p * 100) + '%'; }
   function downloadBlob(blob, name) {
     const url = URL.createObjectURL(blob);
@@ -548,7 +654,9 @@
 
   async function loadFile(file) {
     if (!/\.pptx$/i.test(file.name)) { setStatus('Please choose a .pptx file (old .ppt files are not supported).', true); return; }
-    job?.abort();
+    job?.abort(); slideJob?.abort();
+    playerStop();
+    stopLive();
     if (renderer) renderer.destroy();
     renderer = new PptxRenderer();
     fileBaseName = file.name.replace(/\.pptx$/i, '') || 'presentation';
@@ -562,14 +670,20 @@
       for (let i = 0; i < renderer.slideCount; i++) animTotal += fxCountOf(i);
       $('info').textContent = `${file.name} · ${info.slideCount} slide${info.slideCount === 1 ? '' : 's'} · ` +
         `${info.width.toFixed(2)}″ × ${info.height.toFixed(2)}″ · ${animTotal} animation effect${animTotal === 1 ? '' : 's'}`;
-      $('viewer').style.display = 'block';
+      $('stage').style.aspectRatio = `${info.aspectRatio}`;
+      slides = [];
+      for (let i = 0; i < renderer.slideCount; i++) {
+        let text = '';
+        try { text = await slideNotes(renderer, i); } catch {}
+        slides.push(newSlideState(text));
+      }
+      $('editor').style.display = 'block';
       $('videoPanel').style.display = 'block';
-      current = 0;
-      await showSlide(0);
       await buildThumbnails();
-      await loadNarrationNotes();
+      await selectSlide(0);
       setBar($('progress'), null);
-      setStatus('Ready.');
+      const withNotes = slides.filter(s => s.text.trim()).length;
+      setStatus('Ready.' + (withNotes ? ` ${withNotes} slide${withNotes === 1 ? ' has' : 's have'} speaker notes – turn on Narration to voice them.` : ''));
     } catch (err) {
       console.error(err);
       setBar($('progress'), null);
@@ -583,29 +697,41 @@
     const n = renderer.slideCount;
     for (let i = 0; i < n; i++) {
       const wrap = document.createElement('div');
-      wrap.className = 'thumb' + (i === current ? ' active' : '');
+      wrap.className = 'thumb';
       wrap.dataset.index = i;
       const c = document.createElement('canvas');
       wrap.append(c, Object.assign(document.createElement('span'), { textContent: i + 1 }));
       const fx = fxCountOf(i);
       if (fx) wrap.append(Object.assign(document.createElement('span'), { className: 'anim', textContent: '★ ' + fx, title: fx + ' animation effects' }));
-      wrap.addEventListener('click', () => { if (!job) showSlide(i); });
+      wrap.append(Object.assign(document.createElement('div'), { className: 'badges' }));
+      wrap.addEventListener('click', () => { if (!job && !genBusy && recIndex < 0) selectSlide(i); });
       thumbs.appendChild(wrap);
       try { await renderer.renderSlide(i, c, 320); } catch (err) { console.warn('Thumbnail ' + (i + 1) + ' failed', err); }
       setBar($('progress'), 0.5 + 0.5 * (i + 1) / n);
       setStatus(`Rendering thumbnails ${i + 1}/${n}…`);
+      updateThumbBadges(i);
     }
   }
 
-  // ── Viewer ─────────────────────────────────────────────────────────────────
-  async function showSlide(i) {
+  function updateThumbBadges(i) {
+    const b = document.querySelector(`.thumb[data-index="${i}"] .badges`);
+    if (!b || !slides[i]) return;
+    const s = slides[i];
+    b.innerHTML = (s.bg ? '<i class="on" title="Background video">▣</i>' : '') +
+      (s.narrOn ? `<i class="${s.buffer ? 'on' : ''}" title="${s.buffer ? 'Narration ready' : 'Narration on, no audio yet'}">♪</i>` : '');
+  }
+
+  // ── Slide selection ────────────────────────────────────────────────────────
+  async function selectSlide(i) {
     if (!renderer) return;
     i = Math.max(0, Math.min(i, renderer.slideCount - 1));
+    if (player.key !== null && player.key !== 'test') playerStop();
+    slideJob?.abort();
     current = i;
-    const token = ++renderToken;
-    updateNav();
     document.querySelectorAll('.thumb').forEach(t => t.classList.toggle('active', +t.dataset.index === i));
     document.querySelector(`.thumb[data-index="${i}"]`)?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    $('slideLabel').textContent = `Slide ${i + 1} / ${renderer.slideCount}`;
+    updateNav();
 
     const groups = parseSlideAnimations(renderer, i).groups;
     const fx = groups.flatMap(g => g.effects);
@@ -613,51 +739,24 @@
       ? `Animations: ${fx.length} effect${fx.length === 1 ? '' : 's'} in ${groups.length} step${groups.length === 1 ? '' : 's'} – ` +
         [...new Set(fx.map(e => `${e.cls === 'entr' ? 'in' : e.cls === 'exit' ? 'out' : 'emphasis'}:${e.kind}`))].join(', ')
       : '';
-    $('playAnimBtn').disabled = !fx.length || !!job;
 
-    try {
-      const off = document.createElement('canvas');
-      await renderer.renderSlide(i, off, 1280);
-      if (token !== renderToken) return;
-      const sc = $('slideCanvas');
-      sc.width = off.width; sc.height = off.height;
-      sc.getContext('2d').drawImage(off, 0, 0);
-    } catch (err) {
-      console.error(err);
-      setStatus(`Slide ${i + 1} failed to render: ${err?.message || err}`, true);
-    }
-    renderStillPreview();
-    try {
-      const notes = await slideNotes(renderer, i);
-      if (token === renderToken) $('notes').textContent = notes ? 'Notes: ' + notes : '';
-    } catch { $('notes').textContent = ''; }
+    await loadNarrationUI();
+    loadBgUI();
+    refreshLive();
   }
 
   function updateNav() {
     if (!renderer) return;
-    $('slideLabel').textContent = `Slide ${current + 1} / ${renderer.slideCount}`;
-    $('prevBtn').disabled = current <= 0 || !!job;
-    $('nextBtn').disabled = current >= renderer.slideCount - 1 || !!job;
+    const busy = !!job || genBusy || recIndex >= 0;
+    $('prevBtn').disabled = current <= 0 || busy;
+    $('nextBtn').disabled = current >= renderer.slideCount - 1 || busy;
   }
-
-  $('prevBtn').addEventListener('click', () => showSlide(current - 1));
-  $('nextBtn').addEventListener('click', () => showSlide(current + 1));
+  $('prevBtn').addEventListener('click', () => selectSlide(current - 1));
+  $('nextBtn').addEventListener('click', () => selectSlide(current + 1));
   document.addEventListener('keydown', (e) => {
-    if (!renderer || job || e.target.matches('input, select, textarea')) return;
-    if (e.key === 'ArrowLeft') showSlide(current - 1);
-    if (e.key === 'ArrowRight') showSlide(current + 1);
-  });
-
-  $('playAnimBtn').addEventListener('click', async () => {
-    const btn = $('playAnimBtn');
-    btn.disabled = true;
-    ++renderToken;
-    try {
-      await previewSlide(renderer, current, $('slideCanvas'), { width: 1280, clickGapMs: +$('clickGapSec').value * 1000 });
-    } catch (err) {
-      console.error(err);
-      setStatus('Animation preview failed: ' + (err?.message || err), true);
-    } finally { btn.disabled = false; }
+    if (!renderer || job || genBusy || recIndex >= 0 || e.target.matches('input, select, textarea')) return;
+    if (e.key === 'ArrowLeft') selectSlide(current - 1);
+    if (e.key === 'ArrowRight') selectSlide(current + 1);
   });
 
   $('showBtn').addEventListener('click', async () => {
@@ -665,7 +764,9 @@
     await show.start(current);
   });
   $('pngBtn').addEventListener('click', async () => {
-    downloadBlob(await renderer.toBlob(current, 1920, 'image/png'), `${fileBaseName}-slide${current + 1}.png`);
+    // the composed frame (slide + background) when there is one, else the plain slide
+    if (live.pv && slides[current].bg) live.pv.out.toBlob((b) => downloadBlob(b, `${fileBaseName}-slide${current + 1}.png`), 'image/png');
+    else downloadBlob(await renderer.toBlob(current, 1920, 'image/png'), `${fileBaseName}-slide${current + 1}.png`);
   });
   $('pdfBtn').addEventListener('click', async () => {
     const btn = $('pdfBtn');
@@ -677,7 +778,90 @@
     finally { btn.disabled = false; }
   });
 
-  // ── Background video gallery ───────────────────────────────────────────────
+  // ── Live canvas (the slide over its own background, background playing) ──
+  const live = { pv: null, raf: 0, token: 0 };
+  const stageCanvas = $('slideCanvas');
+
+  function stageShow(src) {
+    if (stageCanvas.width !== src.width || stageCanvas.height !== src.height) { stageCanvas.width = src.width; stageCanvas.height = src.height; }
+    stageCanvas.getContext('2d').drawImage(src, 0, 0);
+  }
+  function stopLive() {
+    cancelAnimationFrame(live.raf);
+    live.pv?.dispose();
+    live.pv = null;
+  }
+
+  /** Settings for one-slide previews (smaller width, same look as the export). */
+  function previewSettings(width = 1280) {
+    const s = readSettings();
+    s.width = width;
+    return s;
+  }
+
+  let liveTimer = 0;
+  function refreshLive() {
+    clearTimeout(liveTimer);
+    liveTimer = setTimeout(async () => {
+      if (!renderer || slideJob) return;
+      const token = ++live.token;
+      stopLive();
+      const pv = new PptxVideo(renderer, previewSettings());
+      try {
+        $('stageMsg').textContent = slides[current]?.bg ? 'Loading background…' : '';
+        await pv.prepareSlide(current);
+      } catch (err) {
+        console.warn('Live preview failed', err);
+        $('stageMsg').textContent = 'Preview failed: ' + (err?.message || err);
+        pv.dispose();
+        return;
+      }
+      if (token !== live.token || slideJob) { pv.dispose(); return; }
+      live.pv = pv;
+      $('stageMsg').textContent = slides[current]?.bg ? `Background: ${slides[current].bg.title}` : '';
+      const loop = () => {
+        if (live.pv !== pv) return;
+        pv.liveFrame();
+        stageShow(pv.out);
+        if (slides[current]?.bg) live.raf = requestAnimationFrame(loop);   // only animate when a video plays behind
+      };
+      loop();
+    }, 60);
+  }
+
+  // ── Play slide (animations + background + narration, real time) ─────────────
+  $('playSlideBtn').addEventListener('click', async () => {
+    if (!renderer || slideJob) return;
+    playerStop();
+    slideJob = new AbortController();
+    $('playSlideBtn').disabled = true;
+    $('stopSlideBtn').disabled = false;
+    stopLive();
+    const pv = new PptxVideo(renderer, previewSettings());
+    const voice = narrationPlayer(false);
+    try {
+      $('stageMsg').textContent = 'Playing slide…';
+      let raf = 0;
+      const mirror = () => { stageShow(pv.out); raf = requestAnimationFrame(mirror); };
+      mirror();
+      await pv.playRealtime({ only: current, signal: slideJob.signal, onSegmentStart: voice.onSegmentStart });
+      cancelAnimationFrame(raf);
+      stageShow(pv.out);
+    } catch (err) {
+      console.error(err);
+      $('stageMsg').textContent = 'Playback failed: ' + (err?.message || err);
+    } finally {
+      voice.stop();
+      pv.dispose();
+      slideJob = null;
+      $('playSlideBtn').disabled = false;
+      $('stopSlideBtn').disabled = true;
+      refreshLive();
+    }
+  });
+  $('stopSlideBtn').addEventListener('click', () => slideJob?.abort());
+
+  // ── Background library (right, top) ────────────────────────────────────────
   const VIDEO_RE = /\.(mp4|webm|mov|m4v)$/i;
 
   /** Read video-backgrounds/videos.json; fall back to the server's directory listing. */
@@ -706,10 +890,16 @@
     return el;
   }
 
+  /** A gallery clip as a per-slide background (streamed from the server, never downloaded whole). */
+  const bgFromEntry = (v) => ({
+    title: v.title || v.file, poster: v.poster ? GALLERY_DIR + v.poster : null, size: v.webSize || v.size || 0,
+    source: new URL(GALLERY_DIR + encodeURI(v.web || v.file), location.href).href, file: v.file,
+  });
+
   async function buildGallery() {
     gallery = await loadGallery();
     $('gallery').innerHTML = '';
-    card('none selected', '<div class="vthumb">No background</div><div class="vtitle">None</div>', () => selectBg(null));
+    card('none', '<div class="vthumb">No background</div><div class="vtitle">None</div>', () => setSlideBg(null));
     gallery.forEach((v, i) => {
       const res = v.height >= 2160 ? '4K' : v.height >= 1440 ? '1440p' : v.height >= 1080 ? 'HD' : v.height ? v.height + 'p' : '';
       const el = card('', `
@@ -719,12 +909,11 @@
           ${res ? `<span class="badge res">${res}</span>` : ''}
           ${v.duration ? `<span class="badge dur">${fmtTime(v.duration)}</span>` : ''}
           <span class="check">✓</span>
-          <div class="loading"></div>
         </div>
-        <div class="vtitle"></div>`, (el) => selectBg(v, el));
-      el.dataset.idx = i;
+        <div class="vtitle"></div>`, () => setSlideBg(bgFromEntry(v)));
+      el.dataset.file = v.file;
       el.querySelector('.vtitle').textContent = v.title || v.file;
-      el.title = `${v.title || v.file}${v.size ? ' · ' + fmtSize(v.size) : ''}`;
+      el.title = `${v.title || v.file}${v.size ? ' · ' + fmtSize(v.webSize || v.size) : ''}`;
       if (v.poster) el.querySelector('img').src = GALLERY_DIR + v.poster;
       else el.querySelector('video').src = GALLERY_DIR + encodeURI(v.file) + '#t=1';
       if (v.preview) {
@@ -738,106 +927,72 @@
     });
     card('upload', '<div class="vthumb">＋</div><div class="vtitle">Upload your own…</div>', () => $('bgInput').click());
     if (!gallery.length) $('bgName').textContent = 'No clips found in video-backgrounds/ (add videos.json or enable directory listing).';
-  }
-
-  function markSelected(el) {
-    document.querySelectorAll('#gallery .vcard').forEach(c => c.classList.toggle('selected', c === el));
-  }
-
-  function setBgFile(src) {
-    if (bgUrl && bgUrl.startsWith('blob:')) URL.revokeObjectURL(bgUrl);
-    bgFile = src;
-    bgUrl = !src ? null : typeof src === 'string' ? src : URL.createObjectURL(src);
-  }
-
-  /** Gallery clips are not downloaded: the exporter streams them from the server (HTTP range requests). */
-  function selectBg(v, el = null) {
-    bgEntry = v;
-    setBgFile(v ? new URL(GALLERY_DIR + encodeURI(v.web || v.file), location.href).href : null);
-    markSelected(el || document.querySelector('#gallery .vcard.none'));
-    updateBgFields();
-    renderStillPreview();
+    loadBgUI();
   }
 
   $('bgInput').addEventListener('change', (e) => {
     const f = e.target.files[0];
     e.target.value = '';
-    if (!f) return;
-    bgEntry = { upload: true, title: f.name };
-    setBgFile(f);
-    markSelected(document.querySelector('#gallery .vcard.upload'));
-    updateBgFields();
-    renderStillPreview();
+    if (f) setSlideBg({ title: f.name, source: f, upload: true, size: f.size });
   });
 
-  function updateBgFields() {
-    const has = !!bgEntry, mode = $('bgMode').value;
-    if (!has) $('bgName').textContent = 'No background video';
-    else if (bgEntry.upload) $('bgName').textContent = `Background: ${bgEntry.title} (${fmtSize(bgFile.size)}, uploaded)`;
-    else $('bgName').textContent = `Background: ${bgEntry.title || bgEntry.file}` +
-      ((bgEntry.webSize || bgEntry.size) ? ` (${fmtSize(bgEntry.webSize || bgEntry.size)}, streamed from the server)` : '');
-    for (const id of ['bgMode', 'bgLoop']) $(id).closest('label').classList.toggle('muted-off', !has);
-    $('insetField').classList.toggle('muted-off', !has || mode !== 'inset');
-    $('blendField').classList.toggle('muted-off', !has || mode !== 'blend');
-    $('readRow').classList.toggle('muted-off', !has || mode !== 'transparent');
+  function setSlideBg(bg) {
+    if (!slides[current]) return;
+    slides[current].bg = bg;
+    loadBgUI();
+    updateThumbBadges(current);
+    refreshLive();
   }
 
-  /** Instantly show the current slide over the background's poster frame. */
-  let stillTimer = 0, stillToken = 0;
-  function renderStillPreview() {
-    clearTimeout(stillTimer);
-    stillTimer = setTimeout(async () => {
-      if (!renderer || job) return;
-      const token = ++stillToken;
-      try {
-        let bgImg = null;
-        if (bgEntry?.poster) {
-          bgImg = new Image();
-          bgImg.src = GALLERY_DIR + bgEntry.poster;
-          await bgImg.decode();
-        } else if (bgEntry && bgUrl) {
-          bgImg = document.createElement('video');
-          Object.assign(bgImg, { src: bgUrl, muted: true, preload: 'auto' });
-          await new Promise((res, rej) => { bgImg.onloadeddata = res; bgImg.onerror = rej; });
-          bgImg.currentTime = Math.min(1, (bgImg.duration || 2) / 2);
-          await new Promise(res => { bgImg.onseeked = res; });
-        }
-        const s = readSettings();
-        s.width = 1280;
-        if (bgEntry) { s.bg.file = bgFile || 'poster'; s.bg.mode = $('bgMode').value; }
-        const pv = new PptxVideo(renderer, s);
-        await pv.renderStill(current, bgImg);
-        if (token !== stillToken || job) return;
-        showLive(pv.out);
-        $('liveLabel').textContent = `– slide ${current + 1} preview`;
-      } catch (err) { console.warn('Still preview failed', err); }
-    }, 120);
-  }
-  for (const id of ['bgMode', 'insetPct', 'blendPct', 'readMode', 'readStrength']) $(id).addEventListener('input', () => { updateBgFields(); renderStillPreview(); });
-  $('bgMode').addEventListener('change', updateBgFields);
-  buildGallery();
-  updateBgFields();
-
-  /** An HTMLVideoElement for real-time preview/recording (muted, ready to play). */
-  async function makeBgVideoElement() {
-    if (!bgFile) return null;
-    const v = document.createElement('video');
-    Object.assign(v, { src: bgUrl, muted: true, loop: $('bgLoop').checked, playsInline: true, preload: 'auto' });
-    await new Promise((res, rej) => {
-      v.onloadeddata = res;
-      v.onerror = () => rej(new Error('This browser cannot play the background video.'));
+  /** Show the current slide's background choice and options in the right panel. */
+  function loadBgUI() {
+    const s = slides[current];
+    const bg = s?.bg || null;
+    document.querySelectorAll('#gallery .vcard').forEach(c => {
+      const sel = !bg ? c.classList.contains('none')
+        : bg.upload ? c.classList.contains('upload')
+        : c.dataset.file === bg.file;
+      c.classList.toggle('selected', !!sel);
     });
-    return v;
+    if (!s) return;
+    $('bgMode').value = s.mode;
+    $('insetPct').value = s.inset;
+    $('blendPct').value = s.blend;
+    $('bgName').textContent = !bg ? 'No background on this slide'
+      : `${bg.title}${bg.size ? ' · ' + fmtSize(bg.size) : ''}${bg.upload ? ' · uploaded' : ' · streamed from the server'}`;
+    $('bgOpts').classList.toggle('muted-off', !bg);
+    $('insetField').style.display = s.mode === 'inset' ? '' : 'none';
+    $('blendField').style.display = s.mode === 'blend' ? '' : 'none';
   }
 
-  // ── Narration ──────────────────────────────────────────────────────────────
-  // narr[i] = { text, buffer: AudioBuffer|null, kind: 'tts'|'rec'|null, label, spokenText }
+  for (const id of ['bgMode', 'insetPct', 'blendPct']) $(id).addEventListener('input', () => {
+    const s = slides[current];
+    if (!s) return;
+    s.mode = $('bgMode').value;
+    s.inset = Math.min(100, Math.max(40, +$('insetPct').value || 80));
+    s.blend = Math.min(100, Math.max(10, +$('blendPct').value || 85));
+    loadBgUI();
+    refreshLive();
+  });
+  for (const id of ['readMode', 'readStrength', 'bgLoop']) $(id).addEventListener('input', refreshLive);
+
+  $('bgApplyAll').addEventListener('click', () => {
+    const s = slides[current];
+    if (!s) return;
+    slides.forEach((t, i) => { Object.assign(t, { bg: s.bg, mode: s.mode, inset: s.inset, blend: s.blend }); updateThumbBadges(i); });
+    const b = $('bgApplyAll');
+    b.innerHTML = `${icon('copy')}Applied to ${slides.length} slides`;
+    setTimeout(() => { b.innerHTML = `${icon('copy')}Apply to all`; }, 1800);
+  });
+
+  buildGallery();
+
+  // ── Narration (per slide) ──────────────────────────────────────────────────
   const tts = new TtsClient();
-  let narr = [];
   let actx = null;                    // shared AudioContext (decoding, playback, recording mix)
-  let playingSrc = null;
   let micStream = null, micRec = null, recIndex = -1;
   let genAbort = false, genBusy = false;
+  let defaultVoice = null;            // the last voice the user picked: used for slides that have none yet
 
   const audioCtx = () => (actx ||= new (window.AudioContext || window.webkitAudioContext)());
   const KOKORO_VOICES = ['af_heart','af_alloy','af_aoede','af_bella','af_jessica','af_kore','af_nicole','af_nova','af_river',
@@ -857,21 +1012,23 @@
     pl: 'Cześć! Tak będzie brzmiała narracja Twojej prezentacji.',
   };
 
-  function setTtsStatus(msg, isError = false) { $('ttsStatus').textContent = msg; $('ttsStatus').classList.toggle('error', isError); }
-
-  // ── voice pickers
+  // ── voice pickers (bound to the current slide)
+  let langsFilled = false;
   async function fillLanguages() {
     const list = await tts.piperVoices();
     const langs = new Map();
     for (const v of list) langs.set(v.language.code, `${v.language.name_english} – ${v.language.name_native} (${v.language.country_english})`);
     const sel = $('ttsLang');
     sel.innerHTML = '';
-    [...langs.entries()].sort((a, b) => a[1].localeCompare(b[1])).forEach(([code, label]) =>
-      sel.append(new Option(label, code)));
+    [...langs.entries()].sort((a, b) => a[1].localeCompare(b[1])).forEach(([code, label]) => sel.append(new Option(label, code)));
+    langsFilled = true;
+    return langs;
+  }
+  async function guessLang() {
+    const list = await tts.piperVoices();
+    const codes = [...new Set(list.map(v => v.language.code))];
     const pref = (navigator.language || 'en-US').replace('-', '_');
-    const guess = [...langs.keys()].find(c => c.toLowerCase() === pref.toLowerCase())
-      || [...langs.keys()].find(c => c.startsWith(pref.slice(0, 2))) || 'en_US';
-    sel.value = langs.has(guess) ? guess : 'en_US';
+    return codes.find(c => c.toLowerCase() === pref.toLowerCase()) || codes.find(c => c.startsWith(pref.slice(0, 2))) || 'en_US';
   }
 
   async function fillVoices() {
@@ -899,7 +1056,8 @@
         sel.append(new Option(`${v.name}${g} · ${v.quality}${multi} · ${Math.round(mb / 1048576)} MB`, v.key));
       }
     }
-    fillSpeakers();
+    await fillSpeakers();
+    updateKokoroAutoUI();
   }
 
   async function fillSpeakers() {
@@ -909,56 +1067,99 @@
     if ($('ttsEngine').value === 'piper') {
       const v = (await tts.piperVoices()).find(x => x.key === $('ttsVoice').value);
       const ids = Object.entries(v?.speaker_id_map || {}).sort((a, b) => a[1] - b[1]);
-      if (ids.length > 1) {
-        show = true;
-        for (const [name, id] of ids) sel.append(new Option(`${id} – ${name}`, id));
-      }
+      if (ids.length > 1) { show = true; for (const [name, id] of ids) sel.append(new Option(`${id} – ${name}`, id)); }
     }
     $('speakerField').style.display = show ? '' : 'none';
   }
 
-  $('ttsEngine').addEventListener('change', fillVoices);
-  $('ttsLang').addEventListener('change', fillVoices);
-  $('ttsVoice').addEventListener('change', fillSpeakers);
-  $('ttsSpeed').addEventListener('input', () => { $('ttsSpeedVal').textContent = (+$('ttsSpeed').value).toFixed(2) + '×'; });
-
-  /** Load the selected model (downloads once). Returns what speak() needs. */
-  async function ensureVoice() {
+  /** Voice settings currently shown in the controls. */
+  function readVoiceControls() {
     const engine = $('ttsEngine').value;
-    const bar = $('ttsProgress');
-    const onProgress = (p) => {
-      if (p.label === 'speaking') return;
-      setBar(bar, p.total ? p.loaded / p.total : null);
-      setTtsStatus(`Downloading ${p.label}… ${fmtSize(p.loaded)}${p.total ? ' / ' + fmtSize(p.total) : ''}`);
+    return {
+      engine, lang: $('ttsLang').value,
+      piperKey: engine === 'piper' ? $('ttsVoice').value : (slides[current]?.voice?.piperKey || ''),
+      kokoroVoice: engine === 'kokoro' ? $('ttsVoice').value : (slides[current]?.voice?.kokoroVoice || 'af_heart'),
+      speaker: +($('ttsSpeaker').value || 0),
+      kokoroQ: $('kokoroQ').value,
+      speed: +$('ttsSpeed').value,
     };
-    try {
-      if (engine === 'kokoro') {
-        const cfg = await kokoroConfig(onProgress);
-        const [dtype, device] = cfg.split('|');
-        if (device === 'webgpu' && !navigator.gpu) throw new Error('WebGPU is not available in this browser – choose a CPU model.');
-        const key = 'kokoro|' + cfg;
-        if (ensureVoice.loaded !== key) {
-          setTtsStatus('Loading Kokoro…');
-          const voices = await tts.load('kokoro', { dtype, device }, onProgress);
-          ensureVoice.loaded = key;
-          const cur = $('ttsVoice').value;
-          if (voices?.length) { await fillVoices(); $('ttsVoice').value = cur; }
-        }
-        const voice = $('ttsVoice').value;
-        return { engine, voice, speed: +$('ttsSpeed').value, label: 'Kokoro ' + voice + (device === 'webgpu' ? ' (GPU)' : ' (CPU)') };
-      }
-      const v = (await tts.piperVoices()).find(x => x.key === $('ttsVoice').value);
-      if (!v) throw new Error('Choose a voice first.');
-      if (ensureVoice.loaded !== 'piper|' + v.key) {
-        setTtsStatus('Loading ' + v.key + '…');
-        await tts.load('piper', v, onProgress);
-        ensureVoice.loaded = 'piper|' + v.key;
-      }
-      return { engine, speed: +$('ttsSpeed').value, speaker: +($('ttsSpeaker').value || 0), label: v.key };
-    } finally {
-      setBar(bar, null);
-    }
   }
+  const voiceSig = (v) => v.engine === 'kokoro' ? `kokoro|${v.kokoroVoice}|${v.speed}` : `piper|${v.piperKey}|${v.speaker}|${v.speed}`;
+
+  /** Put a voice into the controls. */
+  async function writeVoiceControls(v) {
+    if (!langsFilled) await fillLanguages();
+    $('ttsEngine').value = v.engine;
+    $('ttsLang').value = v.lang;
+    await fillVoices();
+    if (v.engine === 'piper' && v.piperKey && [...$('ttsVoice').options].some(o => o.value === v.piperKey)) $('ttsVoice').value = v.piperKey;
+    if (v.engine === 'kokoro' && v.kokoroVoice) $('ttsVoice').value = v.kokoroVoice;
+    await fillSpeakers();
+    if ($('ttsSpeaker').options.length) $('ttsSpeaker').value = String(v.speaker || 0);
+    $('kokoroQ').value = v.kokoroQ || (navigator.gpu ? 'auto' : KOKORO_CPU());
+    $('ttsSpeed').value = v.speed || 1;
+    $('ttsSpeedVal').textContent = (+$('ttsSpeed').value).toFixed(2) + '×';
+    updateKokoroAutoUI();
+  }
+
+  async function initialVoice() {
+    if (defaultVoice) return { ...defaultVoice };
+    return { engine: 'piper', lang: await guessLang(), piperKey: '', kokoroVoice: 'af_heart', speaker: 0,
+      kokoroQ: navigator.gpu ? 'auto' : KOKORO_CPU(), speed: 1 };
+  }
+
+  /** Save the controls into the current slide whenever the user changes them. */
+  async function onVoiceChanged() {
+    const s = slides[current];
+    if (!s) return;
+    s.voice = readVoiceControls();
+    defaultVoice = { ...s.voice };
+    updateRow(current);
+  }
+  $('ttsEngine').addEventListener('change', async () => { await fillVoices(); onVoiceChanged(); });
+  $('ttsLang').addEventListener('change', async () => { await fillVoices(); onVoiceChanged(); });
+  $('ttsVoice').addEventListener('change', async () => { await fillSpeakers(); onVoiceChanged(); });
+  $('ttsSpeaker').addEventListener('change', onVoiceChanged);
+  $('kokoroQ').addEventListener('change', () => { onVoiceChanged(); updateKokoroAutoUI(); });
+  $('ttsSpeed').addEventListener('input', () => { $('ttsSpeedVal').textContent = (+$('ttsSpeed').value).toFixed(2) + '×'; onVoiceChanged(); });
+
+  /** Show the current slide's narration (switch, voice, text, audio). */
+  async function loadNarrationUI() {
+    const s = slides[current];
+    if (!s) return;
+    $('narrOn').checked = s.narrOn;
+    $('narrBody').style.display = s.narrOn ? '' : 'none';
+    $('narrHint').textContent = s.narrOn ? '' : (s.text.trim() ? 'This slide has speaker notes – turn on to voice them.' : 'Off – the slide uses the normal hold time.');
+    $('narrTitle').textContent = `Slide ${current + 1}`;
+    const ta = $('narrEditor').querySelector('textarea');
+    ta.value = s.text;
+    if (s.narrOn) {
+      if (!s.voice) s.voice = await initialVoice();
+      await writeVoiceControls(s.voice);
+    }
+    requestAnimationFrame(() => { autosize(ta); paintHL(current, []); });
+    updateRow(current);
+  }
+
+  $('narrOn').addEventListener('change', async () => {
+    const s = slides[current];
+    if (!s) return;
+    s.narrOn = $('narrOn').checked;
+    if (s.narrOn && !s.voice) s.voice = await initialVoice();
+    await loadNarrationUI();
+    updateThumbBadges(current);
+  });
+
+  $('narrApplyAll').addEventListener('click', () => {
+    const s = slides[current];
+    if (!s) return;
+    const v = s.narrOn ? (s.voice || readVoiceControls()) : null;
+    slides.forEach((t, i) => { t.narrOn = s.narrOn; if (v) t.voice = { ...v }; updateThumbBadges(i); });
+    const b = $('narrApplyAll');
+    b.innerHTML = `${icon('copy')}Applied to ${slides.length} slides`;
+    setTimeout(() => { b.innerHTML = `${icon('copy')}Apply to all slides`; }, 1800);
+    updateNarrTotal();
+  });
 
   // ── Kokoro: pick GPU or CPU automatically (measured once per PC, remembered)
   const KOKORO_CPU = () => (self.crossOriginIsolated && (navigator.hardwareConcurrency || 2) >= 4) ? 'fp32|wasm' : 'q8|wasm';
@@ -969,15 +1170,12 @@
     const parts = Object.entries(s.results).map(([c, r]) => `${autoLabel(c)} ${r ? r.toFixed(2) + '×' : 'failed'}`);
     return `Auto uses ${autoLabel(s.choice)} on this PC (measured: ${parts.join(', ')} real time).`;
   }
-
-  async function kokoroConfig(onProgress) {
-    const sel = $('kokoroQ').value;
+  async function kokoroConfig(sel, onProgress) {
     if (sel !== 'auto') return sel;
     const s = savedAuto();
     if (s) return s.choice;
     return await calibrateKokoro(onProgress);
   }
-
   async function calibrateKokoro(onProgress) {
     const cands = [];
     try { if (navigator.gpu && await navigator.gpu.requestAdapter()) cands.push('fp32|webgpu'); } catch {}
@@ -996,15 +1194,11 @@
         const t0 = performance.now();
         const buf = await tts.speak('kokoro', { text, voice: 'af_heart' }, audioCtx());
         results[c] = buf.duration / ((performance.now() - t0) / 1000);
-      } catch (err) {
-        console.warn('Kokoro test failed for', c, err);
-        results[c] = 0;
-        lastErr = err;
-      }
+      } catch (err) { console.warn('Kokoro test failed for', c, err); results[c] = 0; lastErr = err; }
     }
     const best = Object.entries(results).sort((a, b) => b[1] - a[1])[0];
     if (!best || !best[1]) {
-      if (lastErr && /download|internet/i.test(lastErr.message)) throw lastErr;   // a network problem, not the PC
+      if (lastErr && /download|internet/i.test(lastErr.message)) throw lastErr;
       throw new Error('Kokoro could not run on this PC (GPU and CPU tests failed). Try Piper.');
     }
     const s = { choice: best[0], cpu: KOKORO_CPU(), results, at: Date.now() };
@@ -1012,14 +1206,11 @@
     setTtsStatus(describeAuto(s));
     return s.choice;
   }
-
   function updateKokoroAutoUI() {
     const auto = $('ttsEngine').value === 'kokoro' && $('kokoroQ').value === 'auto';
     $('kokoroRetest').style.display = auto && savedAuto() ? '' : 'none';
     if (auto && savedAuto()) setTtsStatus(describeAuto(savedAuto()));
   }
-  $('kokoroQ').addEventListener('change', updateKokoroAutoUI);
-  $('ttsEngine').addEventListener('change', updateKokoroAutoUI);
   $('kokoroRetest').addEventListener('click', async () => {
     const b = $('kokoroRetest');
     b.disabled = true;
@@ -1030,8 +1221,43 @@
     finally { b.disabled = false; updateKokoroAutoUI(); }
   });
 
-  async function speakText(text, onProgress) {
-    const cfg = await ensureVoice();
+  /** Load the model a voice needs (downloads once). */
+  async function ensureVoice(v) {
+    const bar = $('ttsProgress');
+    const onProgress = (p) => {
+      if (p.label === 'sentence' || p.label === 'sentence-done') return;
+      setBar(bar, p.total ? p.loaded / p.total : null);
+      setTtsStatus(`Downloading ${p.label}… ${fmtSize(p.loaded)}${p.total ? ' / ' + fmtSize(p.total) : ''}`);
+    };
+    try {
+      if (v.engine === 'kokoro') {
+        const cfg = await kokoroConfig(v.kokoroQ || 'auto', onProgress);
+        const [dtype, device] = cfg.split('|');
+        if (device === 'webgpu' && !navigator.gpu) throw new Error('WebGPU is not available in this browser – choose a CPU model.');
+        if (ensureVoice.loaded !== 'kokoro|' + cfg) {
+          setTtsStatus('Loading Kokoro…');
+          await tts.load('kokoro', { dtype, device }, onProgress);
+          ensureVoice.loaded = 'kokoro|' + cfg;
+        }
+        return { engine: 'kokoro', voice: v.kokoroVoice || 'af_heart', speed: v.speed || 1,
+          label: `Kokoro ${v.kokoroVoice} (${device === 'webgpu' ? 'GPU' : 'CPU'})` };
+      }
+      const list = await tts.piperVoices();
+      const pv = list.find(x => x.key === v.piperKey) || list.find(x => x.language.code === v.lang);
+      if (!pv) throw new Error('Choose a voice first.');
+      if (ensureVoice.loaded !== 'piper|' + pv.key) {
+        setTtsStatus('Loading ' + pv.key + '…');
+        await tts.load('piper', pv, onProgress);
+        ensureVoice.loaded = 'piper|' + pv.key;
+      }
+      return { engine: 'piper', speed: v.speed || 1, speaker: v.speaker || 0, label: pv.key };
+    } finally {
+      setBar(bar, null);
+    }
+  }
+
+  async function speakText(text, v, onProgress) {
+    const cfg = await ensureVoice(v);
     setTtsStatus(`Voice ready: ${cfg.label}.`);
     const buf = await tts.speak(cfg.engine, { text, voice: cfg.voice, speed: cfg.speed, speaker: cfg.speaker }, audioCtx(), onProgress);
     return { buf, label: cfg.label };
@@ -1041,10 +1267,10 @@
     const btn = $('ttsTestBtn');
     btn.disabled = true;
     try {
-      const fam = $('ttsEngine').value === 'kokoro' ? 'en' : ($('ttsLang').value || 'en').slice(0, 2);
-      const text = SAMPLE[fam] || SAMPLE.en;
+      const v = readVoiceControls();
+      const fam = v.engine === 'kokoro' ? 'en' : (v.lang || 'en').slice(0, 2);
       setTtsStatus('Generating a sample…');
-      const { buf } = await speakText(text);
+      const { buf } = await speakText(SAMPLE[fam] || SAMPLE.en, v);
       playerPlay('test', buf);
       setTtsStatus(`Sample: ${buf.duration.toFixed(1)} s. The voice is ready.`);
     } catch (err) {
@@ -1054,7 +1280,6 @@
   });
 
   // ── Audio player (one at a time): play / pause / resume / stop with a time display
-  const icon = (n, f = false) => `<svg class="ic${f ? ' f' : ''}"><use href="#i-${n}"/></svg>`;
   const player = { key: null, buf: null, src: null, startAt: 0, offset: 0, playing: false, raf: 0, hooks: {} };
   const playerPos = () => player.playing ? audioCtx().currentTime - player.startAt : player.offset;
 
@@ -1091,12 +1316,11 @@
     hooks.onTick?.(null);
     hooks.onState?.();
   }
-  const stopPlayback = playerStop;
 
   /** Play a slide's narration with live time and sentence highlight. */
   function playRow(i) {
-    const n = narr[i];
-    if (!n.buffer) return;
+    const n = slides[i];
+    if (!n?.buffer) return;
     if (player.key === i && player.playing) { playerPause(); return; }
     playerPlay(i, n.buffer, {
       onTick: (pos) => {
@@ -1105,14 +1329,15 @@
         row.querySelector('.ntime').textContent = pos == null ? fmtTime(n.buffer.duration) : `${fmtTime(pos)} / ${fmtTime(n.buffer.duration)}`;
         if (pos == null || !n.marks || cleanForSpeech(n.text) !== n.spokenText) { if (pos == null) paintHL(i, []); return; }
         let k = -1;
-        n.marks.forEach((m, j) => { if (pos >= m.t0) k = j; });
-        paintHL(i, n.marks.filter(Boolean).map((m, j) => j < k ? { ...m, cls: 'done' } : j === k ? { ...m, cls: 'cur' } : null).filter(Boolean));
+        n.marks.forEach((m, j) => { if (m && pos >= m.t0) k = j; });
+        paintHL(i, n.marks.map((m, j) => !m ? null : j < k ? { ...m, cls: 'done' } : j === k ? { ...m, cls: 'cur' } : null).filter(Boolean));
       },
       onState: () => updateRow(i),
     });
   }
 
-  // ── Highlight backdrop behind each notes box
+  // ── Notes editor with highlight backdrop (shows the current slide)
+  function rowEl(i) { return i === current ? $('narrEditor') : null; }
   const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   function paintHL(i, ranges) {
     const row = rowEl(i);
@@ -1129,7 +1354,7 @@
     hl.scrollTop = ta.scrollTop;
   }
   function autosize(ta) { ta.style.height = 'auto'; ta.style.height = (ta.scrollHeight + 2) + 'px'; }
-  window.addEventListener('resize', () => document.querySelectorAll('#narrList textarea').forEach(autosize));
+  window.addEventListener('resize', () => autosize($('narrEditor').querySelector('textarea')));
 
   /** Find a spoken sentence inside the original notes text (which may contain bullets, line breaks…). */
   function locateSentence(raw, sentence, from = 0) {
@@ -1152,78 +1377,33 @@
     return { start: map[a], end: (map[Math.min(b, map.length) - 1] ?? map[map.length - 1]) + 1 };
   }
 
-  // ── notes list
-  async function loadNarrationNotes() {
-    playerStop();
-    narr = [];
-    for (let i = 0; i < renderer.slideCount; i++) {
-      let text = '';
-      try { text = await slideNotes(renderer, i); } catch {}
-      narr.push({ text, buffer: null, kind: null, label: '', spokenText: '', marks: null });
-    }
-    $('narrPanel').style.display = 'block';
-    const withNotes = narr.filter(n => n.text.trim()).length;
-    if (withNotes) setTtsStatus(`${withNotes} of ${narr.length} slides have speaker notes. The voice model downloads once, then your browser keeps it.`);
-    buildNarrList();
-  }
-
-  function buildNarrList() {
-    const list = $('narrList');
-    list.innerHTML = '';
-    narr.forEach((n, i) => {
-      const row = document.createElement('div');
-      row.className = 'nrow';
-      row.dataset.i = i;
-      row.innerHTML = `
-        <canvas></canvas>
-        <div>
-          <div class="nhead"><b>Slide ${i + 1}</b><span class="nstat"></span></div>
-          <div class="nedit"><div class="nhl"></div><textarea rows="2" placeholder="Type what should be said on this slide (or leave empty)."></textarea></div>
-          <div class="nbtns">
-            <button class="sm rec" title="Record your own voice for this slide">${icon('rec', true)}<span>Record</span></button>
-            <button class="sm gen" title="Generate speech with the selected voice">${icon('spark')}Generate</button>
-            <button class="sm play" title="Play / pause">${icon('play', true)}<span>Play</span></button>
-            <button class="sm stop icon-only" title="Stop">${icon('stop', true)}</button>
-            <span class="ntime"></span>
-            <span style="flex:1"></span>
-            <button class="sm clear" title="Remove this slide's audio">${icon('trash')}Remove</button>
-          </div>
-        </div>`;
-      const thumb = document.querySelector(`.thumb[data-index="${i}"] canvas`);
-      const c = row.querySelector('canvas');
-      if (thumb?.width) { c.width = thumb.width; c.height = thumb.height; c.getContext('2d').drawImage(thumb, 0, 0); }
-      const ta = row.querySelector('textarea');
-      ta.value = n.text;
-      ta.addEventListener('input', () => { n.text = ta.value; autosize(ta); paintHL(i, []); updateRow(i); });
-      ta.addEventListener('scroll', () => { row.querySelector('.nhl').scrollTop = ta.scrollTop; });
-      row.querySelector('.rec').addEventListener('click', () => toggleRecord(i));
-      row.querySelector('.gen').addEventListener('click', () => generateOne(i));
-      row.querySelector('.play').addEventListener('click', () => playRow(i));
-      row.querySelector('.stop').addEventListener('click', () => { if (player.key === i) playerStop(); });
-      row.querySelector('.clear').addEventListener('click', () => {
-        if (player.key === i) playerStop();
-        Object.assign(n, { buffer: null, kind: null, marks: null });
-        updateRow(i);
-      });
-      list.appendChild(row);
-      requestAnimationFrame(() => autosize(ta));
-      paintHL(i, []);
-      updateRow(i);
+  // editor events (always act on the current slide)
+  (() => {
+    const ed = $('narrEditor'), ta = ed.querySelector('textarea');
+    ta.addEventListener('input', () => { const s = slides[current]; if (!s) return; s.text = ta.value; autosize(ta); paintHL(current, []); updateRow(current); });
+    ta.addEventListener('scroll', () => { ed.querySelector('.nhl').scrollTop = ta.scrollTop; });
+    ed.querySelector('.rec').addEventListener('click', () => toggleRecord(current));
+    ed.querySelector('.gen').addEventListener('click', () => generateOne(current).catch(() => {}));
+    ed.querySelector('.play').addEventListener('click', () => playRow(current));
+    ed.querySelector('.stop').addEventListener('click', () => { if (player.key === current) playerStop(); });
+    ed.querySelector('.clear').addEventListener('click', () => {
+      if (player.key === current) playerStop();
+      Object.assign(slides[current], { buffer: null, kind: null, marks: null });
+      updateRow(current);
     });
-    updateNarrTotal();
-  }
-
-  function rowEl(i) { return document.querySelector(`#narrList .nrow[data-i="${i}"]`); }
+  })();
 
   function updateRow(i) {
-    const n = narr[i], row = rowEl(i);
-    if (!row) return;
+    const n = slides[i], row = rowEl(i);
+    updateThumbBadges(i);
+    updateNarrTotal();
+    if (!row || !n) return;
     const st = row.querySelector('.nstat');
     if (!row.classList.contains('busy')) {
       st.className = 'nstat';
       if (n.buffer) {
-        const stale = n.kind === 'tts' && cleanForSpeech(n.text) !== n.spokenText;
-        st.textContent = `${n.kind === 'rec' ? 'Your recording' : n.label} · ${n.buffer.duration.toFixed(1)} s${stale ? ' · text changed, generate again' : ''}`;
+        const stale = n.kind === 'tts' && (cleanForSpeech(n.text) !== n.spokenText || (n.voice && n.voiceSig !== voiceSig(n.voice)));
+        st.textContent = `${n.kind === 'rec' ? 'Your recording' : n.label} · ${n.buffer.duration.toFixed(1)} s${stale ? ' · text or voice changed, generate again' : ''}`;
         st.classList.add(stale ? 'warn' : 'ok');
       } else {
         st.textContent = n.text.trim() ? 'No audio yet' : 'No text – uses the normal hold time';
@@ -1238,26 +1418,20 @@
     row.querySelector('.clear').disabled = !n.buffer || row.classList.contains('busy');
     row.querySelector('.gen').disabled = !n.text.trim() || genBusy || recIndex >= 0;
     row.querySelector('.rec').disabled = genBusy || (recIndex >= 0 && recIndex !== i);
-    updateNarrTotal();
   }
 
   function updateNarrTotal() {
-    const clips = narr.filter(n => n.buffer);
-    const secs = clips.reduce((s, n) => s + n.buffer.duration, 0);
-    $('narrTotal').textContent = clips.length ? `${clips.length}/${narr.length} slides have audio · ${fmtTime(secs)} of narration` : '';
+    const on = slides.filter(s => s.narrOn);
+    const clips = on.filter(s => s.buffer);
+    const secs = clips.reduce((a, s) => a + s.buffer.duration, 0);
+    $('narrTotal').textContent = on.length ? `${clips.length}/${on.length} narrated slides have audio · ${fmtTime(secs)} of narration` : '';
   }
 
-  // ── generate
-  // Speed statistics across all generated sentences (for "≈ x left" estimates)
+  // ── generate (with live sentence highlight)
   const speed = { ms: 0, chars: 0, audio: 0 };
   const short = (t, n = 70) => t.length > n ? t.slice(0, n - 1) + '…' : t;
 
-  /**
-   * Live progress: highlights the sentence being generated (yellow) and finished ones (green),
-   * shows sentence k/N, elapsed time, real-time factor and time left; collects sentence timings.
-   */
   function progressReporter(i, raw, cleaned, charsAfter = 0) {
-    const row = rowEl(i);
     const t0 = performance.now();
     let cur = null, curLoc = null, cursor = 0, doneChars = 0;
     const done = [], marks = [];
@@ -1266,6 +1440,7 @@
       const rtf = speed.ms ? speed.audio / (speed.ms / 1000) : 0;
       const msPerChar = speed.chars ? speed.ms / speed.chars : 0;
       const left = msPerChar ? ((cleaned.length - doneChars) + charsAfter) * msPerChar / 1000 : 0;
+      const row = rowEl(i);
       if (row && cur) row.querySelector('.nstat').textContent = `Generating sentence ${cur.index}/${cur.total} · ${fmtTime(el)}`;
       setTtsStatus(
         (cur ? `Slide ${i + 1}, sentence ${cur.index}/${cur.total}: “${short(cur.text)}”` : `Slide ${i + 1}: preparing…`) +
@@ -1295,9 +1470,10 @@
   }
 
   async function generateOne(i, quiet = false, charsAfter = 0) {
-    const n = narr[i];
+    const n = slides[i];
     const text = cleanForSpeech(n.text);
     if (!text) return;
+    if (!n.voice) n.voice = i === current ? readVoiceControls() : await initialVoice();
     const row = rowEl(i);
     if (player.key === i) playerStop();
     row?.classList.add('busy');
@@ -1305,9 +1481,9 @@
     if (ta) ta.readOnly = true;                     // keep the text stable while it is highlighted
     const rep = progressReporter(i, n.text, text, charsAfter);
     try {
-      row.querySelector('.nstat').textContent = 'Preparing…';
-      const { buf, label } = await speakText(text, rep.onProgress);
-      Object.assign(n, { buffer: buf, kind: 'tts', label, spokenText: text, marks: rep.marks });
+      if (row) row.querySelector('.nstat').textContent = 'Preparing…';
+      const { buf, label } = await speakText(text, n.voice, rep.onProgress);
+      Object.assign(n, { buffer: buf, kind: 'tts', label, spokenText: text, voiceSig: voiceSig(n.voice), marks: rep.marks });
     } catch (err) {
       console.error(err);
       setTtsStatus(`Slide ${i + 1}: ${err?.message || err}`, true);
@@ -1316,19 +1492,20 @@
       rep.done();
       if (ta) ta.readOnly = false;
       row?.classList.remove('busy');
-      setTimeout(() => { if (player.key !== i) paintHL(i, []); }, 1200);   // let the green "done" linger a moment
+      setTimeout(() => { if (player.key !== i) paintHL(i, []); }, 1200);
       updateRow(i);
     }
-    if (!quiet) playRow(i);
+    if (!quiet && i === current) playRow(i);
   }
 
   function setGenBusy(b) {
     genBusy = b;
     $('genAllBtn').disabled = b;
     $('genStopBtn').disabled = !b;
-    for (const id of ['ttsEngine', 'ttsLang', 'ttsVoice', 'ttsSpeaker', 'kokoroQ', 'ttsSpeed', 'ttsTestBtn', 'exportBtn', 'previewVideoBtn'])
+    for (const id of ['ttsEngine', 'ttsLang', 'ttsVoice', 'ttsSpeaker', 'kokoroQ', 'ttsSpeed', 'ttsTestBtn', 'narrOn', 'narrApplyAll', 'exportBtn', 'previewVideoBtn'])
       $(id).disabled = b;
-    narr.forEach((_, i) => updateRow(i));
+    updateNav();
+    updateRow(current);
   }
 
   $('genAllBtn').addEventListener('click', async () => {
@@ -1336,12 +1513,13 @@
     setGenBusy(true);
     let done = 0;
     try {
-      for (let i = 0; i < narr.length && !genAbort; i++) {
-        const n = narr[i];
-        if (!cleanForSpeech(n.text) || n.kind === 'rec') continue;          // keep the user's own recordings
-        if (n.kind === 'tts' && n.spokenText === cleanForSpeech(n.text) && n.label === (await ensureVoice()).label) continue;
-        rowEl(i)?.scrollIntoView({ block: 'nearest' });
-        const after = narr.slice(i + 1).filter(x => x.kind !== 'rec').reduce((s, x) => s + cleanForSpeech(x.text).length, 0);
+      const todo = slides.map((n, i) => ({ n, i })).filter(({ n }) => n.narrOn && cleanForSpeech(n.text) && n.kind !== 'rec' &&
+        !(n.kind === 'tts' && n.spokenText === cleanForSpeech(n.text) && n.voice && n.voiceSig === voiceSig(n.voice)));
+      if (!todo.length) { setTtsStatus('Nothing to generate: every narrated slide already has up-to-date audio.'); return; }
+      for (let k = 0; k < todo.length && !genAbort; k++) {
+        const { i } = todo[k];
+        if (i !== current) await selectSlide(i);          // follow along, so the highlight is visible
+        const after = todo.slice(k + 1).reduce((s, x) => s + cleanForSpeech(x.n.text).length, 0);
         await generateOne(i, true, after);
         done++;
       }
@@ -1351,7 +1529,7 @@
   });
   $('genStopBtn').addEventListener('click', () => { genAbort = true; setTtsStatus('Stopping after the current slide…'); });
 
-  // ── record your own voice
+  // ── record your own voice (current slide)
   async function toggleRecord(i) {
     if (recIndex === i) { micRec?.stop(); return; }
     try {
@@ -1360,12 +1538,12 @@
       setTtsStatus('Microphone not available: ' + (err?.message || err), true);
       return;
     }
-    stopPlayback();
+    playerStop();
     const chunks = [];
     const mime = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4'].find(m => MediaRecorder.isTypeSupported(m)) || '';
     micRec = new MediaRecorder(micStream, mime ? { mimeType: mime } : undefined);
     micRec.ondataavailable = (e) => { if (e.data?.size) chunks.push(e.data); };
-    const row = rowEl(i), btn = row.querySelector('.rec');
+    const row = $('narrEditor'), btn = row.querySelector('.rec');
     const t0 = performance.now();
     const timer = setInterval(() => { row.querySelector('.nstat').textContent = `● Recording… ${((performance.now() - t0) / 1000).toFixed(1)} s – click Stop when done`; }, 200);
     micRec.onstop = async () => {
@@ -1376,14 +1554,16 @@
       try {
         const raw = await new Blob(chunks, { type: micRec.mimeType }).arrayBuffer();
         const buf = trimSilence(await audioCtx().decodeAudioData(raw));
-        Object.assign(narr[i], { buffer: buf, kind: 'rec', label: 'Your recording', marks: null });
+        Object.assign(slides[i], { buffer: buf, kind: 'rec', label: 'Your recording', marks: null });
       } catch (err) { setTtsStatus('Could not read the recording: ' + (err?.message || err), true); }
-      narr.forEach((_, k) => updateRow(k));
+      updateNav();
+      updateRow(i);
     };
     recIndex = i;
     btn.classList.add('on'); btn.innerHTML = `${icon('stop', true)}<span>Stop recording</span>`;
     row.classList.add('recording');
-    narr.forEach((_, k) => updateRow(k));
+    updateNav();
+    updateRow(i);
     micRec.start();
   }
 
@@ -1401,39 +1581,8 @@
     return out;
   }
 
-  // ── on / off
-  function updateNarrUI() {
-    const on = $('narrChk').checked;
-    $('narrBody').style.display = on ? 'block' : 'none';
-    if (on) requestAnimationFrame(() => document.querySelectorAll('#narrList textarea').forEach(autosize));
-    $('holdLabel').textContent = on ? 'Hold slides without narration (s)' : 'Hold each slide (s)';
-    if (on && !$('ttsLang').options.length) fillLanguages().then(fillVoices).catch(err => setTtsStatus(String(err), true));
-  }
-  $('narrChk').addEventListener('change', updateNarrUI);
-  $('kokoroQ').value = navigator.gpu ? 'auto' : KOKORO_CPU();
-  updateKokoroAutoUI();
-
-  // ── Theme switch (light / dark / follow Windows)
-  function applyTheme(t) {
-    if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
-    else { delete document.documentElement.dataset.theme; t = 'auto'; }
-    try { localStorage.setItem('pptxTheme', t); } catch {}
-    document.querySelectorAll('#themeSeg button').forEach(b => b.classList.toggle('on', b.dataset.themeSet === t));
-  }
-  document.querySelectorAll('#themeSeg button').forEach(b => b.addEventListener('click', () => applyTheme(b.dataset.themeSet)));
-  applyTheme((() => { try { return localStorage.getItem('pptxTheme'); } catch { return null; } })() || 'auto');
-
-  function narrationSettings() {
-    if (!$('narrChk').checked || !narr.some(n => n.buffer)) return null;
-    return {
-      clips: narr.map(n => n.buffer || null),
-      leadMs: Math.max(0, +$('leadSec').value || 0) * 1000,
-      tailMs: Math.max(0, +$('tailSec').value || 0) * 1000,
-    };
-  }
-
   /**
-   * Plays each slide's clip in real time when its segment starts (preview + MediaRecorder export).
+   * Plays each slide's clip in real time when its segment starts (previews + MediaRecorder export).
    * With `record` it also exposes an audio track to add to the recorded stream.
    */
   function narrationPlayer(record) {
@@ -1456,13 +1605,19 @@
     };
   }
 
-  // ── Video jobs ─────────────────────────────────────────────────────────────
-  /** A background is usable when nothing is selected or a source is set. */
-  async function bgPrepared() {
-    return !bgEntry || !!bgFile;
+  // ── Theme switch (light / dark / follow Windows)
+  function applyTheme(t) {
+    if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+    else { delete document.documentElement.dataset.theme; t = 'auto'; }
+    try { localStorage.setItem('pptxTheme', t); } catch {}
+    document.querySelectorAll('#themeSeg button').forEach(b => b.classList.toggle('on', b.dataset.themeSet === t));
   }
+  document.querySelectorAll('#themeSeg button').forEach(b => b.addEventListener('click', () => applyTheme(b.dataset.themeSet)));
+  applyTheme((() => { try { return localStorage.getItem('pptxTheme'); } catch { return null; } })() || 'auto');
 
+  // ── Video settings + jobs ──────────────────────────────────────────────────
   function readSettings() {
+    const anyNarr = slides.some(s => s.narrOn && s.buffer);
     return {
       width: +$('resSel').value,
       fps: +$('fpsSel').value,
@@ -1470,17 +1625,19 @@
       clickGapMs: Math.max(0, +$('clickGapSec').value || 0) * 1000,
       animate: $('animChk').checked,
       readability: { mode: $('readMode').value, strength: (+$('readStrength').value || 0) / 100 },
-      narration: narrationSettings(),
       transition: { choice: $('transitionSel').value, ms: Math.max(0, +$('transMs').value || 0) },
-      bg: {
-        file: bgEntry ? bgFile : null,
-        mode: bgEntry && bgFile ? $('bgMode').value : 'none',
-        scale: Math.min(1, Math.max(0.4, (+$('insetPct').value || 80) / 100)),
-        opacity: Math.min(1, Math.max(0.1, (+$('blendPct').value || 85) / 100)),
-        loop: $('bgLoop').checked,
-      },
+      bgLoop: $('bgLoop').checked,
+      slides: slides.map(s => ({
+        bg: s.bg ? { source: s.bg.source, mode: s.mode, scale: s.inset / 100, opacity: s.blend / 100 } : null,
+      })),
+      narration: anyNarr ? {
+        clips: slides.map(s => (s.narrOn && s.buffer) ? s.buffer : null),
+        leadMs: Math.max(0, +$('leadSec').value || 0) * 1000,
+        tailMs: Math.max(0, +$('tailSec').value || 0) * 1000,
+      } : null,
     };
   }
+  for (const id of ['animChk', 'clickGapSec', 'holdSec']) $(id).addEventListener('change', () => {});
 
   function showLive(canvas) {
     const wrap = $('liveWrap');
@@ -1490,18 +1647,12 @@
   }
 
   function setJobUI(running) {
-    $('gallery').classList.toggle('muted-off', running);
-    $('narrPanel').classList.toggle('muted-off', running);
-    for (const id of ['previewVideoBtn', 'exportBtn', 'pdfBtn', 'showBtn', 'pngBtn', 'playAnimBtn'])
-      $(id).disabled = running;
+    $('editor').classList.toggle('muted-off', running);
+    for (const id of ['previewVideoBtn', 'exportBtn']) $(id).disabled = running;
     $('stopBtn').disabled = !running;
     dropZone.style.pointerEvents = running ? 'none' : '';
     document.querySelectorAll('#videoPanel input, #videoPanel select').forEach(el => el.disabled = running);
-    if (!running) {
-      if (!webCodecsAvailable()) $('engineSel').options[0].disabled = true;
-      $('playAnimBtn').disabled = !fxCountOf(current);
-    }
-    updateBgFields();
+    if (!running && !webCodecsAvailable()) $('engineSel').options[0].disabled = true;
     updateNav();
   }
 
@@ -1521,19 +1672,17 @@
   $('previewVideoBtn').addEventListener('click', async () => {
     if (!renderer) return;
     job = new AbortController();
+    playerStop(); slideJob?.abort();
     setJobUI(true);
-    let bgVideo = null;
+    let pv = null;
     try {
-      if (!(await bgPrepared())) throw new Error('The background video is not available.');
-      const pv = new PptxVideo(renderer, readSettings());
+      pv = new PptxVideo(renderer, readSettings());
       showLive(pv.out);
-      $('liveLabel').textContent = '';
       setVStatus('Preparing…');
-      bgVideo = await makeBgVideoElement();
       setBar($('videoProgress'), 0);
-      const voice = narrationPlayer(null);
+      const voice = narrationPlayer(false);
       const done = await pv.playRealtime({
-        bgVideo, signal: job.signal, onSegmentStart: voice.onSegmentStart,
+        signal: job.signal, onSegmentStart: voice.onSegmentStart,
         onProgress: (t, total, s) => { setBar($('videoProgress'), t / total); setVStatus(`Slide ${s + 1}/${renderer.slideCount} · ${fmtTime(t / 1000)} / ${fmtTime(total / 1000)}`); },
       });
       voice.stop();
@@ -1542,7 +1691,7 @@
       console.error(err);
       setVStatus('Preview failed: ' + (err?.message || err), true);
     } finally {
-      bgVideo?.pause();
+      pv?.dispose();
       setBar($('videoProgress'), null);
       job = null;
       setJobUI(false);
@@ -1552,17 +1701,16 @@
   $('exportBtn').addEventListener('click', async () => {
     if (!renderer) return;
     job = new AbortController();
+    playerStop(); slideJob?.abort();
     setJobUI(true);
     $('downloadLink').style.display = 'none';
     setVStatus('Preparing…');
     const container = $('containerSel').value;
     const engine = $('engineSel').value;
-    let bgVideo = null;
+    let pv = null;
     try {
-      if (!(await bgPrepared())) throw new Error('The background video is not available.');
-      const pv = new PptxVideo(renderer, readSettings());
+      pv = new PptxVideo(renderer, readSettings());
       showLive(pv.out);
-      $('liveLabel').textContent = '';
       setBar($('videoProgress'), 0);
 
       if (engine === 'fast') {
@@ -1574,8 +1722,8 @@
           onProgress: (done, total, s) => {
             setBar($('videoProgress'), done / total);
             const el = (performance.now() - t0) / 1000;
-            const speed = (done / pv.s.fps) / Math.max(el, 0.001);
-            setVStatus(`Encoding slide ${s + 1}/${renderer.slideCount} · frame ${done}/${total} · ${speed.toFixed(1)}× real time`);
+            const sp = (done / pv.s.fps) / Math.max(el, 0.001);
+            setVStatus(`Encoding slide ${s + 1}/${renderer.slideCount} · frame ${done}/${total} · ${sp.toFixed(1)}× real time`);
           },
         });
         if (!blob) { setVStatus('Export cancelled.'); return; }
@@ -1586,7 +1734,6 @@
         const mime = mrMime(container, wantAudio) || mrMime(container === 'mp4' ? 'webm' : 'mp4', wantAudio);
         if (!mime) throw new Error('MediaRecorder recording is not supported in this browser.');
         const ext = mime.startsWith('video/mp4') ? 'mp4' : 'webm';
-        bgVideo = await makeBgVideoElement();
         const voice = narrationPlayer(wantAudio);
         const stream = pv.out.captureStream(pv.s.fps);
         if (voice.track) stream.addTrack(voice.track);
@@ -1597,7 +1744,7 @@
         rec.start(1000);
         rec.pause();                                     // the engine resumes once the first slide is ready
         const done = await pv.playRealtime({
-          recorder: rec, bgVideo, signal: job.signal, onSegmentStart: voice.onSegmentStart,
+          recorder: rec, signal: job.signal, onSegmentStart: voice.onSegmentStart,
           onProgress: (t, total, s) => { setBar($('videoProgress'), t / total); setVStatus(`Recording slide ${s + 1}/${renderer.slideCount} · ${fmtTime(t / 1000)} / ${fmtTime(total / 1000)}`); },
         });
         if (rec.state === 'paused') rec.resume();
@@ -1612,7 +1759,7 @@
       console.error(err);
       setVStatus('Export failed: ' + (err?.message || err), true);
     } finally {
-      bgVideo?.pause();
+      pv?.dispose();
       setBar($('videoProgress'), null);
       job = null;
       setJobUI(false);

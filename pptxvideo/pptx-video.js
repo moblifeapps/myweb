@@ -566,8 +566,15 @@ class BgReader {
  * settings = {
  *   width, fps, holdMs, clickGapMs, animate,
  *   transition: { choice: 'file'|'fade'|..., ms },
- *   bg: { file: File|null, mode: 'none'|'transparent'|'inset'|'blend', scale: 0.8, opacity: 0.85, loop: true }
+ *   slides: [ { bg: { source: File|Blob|URL string, mode: 'transparent'|'inset'|'blend', scale, opacity } | null } ],
+ *   bgLoop: true,
+ *   readability: { mode, strength },          // used on slides whose background mode is 'transparent'
+ *   narration: { clips: [AudioBuffer|null], leadMs, tailMs } | null,
  * }
+ * (Legacy: settings.bg = { file, mode, scale, opacity, loop } applies one background to every slide.)
+ *
+ * Each slide is composed with its own background; transitions blend the two COMPLETE frames
+ * (slide + its background), so a background change cross-fades like in a video editor.
  */
 export class PptxVideo {
   constructor(renderer, settings) {
@@ -578,23 +585,47 @@ export class PptxVideo {
     this.slideH = Math.round(this.W / aspect);
     this.H = this.slideH + (this.slideH % 2);         // encoders want even sizes
     this.out = makeCanvas(this.W, this.H);
-    this.frame = makeCanvas(this.W, this.slideH);     // composed slide (may be transparent)
-    this.tA = makeCanvas(this.W, this.slideH);
+    this.frame = makeCanvas(this.W, this.slideH);     // composed slide content (may be transparent)
+    this.tA = makeCanvas(this.W, this.slideH);        // transition: slide content (from / to)
     this.tB = makeCanvas(this.W, this.slideH);
+    this.cA = makeCanvas(this.W, this.H);             // transition: complete frames (from / to)
+    this.cB = makeCanvas(this.W, this.H);
     this.scenes = new Map();
-    this.hasBg = !!(settings.bg?.file && settings.bg.mode !== 'none');
-    this.transparent = this.hasBg && settings.bg.mode === 'transparent';
-    // readability only matters when slide content sits directly on the video
+
+    // per-slide backgrounds
+    const n = renderer.slideCount;
+    const legacy = settings.bg?.file && settings.bg.mode !== 'none'
+      ? { source: settings.bg.file, mode: settings.bg.mode, scale: settings.bg.scale, opacity: settings.bg.opacity } : null;
+    this.bgs = Array.from({ length: n }, (_, i) => {
+      const b = settings.slides ? settings.slides[i]?.bg : legacy;
+      return b && b.source ? { mode: 'transparent', scale: 0.8, opacity: 0.85, ...b } : null;
+    });
+    this.loop = settings.bgLoop ?? settings.bg?.loop ?? true;
+    this.hasBg = this.bgs.some(Boolean);
+
     const rd = settings.readability || { mode: 'off', strength: 0.6 };
-    this.readMode = this.transparent ? rd.mode : 'off';
+    this.readMode = rd.mode || 'off';
     this.readK = Math.max(0, Math.min(1, rd.strength ?? 0.6));
     if (this.readMode === 'frosted') {
       this.blurSmall = makeCanvas(Math.max(2, Math.round(this.W / 4)), Math.max(2, Math.round(this.slideH / 4)));
-      this.deco = { src: this.blurSmall, W: this.W, H: this.slideH, tint: 0.15 + 0.35 * this.readK };
+      this.decoObj = { src: this.blurSmall, W: this.W, H: this.slideH, tint: 0.15 + 0.35 * this.readK };
     }
     this.segs = this._plan();
     this.totalMs = this.segs.reduce((s, x) => s + x.ms, 0);
+
+    // A background clip that continues over consecutive slides keeps playing instead of restarting
+    this.runStart = new Array(n).fill(0);
+    for (const seg of this.segs) {
+      if (seg.kind !== 'slide') continue;
+      const i = seg.i, prev = i > 0 ? this.bgs[i - 1] : null;
+      this.runStart[i] = (prev && this.bgs[i] && prev.source === this.bgs[i].source) ? this.runStart[i - 1] : seg.t0;
+    }
+    this.readers = new Map();   // fast export: source → BgReader
+    this.videos = new Map();    // real time:   source → <video>
   }
+
+  isTransparent(i) { return this.bgs[i]?.mode === 'transparent'; }
+  decoFor(i) { return this.isTransparent(i) ? this.decoObj || null : null; }
 
   _transition(i) {
     const { choice, ms: len } = this.s.transition;
@@ -648,9 +679,10 @@ export class PptxVideo {
 
   async _scene(i) {
     if (!this.scenes.has(i)) {
+      const transparent = this.isTransparent(i);
       this.scenes.set(i, buildScene(this.r, i, {
-        width: this.W, transparent: this.transparent, animate: this.s.animate, clickGapMs: this.s.clickGapMs,
-      }).then(sc => decorateScene(sc, this.readMode, this.readK)));
+        width: this.W, transparent, animate: this.s.animate, clickGapMs: this.s.clickGapMs,
+      }).then(sc => transparent ? decorateScene(sc, this.readMode, this.readK) : sc));
     }
     return this.scenes.get(i);
   }
@@ -660,41 +692,40 @@ export class PptxVideo {
     const got = [];
     for (const i of need) got.push(await this._scene(i));
     if (seg.kind === 'trans') {
-      // static "from" (end state) and "to" (start state) for the transition
-      drawScene(this.tA.getContext('2d'), got[0], Number.MAX_SAFE_INTEGER, this.deco);
-      drawScene(this.tB.getContext('2d'), got[1], 0, this.deco);
+      // static "from" (end state) and "to" (start state) slide content for the transition
+      drawScene(this.tA.getContext('2d'), got[0], Number.MAX_SAFE_INTEGER, this.decoFor(seg.from));
+      drawScene(this.tB.getContext('2d'), got[1], 0, this.decoFor(seg.to));
     }
     seg.scene = got[got.length - 1];
   }
 
-  /** Compose the output frame for a segment at local time t (ms); bgSrc = canvas/video or null. */
-  _compose(seg, t, bgSrc, bgW, bgH) {
-    // frosted panels: a small blurred copy of the current background frame
-    if (this.deco && bgSrc) {
-      const b = this.blurSmall.getContext('2d');
-      if (FILTER_OK) b.filter = `blur(${Math.max(1, 2 + 4 * this.readK)}px)`;
-      drawCover(b, bgSrc, bgW, bgH, this.blurSmall.width, this.blurSmall.height);
-      b.filter = 'none';
-    }
-    const fctx = this.frame.getContext('2d');
-    if (seg.kind === 'slide') drawScene(fctx, seg.scene, t, this.deco);
-    else renderTransitionFrame(fctx, this.tA, this.tB, seg.t, Math.min(1, t / seg.ms));
+  /** Background time (s) of slide i at global time tg (ms). */
+  bgTime(i, tg) { return Math.max(0, (tg - this.runStart[i]) / 1000); }
 
-    const ctx = this.out.getContext('2d');
+  _updateBlur(bg) {
+    if (!this.decoObj || !bg?.src) return;
+    const b = this.blurSmall.getContext('2d');
+    if (FILTER_OK) b.filter = `blur(${Math.max(1, 2 + 4 * this.readK)}px)`;
+    drawCover(b, bg.src, bg.w, bg.h, this.blurSmall.width, this.blurSmall.height);
+    b.filter = 'none';
+  }
+
+  /** Draw slide i's complete frame: its background + its content (frame canvas) per its mode. */
+  _composeSlide(ctx, i, frame, bg) {
     const { W, H } = this;
+    const cfg = this.bgs[i];
     ctx.save();
     ctx.globalAlpha = 1;
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, W, H);
-    if (this.hasBg && bgSrc) drawCover(ctx, bgSrc, bgW, bgH, W, H);
-    if (this.readMode === 'auto' && this.readK > 0) {      // gentle overall dim of the footage
+    const mode = cfg ? cfg.mode : 'none';
+    if (cfg && bg?.src) drawCover(ctx, bg.src, bg.w, bg.h, W, H);
+    if (mode === 'transparent' && this.readMode === 'auto' && this.readK > 0) {   // gentle dim of the footage
       ctx.fillStyle = `rgba(0,0,0,${0.3 * this.readK})`;
       ctx.fillRect(0, 0, W, H);
     }
-
-    const mode = this.hasBg ? this.s.bg.mode : 'none';
     if (mode === 'inset') {
-      const k = this.s.bg.scale;
+      const k = cfg.scale ?? 0.8;
       const w = W * k, h = H * k, x = (W - w) / 2, y = (H - h) / 2;
       const r = Math.round(W * 0.012);
       ctx.shadowColor = 'rgba(0,0,0,.55)';
@@ -706,59 +737,136 @@ export class PptxVideo {
       ctx.fill();
       ctx.shadowColor = 'transparent';
       ctx.clip();
-      ctx.drawImage(this.frame, x, y, w, h);
+      ctx.drawImage(frame, x, y, w, h);
     } else {
-      if (mode === 'blend') ctx.globalAlpha = this.s.bg.opacity;
-      ctx.drawImage(this.frame, 0, 0, W, H);
+      if (mode === 'blend') ctx.globalAlpha = cfg.opacity ?? 0.85;
+      ctx.drawImage(frame, 0, 0, W, H);
     }
     ctx.restore();
   }
 
   /**
-   * Render one finished slide (all animations done) over a still background
-   * (an <img>, canvas or paused <video>) into this.out. Used for instant previews.
+   * Compose the output frame for a segment at local time t (ms).
+   * bgs: { [slideIndex]: { src, w, h } } – current background frame per visible slide.
    */
-  async renderStill(slideIndex, bgSrc = null) {
+  _compose(seg, t, bgs = {}) {
+    const out = this.out.getContext('2d');
+    if (seg.kind === 'slide') {
+      if (this.isTransparent(seg.i)) this._updateBlur(bgs[seg.i]);
+      drawScene(this.frame.getContext('2d'), seg.scene, t, this.decoFor(seg.i));
+      this._composeSlide(out, seg.i, this.frame, bgs[seg.i]);
+    } else {
+      this._composeSlide(this.cA.getContext('2d'), seg.from, this.tA, bgs[seg.from]);
+      this._composeSlide(this.cB.getContext('2d'), seg.to, this.tB, bgs[seg.to]);
+      renderTransitionFrame(out, this.cA, this.cB, seg.t, Math.min(1, t / seg.ms));
+    }
+  }
+
+  // ── backgrounds for real-time playback (<video> elements, one per distinct source)
+  _video(src) {
+    let v = this.videos.get(src);
+    if (!v) {
+      v = document.createElement('video');
+      Object.assign(v, { muted: true, loop: this.loop, playsInline: true, preload: 'auto', crossOrigin: 'anonymous' });
+      v.src = typeof src === 'string' ? src : URL.createObjectURL(src);
+      this.videos.set(src, v);
+    }
+    return v;
+  }
+  async _syncVideos(indices, tg, play) {
+    const want = new Set(indices.map(i => this.bgs[i]?.source).filter(Boolean));
+    for (const [src, v] of this.videos) if (!want.has(src)) v.pause();
+    for (const i of indices) {
+      const cfg = this.bgs[i];
+      if (!cfg) continue;
+      const v = this._video(cfg.source);
+      if (v.readyState < 2) await new Promise(r => { v.addEventListener('loadeddata', r, { once: true }); v.addEventListener('error', r, { once: true }); });
+      const target = this.bgTime(i, tg);
+      const dur = v.duration || 0;
+      const pos = this.loop && dur ? target % dur : Math.min(target, Math.max(0, dur - 0.05));
+      if (Math.abs(v.currentTime - pos) > 0.25) v.currentTime = pos;
+      if (play) await v.play().catch(() => {}); else v.pause();
+    }
+  }
+  _videoFrames(indices) {
+    const o = {};
+    for (const i of indices) {
+      const cfg = this.bgs[i];
+      if (!cfg) continue;
+      const v = this.videos.get(cfg.source);
+      if (v && v.readyState >= 2) o[i] = { src: v, w: v.videoWidth, h: v.videoHeight };
+    }
+    return o;
+  }
+  pauseVideos() { for (const v of this.videos.values()) v.pause(); }
+  dispose() {
+    for (const v of this.videos.values()) { v.pause(); if (v.src.startsWith('blob:')) URL.revokeObjectURL(v.src); v.removeAttribute('src'); v.load(); }
+    this.videos.clear();
+  }
+
+  /** Prepare slide i for liveFrame() (renders its layers). */
+  async prepareSlide(i) {
+    this._live = { kind: 'slide', i, ms: 1, t0: 0 };
+    await this._ensure(this._live);
+    await this._syncVideos([i], this.runStart[i], true);
+  }
+  /** Draw slide i (finished state) over its playing background – call every animation frame. */
+  liveFrame() {
+    if (!this._live) return;
+    this._compose(this._live, Number.MAX_SAFE_INTEGER, this._videoFrames([this._live.i]));
+  }
+
+  /** Render one finished slide over a still background image (instant preview). */
+  async renderStill(slideIndex, bgImage = null) {
     const seg = { kind: 'slide', i: slideIndex, ms: 1, t0: 0 };
     await this._ensure(seg);
-    const w = bgSrc?.naturalWidth || bgSrc?.videoWidth || bgSrc?.width || 0;
-    const h = bgSrc?.naturalHeight || bgSrc?.videoHeight || bgSrc?.height || 0;
-    this._compose(seg, Number.MAX_SAFE_INTEGER, bgSrc, w, h);
+    const bg = bgImage ? { src: bgImage, w: bgImage.naturalWidth || bgImage.videoWidth || bgImage.width, h: bgImage.naturalHeight || bgImage.videoHeight || bgImage.height } : null;
+    this._compose(seg, Number.MAX_SAFE_INTEGER, { [slideIndex]: bg });
     return this.out;
   }
 
   /**
    * Real-time playback onto this.out (preview or MediaRecorder recording).
-   * hooks: { recorder?, bgVideo? (HTMLVideoElement, playing), signal?, onProgress?(ms,total,slide) }
+   * opts: { recorder?, signal?, onProgress?(ms,total,slide), onSegmentStart?(seg), only?: slideIndex }
    */
-  async playRealtime({ recorder = null, bgVideo = null, signal = null, onProgress = null, onSegmentStart = null } = {}) {
-    for (const seg of this.segs) {
-      if (signal?.aborted) return false;
-      // Rendering the next scene can take a moment: pause recording meanwhile
-      if (recorder?.state === 'recording') recorder.pause();
-      bgVideo?.pause();
-      await this._ensure(seg);
-      if (signal?.aborted) return false;
-      this._compose(seg, 0, bgVideo, bgVideo?.videoWidth, bgVideo?.videoHeight);
-      if (bgVideo) await bgVideo.play().catch(() => {});
-      if (recorder?.state === 'paused') recorder.resume();
-      onSegmentStart?.(seg);
+  async playRealtime({ recorder = null, signal = null, onProgress = null, onSegmentStart = null, only = null } = {}) {
+    const segs = only == null ? this.segs
+      : this.segs.filter(s => s.kind === 'slide' && s.i === only);
+    const total = segs.reduce((a, s) => a + s.ms, 0);
+    let done = 0;
+    try {
+      for (const seg of segs) {
+        if (signal?.aborted) return false;
+        // Rendering the next scene can take a moment: pause recording + backgrounds meanwhile
+        if (recorder?.state === 'recording') recorder.pause();
+        this.pauseVideos();
+        await this._ensure(seg);
+        if (signal?.aborted) return false;
+        const idx = seg.kind === 'slide' ? [seg.i] : [seg.from, seg.to];
+        await this._syncVideos(idx, seg.t0, true);
+        this._compose(seg, 0, this._videoFrames(idx));
+        if (recorder?.state === 'paused') recorder.resume();
+        onSegmentStart?.(seg);
 
-      await new Promise((resolve) => {
-        let start = null;
-        const tick = (now) => {
-          if (signal?.aborted) return resolve();
-          if (start === null) start = now;
-          const t = Math.min(now - start, seg.ms);
-          this._compose(seg, t, bgVideo, bgVideo?.videoWidth, bgVideo?.videoHeight);
-          onProgress?.(seg.t0 + t, this.totalMs, seg.kind === 'slide' ? seg.i : seg.to);
-          if (t >= seg.ms) return resolve();
+        await new Promise((resolve) => {
+          let start = null;
+          const tick = (now) => {
+            if (signal?.aborted) return resolve();
+            if (start === null) start = now;
+            const t = Math.min(now - start, seg.ms);
+            this._compose(seg, t, this._videoFrames(idx));
+            onProgress?.(done + t, total, seg.kind === 'slide' ? seg.i : seg.to);
+            if (t >= seg.ms) return resolve();
+            requestAnimationFrame(tick);
+          };
           requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-      });
+        });
+        done += seg.ms;
+      }
+      return !signal?.aborted;
+    } finally {
+      this.pauseVideos();
     }
-    return !signal?.aborted;
   }
 
   /**
@@ -793,8 +901,13 @@ export class PptxVideo {
     await output.start();
     if (audioSource) { await audioSource.add(narration); audioSource.close?.(); }
 
-    let bg = null;
-    if (this.hasBg) { bg = new BgReader(this.s.bg.file, this.W, this.H, this.s.bg.loop); await bg.init(); }
+    const reader = async (src) => {
+      if (!this.readers.has(src)) {
+        const r = new BgReader(src, this.W, this.H, this.loop);
+        this.readers.set(src, r.init().then(() => r));
+      }
+      return this.readers.get(src);
+    };
 
     const fps = this.s.fps;
     const totalFrames = Math.max(1, Math.round(this.totalMs / 1000 * fps));
@@ -802,12 +915,23 @@ export class PptxVideo {
     try {
       for (const seg of this.segs) {
         await this._ensure(seg);
+        const idx = seg.kind === 'slide' ? [seg.i] : [seg.from, seg.to];
         const segEnd = seg.t0 + seg.ms;
         while (n < totalFrames && (n * 1000 / fps) < segEnd) {
           if (signal?.aborted) { await output.cancel(); return null; }
           const tGlobal = n * 1000 / fps;
-          const bgCanvas = bg ? await bg.at(tGlobal / 1000) : null;
-          this._compose(seg, tGlobal - seg.t0, bgCanvas, bgCanvas?.width, bgCanvas?.height);
+          const bgs = {}, perSource = new Map();
+          for (const i of idx) {
+            const cfg = this.bgs[i];
+            if (!cfg) continue;
+            const key = cfg.source, t = this.bgTime(i, tGlobal);
+            const k2 = perSource.get(key);
+            if (k2 && Math.abs(k2.t - t) < 1e-3) { bgs[i] = k2.bg; continue; }   // same clip, same time
+            const c = await (await reader(key)).at(t);
+            bgs[i] = c ? { src: c, w: c.width, h: c.height } : null;
+            perSource.set(key, { t, bg: bgs[i] });
+          }
+          this._compose(seg, tGlobal - seg.t0, bgs);
           await source.add(n / fps, 1 / fps);
           n++;
           if (n % 5 === 0) onProgress?.(n, totalFrames, seg.kind === 'slide' ? seg.i : seg.to);
@@ -816,7 +940,8 @@ export class PptxVideo {
       source.close?.();
       await output.finalize();
     } finally {
-      await bg?.close();
+      for (const p of this.readers.values()) { try { (await p).close(); } catch {} }
+      this.readers.clear();
     }
     onProgress?.(totalFrames, totalFrames, this.r.slideCount - 1);
     return new Blob([output.target.buffer], { type: container === 'mp4' ? 'video/mp4' : 'video/webm' });
