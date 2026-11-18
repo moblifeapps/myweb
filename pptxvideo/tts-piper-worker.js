@@ -14,7 +14,7 @@ const TTS_DIR = HERE + '../tts/';
 importScripts(TTS_DIR + 'ort/ort.wasm.min.js', TTS_DIR + 'piper/piper_phonemize.js');
 
 ort.env.wasm.wasmPaths = TTS_DIR + 'ort/';
-ort.env.wasm.numThreads = self.crossOriginIsolated ? Math.min(4, navigator.hardwareConcurrency || 2) : 1;
+ort.env.wasm.numThreads = self.crossOriginIsolated ? Math.max(1, Math.min(8, (navigator.hardwareConcurrency || 2) - 1)) : 1;
 
 const HF_BASE = 'https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/';
 const CACHE = 'mla-piper-voices-v1';
@@ -50,21 +50,21 @@ async function ensurePhonemizer() {
   phonemizeWasm = w; phonemizeData = d;
 }
 
-/** espeak-ng phonemes → Piper phoneme ids (one emscripten instance per call, like the reference app). */
-async function phonemeIds(text, espeakVoice) {
+/** espeak-ng phonemes → Piper phoneme ids for several sentences in ONE phonemizer run. */
+async function phonemeIdsMany(texts, espeakVoice) {
   await ensurePhonemizer();
   return await new Promise((resolve, reject) => {
-    let out = null;
+    const out = [];
     createPiperPhonemize({
       wasmBinary: phonemizeWasm,
       getPreloadedPackage: () => phonemizeData,
-      print: (line) => { try { out = JSON.parse(line).phoneme_ids; } catch {} },
+      print: (line) => { try { out.push(JSON.parse(line).phoneme_ids); } catch {} },
       printErr: () => {},
       locateFile: (u) => TTS_DIR + 'piper/' + u,
     }).then((m) => {
       try {
-        m.callMain(['-l', espeakVoice, '--input', JSON.stringify([{ text }]), '--espeak_data', '/espeak-ng-data']);
-        if (out) resolve(out); else reject(new Error('Phonemizer returned nothing'));
+        m.callMain(['-l', espeakVoice, '--input', JSON.stringify(texts.map(text => ({ text }))), '--espeak_data', '/espeak-ng-data']);
+        if (out.length === texts.length) resolve(out); else reject(new Error('Phonemizer returned ' + out.length + '/' + texts.length));
       } catch (e) { reject(e); }
     }, reject);
   });
@@ -101,8 +101,11 @@ async function speak(id, text, speed = 1, speaker = 0) {
   const gap = new Float32Array(Math.round(sr * 0.18));     // short pause between sentences
   const chunks = [];
   const list = sentences(text);
+  const allIds = await phonemeIdsMany(list, config.espeak.voice);
   for (let k = 0; k < list.length; k++) {
-    const ids = await phonemeIds(list[k], config.espeak.voice);
+    postMessage({ type: 'progress', id, label: 'sentence', index: k + 1, total: list.length, text: list[k] });
+    const t0 = performance.now();
+    const ids = allIds[k];
     const feeds = {
       input: new ort.Tensor('int64', BigInt64Array.from(ids.map(BigInt)), [1, ids.length]),
       input_lengths: new ort.Tensor('int64', BigInt64Array.from([BigInt(ids.length)]), [1]),
@@ -111,7 +114,8 @@ async function speak(id, text, speed = 1, speaker = 0) {
     if (multi) feeds.sid = new ort.Tensor('int64', BigInt64Array.from([BigInt(speaker || 0)]), [1]);
     const res = await session.run(feeds);
     chunks.push(res.output.data, gap);
-    postMessage({ type: 'progress', id, loaded: k + 1, total: list.length, label: 'speaking' });
+    postMessage({ type: 'progress', id, label: 'sentence-done', index: k + 1, total: list.length,
+      ms: performance.now() - t0, audioSec: res.output.data.length / sr, chars: list[k].length });
   }
   const len = chunks.reduce((s, c) => s + c.length, 0);
   const pcm = new Float32Array(len);

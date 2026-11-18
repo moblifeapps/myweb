@@ -30,16 +30,33 @@ async function load(id, dtype, device) {
   loadedKey = key;
 }
 
+/** Sentence split (Kokoro is limited to ~510 tokens per call; sentences also give us progress). */
+function sentences(text) {
+  const parts = text.replace(/\s+/g, ' ').match(/[^.!?;:…]+[.!?;:…]*["')\]]*\s*/g) || [text];
+  const out = [];
+  for (let p of parts.map(x => x.trim()).filter(Boolean)) {
+    while (p.length > 350) {                       // very long sentence: cut at a comma or space
+      let cut = p.lastIndexOf(', ', 350); if (cut < 120) cut = p.lastIndexOf(' ', 350); if (cut < 60) cut = 350;
+      out.push(p.slice(0, cut + 1).trim()); p = p.slice(cut + 1).trim();
+    }
+    if (p) out.push(p);
+  }
+  return out;
+}
+
 async function speak(id, text, voice, speed) {
   if (!tts) throw new Error('Kokoro is not loaded');
+  const list = sentences(text);
   const chunks = [];
-  let sr = 24000, n = 0;
-  // stream() splits the text into sentences (Kokoro has a ~510 token limit per call)
-  for await (const part of tts.stream(text, { voice, speed })) {
-    const a = part.audio;
+  let sr = 24000;
+  for (let k = 0; k < list.length; k++) {
+    postMessage({ type: 'progress', id, label: 'sentence', index: k + 1, total: list.length, text: list[k] });
+    const t0 = performance.now();
+    const a = await tts.generate(list[k], { voice, speed });
     sr = a.sampling_rate || sr;
-    chunks.push(a.audio);
-    postMessage({ type: 'progress', id, loaded: ++n, total: 0, label: 'speaking' });
+    chunks.push(a.audio, new Float32Array(Math.round(sr * 0.12)));
+    postMessage({ type: 'progress', id, label: 'sentence-done', index: k + 1, total: list.length,
+      ms: performance.now() - t0, audioSec: a.audio.length / sr, chars: list[k].length });
   }
   const len = chunks.reduce((s, c) => s + c.length, 0);
   const pcm = new Float32Array(len);

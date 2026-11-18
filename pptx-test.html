@@ -5,6 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PPTX to Video – Test Page | MLApplications</title>
 <meta name="robots" content="noindex, nofollow">
+<script>
+  // Multi-threaded WebAssembly needs a "cross-origin isolated" page. pptx-coi-sw.js adds the two headers
+  // for pages under /pptx… only (one automatic reload the first time).
+  (function () {
+    if (self.crossOriginIsolated || !('serviceWorker' in navigator) || !window.isSecureContext) return;
+    navigator.serviceWorker.register('pptx-coi-sw.js', { scope: './pptx' }).then(function (reg) {
+      if (navigator.serviceWorker.controller) return;                 // controlled but still not isolated: give up quietly
+      if (sessionStorage.getItem('pptxCoiReload')) return;
+      sessionStorage.setItem('pptxCoiReload', '1');
+      var go = function () { location.reload(); };
+      if (reg.active) go(); else navigator.serviceWorker.addEventListener('controllerchange', go);
+    }).catch(function () {});
+  })();
+</script>
 <style>
   :root {
     --bg: #f4f5f7; --panel: #ffffff; --border: #dfe2e7; --text: #1d2330; --muted: #697184;
@@ -178,7 +192,7 @@
         <label class="field">Engine
           <select id="ttsEngine">
             <option value="piper">Piper – 30+ languages incl. Greek (20–75 MB per voice)</option>
-            <option value="kokoro">Kokoro – English only, most natural</option>
+            <option value="kokoro">Kokoro – English only, most natural, slow on CPU</option>
           </select>
         </label>
         <label class="field" id="langField">Language <select id="ttsLang"></select></label>
@@ -186,8 +200,9 @@
         <label class="field" id="speakerField">Speaker <select id="ttsSpeaker"></select></label>
         <label class="field" id="kokoroQField">Model
           <select id="kokoroQ">
-            <option value="q8|wasm">Standard (≈90 MB, CPU)</option>
-            <option value="fp32|webgpu">High quality (≈330 MB, GPU)</option>
+            <option value="q8|wasm">Compact (≈90 MB, CPU, 1 thread speed)</option>
+            <option value="fp32|wasm">Full (≈330 MB, CPU, uses all threads)</option>
+            <option value="fp32|webgpu">Full on GPU (≈330 MB, WebGPU)</option>
           </select>
         </label>
         <label class="field">Speed <span><input type="range" id="ttsSpeed" min="0.7" max="1.3" step="0.05" value="1"> <span id="ttsSpeedVal">1.00×</span></span></label>
@@ -939,17 +954,51 @@
   }
 
   // ── generate
-  async function generateOne(i, quiet = false) {
+  // Speed statistics across all generated sentences (for "≈ x left" estimates)
+  const speed = { ms: 0, chars: 0, audio: 0 };
+  const short = (t, n = 70) => t.length > n ? t.slice(0, n - 1) + '…' : t;
+
+  /**
+   * Shows live progress: which sentence, its text, elapsed time, real-time factor and time left.
+   * `charsAfter` = characters still waiting in later slides (Generate all).
+   */
+  function progressReporter(i, text, charsAfter = 0) {
+    const row = rowEl(i);
+    const t0 = performance.now();
+    let cur = null, doneChars = 0;
+    const paint = () => {
+      const el = (performance.now() - t0) / 1000;
+      const rtf = speed.ms ? speed.audio / (speed.ms / 1000) : 0;
+      const msPerChar = speed.chars ? speed.ms / speed.chars : 0;
+      const left = msPerChar ? ((text.length - doneChars) + charsAfter) * msPerChar / 1000 : 0;
+      if (row && cur) row.querySelector('.nstat').textContent = `Generating sentence ${cur.index}/${cur.total} · ${fmtTime(el)}`;
+      setTtsStatus(
+        (cur ? `Slide ${i + 1}, sentence ${cur.index}/${cur.total}: “${short(cur.text)}”` : `Slide ${i + 1}: preparing…`) +
+        (rtf ? ` · speed ${rtf.toFixed(2)}× real time` : '') +
+        (left ? ` · about ${fmtTime(left)} left` : '') +
+        ` · ${self.crossOriginIsolated ? 'multi-threaded' : 'single thread'}`);
+    };
+    const timer = setInterval(paint, 500);
+    return {
+      onProgress: (p) => {
+        if (p.label === 'sentence') cur = p;
+        else if (p.label === 'sentence-done') { speed.ms += p.ms; speed.chars += p.chars; speed.audio += p.audioSec; doneChars += p.chars; }
+        paint();
+      },
+      done: () => clearInterval(timer),
+    };
+  }
+
+  async function generateOne(i, quiet = false, charsAfter = 0) {
     const n = narr[i];
     const text = cleanForSpeech(n.text);
     if (!text) return;
     const row = rowEl(i);
     row?.classList.add('busy');
+    const rep = progressReporter(i, text, charsAfter);
     try {
-      row.querySelector('.nstat').textContent = 'Generating…';
-      const { buf, label } = await speakText(text, (p) => {
-        if (p.label === 'speaking' && row) row.querySelector('.nstat').textContent = `Generating… sentence ${p.loaded}${p.total ? '/' + p.total : ''}`;
-      });
+      row.querySelector('.nstat').textContent = 'Preparing…';
+      const { buf, label } = await speakText(text, rep.onProgress);
       Object.assign(n, { buffer: buf, kind: 'tts', label, spokenText: text });
       if (!quiet) playBuffer(buf);
     } catch (err) {
@@ -957,6 +1006,7 @@
       setTtsStatus(`Slide ${i + 1}: ${err?.message || err}`, true);
       throw err;
     } finally {
+      rep.done();
       row?.classList.remove('busy');
       updateRow(i);
     }
@@ -981,7 +1031,8 @@
         if (!cleanForSpeech(n.text) || n.kind === 'rec') continue;          // keep the user's own recordings
         if (n.kind === 'tts' && n.spokenText === cleanForSpeech(n.text) && n.label === (await ensureVoice()).label) continue;
         rowEl(i)?.scrollIntoView({ block: 'nearest' });
-        await generateOne(i, true);
+        const after = narr.slice(i + 1).filter(x => x.kind !== 'rec').reduce((s, x) => s + cleanForSpeech(x.text).length, 0);
+        await generateOne(i, true, after);
         done++;
       }
       setTtsStatus(genAbort ? `Stopped after ${done} slide(s).` : `Done – generated ${done} slide(s).`);
@@ -1048,6 +1099,7 @@
     if (on && !$('ttsLang').options.length) fillLanguages().then(fillVoices).catch(err => setTtsStatus(String(err), true));
   }
   $('narrChk').addEventListener('change', updateNarrUI);
+  $('kokoroQ').value = (self.crossOriginIsolated && (navigator.hardwareConcurrency || 2) >= 4) ? 'fp32|wasm' : 'q8|wasm';
 
   function narrationSettings() {
     if (!$('narrChk').checked || !narr.some(n => n.buffer)) return null;
