@@ -50,7 +50,7 @@ async function ensurePhonemizer() {
   phonemizeWasm = w; phonemizeData = d;
 }
 
-/** espeak-ng phonemes → Piper phoneme ids for several sentences in ONE phonemizer run. */
+/** espeak-ng phonemes for several sentences in ONE phonemizer run → [{ phonemes:[…], phoneme_ids:[…] }]. */
 async function phonemeIdsMany(texts, espeakVoice) {
   await ensurePhonemizer();
   return await new Promise((resolve, reject) => {
@@ -58,7 +58,7 @@ async function phonemeIdsMany(texts, espeakVoice) {
     createPiperPhonemize({
       wasmBinary: phonemizeWasm,
       getPreloadedPackage: () => phonemizeData,
-      print: (line) => { try { out.push(JSON.parse(line).phoneme_ids); } catch {} },
+      print: (line) => { try { out.push(JSON.parse(line)); } catch {} },
       printErr: () => {},
       locateFile: (u) => TTS_DIR + 'piper/' + u,
     }).then((m) => {
@@ -86,6 +86,25 @@ async function load(id, voice, base) {
   await ensurePhonemizer();
 }
 
+/**
+ * Phonemes → ids with the VOICE's own table (config.phoneme_id_map), exactly like Piper:
+ * "^", then id + "_" for every phoneme, then "$". Phonemes the voice does not know are skipped
+ * (e.g. the combining cedilla of Greek "ç" for voices with the older 130-symbol table).
+ * Without a table, the phonemizer's ids are used, minus any beyond the model's symbol count.
+ */
+function voiceIds(ph) {
+  const map = config.phoneme_id_map;
+  if (!map) {
+    const n = config.num_symbols || 256;
+    return ph.phoneme_ids.filter(i => i < n);
+  }
+  const pad = map['_'] || [0];
+  const ids = [...(map['^'] || [1])];
+  for (const p of ph.phonemes || []) if (map[p]) ids.push(...map[p], ...pad);
+  ids.push(...(map['$'] || [2]));
+  return ids;
+}
+
 /** Split long notes into sentences so each inference stays small. */
 function sentences(text) {
   const parts = text.replace(/\s+/g, ' ').match(/[^.!?;:…。]+[.!?;:…。]*\s*/g) || [text];
@@ -107,7 +126,7 @@ async function speak(id, text, speed = 1, speaker = 0) {
     if (cancelled.has(id)) { cancelled.delete(id); throw new Error('Cancelled'); }
     postMessage({ type: 'progress', id, label: 'sentence', index: k + 1, total: list.length, text: list[k] });
     const t0 = performance.now();
-    const ids = allIds[k];
+    const ids = voiceIds(allIds[k]);
     const feeds = {
       input: new ort.Tensor('int64', BigInt64Array.from(ids.map(BigInt)), [1, ids.length]),
       input_lengths: new ort.Tensor('int64', BigInt64Array.from([BigInt(ids.length)]), [1]),

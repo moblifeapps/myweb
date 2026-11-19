@@ -183,17 +183,193 @@
   .nhead { min-width: 0; }
 
   /* transition pills between thumbnails */
-  .tpill { display: flex; align-items: center; justify-content: center; gap: 5px; width: 100%; min-height: 26px;
-    padding: 3px 6px; margin: -2px 0; border-radius: 999px; font-size: 11.5px; font-weight: 600; color: var(--muted);
-    border: 1px dashed var(--btn-border); background: var(--panel-2); box-shadow: none; }
-  .tpill .ic { width: 14px; height: 14px; }
-  .tpill.custom { color: var(--accent); border-style: solid; border-color: var(--accent); background: var(--accent-soft); }
+  .tlink { position: relative; display: flex; justify-content: center; padding: 8px 0; flex: none; }
+  .tlink::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; border-left: 2px solid var(--btn-border); transform: translateX(-1px); }
+  .tpill { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 6px; width: 92%; min-height: 34px;
+    padding: 5px 8px; border-radius: 999px; font-size: 12.5px; font-weight: 600; color: var(--muted);
+    border: 1px dashed var(--btn-border); background: var(--panel-2); box-shadow: 0 1px 2px var(--shadow); }
+  .tpill .ic { width: 16px; height: 16px; flex: none; }
+  .tpill:hover { color: var(--accent); border-color: var(--accent); }
+  .tpill.custom { color: var(--accent); border-style: solid; border-color: var(--accent); background: linear-gradient(var(--accent-soft), var(--accent-soft)), var(--panel); }
   .tpill.active { color: #fff; border-style: solid; border-color: var(--accent-dark);
     background: linear-gradient(180deg, var(--accent-hi), var(--accent)); }
   .tpill span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
 
+  /* headings with an icon tile (accent colours follow the theme) */
+  .ttl { display: flex; align-items: center; gap: 10px; }
+  .panel h2.ttl { font-size: 19px; margin-bottom: 14px; }
+  .panel h3.ttl { font-size: 16px; margin: 20px 0 10px; }
+  .card-h b.ttl { font-size: 16.5px; white-space: nowrap; }
+  /* card headers stay on one line: the hint and the voice button shrink first */
+  #narrCard > .card-h, #bgCard > .card-h, #avatarCard > .card-h { flex-wrap: nowrap; }
+  .card-h > button { white-space: nowrap; flex: none; }
+  .card-h > button.voicechip { flex: 0 1 auto; min-width: 0; }
+  #narrHint { flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #narrCard > .card-h .spacer { flex: 1 1 0; min-width: 0; }
+  #narrCard > .card-h { gap: 8px; }
+  .card-h > button.voicechip { min-width: 150px; }
+  .ntitle { gap: 7px; } .ntitle b { font-size: 15.5px; }
+  .tic { width: 32px; height: 32px; border-radius: 9px; flex: none; display: inline-flex; align-items: center; justify-content: center;
+    color: var(--accent); background: linear-gradient(180deg, var(--accent-soft), transparent 140%);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 28%, transparent), inset 0 1px 0 var(--gloss); }
+  .tic .ic { width: 18px; height: 18px; }
+  .tic.sm { width: 28px; height: 28px; border-radius: 8px; } .tic.sm .ic { width: 16px; height: 16px; }
+  .tic.xs { width: 24px; height: 24px; border-radius: 7px; } .tic.xs .ic { width: 14px; height: 14px; }
+
+  /* section 3: each group is one full-width row of equal boxes, centred */
+  .s3row { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 10px; }
+  .s3row > label.field { align-items: center; justify-content: space-between; text-align: center; gap: 8px; padding: 10px 10px 12px;
+    border-radius: 12px; background: var(--panel-2); border: 1px solid var(--border); font-size: 13.5px; line-height: 1.3;
+    min-height: 0; }
+  .s3row > label.field > :is(input, select, .s3check) { width: 100%; min-width: 0; box-sizing: border-box; }
+  .s3row > label.field input:not([type=checkbox]):not([type=range]) { text-align: center; font-size: 15px; }
+  .s3row > label.field select { text-align: center; text-align-last: center; font-size: 14.5px; }
+  .s3row > label.field input[type=range] { padding: 0; border: 0; background: none; }
+  .s3check { display: flex; justify-content: center; align-items: center; min-height: 36px; }
+  .s3check input[type=checkbox] { width: 22px; height: 22px; }
+  .s3hint { text-align: center; margin: 8px 0 0; }
+  @media (max-width: 1100px) { .s3row { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); } }
+  .s3actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin: 22px 0 6px; }
+
+  /* big glossy buttons */
+  button.gloss { position: relative; overflow: hidden; min-height: 50px; padding: 12px 26px; border-radius: 14px; font-size: 16px; font-weight: 650;
+    color: #fff; border: 1px solid rgba(0,0,0,.25); text-shadow: 0 1px 1px rgba(0,0,0,.30);
+    background: linear-gradient(180deg, var(--g1), var(--g2) 50%, var(--g3) 51%, var(--g4));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.55), inset 0 -2px 6px rgba(0,0,0,.18), 0 6px 16px var(--gsh); }
+  button.gloss::after { content: ''; position: absolute; left: 6%; right: 6%; top: 2px; height: 46%; border-radius: 12px 12px 40% 40% / 12px 12px 14px 14px;
+    background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.08)); pointer-events: none; }
+  button.gloss .ic { width: 20px; height: 20px; position: relative; z-index: 1; }
+  button.gloss:hover:not(:disabled) { filter: brightness(1.08) saturate(1.05); box-shadow: inset 0 1px 0 rgba(255,255,255,.6), inset 0 -2px 6px rgba(0,0,0,.18), 0 8px 22px var(--gsh); }
+  button.gloss:active:not(:disabled) { transform: translateY(1px); filter: brightness(.97); }
+  button.gloss:disabled { opacity: .5; filter: grayscale(.35); }
+  .g-blue { --g1: #7fa9ff; --g2: #2f6ff0; --g3: #1d55d8; --g4: #1a3fa8; --gsh: rgba(29,85,216,.42); }
+  .g-teal { --g1: #6ee7d8; --g2: #14b8a6; --g3: #0d9488; --g4: #0f766e; --gsh: rgba(13,148,136,.38); }
+  .g-sky  { --g1: #a9d4ff; --g2: #5aa9f8; --g3: #2f86ea; --g4: #1f68cc; --gsh: rgba(47,134,234,.38); }
+  .g-red  { --g1: #ff9a9a; --g2: #ef4444; --g3: #dc2626; --g4: #b91c1c; --gsh: rgba(220,38,38,.38); }
+  button.gloss.g-white { --gsh: rgba(10,30,90,.40); color: #1e3a8a; text-shadow: none; border-color: rgba(255,255,255,.75);
+    background: linear-gradient(180deg, #ffffff, #eef4ff 50%, #dfe9ff 51%, #cfdcfb); }
+  button.gloss.g-white .ic { color: #2563eb; }
+
+  /* quick video row */
+  .quickrow { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 18px 16px; border-radius: var(--radius);
+    position: relative; overflow: hidden; margin-bottom: 16px;
+    background: linear-gradient(180deg, #4f8ff7 0%, #2f6ff0 50%, #1d55d8 51%, #1a3fa8 100%);
+    border: 1px solid rgba(10,30,90,.35);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.45), inset 0 -3px 10px rgba(0,0,0,.18), 0 8px 22px rgba(29,85,216,.30); }
+  .quickrow::before { content: ''; position: absolute; left: 1%; right: 1%; top: 2px; height: 48%; border-radius: 12px 12px 50% 50% / 12px 12px 18px 18px;
+    background: linear-gradient(180deg, rgba(255,255,255,.34), rgba(255,255,255,.05)); pointer-events: none; }
+  .quickrow > * { position: relative; }
+  .quickrow button.gloss { font-size: 17px; padding: 13px 30px; }
+  .quicksub { color: rgba(255,255,255,.92); font-size: 13.5px; text-align: center; }
+
+  /* narration & background as one compact row; the full UI opens in a pop-up */
+  .narrrow { display: flex; align-items: center; gap: 12px; width: 100%; margin-top: 12px; padding: 12px 14px; min-height: 58px;
+    border-radius: var(--radius); justify-content: flex-start; text-align: left; font-weight: 500; }
+  .nr-main { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1 1 auto; }
+  .nr-main b { font-size: 16.5px; }
+  .nr-pill { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--track); color: var(--muted); }
+  .nr-pill.on { background: var(--accent-soft); color: var(--accent); }
+  .nr-voice { color: var(--muted); font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  .nr-info { color: var(--muted); font-size: 13px; white-space: nowrap; }
+  .nr-open { display: inline-flex; align-items: center; gap: 4px; color: var(--accent); font-weight: 650; font-size: 14px; white-space: nowrap; }
+  dialog.dlg.xwide { width: min(980px, 96vw); }
+  #narrDlg .dlg-b > #narrCard { margin: 0; border: none; box-shadow: none; padding: 0; background: none; }
+  #narrDlg #narrCard > .card-h > b.ttl { display: none; }   /* the pop-up's own title already says Narration */
+  .nd-nav { display: inline-flex; align-items: center; gap: 6px; margin-left: 14px; font-size: 13.5px; color: var(--muted); }
+  .bgcur-text em { font-style: normal; font-size: 12.5px; color: var(--muted); }
+  .bgdlg-top { display: flex; align-items: flex-end; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; padding: 12px;
+    border-radius: 10px; background: var(--panel-2); }
+  .bgdlg-top #bgName { flex: 1 1 100%; }
+  .bgdlg-top #bgOpts { flex: 1 1 auto; }
+  #bgDlg .vcard.selected { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+  /* background pop-up: categories, search, suggestions */
+  .bgfilter { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip { min-height: 0; padding: 5px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; box-shadow: none; }
+  .chip.on { color: #fff; border-color: var(--accent-dark); background: linear-gradient(180deg, var(--accent-hi), var(--accent)); }
+  .chip .n { opacity: .7; font-weight: 500; margin-left: 4px; }
+  #bgSearch { min-width: 260px; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--btn-border); background: var(--input-bg); color: var(--text); }
+  .vcard .mbadge { position: absolute; left: 6px; right: 6px; bottom: 6px; display: none; padding: 3px 8px; border-radius: 6px; font-size: 11.5px;
+    background: rgba(37,99,235,.92); color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.3; }
+  .gallery.show-match .vcard .mbadge.has { display: block; }
+  .gallery.show-match .vcard .badge.res, .gallery.show-match .vcard .badge.dur { display: none; }
+  .vcard .vtags { display: block; font-size: 11.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+
+  /* quick video */
+  .qsteps { display: flex; gap: 6px; padding: 10px 16px 0; flex-wrap: wrap; }
+  .qsteps span { display: flex; align-items: center; gap: 7px; padding: 6px 12px 6px 6px; border-radius: 999px; font-size: 13px;
+    color: var(--muted); background: var(--panel-2); font-weight: 600; }
+  .qsteps i { font-style: normal; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background: var(--btn-border); color: var(--panel); font-size: 12px; }
+  .qsteps span.on { color: var(--accent); background: var(--accent-soft); }
+  .qsteps span.on i, .qsteps span.done i { background: var(--accent); color: #fff; }
+  .qstep { display: none; } .qstep.on { display: block; }
+  .qlead { margin: 0 0 12px; color: var(--muted); font-size: 14px; }
+  .qgallery { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); margin: 0; }
+  .qgallery .vcard .order { position: absolute; top: 6px; left: 6px; min-width: 24px; height: 24px; padding: 0 6px; border-radius: 12px;
+    background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; display: none; align-items: center; justify-content: center; }
+  .qgallery .vcard.selected .order { display: flex; }
+  .qfile { display: flex; align-items: center; gap: 14px; padding: 22px; border: 2px dashed var(--btn-border); border-radius: 12px; }
+  .qfile.drag { border-color: var(--accent); background: var(--accent-soft); }
+  .qfile > .ic { width: 36px; height: 36px; color: var(--accent); flex: none; }
+  .qfile > div { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
+  .qchoice { display: flex; gap: 22px; flex-wrap: wrap; margin-bottom: 12px; }
+  #qVoiceHost .voicegrid { margin-top: 4px; }
+
+  /* big progress overlay */
+  .busy-ov { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center;
+    background: rgba(10,14,22,.62); backdrop-filter: blur(3px); }
+  .busy-ov.on { display: flex; }
+  .bo-box { width: min(460px, 90vw); background: var(--panel); color: var(--text); border-radius: 18px; padding: 28px 28px 22px;
+    text-align: center; box-shadow: 0 24px 70px rgba(0,0,0,.4); }
+  .bo-pct { font-size: 56px; font-weight: 800; letter-spacing: -1px; line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .bo-phase { margin-top: 10px; font-size: 16px; font-weight: 600; }
+  .bo-bar { height: 8px; border-radius: 4px; background: var(--track); margin: 16px 0 10px; overflow: hidden; }
+  .bo-bar div { height: 100%; width: 0; background: linear-gradient(90deg, var(--accent-hi), var(--accent)); transition: width .25s; }
+  .bo-detail { font-size: 12.5px; color: var(--muted); min-height: 36px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .bo-btns { display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
+  .busy-ov.error .bo-pct { color: #dc2626; font-size: 30px; }
+
+  /* pop-up dialogs */
+  dialog.dlg { border: none; padding: 0; border-radius: 14px; width: min(760px, 94vw); max-height: 88vh; color: var(--text);
+    background: var(--panel); box-shadow: 0 20px 60px rgba(0,0,0,.35); overflow: hidden; }
+  dialog.dlg[open] { display: flex; flex-direction: column; }
+  dialog.dlg.wide { width: min(1100px, 96vw); }
+  dialog.dlg::backdrop { background: rgba(10,14,22,.55); backdrop-filter: blur(2px); }
+  .dlg-h { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+  .dlg-h b { font-size: 16px; }
+  .dlg-h > [data-close] { margin-left: auto; }
+  .dlg-f { justify-content: flex-end; }
+  .dlg-b { padding: 14px 16px; overflow: auto; }
+  .dlg-f { display: flex; gap: 10px; padding: 12px 16px; border-top: 1px solid var(--border); }
+  .voicegrid { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px 14px; align-items: end; }
+  .voicegrid label.field select { width: 100%; }
+  #bgDlg .gallery { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); margin: 0; }
+
+  /* compact chips that open the dialogs */
+  .voicechip { max-width: 360px; font-weight: 500; }
+  .voicechip #voiceSummary { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .voicechip .caret { color: var(--muted); font-size: 11px; }
+  .bgcur { display: flex; align-items: center; gap: 10px; padding: 6px; width: 100%; text-align: left; justify-content: flex-start;
+    min-height: 0; font-weight: 500; }
+  .bgcur-thumb { width: 112px; aspect-ratio: 16/9; border-radius: 6px; background: #1d2330 center/cover no-repeat; flex: none;
+    display: flex; align-items: center; justify-content: center; color: #9aa3b5; font-size: 11px; }
+  .bgcur-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .bgcur-text b { font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bgcur-text span { font-size: 12.5px; color: var(--accent); }
+
+  /* "preparing preview" indicator in the middle of the slide */
+  .stage-busy { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: none; align-items: center; gap: 10px;
+    padding: 10px 16px; border-radius: 999px; background: rgba(15,20,30,.78); color: #fff; font-size: 13.5px; z-index: 3;
+    box-shadow: 0 6px 20px rgba(0,0,0,.35); pointer-events: none; }
+  .stage-busy.on { display: flex; }
+  .spin { width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid rgba(255,255,255,.3); border-top-color: #fff;
+    animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
   /* AI narration */
-  #aiBox { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 12px; }
+  #aiBox .form-row { margin-top: 0 !important; }
   #aiBox summary { cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px; list-style: none; }
   #aiBox summary::-webkit-details-marker { display: none; }
   #aiBox summary .ic { width: 18px; height: 18px; color: var(--accent); }
@@ -259,8 +435,10 @@
     padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px;
     white-space: pre-wrap; overflow-wrap: break-word; word-break: normal; tab-size: 4;
   }
-  .nedit .nhl { position: absolute; inset: 0; color: transparent; background: var(--input-bg); overflow: hidden; pointer-events: none; }
-  .nedit textarea { position: relative; display: block; width: 100%; min-height: 64px; resize: none; overflow: hidden;
+  .nedit .nhl { position: absolute; inset: 0; color: transparent; background: var(--input-bg); overflow: hidden; pointer-events: none;
+    scrollbar-gutter: stable; }
+  .nedit textarea { position: relative; display: block; width: 100%; min-height: 64px; resize: none; overflow-y: auto;
+    scrollbar-gutter: stable;
     background: transparent; color: var(--text); }
   .nedit textarea:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
   .nedit textarea[readonly] { cursor: default; }
@@ -274,16 +452,16 @@
 
   @media (max-width: 800px) {
     .viewer-grid { grid-template-columns: 1fr; }
-    #thumbs { flex-direction: row; max-height: none; overflow-x: auto; }
+    #thumbs { flex-direction: row; max-height: none; overflow-x: auto; } .tlink { padding: 0 8px; align-items: center; } .tlink::before { left: 0; right: 0; top: 50%; bottom: auto; border-left: none; border-top: 2px solid var(--btn-border); transform: translateY(-1px); } .tpill { width: auto; white-space: nowrap; }
     .thumb { min-width: 120px; }
     .video-grid { grid-template-columns: 1fr; }
   }
 
   /* ── Slide editor: thumbnails | live canvas + narration | background + avatar ── */
   #editor, #videoPanel { display: none; }
-  .editor { display: grid; grid-template-columns: 150px minmax(0, 1fr) 330px; gap: 16px; align-items: stretch; margin-top: 10px; }
+  .editor { display: grid; grid-template-columns: 150px minmax(0,1fr) 350px; gap: 16px; align-items: stretch; margin-top: 10px; }
   .thumbcol { position: relative; min-height: 300px; }
-  #thumbs { position: absolute; inset: 0; overflow-y: auto; max-height: none; padding: 2px 4px 2px 2px; gap: 6px; }
+  #thumbs { position: absolute; inset: 0; overflow-y: auto; max-height: none; padding: 2px 4px 2px 2px; gap: 0; }
   .thumb .badges { position: absolute; right: 4px; bottom: 4px; display: flex; gap: 3px; }
   .thumb .badges i { font-style: normal; font-size: 10px; line-height: 1; padding: 3px 4px; border-radius: 3px; color: #fff; background: rgba(0,0,0,.65); }
   .thumb .badges i.on { background: rgba(37,99,235,.9); }
@@ -300,8 +478,8 @@
   .card-body { margin-top: 12px; }
   .muted { color: var(--muted); font-size: 13px; }
 
-  .side { display: flex; flex-direction: column; gap: 12px; min-height: 760px; }
-  .side-card { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; gap: 10px;
+  .side { display: flex; flex-direction: column; gap: 12px; }
+  .side-card { flex: none; min-height: 0; display: flex; flex-direction: column; gap: 10px;
     border: 1px solid var(--border); border-radius: 12px; background: var(--panel-2); padding: 12px; }
   .side-card .gallery { flex: 1 1 0; min-height: 150px; overflow-y: auto; margin: 0; padding: 2px;
     grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: max-content; gap: 8px; align-content: start; }
@@ -311,6 +489,7 @@
   .side-card label.field { flex: 1 1 120px; }
   #bgName { font-size: 12px; }
   .soon { font-size: 11px; padding: 3px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 650; }
+  #avatarCard { flex: 1 1 auto; min-height: 280px; }
   .avatar-empty { flex: 1; border: 2px dashed var(--border); border-radius: 10px; display: flex; flex-direction: column;
     align-items: center; justify-content: center; text-align: center; gap: 8px; padding: 14px; color: var(--muted); font-size: 13px; }
   .avatar-empty .ic { width: 40px; height: 40px; stroke-width: 1.5; opacity: .7; }
@@ -335,15 +514,204 @@
   @media (max-width: 1150px) {
     .editor { grid-template-columns: 130px minmax(0, 1fr); }
     .side { grid-column: 1 / -1; min-height: 0; flex-direction: row; }
-    .side-card { min-height: 380px; }
+    .side-card { min-height: 0; }
   }
   @media (max-width: 760px) {
     .editor { grid-template-columns: 1fr; }
     .thumbcol { min-height: 0; }
-    #thumbs { position: static; flex-direction: row; overflow-x: auto; }
+    #thumbs { position: static; flex-direction: row; overflow-x: auto; } .tlink { padding: 0 8px; align-items: center; } .tlink::before { left: 0; right: 0; top: 50%; bottom: auto; border-left: none; border-top: 2px solid var(--btn-border); transform: translateY(-1px); } .tpill { width: auto; white-space: nowrap; }
     .thumb { min-width: 110px; }
     .side { flex-direction: column; }
   }
+
+  /* ═════════════ WinUI 3 look (Fluent design tokens, light / dark) ═════════════ */
+  :root {
+    --mica: #f3f3f3; --layer: #f9f9f9; --card: #ffffff; --card-stroke: #e5e5e5;
+    --ctl: #fefefe; --ctl-hover: #f6f6f6; --ctl-press: #f0f0f0; --ctl-stroke: #e5e5e5; --ctl-stroke-bottom: #cccccc;
+    --text: #1a1a1a; --text2: #5d5d5d; --text3: #8a8a8a; --strong-stroke: #868686;
+    --accent: #005fb8; --accent-hover: #1975c5; --accent-press: #3183ca; --accent-fg: #ffffff; --accent-soft: rgba(0,95,184,.10);
+    --subtle-hover: rgba(0,0,0,.0373); --subtle-press: rgba(0,0,0,.0241); --smoke: rgba(0,0,0,.30);
+    --bg: var(--mica); --panel: var(--card); --panel-2: #f6f6f6; --border: var(--card-stroke); --muted: var(--text2);
+    --accent-dark: var(--accent-press); --accent-hi: var(--accent-hover); --input-bg: #ffffff; --track: rgba(0,0,0,.09);
+    --btn-top: var(--ctl); --btn-bot: var(--ctl); --btn-border: var(--ctl-stroke); --gloss: transparent; --shadow: rgba(0,0,0,.06);
+    --danger: #c42b1c; --danger-dark: #a52518; --danger-hi: #d13f30; --ok: #0f7b0f; --warn: #9d5d00;
+    --radius: 8px; --frame: rgba(0,0,0,.18);
+  }
+  :root[data-theme="dark"] {
+    --mica: #202020; --layer: #272727; --card: #2b2b2b; --card-stroke: #1d1d1d;
+    --ctl: #2d2d2d; --ctl-hover: #323232; --ctl-press: #272727; --ctl-stroke: #353535; --ctl-stroke-bottom: #2f2f2f;
+    --text: #ffffff; --text2: #c9c9c9; --text3: #9d9d9d; --strong-stroke: #9a9a9a;
+    --accent: #60cdff; --accent-hover: #5ab9e6; --accent-press: #50a5cc; --accent-fg: #000000; --accent-soft: rgba(96,205,255,.14);
+    --subtle-hover: rgba(255,255,255,.0605); --subtle-press: rgba(255,255,255,.0419); --smoke: rgba(0,0,0,.45);
+    --panel-2: #323232; --input-bg: #2d2d2d; --track: rgba(255,255,255,.12); --shadow: rgba(0,0,0,.30);
+    --danger: #ff99a4; --danger-dark: #e8818c; --danger-hi: #ffb0b8; --ok: #6ccb5f; --warn: #fce100; --frame: rgba(255,255,255,.22);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+      --mica: #202020; --layer: #272727; --card: #2b2b2b; --card-stroke: #1d1d1d;
+      --ctl: #2d2d2d; --ctl-hover: #323232; --ctl-press: #272727; --ctl-stroke: #353535; --ctl-stroke-bottom: #2f2f2f;
+      --text: #ffffff; --text2: #c9c9c9; --text3: #9d9d9d; --strong-stroke: #9a9a9a;
+      --accent: #60cdff; --accent-hover: #5ab9e6; --accent-press: #50a5cc; --accent-fg: #000000; --accent-soft: rgba(96,205,255,.14);
+      --subtle-hover: rgba(255,255,255,.0605); --subtle-press: rgba(255,255,255,.0419); --smoke: rgba(0,0,0,.45);
+      --panel-2: #323232; --input-bg: #2d2d2d; --track: rgba(255,255,255,.12); --shadow: rgba(0,0,0,.30);
+      --danger: #ff99a4; --danger-dark: #e8818c; --danger-hi: #ffb0b8; --ok: #6ccb5f; --warn: #fce100; --frame: rgba(255,255,255,.22);
+    }
+  }
+  body { font-family: "Segoe UI Variable Text", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-size: 14px; background: var(--mica); color: var(--text); }
+  .ic { stroke-width: 1.6; }
+
+  /* app shell: title bar + NavigationView + content layer */
+  .app { display: grid; grid-template-columns: auto 1fr; grid-template-rows: 48px 1fr; height: 100vh; }
+  .titlebar { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; padding: 0 12px 0 4px; }
+  .titlebar .appicon { width: 20px; height: 20px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #2b88d8, #005fb8); color: #fff; }
+  .titlebar .appicon .ic { width: 13px; height: 13px; stroke-width: 2.2; }
+  .titlebar .apptitle { font-size: 12px; }
+  .titlebar .apptitle span { color: var(--text3); margin-left: 6px; }
+  .navbtn { width: 40px; min-height: 36px; padding: 0; border: 0; background: transparent; border-radius: 4px; }
+  .navbtn:hover:not(:disabled) { background: var(--subtle-hover); }
+  .navpane { width: 280px; display: flex; flex-direction: column; gap: 2px; padding: 4px 4px 8px; overflow: hidden auto; transition: width .18s ease; }
+  .app.compact .navpane { width: 48px; }
+  .navitem { position: relative; display: flex; align-items: center; gap: 14px; height: 36px; padding: 0 12px; border-radius: 4px;
+    color: var(--text); text-decoration: none; font-size: 14px; white-space: nowrap; flex: none; }
+  .navitem .ic { width: 16px; height: 16px; flex: none; }
+  .navitem:hover { background: var(--subtle-hover); }
+  .navitem:active { background: var(--subtle-press); color: var(--text2); }
+  .navitem.on { background: var(--subtle-hover); }
+  .navitem.on::before { content: ''; position: absolute; left: 0; top: 50%; width: 3px; height: 16px; margin-top: -8px; border-radius: 2px; background: var(--accent); }
+  .app.compact .navitem span { opacity: 0; pointer-events: none; }
+  .navsep { height: 1px; background: var(--card-stroke); margin: 6px 8px; flex: none; }
+  .navspace { flex: 1; }
+  .content { background: var(--layer); border-top-left-radius: 8px; border-left: 1px solid var(--card-stroke); border-top: 1px solid var(--card-stroke);
+    overflow: auto; min-width: 0; }
+  .page { display: none; }
+  .page.on { display: block; }
+  .pagehead { max-width: 1280px; margin: 0 auto; padding: 28px 24px 4px; }
+  .pagehead h1 { margin: 0; font-size: 28px; line-height: 36px; font-weight: 600; font-family: "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif; }
+  .pagehead p { margin: 6px 0 0; color: var(--text2); }
+  main, .pagebody { max-width: 1280px; margin: 0 auto; padding: 16px 24px 48px; }
+  .pagebody { display: grid; gap: 12px; }
+  @media (max-width: 900px) { .navpane { width: 48px; } .app:not(.compact) .navpane { position: absolute; z-index: 50; height: calc(100vh - 48px); top: 48px;
+    background: var(--mica); box-shadow: 0 8px 24px rgba(0,0,0,.2); width: 280px; } .app { grid-template-columns: 48px 1fr; } }
+
+  /* cards & headings */
+  .panel, .card, .side-card, .quickrow { background: var(--card); border: 1px solid var(--card-stroke); border-radius: 8px; box-shadow: none; }
+  .panel h2.ttl { font-size: 20px; font-weight: 600; }
+  .panel h3.ttl { font-size: 14px; font-weight: 600; }
+  .card-h b.ttl { font-size: 14px; font-weight: 600; }
+  .tic { background: transparent !important; box-shadow: none !important; color: var(--accent); width: auto !important; height: auto !important; }
+  .tic .ic { width: 18px !important; height: 18px !important; }
+  .muted, .hint { color: var(--text2); }
+
+  /* buttons (Button / AccentButton) */
+  button { font-size: 14px; font-weight: 400; min-height: 32px; padding: 5px 12px; border-radius: 4px; color: var(--text);
+    background: var(--ctl); border: 1px solid var(--ctl-stroke); border-bottom-color: var(--ctl-stroke-bottom);
+    box-shadow: none; text-shadow: none; transition: background .08s, color .08s; filter: none; }
+  button:hover:not(:disabled) { background: var(--ctl-hover); filter: none; box-shadow: none; }
+  button:active:not(:disabled) { background: var(--ctl-press); color: var(--text2); transform: none; box-shadow: none; }
+  button:disabled { opacity: 1; color: var(--text3); background: var(--ctl); }
+  button:focus-visible { outline: 2px solid var(--text); outline-offset: 1px; }
+  button.primary, button.gloss.g-blue, button.gloss.g-white, .chip.on, .tpill.active {
+    color: var(--accent-fg); background: var(--accent); border: 1px solid rgba(255,255,255,.08); border-bottom-color: rgba(0,0,0,.40); text-shadow: none; }
+  button.primary:hover:not(:disabled), button.gloss.g-blue:hover:not(:disabled), button.gloss.g-white:hover:not(:disabled) { background: var(--accent-hover); }
+  button.primary:active:not(:disabled), button.gloss.g-blue:active:not(:disabled), button.gloss.g-white:active:not(:disabled) { background: var(--accent-press); color: var(--accent-fg); opacity: .9; }
+  button.primary:disabled, button.gloss.g-blue:disabled { background: var(--track); color: var(--text3); border-color: transparent; }
+  button.primary .ic, button.gloss.g-white .ic, button.gloss .ic { color: inherit; }
+  button.danger, button.gloss.g-red, button.rec.on { color: #fff; background: #c42b1c; border-color: rgba(255,255,255,.08); border-bottom-color: rgba(0,0,0,.4); }
+  button.danger:hover:not(:disabled), button.gloss.g-red:hover:not(:disabled) { background: #b3291b; }
+  button.gloss.g-red:disabled { background: var(--ctl); color: var(--text3); border-color: var(--ctl-stroke); }
+  button.gloss { min-height: 36px; padding: 7px 20px; border-radius: 4px; font-size: 14px; font-weight: 600; }
+  button.gloss::after, .quickrow::before { display: none !important; }
+  button.gloss.g-sky { color: var(--text); background: var(--ctl); border: 1px solid var(--ctl-stroke); border-bottom-color: var(--ctl-stroke-bottom); }
+  button.gloss.g-sky:hover:not(:disabled) { background: var(--ctl-hover); }
+  button.sm { min-height: 30px; padding: 4px 11px; font-size: 13.5px; border-radius: 4px; }
+  .seg { border-radius: 4px; border-color: var(--ctl-stroke); }
+  .seg button { border-radius: 0; }
+  .seg button.on { background: var(--accent); color: var(--accent-fg); }
+
+  /* inputs (TextBox / ComboBox) */
+  label.field input, label.field select, #bgSearch, #aiBox input[type=text], .nedit textarea, input[type=search], input[type=url] {
+    background: var(--input-bg); color: var(--text); border: 1px solid var(--ctl-stroke); border-bottom-color: var(--strong-stroke); border-radius: 4px; }
+  label.field input:focus, label.field select:focus, #bgSearch:focus, input[type=search]:focus {
+    outline: none; border-bottom: 2px solid var(--accent); }
+  label.field { color: var(--text); font-size: 14px; }
+  #bgSearch { border-radius: 4px; }
+  input[type=range], input[type=checkbox], input[type=radio] { accent-color: var(--accent); }
+
+  /* ToggleSwitch */
+  .switch { width: 40px; height: 20px; }
+  .switch span { border-radius: 10px; background: transparent; border: 1px solid var(--text2); }
+  .switch span::after { top: 3px; left: 3px; width: 12px; height: 12px; background: var(--text2); box-shadow: none; }
+  .switch input:checked + span { background: var(--accent); border-color: var(--accent); }
+  .switch input:checked + span::after { transform: translateX(20px); background: var(--accent-fg); }
+
+  /* misc surfaces */
+  .quickrow { flex-direction: row; justify-content: space-between; gap: 16px; padding: 16px 20px; margin-bottom: 12px; flex-wrap: wrap;
+    background: linear-gradient(100deg, var(--accent-soft), transparent 70%), var(--card); }
+  .quicksub { color: var(--text2); text-align: left; font-size: 14px; }
+  .quickrow .qr-text { display: flex; flex-direction: column; gap: 2px; }
+  .quickrow .qr-text b { font-size: 16px; font-weight: 600; }
+  .quickrow button.gloss { font-size: 14px; padding: 7px 22px; }
+  .stage { background: #000; border-radius: 8px; }
+  .thumb { border-radius: 6px; }
+  .thumb.active { border-color: var(--accent); }
+  .tpill { border-radius: 4px; color: var(--text2); background: var(--ctl); border: 1px solid var(--ctl-stroke); box-shadow: none; }
+  .tpill.custom { color: var(--accent); background: var(--ctl); border-color: var(--accent); }
+  .tlink::before { border-left-color: var(--card-stroke); }
+  .chip { border-radius: 4px; background: var(--ctl); }
+  dialog.dlg { background: var(--card); border: 1px solid var(--card-stroke); border-radius: 8px; box-shadow: 0 32px 64px rgba(0,0,0,.28), 0 2px 21px rgba(0,0,0,.22); }
+  dialog.dlg::backdrop { background: var(--smoke); backdrop-filter: none; }
+  .dlg-h { border-bottom: 0; padding: 20px 24px 8px; }
+  .dlg-h b { font-size: 20px; font-weight: 600; }
+  .dlg-b { padding: 8px 24px 16px; }
+  .dlg-f { background: var(--mica); border-top: 1px solid var(--card-stroke); padding: 20px 24px; }
+  .busy-ov { background: var(--smoke); backdrop-filter: none; }
+  .bo-box { border-radius: 8px; border: 1px solid var(--card-stroke); background: var(--card); }
+  .bo-pct { color: var(--accent); font-weight: 600; }
+  .progress > div, .bo-bar div { background: var(--accent); }
+  .qsteps span.on { color: var(--accent); background: var(--accent-soft); }
+  .qsteps span.on i, .qsteps span.done i { background: var(--accent); color: var(--accent-fg); }
+  .s3row > label.field { background: var(--layer); border: 1px solid var(--card-stroke); border-radius: 6px; }
+  .narrrow { border-radius: 8px; background: var(--card); border: 1px solid var(--card-stroke); }
+  .narrrow:hover:not(:disabled) { background: var(--ctl-hover); }
+  .nr-open { color: var(--accent); }
+  .bgcur { border-radius: 6px; }
+  .soon { border-radius: 4px; }
+
+  /* simple pages (history, gallery, settings, help…) */
+  .setcard { display: flex; align-items: center; gap: 16px; padding: 16px 18px; min-height: 68px; background: var(--card);
+    border: 1px solid var(--card-stroke); border-radius: 6px; }
+  .setcard > .ic { width: 20px; height: 20px; color: var(--text); }
+  .setcard .st { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .setcard .st span { color: var(--text2); font-size: 12px; }
+  .grouptitle { font-weight: 600; margin: 14px 0 2px; }
+  details.exp { background: var(--card); border: 1px solid var(--card-stroke); border-radius: 6px; }
+  details.exp summary { padding: 14px 18px; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 12px; font-weight: 500; }
+  details.exp summary::-webkit-details-marker { display: none; }
+  details.exp summary::after { content: '⌄'; margin-left: auto; color: var(--text2); transition: transform .15s; }
+  details.exp[open] summary::after { transform: rotate(180deg); }
+  details.exp > div { padding: 0 18px 16px 48px; color: var(--text2); line-height: 1.6; }
+  .empty { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 56px 20px; text-align: center; color: var(--text2);
+    background: var(--card); border: 1px solid var(--card-stroke); border-radius: 8px; }
+  .empty .ic { width: 40px; height: 40px; color: var(--text3); stroke-width: 1.2; }
+  .empty b { color: var(--text); font-size: 16px; font-weight: 600; }
+  .steps { counter-reset: st; display: grid; gap: 8px; }
+  .steps .setcard::before { counter-increment: st; content: counter(st); width: 28px; height: 28px; border-radius: 50%; flex: none;
+    display: flex; align-items: center; justify-content: center; background: var(--accent); color: var(--accent-fg); font-weight: 600; }
+  .histitem video { width: 160px; aspect-ratio: 16/9; border-radius: 4px; background: #000; flex: none; }
+  .vg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+  .vg-card { background: var(--card); border: 1px solid var(--card-stroke); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
+  .vg-card .vg-media { position: relative; aspect-ratio: 16/9; background: #111; }
+  .vg-card .vg-media img, .vg-card .vg-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .vg-card .vg-media video { opacity: 0; transition: opacity .2s; } .vg-card:hover .vg-media video.ready { opacity: 1; }
+  .vg-card .vg-b { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 4px; }
+  .vg-card .vg-b span { color: var(--text2); font-size: 12px; }
+  .vg-card .vg-b button { margin-top: 6px; align-self: flex-start; }
+  .linkrow a { color: var(--accent); text-decoration: none; } .linkrow a:hover { text-decoration: underline; }
+  button.gloss, button.gloss:hover:not(:disabled), button.gloss:active:not(:disabled) { box-shadow: none !important; transform: none; }
+  #vgSearch, #bgSearch { min-width: 260px; padding: 6px 11px; font: inherit; font-size: 14px; }
+  #vgSearch:focus, #bgSearch:focus { outline: none; border-bottom: 2px solid var(--accent); }
 </style>
 </head>
 <body>
@@ -373,20 +741,53 @@
     <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20.5c1.6-4 4.6-6 8-6s6.4 2 8 6"/></symbol>
     <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M4 16a8 8 0 1 1 16 0"/><path d="M12 16l4-5"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><rect x="3" y="4" width="14" height="10" rx="1.5"/><path d="M7 18h12a2 2 0 0 0 2-2V8"/></symbol>
+    <symbol id="i-text" viewBox="0 0 24 24"><path d="M4 6h16M4 11h16M4 16h10"/></symbol>
+    <symbol id="i-clapper" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="11" rx="1.5"/><path d="m3 9 2.5-5 15 3L18 11"/><path d="m8 5 2 4M13 6l2 4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-type" viewBox="0 0 24 24"><path d="M5 6V4h14v2M12 4v16M9 20h6"/></symbol>
+    <symbol id="i-export" viewBox="0 0 24 24"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></symbol>
+    <symbol id="i-create" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9.5v5l4.5-2.5z"/></symbol>
+    <symbol id="i-history" viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 0 2.5-6"/><path d="M3.5 4v4h4"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-videos" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 8.5h18M3 15.5h18M8 4v4.5M16 4v4.5M8 15.5V20M16 15.5V20"/></symbol>
+    <symbol id="i-avatar" viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5.5 19.5a6.5 6.5 0 0 1 13 0"/><rect x="2.5" y="2.5" width="19" height="19" rx="3"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.8l1.6 2.3 2.8-.5.9 2.7 2.6 1.1-.5 2.8L21.2 12l-1.8 1.8.5 2.8-2.6 1.1-.9 2.7-2.8-.5L12 21.2l-1.6-2.3-2.8.5-.9-2.7-2.6-1.1.5-2.8L2.8 12l1.8-1.8-.5-2.8 2.6-1.1.9-2.7 2.8.5z"/></symbol>
+    <symbol id="i-samples" viewBox="0 0 24 24"><rect x="3" y="7" width="14" height="13" rx="2"/><path d="M7 4h12a2 2 0 0 1 2 2v11"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14"/><path d="M12 17.2v.1"/></symbol>
+    <symbol id="i-howto" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 21H20"/><path d="M8 8h8M8 11.5h6"/></symbol>
+    <symbol id="i-about" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.1"/></symbol>
+    <symbol id="i-contact" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></symbol>
+    <symbol id="i-trash2" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13"/></symbol>
   </defs>
 </svg>
 
-<header>
-  <div class="htext">
-    <h1>PPTX to Video – test page</h1>
-    <p>Loads a PowerPoint file entirely in your browser (nothing is uploaded), renders slides with their animations and transitions, and exports a video.</p>
+<div class="app" id="app">
+  <div class="titlebar">
+    <button class="navbtn" id="navToggle" title="Open or close the navigation"><svg class="ic"><use href="#i-menu"/></svg></button>
+    <span class="appicon"><svg class="ic"><use href="#i-create"/></svg></span>
+    <span class="apptitle">PPTX to Video<span>MLApplications · test page</span></span>
   </div>
-  <div class="seg" id="themeSeg" role="group" aria-label="Theme">
-    <button data-theme-set="light" title="Light theme"><svg class="ic"><use href="#i-sun"/></svg>Light</button>
-    <button data-theme-set="dark" title="Dark theme"><svg class="ic"><use href="#i-moon"/></svg>Dark</button>
-    <button data-theme-set="auto" title="Follow Windows setting"><svg class="ic"><use href="#i-auto"/></svg>Auto</button>
-  </div>
-</header>
+  <nav class="navpane" id="navPane" aria-label="Main">
+    <a class="navitem" href="#create" data-page="create" title="Create"><svg class="ic"><use href="#i-create"/></svg><span>Create</span></a>
+    <a class="navitem" href="#history" data-page="history" title="History"><svg class="ic"><use href="#i-history"/></svg><span>History</span></a>
+    <a class="navitem" href="#videos" data-page="videos" title="Video gallery"><svg class="ic"><use href="#i-videos"/></svg><span>Video gallery</span></a>
+    <a class="navitem" href="#avatars" data-page="avatars" title="Avatar gallery"><svg class="ic"><use href="#i-avatar"/></svg><span>Avatar gallery</span></a>
+    <div class="navsep"></div>
+    <a class="navitem" href="#samples" data-page="samples" title="Samples"><svg class="ic"><use href="#i-samples"/></svg><span>Samples</span></a>
+    <a class="navitem" href="#howto" data-page="howto" title="How to"><svg class="ic"><use href="#i-howto"/></svg><span>How to</span></a>
+    <a class="navitem" href="#help" data-page="help" title="Help"><svg class="ic"><use href="#i-help"/></svg><span>Help</span></a>
+    <div class="navspace"></div>
+    <div class="navsep"></div>
+    <a class="navitem" href="#about" data-page="about" title="About"><svg class="ic"><use href="#i-about"/></svg><span>About</span></a>
+    <a class="navitem" href="#contact" data-page="contact" title="Contact"><svg class="ic"><use href="#i-contact"/></svg><span>Contact</span></a>
+    <a class="navitem" href="#settings" data-page="settings" title="Settings"><svg class="ic"><use href="#i-settings"/></svg><span>Settings</span></a>
+  </nav>
+  <div class="content" id="content">
+  <section class="page" data-page="create">
+    <div class="pagehead"><h1>Create</h1>
+      <p>Turn a PowerPoint file into a video with narration, background videos and transitions – right in your browser, nothing is uploaded.</p></div>
 
 <main>
 
@@ -407,8 +808,13 @@
   </section>
 
   <!-- 2. Slide editor -->
+  <section class="quickrow">
+    <div class="qr-text"><b>In a hurry?</b><span class="quicksub">Pick background videos and a voice – transitions, timing and narration are done for you.</span></div>
+    <button id="quickBtn" class="gloss g-white" title="In a hurry? Pick videos and a voice – transitions and timing are chosen for you"><svg class="ic"><use href="#i-bolt"/></svg>Create a quick video</button>
+  </section>
+
   <section class="panel" id="editor">
-    <h2>2. Slides</h2>
+    <h2 class="ttl"><span class="tic"><svg class="ic"><use href="#i-layers"/></svg></span>2. Slides</h2>
     <div id="info" class="muted" style="display:none"></div>
     <div class="editor">
       <!-- left: slides -->
@@ -416,7 +822,7 @@
 
       <!-- center: live canvas + narration -->
       <div class="center">
-        <div class="stage" id="stage"><canvas id="slideCanvas"></canvas><div class="stage-msg" id="stageMsg"></div></div>
+        <div class="stage" id="stage"><canvas id="slideCanvas"></canvas><div class="stage-msg" id="stageMsg"></div><div class="stage-busy" id="stageBusy"><span class="spin"></span><span id="stageBusyText">Preparing preview…</span></div></div>
         <div class="toolbar">
           <button id="prevBtn" class="icon-only" title="Previous slide"><svg class="ic"><use href="#i-left"/></svg></button>
           <span id="slideLabel">–</span>
@@ -431,16 +837,113 @@
         <div id="animInfo"></div>
 
         <!-- narration for this slide -->
+        <button class="narrrow" id="narrRow" title="Open the narration of this slide">
+          <span class="tic sm"><svg class="ic"><use href="#i-mic"/></svg></span>
+          <span class="nr-main"><b>Narration</b><span class="nr-pill" id="nrState">Off</span><span class="nr-voice" id="nrVoice"></span></span>
+          <span class="nr-info" id="nrInfo"></span>
+          <span class="nr-open">Open<svg class="ic"><use href="#i-right"/></svg></span>
+        </button>
+
+        <!-- transition picker (shown when a pill between two thumbnails is clicked) -->
+        <div class="card" id="transCard">
+          <div class="card-h">
+            <b id="transTitle">Transition</b>
+            <span class="muted" id="transNow"></span>
+            <span class="spacer"></span>
+            <button id="transRandomAll" class="sm" title="Give every pair of slides a random matte transition"><svg class="ic"><use href="#i-spark"/></svg>Random mattes for all</button>
+            <button id="transApplyAll" class="sm" title="Use this transition between every pair of slides"><svg class="ic"><use href="#i-copy"/></svg>Apply to all transitions</button>
+            <button id="transDone" class="sm primary">Done</button>
+          </div>
+          <div class="form-row" style="margin-top:10px">
+            <label class="field">Duration
+              <span><input type="range" id="transDur" min="0.2" max="3" step="0.1" value="0.7"> <span id="transDurVal">0.7 s</span></span>
+            </label>
+            <label class="check" id="glowField"><input type="checkbox" id="transGlow"> Glow on the matte edge</label>
+            <span class="hint" style="margin:0 0 6px">The preview above loops: slide A → transition → slide B.</span>
+          </div>
+          <div class="tlist" id="transList"></div>
+        </div>
+      </div>
+
+      <!-- right: background (top half) + AI avatar (bottom half) -->
+      <div class="side">
+        <div class="side-card" id="bgCard">
+          <div class="card-h">
+            <b class="ttl"><span class="tic sm"><svg class="ic"><use href="#i-clapper"/></svg></span>Background video</b>
+          </div>
+          <button id="bgCurrent" class="bgcur" title="Choose a background video for this slide">
+            <div class="bgcur-thumb" id="bgCurThumb"></div>
+            <div class="bgcur-text"><b id="bgCurTitle">No background</b><em id="bgCurMode"></em><span>Change…</span></div>
+          </button>
+        </div>
+
+        <div class="side-card" id="avatarCard">
+          <div class="card-h"><b class="ttl"><span class="tic sm"><svg class="ic"><use href="#i-user"/></svg></span>AI avatar</b><span class="spacer"></span><span class="soon">Coming soon</span></div>
+          <div class="avatar-empty">
+            <svg class="ic"><use href="#i-user"/></svg>
+            <div>A talking presenter over this slide's video will be added here.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ pop-up dialogs ═══ -->
+  <dialog id="narrDlg" class="dlg xwide">
+    <div class="dlg-h">
+      <b class="ttl"><span class="tic sm"><svg class="ic"><use href="#i-mic"/></svg></span>Narration</b>
+      <span class="nd-nav"><button class="sm icon-only" id="ndPrev" title="Previous slide"><svg class="ic"><use href="#i-left"/></svg></button>
+        <span id="ndSlide">Slide 1 / 1</span>
+        <button class="sm icon-only" id="ndNext" title="Next slide"><svg class="ic"><use href="#i-right"/></svg></button></span>
+      <button class="sm icon-only" data-close title="Close">✕</button></div>
+    <div class="dlg-b">
         <div class="card" id="narrCard">
           <div class="card-h">
             <label class="switch" title="Narration for this slide"><input type="checkbox" id="narrOn"><span></span></label>
-            <b>Narration</b>
+            <b class="ttl"><span class="tic sm"><svg class="ic"><use href="#i-mic"/></svg></span>Narration</b>
+            <button id="voiceBtn" class="sm voicechip" title="Choose engine, language, voice and speed"><svg class="ic"><use href="#i-sound"/></svg><span id="voiceSummary">Voice</span><span class="caret">▾</span></button>
             <span class="muted" id="narrHint"></span>
             <span class="spacer"></span>
-            <button id="narrApplyAll" class="sm" title="Use this narration on/off setting and voice on every slide"><svg class="ic"><use href="#i-copy"/></svg>Apply to all slides</button>
+            <button id="aiBtn" class="sm" title="Let Claude, ChatGPT, Gemini or DeepSeek write the narration of every slide"><svg class="ic"><use href="#i-spark"/></svg>AI text…</button>
+            <button id="narrApplyAll" class="sm" title="Use this narration on/off setting and voice on every slide"><svg class="ic"><use href="#i-copy"/></svg>Apply to all</button>
           </div>
           <div class="card-body" id="narrBody">
-            <div class="form-row">
+
+            <div id="narrEditor">
+              <div class="nhead"><span class="ttl ntitle"><span class="tic xs"><svg class="ic"><use href="#i-text"/></svg></span><b id="narrTitle">Slide 1</b></span><span class="nstat"></span></div>
+              <div class="nedit"><div class="nhl"></div><textarea rows="2" placeholder="Type what should be said on this slide (or leave empty)."></textarea></div>
+              <div class="nbtns">
+                <button class="sm rec" title="Record your own voice for this slide"><svg class="ic f"><use href="#i-rec"/></svg><span>Record</span></button>
+                <button class="sm gen" title="Generate speech with the selected voice"><svg class="ic"><use href="#i-spark"/></svg>Generate</button>
+                <button class="sm play" title="Play / pause"><svg class="ic f"><use href="#i-play"/></svg><span>Play</span></button>
+                <button class="sm stop icon-only" title="Stop"><svg class="ic f"><use href="#i-stop"/></svg></button>
+                <span class="ntime"></span>
+                <span style="flex:1"></span>
+                <button class="sm fromslide" title="Use the text written on the slide (read top to bottom, left to right)"><svg class="ic"><use href="#i-file"/></svg>From slide text</button>
+                <button class="sm clear" title="Remove this slide's audio"><svg class="ic"><use href="#i-trash"/></svg>Remove</button>
+              </div>
+            </div>
+          </div>
+          <div class="progress" id="ttsProgress"><div></div></div>
+          <div class="status oneline" id="ttsStatus">The voice model downloads once, then your browser keeps it.</div>
+          <div class="toolbar" style="margin-top:10px; border-top:1px solid var(--border); padding-top:12px">
+            <button id="genAllBtn" title="Voices every slide with narration on, each with its own voice; skips slides you recorded yourself"><svg class="ic"><use href="#i-spark"/></svg>Generate all slides</button>
+            <button id="genStopBtn" disabled><svg class="ic f"><use href="#i-stop"/></svg>Stop</button>
+            <span class="spacer"></span>
+            <span id="narrTotal" class="muted"></span>
+          </div>
+
+        </div>
+    </div>
+    <div class="dlg-f"><span class="spacer"></span><button class="primary" data-close>Done</button></div>
+  </dialog>
+
+  <dialog id="voiceDlg" class="dlg">
+    <div class="dlg-h"><b id="voiceDlgTitle">Voice</b><span class="spacer"></span>
+      <button class="sm icon-only" data-close title="Close">✕</button></div>
+    <div class="dlg-b">
+            <div class="form-row voicegrid">
               <label class="field">Engine
                 <select id="ttsEngine">
                   <option value="piper">Piper – 30+ languages incl. Greek</option>
@@ -463,34 +966,16 @@
               <button id="kokoroRetest" class="sm" title="Measure GPU and CPU speed again"><svg class="ic"><use href="#i-gauge"/></svg>Re-test speed</button>
               <button id="ttsTestBtn" class="sm"><svg class="ic"><use href="#i-sound"/></svg>Test voice</button>
             </div>
+            <p class="hint" style="margin:10px 0 0">The settings apply to the current slide. Use "Apply to all" in the narration card to copy them to every slide.</p>
+    </div>
+    <div class="dlg-f"><span class="spacer"></span><button class="primary" data-close>Done</button></div>
+  </dialog>
 
-            <div id="narrEditor">
-              <div class="nhead"><b id="narrTitle">Slide 1</b><span class="nstat"></span></div>
-              <div class="nedit"><div class="nhl"></div><textarea rows="2" placeholder="Type what should be said on this slide (or leave empty)."></textarea></div>
-              <div class="nbtns">
-                <button class="sm rec" title="Record your own voice for this slide"><svg class="ic f"><use href="#i-rec"/></svg><span>Record</span></button>
-                <button class="sm gen" title="Generate speech with the selected voice"><svg class="ic"><use href="#i-spark"/></svg>Generate</button>
-                <button class="sm play" title="Play / pause"><svg class="ic f"><use href="#i-play"/></svg><span>Play</span></button>
-                <button class="sm stop icon-only" title="Stop"><svg class="ic f"><use href="#i-stop"/></svg></button>
-                <span class="ntime"></span>
-                <span style="flex:1"></span>
-                <button class="sm fromslide" title="Use the text written on the slide (read top to bottom, left to right)"><svg class="ic"><use href="#i-file"/></svg>From slide text</button>
-                <button class="sm clear" title="Remove this slide's audio"><svg class="ic"><use href="#i-trash"/></svg>Remove</button>
-              </div>
-            </div>
-          </div>
-          <div class="progress" id="ttsProgress"><div></div></div>
-          <div class="status oneline" id="ttsStatus">The voice model downloads once, then your browser keeps it.</div>
-          <div class="toolbar" style="margin-top:10px; border-top:1px solid var(--border); padding-top:12px">
-            <button id="genAllBtn"><svg class="ic"><use href="#i-spark"/></svg>Generate all slides</button>
-            <button id="genStopBtn" disabled><svg class="ic f"><use href="#i-stop"/></svg>Stop</button>
-            <span class="spacer"></span>
-            <span id="narrTotal" class="muted"></span>
-          </div>
-          <p class="hint" style="margin-bottom:0">"Generate all" voices every slide with narration on, each with its own voice, and skips slides you recorded yourself.</p>
-
-          <details id="aiBox">
-            <summary><svg class="ic"><use href="#i-spark"/></svg>Write the narration with AI (Claude, ChatGPT, Gemini, DeepSeek)</summary>
+  <dialog id="aiDlg" class="dlg">
+    <div class="dlg-h"><b><svg class="ic" style="vertical-align:-3px;color:var(--accent)"><use href="#i-spark"/></svg> Write the narration with AI</b>
+      <span class="muted">Claude, ChatGPT, Gemini, DeepSeek</span><span class="spacer"></span>
+      <button class="sm icon-only" data-close title="Close">✕</button></div>
+    <div class="dlg-b" id="aiBox">
             <div class="form-row">
               <label class="field">AI assistant
                 <select id="aiProvider">
@@ -544,38 +1029,14 @@
                 <button id="aiCancelBtn" class="sm">Cancel</button>
               </div>
             </div>
-          </details>
-        </div>
+              </div>
+  </dialog>
 
-        <!-- transition picker (shown when a pill between two thumbnails is clicked) -->
-        <div class="card" id="transCard">
-          <div class="card-h">
-            <b id="transTitle">Transition</b>
-            <span class="muted" id="transNow"></span>
-            <span class="spacer"></span>
-            <button id="transApplyAll" class="sm" title="Use this transition between every pair of slides"><svg class="ic"><use href="#i-copy"/></svg>Apply to all transitions</button>
-            <button id="transDone" class="sm primary">Done</button>
-          </div>
-          <div class="form-row" style="margin-top:10px">
-            <label class="field">Duration
-              <span><input type="range" id="transDur" min="0.2" max="3" step="0.1" value="0.7"> <span id="transDurVal">0.7 s</span></span>
-            </label>
-            <label class="check" id="glowField"><input type="checkbox" id="transGlow"> Glow on the matte edge</label>
-            <span class="hint" style="margin:0 0 6px">The preview above loops: slide A → transition → slide B.</span>
-          </div>
-          <div class="tlist" id="transList"></div>
-        </div>
-      </div>
-
-      <!-- right: background (top half) + AI avatar (bottom half) -->
-      <div class="side">
-        <div class="side-card" id="bgCard">
-          <div class="card-h">
-            <b>Background video</b>
-            <span class="spacer"></span>
-            <button id="bgApplyAll" class="sm" title="Use this background and its settings on every slide"><svg class="ic"><use href="#i-copy"/></svg>Apply to all</button>
-          </div>
-          <div id="gallery" class="gallery"></div>
+  <dialog id="bgDlg" class="dlg wide">
+    <div class="dlg-h"><b id="bgDlgTitle">Background video</b><span class="muted">Hover a clip to preview it</span><span class="spacer"></span>
+      <button class="sm icon-only" data-close title="Close">✕</button></div>
+    <div class="dlg-b">
+      <div class="bgdlg-top">
           <input type="file" id="bgInput" class="hidden-input" accept="video/*">
           <div id="bgName" class="muted"></div>
           <div class="form-row" id="bgOpts">
@@ -593,25 +1054,82 @@
               <input type="number" id="blendPct" min="10" max="100" step="1" value="85">
             </label>
           </div>
-        </div>
-
-        <div class="side-card" id="avatarCard">
-          <div class="card-h"><b>AI avatar</b><span class="spacer"></span><span class="soon">Coming soon</span></div>
-          <div class="avatar-empty">
-            <svg class="ic"><use href="#i-user"/></svg>
-            <div>A talking presenter over this slide's video will be added here.</div>
-          </div>
-        </div>
+        <button id="bgApplyAll" class="sm" title="Use this background and its settings on every slide"><svg class="ic"><use href="#i-copy"/></svg>Apply to all slides</button>
       </div>
+      <div class="bgfilter" id="bgFilter">
+        <span id="bgChips" class="chips"></span>
+        <span class="spacer"></span>
+        <input type="search" id="bgSearch" placeholder="Search tags, e.g. ocean, city, forest…">
+      </div>
+      <div id="gallery" class="gallery"></div>
     </div>
-  </section>
+    <div class="dlg-f"><span class="spacer"></span><button class="primary" data-close>Done</button></div>
+  </dialog>
+
+  <dialog id="quickDlg" class="dlg wide">
+    <div class="dlg-h"><b><svg class="ic" style="vertical-align:-3px;color:var(--accent)"><use href="#i-bolt"/></svg> Quick video</b>
+      <span class="muted">Pick what you need – transitions and timing are chosen for you</span>
+      <button class="sm icon-only" data-close title="Close">✕</button></div>
+    <div class="qsteps" id="qSteps">
+      <span data-step="0"><i>1</i>Presentation</span><span data-step="1"><i>2</i>Background videos</span>
+      <span data-step="2"><i>3</i>Voice</span><span data-step="3"><i>4</i>Avatar</span>
+    </div>
+    <div class="dlg-b">
+      <section class="qstep" data-step="0">
+        <div class="qfile" id="qFileBox">
+          <svg class="ic"><use href="#i-file"/></svg>
+          <div><b id="qFileName">No presentation yet</b><span class="muted" id="qFileMeta">Choose a .pptx file, or drop it here.</span></div>
+          <button id="qFileBtn" class="primary"><svg class="ic"><use href="#i-down"/></svg>Choose .pptx…</button>
+        </div>
+      </section>
+      <section class="qstep" data-step="1">
+        <div class="qchoice">
+          <label class="check"><input type="radio" name="qBgMode" value="auto" checked> <b>Match a video to each slide automatically</b> (by the words on the slide)</label>
+          <label class="check"><input type="radio" name="qBgMode" value="pick"> I'll choose the videos</label>
+        </div>
+        <p class="qlead" id="qBgLead"></p>
+        <div id="qGallery" class="gallery qgallery"></div>
+      </section>
+      <section class="qstep" data-step="2">
+        <div class="qchoice">
+          <label class="check"><input type="radio" name="qNarr" value="on" checked> Narrate with a voice</label>
+          <label class="check"><input type="radio" name="qNarr" value="off"> No narration (each slide shows for a fixed time)</label>
+        </div>
+        <div id="qVoiceHost"></div>
+        <label class="check" style="margin-top:10px"><input type="checkbox" id="qUseSlideText" checked> Slides without speaker notes: read the text written on the slide</label>
+      </section>
+      <section class="qstep" data-step="3">
+        <div class="avatar-empty" style="min-height:220px">
+          <svg class="ic"><use href="#i-user"/></svg>
+          <div><b>AI avatar – coming soon.</b><br>For now the video is made without a presenter.</div>
+        </div>
+      </section>
+    </div>
+    <div class="dlg-f">
+      <button id="qBack"><svg class="ic"><use href="#i-left"/></svg>Back</button>
+      <span class="muted" id="qHint" style="align-self:center"></span>
+      <span class="spacer"></span>
+      <button id="qNext" class="primary">Next<svg class="ic"><use href="#i-right"/></svg></button>
+    </div>
+  </dialog>
+
+  <div id="busyOverlay" class="busy-ov" role="dialog" aria-modal="true" aria-live="polite">
+    <div class="bo-box">
+      <div class="bo-pct" id="boPct">0%</div>
+      <div class="bo-phase" id="boPhase">Starting…</div>
+      <div class="bo-bar"><div id="boBar"></div></div>
+      <div class="bo-detail" id="boDetail"></div>
+      <div class="bo-btns"><button id="boCancel"><svg class="ic f"><use href="#i-stop"/></svg>Cancel</button><button id="boClose" class="primary" style="display:none">Close</button></div>
+    </div>
+  </div>
 
   <!-- 3. Video -->
-  <section class="panel" id="videoPanel">
-    <h2>3. Create video</h2>
 
-    <h3>Timing</h3>
-    <div class="form-row">
+  <section class="panel" id="videoPanel">
+    <h2 class="ttl"><span class="tic"><svg class="ic"><use href="#i-film"/></svg></span>3. Create video</h2>
+
+    <h3 class="ttl"><span class="tic sm"><svg class="ic"><use href="#i-clock"/></svg></span>Timing</h3>
+    <div class="s3row" style="--n:7">
       <label class="field">Hold slides without narration (s)
         <input type="number" id="holdSec" min="0" max="120" step="0.5" value="3">
       </label>
@@ -621,7 +1139,9 @@
       <label class="field">Pause after narration (s)
         <input type="number" id="tailSec" min="0" max="5" step="0.1" value="0.8">
       </label>
-      <label class="check"><input type="checkbox" id="animChk" checked> Play shape animations</label>
+      <label class="field">Play shape animations
+        <span class="s3check"><input type="checkbox" id="animChk" checked></span>
+      </label>
       <label class="field">Pause before "on click" animations (s)
         <input type="number" id="clickGapSec" min="0" max="10" step="0.1" value="0.6">
       </label>
@@ -633,8 +1153,8 @@
       </label>
     </div>
 
-    <h3>Text over video</h3>
-    <div class="form-row">
+    <h3 class="ttl"><span class="tic sm"><svg class="ic"><use href="#i-type"/></svg></span>Text over video</h3>
+    <div class="s3row" style="--n:3">
       <label class="field">Text readability
         <select id="readMode">
           <option value="auto" selected>Auto (contrast glow + light dim)</option>
@@ -647,12 +1167,14 @@
       <label class="field">Strength (%)
         <input type="range" id="readStrength" min="0" max="100" step="5" value="60" style="min-width:160px">
       </label>
-      <label class="check"><input type="checkbox" id="bgLoop" checked> Loop background videos</label>
-      <span class="hint" style="margin:0 0 6px">Readability applies to slides whose background is set to "Transparent background".</span>
+      <label class="field">Loop background videos
+        <span class="s3check"><input type="checkbox" id="bgLoop" checked></span>
+      </label>
     </div>
+    <p class="hint s3hint">Readability applies to slides whose background is set to "Transparent background".</p>
 
-    <h3>Output</h3>
-    <div class="form-row">
+    <h3 class="ttl"><span class="tic sm"><svg class="ic"><use href="#i-export"/></svg></span>Output</h3>
+    <div class="s3row" style="--n:4">
       <label class="field">Resolution
         <select id="resSel">
           <option value="1280">1280 px wide (720p)</option>
@@ -681,10 +1203,10 @@
       </label>
     </div>
 
-    <div class="toolbar" style="margin-top:14px">
-      <button id="previewVideoBtn"><svg class="ic"><use href="#i-eye"/></svg>Preview whole video</button>
-      <button id="exportBtn" class="primary"><svg class="ic"><use href="#i-film"/></svg>Export video</button>
-      <button id="stopBtn" class="danger" disabled><svg class="ic f"><use href="#i-stop"/></svg>Stop</button>
+    <div class="s3actions">
+      <button id="previewVideoBtn" class="gloss g-sky"><svg class="ic"><use href="#i-eye"/></svg>Preview whole video</button>
+      <button id="exportBtn" class="gloss g-blue"><svg class="ic"><use href="#i-film"/></svg>Export video</button>
+      <button id="stopBtn" class="gloss g-red" disabled><svg class="ic f"><use href="#i-stop"/></svg>Stop</button>
     </div>
     <div class="progress" id="videoProgress"><div></div></div>
     <div class="status oneline" id="videoStatus"></div>
@@ -704,6 +1226,97 @@
   </section>
 
 </main>
+  </section>
+
+  <section class="page" data-page="history">
+    <div class="pagehead"><h1>History</h1><p>The videos you made. Files stay in this browser tab only – download the ones you want to keep.</p></div>
+    <div class="pagebody" id="historyList"></div>
+  </section>
+
+  <section class="page" data-page="videos">
+    <div class="pagehead"><h1>Video gallery</h1><p>Background videos you can put behind your slides. Hover a clip to preview it.</p></div>
+    <div class="pagebody">
+      <div class="bgfilter"><span id="vgChips" class="chips"></span><span class="spacer"></span><input type="search" id="vgSearch" placeholder="Search tags, e.g. ocean, city, forest…"></div>
+      <div class="vg-grid" id="vgGrid"></div>
+      <p class="hint linkrow">Videos from <a href="https://pixabay.com/" target="_blank" rel="noopener">Pixabay</a> and Pexels, free to use under their licences.</p>
+    </div>
+  </section>
+
+  <section class="page" data-page="avatars">
+    <div class="pagehead"><h1>Avatar gallery</h1><p>Talking presenters that appear over your slides.</p></div>
+    <div class="pagebody"><div class="empty"><svg class="ic"><use href="#i-avatar"/></svg><b>Coming soon</b>AI avatars that read your narration will appear here.</div></div>
+  </section>
+
+  <section class="page" data-page="samples">
+    <div class="pagehead"><h1>Samples</h1><p>Example presentations to try the editor with.</p></div>
+    <div class="pagebody"><div class="empty"><svg class="ic"><use href="#i-samples"/></svg><b>Samples are on the way</b>Until then, open any .pptx of your own on the Create page – nothing is uploaded.</div></div>
+  </section>
+
+  <section class="page" data-page="howto">
+    <div class="pagehead"><h1>How to</h1><p>From a PowerPoint file to a finished video in a few steps.</p></div>
+    <div class="pagebody steps">
+      <div class="setcard"><div class="st"><b>Open your presentation</b><span>On Create, choose or drop a .pptx file. Slides, animations and transitions are read in your browser.</span></div></div>
+      <div class="setcard"><div class="st"><b>Add narration</b><span>Open Narration under the slide: use the speaker notes, the text on the slide, your own recording, or let an AI write it. Pick a voice and press Generate all.</span></div></div>
+      <div class="setcard"><div class="st"><b>Choose background videos</b><span>Open Background video on the right. "Suggested" shows clips whose tags match the words on the slide.</span></div></div>
+      <div class="setcard"><div class="st"><b>Pick the transitions</b><span>Click the button between two thumbnails to preview and choose a transition – mattes are chosen at random by default.</span></div></div>
+      <div class="setcard"><div class="st"><b>Export</b><span>In "Create video" choose the resolution and press Export video. Or press "Create a quick video" and let the wizard do everything.</span></div></div>
+    </div>
+  </section>
+
+  <section class="page" data-page="help">
+    <div class="pagehead"><h1>Help</h1><p>Answers to common questions.</p></div>
+    <div class="pagebody">
+      <details class="exp"><summary><svg class="ic"><use href="#i-help"/></svg>Is my presentation uploaded anywhere?</summary><div>No. The file is opened, rendered and exported inside your browser. Only the voice models and the background videos are downloaded to your computer.</div></details>
+      <details class="exp"><summary><svg class="ic"><use href="#i-help"/></svg>Speech generation is slow</summary><div>Voices run on your own computer. Piper is the fastest; Kokoro sounds more natural but needs more power. The first time, each voice is downloaded once and then kept by the browser.</div></details>
+      <details class="exp"><summary><svg class="ic"><use href="#i-help"/></svg>Which browsers work?</summary><div>Recent Chrome, Edge and Opera work best. Firefox and Safari can make the video in real time when fast export is not available.</div></details>
+      <details class="exp"><summary><svg class="ic"><use href="#i-help"/></svg>Some fonts look different from PowerPoint</summary><div>The browser uses the fonts installed on your computer. Install the presentation's fonts, or choose fonts that are common on Windows.</div></details>
+      <details class="exp"><summary><svg class="ic"><use href="#i-help"/></svg>Where are my videos?</summary><div>Under History, until you close this tab. Use Download to save them.</div></details>
+    </div>
+  </section>
+
+  <section class="page" data-page="about">
+    <div class="pagehead"><h1>About</h1></div>
+    <div class="pagebody">
+      <div class="setcard"><span class="appicon" style="width:40px;height:40px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2b88d8,#005fb8);color:#fff"><svg class="ic" style="width:24px;height:24px"><use href="#i-create"/></svg></span>
+        <div class="st"><b>PPTX to Video</b><span>Test page · © MLApplications</span></div></div>
+      <div class="grouptitle">Made with</div>
+      <div class="setcard linkrow"><div class="st"><b>Open-source parts</b><span>
+        pptx-browser (slide rendering) · <a href="https://mediabunny.dev/" target="_blank" rel="noopener">Mediabunny</a> (video encoding, MPL-2.0) ·
+        <a href="https://onnxruntime.ai/" target="_blank" rel="noopener">ONNX Runtime Web</a> ·
+        <a href="https://github.com/rhasspy/piper" target="_blank" rel="noopener">Piper</a> voices ·
+        <a href="https://huggingface.co/hexgrad/Kokoro-82M" target="_blank" rel="noopener">Kokoro-82M</a> (Apache-2.0) ·
+        background videos from <a href="https://pixabay.com/" target="_blank" rel="noopener">Pixabay</a> and Pexels</span></div></div>
+    </div>
+  </section>
+
+  <section class="page" data-page="contact">
+    <div class="pagehead"><h1>Contact</h1><p>Questions, ideas or a problem with a presentation? We'd like to hear from you.</p></div>
+    <div class="pagebody linkrow">
+      <div class="setcard"><svg class="ic"><use href="#i-contact"/></svg><div class="st"><b>MLApplications</b><span>Free apps for Windows – <a href="https://mlapplications.com/" target="_blank" rel="noopener">mlapplications.com</a></span></div></div>
+    </div>
+  </section>
+
+  <section class="page" data-page="settings">
+    <div class="pagehead"><h1>Settings</h1></div>
+    <div class="pagebody">
+      <div class="grouptitle">Appearance</div>
+      <div class="setcard"><svg class="ic"><use href="#i-sun"/></svg><div class="st"><b>App theme</b><span>Light, dark, or follow your Windows setting</span></div>
+  <div class="seg" id="themeSeg" role="group" aria-label="Theme">
+    <button data-theme-set="light" title="Light theme"><svg class="ic"><use href="#i-sun"/></svg>Light</button>
+    <button data-theme-set="dark" title="Dark theme"><svg class="ic"><use href="#i-moon"/></svg>Dark</button>
+    <button data-theme-set="auto" title="Follow Windows setting"><svg class="ic"><use href="#i-auto"/></svg>Auto</button>
+  </div></div>
+      <div class="setcard"><svg class="ic"><use href="#i-menu"/></svg><div class="st"><b>Navigation</b><span>Show the menu with names, or icons only</span></div>
+        <div class="seg" id="navSeg"><button data-nav="full">Expanded</button><button data-nav="compact">Compact</button></div></div>
+      <div class="grouptitle">Storage</div>
+      <div class="setcard"><svg class="ic"><use href="#i-sound"/></svg><div class="st"><b>Downloaded voices</b><span id="voiceCacheInfo">Voice models are kept by your browser after the first download</span></div>
+        <button id="clearVoicesBtn"><svg class="ic"><use href="#i-trash2"/></svg>Remove</button></div>
+      <div class="setcard"><svg class="ic"><use href="#i-history"/></svg><div class="st"><b>Remembered choices</b><span>Theme, AI assistant, voice auto-test and other small settings saved in this browser</span></div>
+        <button id="resetPrefsBtn">Reset</button></div>
+    </div>
+  </section>
+  </div>
+</div>
 
 <script type="module">
   import { PptxRenderer } from './pptxpackage/pptxsrc/index.js';
@@ -826,6 +1439,8 @@
         try { text = await slideNotes(renderer, i); } catch {}
         slides.push(newSlideState(text));
       }
+      await mattesReady;
+      randomizeTransitions();                            // default: a random matte between every two slides
       $('editor').style.display = 'block';
       $('videoPanel').style.display = 'block';
       await buildThumbnails();
@@ -834,6 +1449,8 @@
       const withNotes = slides.filter(s => s.text.trim()).length;
       setStatus(withNotes ? `${withNotes} slide${withNotes === 1 ? ' has' : 's have'} speaker notes – turn on Narration to voice them.` : '');
       $('loadPanel').classList.add('compact');
+      slideTextCache.clear();
+      if ($('quickDlg').open) { quick.sel = []; buildQuickGallery(); updateQuickHint(); }
     } catch (err) {
       console.error(err);
       setBar($('progress'), null);
@@ -847,12 +1464,15 @@
     const n = renderer.slideCount;
     for (let i = 0; i < n; i++) {
       if (i > 0) {
+        const link = document.createElement('div');
+        link.className = 'tlink';
         const pill = document.createElement('button');
         pill.className = 'tpill';
         pill.dataset.to = i;
         pill.title = `Transition from slide ${i} to slide ${i + 1}`;
         pill.addEventListener('click', () => { if (!job && !genBusy && recIndex < 0) openTransMode(i); });
-        thumbs.appendChild(pill);
+        link.appendChild(pill);
+        thumbs.appendChild(link);
         updatePill(i);
       }
       const wrap = document.createElement('div');
@@ -1070,11 +1690,13 @@
           ${res ? `<span class="badge res">${res}</span>` : ''}
           ${v.duration ? `<span class="badge dur">${fmtTime(v.duration)}</span>` : ''}
           <span class="check">✓</span>
+          <span class="mbadge"></span>
         </div>
         <div class="vtitle"></div>`, () => setSlideBg(bgFromEntry(v)));
       el.dataset.file = v.file;
       el.querySelector('.vtitle').textContent = v.title || v.file;
-      el.title = `${v.title || v.file}${v.size ? ' · ' + fmtSize(v.webSize || v.size) : ''}`;
+      if (v.tags?.length) el.querySelector('.vtitle').insertAdjacentHTML('beforeend', `<span class="vtags"></span>`), el.querySelector('.vtags').textContent = v.tags.slice(0, 5).join(' · ');
+      el.title = `${v.title || v.file}${v.size ? ' · ' + fmtSize(v.webSize || v.size) : ''}${v.credit?.user ? ' · by ' + v.credit.user + ' on Pixabay' : ''}`;
       if (v.poster) el.querySelector('img').src = GALLERY_DIR + v.poster;
       else el.querySelector('video').src = GALLERY_DIR + encodeURI(v.file) + '#t=1';
       if (v.preview) {
@@ -1119,6 +1741,11 @@
     $('bgMode').value = s.mode;
     $('insetPct').value = s.inset;
     $('blendPct').value = s.blend;
+    const th = $('bgCurThumb');
+    th.style.backgroundImage = bg?.poster ? `url("${bg.poster}")` : '';
+    th.textContent = !bg ? 'None' : bg.poster ? '' : bg.upload ? 'Your video' : 'Video';
+    $('bgCurTitle').textContent = bg ? bg.title : 'No background';
+    $('bgCurMode').textContent = bg ? ($('bgMode').selectedOptions[0]?.textContent || '') : '';
     $('bgName').textContent = !bg ? 'No background on this slide'
       : `${bg.title}${bg.size ? ' · ' + fmtSize(bg.size) : ''}${bg.upload ? ' · uploaded' : ' · streamed from the server'}`;
     $('bgOpts').classList.toggle('muted-off', !bg);
@@ -1276,6 +1903,7 @@
     s.voice = readVoiceControls();
     defaultVoice = { ...s.voice };
     updateRow(current);
+    updateVoiceChip();
   }
   $('ttsEngine').addEventListener('change', async () => { await fillVoices(); onVoiceChanged(); });
   $('ttsLang').addEventListener('change', async () => { await fillVoices(); onVoiceChanged(); });
@@ -1300,6 +1928,9 @@
     }
     requestAnimationFrame(() => { autosize(ta); paintHL(current, []); });
     updateRow(current);
+    $('voiceBtn').style.display = s.narrOn ? '' : 'none';
+    updateVoiceChip();
+    updateNarrRow();
   }
 
   $('narrOn').addEventListener('change', async () => {
@@ -1318,7 +1949,7 @@
     slides.forEach((t, i) => { t.narrOn = s.narrOn; if (v) t.voice = { ...v }; updateThumbBadges(i); });
     const b = $('narrApplyAll');
     b.innerHTML = `${icon('copy')}Applied to ${slides.length} slides`;
-    setTimeout(() => { b.innerHTML = `${icon('copy')}Apply to all slides`; }, 1800);
+    setTimeout(() => { b.innerHTML = `${icon('copy')}Apply to all`; }, 1800);
     updateNarrTotal();
   });
 
@@ -1512,9 +2143,22 @@
       p = r.end;
     }
     hl.innerHTML = html + esc(text.slice(p)) + '\n';
+    // keep the sentence being spoken in view when the text box scrolls
+    const cur = hl.querySelector('mark.cur');
+    if (cur && document.activeElement !== ta) {
+      const top = cur.offsetTop, bottom = top + cur.offsetHeight;
+      if (top < ta.scrollTop + 4 || bottom > ta.scrollTop + ta.clientHeight - 4) ta.scrollTop = Math.max(0, top - 24);
+    }
     hl.scrollTop = ta.scrollTop;
   }
-  function autosize(ta) { ta.style.height = 'auto'; ta.style.height = (ta.scrollHeight + 2) + 'px'; }
+  /** Grow the narration box with its text, up to about 6 lines; longer text scrolls. */
+  function autosize(ta) {
+    ta.style.height = 'auto';
+    const max = Math.round(parseFloat(getComputedStyle(ta).lineHeight) * 6 + 20);
+    ta.style.height = Math.min(ta.scrollHeight + 2, max) + 'px';
+    const hl = ta.parentElement.querySelector('.nhl');
+    if (hl) hl.scrollTop = ta.scrollTop;
+  }
   window.addEventListener('resize', () => autosize($('narrEditor').querySelector('textarea')));
 
   /** Find a spoken sentence inside the original notes text (which may contain bullets, line breaks…). */
@@ -1575,6 +2219,7 @@
     const n = slides[i], row = rowEl(i);
     updateThumbBadges(i);
     updateNarrTotal();
+    if (i === current) queueMicrotask(updateNarrRow);
     if (!row || !n) return;
     const st = row.querySelector('.nstat');
     if (!row.classList.contains('busy')) {
@@ -1623,6 +2268,7 @@
       const rtf = speed.ms ? speed.audio / (speed.ms / 1000) : 0;
       const msPerChar = speed.chars ? speed.ms / speed.chars : 0;
       const left = msPerChar ? ((cleaned.length - doneChars) + charsAfter) * msPerChar / 1000 : 0;
+      genHook?.(doneChars);
       const row = rowEl(i);
       if (row && cur) row.querySelector('.nstat').textContent = `Generating sentence ${cur.index}/${cur.total} · ${fmtTime(el)}`;
       setTtsStatus(
@@ -1697,31 +2343,40 @@
     genBusy = b;
     $('genAllBtn').disabled = b;
     $('genStopBtn').disabled = !b;
-    for (const id of ['ttsEngine', 'ttsLang', 'ttsVoice', 'ttsSpeaker', 'kokoroQ', 'ttsSpeed', 'ttsTestBtn', 'narrOn', 'narrApplyAll', 'exportBtn', 'previewVideoBtn'])
+    for (const id of ['ttsEngine', 'ttsLang', 'ttsVoice', 'ttsSpeaker', 'kokoroQ', 'ttsSpeed', 'ttsTestBtn', 'narrOn', 'narrApplyAll', 'exportBtn', 'previewVideoBtn', 'voiceBtn', 'aiBtn'])
       $(id).disabled = b;
     updateNav();
     updateRow(current);
   }
 
-  $('genAllBtn').addEventListener('click', async () => {
+  let genHook = null;               // (charsDone, charsTotal) of the slide being generated – used by the quick wizard
+  /** Voice every narrated slide that has no up-to-date audio. onFraction(0…1) reports overall progress. */
+  async function generateAll(onFraction = null) {
     genAbort = false;
     setGenBusy(true);
     let done = 0;
     try {
       const todo = slides.map((n, i) => ({ n, i })).filter(({ n }) => n.narrOn && cleanForSpeech(n.text) && n.kind !== 'rec' &&
         !(n.kind === 'tts' && n.spokenText === cleanForSpeech(n.text) && n.voice && n.voiceSig === voiceSig(n.voice)));
-      if (!todo.length) { setTtsStatus('Nothing to generate: every narrated slide already has up-to-date audio.'); return; }
+      if (!todo.length) { setTtsStatus('Nothing to generate: every narrated slide already has up-to-date audio.'); return done; }
+      const total = todo.reduce((s, x) => s + cleanForSpeech(x.n.text).length, 0) || 1;
+      let before = 0;
       for (let k = 0; k < todo.length && !genAbort; k++) {
-        const { i } = todo[k];
+        const { i, n } = todo[k];
         if (i !== current) await selectSlide(i);          // follow along, so the highlight is visible
         const after = todo.slice(k + 1).reduce((s, x) => s + cleanForSpeech(x.n.text).length, 0);
+        genHook = onFraction ? (d) => onFraction(Math.min(1, (before + d) / total)) : null;
         await generateOne(i, true, after);
+        before += cleanForSpeech(n.text).length;
+        onFraction?.(before / total);
         done++;
       }
       setTtsStatus(genAbort ? `Stopped – ${done} slide(s) generated.` : `Done – generated ${done} slide(s).`);
     } catch { /* message already shown */ }
-    finally { setGenBusy(false); }
-  });
+    finally { genHook = null; setGenBusy(false); }
+    return done;
+  }
+  $('genAllBtn').addEventListener('click', () => generateAll());
   $('genStopBtn').addEventListener('click', () => { cancelGeneration(); setTtsStatus('Generation stopped.'); });
 
   // ── record your own voice (current slide)
@@ -1800,6 +2455,208 @@
     };
   }
 
+  // ── Video suggestions: the words on a slide ↔ the videos' tags ──────────────
+  const STOP = new Set(('the and for are but not you all any can had her was one our out day get has him his how man new now old see two way who did its let put say she too use ' +
+    'that with this from they will would there their what about which when your have more been were into than then them these some make like just over such only also very after most ' +
+    'other many well even want here back could where much should those because while through each first between being both under again today going will lets talk look main ' +
+    'slide slides presentation thank thanks hello everyone welcome part next important really things thing').split(' '));
+  const SYN = {
+    sea: ['ocean', 'beach', 'coast', 'waves', 'island'], ocean: ['sea', 'waves', 'beach'], beach: ['sea', 'coast', 'sand'], water: ['river', 'sea', 'ocean', 'waterfall', 'lake'],
+    river: ['water', 'waterfall'], environment: ['nature', 'forest', 'green', 'trees', 'earth'], pollution: ['environment', 'nature', 'smoke', 'factory', 'industry'],
+    planet: ['earth', 'nature', 'globe', 'space'], earth: ['planet', 'nature', 'globe'], climate: ['nature', 'environment', 'weather'], green: ['nature', 'forest', 'trees'],
+    nature: ['forest', 'trees', 'landscape', 'green'], wildlife: ['animals', 'nature', 'forest'], soil: ['field', 'meadow', 'nature', 'grass'], air: ['sky', 'clouds', 'wind'],
+    food: ['cafe', 'restaurant', 'cooking'], city: ['urban', 'street', 'buildings', 'town', 'traffic'], business: ['office', 'meeting', 'finance', 'work', 'technology'],
+    money: ['finance', 'business'], technology: ['digital', 'computer', 'abstract', 'data'], data: ['digital', 'technology', 'abstract'], digital: ['technology', 'abstract'],
+    education: ['school', 'book', 'reading', 'learning', 'study'], learning: ['education', 'book', 'reading'], school: ['education', 'children', 'study'],
+    family: ['children', 'kids', 'people', 'home'], children: ['kids', 'family'], kids: ['children', 'family'], people: ['family', 'couple', 'children'],
+    travel: ['vacation', 'holiday', 'tourism', 'island'], holiday: ['travel', 'vacation', 'summer', 'beach'], summer: ['beach', 'sun', 'holiday', 'sea'],
+    sun: ['sunlight', 'sunset', 'sunrise', 'summer'], evening: ['sunset', 'night'], morning: ['sunrise', 'fog'], greece: ['santorini', 'island', 'sea'],
+    health: ['doctor', 'hospital', 'fitness'], sport: ['fitness', 'football', 'running'], energy: ['solar', 'wind', 'power'], future: ['technology', 'abstract', 'digital'],
+    protect: ['nature', 'environment'], tree: ['forest', 'nature'], forest: ['trees', 'nature', 'woods'], mountain: ['landscape', 'nature'],
+  };
+  // Greek words (accents removed, σ for ς) → English tags; matched by word start
+  const GR = [['θαλασσ', 'sea'], ['παραλι', 'beach'], ['νησι', 'island'], ['ωκεαν', 'ocean'], ['νερο', 'water'], ['νερα', 'water'], ['νερου', 'water'], ['ποταμ', 'river'], ['λιμν', 'lake'],
+    ['καταρρακτ', 'waterfall'], ['βουν', 'mountain'], ['δασο', 'forest'], ['δαση', 'forest'], ['δασων', 'forest'], ['δασικ', 'forest'], ['δεντρ', 'tree'], ['λουλουδ', 'flower'],
+    ['φυση', 'nature'], ['φυσικο περιβ', 'nature'], ['περιβαλλ', 'environment'], ['ρυπανσ', 'pollution'], ['μολυνσ', 'pollution'], ['πλανητ', 'planet'], ['γης', 'earth'],
+    ['κλιμα', 'climate'], ['ηλιοβασιλ', 'sunset'], ['ηλιο', 'sun'], ['ηλιακ', 'solar'], ['ουραν', 'sky'], ['συννεφ', 'clouds'], ['βροχ', 'rain'], ['χιον', 'snow'], ['ανεμ', 'wind'],
+    ['πολη', 'city'], ['πολεισ', 'city'], ['πολεων', 'city'], ['αστικ', 'city'], ['δρομ', 'street'], ['κτιρι', 'buildings'], ['σπιτ', 'home'], ['οικογεν', 'family'],
+    ['παιδι', 'children'], ['ανθρωπ', 'people'], ['ζευγαρ', 'couple'], ['σχολ', 'school'], ['μαθητ', 'school'], ['εκπαιδευ', 'education'], ['μαθησ', 'learning'],
+    ['βιβλι', 'book'], ['διαβασ', 'reading'], ['τεχνολογ', 'technology'], ['υπολογιστ', 'computer'], ['ψηφιακ', 'digital'], ['δεδομεν', 'data'], ['επιχειρ', 'business'],
+    ['εταιρ', 'business'], ['χρημα', 'money'], ['οικονομ', 'finance'], ['γραφει', 'office'], ['ομαδ', 'team'], ['συναντησ', 'meeting'], ['ταξιδ', 'travel'], ['διακοπ', 'holiday'],
+    ['καλοκαιρ', 'summer'], ['χειμων', 'winter'], ['φαγητ', 'food'], ['τροφ', 'food'], ['καφε', 'cafe'], ['εστιατορ', 'restaurant'], ['ζωα', 'animals'], ['σκυλ', 'dog'],
+    ['γατ', 'cat'], ['αθλητ', 'sport'], ['ποδοσφαιρ', 'football'], ['μουσικ', 'music'], ['υγει', 'health'], ['γιατρ', 'doctor'], ['νοσοκομ', 'hospital'], ['ενεργει', 'energy'],
+    ['αυτοκινητ', 'car'], ['κυκλοφορ', 'traffic'], ['ελλαδ', 'greece'], ['σαντοριν', 'santorini'], ['πρωι', 'morning'], ['νυχτ', 'night'], ['βραδ', 'evening'], ['φωσ', 'light'],
+    ['εδαφ', 'soil'], ['αερα', 'air'], ['αερασ', 'air'], ['προστασ', 'protect'], ['μελλον', 'future'], ['αγρ', 'field'], ['λιβαδ', 'meadow']];
+  const stem = (w) => {
+    if (w.length > 4 && w.endsWith('ies')) return w.slice(0, -3) + 'y';
+    if (w.length > 4 && /(ch|sh|x)es$/.test(w)) return w.slice(0, -2);
+    if (w.length > 3 && w.endsWith('s') && !w.endsWith('ss')) return w.slice(0, -1);
+    return w;
+  };
+  const plain = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ς/g, 'σ');
+
+  /** word → count, Greek words translated to English tags. */
+  function termsOf(text) {
+    const out = new Map();
+    for (const w of plain(text).match(/[a-zα-ω]{3,}/g) || []) {
+      let t = null;
+      if (/[a-z]/.test(w)) { if (!STOP.has(w)) t = stem(w); }
+      else { const hit = GR.find(([k]) => w.startsWith(k)); if (hit) t = stem(hit[1]); }
+      if (t) out.set(t, (out.get(t) || 0) + 1);
+    }
+    return out;
+  }
+  const videoTermCache = new WeakMap();
+  function videoTerms(v) {
+    if (!videoTermCache.has(v)) {
+      const words = [...(v.tags || []), ...(v.title || '').split(/[\s&,·]+/), v.category || ''];
+      videoTermCache.set(v, new Set(words.flatMap(w => plain(w).split(/\s+/)).filter(w => w.length > 2).map(stem)));
+    }
+    return videoTermCache.get(v);
+  }
+  /** How well a video fits a slide: { score, words } (words = the slide words that matched). */
+  function matchVideo(v, terms) {
+    const vt = videoTerms(v);
+    let score = 0;
+    const words = [];
+    for (const [t, n] of terms) {
+      const w = Math.min(n, 3);
+      if (vt.has(t)) { score += 2 * w; words.push(t); continue; }
+      const syn = (SYN[t] || []).map(stem).find(x => vt.has(x));
+      if (syn) { score += w; words.push(syn); }
+    }
+    return { score, words: [...new Set(words)] };     // the video's own tags that matched
+  }
+  const slideTextCache = new Map();
+  /** All words of slide i: what is written on it plus its narration / notes. */
+  async function slideTerms(i) {
+    const key = renderer ? i : -1;
+    let txt = slideTextCache.get(key);
+    if (txt == null) { try { txt = await slideText(renderer, i); } catch { txt = ''; } slideTextCache.set(key, txt); }
+    return termsOf(txt + '\n' + (slides[i]?.text || ''));
+  }
+  /** Gallery videos ranked for slide i (best first, only those that match). */
+  async function suggestFor(i, pool = gallery) {
+    const terms = await slideTerms(i);
+    return pool.map(v => ({ v, ...matchVideo(v, terms) })).filter(x => x.score > 0).sort((a, b) => b.score - a.score);
+  }
+
+  // background pop-up: chips (Suggested / All / categories) + search
+  let bgView = 'all', bgSugg = new Map();
+  function buildBgChips() {
+    const cats = {};
+    for (const v of gallery) if (v.category) cats[v.category] = (cats[v.category] || 0) + 1;
+    const chips = [['suggested', '✨ Suggested', bgSugg.size], ['all', 'All', gallery.length],
+      ...Object.keys(cats).sort().map(c => [c, c[0].toUpperCase() + c.slice(1), cats[c]])];
+    $('bgChips').innerHTML = '';
+    for (const [id, label, n] of chips) {
+      if (id === 'suggested' && !n) continue;
+      const b = document.createElement('button');
+      b.className = 'chip' + (bgView === id ? ' on' : '');
+      b.innerHTML = `${label}<span class="n">${n}</span>`;
+      b.addEventListener('click', () => { bgView = id; buildBgChips(); applyBgFilter(); });
+      $('bgChips').appendChild(b);
+    }
+  }
+  function applyBgFilter() {
+    const q = plain($('bgSearch').value.trim());
+    const qTerms = q ? [...termsOf(q).keys()].flatMap(t => [t, ...(SYN[t] || []).map(stem)]) : [];
+    $('gallery').classList.toggle('show-match', bgView === 'suggested');
+    document.querySelectorAll('#gallery .vcard').forEach(c => {
+      const v = gallery.find(x => x.file === c.dataset.file);
+      if (!v) { c.style.display = (bgView === 'suggested' || q) ? 'none' : ''; c.style.order = c.classList.contains('none') ? -1e6 : 1e6; return; }
+      const s = bgSugg.get(v.file);
+      let show = bgView === 'all' || (bgView === 'suggested' ? !!s : v.category === bgView);
+      if (show && q) {
+        const hay = plain([v.title, ...(v.tags || []), v.category || ''].join(' '));
+        show = hay.includes(q) || qTerms.some(t => videoTerms(v).has(t));
+      }
+      c.style.display = show ? '' : 'none';
+      c.style.order = bgView === 'suggested' && s ? -s.score : 0;
+      const mb = c.querySelector('.mbadge');
+      mb.classList.toggle('has', !!s);
+      mb.textContent = s ? 'Matches: ' + s.words.slice(0, 4).join(', ') : '';
+    });
+  }
+  $('bgSearch').addEventListener('input', applyBgFilter);
+  async function refreshBgSuggestions() {
+    bgSugg = new Map((await suggestFor(current)).map(x => [x.v.file, x]));
+    if (bgView === 'suggested' && !bgSugg.size) bgView = 'all';
+    buildBgChips();
+    applyBgFilter();
+  }
+
+  // ── Pop-up dialogs ──────────────────────────────────────────────────────────
+  document.querySelectorAll('dialog.dlg').forEach(d => {
+    d.addEventListener('click', (e) => {
+      if (e.target.closest('[data-close]')) d.close();
+      else if (e.target === d) d.close();                    // click on the dark backdrop
+    });
+  });
+  $('voiceBtn').addEventListener('click', () => {
+    if (!slides[current]) return;
+    $('voiceDlgTitle').textContent = `Voice – slide ${current + 1}`;
+    $('voiceDlg').showModal();
+  });
+  $('aiBtn').addEventListener('click', () => {
+    if (!renderer) return;
+    fillAiLangs();
+    $('aiDlg').showModal();
+  });
+  $('bgCurrent').addEventListener('click', () => {
+    if (!slides[current] || job) return;
+    $('bgDlgTitle').textContent = `Background video – slide ${current + 1}`;
+    bgView = 'suggested'; $('bgSearch').value = '';
+    $('bgDlg').showModal();
+    refreshBgSuggestions();
+    document.querySelector('#gallery .vcard.selected')?.scrollIntoView({ block: 'nearest' });
+  });
+
+  // narration pop-up
+  $('narrRow').addEventListener('click', () => {
+    if (!slides[current]) return;
+    $('narrDlg').showModal();
+    const ta = $('narrEditor')?.querySelector('textarea');
+    if (ta) requestAnimationFrame(() => { autosize(ta); paintHL(current, []); });
+  });
+  $('ndPrev').addEventListener('click', () => { if (current > 0) selectSlide(current - 1); });
+  $('ndNext').addEventListener('click', () => { if (current < slides.length - 1) selectSlide(current + 1); });
+  $('narrDlg').addEventListener('close', () => playerStop());
+
+  /** The compact narration row under the slide. */
+  function updateNarrRow() {
+    const s = slides[current];
+    if (!s) return;
+    $('ndSlide').textContent = `Slide ${current + 1} / ${slides.length}`;
+    $('ndPrev').disabled = current === 0; $('ndNext').disabled = current >= slides.length - 1;
+    const st = $('nrState');
+    st.textContent = s.narrOn ? 'On' : 'Off';
+    st.classList.toggle('on', !!s.narrOn);
+    $('nrVoice').textContent = s.narrOn ? $('voiceSummary').textContent : 'Fixed timing – no voice on this slide';
+    const total = $('narrTotal')?.textContent || '';
+    $('nrInfo').textContent = !s.narrOn ? total
+      : s.buffer ? `${fmtTime(s.buffer.duration)} of audio${total ? ' · ' + total.split(' · ')[0] : ''}`
+      : (s.text.trim() ? 'No audio yet' : 'No text yet');
+  }
+
+  /** One-line summary of the current slide's voice, shown on the voice button. */
+  function updateVoiceChip() {
+    const s = slides[current];
+    if (!s?.voice) { $('voiceSummary').textContent = 'Voice'; return; }
+    const v = s.voice;
+    let txt;
+    if (v.engine === 'kokoro') txt = `Kokoro · ${$('ttsVoice').selectedOptions[0]?.textContent?.split(' · ').slice(0, 3).join(' · ') || v.kokoroVoice}`;
+    else {
+      const lang = $('ttsLang').selectedOptions[0]?.textContent?.split(' – ')[0] || v.lang;
+      const name = (v.piperKey || '').split('-')[1] || '';
+      txt = `Piper · ${lang}${name ? ' · ' + name : ''}`;
+    }
+    if (v.speed && v.speed !== 1) txt += ` · ${(+v.speed).toFixed(2)}×`;
+    $('voiceSummary').textContent = txt;
+    $('voiceBtn').title = txt + ' – click to change';
+    updateNarrRow();
+  }
+
   // ── Narration written by an AI assistant (copy prompt → paste answer) ───────
   const AI_URLS = { claude: 'https://claude.ai/new', chatgpt: 'https://chatgpt.com/', gemini: 'https://gemini.google.com/app', deepseek: 'https://chat.deepseek.com/' };
   const AI_LANGS = ['English', 'Greek', 'German', 'French', 'Spanish', 'Italian', 'Portuguese', 'Dutch', 'Polish', 'Romanian',
@@ -1823,7 +2680,6 @@
     AI_LANGS.forEach(l => sel.append(new Option(l, l)));
     sel.value = keep || 'voice';
   }
-  $('aiBox').addEventListener('toggle', () => { if ($('aiBox').open) fillAiLangs(); });
   try { $('aiProvider').value = localStorage.getItem('pptxAiProvider') || 'claude'; } catch {}
   $('aiProvider').addEventListener('change', () => { try { localStorage.setItem('pptxAiProvider', $('aiProvider').value); } catch {} });
 
@@ -1944,10 +2800,219 @@ ${parts.join('\n\n')}
     updateRow(current);
     $('aiPaste').style.display = 'none';
     $('aiAnswer').value = '';
+    setTimeout(() => $('aiDlg').close(), 1600);
     const missing = renderer.slideCount - map.size;
     aiStatus(`Narration added to ${used} slide${used === 1 ? '' : 's'}` + (kept ? `, ${kept} kept as you wrote them` : '') +
       (missing > 0 ? ` · ${missing} slide${missing === 1 ? ' was' : 's were'} missing in the answer` : '') + ' – now press "Generate all slides".');
+    setTtsStatus($('aiStatus').textContent);
   });
+
+  // ── Quick video: presentation → videos → voice → avatar → done ─────────────
+  const quick = { step: 0, sel: [], running: false, cancelled: false };
+  const qSteps = [...document.querySelectorAll('#quickDlg .qstep')];
+
+  function showQuickStep(n) {
+    quick.step = n;
+    qSteps.forEach(s => s.classList.toggle('on', +s.dataset.step === n));
+    document.querySelectorAll('#qSteps span').forEach(s => {
+      s.classList.toggle('on', +s.dataset.step === n);
+      s.classList.toggle('done', +s.dataset.step < n);
+    });
+    $('qBack').style.visibility = n === 0 ? 'hidden' : '';
+    $('qNext').innerHTML = n === 3 ? `${icon('bolt')}Create video` : `Next${icon('right')}`;
+    // the voice settings live in the voice pop-up; borrow them while step 3 is shown
+    const grid = document.querySelector('.voicegrid');
+    if (n === 2) {
+      $('qVoiceHost').appendChild(grid);
+      const s = slides[current];
+      if (s && !s.voice) initialVoice().then(v => { s.voice = v; return writeVoiceControls(v); }).then(updateVoiceChip);
+    }
+    else if (grid.parentElement === $('qVoiceHost')) $('voiceDlg').querySelector('.dlg-b').prepend(grid);
+    $('qVoiceHost').style.display = document.querySelector('input[name=qNarr]:checked').value === 'on' ? '' : 'none';
+    updateQuickHint();
+  }
+  function updateQuickHint() {
+    const h = $('qHint'), next = $('qNext');
+    next.disabled = false; h.textContent = '';
+    if (quick.step === 0) {
+      next.disabled = !renderer;
+      if (renderer) { $('qFileName').textContent = fileBaseName + '.pptx'; $('qFileMeta').textContent = $('fileMeta').textContent; $('qFileBtn').innerHTML = `${icon('down')}Change…`; }
+    }
+    if (quick.step === 1) {
+      const auto = document.querySelector('input[name=qBgMode]:checked').value === 'auto';
+      $('qBgLead').textContent = auto
+        ? 'Each slide gets the video whose tags best match its words. Optionally tick a few videos below to choose only among them. The slides\' own background colours are removed so the video shows through.'
+        : 'Pick one or more videos. With several, they take turns from slide to slide. The slides\' own background colours are removed so the video shows through. Pick none for plain slides.';
+      h.textContent = auto ? (quick.sel.length ? `Matching among ${quick.sel.length} selected video${quick.sel.length === 1 ? '' : 's'}` : 'Matching among all videos')
+        : quick.sel.length ? `${quick.sel.length} video${quick.sel.length === 1 ? '' : 's'} selected` : 'No video – plain slides';
+    }
+  }
+
+  function buildQuickGallery() {
+    const g = $('qGallery');
+    g.innerHTML = '';
+    for (const v of gallery) {
+      const el = document.createElement('div');
+      el.className = 'vcard';
+      el.dataset.file = v.file;
+      el.innerHTML = `<div class="vthumb">${v.poster ? '<img loading="lazy" alt="">' : ''}<span class="order"></span>` +
+        `${v.duration ? `<span class="badge dur">${fmtTime(v.duration)}</span>` : ''}</div><div class="vtitle"></div>`;
+      if (v.poster) el.querySelector('img').src = GALLERY_DIR + v.poster;
+      el.querySelector('.vtitle').textContent = v.title || v.file;
+      el.addEventListener('click', () => {
+        const k = quick.sel.indexOf(v.file);
+        if (k >= 0) quick.sel.splice(k, 1); else quick.sel.push(v.file);
+        paintQuickGallery();
+      });
+      g.appendChild(el);
+    }
+    paintQuickGallery();
+  }
+  function paintQuickGallery() {
+    document.querySelectorAll('#qGallery .vcard').forEach(el => {
+      const k = quick.sel.indexOf(el.dataset.file);
+      el.classList.toggle('selected', k >= 0);
+      el.querySelector('.order').textContent = k >= 0 ? k + 1 : '';
+    });
+    updateQuickHint();
+  }
+
+  $('quickBtn').addEventListener('click', async () => {
+    if (job || quick.running) return;
+    // start from what the presentation already uses
+    quick.sel = [...new Set(slides.map(s => s.bg?.file).filter(Boolean))];
+    if (!gallery.length) await buildGallery();
+    buildQuickGallery();
+    if (renderer && slides[current]) {
+      if (!slides[current].voice) slides[current].voice = await initialVoice();
+      await writeVoiceControls(slides[current].voice);
+    }
+    showQuickStep(renderer ? 1 : 0);
+    $('quickDlg').showModal();
+  });
+  $('quickDlg').addEventListener('close', () => {
+    const grid = document.querySelector('.voicegrid');
+    if (grid.parentElement === $('qVoiceHost')) $('voiceDlg').querySelector('.dlg-b').prepend(grid);
+  });
+  document.querySelectorAll('input[name=qNarr]').forEach(r => r.addEventListener('change', () => showQuickStep(quick.step)));
+  document.querySelectorAll('input[name=qBgMode]').forEach(r => r.addEventListener('change', () => updateQuickHint()));
+  $('qFileBtn').addEventListener('click', () => $('fileInput').click());
+  const qBox = $('qFileBox');
+  ['dragenter', 'dragover'].forEach(ev => qBox.addEventListener(ev, (e) => { e.preventDefault(); qBox.classList.add('drag'); }));
+  ['dragleave', 'drop'].forEach(ev => qBox.addEventListener(ev, (e) => { e.preventDefault(); qBox.classList.remove('drag'); }));
+  qBox.addEventListener('drop', (e) => { const f = e.dataTransfer.files[0]; if (f) loadFile(f); });
+  $('qBack').addEventListener('click', () => showQuickStep(Math.max(0, quick.step - 1)));
+  $('qNext').addEventListener('click', () => {
+    if (quick.step < 3) { showQuickStep(quick.step + 1); return; }
+    $('quickDlg').close();
+    runQuick();
+  });
+
+  // big progress overlay
+  function overlay(state) {
+    const o = $('busyOverlay');
+    if (state === false) { o.classList.remove('on', 'error'); return; }
+    o.classList.add('on');
+    if (state.error) {
+      o.classList.add('error');
+      $('boPct').textContent = 'Stopped';
+      $('boPhase').textContent = state.error;
+      $('boCancel').style.display = 'none'; $('boClose').style.display = '';
+      return;
+    }
+    o.classList.remove('error');
+    $('boCancel').style.display = ''; $('boClose').style.display = 'none';
+    if (state.pct != null) { const p = Math.max(0, Math.min(100, Math.round(state.pct))); $('boPct').textContent = p + '%'; $('boBar').style.width = p + '%'; }
+    if (state.phase) $('boPhase').textContent = state.phase;
+    if (state.detail != null) $('boDetail').textContent = state.detail;
+  }
+  $('boCancel').addEventListener('click', () => {
+    quick.cancelled = true;
+    cancelGeneration();
+    job?.abort();
+    overlay({ phase: 'Cancelling…' });
+  });
+  $('boClose').addEventListener('click', () => overlay(false));
+  // mirror the detailed status lines into the overlay while it is shown
+  const mirror = (id) => new MutationObserver(() => { if (quick.running) overlay({ detail: $(id).textContent }); })
+    .observe($(id), { childList: true, characterData: true, subtree: true });
+  mirror('ttsStatus'); mirror('videoStatus');
+
+  /** Apply the wizard's choices to every slide, voice the narration, then make the video. */
+  async function runQuick() {
+    if (!renderer || quick.running) return;
+    quick.running = true; quick.cancelled = false;
+    overlay({ pct: 0, phase: 'Setting up the slides…', detail: '' });
+    try {
+      // 1. backgrounds: chosen videos take turns; slide background colours removed
+      const vids = quick.sel.map(f => gallery.find(v => v.file === f)).filter(Boolean);
+      const auto = document.querySelector('input[name=qBgMode]:checked').value === 'auto';
+      if (auto && gallery.length) {
+        // best match per slide; avoid showing the same clip twice in a row when another fits nearly as well
+        const pool = vids.length ? vids : gallery;
+        const used = new Map();
+        let prev = null;
+        for (let i = 0; i < slides.length; i++) {
+          const ranked = await suggestFor(i, pool);
+          let pick = ranked[0]?.v || null;
+          if (pick && pick === prev) {
+            const alt = ranked.find(x => x.v !== prev && x.score >= ranked[0].score * 0.5);
+            if (alt) pick = alt.v;
+          }
+          if (!pick) {                                     // no word matched: the least used clip of the pool
+            pick = [...pool].sort((a, b) => (used.get(a) || 0) - (used.get(b) || 0) || (a === prev) - (b === prev))[0];
+          }
+          used.set(pick, (used.get(pick) || 0) + 1);
+          slides[i].bg = bgFromEntry(pick);
+          slides[i].mode = 'transparent';
+          prev = pick;
+        }
+      } else {
+        slides.forEach((s, i) => {
+          s.bg = vids.length ? bgFromEntry(vids[i % vids.length]) : null;
+          s.mode = 'transparent';
+        });
+      }
+      // 2. narration: notes, or the slide's own text when there are none
+      const narrate = document.querySelector('input[name=qNarr]:checked').value === 'on';
+      const voice = narrate ? readVoiceControls() : null;
+      for (let i = 0; i < slides.length; i++) {
+        const s = slides[i];
+        if (narrate && !s.text.trim() && $('qUseSlideText').checked) { try { s.text = await slideText(renderer, i); } catch {} }
+        s.narrOn = narrate && !!cleanForSpeech(s.text);
+        if (narrate) s.voice = { ...voice };
+      }
+      if (narrate) defaultVoice = { ...voice };
+      // 3. transitions: random mattes
+      randomizeTransitions();
+      for (let i = 0; i < slides.length; i++) updateThumbBadges(i);
+      loadBgUI(); await loadNarrationUI(); refreshLive();
+
+      // 4. voices (first part of the bar), 5. video
+      const hasVoice = slides.some(s => s.narrOn);
+      const split = hasVoice ? 0.45 : 0;
+      if (hasVoice) {
+        overlay({ pct: 1, phase: 'Generating the narration…' });
+        await generateAll((f) => overlay({ pct: 1 + f * (split * 100 - 1) }));
+        if (quick.cancelled) throw new Error('Cancelled.');
+        const missing = slides.filter(s => s.narrOn && !s.buffer).length;
+        if (missing) throw new Error(`${missing} slide${missing === 1 ? '' : 's'} could not be voiced – ${$('ttsStatus').textContent}`);
+      }
+      overlay({ pct: split * 100, phase: 'Making the video…', detail: '' });
+      const ok = await runExport((f) => overlay({ pct: split * 100 + f * (100 - split * 100) }));
+      if (quick.cancelled) throw new Error('Cancelled.');
+      if (!ok) throw new Error($('videoStatus').textContent || 'The video could not be made.');
+      overlay({ pct: 100, phase: 'Done!' });
+      await new Promise(r => setTimeout(r, 700));
+      overlay(false);
+      $('videoPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch (err) {
+      overlay(quick.cancelled ? false : { error: err?.message || String(err) });
+      if (quick.cancelled) setVStatus('Quick video cancelled – your choices are kept, change anything and press "Export video".');
+    } finally {
+      quick.running = false;
+    }
+  }
 
   // ── Transitions between slides ─────────────────────────────────────────────
   // slides[i].trans = transition INTO slide i: { type, ms, url?, mduration?, glow? } or null (= the default)
@@ -1974,7 +3039,25 @@ ${parts.join('\n\n')}
     if (mattes.length) add('Mattes', mattes.map(m => ['matte:' + m.id, 'Matte ' + m.id.slice(5)]));
     sel.value = 'fade';
   }
-  loadMattes();
+  const mattesReady = loadMattes();
+
+  /** A random matte transition (never the same as `avoid`). */
+  function randomMatteTrans(avoid = null) {
+    if (!mattes.length) return null;
+    let m, tries = 0;
+    do { m = mattes[Math.floor(Math.random() * mattes.length)]; } while ('matte:' + m.id === avoid && mattes.length > 1 && ++tries < 10);
+    return matteDef(m);
+  }
+  /** Give every pair of slides a random matte transition (no two in a row the same). */
+  function randomizeTransitions() {
+    let prev = null;
+    for (let i = 1; i < slides.length; i++) {
+      const t = randomMatteTrans(prev);
+      if (!t) return;
+      slides[i].trans = t; prev = t.type;
+      updatePill(i);
+    }
+  }
   $('transitionSel').addEventListener('change', () => { for (let i = 1; i < slides.length; i++) updatePill(i); });
 
   function updatePill(i) {
@@ -2017,15 +3100,6 @@ ${parts.join('\n\n')}
       return b;
     };
     const half = (ctx) => { ctx.drawImage(A, 0, 0, 96, 108, 0, 0, 96, 108); ctx.drawImage(B, 96, 0, 96, 108, 96, 0, 96, 108); };
-    const g0 = group('General');
-    tile(g0, 'default', 'Use default', (ctx) => { half(ctx); });
-    tile(g0, 'file', 'From PowerPoint', (ctx) => { half(ctx); });
-    tile(g0, 'cut', 'Cut', (ctx) => { ctx.drawImage(B, 0, 0); });
-    for (const grp of [...new Set(GL_TRANSITIONS.map(t => t.group))]) {
-      const g = group(grp);
-      for (const t of GL_TRANSITIONS.filter(x => x.group === grp))
-        tile(g, t.id, t.label, (ctx) => { if (!trans.gl.render(ctx, A, B, { kind: 'gl', name: t.id }, 0.45)) half(ctx); });
-    }
     if (mattes.length) {
       const g = group('Mattes – from Desktop Live Wallpaper+');
       for (const m of mattes) {
@@ -2035,6 +3109,15 @@ ${parts.join('\n\n')}
         img.src = MATTE_DIR + m.poster;
       }
     }
+    const g0 = group('General');
+    tile(g0, 'default', 'Use default', (ctx) => { half(ctx); });
+    tile(g0, 'file', 'From PowerPoint', (ctx) => { half(ctx); });
+    tile(g0, 'cut', 'Cut', (ctx) => { ctx.drawImage(B, 0, 0); });
+    for (const grp of [...new Set(GL_TRANSITIONS.map(t => t.group))]) {
+      const g = group(grp);
+      for (const t of GL_TRANSITIONS.filter(x => x.group === grp))
+        tile(g, t.id, t.label, (ctx) => { if (!trans.gl.render(ctx, A, B, { kind: 'gl', name: t.id }, 0.45)) half(ctx); });
+    }
   }
 
   async function openTransMode(to) {
@@ -2043,7 +3126,7 @@ ${parts.join('\n\n')}
     playerStop();
     trans.to = to;
     document.querySelectorAll('.tpill').forEach(p => p.classList.toggle('active', +p.dataset.to === to));
-    $('narrCard').style.display = 'none';
+    $('narrRow').style.display = 'none';
     $('transCard').style.display = 'block';
     $('transTitle').textContent = `Transition: slide ${to} → slide ${to + 1}`;
     await buildTransList();
@@ -2056,9 +3139,10 @@ ${parts.join('\n\n')}
     if (!$('transCard') || $('transCard').style.display !== 'block') return;
     trans.job?.abort();
     trans.job = null;
+    stageBusy(false);
     document.querySelectorAll('.tpill').forEach(p => p.classList.remove('active'));
     $('transCard').style.display = 'none';
-    $('narrCard').style.display = '';
+    $('narrRow').style.display = '';
     if (!silent) refreshLive();
   }
 
@@ -2116,8 +3200,14 @@ ${parts.join('\n\n')}
     setTimeout(() => { b.innerHTML = `${icon('copy')}Apply to all transitions`; }, 1800);
   });
   $('transDone').addEventListener('click', () => exitTransMode());
+  $('transRandomAll').addEventListener('click', () => { randomizeTransitions(); syncTransUI(); restartTransPreview(); });
 
   let transTimer = 0;
+  /** Spinner in the middle of the slide while a preview is being prepared (false hides it). */
+  function stageBusy(text) {
+    $('stageBusy').classList.toggle('on', !!text);
+    if (text) $('stageBusyText').textContent = text;
+  }
   function restartTransPreview() {
     clearTimeout(transTimer);
     transTimer = setTimeout(async () => {
@@ -2129,12 +3219,156 @@ ${parts.join('\n\n')}
       // the default transition with matte data, if the slide has no own choice
       s.slides = s.slides.map((x, i) => ({ ...x, trans: slides[i].trans || (i === trans.to ? defaultTransObj() : null) }));
       const pv = new PptxVideo(renderer, s);
-      $('stageMsg').textContent = `Preview: ${transLabel((slides[trans.to].trans || defaultTrans()).type)}`;
-      try { await pv.playTransitionLoop(trans.to, { signal: ctrl.signal, onFrame: () => stageShow(pv.out) }); }
+      const label = transLabel((slides[trans.to].trans || defaultTrans()).type);
+      $('stageMsg').textContent = `Preview: ${label}`;
+      stageBusy(`Preparing “${label}”…`);
+      let first = true;
+      try {
+        await pv.playTransitionLoop(trans.to, { signal: ctrl.signal, onFrame: () => {
+          if (first) { first = false; if (trans.job === ctrl) stageBusy(false); }
+          stageShow(pv.out);
+        } });
+      }
       catch (err) { console.warn(err); $('stageMsg').textContent = 'Preview failed: ' + (err?.message || err); }
-      finally { pv.dispose(); }
+      finally { pv.dispose(); if (trans.job === ctrl || !trans.job) stageBusy(false); }
     }, 60);
   }
+
+  // ── App shell: navigation pane + pages ─────────────────────────────────────
+  const appEl = $('app');
+  const narrow = () => matchMedia('(max-width: 900px)').matches;
+  function setNav(mode) {
+    appEl.classList.toggle('compact', mode === 'compact');
+    document.querySelectorAll('#navSeg button').forEach(b => b.classList.toggle('on', b.dataset.nav === mode));
+    if (!narrow()) { try { localStorage.setItem('pptxNav', mode); } catch {} }
+  }
+  setNav(narrow() ? 'compact' : ((() => { try { return localStorage.getItem('pptxNav'); } catch { return null; } })() || 'full'));
+  $('navToggle').addEventListener('click', () => setNav(appEl.classList.contains('compact') ? 'full' : 'compact'));
+  document.querySelectorAll('#navSeg button').forEach(b => b.addEventListener('click', () => setNav(b.dataset.nav)));
+
+  function showPage(id) {
+    if (!document.querySelector(`.page[data-page="${id}"]`)) id = 'create';
+    document.querySelectorAll('.page').forEach(p => p.classList.toggle('on', p.dataset.page === id));
+    document.querySelectorAll('.navitem').forEach(a => a.classList.toggle('on', a.dataset.page === id));
+    if (narrow()) setNav('compact');
+    $('content').scrollTop = 0;
+    if (id === 'history') renderHistory();
+    if (id === 'videos') renderVideoGallery();
+    if (id === 'settings') showVoiceCache();
+  }
+  window.addEventListener('hashchange', () => showPage(location.hash.slice(1)));
+  showPage(location.hash.slice(1) || 'create');
+
+  // ── History: the videos made in this tab (files live only as long as the tab)
+  const histList = [];
+  let pastHistory = [];
+  try { pastHistory = JSON.parse(localStorage.getItem('pptxHistory') || '[]'); } catch {}
+  function addHistory(blob, name, ext, extra) {
+    histList.unshift({ url: lastVideoUrl, name, ext, size: blob.size, when: Date.now(), info: extra.replace(/^ · /, '') });
+    while (histList.length > 12) URL.revokeObjectURL(histList.pop().url);   // keep memory in check
+    try {
+      const meta = [...histList.map(({ name, ext, size, when, info }) => ({ name, ext, size, when, info })), ...pastHistory].slice(0, 30);
+      localStorage.setItem('pptxHistory', JSON.stringify(meta));
+    } catch {}
+  }
+  function renderHistory() {
+    const box = $('historyList');
+    box.innerHTML = '';
+    const nowNames = new Set(histList.map(x => x.when));
+    const older = pastHistory.filter(x => !nowNames.has(x.when));
+    if (!histList.length && !older.length) {
+      box.innerHTML = `<div class="empty"><svg class="ic"><use href="#i-history"/></svg><b>No videos yet</b>Videos you export on the Create page appear here.</div>`;
+      return;
+    }
+    const row = (x, live) => {
+      const el = document.createElement('div');
+      el.className = 'setcard histitem';
+      el.innerHTML = (live ? '<video preload="metadata" muted playsinline></video>' : `<svg class="ic"><use href="#i-film"/></svg>`) +
+        `<div class="st"><b></b><span></span></div>` +
+        (live ? `<button class="sm play">${icon('play', true)}Play</button><a class="dl"><button class="sm primary">${icon('down')}Download</button></a>` : '');
+      el.querySelector('b').textContent = `${x.name}`;
+      el.querySelector('.st span').textContent = `${new Date(x.when).toLocaleString()} · ${fmtSize(x.size)}${x.info ? ' · ' + x.info : ''}` +
+        (live ? '' : ' · made in an earlier visit, no longer in this browser');
+      if (live) {
+        const v = el.querySelector('video');
+        v.src = x.url + '#t=0.5';
+        el.querySelector('.play').addEventListener('click', () => { v.controls = true; v.muted = false; v.src = x.url; v.play().catch(() => {}); });
+        const a = el.querySelector('.dl'); a.href = x.url; a.download = x.name;
+      }
+      return el;
+    };
+    if (histList.length) { box.insertAdjacentHTML('beforeend', '<div class="grouptitle">This visit</div>'); histList.forEach(x => box.appendChild(row(x, true))); }
+    if (older.length) { box.insertAdjacentHTML('beforeend', '<div class="grouptitle">Earlier</div>'); older.slice(0, 12).forEach(x => box.appendChild(row(x, false))); }
+  }
+
+  // ── Video gallery page
+  let vgView = 'all';
+  async function renderVideoGallery() {
+    if (!gallery.length) await buildGallery();
+    const cats = {};
+    for (const v of gallery) if (v.category) cats[v.category] = (cats[v.category] || 0) + 1;
+    $('vgChips').innerHTML = '';
+    for (const [id, label, n] of [['all', 'All', gallery.length], ...Object.keys(cats).sort().map(c => [c, c[0].toUpperCase() + c.slice(1), cats[c]])]) {
+      const b = document.createElement('button');
+      b.className = 'chip' + (vgView === id ? ' on' : '');
+      b.innerHTML = `${label}<span class="n">${n}</span>`;
+      b.addEventListener('click', () => { vgView = id; renderVideoGallery(); });
+      $('vgChips').appendChild(b);
+    }
+    const q = plain($('vgSearch').value.trim());
+    const qTerms = q ? [...termsOf(q).keys()].flatMap(t => [t, ...(SYN[t] || []).map(stem)]) : [];
+    const grid = $('vgGrid');
+    grid.innerHTML = '';
+    for (const v of gallery) {
+      if (vgView !== 'all' && v.category !== vgView) continue;
+      if (q && !(plain([v.title, ...(v.tags || []), v.category || ''].join(' ')).includes(q) || qTerms.some(t => videoTerms(v).has(t)))) continue;
+      const el = document.createElement('div');
+      el.className = 'vg-card';
+      el.innerHTML = `<div class="vg-media">${v.poster ? '<img loading="lazy" alt="">' : ''}${v.preview ? '<video muted loop playsinline preload="none"></video>' : ''}</div>
+        <div class="vg-b"><b></b><span class="t"></span><span class="c"></span><button class="sm">${icon('image')}Use on the current slide</button></div>`;
+      if (v.poster) el.querySelector('img').src = GALLERY_DIR + v.poster;
+      el.querySelector('b').textContent = v.title || v.file;
+      el.querySelector('.t').textContent = (v.tags || []).slice(0, 6).join(' · ');
+      el.querySelector('.c').textContent = [v.category && v.category[0].toUpperCase() + v.category.slice(1), v.duration && fmtTime(v.duration),
+        v.height >= 2160 ? '4K' : v.height >= 1080 ? 'HD' : '', v.credit?.user && 'by ' + v.credit.user].filter(Boolean).join(' · ');
+      const pv = el.querySelector('video');
+      if (pv) {
+        el.addEventListener('mouseenter', () => { if (!pv.src) { pv.src = GALLERY_DIR + v.preview; pv.oncanplay = () => pv.classList.add('ready'); } pv.play().catch(() => {}); });
+        el.addEventListener('mouseleave', () => pv.pause());
+      }
+      const use = el.querySelector('button');
+      use.disabled = !renderer || !!job;
+      use.title = renderer ? `Put it behind slide ${current + 1}` : 'Open a presentation on the Create page first';
+      use.addEventListener('click', () => { setSlideBg(bgFromEntry(v)); location.hash = '#create'; });
+      grid.appendChild(el);
+    }
+    if (!grid.children.length) grid.innerHTML = '<div class="empty" style="grid-column:1/-1">No videos match.</div>';
+  }
+  $('vgSearch').addEventListener('input', () => renderVideoGallery());
+
+  // ── Settings actions
+  async function showVoiceCache() {
+    try {
+      const names = (await caches.keys()).filter(n => /piper|kokoro|transformers|onnx|mla-/i.test(n));
+      let bytes = 0;
+      if (navigator.storage?.estimate) bytes = (await navigator.storage.estimate()).usage || 0;
+      $('voiceCacheInfo').textContent = names.length
+        ? `${names.length} voice cache${names.length === 1 ? '' : 's'} · this site uses about ${fmtSize(bytes)} in your browser`
+        : 'No voice models downloaded yet';
+      $('clearVoicesBtn').disabled = !names.length;
+    } catch { $('voiceCacheInfo').textContent = 'Not available in this browser'; }
+  }
+  $('clearVoicesBtn').addEventListener('click', async () => {
+    if (!confirm('Remove the downloaded voice models? They are downloaded again the next time you generate speech.')) return;
+    for (const n of await caches.keys()) if (/piper|kokoro|transformers|onnx|mla-/i.test(n)) await caches.delete(n);
+    ensureVoice.loaded = null;
+    showVoiceCache();
+  });
+  $('resetPrefsBtn').addEventListener('click', () => {
+    if (!confirm('Reset the remembered choices (theme, menu, AI assistant, voice test results)?')) return;
+    try { Object.keys(localStorage).filter(k => k.startsWith('pptx')).forEach(k => localStorage.removeItem(k)); } catch {}
+    location.reload();
+  });
 
   // ── Theme switch (light / dark / follow Windows)
   function applyTheme(t) {
@@ -2189,14 +3423,14 @@ ${parts.join('\n\n')}
   }
 
   function showResult(blob, ext, extra = '') {
-    if (lastVideoUrl) URL.revokeObjectURL(lastVideoUrl);
-    lastVideoUrl = URL.createObjectURL(blob);
+    lastVideoUrl = URL.createObjectURL(blob);            // earlier results stay usable from History
     $('resultVideo').src = lastVideoUrl;
     const a = $('downloadLink');
     a.href = lastVideoUrl;
     a.download = `${fileBaseName}.${ext}`;
     a.style.display = 'inline-block';
     setVStatus(`Done – ${fmtSize(blob.size)} ${ext.toUpperCase()}${extra}.`);
+    addHistory(blob, a.download, ext, extra);
   }
 
   $('stopBtn').addEventListener('click', () => job?.abort());
@@ -2230,8 +3464,11 @@ ${parts.join('\n\n')}
     }
   });
 
-  $('exportBtn').addEventListener('click', async () => {
-    if (!renderer) return;
+  $('exportBtn').addEventListener('click', () => runExport());
+  /** Make the video with the current settings. onFraction(0…1) reports progress. Returns true when a video was made. */
+  async function runExport(onFraction = null) {
+    if (!renderer) return false;
+    let made = false;
     job = new AbortController();
     playerStop(); slideJob?.abort();
     setJobUI(true);
@@ -2253,13 +3490,15 @@ ${parts.join('\n\n')}
           container, signal: job.signal,
           onProgress: (done, total, s) => {
             setBar($('videoProgress'), done / total);
+            onFraction?.(done / total);
             const el = (performance.now() - t0) / 1000;
             const sp = (done / pv.s.fps) / Math.max(el, 0.001);
             setVStatus(`Encoding slide ${s + 1}/${renderer.slideCount} · frame ${done}/${total} · ${sp.toFixed(1)}× real time`);
           },
         });
-        if (!blob) { setVStatus('Export cancelled.'); return; }
+        if (!blob) { setVStatus('Export cancelled.'); return false; }
         const secs = (performance.now() - t0) / 1000;
+        made = true;
         showResult(blob, container, ` · ${fmtTime(pv.totalMs / 1000)} of video${pv.hasNarration ? ' with narration (' + pv.audioCodec.toUpperCase() + ')' : ''} made in ${secs.toFixed(1)} s`);
       } else {
         const wantAudio = pv.hasNarration;
@@ -2277,7 +3516,7 @@ ${parts.join('\n\n')}
         rec.pause();                                     // the engine resumes once the first slide is ready
         const done = await pv.playRealtime({
           recorder: rec, signal: job.signal, onSegmentStart: voice.onSegmentStart,
-          onProgress: (t, total, s) => { setBar($('videoProgress'), t / total); setVStatus(`Recording slide ${s + 1}/${renderer.slideCount} · ${fmtTime(t / 1000)} / ${fmtTime(total / 1000)}`); },
+          onProgress: (t, total, s) => { setBar($('videoProgress'), t / total); onFraction?.(t / total); setVStatus(`Recording slide ${s + 1}/${renderer.slideCount} · ${fmtTime(t / 1000)} / ${fmtTime(total / 1000)}`); },
         });
         if (rec.state === 'paused') rec.resume();
         await new Promise(r => setTimeout(r, 300));     // let the last frame flush
@@ -2285,6 +3524,7 @@ ${parts.join('\n\n')}
         await stopped;
         voice.stop();
         stream.getTracks().forEach(t => t.stop());
+        made = !!done;
         showResult(new Blob(chunks, { type: mime.split(';')[0] }), ext, done ? '' : ' (stopped early)');
       }
     } catch (err) {
@@ -2296,7 +3536,8 @@ ${parts.join('\n\n')}
       job = null;
       setJobUI(false);
     }
-  });
+    return made;
+  }
 </script>
 </body>
 </html>

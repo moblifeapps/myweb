@@ -4,7 +4,10 @@
 # Usage (from this folder):   powershell -ExecutionPolicy Bypass -File .\update-gallery.ps1
 #
 # - Scans *.mp4, *.webm, *.mov, *.m4v in this folder.
-# - Keeps titles you already edited in videos.json; new clips get a title from the file name.
+# - Keeps titles, tags and categories you already edited in videos.json; new clips get a title from the file name
+#   (or from their Pixabay tags).
+# - Merges tags, category and credit from pixabay.json (written by pixabay-gallery.ps1), used by the page to
+#   suggest videos that match the words on each slide.
 # - If ffmpeg/ffprobe are on PATH, it also reads size/duration and creates a poster (.jpg)
 #   and a 4-second hover preview (.preview.mp4) in thumbs/, plus a light 1080p web copy in web/
 #   (what the page streams as the background). Without ffmpeg the gallery still works, it just
@@ -18,13 +21,24 @@ $webDir = Join-Path $dir 'web'
 New-Item -ItemType Directory -Force -Path $thumbs | Out-Null
 New-Item -ItemType Directory -Force -Path $webDir | Out-Null
 
-# Existing titles (so manual edits survive)
-$oldTitles = @{}
+# Existing titles / tags / categories (so manual edits survive)
+$oldTitles = @{}; $oldTags = @{}; $oldCat = @{}
 if (Test-Path $jsonPath) {
     try {
         $old = Get-Content $jsonPath -Raw -Encoding UTF8 | ConvertFrom-Json
-        foreach ($v in $old.videos) { $oldTitles[$v.file] = $v.title }
+        foreach ($v in $old.videos) {
+            $oldTitles[$v.file] = $v.title
+            if ($v.tags) { $oldTags[$v.file] = @($v.tags) }
+            if ($v.category) { $oldCat[$v.file] = $v.category }
+        }
     } catch { Write-Warning "Could not read existing videos.json: $_" }
+}
+# Tags from Pixabay (pixabay-gallery.ps1)
+$pix = @{}
+$pixPath = Join-Path $dir 'pixabay.json'
+if (Test-Path $pixPath) {
+    try { foreach ($p in (Get-Content $pixPath -Raw -Encoding UTF8 | ConvertFrom-Json).videos) { if ($p.file) { $pix[$p.file] = $p } } }
+    catch { Write-Warning "Could not read pixabay.json: $_" }
 }
 
 $hasFfmpeg = [bool](Get-Command ffmpeg -ErrorAction SilentlyContinue) -and [bool](Get-Command ffprobe -ErrorAction SilentlyContinue)
@@ -35,12 +49,19 @@ $files = Get-ChildItem -Path $dir -File | Where-Object { $_.Extension -match '^\
 foreach ($f in $files) {
     $base = [System.IO.Path]::GetFileNameWithoutExtension($f.Name)
     $title = $oldTitles[$f.Name]
+    $px = $pix[$f.Name]
+    if (-not $title -and $px -and @($px.tags).Count) {
+        $title = (Get-Culture).TextInfo.ToTitleCase((@($px.tags) | Select-Object -First 2) -join ' & ')
+    }
     if (-not $title) {
         $title = ($base -replace '[-_]+', ' ' -replace '\b(hd|uhd|pixabay)\b', '' -replace '\b\d{3,}\b', '' -replace '\s+', ' ').Trim()
         if (-not $title) { $title = $base }
         $title = (Get-Culture).TextInfo.ToTitleCase($title)
     }
     $item = [ordered]@{ file = $f.Name; title = $title; size = $f.Length }
+    if ($px -and @($px.tags).Count) { $item.tags = @($px.tags) } elseif ($oldTags[$f.Name]) { $item.tags = $oldTags[$f.Name] }
+    if ($oldCat[$f.Name]) { $item.category = $oldCat[$f.Name] } elseif ($px -and $px.category) { $item.category = $px.category }
+    if ($px) { $item.credit = [ordered]@{ user = $px.user; url = $px.pageURL; source = 'Pixabay' } }
 
     if ($hasFfmpeg) {
         $probe = & ffprobe -v error -select_streams v:0 -show_entries stream=width,height:format=duration -of json $f.FullName | ConvertFrom-Json

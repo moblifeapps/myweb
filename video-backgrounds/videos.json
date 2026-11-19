@@ -10,7 +10,18 @@
       "duration": 20.02,
       "size": 68042268,
       "web": "web/12421439_3840_2160_30fps.mp4",
-      "webSize": 7751191
+      "webSize": 7751191,
+      "tags": [
+        "abstract",
+        "waves",
+        "blue",
+        "technology",
+        "digital",
+        "background",
+        "lines",
+        "motion"
+      ],
+      "category": "backgrounds"
     },
     {
       "file": "20591098-hd_1920_1080_30fps.mp4",
@@ -22,7 +33,18 @@
       "duration": 14.36,
       "size": 10412767,
       "web": "web/20591098-hd_1920_1080_30fps.mp4",
-      "webSize": 7794084
+      "webSize": 7794084,
+      "tags": [
+        "santorini",
+        "greece",
+        "island",
+        "sea",
+        "village",
+        "travel",
+        "summer",
+        "coast"
+      ],
+      "category": "places"
     },
     {
       "file": "3209989-uhd_3840_2160_25fps.mp4",
@@ -34,7 +56,17 @@
       "duration": 15.96,
       "size": 46965018,
       "web": "web/3209989-uhd_3840_2160_25fps.mp4",
-      "webSize": 9959732
+      "webSize": 9959732,
+      "tags": [
+        "waterfall",
+        "mountain",
+        "water",
+        "river",
+        "nature",
+        "green",
+        "landscape"
+      ],
+      "category": "nature"
     },
     {
       "file": "6412529-hd_1920_1080_30fps.mp4",
@@ -46,7 +78,18 @@
       "duration": 9.51,
       "size": 6172696,
       "web": "web/6412529-hd_1920_1080_30fps.mp4",
-      "webSize": 3487019
+      "webSize": 3487019,
+      "tags": [
+        "children",
+        "kids",
+        "family",
+        "cafe",
+        "people",
+        "restaurant",
+        "food",
+        "city"
+      ],
+      "category": "people"
     },
     {
       "file": "6554524-hd_1920_1080_25fps.mp4",
@@ -58,7 +101,18 @@
       "duration": 15.49,
       "size": 9865651,
       "web": "web/6554524-hd_1920_1080_25fps.mp4",
-      "webSize": 3757958
+      "webSize": 3757958,
+      "tags": [
+        "santorini",
+        "sunset",
+        "greece",
+        "sea",
+        "evening",
+        "travel",
+        "island",
+        "holiday"
+      ],
+      "category": "places"
     },
     {
       "file": "9242198-hd_1920_1080_30fps.mp4",
@@ -70,7 +124,18 @@
       "duration": 8.44,
       "size": 5340753,
       "web": "web/9242198-hd_1920_1080_30fps.mp4",
-      "webSize": 2433664
+      "webSize": 2433664,
+      "tags": [
+        "couple",
+        "reading",
+        "book",
+        "people",
+        "home",
+        "education",
+        "learning",
+        "relax"
+      ],
+      "category": "people"
     },
     {
       "file": "forest-49981-pixabay.mp4",
@@ -82,7 +147,18 @@
       "duration": 41.22,
       "size": 29753626,
       "web": "web/forest-49981-pixabay.mp4",
-      "webSize": 24768836
+      "webSize": 24768836,
+      "tags": [
+        "tree",
+        "meadow",
+        "fog",
+        "morning",
+        "nature",
+        "field",
+        "grass",
+        "environment"
+      ],
+      "category": "nature"
     },
     {
       "file": "netherlands-382582-pixabay.mp4",
@@ -94,7 +170,18 @@
       "duration": 12.21,
       "size": 49956850,
       "web": "web/netherlands-382582-pixabay.mp4",
-      "webSize": 9690135
+      "webSize": 9690135,
+      "tags": [
+        "forest",
+        "trees",
+        "sunlight",
+        "nature",
+        "woods",
+        "environment",
+        "green",
+        "light"
+      ],
+      "category": "nature"
     }
   ]
 }
