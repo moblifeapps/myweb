@@ -912,10 +912,6 @@
   #loadPanel.compact > h2.ttl { margin: -14px -18px 10px; }
 
   .pxlive { font-size: 12px; color: var(--text2); margin-left: 8px; }
-  .pxcard .st input { margin-top: 8px; width: min(520px, 100%); padding: 7px 10px; font: inherit; font-size: 13px;
-    background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 6px; }
-  .pxtest { list-style: none; margin: 8px 0 0; padding: 0; font-size: 12.5px; display: grid; gap: 3px; }
-  .pxtest .ok { color: var(--green); } .pxtest .bad { color: var(--red); } .pxtest .wait { color: var(--text2); }
 
   /* what applies to the slide: the slide itself (violet frame) and its three actions (accent border) – both themes */
   :root:not([data-x]), :root[data-theme="dark"] { --slide-frame: #a78bfa; }
@@ -1566,12 +1562,6 @@
   </div></div>
       <div class="setcard"><svg class="ic"><use href="#i-menu"/></svg><div class="st"><b>Navigation</b><span>Show the menu with names, or icons only</span></div>
         <div class="seg" id="navSeg"><button data-nav="full">Expanded</button><button data-nav="compact">Compact</button></div></div>
-      <div class="grouptitle">Pixabay</div>
-      <div class="setcard pxcard"><svg class="ic"><use href="#i-film"/></svg><div class="st"><b>Pixabay search</b>
-          <span>Your Cloudflare Worker searches all of Pixabay and helps download clips. The test checks every part from this browser.</span>
-          <input type="url" id="pxProxyIn" placeholder="https://pixquery.mlapplications.com" spellcheck="false">
-          <ul class="pxtest" id="pxTestOut"></ul></div>
-        <button id="pxTestBtn"><svg class="ic"><use href="#i-gauge"/></svg>Test</button></div>
       <div class="grouptitle">Storage</div>
       <div class="setcard"><svg class="ic"><use href="#i-sound"/></svg><div class="st"><b>Downloaded voices</b><span id="voiceCacheInfo">Voice models are kept by your browser after the first download</span></div>
         <button id="clearVoicesBtn"><svg class="ic"><use href="#i-trash2"/></svg>Remove</button></div>
@@ -1604,9 +1594,10 @@
   const GALLERY_DIR = './video-backgrounds/';
   const PIXABAY_LIST = './pixabay_videos.json';      // same list as the Desktop Live Wallpaper+ gallery
   // Your Cloudflare Worker (WINDOWS APPS\PIXABAY_PROXY_CLOUDFLARE): live search of all of Pixabay + clip downloads.
-  // Leave '' to search only pixabay_videos.json. Settings → "Pixabay search" can try another address in this browser.
+  // Leave '' to search only pixabay_videos.json.
   const PIXABAY_PROXY_DEFAULT = 'https://pixquery.mlapplications.com';
-  const pxProxy = () => { try { return (localStorage.getItem('pptxPxProxy') || PIXABAY_PROXY_DEFAULT).trim().replace(/\/+$/, ''); } catch { return PIXABAY_PROXY_DEFAULT; } };
+  const pxProxy = () => PIXABAY_PROXY_DEFAULT.replace(/\/+$/, '');
+  try { localStorage.removeItem('pptxPxProxy'); } catch {}
   let lastVideoUrl = null;
 
   const newSlideState = (text = '') => ({
@@ -3851,52 +3842,6 @@ ${parts.join('\n\n')}
 
 
 
-  // ── Settings → Pixabay: Worker address (this browser) + a test of search and downloads
-  $('pxProxyIn').value = pxProxy();
-  $('pxProxyIn').addEventListener('change', () => {
-    const v = $('pxProxyIn').value.trim().replace(/\/+$/, '');
-    try { if (v && v !== PIXABAY_PROXY_DEFAULT) localStorage.setItem('pptxPxProxy', v); else localStorage.removeItem('pptxPxProxy'); } catch {}
-    pxLiveDone.clear(); pxDirect = null; try { sessionStorage.removeItem('pptxPxDirect'); } catch {}
-  });
-  $('pxTestBtn').addEventListener('click', async () => {
-    const out = $('pxTestOut'), btn = $('pxTestBtn');
-    $('pxProxyIn').dispatchEvent(new Event('change'));
-    const proxy = pxProxy();
-    out.innerHTML = ''; btn.disabled = true;
-    const line = (ok, text) => { const li = document.createElement('li'); li.className = ok === null ? 'wait' : ok ? 'ok' : 'bad'; li.textContent = (ok === null ? '… ' : ok ? '✓ ' : '✗ ') + text; out.appendChild(li); return li; };
-    const timed = async (url, opts) => { const t0 = performance.now(); const r = await fetch(url, { credentials: 'omit', cache: 'no-store', ...opts }); const b = await r.arrayBuffer(); return { r, bytes: b.byteLength, ms: performance.now() - t0 }; };
-    const rate = (x) => `${fmtSize(x.bytes)} in ${(x.ms / 1000).toFixed(1)} s (${fmtSize(x.bytes / Math.max(0.05, x.ms / 1000))}/s)`;
-    let clip = null;
-    try {
-      if (!proxy) line(false, 'No Worker address – enter it above (only the clips in pixabay_videos.json can be searched without it).');
-      else {
-        try {
-          const h = await (await fetch(proxy + '/health', { credentials: 'omit', cache: 'no-store' })).json();
-          line(h.ok && h.key, `Worker v${h.version} answers${h.key ? ' and has the API key' : ' – but PIXABAY_KEY is not set'}`);
-        } catch (err) { line(false, 'Worker not reachable (wrong address, or this site is not in ALLOWED_ORIGINS): ' + err.message); }
-        try {
-          const t0 = performance.now();
-          const r = await fetch(proxy + '/videos?q=citrus&per_page=200', { credentials: 'omit' });
-          const d = await r.json();
-          if (!r.ok) throw new Error(d.error || r.status);
-          line(true, `Search "citrus": ${d.total} clips on Pixabay, ${d.items.length} returned in ${((performance.now() - t0) / 1000).toFixed(1)} s`);
-          clip = d.items.find(x => x.pv) || null;
-        } catch (err) { line(false, 'Search failed: ' + err.message); }
-      }
-      if (!clip) { const v = gallery.find(x => x.px); if (v) clip = { pv: v.preview, m: v.dl }; }
-      if (!clip) { line(false, 'No Pixabay clip to test the download with.'); return; }
-      const url = clip.pv || clip.m;
-      const w1 = line(null, 'Download straight from Pixabay…');
-      try { const x = await timed(url, { mode: 'cors' }); w1.className = x.r.ok ? 'ok' : 'bad'; w1.textContent = (x.r.ok ? '✓ Straight from Pixabay works: ' : '✗ Pixabay answered ' + x.r.status + ': ') + rate(x); if (x.r.ok) { pxDirect = 'ok'; } }
-      catch (err) { w1.className = 'bad'; w1.textContent = '✗ Straight from Pixabay is blocked by this browser (' + err.message + ')' + (proxy ? ' – the Worker will be used' : ''); pxDirect = 'blocked'; }
-      try { sessionStorage.setItem('pptxPxDirect', pxDirect); } catch {}
-      if (proxy) {
-        const w2 = line(null, 'Download through the Worker…');
-        try { const x = await timed(`${proxy}/file?u=${encodeURIComponent(url)}`); w2.className = x.r.ok ? 'ok' : 'bad'; w2.textContent = (x.r.ok ? '✓ Through the Worker works: ' : '✗ Worker answered ' + x.r.status + ': ') + rate(x); }
-        catch (err) { w2.className = 'bad'; w2.textContent = '✗ Through the Worker failed: ' + err.message; }
-      }
-    } finally { btn.disabled = false; }
-  });
 
   // ── Create page: step bar (1 file, 2 design, 3 create) follows the scroll position
   (function stepBar() {
