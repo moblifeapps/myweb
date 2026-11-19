@@ -52,7 +52,8 @@ export class TtsClient {
         } else p.resolve(m);
       };
       w.onerror = (e) => {
-        for (const [id, p] of this.pending) { p.reject(new Error(e.message || 'TTS worker failed')); this.pending.delete(id); }
+        for (const [id, p] of this.pending) { if (p.engine !== engine) continue; p.reject(new Error(e.message || 'TTS worker failed')); this.pending.delete(id); }
+        this.reset(engine);
       };
       this.workers[engine] = w;
     }
@@ -99,6 +100,19 @@ export class TtsClient {
   async speak(engine, { text, voice, speed = 1, speaker = 0 }, audioCtx, onProgress) {
     const m = await this._call(engine, { type: 'speak', text, voice, speed, speaker }, onProgress);
     return pcmToBuffer(m.pcm, m.sampleRate, audioCtx);
+  }
+
+  /**
+   * Throw an engine's worker away (its WebAssembly memory goes with it). The next call starts a fresh one,
+   * which reads the model from the browser cache – no new download.
+   */
+  reset(engine) {
+    const w = this.workers[engine];
+    if (!w) return;
+    for (const [id, p] of this.pending) if (p.engine === engine) { this.pending.delete(id); p.reject(new Error('Cancelled')); }
+    try { w.terminate(); } catch {}
+    delete this.workers[engine];
+    if (engine === 'kokoro') this.kokoroVoices = null;
   }
 
   /**

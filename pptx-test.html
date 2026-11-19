@@ -1171,7 +1171,7 @@
               <label class="field" id="speakerField">Speaker <select id="ttsSpeaker"></select></label>
               <label class="field" id="kokoroQField">Model
                 <select id="kokoroQ">
-                  <option value="auto">Auto – fastest on this PC (tests GPU and CPU once)</option>
+                  <option value="auto">Auto – compact model, GPU only if it is faster (tested once)</option>
                   <option value="q8|wasm">Compact (≈90 MB, CPU, 1 thread speed)</option>
                   <option value="fp32|wasm">Full (≈330 MB, CPU, uses all threads)</option>
                   <option value="fp32|webgpu">Full on GPU (≈330 MB, WebGPU)</option>
@@ -2218,7 +2218,7 @@
     if (v.engine === 'kokoro' && v.kokoroVoice) $('ttsVoice').value = v.kokoroVoice;
     await fillSpeakers();
     if ($('ttsSpeaker').options.length) $('ttsSpeaker').value = String(v.speaker || 0);
-    $('kokoroQ').value = v.kokoroQ || (navigator.gpu ? 'auto' : KOKORO_CPU());
+    $('kokoroQ').value = v.kokoroQ || 'auto';
     $('ttsSpeed').value = v.speed || 1;
     $('ttsSpeedVal').textContent = (+$('ttsSpeed').value).toFixed(2) + '×';
     updateKokoroAutoUI();
@@ -2227,7 +2227,7 @@
   async function initialVoice() {
     if (defaultVoice) return { ...defaultVoice };
     return { engine: 'piper', lang: await guessLang(), piperKey: '', kokoroVoice: 'af_heart', speaker: 0,
-      kokoroQ: navigator.gpu ? 'auto' : KOKORO_CPU(), speed: 1 };
+      kokoroQ: 'auto', speed: 1 };
   }
 
   /** Save the controls into the current slide whenever the user changes them. */
@@ -2290,7 +2290,7 @@
   // ── Kokoro: pick GPU or CPU automatically (measured once per PC, remembered)
   const KOKORO_CPU = () => (self.crossOriginIsolated && (navigator.hardwareConcurrency || 2) >= 4) ? 'fp32|wasm' : 'q8|wasm';
   const AUTO_KEY = 'pptxKokoroAuto';
-  function savedAuto() { try { const s = JSON.parse(localStorage.getItem(AUTO_KEY) || 'null'); return s && s.cpu === KOKORO_CPU() ? s : null; } catch { return null; } }
+  function savedAuto() { try { const s = JSON.parse(localStorage.getItem(AUTO_KEY) || 'null'); return s && s.v === 2 && s.cpu === KOKORO_CPU() ? s : null; } catch { return null; } }
   const autoLabel = (c) => c.endsWith('webgpu') ? 'GPU' : c.startsWith('fp32') ? 'CPU (full, multi-thread)' : 'CPU (compact)';
   function describeAuto(s) {
     const parts = Object.entries(s.results).map(([c, r]) => `${autoLabel(c)} ${r ? r.toFixed(2) + '×' : 'failed'}`);
@@ -2302,15 +2302,18 @@
     if (s) return s.choice;
     return await calibrateKokoro(onProgress);
   }
+  /**
+   * Auto: start with the compact CPU model (≈90 MB, works everywhere). Only if that is slower than real time
+   * and the browser has a GPU, try the GPU model too. Each test runs in a fresh worker – two models in one
+   * worker overflow its WebAssembly memory ("memory access out of bounds").
+   */
   async function calibrateKokoro(onProgress) {
-    const cands = [];
-    try { if (navigator.gpu && await navigator.gpu.requestAdapter()) cands.push('fp32|webgpu'); } catch {}
-    cands.push(KOKORO_CPU());
     const results = {};
     let lastErr = null;
     const text = 'This is a short speed test, so we can choose the fastest way to speak on this computer.';
-    for (const c of cands) {
+    const test = async (c) => {
       const [dtype, device] = c.split('|');
+      tts.reset('kokoro'); ensureVoice.loaded = null;
       try {
         setTtsStatus(`Auto: loading Kokoro for the ${autoLabel(c)} test…`);
         await tts.load('kokoro', { dtype, device }, onProgress);
@@ -2320,14 +2323,21 @@
         const t0 = performance.now();
         const buf = await tts.speak('kokoro', { text, voice: 'af_heart' }, audioCtx());
         results[c] = buf.duration / ((performance.now() - t0) / 1000);
-      } catch (err) { console.warn('Kokoro test failed for', c, err); results[c] = 0; lastErr = err; }
-    }
+      } catch (err) {
+        console.warn('Kokoro test failed for', c, err); results[c] = 0; lastErr = err;
+        tts.reset('kokoro'); ensureVoice.loaded = null;
+      }
+    };
+    await test('q8|wasm');
+    let gpu = false;
+    try { gpu = !!(navigator.gpu && await navigator.gpu.requestAdapter()); } catch {}
+    if (gpu && (results['q8|wasm'] || 0) < 1.2) await test('fp32|webgpu');
     const best = Object.entries(results).sort((a, b) => b[1] - a[1])[0];
     if (!best || !best[1]) {
       if (lastErr && /download|internet/i.test(lastErr.message)) throw lastErr;
-      throw new Error('Kokoro could not run on this PC (GPU and CPU tests failed). Try Piper.');
+      throw new Error('Kokoro could not run on this PC. Try Piper.');
     }
-    const s = { choice: best[0], cpu: KOKORO_CPU(), results, at: Date.now() };
+    const s = { choice: best[0], cpu: KOKORO_CPU(), results, at: Date.now(), v: 2 };
     try { localStorage.setItem(AUTO_KEY, JSON.stringify(s)); } catch {}
     setTtsStatus(describeAuto(s));
     return s.choice;
@@ -2353,7 +2363,7 @@
     const onProgress = (p) => {
       if (p.label === 'sentence' || p.label === 'sentence-done') return;
       setBar(bar, p.total ? p.loaded / p.total : null);
-      setTtsStatus(`Downloading ${p.label}… ${fmtSize(p.loaded)}${p.total ? ' / ' + fmtSize(p.total) : ''}`);
+      setTtsStatus(`${p.cached ? 'Loading' : 'Downloading'} ${p.label}… ${fmtSize(p.loaded)}${p.total ? ' / ' + fmtSize(p.total) : ''}`);
     };
     try {
       if (v.engine === 'kokoro') {
@@ -2362,6 +2372,7 @@
         if (device === 'webgpu' && !navigator.gpu) throw new Error('WebGPU is not available in this browser – choose a CPU model.');
         if (ensureVoice.loaded !== 'kokoro|' + cfg) {
           setTtsStatus('Loading Kokoro…');
+          if (ensureVoice.loaded?.startsWith('kokoro|')) tts.reset('kokoro');   // never two Kokoro models in one worker
           await tts.load('kokoro', { dtype, device }, onProgress);
           ensureVoice.loaded = 'kokoro|' + cfg;
         }
@@ -2382,11 +2393,26 @@
     }
   }
 
+  const WASM_CRASH = /memory access out of bounds|out of memory|RuntimeError|Aborted|unreachable|worker failed/i;
   async function speakText(text, v, onProgress) {
-    const cfg = await ensureVoice(v);
-    setTtsStatus(`Voice ready: ${cfg.label}.`);
-    const buf = await tts.speak(cfg.engine, { text, voice: cfg.voice, speed: cfg.speed, speaker: cfg.speaker }, audioCtx(), onProgress);
-    return { buf, label: cfg.label };
+    for (let attempt = 0; ; attempt++) {
+      const cfg = await ensureVoice(v);
+      setTtsStatus(`Voice ready: ${cfg.label}.`);
+      try {
+        const buf = await tts.speak(cfg.engine, { text, voice: cfg.voice, speed: cfg.speed, speaker: cfg.speaker }, audioCtx(), onProgress);
+        return { buf, label: cfg.label };
+      } catch (err) {
+        if (attempt > 0 || !WASM_CRASH.test(String(err?.message || err))) throw err;
+        // the engine crashed: start it again (from the browser cache) and retry once, on the compact model for Kokoro
+        console.warn('TTS engine crashed, restarting it', err);
+        tts.reset(cfg.engine); ensureVoice.loaded = null;
+        if (cfg.engine === 'kokoro' && !String(v.kokoroQ).startsWith('q8')) {
+          v = { ...v, kokoroQ: 'q8|wasm' };
+          try { localStorage.setItem(AUTO_KEY, JSON.stringify({ choice: 'q8|wasm', cpu: KOKORO_CPU(), results: { 'q8|wasm': 1 }, at: Date.now(), v: 2 })); } catch {}
+        }
+        setTtsStatus('The voice engine ran out of memory – restarting it…');
+      }
+    }
   }
 
   $('ttsTestBtn').addEventListener('click', async () => {

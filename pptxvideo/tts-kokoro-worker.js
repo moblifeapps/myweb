@@ -15,16 +15,18 @@ let tts = null, loadedKey = '';
 async function load(id, dtype, device) {
   const key = dtype + '|' + device;
   if (tts && loadedKey === key) return;
-  const files = new Map();
+  const files = new Map(), fetched = new Set();
   if (tts) { try { await tts.model?.dispose?.(); } catch {} tts = null; loadedKey = ''; }
   tts = await KokoroTTS.from_pretrained(MODEL, {
     dtype, device,
     progress_callback: (p) => {
+      if (p.status === 'download' && p.file) fetched.add(p.file);      // only sent when the file is not in the browser cache
       if (p.status === 'progress' && p.file) {
         files.set(p.file, { loaded: p.loaded || 0, total: p.total || 0 });
         let loaded = 0, total = 0;
         for (const f of files.values()) { loaded += f.loaded; total += f.total; }
-        postMessage({ type: 'progress', id, loaded, total, label: 'Kokoro model' });
+        postMessage({ type: 'progress', id, loaded, total, label: fetched.size ? 'Kokoro model' : 'Kokoro model (from the browser cache)',
+          cached: !fetched.size });
       }
     },
   });
