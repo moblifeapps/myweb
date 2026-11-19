@@ -903,6 +903,13 @@
   #voiceStatus:empty { display: none; }
   #loadPanel.compact > h2.ttl { display: flex; margin: 2px 0 10px; }
   #loadPanel.compact { padding: 14px 18px; }
+
+  /* the heading of the step you are in stays under the step bar while you scroll */
+  .page[data-page="create"] .panel > h2.ttl { position: sticky; top: var(--stick-top, 84px); z-index: 15;
+    margin: -16px -18px 14px; padding: 12px 18px 10px; border-radius: calc(var(--radius) + 4px) calc(var(--radius) + 4px) 0 0;
+    background: color-mix(in srgb, var(--surface) 55%, var(--bg)); border-bottom: 1px solid transparent; }
+  .page[data-page="create"] .panel > h2.ttl.stuck { border-bottom-color: var(--border); border-radius: 0; box-shadow: 0 6px 12px rgba(0,0,0,.18); }
+  #loadPanel.compact > h2.ttl { margin: -14px -18px 10px; }
 </style>
 </head>
 <body>
@@ -1143,7 +1150,7 @@
           <div class="progress" id="ttsProgress"><div></div></div>
           <div class="status oneline" id="ttsStatus">The voice model downloads once, then your browser keeps it.</div>
           <div class="toolbar" style="margin-top:10px; border-top:1px solid var(--border); padding-top:12px">
-            <button id="genAllBtn" title="Voices every slide with narration on, each with its own voice; skips slides you recorded yourself"><svg class="ic"><use href="#i-spark"/></svg>Generate all slides</button>
+            <button id="genAllBtn" title="Turns narration on for every slide and voices the whole presentation with this voice – only slides without up-to-date audio are generated; your own recordings are kept"><svg class="ic"><use href="#i-spark"/></svg>Generate all slides</button>
             <button id="genStopBtn" disabled><svg class="ic f"><use href="#i-stop"/></svg>Stop</button>
             <span class="spacer"></span>
             <span id="narrTotal" class="muted"></span>
@@ -1696,7 +1703,51 @@
     }
   }
 
+  // ── Thumbnails: the slide as it will appear – over the first frame of its background video
+  let plainThumbs = [], thumbSig = [];
+  const thumbQ = new Set();
+  let thumbBusy = false;
+  function copyCanvas(src) {
+    const c = document.createElement('canvas');
+    c.width = src.width; c.height = src.height;
+    c.getContext('2d').drawImage(src, 0, 0);
+    return c;
+  }
+  const thumbSigOf = (i) => {
+    const s = slides[i], b = s?.bg;
+    return !b ? '' : [b.file || b.title, !!b.source, s.mode, s.inset, s.blend, $('readMode').value, $('readStrength').value].join('|');
+  };
+  function paintThumb(i, src) {
+    const c = document.querySelector(`.thumb[data-index="${i}"] canvas`);
+    if (!c || !src) return;
+    c.getContext('2d').drawImage(src, 0, 0, c.width, c.height);
+  }
+  function queueThumb(i) { if (renderer && slides[i]) { thumbQ.add(i); runThumbQueue(); } }
+  async function runThumbQueue() {
+    if (thumbBusy) return;
+    thumbBusy = true;
+    try {
+      while (thumbQ.size) {
+        if (job || slideJob || trans.job || genBusy) { await new Promise(r => setTimeout(r, 600)); continue; }
+        const i = thumbQ.values().next().value;
+        thumbQ.delete(i);
+        const sig = thumbSigOf(i), b = slides[i]?.bg;
+        if (sig === thumbSig[i]) continue;
+        if (!b) { paintThumb(i, plainThumbs[i]); thumbSig[i] = sig; continue; }
+        if (!b.source) continue;                           // Pixabay clip still downloading – queued again when it is here
+        const pv = new PptxVideo(renderer, previewSettings(640));
+        try {
+          await pv.prepareSlide(i);
+          pv.liveFrame();
+          if (thumbSigOf(i) === sig) { paintThumb(i, pv.out); thumbSig[i] = sig; }
+        } catch (err) { console.warn('Thumbnail with background failed', i + 1, err); }
+        finally { pv.dispose(); }
+      }
+    } finally { thumbBusy = false; }
+  }
+
   async function buildThumbnails() {
+    plainThumbs = []; thumbSig = []; thumbQ.clear();
     const thumbs = $('thumbs');
     thumbs.innerHTML = '';
     const n = renderer.slideCount;
@@ -1724,6 +1775,7 @@
       wrap.addEventListener('click', () => { if (!job && !genBusy && recIndex < 0) selectSlide(i); });
       thumbs.appendChild(wrap);
       try { await renderer.renderSlide(i, c, 320); } catch (err) { console.warn('Thumbnail ' + (i + 1) + ' failed', err); }
+      plainThumbs[i] = copyCanvas(c); thumbSig[i] = '';
       setBar($('progress'), 0.5 + 0.5 * (i + 1) / n);
       setStatus(`Rendering thumbnails ${i + 1}/${n}…`);
       updateThumbBadges(i);
@@ -1733,6 +1785,7 @@
   function updateThumbBadges(i) {
     const b = document.querySelector(`.thumb[data-index="${i}"] .badges`);
     if (!b || !slides[i]) return;
+    if (thumbSigOf(i) !== (thumbSig[i] ?? '')) queueThumb(i);
     const s = slides[i];
     b.innerHTML = (s.bg ? '<i class="on" title="Background video">▣</i>' : '') +
       (s.narrOn ? `<i class="${s.buffer ? 'on' : ''}" title="${s.buffer ? 'Narration ready' : 'Narration on, no audio yet'}">♪</i>` : '');
@@ -1838,6 +1891,12 @@
       if (token !== live.token || slideJob) { pv.dispose(); return; }
       live.pv = pv;
       $('stageMsg').textContent = slides[current]?.bg ? `Background: ${slides[current].bg.title}` : '';
+      {
+        const i = current, sig = thumbSigOf(i);
+        pv.liveFrame();
+        if (sig && slides[i].bg.source) { paintThumb(i, pv.out); thumbSig[i] = sig; thumbQ.delete(i); }
+        else if (!sig && thumbSig[i]) { paintThumb(i, plainThumbs[i]); thumbSig[i] = ''; }
+      }
       const loop = () => {
         if (live.pv !== pv) return;
         pv.liveFrame();
@@ -2054,7 +2113,7 @@
     refreshLive();
     if (bg?.px && !bg.source) {
       pxNotify();
-      ensureBackgrounds().then(() => { loadBgUI(); refreshLive(); })
+      ensureBackgrounds().then(() => { loadBgUI(); refreshLive(); slides.forEach((_, k) => updateThumbBadges(k)); })
         .catch((err) => { loadBgUI(); $('bgName').textContent = '⚠ ' + err.message; });
     }
   }
@@ -2097,6 +2156,7 @@
     refreshLive();
   });
   for (const id of ['readMode', 'readStrength', 'bgLoop']) $(id).addEventListener('input', refreshLive);
+  for (const id of ['readMode', 'readStrength']) $(id).addEventListener('change', () => slides.forEach((_, k) => updateThumbBadges(k)));
 
   $('bgApplyAll').addEventListener('click', () => {
     const s = slides[current];
@@ -2736,7 +2796,41 @@
     finally { genHook = null; setGenBusy(false); }
     return done;
   }
-  $('genAllBtn').addEventListener('click', () => generateAll());
+  /**
+   * "Generate all slides": the whole presentation in the voice shown now – narration is turned on for every
+   * slide that has something to say (its notes, or else the text written on it), each gets this exact voice,
+   * and only slides whose audio is missing or was made with another voice / text are generated.
+   * Slides you recorded yourself are kept.
+   */
+  async function generateWholeDeck() {
+    const cur = slides[current];
+    if (!cur || genBusy) return;
+    const v = { ...(cur.narrOn && cur.voice ? cur.voice : (defaultVoice || await initialVoice())) };
+    defaultVoice = { ...v };
+    let filled = 0, turnedOn = 0, silent = 0;
+    setTtsStatus('Preparing every slide…');
+    for (let i = 0; i < slides.length; i++) {
+      const t = slides[i];
+      if (t.kind === 'rec' && t.buffer) { if (!t.narrOn) { t.narrOn = true; turnedOn++; } continue; }   // your own recording stays
+      if (!cleanForSpeech(t.text)) {
+        let txt = slideTextCache.get(i);
+        if (txt == null) { try { txt = await slideText(renderer, i); } catch { txt = ''; } slideTextCache.set(i, txt); }
+        if (txt.trim()) { t.text = txt.trim(); filled++; }
+      }
+      if (!cleanForSpeech(t.text)) { silent++; continue; }        // nothing to say: keeps the normal hold time
+      if (!t.narrOn) { t.narrOn = true; turnedOn++; }
+      t.voice = { ...v };
+      updateThumbBadges(i);
+    }
+    await loadNarrationUI();
+    updateNarrTotal();
+    const notes = [turnedOn && `narration turned on for ${turnedOn} slide${turnedOn === 1 ? '' : 's'}`,
+      filled && `${filled} took their text from the slide`, silent && `${silent} without any text stay silent`].filter(Boolean).join(', ');
+    if (notes) setTtsStatus(notes[0].toUpperCase() + notes.slice(1) + '.');
+    const made = await generateAll();
+    if (notes && made >= 0 && !genAbort && !$('ttsStatus').classList.contains('error')) setTtsStatus(`Done – ${made} slide${made === 1 ? '' : 's'} generated; ${notes}.`);
+  }
+  $('genAllBtn').addEventListener('click', () => generateWholeDeck());
   $('genStopBtn').addEventListener('click', () => { cancelGeneration(); setTtsStatus('Generation stopped.'); });
 
   // ── record your own voice (current slide)
@@ -3679,6 +3773,19 @@ ${parts.join('\n\n')}
     }));
     $('content').addEventListener('scroll', update, { passive: true });
     setInterval(update, 800);                               // also catches the file being loaded
+    // headings stick right under the step bar: keep --stick-top equal to its height
+    const bar = $('stepBar');
+    const setTop = () => $('content').style.setProperty('--stick-top', (bar.offsetHeight - 1) + 'px');
+    new ResizeObserver(setTop).observe(bar); setTop();
+    const heads = [...document.querySelectorAll('.page[data-page="create"] .panel > h2.ttl')];
+    const markStuck = () => {
+      const lim = bar.getBoundingClientRect().bottom + 8;
+      for (const h of heads) {
+        const p = h.parentElement.getBoundingClientRect();
+        h.classList.toggle('stuck', p.top < lim - 8 && p.bottom > lim + h.offsetHeight);
+      }
+    };
+    $('content').addEventListener('scroll', markStuck, { passive: true });
     update();
   })();
 
