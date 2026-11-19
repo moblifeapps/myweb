@@ -910,6 +910,12 @@
     background: color-mix(in srgb, var(--surface) 55%, var(--bg)); border-bottom: 1px solid transparent; }
   .page[data-page="create"] .panel > h2.ttl.stuck { border-bottom-color: var(--border); border-radius: 0; box-shadow: 0 6px 12px rgba(0,0,0,.18); }
   #loadPanel.compact > h2.ttl { margin: -14px -18px 10px; }
+
+  .pxlive { font-size: 12px; color: var(--text2); margin-left: 8px; }
+  .pxcard .st input { margin-top: 8px; width: min(520px, 100%); padding: 7px 10px; font: inherit; font-size: 13px;
+    background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 6px; }
+  .pxtest { list-style: none; margin: 8px 0 0; padding: 0; font-size: 12.5px; display: grid; gap: 3px; }
+  .pxtest .ok { color: var(--green); } .pxtest .bad { color: var(--red); } .pxtest .wait { color: var(--text2); }
 </style>
 </head>
 <body>
@@ -1284,6 +1290,7 @@
         <span id="bgChips" class="chips"></span>
         <span class="spacer"></span>
         <input type="search" id="bgSearch" placeholder="Search tags, e.g. ocean, city, forest…">
+        <span class="pxlive" id="bgLive"></span>
       </div>
       <div id="gallery" class="gallery"></div>
     </div>
@@ -1313,7 +1320,7 @@
         </div>
         <p class="qlead" id="qBgLead"></p>
         <div class="bgfilter"><span class="muted" id="qGalleryCount"></span><span class="spacer"></span>
-          <input type="search" id="qSearch" placeholder="Search tags, e.g. ocean, city, forest…"></div>
+          <input type="search" id="qSearch" placeholder="Search tags, e.g. ocean, city, forest…"><span class="pxlive" id="qLive"></span></div>
         <div id="qGallery" class="gallery qgallery"></div>
       </section>
       <section class="qstep" data-step="2">
@@ -1471,7 +1478,7 @@
     <div class="pagehead"><h1>Video Gallery</h1><p>More than 2,000 background videos from Pixabay, sorted by category and tags. Hover a clip to preview it; it is downloaded to your browser only when you use it.</p></div>
     <div class="pagebody">
       <div class="bgfilter"><span id="vgChips" class="chips"></span><span class="spacer"></span><input type="search" id="vgSearch" placeholder="Search tags, e.g. ocean, city, forest…"></div>
-      <div class="muted" id="vgCount" style="font-size:12px"></div>
+      <div class="muted" id="vgCount" style="font-size:12px"></div><div class="pxlive" id="vgLive"></div>
       <div class="vg-grid" id="vgGrid"></div>
       <p class="hint linkrow">Videos from <a href="https://pixabay.com/" target="_blank" rel="noopener">Pixabay</a> and Pexels, free to use under their licences.</p>
     </div>
@@ -1543,6 +1550,12 @@
   </div></div>
       <div class="setcard"><svg class="ic"><use href="#i-menu"/></svg><div class="st"><b>Navigation</b><span>Show the menu with names, or icons only</span></div>
         <div class="seg" id="navSeg"><button data-nav="full">Expanded</button><button data-nav="compact">Compact</button></div></div>
+      <div class="grouptitle">Pixabay</div>
+      <div class="setcard pxcard"><svg class="ic"><use href="#i-film"/></svg><div class="st"><b>Pixabay search</b>
+          <span>Your Cloudflare Worker searches all of Pixabay and helps download clips. The test checks every part from this browser.</span>
+          <input type="url" id="pxProxyIn" placeholder="https://mla-pixabay.<your-account>.workers.dev" spellcheck="false">
+          <ul class="pxtest" id="pxTestOut"></ul></div>
+        <button id="pxTestBtn"><svg class="ic"><use href="#i-gauge"/></svg>Test</button></div>
       <div class="grouptitle">Storage</div>
       <div class="setcard"><svg class="ic"><use href="#i-sound"/></svg><div class="st"><b>Downloaded voices</b><span id="voiceCacheInfo">Voice models are kept by your browser after the first download</span></div>
         <button id="clearVoicesBtn"><svg class="ic"><use href="#i-trash2"/></svg>Remove</button></div>
@@ -1574,6 +1587,10 @@
   let gallery = [];
   const GALLERY_DIR = './video-backgrounds/';
   const PIXABAY_LIST = './pixabay_videos.json';      // same list as the Desktop Live Wallpaper+ gallery
+  // Your Cloudflare Worker (WINDOWS APPS\PIXABAY_PROXY_CLOUDFLARE): live search of all of Pixabay + clip downloads.
+  // Leave '' to search only pixabay_videos.json. Settings → "Pixabay search" can try another address in this browser.
+  const PIXABAY_PROXY_DEFAULT = '';
+  const pxProxy = () => { try { return (localStorage.getItem('pptxPxProxy') || PIXABAY_PROXY_DEFAULT).trim().replace(/\/+$/, ''); } catch { return PIXABAY_PROXY_DEFAULT; } };
   let lastVideoUrl = null;
 
   const newSlideState = (text = '') => ({
@@ -2004,9 +2021,7 @@
       let cache = null, r = null;
       try { cache = await caches.open(PX_CACHE); r = await cache.match(url); } catch {}
       if (!r) {
-        try { r = await fetch(url, { mode: 'cors', credentials: 'omit' }); }
-        catch { throw new Error('Pixabay did not let this browser download the clip (network or CORS). Try another clip or upload your own.'); }
-        if (!r.ok) throw new Error(`Pixabay answered ${r.status} for this clip.`);
+        r = await pxFetchClip(url);
         const total = +r.headers.get('content-length') || 0, reader = r.body.getReader(), parts = [];
         let loaded = 0;
         for (;;) {
@@ -2025,6 +2040,65 @@
     })().finally(() => pxJobs.delete(id)));
     return pxJobs.get(id);
   }
+  /** Fetch a Pixabay clip: straight from Pixabay's CDN, or through the Worker when the browser blocks that. */
+  let pxDirect = (() => { try { return sessionStorage.getItem('pptxPxDirect'); } catch { return null; } })();   // 'ok' | 'blocked' | null
+  async function pxFetchClip(url) {
+    const proxy = pxProxy();
+    if (pxDirect !== 'blocked' || !proxy) {
+      try {
+        const r = await fetch(url, { mode: 'cors', credentials: 'omit' });
+        if (r.ok) { pxDirect = 'ok'; try { sessionStorage.setItem('pptxPxDirect', 'ok'); } catch {} return r; }
+        if (!proxy) throw new Error(`Pixabay answered ${r.status} for this clip.`);
+      } catch (err) {
+        if (!proxy) throw new Error(/answered/.test(err.message) ? err.message
+          : 'Pixabay did not let this browser download the clip (network or CORS). Try another clip or upload your own.');
+        pxDirect = 'blocked'; try { sessionStorage.setItem('pptxPxDirect', 'blocked'); } catch {}
+      }
+    }
+    let r;
+    try { r = await fetch(`${proxy}/file?u=${encodeURIComponent(url)}`, { credentials: 'omit' }); }
+    catch { throw new Error('Could not reach the Pixabay proxy – check the internet connection.'); }
+    if (!r.ok) throw new Error(`The Pixabay proxy answered ${r.status} for this clip.`);
+    return r;
+  }
+
+  // ── Live search of all of Pixabay through the Worker (results join the gallery; 24 h cache on the Worker)
+  const pxLiveDone = new Map();          // query -> Promise<number of new clips>
+  let pxLiveTimer = 0;
+  function pxLiveSearch(q, rerender, statusEl) {
+    q = (q || '').trim().toLowerCase();
+    clearTimeout(pxLiveTimer);
+    if (statusEl) statusEl.textContent = '';
+    if (!pxProxy() || q.length < 3) return;
+    pxLiveTimer = setTimeout(async () => {
+      if (!pxLiveDone.has(q)) pxLiveDone.set(q, (async () => {
+        const r = await fetch(`${pxProxy()}/videos?q=${encodeURIComponent(q)}&per_page=200`, { credentials: 'omit' });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.error || `Proxy answered ${r.status}`);
+        let added = 0;
+        for (const x of d.items || []) {
+          if (!x?.i || !x.m || galleryByFile.has('px-' + x.i)) continue;
+          const v = { ...pxEntry(x), live: true };
+          gallery.push(v); galleryByFile.set(v.file, v); added++;
+        }
+        return { added, total: d.total || 0 };
+      })().catch((err) => { pxLiveDone.delete(q); throw err; }));
+      if (statusEl) statusEl.textContent = 'Searching all of Pixabay…';
+      try {
+        const { added, total } = await pxLiveDone.get(q);
+        if (statusEl) statusEl.textContent = total ? `Pixabay has ${total} clip${total === 1 ? '' : 's'} for "${q}"${added ? ` – ${added} added below` : ''}` : `No more clips for "${q}" on Pixabay`;
+        if (added) rerender();
+      } catch (err) { if (statusEl) statusEl.textContent = 'Pixabay search failed: ' + err.message; }
+    }, 450);
+  }
+  /** Search order: clips whose own tags contain the words first, then the ones found through related words. */
+  function bySearch(list, q) {
+    if (!q) return list;
+    const words = q.split(/\s+/).filter(Boolean);
+    const rank = (v) => { const t = plain((v.tags || []).join(' ') + ' ' + (v.title || '')); return words.filter(w => t.includes(w)).length; };
+    return list.map((v, k) => [v, rank(v), k]).sort((a, b) => b[1] - a[1] || a[2] - b[2]).map(x => x[0]);
+  }
+
   function pxNotify() {
     const bg = slides[current]?.bg;
     if (!bg?.px || bg.source) return;
@@ -3025,6 +3099,7 @@
     $('gallery').classList.toggle('show-match', bgView === 'suggested');
     let list = gallery.filter(v => (bgView === 'all' || (bgView === 'suggested' ? bgSugg.has(v.file) : v.category === bgView)) && searchHit(v, q, qTerms));
     if (bgView === 'suggested') list.sort((a, b) => bgSugg.get(b.file).score - bgSugg.get(a.file).score);
+    else list = bySearch(list, q);
     const shown = list.slice(0, bgLimit).map(bgCard);
     for (const c of shown) {
       const sg = bgSugg.get(c.dataset.file), mb = c.querySelector('.mbadge');
@@ -3038,8 +3113,9 @@
     loadBgUI();
   }
   $('bgSearch').addEventListener('input', () => {
-    if (bgView === 'suggested' && $('bgSearch').value.trim()) { bgView = 'all'; buildBgChips(); }   // a search looks through everything
+    if (bgView !== 'all' && $('bgSearch').value.trim()) { bgView = 'all'; buildBgChips(); }   // a search looks through everything
     applyBgFilter();
+    pxLiveSearch($('bgSearch').value, () => applyBgFilter(false), $('bgLive'));
   });
   async function refreshBgSuggestions() {
     bgSugg = new Map((await suggestFor(current)).map(x => [x.v.file, x]));
@@ -3316,7 +3392,7 @@ ${parts.join('\n\n')}
     const g = $('qGallery');
     const q = plain(($('qSearch')?.value || '').trim()), qTerms = searchTerms(q);
     const sel = quick.sel.map(f => galleryByFile.get(f)).filter(Boolean);
-    const rest = gallery.filter(v => !quick.sel.includes(v.file) && searchHit(v, q, qTerms));
+    const rest = bySearch(gallery.filter(v => !quick.sel.includes(v.file) && searchHit(v, q, qTerms)), q);
     const list = [...sel, ...rest.slice(0, qLimit)];
     g.innerHTML = '';
     for (const v of list) {
@@ -3344,7 +3420,10 @@ ${parts.join('\n\n')}
     if (!list.length) g.innerHTML = '<div class="empty" style="grid-column:1/-1;padding:24px">No videos match.</div>';
     paintQuickGallery();
   }
-  $('qSearch').addEventListener('input', () => buildQuickGallery());
+  $('qSearch').addEventListener('input', () => {
+    buildQuickGallery();
+    pxLiveSearch($('qSearch').value, () => buildQuickGallery(false), $('qLive'));
+  });
   function paintQuickGallery() {
     $('qGalleryCount').textContent = `${gallery.length} videos · ${quick.sel.length} selected`;
     document.querySelectorAll('#qGallery .vcard').forEach(el => {
@@ -3750,6 +3829,54 @@ ${parts.join('\n\n')}
   showPage(location.hash.slice(1) || 'create');
 
 
+
+  // ── Settings → Pixabay: Worker address (this browser) + a test of search and downloads
+  $('pxProxyIn').value = pxProxy();
+  $('pxProxyIn').addEventListener('change', () => {
+    const v = $('pxProxyIn').value.trim().replace(/\/+$/, '');
+    try { if (v && v !== PIXABAY_PROXY_DEFAULT) localStorage.setItem('pptxPxProxy', v); else localStorage.removeItem('pptxPxProxy'); } catch {}
+    pxLiveDone.clear(); pxDirect = null; try { sessionStorage.removeItem('pptxPxDirect'); } catch {}
+  });
+  $('pxTestBtn').addEventListener('click', async () => {
+    const out = $('pxTestOut'), btn = $('pxTestBtn');
+    $('pxProxyIn').dispatchEvent(new Event('change'));
+    const proxy = pxProxy();
+    out.innerHTML = ''; btn.disabled = true;
+    const line = (ok, text) => { const li = document.createElement('li'); li.className = ok === null ? 'wait' : ok ? 'ok' : 'bad'; li.textContent = (ok === null ? '… ' : ok ? '✓ ' : '✗ ') + text; out.appendChild(li); return li; };
+    const timed = async (url, opts) => { const t0 = performance.now(); const r = await fetch(url, { credentials: 'omit', cache: 'no-store', ...opts }); const b = await r.arrayBuffer(); return { r, bytes: b.byteLength, ms: performance.now() - t0 }; };
+    const rate = (x) => `${fmtSize(x.bytes)} in ${(x.ms / 1000).toFixed(1)} s (${fmtSize(x.bytes / Math.max(0.05, x.ms / 1000))}/s)`;
+    let clip = null;
+    try {
+      if (!proxy) line(false, 'No Worker address – enter it above (only the clips in pixabay_videos.json can be searched without it).');
+      else {
+        try {
+          const h = await (await fetch(proxy + '/health', { credentials: 'omit', cache: 'no-store' })).json();
+          line(h.ok && h.key, `Worker v${h.version} answers${h.key ? ' and has the API key' : ' – but PIXABAY_KEY is not set'}`);
+        } catch (err) { line(false, 'Worker not reachable (wrong address, or this site is not in ALLOWED_ORIGINS): ' + err.message); }
+        try {
+          const t0 = performance.now();
+          const r = await fetch(proxy + '/videos?q=citrus&per_page=200', { credentials: 'omit' });
+          const d = await r.json();
+          if (!r.ok) throw new Error(d.error || r.status);
+          line(true, `Search "citrus": ${d.total} clips on Pixabay, ${d.items.length} returned in ${((performance.now() - t0) / 1000).toFixed(1)} s`);
+          clip = d.items.find(x => x.pv) || null;
+        } catch (err) { line(false, 'Search failed: ' + err.message); }
+      }
+      if (!clip) { const v = gallery.find(x => x.px); if (v) clip = { pv: v.preview, m: v.dl }; }
+      if (!clip) { line(false, 'No Pixabay clip to test the download with.'); return; }
+      const url = clip.pv || clip.m;
+      const w1 = line(null, 'Download straight from Pixabay…');
+      try { const x = await timed(url, { mode: 'cors' }); w1.className = x.r.ok ? 'ok' : 'bad'; w1.textContent = (x.r.ok ? '✓ Straight from Pixabay works: ' : '✗ Pixabay answered ' + x.r.status + ': ') + rate(x); if (x.r.ok) { pxDirect = 'ok'; } }
+      catch (err) { w1.className = 'bad'; w1.textContent = '✗ Straight from Pixabay is blocked by this browser (' + err.message + ')' + (proxy ? ' – the Worker will be used' : ''); pxDirect = 'blocked'; }
+      try { sessionStorage.setItem('pptxPxDirect', pxDirect); } catch {}
+      if (proxy) {
+        const w2 = line(null, 'Download through the Worker…');
+        try { const x = await timed(`${proxy}/file?u=${encodeURIComponent(url)}`); w2.className = x.r.ok ? 'ok' : 'bad'; w2.textContent = (x.r.ok ? '✓ Through the Worker works: ' : '✗ Worker answered ' + x.r.status + ': ') + rate(x); }
+        catch (err) { w2.className = 'bad'; w2.textContent = '✗ Through the Worker failed: ' + err.message; }
+      }
+    } finally { btn.disabled = false; }
+  });
+
   // ── Create page: step bar (1 file, 2 design, 3 create) follows the scroll position
   (function stepBar() {
     const links = [...document.querySelectorAll('#stepBar a')];
@@ -3851,7 +3978,7 @@ ${parts.join('\n\n')}
     const qTerms = q ? [...termsOf(q).keys()].flatMap(t => [t, ...(SYN[t] || []).map(stem)]) : [];
     const grid = $('vgGrid');
     grid.innerHTML = '';
-    const list = gallery.filter(v => (vgView === 'all' || v.category === vgView) && searchHit(v, q, qTerms));
+    const list = bySearch(gallery.filter(v => (vgView === 'all' || v.category === vgView) && searchHit(v, q, qTerms)), q);
     $('vgCount').textContent = `${list.length} of ${gallery.length} videos${list.length > vgLimit ? ` · showing ${vgLimit}` : ''}`;
     for (const v of list.slice(0, vgLimit)) {
       const el = document.createElement('div');
@@ -3882,7 +4009,11 @@ ${parts.join('\n\n')}
     }
     if (!grid.children.length) grid.innerHTML = '<div class="empty" style="grid-column:1/-1">No videos match.</div>';
   }
-  $('vgSearch').addEventListener('input', () => renderVideoGallery());
+  $('vgSearch').addEventListener('input', () => {
+    if (vgView !== 'all' && $('vgSearch').value.trim()) vgView = 'all';
+    renderVideoGallery();
+    pxLiveSearch($('vgSearch').value, () => renderVideoGallery(false), $('vgLive'));
+  });
 
   // ── Settings actions
   async function showVoiceCache() {
