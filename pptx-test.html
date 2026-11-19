@@ -916,6 +916,21 @@
     background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 6px; }
   .pxtest { list-style: none; margin: 8px 0 0; padding: 0; font-size: 12.5px; display: grid; gap: 3px; }
   .pxtest .ok { color: var(--green); } .pxtest .bad { color: var(--red); } .pxtest .wait { color: var(--text2); }
+
+  /* what applies to the slide: the slide itself (violet frame) and its three actions (accent border) – both themes */
+  :root:not([data-x]), :root[data-theme="dark"] { --slide-frame: #a78bfa; }
+  :root[data-theme="light"] { --slide-frame: #7c3aed; }
+  @media (prefers-color-scheme: light) { :root:not([data-theme]) { --slide-frame: #7c3aed; } }
+  .page[data-page="create"] .narrrow, #bgCard, #avatarCard {
+    border: 1.5px solid color-mix(in srgb, var(--accent) 55%, var(--border));
+    background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, transparent), transparent 70%), var(--surface);
+    transition: border-color .15s, box-shadow .15s; }
+  .page[data-page="create"] .narrrow:hover:not(:disabled), #bgCard:hover, #avatarCard:hover {
+    border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow), 0 6px 18px rgba(0,0,0,.18); }
+  #stage { outline: 2px solid color-mix(in srgb, var(--slide-frame) 60%, transparent); outline-offset: 3px; transition: outline-color .15s, box-shadow .15s; }
+  #stage:hover { outline-color: var(--slide-frame); box-shadow: 0 0 0 7px color-mix(in srgb, var(--slide-frame) 18%, transparent); }
+  .thumb.active { box-shadow: 0 0 0 2px var(--slide-frame), 0 0 14px color-mix(in srgb, var(--slide-frame) 35%, transparent); border-color: var(--slide-frame); }
+  .pxlive.kept { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -1290,6 +1305,7 @@
         <span id="bgChips" class="chips"></span>
         <span class="spacer"></span>
         <input type="search" id="bgSearch" placeholder="Search tags, e.g. ocean, city, forest…">
+        <span class="pxlive kept" id="bgSearchKept" hidden>search kept from the previous slide</span>
         <span class="pxlive" id="bgLive"></span>
       </div>
       <div id="gallery" class="gallery"></div>
@@ -3113,6 +3129,7 @@
     loadBgUI();
   }
   $('bgSearch').addEventListener('input', () => {
+    $('bgSearchKept').hidden = true;
     if (bgView !== 'all' && $('bgSearch').value.trim()) { bgView = 'all'; buildBgChips(); }   // a search looks through everything
     applyBgFilter();
     pxLiveSearch($('bgSearch').value, () => applyBgFilter(false), $('bgLive'));
@@ -3144,9 +3161,13 @@
   $('bgCurrent').addEventListener('click', () => {
     if (!slides[current] || job) return;
     $('bgDlgTitle').textContent = `Background video – slide ${current + 1}`;
-    bgView = 'suggested'; $('bgSearch').value = '';
+    // the last search stays: slides one after another often need similar clips
+    const q = $('bgSearch').value.trim();
+    bgView = q ? 'all' : 'suggested';
+    $('bgSearchKept').hidden = !q;
     $('bgDlg').showModal();
     refreshBgSuggestions();
+    if (q) pxLiveSearch(q, () => applyBgFilter(false), $('bgLive'));
     document.querySelector('#gallery .vcard.selected')?.scrollIntoView({ block: 'nearest' });
   });
 
