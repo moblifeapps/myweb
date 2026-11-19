@@ -7,7 +7,7 @@
 <meta name="robots" content="noindex, nofollow">
 <script>
   // Apply the saved theme before first paint (light / dark; nothing = follow the system)
-  (function () { try { var t = localStorage.getItem('pptxTheme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {} })();
+  (function () { try { var t = localStorage.getItem('pptxTheme'); if (t !== 'auto') document.documentElement.dataset.theme = (t === 'light' ? 'light' : 'dark'); } catch (e) {} })();
 </script>
 <script>
   // Multi-threaded WebAssembly needs a "cross-origin isolated" page. pptx-coi-sw.js adds the two headers
@@ -712,6 +712,197 @@
   button.gloss, button.gloss:hover:not(:disabled), button.gloss:active:not(:disabled) { box-shadow: none !important; transform: none; }
   #vgSearch, #bgSearch { min-width: 260px; padding: 6px 11px; font: inherit; font-size: 14px; }
   #vgSearch:focus, #bgSearch:focus { outline: none; border-bottom: 2px solid var(--accent); }
+
+  /* ═════════════ Transparent Taskbar+ look (same tokens as the other mlapplications.com apps) ═════════════ */
+  :root:not([data-x]), :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0f1117; --surface: #181c27; --surface2: #1e2333; --border: #2a3148;
+    --accent: #5b7fff; --accent-glow: rgba(91,127,255,.18); --green: #3ecf82; --red: #ff5f72; --amber: #f5a623;
+    --text: #e2e8f0; --text2: #8a94a8; --text3: #4e5a72; --nav-active-bg: var(--bg); --bg-icon-color: #3a4152;
+    --hover-mix: #ffffff;
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --bg: #f0f2f8; --surface: #ffffff; --surface2: #e8ecf4; --border: #d0d5e8;
+    --accent: #4a6ef5; --accent-glow: rgba(74,110,245,.14); --green: #16a34a; --red: #dc2626; --amber: #d97706;
+    --text: #1a1f35; --text2: #4a5278; --text3: #8891b0; --nav-active-bg: var(--surface2); --bg-icon-color: #c7ccdb;
+    --hover-mix: #000000;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme]) {
+      color-scheme: light;
+      --bg: #f0f2f8; --surface: #ffffff; --surface2: #e8ecf4; --border: #d0d5e8;
+      --accent: #4a6ef5; --accent-glow: rgba(74,110,245,.14); --green: #16a34a; --red: #dc2626; --amber: #d97706;
+      --text: #1a1f35; --text2: #4a5278; --text3: #8891b0; --nav-active-bg: var(--surface2); --bg-icon-color: #c7ccdb;
+      --hover-mix: #000000;
+    }
+  }
+  /* map the names the rest of the page uses onto those tokens */
+  :root:not([data-x]) {
+    --mica: var(--bg); --layer: var(--bg); --card: var(--surface); --card-stroke: var(--border); --panel: var(--surface); --panel-2: var(--surface2);
+    --ctl: var(--surface2); --ctl-hover: color-mix(in srgb, var(--surface2) 88%, var(--hover-mix)); --ctl-press: var(--surface2);
+    --ctl-stroke: var(--border); --ctl-stroke-bottom: var(--border); --strong-stroke: var(--border); --muted: var(--text2);
+    --accent-hover: color-mix(in srgb, var(--accent) 88%, #fff); --accent-press: color-mix(in srgb, var(--accent) 85%, #000);
+    --accent-fg: #ffffff; --accent-soft: var(--accent-glow); --accent-dark: var(--accent-press); --accent-hi: var(--accent-hover);
+    --input-bg: var(--bg); --track: var(--surface2); --subtle-hover: var(--surface2); --subtle-press: var(--surface2);
+    --danger: var(--red); --ok: var(--green); --warn: var(--amber); --radius: 10px; --smoke: rgba(0,0,0,.55);
+  }
+  body { font-family: "Segoe UI", "Yu Gothic UI", "Malgun Gothic", system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; }
+
+  /* shell: top bar + sidebar + content */
+  .app { display: flex; flex-direction: column; height: 100vh; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 12px 24px;
+    background: var(--surface); border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .topbar-brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .brand-logo svg { width: 40px; height: 40px; display: block; }
+  .topbar-brand-title { font-size: 17px; font-weight: 700; color: var(--text); line-height: 1.15; }
+  .topbar-brand-subtitle { font-size: 11px; color: var(--text2); }
+  .topbar-center { flex: 1; text-align: center; font-size: 11px; color: var(--text2); line-height: 1.5; max-width: 600px; margin: 0 auto; }
+  .topbar-center strong { color: var(--text); }
+  @media (max-width: 760px) { .topbar-center { display: none; } }
+  .app-layout { display: flex; flex: 1; min-height: 0; position: relative; }
+
+  .sidebar { width: 230px; flex-shrink: 0; background: var(--surface); border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; padding: 8px 0 16px; overflow: hidden auto; gap: 0; transition: width .18s ease; }
+  .sidebar-nav { display: flex; flex-direction: column; gap: 2px; margin: 0; padding: 0; }
+  .sidebar-divider { border-bottom: 1px solid var(--border); margin: 0; flex: none; }
+  .sidebar-section-primary, .sidebar-section-settings { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+  .sidebar-section-docs, .sidebar-section-legal { background: color-mix(in srgb, var(--text3) 6%, transparent); }
+  .navitem, .nav-toggle { position: relative; display: flex; align-items: center; gap: 12px; height: auto; min-height: 0;
+    background: transparent; border: none; border-left: 3px solid transparent; border-radius: 0;
+    color: var(--text2); text-align: left; text-decoration: none; white-space: nowrap; overflow: hidden;
+    padding: 14px 20px 14px 17px; cursor: pointer; font-size: 15.5px; font-family: inherit; width: 100%; flex: none; }
+  .navitem:hover, .nav-toggle:hover:not(:disabled) { background: var(--surface2); color: var(--text); }
+  .navitem:active { background: var(--surface2); color: var(--text); }
+  .navitem.on { background: var(--nav-active-bg); color: var(--text); }
+  .navitem.on::before { display: none; }
+  .nav-toggle { padding-top: 10px; padding-bottom: 10px; margin-bottom: 6px; }
+  .nav-icon { font-size: 17px; width: 20px; text-align: center; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
+  .nav-icon svg { width: 19px; height: 19px; display: block; }
+  .nav-label { transition: opacity .12s; }
+  .sidebar-footer { margin-top: auto; padding: 16px 12px 4px; text-align: center; }
+  .sidebar-footer-logo { height: 22px; width: auto; max-width: 96px; object-fit: contain; opacity: .85; }
+  .sidebar-footer-link { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text3); font-size: 11px; text-decoration: none; }
+  .sidebar-footer-link:hover { color: var(--text2); }
+  /* collapsed = icons only (like a WinUI 3 NavigationView in compact mode) */
+  .app.compact .sidebar { width: 62px; }
+  .app.compact .nav-label { opacity: 0; pointer-events: none; }
+  .app.compact .navitem .nav-icon { opacity: 1; pointer-events: auto; }
+  .nav-toggle { justify-content: flex-start; }
+  .app.compact .sidebar-footer-logo { max-width: 40px; }
+  @media (max-width: 900px) {
+    .sidebar { width: 62px; }
+    .app:not(.compact) .sidebar { position: absolute; z-index: 60; top: 0; bottom: 0; left: 0; width: 230px; box-shadow: 8px 0 24px rgba(0,0,0,.35); }
+    .app-layout { padding-left: 62px; } .app-layout > .sidebar { left: 0; } .app.compact .sidebar { position: absolute; top: 0; bottom: 0; left: 0; }
+  }
+
+  .content { flex: 1; min-width: 0; background: var(--bg); border: 0; border-radius: 0; overflow: auto; position: relative; }
+  .content > .page > :not(.view-bg-icon) { position: relative; z-index: 1; }
+  .view-bg-icon { position: fixed; right: 28px; bottom: 24px; width: 190px; aspect-ratio: 1 / 1; color: var(--bg-icon-color);
+    opacity: .20; pointer-events: none; z-index: 0; font-size: 150px; line-height: 190px; text-align: center; filter: grayscale(1); }
+  .view-bg-icon svg { width: 100%; height: 100%; display: block; stroke-width: 1.2; }
+  .pagehead { max-width: 1280px; margin: 0 auto; padding: 24px 24px 4px; }
+  .pagehead h1 { font-family: inherit; font-size: 24px; line-height: 1.25; font-weight: 700; margin: 0 0 4px; }
+  .pagehead p { font-size: 13px; color: var(--text2); margin: 0; }
+
+  /* cards, headings, step circles */
+  .panel, .card, .side-card, .quickrow, .setcard, details.exp, .empty, .vg-card, .narrrow { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+  .panel { background: color-mix(in srgb, var(--surface) 55%, transparent); border-radius: calc(var(--radius) + 4px); }
+  .panel h2.ttl { display: flex; align-items: center; gap: 12px; font-size: 17px; font-weight: 700; }
+  .layer-step { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: #fff; background: linear-gradient(180deg, #1f6fd1 0%, #0a3f8f 100%); }
+  .tic { color: var(--accent); }
+  .grouptitle { font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .06em; margin: 16px 0 4px; }
+
+  /* buttons: secondary / primary like the TTB+ page */
+  button { border-radius: 6px; color: var(--text2); background: var(--surface2); border: 1px solid var(--border); font-family: inherit; }
+  button:hover:not(:disabled) { color: var(--text); background: var(--surface2); border-color: var(--accent); }
+  button:active:not(:disabled) { background: var(--surface2); color: var(--text); }
+  button:disabled { color: var(--text3); background: var(--surface2); opacity: .6; }
+  button:focus-visible { outline: 2px solid #8ab8ff; outline-offset: 2px; }
+  button.primary, .chip.on, .tpill.active { color: #fff; background: var(--accent); border: 1px solid var(--accent); }
+  button.primary:hover:not(:disabled) { background: var(--accent); filter: brightness(1.1); color: #fff; }
+  /* the big actions use the blue tiles from the TTB+ action bar */
+  #quickBtn, #exportBtn, #previewVideoBtn, button.gloss.g-blue, button.gloss.g-white {
+    color: #fff; font-weight: 700; text-shadow: 0 1px 1px rgba(0,0,0,.35); border-radius: 9px; min-height: 44px; padding: 8px 20px;
+    background: linear-gradient(180deg, #1f6fd1 0%, #0f55b5 48%, #0a3f8f 100%); border: 1px solid #3a86e8;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 1px 3px rgba(0,0,0,.35) !important; }
+  #quickBtn:hover:not(:disabled), #exportBtn:hover:not(:disabled), #previewVideoBtn:hover:not(:disabled),
+  button.gloss.g-blue:hover:not(:disabled), button.gloss.g-white:hover:not(:disabled) {
+    background: linear-gradient(180deg, #1f6fd1 0%, #0f55b5 48%, #0a3f8f 100%); filter: brightness(1.12); color: #fff; border-color: #3a86e8; }
+  #quickBtn:active:not(:disabled), #exportBtn:active:not(:disabled), #previewVideoBtn:active:not(:disabled) { filter: brightness(.95); }
+  #quickBtn:disabled, #exportBtn:disabled, #previewVideoBtn:disabled { filter: grayscale(.6) brightness(.8); opacity: .6; }
+  #quickBtn .ic, #exportBtn .ic, #previewVideoBtn .ic { width: 20px; height: 20px; filter: drop-shadow(0 1px 1px rgba(0,0,0,.35)); }
+  button.danger, button.gloss.g-red, button.rec.on { color: #fff; background: var(--red); border-color: var(--red); }
+  button.gloss.g-red:disabled { background: var(--surface2); color: var(--text3); border-color: var(--border); }
+  .seg { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .seg button { border: none; border-radius: 0; background: var(--surface); color: var(--text2); font-size: 12.5px; padding: 7px 13px; min-height: 0; }
+  .seg button + button { border-left: 1px solid var(--border); }
+  .seg button.on, .seg button.on:hover:not(:disabled) { background: var(--accent); color: #fff; }
+
+  /* inputs, switches */
+  label.field input, label.field select, #bgSearch, #vgSearch, #aiBox input[type=text], .nedit textarea, input[type=search], input[type=url], select, textarea {
+    background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 6px; }
+  label.field input:focus, label.field select:focus, #bgSearch:focus, #vgSearch:focus, input[type=search]:focus, textarea:focus { outline: none; border-color: var(--accent); }
+  .switch { width: 46px; height: 26px; }
+  .switch span { border-radius: 26px; background: var(--surface2); border: 1px solid var(--border); }
+  .switch span::after { top: 3px; left: 3px; width: 18px; height: 18px; background: #fff; }
+  .switch input:checked + span { background: var(--accent); border-color: var(--accent); }
+  .switch input:checked + span::after { transform: translateX(20px); background: #fff; }
+
+  /* surfaces */
+  .quickrow { background: linear-gradient(100deg, var(--accent-glow), transparent 70%), var(--surface); }
+  .thumb.active, .vg-card:hover, .setcard:hover { border-color: var(--accent); }
+  .thumb.active { box-shadow: 0 0 0 1px var(--accent), 0 0 16px var(--accent-glow); }
+  .tpill { border-radius: 6px; background: var(--surface2); border: 1px solid var(--border); color: var(--text2); }
+  .chip { border-radius: 12px; background: var(--surface2); border: 1px solid var(--border); }
+  dialog.dlg { background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 24px 64px rgba(0,0,0,.5); }
+  .dlg-f { background: var(--bg); border-top: 1px solid var(--border); }
+  .bo-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+  .s3row > label.field { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; }
+  .narrrow:hover:not(:disabled) { background: var(--surface2); border-color: var(--accent); }
+  .steps .setcard::before { background: linear-gradient(180deg, #1f6fd1 0%, #0a3f8f 100%); color: #fff; }
+  .linkrow a, .nr-open { color: var(--accent); }
+
+  /* ── Create Video: full width, step bar, Advanced settings ── */
+  .page[data-page="create"] .pagehead, .page[data-page="create"] main { max-width: none; }
+  .stepbar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 10px; padding: 10px 14px; margin: 0 0 2px;
+    background: color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border); border-radius: calc(var(--radius) + 4px); box-shadow: 0 6px 18px rgba(0,0,0,.18); }
+  .stepbar a { display: flex; align-items: center; gap: 10px; padding: 6px 12px 6px 6px; border-radius: 10px; text-decoration: none;
+    color: var(--text2); flex: 0 1 auto; min-width: 0; border: 1px solid transparent; transition: background .15s, border-color .15s; }
+  .stepbar a b { display: block; font-size: 15px; color: var(--text); white-space: nowrap; }
+  .stepbar a small { display: block; font-size: 11.5px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .stepbar a:hover { background: var(--surface2); }
+  .stepbar a.on { background: var(--accent-glow); border-color: color-mix(in srgb, var(--accent) 55%, var(--border)); }
+  .stepbar a.off { opacity: .45; pointer-events: none; }
+  .stepbar a.done .layer-step { background: linear-gradient(180deg, #2fb36f 0%, #1c7f4c 100%); }
+  .stepbar a .layer-step { width: 32px; height: 32px; font-size: 15px; }
+  .stepbar .stepline { flex: 1 1 24px; min-width: 16px; height: 2px; border-radius: 2px; background: var(--border); }
+  @media (max-width: 760px) { .stepbar a small { display: none; } .stepbar a b { font-size: 13px; } }
+  .panel { scroll-margin-top: 78px; }
+  .panel > h2.ttl .layer-step { width: 34px; height: 34px; font-size: 16px; }
+  .panel > h2.ttl { font-size: 19px; }
+  .h2sub { font-size: 12.5px; font-weight: 400; color: var(--text2); margin-left: 4px; }
+  .s3simple { margin-bottom: 4px; }
+  details.advanced { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); margin: 6px 0 14px; }
+  details.advanced > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px; padding: 12px 16px; flex-wrap: wrap; }
+  details.advanced > summary::-webkit-details-marker { display: none; }
+  details.advanced > summary .ic { width: 18px; height: 18px; color: var(--accent); }
+  details.advanced > summary .muted { font-size: 12px; flex: 1 1 260px; }
+  details.advanced > summary::after { content: '⌄'; color: var(--text2); font-size: 18px; transition: transform .15s; margin-left: auto; }
+  details.advanced[open] > summary::after { transform: rotate(180deg); }
+  details.advanced[open] > summary { border-bottom: 1px solid var(--border); }
+  details.advanced .adv-body { padding: 4px 16px 14px; }
+  /* gallery extras */
+  .vcard .badge.src { position: absolute; left: 6px; top: 6px; font-size: 10px; padding: 1px 6px; border-radius: 6px; background: rgba(0,0,0,.6); color: #fff; }
+  .vcard.more .vthumb { display: flex; align-items: center; justify-content: center; font-size: 26px; color: var(--accent); }
+  .vcard.more .vtitle { color: var(--accent); font-weight: 600; }
+  .vg-more { grid-column: 1 / -1; justify-self: center; padding: 10px 28px; }
+  #voiceProgress { margin-top: 12px; }
+  #voiceStatus:empty { display: none; }
+  #loadPanel.compact > h2.ttl { display: flex; margin: 2px 0 10px; }
+  #loadPanel.compact { padding: 14px 18px; }
 </style>
 </head>
 <body>
@@ -764,36 +955,60 @@
 </svg>
 
 <div class="app" id="app">
-  <div class="titlebar">
-    <button class="navbtn" id="navToggle" title="Open or close the navigation"><svg class="ic"><use href="#i-menu"/></svg></button>
-    <span class="appicon"><svg class="ic"><use href="#i-create"/></svg></span>
-    <span class="apptitle">PPTX to Video<span>MLApplications · test page</span></span>
+  <div class="topbar">
+    <div class="topbar-brand">
+      <span class="brand-logo" aria-hidden="true"><svg viewBox="0 0 40 40"><defs><linearGradient id="lgPv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a86e8"/><stop offset=".55" stop-color="#0f55b5"/><stop offset="1" stop-color="#5b2bd6"/></linearGradient></defs><rect width="40" height="40" rx="9" fill="url(#lgPv)"/><rect x="7" y="9" width="26" height="18" rx="2.5" fill="none" stroke="#fff" stroke-width="2.2"/><path d="M17.5 13.5v9l7-4.5z" fill="#fff"/><path d="M14 31.5h12" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></span>
+      <div><div class="topbar-brand-title">PPTX to Video</div><div class="topbar-brand-subtitle">Slides, Narration &amp; Transitions</div></div>
+    </div>
+    <div class="topbar-center">Load a PowerPoint file, add narration, background videos and transitions, then press <strong>Create video</strong>. Everything runs in your browser – nothing is uploaded.</div>
   </div>
-  <nav class="navpane" id="navPane" aria-label="Main">
-    <a class="navitem" href="#create" data-page="create" title="Create"><svg class="ic"><use href="#i-create"/></svg><span>Create</span></a>
-    <a class="navitem" href="#history" data-page="history" title="History"><svg class="ic"><use href="#i-history"/></svg><span>History</span></a>
-    <a class="navitem" href="#videos" data-page="videos" title="Video gallery"><svg class="ic"><use href="#i-videos"/></svg><span>Video gallery</span></a>
-    <a class="navitem" href="#avatars" data-page="avatars" title="Avatar gallery"><svg class="ic"><use href="#i-avatar"/></svg><span>Avatar gallery</span></a>
-    <div class="navsep"></div>
-    <a class="navitem" href="#samples" data-page="samples" title="Samples"><svg class="ic"><use href="#i-samples"/></svg><span>Samples</span></a>
-    <a class="navitem" href="#howto" data-page="howto" title="How to"><svg class="ic"><use href="#i-howto"/></svg><span>How to</span></a>
-    <a class="navitem" href="#help" data-page="help" title="Help"><svg class="ic"><use href="#i-help"/></svg><span>Help</span></a>
-    <div class="navspace"></div>
-    <div class="navsep"></div>
-    <a class="navitem" href="#about" data-page="about" title="About"><svg class="ic"><use href="#i-about"/></svg><span>About</span></a>
-    <a class="navitem" href="#contact" data-page="contact" title="Contact"><svg class="ic"><use href="#i-contact"/></svg><span>Contact</span></a>
-    <a class="navitem" href="#settings" data-page="settings" title="Settings"><svg class="ic"><use href="#i-settings"/></svg><span>Settings</span></a>
-  </nav>
+  <div class="app-layout">
+  <aside class="sidebar navpane" id="navPane" aria-label="Main">
+    <button class="nav-toggle" id="navToggle" title="Collapse or expand the menu" aria-label="Collapse or expand the menu"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></span></button>
+    <nav class="sidebar-nav sidebar-section-primary">
+      <a class="navitem" href="#create" data-page="create" title="Create Video"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M10 8.5v5l4.5-2.5z"/><path d="M8 21h8"/></svg></span><span class="nav-label">Create Video</span></a>
+      <a class="navitem" href="#history" data-page="history" title="History"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 2"/></svg></span><span class="nav-label">History</span></a>
+      <a class="navitem" href="#videos" data-page="videos" title="Video Gallery"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 4v16M17 4v16M2 9h5M2 15h5M17 9h5M17 15h5"/></svg></span><span class="nav-label">Video Gallery</span></a>
+      <a class="navitem" href="#avatars" data-page="avatars" title="Avatar Gallery"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="nav-label">Avatar Gallery</span></a>
+    </nav>
+    <div class="sidebar-divider"></div>
+    <nav class="sidebar-nav sidebar-section-settings">
+      <a class="navitem" href="#settings" data-page="settings" title="Settings"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span><span class="nav-label">Settings</span></a>
+    </nav>
+    <div class="sidebar-divider"></div>
+    <nav class="sidebar-nav sidebar-section-docs">
+      <a class="navitem" href="#samples" data-page="samples" title="Samples"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7L18.5 9.5 13.8 11.3 12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></span><span class="nav-label">Samples</span></a>
+      <a class="navitem" href="#help" data-page="help" title="Help"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span><span class="nav-label">Help</span></a>
+      <a class="navitem" href="#howto" data-page="howto" title="How To"><span class="nav-icon">&#128214;</span><span class="nav-label">How To</span></a>
+    </nav>
+    <div class="sidebar-divider"></div>
+    <nav class="sidebar-nav sidebar-section-legal">
+      <a class="navitem" href="#about" data-page="about" title="About"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-5"/><path d="M12 8h.01"/></svg></span><span class="nav-label">About</span></a>
+      <a class="navitem" href="#contact" data-page="contact" title="Contact"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg></span><span class="nav-label">Contact</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="sidebar-footer-link" href="https://mlapplications.com/" target="_blank" rel="noopener" title="mlapplications.com">
+        <img class="sidebar-footer-logo" src="https://mlapplications.com/uploads/logo-big_2.webp" alt="mlapplications.com">
+        <span class="nav-label">mlapplications.com</span></a>
+    </div>
+  </aside>
   <div class="content" id="content">
   <section class="page" data-page="create">
-    <div class="pagehead"><h1>Create</h1>
+    <div class="pagehead"><h1>Create Video</h1>
       <p>Turn a PowerPoint file into a video with narration, background videos and transitions – right in your browser, nothing is uploaded.</p></div>
 
 <main>
+  <nav class="stepbar" id="stepBar" aria-label="Steps">
+    <a href="#loadPanel" data-step="1"><span class="layer-step">1</span><span><b>Choose file</b><small>Your PowerPoint .pptx</small></span></a>
+    <i class="stepline"></i>
+    <a href="#editor" data-step="2"><span class="layer-step">2</span><span><b>Design video</b><small>Narration, backgrounds, transitions</small></span></a>
+    <i class="stepline"></i>
+    <a href="#videoPanel" data-step="3"><span class="layer-step">3</span><span><b>Create video</b><small>Preview and export</small></span></a>
+  </nav>
 
   <!-- 1. Load -->
   <section class="panel" id="loadPanel">
-    <h2>1. Choose a .pptx file</h2>
+    <h2 class="ttl"><span class="layer-step">1</span>Choose file</h2>
     <div class="filebar">
       <svg class="ic"><use href="#i-file"/></svg>
       <b id="fileName"></b>
@@ -814,7 +1029,7 @@
   </section>
 
   <section class="panel" id="editor">
-    <h2 class="ttl"><span class="tic"><svg class="ic"><use href="#i-layers"/></svg></span>2. Slides</h2>
+    <h2 class="ttl"><span class="layer-step">2</span>Design video<small class="h2sub">Narration, background video and transition for each slide</small></h2>
     <div id="info" class="muted" style="display:none"></div>
     <div class="editor">
       <!-- left: slides -->
@@ -966,6 +1181,8 @@
               <button id="kokoroRetest" class="sm" title="Measure GPU and CPU speed again"><svg class="ic"><use href="#i-gauge"/></svg>Re-test speed</button>
               <button id="ttsTestBtn" class="sm"><svg class="ic"><use href="#i-sound"/></svg>Test voice</button>
             </div>
+            <div class="progress" id="voiceProgress"><div></div></div>
+            <div class="status oneline" id="voiceStatus"></div>
             <p class="hint" style="margin:10px 0 0">The settings apply to the current slide. Use "Apply to all" in the narration card to copy them to every slide.</p>
     </div>
     <div class="dlg-f"><span class="spacer"></span><button class="primary" data-close>Done</button></div>
@@ -1088,6 +1305,8 @@
           <label class="check"><input type="radio" name="qBgMode" value="pick"> I'll choose the videos</label>
         </div>
         <p class="qlead" id="qBgLead"></p>
+        <div class="bgfilter"><span class="muted" id="qGalleryCount"></span><span class="spacer"></span>
+          <input type="search" id="qSearch" placeholder="Search tags, e.g. ocean, city, forest…"></div>
         <div id="qGallery" class="gallery qgallery"></div>
       </section>
       <section class="qstep" data-step="2">
@@ -1126,7 +1345,25 @@
   <!-- 3. Video -->
 
   <section class="panel" id="videoPanel">
-    <h2 class="ttl"><span class="tic"><svg class="ic"><use href="#i-film"/></svg></span>3. Create video</h2>
+    <h2 class="ttl"><span class="layer-step">3</span>Create video</h2>
+    <div class="s3row s3simple" style="--n:2">
+      <label class="field">Video size
+        <select id="resSel">
+          <option value="1280">1280 px wide (720p)</option>
+          <option value="1920" selected>1920 px wide (1080p)</option>
+          <option value="2560">2560 px wide (1440p)</option>
+        </select>
+      </label>
+      <label class="field">Format
+        <select id="containerSel">
+          <option value="mp4">MP4</option>
+          <option value="webm">WebM</option>
+        </select>
+      </label>
+    </div>
+    <details class="advanced" id="advBox">
+      <summary><svg class="ic"><use href="#i-settings"/></svg><b>Advanced settings</b><span class="muted">Timing, animations, text over video, frame rate, export engine – the defaults suit most videos</span></summary>
+      <div class="adv-body">
 
     <h3 class="ttl"><span class="tic sm"><svg class="ic"><use href="#i-clock"/></svg></span>Timing</h3>
     <div class="s3row" style="--n:7">
@@ -1174,25 +1411,12 @@
     <p class="hint s3hint">Readability applies to slides whose background is set to "Transparent background".</p>
 
     <h3 class="ttl"><span class="tic sm"><svg class="ic"><use href="#i-export"/></svg></span>Output</h3>
-    <div class="s3row" style="--n:4">
-      <label class="field">Resolution
-        <select id="resSel">
-          <option value="1280">1280 px wide (720p)</option>
-          <option value="1920" selected>1920 px wide (1080p)</option>
-          <option value="2560">2560 px wide (1440p)</option>
-        </select>
-      </label>
+    <div class="s3row" style="--n:2">
       <label class="field">FPS
         <select id="fpsSel">
           <option value="24">24</option>
           <option value="30" selected>30</option>
           <option value="60">60</option>
-        </select>
-      </label>
-      <label class="field">Format
-        <select id="containerSel">
-          <option value="mp4">MP4</option>
-          <option value="webm">WebM</option>
         </select>
       </label>
       <label class="field">Export engine
@@ -1203,6 +1427,10 @@
       </label>
     </div>
 
+        <p class="hint" id="engineHint"></p>
+      </div>
+    </details>
+
     <div class="s3actions">
       <button id="previewVideoBtn" class="gloss g-sky"><svg class="ic"><use href="#i-eye"/></svg>Preview whole video</button>
       <button id="exportBtn" class="gloss g-blue"><svg class="ic"><use href="#i-film"/></svg>Export video</button>
@@ -1210,7 +1438,6 @@
     </div>
     <div class="progress" id="videoProgress"><div></div></div>
     <div class="status oneline" id="videoStatus"></div>
-    <p class="hint" id="engineHint"></p>
 
     <div class="video-grid">
       <div id="liveWrap">
@@ -1234,16 +1461,17 @@
   </section>
 
   <section class="page" data-page="videos">
-    <div class="pagehead"><h1>Video gallery</h1><p>Background videos you can put behind your slides. Hover a clip to preview it.</p></div>
+    <div class="pagehead"><h1>Video Gallery</h1><p>More than 2,000 background videos from Pixabay, sorted by category and tags. Hover a clip to preview it; it is downloaded to your browser only when you use it.</p></div>
     <div class="pagebody">
       <div class="bgfilter"><span id="vgChips" class="chips"></span><span class="spacer"></span><input type="search" id="vgSearch" placeholder="Search tags, e.g. ocean, city, forest…"></div>
+      <div class="muted" id="vgCount" style="font-size:12px"></div>
       <div class="vg-grid" id="vgGrid"></div>
       <p class="hint linkrow">Videos from <a href="https://pixabay.com/" target="_blank" rel="noopener">Pixabay</a> and Pexels, free to use under their licences.</p>
     </div>
   </section>
 
   <section class="page" data-page="avatars">
-    <div class="pagehead"><h1>Avatar gallery</h1><p>Talking presenters that appear over your slides.</p></div>
+    <div class="pagehead"><h1>Avatar Gallery</h1><p>Talking presenters that appear over your slides.</p></div>
     <div class="pagebody"><div class="empty"><svg class="ic"><use href="#i-avatar"/></svg><b>Coming soon</b>AI avatars that read your narration will appear here.</div></div>
   </section>
 
@@ -1253,7 +1481,7 @@
   </section>
 
   <section class="page" data-page="howto">
-    <div class="pagehead"><h1>How to</h1><p>From a PowerPoint file to a finished video in a few steps.</p></div>
+    <div class="pagehead"><h1>How To</h1><p>From a PowerPoint file to a finished video in a few steps.</p></div>
     <div class="pagebody steps">
       <div class="setcard"><div class="st"><b>Open your presentation</b><span>On Create, choose or drop a .pptx file. Slides, animations and transitions are read in your browser.</span></div></div>
       <div class="setcard"><div class="st"><b>Add narration</b><span>Open Narration under the slide: use the speaker notes, the text on the slide, your own recording, or let an AI write it. Pick a voice and press Generate all.</span></div></div>
@@ -1315,7 +1543,8 @@
         <button id="resetPrefsBtn">Reset</button></div>
     </div>
   </section>
-  </div>
+  </div><!-- /content -->
+  </div><!-- /app-layout -->
 </div>
 
 <script type="module">
@@ -1337,6 +1566,7 @@
   let slides = [];
   let gallery = [];
   const GALLERY_DIR = './video-backgrounds/';
+  const PIXABAY_LIST = './pixabay_videos.json';      // same list as the Desktop Live Wallpaper+ gallery
   let lastVideoUrl = null;
 
   const newSlideState = (text = '') => ({
@@ -1377,7 +1607,12 @@
   // ── Helpers ────────────────────────────────────────────────────────────────
   function setStatus(msg, isError = false) { $('status').textContent = msg; $('status').classList.toggle('error', isError); }
   function setVStatus(msg, isError = false) { const e = $('videoStatus'); e.textContent = msg; e.title = msg; e.classList.toggle('error', isError); }
-  function setTtsStatus(msg, isError = false) { const e = $('ttsStatus'); e.textContent = msg; e.title = msg; e.classList.toggle('error', isError); }
+  function setTtsStatus(msg, isError = false) {
+    for (const id of ['ttsStatus', 'voiceStatus', 'narrRowStatus']) {
+      const e = $(id); if (!e) continue;
+      e.textContent = msg; e.title = msg; e.classList.toggle('error', isError);
+    }
+  }
 
   /** Why speech generation runs multi-threaded or not (shown in the progress line). */
   function threadInfo() {
@@ -1386,7 +1621,10 @@
     if (!navigator.serviceWorker?.controller) return 'single thread (pptx-coi-sw.js not active – reload once)';
     return 'single thread (server headers prevent isolation)';
   }
-  function setBar(el, p) { el.style.display = p === null ? 'none' : 'block'; if (p !== null) el.firstElementChild.style.width = Math.round(p * 100) + '%'; }
+  function setBar(el, p) {
+    const els = el.id === 'ttsProgress' ? [el, $('voiceProgress')] : [el];   // a voice download shows in the Voice pop-up too
+    for (const e of els) { if (!e) continue; e.style.display = p === null ? 'none' : 'block'; if (p !== null) e.firstElementChild.style.width = Math.round(p * 100) + '%'; }
+  }
   function downloadBlob(blob, name) {
     const url = URL.createObjectURL(blob);
     const a = Object.assign(document.createElement('a'), { href: url, download: name });
@@ -1588,7 +1826,8 @@
       stopLive();
       const pv = new PptxVideo(renderer, previewSettings());
       try {
-        $('stageMsg').textContent = slides[current]?.bg ? 'Loading background…' : '';
+        const b = slides[current]?.bg;
+        $('stageMsg').textContent = !b ? '' : b.px && !b.source ? (b.err ? '⚠ ' + b.err : 'Downloading the background video…') : 'Loading background…';
         await pv.prepareSlide(current);
       } catch (err) {
         console.warn('Live preview failed', err);
@@ -1618,6 +1857,10 @@
     $('playSlideBtn').disabled = true;
     $('stopSlideBtn').disabled = false;
     stopLive();
+    if (slides[current]?.bg?.px && !slides[current].bg.source) {
+      $('stageMsg').textContent = 'Downloading the background video…';
+      try { await ensureBackgrounds(); loadBgUI(); } catch (err) { $('stageMsg').textContent = err.message; }
+    }
     const pv = new PptxVideo(renderer, previewSettings());
     const voice = narrationPlayer(false);
     try {
@@ -1646,7 +1889,7 @@
   const VIDEO_RE = /\.(mp4|webm|mov|m4v)$/i;
 
   /** Read video-backgrounds/videos.json; fall back to the server's directory listing. */
-  async function loadGallery() {
+  async function loadLocalGallery() {
     try {
       const r = await fetch(GALLERY_DIR + 'videos.json', { cache: 'no-cache' });
       if (r.ok) return (await r.json()).videos || [];
@@ -1661,55 +1904,139 @@
     } catch {}
     return [];
   }
+  /** One item of pixabay_videos.json (the Desktop Live Wallpaper+ list) as a gallery entry. */
+  function pxEntry(x) {
+    const tags = (x.t || '').split(',').map(t => t.trim()).filter(Boolean);
+    const title = tags.slice(0, 2).join(' & ').replace(/(^|\s)\S/g, c => c.toUpperCase()) || 'Pixabay video';
+    return { px: true, pxId: x.i, file: 'px-' + x.i, title, tags, category: x.c, poster: x.th, preview: x.pv, dl: x.m,
+      duration: x.d, srcW: x.w, srcH: x.h, credit: { user: x.a, url: x.p, source: 'Pixabay' } };
+  }
+  /** The clips on this site plus the whole Pixabay list (thumbnails only – a clip is downloaded when it is picked). */
+  async function loadGallery() {
+    const [local, px] = await Promise.all([loadLocalGallery(), (async () => {
+      try { const r = await fetch(PIXABAY_LIST, { cache: 'no-cache' }); if (r.ok) return (await r.json()).items || []; } catch {}
+      return [];
+    })()]);
+    const have = new Set(local.map(v => (/-(\d+)-pixabay/i.exec(v.file || '') || [])[1]).filter(Boolean));
+    return [...local, ...px.filter(x => x && x.i && x.m && !have.has(String(x.i))).map(pxEntry)];
+  }
+  const mediaUrl = (p) => /^(https?:|blob:|data:)/i.test(p) ? p : GALLERY_DIR + p;
 
   function card(cls, inner, onClick) {
     const el = document.createElement('div');
     el.className = 'vcard ' + cls;
     el.innerHTML = inner;
     el.addEventListener('click', () => { if (!job) onClick(el); });
-    $('gallery').appendChild(el);
     return el;
   }
 
-  /** A gallery clip as a per-slide background (streamed from the server, never downloaded whole). */
-  const bgFromEntry = (v) => ({
-    title: v.title || v.file, poster: v.poster ? GALLERY_DIR + v.poster : null, size: v.webSize || v.size || 0,
-    source: new URL(GALLERY_DIR + encodeURI(v.web || v.file), location.href).href, file: v.file,
-  });
+  /** A gallery clip as a per-slide background. Site clips are streamed; Pixabay clips are downloaded once when picked. */
+  const bgFromEntry = (v) => v.px
+    ? { title: v.title, poster: v.poster, size: 0, source: pxDone.get(v.pxId) || null, file: v.file, px: true, pxId: v.pxId, dl: v.dl, credit: v.credit }
+    : { title: v.title || v.file, poster: v.poster ? mediaUrl(v.poster) : null, size: v.webSize || v.size || 0,
+        source: new URL(GALLERY_DIR + encodeURI(v.web || v.file), location.href).href, file: v.file };
 
-  async function buildGallery() {
-    gallery = await loadGallery();
-    $('gallery').innerHTML = '';
-    card('none', '<div class="vthumb">No background</div><div class="vtitle">None</div>', () => setSlideBg(null));
-    gallery.forEach((v, i) => {
-      const res = v.height >= 2160 ? '4K' : v.height >= 1440 ? '1440p' : v.height >= 1080 ? 'HD' : v.height ? v.height + 'p' : '';
-      const el = card('', `
+  // ── Pixabay clips: download on demand (kept in the browser cache so the next visit is instant)
+  const PX_CACHE = 'pptx-bg-pixabay';
+  const pxJobs = new Map(), pxDone = new Map(), pxProg = new Map();
+  function pxFile(id, url) {
+    if (pxDone.has(id)) return Promise.resolve(pxDone.get(id));
+    if (!pxJobs.has(id)) pxJobs.set(id, (async () => {
+      let cache = null, r = null;
+      try { cache = await caches.open(PX_CACHE); r = await cache.match(url); } catch {}
+      if (!r) {
+        try { r = await fetch(url, { mode: 'cors', credentials: 'omit' }); }
+        catch { throw new Error('Pixabay did not let this browser download the clip (network or CORS). Try another clip or upload your own.'); }
+        if (!r.ok) throw new Error(`Pixabay answered ${r.status} for this clip.`);
+        const total = +r.headers.get('content-length') || 0, reader = r.body.getReader(), parts = [];
+        let loaded = 0;
+        for (;;) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          parts.push(value); loaded += value.length;
+          pxProg.set(id, { loaded, total }); pxNotify();
+        }
+        const blob = new Blob(parts, { type: 'video/mp4' });
+        try { await cache?.put(url, new Response(blob, { headers: { 'content-type': 'video/mp4' } })); } catch {}
+        r = new Response(blob);
+      }
+      const f = new File([await r.blob()], `pixabay-${id}.mp4`, { type: 'video/mp4' });
+      pxDone.set(id, f); pxProg.delete(id); pxNotify();
+      return f;
+    })().finally(() => pxJobs.delete(id)));
+    return pxJobs.get(id);
+  }
+  function pxNotify() {
+    const bg = slides[current]?.bg;
+    if (!bg?.px || bg.source) return;
+    const p = pxProg.get(bg.pxId);
+    const txt = p ? `Downloading from Pixabay… ${fmtSize(p.loaded)}${p.total ? ' / ' + fmtSize(p.total) : ''}` : 'Downloading from Pixabay…';
+    $('bgCurMode').textContent = txt;
+    $('bgName').textContent = `${bg.title} · ${txt}`;
+  }
+  /** Download every Pixabay clip the slides use that is not here yet. onFrac(0..1) for a progress bar. */
+  async function ensureBackgrounds(onFrac) {
+    const pend = slides.map(s => s.bg).filter(b => b?.px && !b.source);
+    const ids = [...new Set(pend.map(b => b.pxId))];
+    for (let k = 0; k < ids.length; k++) {
+      const one = pend.find(b => b.pxId === ids[k]);
+      const t = setInterval(() => { const p = pxProg.get(ids[k]); onFrac?.((k + (p?.total ? p.loaded / p.total : 0)) / ids.length); }, 250);
+      try {
+        const f = await pxFile(ids[k], one.dl);
+        for (const b of pend) if (b.pxId === ids[k]) { b.source = f; b.size = f.size; b.err = null; }
+      } catch (err) {
+        for (const b of pend) if (b.pxId === ids[k]) b.err = err.message;
+        throw new Error(`Background "${one.title}": ${err.message}`);
+      } finally { clearInterval(t); }
+    }
+    onFrac?.(1);
+  }
+
+  // background pop-up grid: cards are made when first shown, 60 at a time
+  const bgCards = new Map();
+  let galleryByFile = new Map(), bgLimit = 60, bgNoneCard = null, bgUploadCard = null, bgMoreCard = null;
+  function bgCard(v) {
+    let el = bgCards.get(v.file);
+    if (el) return el;
+    const res = v.height >= 2160 ? '4K' : v.height >= 1440 ? '1440p' : v.height >= 1080 ? 'HD' : v.height ? v.height + 'p' : '';
+    el = card('', `
         <div class="vthumb">
           ${v.poster ? `<img loading="lazy" alt="">` : `<video class="ready" muted playsinline preload="metadata" style="opacity:1"></video>`}
           ${v.preview ? '<video muted loop playsinline preload="none"></video>' : ''}
           ${res ? `<span class="badge res">${res}</span>` : ''}
+          ${v.px ? '<span class="badge src">Pixabay</span>' : ''}
           ${v.duration ? `<span class="badge dur">${fmtTime(v.duration)}</span>` : ''}
           <span class="check">✓</span>
           <span class="mbadge"></span>
         </div>
         <div class="vtitle"></div>`, () => setSlideBg(bgFromEntry(v)));
-      el.dataset.file = v.file;
-      el.querySelector('.vtitle').textContent = v.title || v.file;
-      if (v.tags?.length) el.querySelector('.vtitle').insertAdjacentHTML('beforeend', `<span class="vtags"></span>`), el.querySelector('.vtags').textContent = v.tags.slice(0, 5).join(' · ');
-      el.title = `${v.title || v.file}${v.size ? ' · ' + fmtSize(v.webSize || v.size) : ''}${v.credit?.user ? ' · by ' + v.credit.user + ' on Pixabay' : ''}`;
-      if (v.poster) el.querySelector('img').src = GALLERY_DIR + v.poster;
-      else el.querySelector('video').src = GALLERY_DIR + encodeURI(v.file) + '#t=1';
-      if (v.preview) {
-        const pv = el.querySelectorAll('video')[el.querySelector('img') ? 0 : 1];
-        el.addEventListener('mouseenter', () => {
-          if (!pv.src) { pv.src = GALLERY_DIR + v.preview; pv.oncanplay = () => pv.classList.add('ready'); }
-          pv.play().catch(() => {});
-        });
-        el.addEventListener('mouseleave', () => { pv.pause(); });
-      }
-    });
-    card('upload', '<div class="vthumb">＋</div><div class="vtitle">Upload your own…</div>', () => $('bgInput').click());
-    if (!gallery.length) $('bgName').textContent = 'No clips found in video-backgrounds/ (add videos.json or enable directory listing).';
+    el.dataset.file = v.file;
+    el.querySelector('.vtitle').textContent = v.title || v.file;
+    if (v.tags?.length) el.querySelector('.vtitle').insertAdjacentHTML('beforeend', `<span class="vtags"></span>`), el.querySelector('.vtags').textContent = v.tags.slice(0, 5).join(' · ');
+    el.title = `${v.title || v.file}${v.size ? ' · ' + fmtSize(v.webSize || v.size) : ''}${v.credit?.user ? ' · by ' + v.credit.user + ' on Pixabay' : ''}`;
+    if (v.poster) el.querySelector('img').src = mediaUrl(v.poster);
+    else el.querySelector('video').src = GALLERY_DIR + encodeURI(v.file) + '#t=1';
+    if (v.preview) {
+      const pv = el.querySelectorAll('video')[el.querySelector('img') ? 0 : 1];
+      el.addEventListener('mouseenter', () => {
+        if (!pv.src) { pv.src = mediaUrl(v.preview); pv.oncanplay = () => pv.classList.add('ready'); }
+        pv.play().catch(() => {});
+      });
+      el.addEventListener('mouseleave', () => { pv.pause(); });
+    }
+    bgCards.set(v.file, el);
+    return el;
+  }
+
+  async function buildGallery() {
+    gallery = await loadGallery();
+    galleryByFile = new Map(gallery.map(v => [v.file, v]));
+    bgCards.clear();
+    bgNoneCard = card('none', '<div class="vthumb">No background</div><div class="vtitle">None</div>', () => setSlideBg(null));
+    bgUploadCard = card('upload', '<div class="vthumb">＋</div><div class="vtitle">Upload your own…</div>', () => $('bgInput').click());
+    bgMoreCard = card('more', '<div class="vthumb">⋯</div><div class="vtitle"></div>', () => { bgLimit += 60; applyBgFilter(false); });
+    if (!gallery.length) $('bgName').textContent = 'No clips found (video-backgrounds/videos.json or pixabay_videos.json).';
+    applyBgFilter();
     loadBgUI();
   }
 
@@ -1725,6 +2052,11 @@
     loadBgUI();
     updateThumbBadges(current);
     refreshLive();
+    if (bg?.px && !bg.source) {
+      pxNotify();
+      ensureBackgrounds().then(() => { loadBgUI(); refreshLive(); })
+        .catch((err) => { loadBgUI(); $('bgName').textContent = '⚠ ' + err.message; });
+    }
   }
 
   /** Show the current slide's background choice and options in the right panel. */
@@ -1745,9 +2077,11 @@
     th.style.backgroundImage = bg?.poster ? `url("${bg.poster}")` : '';
     th.textContent = !bg ? 'None' : bg.poster ? '' : bg.upload ? 'Your video' : 'Video';
     $('bgCurTitle').textContent = bg ? bg.title : 'No background';
-    $('bgCurMode').textContent = bg ? ($('bgMode').selectedOptions[0]?.textContent || '') : '';
+    $('bgCurMode').textContent = bg ? (bg.err ? '⚠ Download failed – pick it again or choose another' : ($('bgMode').selectedOptions[0]?.textContent || '')) : '';
     $('bgName').textContent = !bg ? 'No background on this slide'
-      : `${bg.title}${bg.size ? ' · ' + fmtSize(bg.size) : ''}${bg.upload ? ' · uploaded' : ' · streamed from the server'}`;
+      : bg.err ? '⚠ ' + bg.err
+      : `${bg.title}${bg.size ? ' · ' + fmtSize(bg.size) : ''}${bg.upload ? ' · uploaded' : bg.px ? ` · Pixabay${bg.credit?.user ? ', by ' + bg.credit.user : ''}` : ' · streamed from the server'}`;
+    if (bg?.px && !bg.source && !bg.err) pxNotify();
     $('bgOpts').classList.toggle('muted-off', !bg);
     $('insetField').style.display = s.mode === 'inset' ? '' : 'none';
     $('blendField').style.display = s.mode === 'blend' ? '' : 'none';
@@ -2558,27 +2892,35 @@
       $('bgChips').appendChild(b);
     }
   }
-  function applyBgFilter() {
-    const q = plain($('bgSearch').value.trim());
-    const qTerms = q ? [...termsOf(q).keys()].flatMap(t => [t, ...(SYN[t] || []).map(stem)]) : [];
-    $('gallery').classList.toggle('show-match', bgView === 'suggested');
-    document.querySelectorAll('#gallery .vcard').forEach(c => {
-      const v = gallery.find(x => x.file === c.dataset.file);
-      if (!v) { c.style.display = (bgView === 'suggested' || q) ? 'none' : ''; c.style.order = c.classList.contains('none') ? -1e6 : 1e6; return; }
-      const s = bgSugg.get(v.file);
-      let show = bgView === 'all' || (bgView === 'suggested' ? !!s : v.category === bgView);
-      if (show && q) {
-        const hay = plain([v.title, ...(v.tags || []), v.category || ''].join(' '));
-        show = hay.includes(q) || qTerms.some(t => videoTerms(v).has(t));
-      }
-      c.style.display = show ? '' : 'none';
-      c.style.order = bgView === 'suggested' && s ? -s.score : 0;
-      const mb = c.querySelector('.mbadge');
-      mb.classList.toggle('has', !!s);
-      mb.textContent = s ? 'Matches: ' + s.words.slice(0, 4).join(', ') : '';
-    });
+  /** Does video v pass the search box text q? */
+  function searchHit(v, q, qTerms) {
+    if (!q) return true;
+    const hay = plain([v.title, ...(v.tags || []), v.category || ''].join(' '));
+    return hay.includes(q) || qTerms.some(t => videoTerms(v).has(t));
   }
-  $('bgSearch').addEventListener('input', applyBgFilter);
+  const searchTerms = (q) => q ? [...termsOf(q).keys()].flatMap(t => [t, ...(SYN[t] || []).map(stem)]) : [];
+  function applyBgFilter(reset = true) {
+    if (reset) bgLimit = 60;
+    const q = plain($('bgSearch').value.trim()), qTerms = searchTerms(q);
+    $('gallery').classList.toggle('show-match', bgView === 'suggested');
+    let list = gallery.filter(v => (bgView === 'all' || (bgView === 'suggested' ? bgSugg.has(v.file) : v.category === bgView)) && searchHit(v, q, qTerms));
+    if (bgView === 'suggested') list.sort((a, b) => bgSugg.get(b.file).score - bgSugg.get(a.file).score);
+    const shown = list.slice(0, bgLimit).map(bgCard);
+    for (const c of shown) {
+      const sg = bgSugg.get(c.dataset.file), mb = c.querySelector('.mbadge');
+      mb.classList.toggle('has', !!sg);
+      mb.textContent = sg ? 'Matches: ' + sg.words.slice(0, 4).join(', ') : '';
+    }
+    const left = list.length - shown.length;
+    if (bgMoreCard) bgMoreCard.querySelector('.vtitle').textContent = `Show more (${left} more)`;
+    $('gallery').replaceChildren(...[bgView === 'suggested' || q ? null : bgNoneCard, ...shown, left > 0 ? bgMoreCard : null, bgUploadCard].filter(Boolean));
+    if (!list.length) $('gallery').insertAdjacentHTML('afterbegin', '<div class="empty" style="grid-column:1/-1;padding:24px">No videos match.</div>');
+    loadBgUI();
+  }
+  $('bgSearch').addEventListener('input', () => {
+    if (bgView === 'suggested' && $('bgSearch').value.trim()) { bgView = 'all'; buildBgChips(); }   // a search looks through everything
+    applyBgFilter();
+  });
   async function refreshBgSuggestions() {
     bgSugg = new Map((await suggestFor(current)).map(x => [x.v.file, x]));
     if (bgView === 'suggested' && !bgSugg.size) bgView = 'all';
@@ -2848,16 +3190,22 @@ ${parts.join('\n\n')}
     }
   }
 
-  function buildQuickGallery() {
+  let qLimit = 60;
+  function buildQuickGallery(reset = true) {
+    if (reset) qLimit = 60;
     const g = $('qGallery');
+    const q = plain(($('qSearch')?.value || '').trim()), qTerms = searchTerms(q);
+    const sel = quick.sel.map(f => galleryByFile.get(f)).filter(Boolean);
+    const rest = gallery.filter(v => !quick.sel.includes(v.file) && searchHit(v, q, qTerms));
+    const list = [...sel, ...rest.slice(0, qLimit)];
     g.innerHTML = '';
-    for (const v of gallery) {
+    for (const v of list) {
       const el = document.createElement('div');
       el.className = 'vcard';
       el.dataset.file = v.file;
       el.innerHTML = `<div class="vthumb">${v.poster ? '<img loading="lazy" alt="">' : ''}<span class="order"></span>` +
         `${v.duration ? `<span class="badge dur">${fmtTime(v.duration)}</span>` : ''}</div><div class="vtitle"></div>`;
-      if (v.poster) el.querySelector('img').src = GALLERY_DIR + v.poster;
+      if (v.poster) el.querySelector('img').src = mediaUrl(v.poster);
       el.querySelector('.vtitle').textContent = v.title || v.file;
       el.addEventListener('click', () => {
         const k = quick.sel.indexOf(v.file);
@@ -2866,9 +3214,19 @@ ${parts.join('\n\n')}
       });
       g.appendChild(el);
     }
+    if (rest.length > qLimit) {
+      const more = document.createElement('div');
+      more.className = 'vcard more';
+      more.innerHTML = `<div class="vthumb">⋯</div><div class="vtitle">Show more (${rest.length - qLimit} more)</div>`;
+      more.addEventListener('click', () => { qLimit += 60; buildQuickGallery(false); });
+      g.appendChild(more);
+    }
+    if (!list.length) g.innerHTML = '<div class="empty" style="grid-column:1/-1;padding:24px">No videos match.</div>';
     paintQuickGallery();
   }
+  $('qSearch').addEventListener('input', () => buildQuickGallery());
   function paintQuickGallery() {
+    $('qGalleryCount').textContent = `${gallery.length} videos · ${quick.sel.length} selected`;
     document.querySelectorAll('#qGallery .vcard').forEach(el => {
       const k = quick.sel.indexOf(el.dataset.file);
       el.classList.toggle('selected', k >= 0);
@@ -2945,7 +3303,7 @@ ${parts.join('\n\n')}
     overlay({ pct: 0, phase: 'Setting up the slides…', detail: '' });
     try {
       // 1. backgrounds: chosen videos take turns; slide background colours removed
-      const vids = quick.sel.map(f => gallery.find(v => v.file === f)).filter(Boolean);
+      const vids = quick.sel.map(f => galleryByFile.get(f)).filter(Boolean);
       const auto = document.querySelector('input[name=qBgMode]:checked').value === 'auto';
       if (auto && gallery.length) {
         // best match per slide; avoid showing the same clip twice in a row when another fits nearly as well
@@ -2988,6 +3346,13 @@ ${parts.join('\n\n')}
       for (let i = 0; i < slides.length; i++) updateThumbBadges(i);
       loadBgUI(); await loadNarrationUI(); refreshLive();
 
+      // 3b. Pixabay clips are downloaded now (first few percent of the bar)
+      if (slides.some(s => s.bg?.px && !s.bg.source)) {
+        overlay({ pct: 0, phase: 'Downloading the background videos…', detail: '' });
+        await ensureBackgrounds((f) => overlay({ pct: Math.round(f * 5) }));
+        loadBgUI(); refreshLive();
+      }
+      if (quick.cancelled) throw new Error('Cancelled.');
       // 4. voices (first part of the bar), 5. video
       const hasVoice = slides.some(s => s.narrOn);
       const split = hasVoice ? 0.45 : 0;
@@ -3250,6 +3615,11 @@ ${parts.join('\n\n')}
     if (!document.querySelector(`.page[data-page="${id}"]`)) id = 'create';
     document.querySelectorAll('.page').forEach(p => p.classList.toggle('on', p.dataset.page === id));
     document.querySelectorAll('.navitem').forEach(a => a.classList.toggle('on', a.dataset.page === id));
+    const pg = document.querySelector(`.page[data-page="${id}"]`), ico = document.querySelector(`.navitem[data-page="${id}"] .nav-icon`);
+    if (pg && ico && !pg.querySelector(':scope > .view-bg-icon')) {
+      const wm = document.createElement('div'); wm.className = 'view-bg-icon'; wm.setAttribute('aria-hidden', 'true');
+      wm.innerHTML = ico.innerHTML; pg.prepend(wm);
+    }
     if (narrow()) setNav('compact');
     $('content').scrollTop = 0;
     if (id === 'history') renderHistory();
@@ -3258,6 +3628,33 @@ ${parts.join('\n\n')}
   }
   window.addEventListener('hashchange', () => showPage(location.hash.slice(1)));
   showPage(location.hash.slice(1) || 'create');
+
+
+  // ── Create page: step bar (1 file, 2 design, 3 create) follows the scroll position
+  (function stepBar() {
+    const links = [...document.querySelectorAll('#stepBar a')];
+    const panes = links.map(a => document.querySelector(a.getAttribute('href')));
+    const update = () => {
+      const loaded = !!renderer;
+      const sc = $('content'), top = sc.getBoundingClientRect().top + 110;
+      let on = 0;
+      panes.forEach((p, k) => { if (p && p.offsetParent && p.getBoundingClientRect().top <= top) on = k; });
+      if (sc.scrollTop > 0 && sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 4)    // at the very bottom: the last open step
+        panes.forEach((p, k) => { if (p && p.offsetParent) on = k; });
+      links.forEach((a, k) => {
+        a.classList.toggle('on', k === on);
+        a.classList.toggle('off', k > 0 && !loaded);
+        a.classList.toggle('done', k === 0 && loaded);
+      });
+    };
+    links.forEach((a, k) => a.addEventListener('click', (e) => {
+      e.preventDefault();                                   // keep the #create hash (the pages use it)
+      panes[k]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }));
+    $('content').addEventListener('scroll', update, { passive: true });
+    setInterval(update, 800);                               // also catches the file being loaded
+    update();
+  })();
 
   // ── History: the videos made in this tab (files live only as long as the tab)
   const histList = [];
@@ -3303,7 +3700,9 @@ ${parts.join('\n\n')}
 
   // ── Video gallery page
   let vgView = 'all';
-  async function renderVideoGallery() {
+  let vgLimit = 60;
+  async function renderVideoGallery(reset = true) {
+    if (reset) vgLimit = 60;
     if (!gallery.length) await buildGallery();
     const cats = {};
     for (const v of gallery) if (v.category) cats[v.category] = (cats[v.category] || 0) + 1;
@@ -3319,21 +3718,21 @@ ${parts.join('\n\n')}
     const qTerms = q ? [...termsOf(q).keys()].flatMap(t => [t, ...(SYN[t] || []).map(stem)]) : [];
     const grid = $('vgGrid');
     grid.innerHTML = '';
-    for (const v of gallery) {
-      if (vgView !== 'all' && v.category !== vgView) continue;
-      if (q && !(plain([v.title, ...(v.tags || []), v.category || ''].join(' ')).includes(q) || qTerms.some(t => videoTerms(v).has(t)))) continue;
+    const list = gallery.filter(v => (vgView === 'all' || v.category === vgView) && searchHit(v, q, qTerms));
+    $('vgCount').textContent = `${list.length} of ${gallery.length} videos${list.length > vgLimit ? ` · showing ${vgLimit}` : ''}`;
+    for (const v of list.slice(0, vgLimit)) {
       const el = document.createElement('div');
       el.className = 'vg-card';
       el.innerHTML = `<div class="vg-media">${v.poster ? '<img loading="lazy" alt="">' : ''}${v.preview ? '<video muted loop playsinline preload="none"></video>' : ''}</div>
         <div class="vg-b"><b></b><span class="t"></span><span class="c"></span><button class="sm">${icon('image')}Use on the current slide</button></div>`;
-      if (v.poster) el.querySelector('img').src = GALLERY_DIR + v.poster;
+      if (v.poster) el.querySelector('img').src = mediaUrl(v.poster);
       el.querySelector('b').textContent = v.title || v.file;
       el.querySelector('.t').textContent = (v.tags || []).slice(0, 6).join(' · ');
       el.querySelector('.c').textContent = [v.category && v.category[0].toUpperCase() + v.category.slice(1), v.duration && fmtTime(v.duration),
-        v.height >= 2160 ? '4K' : v.height >= 1080 ? 'HD' : '', v.credit?.user && 'by ' + v.credit.user].filter(Boolean).join(' · ');
+        v.height >= 2160 ? '4K' : v.height >= 1080 ? 'HD' : '', v.credit?.user && 'by ' + v.credit.user + (v.px ? ' on Pixabay' : '')].filter(Boolean).join(' · ');
       const pv = el.querySelector('video');
       if (pv) {
-        el.addEventListener('mouseenter', () => { if (!pv.src) { pv.src = GALLERY_DIR + v.preview; pv.oncanplay = () => pv.classList.add('ready'); } pv.play().catch(() => {}); });
+        el.addEventListener('mouseenter', () => { if (!pv.src) { pv.src = mediaUrl(v.preview); pv.oncanplay = () => pv.classList.add('ready'); } pv.play().catch(() => {}); });
         el.addEventListener('mouseleave', () => pv.pause());
       }
       const use = el.querySelector('button');
@@ -3341,6 +3740,12 @@ ${parts.join('\n\n')}
       use.title = renderer ? `Put it behind slide ${current + 1}` : 'Open a presentation on the Create page first';
       use.addEventListener('click', () => { setSlideBg(bgFromEntry(v)); location.hash = '#create'; });
       grid.appendChild(el);
+    }
+    if (list.length > vgLimit) {
+      const more = document.createElement('button');
+      more.className = 'vg-more'; more.textContent = `Show more (${list.length - vgLimit} more)`;
+      more.addEventListener('click', () => { vgLimit += 60; renderVideoGallery(false); });
+      grid.appendChild(more);
     }
     if (!grid.children.length) grid.innerHTML = '<div class="empty" style="grid-column:1/-1">No videos match.</div>';
   }
@@ -3378,7 +3783,7 @@ ${parts.join('\n\n')}
     document.querySelectorAll('#themeSeg button').forEach(b => b.classList.toggle('on', b.dataset.themeSet === t));
   }
   document.querySelectorAll('#themeSeg button').forEach(b => b.addEventListener('click', () => applyTheme(b.dataset.themeSet)));
-  applyTheme((() => { try { return localStorage.getItem('pptxTheme'); } catch { return null; } })() || 'auto');
+  applyTheme((() => { try { return localStorage.getItem('pptxTheme'); } catch { return null; } })() || 'dark');
 
   // ── Video settings + jobs ──────────────────────────────────────────────────
   function readSettings() {
@@ -3442,6 +3847,11 @@ ${parts.join('\n\n')}
     setJobUI(true);
     let pv = null;
     try {
+      if (slides.some(s => s.bg?.px && !s.bg.source)) {
+        setVStatus('Downloading the background videos from Pixabay…');
+        await ensureBackgrounds((f) => setBar($('videoProgress'), f));
+        loadBgUI();
+      }
       pv = new PptxVideo(renderer, readSettings());
       showLive(pv.out);
       setVStatus('Preparing…');
@@ -3478,6 +3888,11 @@ ${parts.join('\n\n')}
     const engine = $('engineSel').value;
     let pv = null;
     try {
+      if (slides.some(s => s.bg?.px && !s.bg.source)) {
+        setVStatus('Downloading the background videos from Pixabay…');
+        await ensureBackgrounds((f) => setBar($('videoProgress'), f));
+        loadBgUI();
+      }
       pv = new PptxVideo(renderer, readSettings());
       showLive(pv.out);
       setBar($('videoProgress'), 0);
