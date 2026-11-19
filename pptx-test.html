@@ -1553,7 +1553,7 @@
       <div class="grouptitle">Pixabay</div>
       <div class="setcard pxcard"><svg class="ic"><use href="#i-film"/></svg><div class="st"><b>Pixabay search</b>
           <span>Your Cloudflare Worker searches all of Pixabay and helps download clips. The test checks every part from this browser.</span>
-          <input type="url" id="pxProxyIn" placeholder="https://mla-pixabay.<your-account>.workers.dev" spellcheck="false">
+          <input type="url" id="pxProxyIn" placeholder="https://pixquery.mlapplications.com" spellcheck="false">
           <ul class="pxtest" id="pxTestOut"></ul></div>
         <button id="pxTestBtn"><svg class="ic"><use href="#i-gauge"/></svg>Test</button></div>
       <div class="grouptitle">Storage</div>
@@ -1589,7 +1589,7 @@
   const PIXABAY_LIST = './pixabay_videos.json';      // same list as the Desktop Live Wallpaper+ gallery
   // Your Cloudflare Worker (WINDOWS APPS\PIXABAY_PROXY_CLOUDFLARE): live search of all of Pixabay + clip downloads.
   // Leave '' to search only pixabay_videos.json. Settings → "Pixabay search" can try another address in this browser.
-  const PIXABAY_PROXY_DEFAULT = '';
+  const PIXABAY_PROXY_DEFAULT = 'https://pixquery.mlapplications.com';
   const pxProxy = () => { try { return (localStorage.getItem('pptxPxProxy') || PIXABAY_PROXY_DEFAULT).trim().replace(/\/+$/, ''); } catch { return PIXABAY_PROXY_DEFAULT; } };
   let lastVideoUrl = null;
 
