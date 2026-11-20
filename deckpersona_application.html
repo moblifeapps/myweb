@@ -3,18 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PPTX to Video – Test Page | MLApplications</title>
+<title>DeckPersona – PowerPoint to narrated video | MLApplications</title>
 <meta name="robots" content="noindex, nofollow">
+<!-- The DeckPersona app shows the highest version it has (bundled, or this page from the website): bump it on every change. -->
+<meta name="dp-page-version" content="2026.11.20.1">
 <script>
   // Apply the saved theme before first paint (light / dark; nothing = follow the system)
   (function () { try { var t = localStorage.getItem('pptxTheme'); if (t !== 'auto') document.documentElement.dataset.theme = (t === 'light' ? 'light' : 'dark'); } catch (e) {} })();
 </script>
 <script>
   // Multi-threaded WebAssembly needs a "cross-origin isolated" page. pptx-coi-sw.js adds the two headers
-  // for pages under /pptx… only (one automatic reload the first time).
+  // for pages under /deckpersona… only (one automatic reload the first time). The workers the page starts
+  // are fetched through the same service worker, so they get the headers too. In the DeckPersona app the
+  // local page site sends these headers itself and this does nothing.
   (function () {
     if (self.crossOriginIsolated || !('serviceWorker' in navigator) || !window.isSecureContext) return;
-    navigator.serviceWorker.register('pptx-coi-sw.js', { scope: './pptx' }).then(function (reg) {
+    navigator.serviceWorker.register('pptx-coi-sw.js', { scope: './deckpersona' }).then(function (reg) {
       if (navigator.serviceWorker.controller) return;                 // controlled but still not isolated: give up quietly
       if (sessionStorage.getItem('pptxCoiReload')) return;
       sessionStorage.setItem('pptxCoiReload', '1');
@@ -1112,7 +1116,7 @@
   <div class="topbar">
     <div class="topbar-brand">
       <span class="brand-logo" aria-hidden="true"><svg viewBox="0 0 40 40"><defs><linearGradient id="lgPv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a86e8"/><stop offset=".55" stop-color="#0f55b5"/><stop offset="1" stop-color="#5b2bd6"/></linearGradient></defs><rect width="40" height="40" rx="9" fill="url(#lgPv)"/><rect x="7" y="9" width="26" height="18" rx="2.5" fill="none" stroke="#fff" stroke-width="2.2"/><path d="M17.5 13.5v9l7-4.5z" fill="#fff"/><path d="M14 31.5h12" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></span>
-      <div><div class="topbar-brand-title">PPTX to Video</div><div class="topbar-brand-subtitle">Slides, Narration &amp; Transitions</div></div>
+      <div><div class="topbar-brand-title">DeckPersona</div><div class="topbar-brand-subtitle">PowerPoint to narrated video</div></div>
     </div>
     <div class="topbar-center">Load a PowerPoint file, add narration, background videos and transitions, then press <strong>Create video</strong>. Everything runs in your browser – nothing is uploaded.</div>
   </div>
@@ -1710,7 +1714,7 @@
     <div class="pagehead"><h1>About</h1></div>
     <div class="pagebody">
       <div class="setcard"><span class="appicon" style="width:40px;height:40px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2b88d8,#005fb8);color:#fff"><svg class="ic" style="width:24px;height:24px"><use href="#i-create"/></svg></span>
-        <div class="st"><b>PPTX to Video</b><span>Test page · © MLApplications</span></div></div>
+        <div class="st"><b>DeckPersona</b><span>PowerPoint to narrated video · © MLApplications</span></div></div>
       <div class="grouptitle">Made with</div>
       <div class="setcard linkrow"><div class="st"><b>Open-source parts</b><span>
         pptx-browser (slide rendering) · <a href="https://mediabunny.dev/" target="_blank" rel="noopener">Mediabunny</a> (video encoding, MPL-2.0) ·
@@ -3763,7 +3767,7 @@ ${parts.join('\n\n')}
         title, '', summary && summary + (summary.length >= 300 ? '…' : ''), summary && '',
         chaptersOk ? 'Chapters:\n' + chaptersTxt + '\n' : '',
         credits.length ? 'Background videos:\n' + credits.join('\n') + '\n' : '',
-        'Made with PPTX to Video – https://mlapplications.com/pptx-test.html',
+        'Made with DeckPersona – https://mlapplications.com/deckpersona_application.html',
       ].filter(x => x !== '' && x != null).join('\n').slice(0, 4900);
 
       files.push({ name: 'title.txt', data: title + '\n' });
@@ -3795,7 +3799,7 @@ ${parts.join('\n\n')}
         '• Thumbnail ........ Details → Thumbnail → Upload file → thumbnail.jpg (1280×720).',
         tags.length ? '• Tags ............. Details → Show more → Tags → paste tags.txt.' : '',
         cues.length ? '• transcript.txt ... the narration slide by slide, for your own use or a blog post.' : '',
-        '', 'Made with PPTX to Video – https://mlapplications.com',
+        '', 'Made with DeckPersona – https://mlapplications.com',
       ].filter(x => x !== '').join('\r\n') + '\r\n' });
 
       const zip = makeZip(files);
