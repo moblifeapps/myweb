@@ -927,6 +927,136 @@
   #stage:hover { outline-color: var(--slide-frame); box-shadow: 0 0 0 7px color-mix(in srgb, var(--slide-frame) 18%, transparent); }
   .thumb.active { box-shadow: 0 0 0 2px var(--slide-frame), 0 0 14px color-mix(in srgb, var(--slide-frame) 35%, transparent); border-color: var(--slide-frame); }
   .pxlive.kept { color: var(--accent); }
+
+  /* ═════════ progress bar: gradient, moving stripes, a shine and a glowing tip ═════════ */
+  .fancybar { position: relative; height: 12px; border-radius: 999px; overflow: hidden;
+    background: color-mix(in srgb, var(--surface2) 80%, var(--bg)); border: 1px solid var(--border);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.35); }
+  .fancybar.big { height: 18px; }
+  .fancybar .fb-fill { position: relative; height: 100%; width: 0; border-radius: inherit; transition: width .45s cubic-bezier(.2,.8,.2,1);
+    background: linear-gradient(90deg, #2f6bff 0%, #5b7fff 35%, #8b5cf6 70%, #c084fc 100%);
+    background-size: 200% 100%; animation: fbHue 6s linear infinite; box-shadow: 0 0 14px rgba(91,127,255,.55); }
+  .fancybar .fb-fill::before { content: ''; position: absolute; inset: 0; border-radius: inherit; opacity: .28;
+    background: repeating-linear-gradient(-45deg, rgba(255,255,255,.9) 0 8px, transparent 8px 16px);
+    background-size: 22.6px 22.6px; animation: fbStripes .8s linear infinite; }
+  .fancybar .fb-fill::after { content: ''; position: absolute; inset: 0; border-radius: inherit;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.55) 50%, transparent 100%);
+    background-size: 40% 100%; background-repeat: no-repeat; animation: fbShine 2.2s ease-in-out infinite; }
+  .fancybar .fb-fill i { position: absolute; right: -2px; top: 50%; width: 14px; height: 14px; transform: translateY(-50%); border-radius: 50%;
+    background: #fff; box-shadow: 0 0 10px 4px rgba(192,132,252,.85), 0 0 22px 8px rgba(91,127,255,.5); opacity: .9; animation: fbPulse 1.2s ease-in-out infinite; }
+  .fancybar.big .fb-fill i { width: 18px; height: 18px; }
+  @keyframes fbStripes { to { background-position: 22.6px 0; } }
+  @keyframes fbShine { 0% { background-position: -60% 0; } 100% { background-position: 160% 0; } }
+  @keyframes fbHue { to { background-position: -200% 0; } }
+  @keyframes fbPulse { 50% { opacity: .45; transform: translateY(-50%) scale(.75); } }
+  @media (prefers-reduced-motion: reduce) { .fancybar .fb-fill, .fancybar .fb-fill::before, .fancybar .fb-fill::after, .fancybar .fb-fill i { animation: none; } }
+
+  /* ═════════ render pop-up ═════════ */
+  .render-dlg { width: min(1040px, 96vw); }
+  .render-dlg #rdX { margin-left: auto; }
+  .render-dlg .rd-live, .render-dlg #rdVideo { width: min(100%, calc(56vh * 16 / 9)); margin: 0 auto; }
+  .render-dlg .rd-prog { width: min(100%, calc(56vh * 16 / 9)); margin: 16px auto 0; }
+  .render-dlg .rd-view { display: none; }
+  .render-dlg.view-run .rd-run, .render-dlg.view-final .rd-final, .render-dlg.view-msg .rd-msg { display: block; }
+  .render-dlg .dlg-f .for-run, .render-dlg .dlg-f .for-final, .render-dlg .dlg-f .for-msg { display: none; }
+  .render-dlg.view-run .for-run, .render-dlg.view-final .for-final, .render-dlg.view-msg .for-msg { display: inline-flex; }
+  .render-dlg.view-msg #rdExportNow[hidden] { display: none; }
+  .render-dlg:not(.view-run) .rd-foot { visibility: hidden; }
+  .rd-live { position: relative; aspect-ratio: 16 / 9; background: #000; border-radius: 10px; overflow: hidden;
+    box-shadow: 0 0 0 1px var(--border), 0 10px 30px rgba(0,0,0,.35); }
+  .rd-canvas, .rd-canvas canvas { width: 100%; height: 100%; display: block; object-fit: contain; }
+  .rd-tag { position: absolute; z-index: 2; left: 12px; top: 12px; display: inline-flex; align-items: center; gap: 7px; padding: 4px 10px 4px 8px;
+    border-radius: 999px; font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #fff;
+    background: rgba(0,0,0,.55); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.18); }
+  .rd-dot { width: 9px; height: 9px; border-radius: 50%; background: #ff4d5e; box-shadow: 0 0 0 0 rgba(255,77,94,.7); animation: rdDot 1.4s infinite; flex: none; }
+  @keyframes rdDot { 70% { box-shadow: 0 0 0 8px rgba(255,77,94,0); } 100% { box-shadow: 0 0 0 0 rgba(255,77,94,0); } }
+  .rd-wait { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #cbd5e1; font-size: 14px;
+    background: radial-gradient(ellipse at center, #1b2133 0%, #000 75%); }
+  .rd-wait[hidden] { display: none; }
+  .rd-prog { margin-top: 16px; }
+  .rd-top { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .rd-pct { font-size: 40px; font-weight: 800; letter-spacing: -1px; line-height: 1; font-variant-numeric: tabular-nums; min-width: 2.6em;
+    background: linear-gradient(135deg, #7da2ff, #c084fc); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .rd-phase { font-size: 16px; font-weight: 600; color: var(--text); }
+  .rd-cheer { font-size: 13.5px; color: var(--accent); min-height: 1.3em; opacity: 0; }
+  .rd-cheer.in { animation: rdCheer .6s ease forwards; }
+  @keyframes rdCheer { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .rd-eta { font-size: 13px; color: var(--text2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .rd-detail { margin-top: 10px; font-size: 12.5px; color: var(--text2); min-height: 1.4em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .render-dlg.is-preview .rd-pct { font-size: 28px; }
+  #rdVideo { width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 10px; display: block; }
+  .rd-final-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  .rd-badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: .06em;
+    text-transform: uppercase; color: #fff; background: linear-gradient(135deg, #2fb36f, #1c7f4c); }
+  .rd-msgbox { padding: 28px 8px; font-size: 15px; line-height: 1.6; text-align: center; }
+  .rd-msgbox.error { color: var(--red); }
+  .render-dlg .dlg-f { flex-wrap: wrap; gap: 8px; align-items: center; }
+  .render-dlg .dlg-f a { text-decoration: none; }
+  .yt-btn .ic { color: #ff3b3b; }
+
+  /* ═════════ step 3: shown only while/after making a video ═════════ */
+  .s3run { margin-top: 14px; padding: 14px 16px; border-radius: var(--radius); border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border));
+    background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 8%, transparent), transparent), var(--surface); }
+  .s3run[hidden], .s3final[hidden] { display: none; }
+  .s3run-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .s3run .spacer, .render-dlg .spacer, .qwiz .spacer { flex: 1 1 auto; }
+  .s3run-row { display: flex; align-items: center; gap: 12px; margin-top: 8px; font-size: 13.5px; }
+  .s3pct { font-size: 18px; font-variant-numeric: tabular-nums; }
+  .s3run.error { border-color: var(--red); } .s3run.error .fancybar, .s3run.error .rd-dot, .s3run.error #s3ShowLive { display: none; }
+  .s3run.error #s3Phase { color: var(--red); }
+  .s3final { margin-top: 14px; display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(220px, 1fr); gap: 18px; align-items: start;
+    padding: 14px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); }
+  .s3final #resultVideo { width: 100%; border-radius: 8px; background: #000; display: block; }
+  .s3final-side { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+  .s3final-side a { text-decoration: none; }
+  .s3final-side #downloadLink { display: inline-block !important; }
+  @media (max-width: 760px) { .s3final { grid-template-columns: 1fr; } }
+
+  /* ═════════ quick video wizard ═════════ */
+  .qwiz { width: min(1180px, 96vw); }
+  .qwiz[open] { display: flex; flex-direction: column; height: min(88vh, 900px); }
+  .qwiz .dlg-b { flex: 1 1 auto; min-height: 0; }
+  .qslides { display: flex; gap: 12px; overflow-x: auto; padding: 6px 4px 12px; scroll-snap-type: x proximity; }
+  .qslide { flex: 0 0 auto; width: 188px; cursor: pointer; scroll-snap-align: start; border-radius: 10px; padding: 6px;
+    border: 2px solid transparent; transition: border-color .15s, background .15s, transform .15s; }
+  .qslide:hover { background: var(--surface2); }
+  .qslide.sel { border-color: var(--slide-frame); background: color-mix(in srgb, var(--slide-frame) 10%, transparent); }
+  .qslide.over { border-color: var(--accent); background: var(--accent-glow); transform: translateY(-3px); }
+  .qs-thumb { position: relative; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; background: #fff; box-shadow: 0 0 0 1px var(--border); }
+  .qs-thumb canvas { width: 100%; height: 100%; display: block; object-fit: cover; }
+  .qs-num { position: absolute; left: 5px; top: 5px; font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 5px; background: rgba(0,0,0,.65); color: #fff; }
+  .qs-x { position: absolute; right: 4px; top: 4px; display: none; width: 24px; height: 24px; min-height: 0; padding: 0; justify-content: center;
+    border-radius: 50%; font-size: 12px; background: rgba(0,0,0,.65); color: #fff; border: none; }
+  .qslide.has-bg:hover .qs-x { display: inline-flex; }
+  .qs-wait { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,.35); }
+  .qslide.waiting .qs-wait { display: flex; }
+  .qs-drop { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; color: #fff;
+    background: color-mix(in srgb, var(--accent) 55%, transparent); border: 2px dashed #fff; border-radius: 6px; }
+  .qslides.dragging .qs-drop { display: flex; opacity: .55; } .qslide.over .qs-drop { opacity: 1; }
+  .qs-title { margin-top: 6px; font-size: 12px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; }
+  .qslide.has-bg .qs-title { color: var(--text); }
+  .qslide.err .qs-title { color: var(--red); }
+  .qtools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 4px 0 12px; }
+  .qwiz .qgallery { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+  .qwiz .qgallery .vcard { cursor: grab; }
+  .qwiz .qgallery .vcard:active { cursor: grabbing; }
+  .qgen { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 14px; padding: 14px; border-radius: var(--radius);
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border)); background: var(--surface); }
+  .qgen-prog { flex: 1 1 320px; min-width: 0; }
+  #qNarrBar { display: none; margin-bottom: 8px; } #qNarrBar.on { display: block; }
+  .qsummary { display: grid; gap: 10px; max-width: 760px; }
+  .qsum-row { display: flex; gap: 14px; align-items: center; padding: 12px 14px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); }
+  .qsum-row > .ic { width: 22px; height: 22px; color: var(--accent); flex: none; }
+  .qsum-row b { display: block; } .qsum-row span { font-size: 13px; color: var(--text2); }
+  #qNext.go { background: linear-gradient(180deg, #1f6fd1 0%, #0f55b5 48%, #0a3f8f 100%); border-color: #3a86e8; color: #fff; font-weight: 700; padding: 8px 22px; }
+
+  .qwiz .qsticky { position: sticky; top: -8px; z-index: 5; margin: -8px -24px 10px; padding: 10px 24px 8px;
+    background: var(--surface); border-bottom: 1px solid var(--border); box-shadow: 0 8px 16px -10px rgba(0,0,0,.4); }
+  .qwiz .qsticky .qlead { margin-bottom: 6px; }
+  .qwiz .qsticky .bgfilter { margin: 0; }
+  #qSearch { width: min(320px, 50vw); padding: 7px 10px; font: inherit; font-size: 13px; background: var(--bg); color: var(--text);
+    border: 1px solid var(--border); border-radius: 6px; }
+  #qSearch:focus { outline: none; border-color: var(--accent); }
 </style>
 </head>
 <body>
@@ -1309,13 +1439,13 @@
     <div class="dlg-f"><span class="spacer"></span><button class="primary" data-close>Done</button></div>
   </dialog>
 
-  <dialog id="quickDlg" class="dlg wide">
+  <dialog id="quickDlg" class="dlg wide qwiz">
     <div class="dlg-h"><b><svg class="ic" style="vertical-align:-3px;color:var(--accent)"><use href="#i-bolt"/></svg> Quick video</b>
-      <span class="muted">Pick what you need – transitions and timing are chosen for you</span>
+      <span class="muted">A few steps – everything you choose is also set in the editor, so you can fine-tune it later</span>
       <button class="sm icon-only" data-close title="Close">✕</button></div>
     <div class="qsteps" id="qSteps">
-      <span data-step="0"><i>1</i>Presentation</span><span data-step="1"><i>2</i>Background videos</span>
-      <span data-step="2"><i>3</i>Voice</span><span data-step="3"><i>4</i>Avatar</span>
+      <span data-step="0"><i>1</i>Presentation</span><span data-step="1"><i>2</i>Backgrounds</span>
+      <span data-step="2"><i>3</i>Narration</span><span data-step="3"><i>4</i>AI avatar</span><span data-step="4"><i>5</i>Create</span>
     </div>
     <div class="dlg-b">
       <section class="qstep" data-step="0">
@@ -1326,28 +1456,42 @@
         </div>
       </section>
       <section class="qstep" data-step="1">
-        <div class="qchoice">
-          <label class="check"><input type="radio" name="qBgMode" value="auto" checked> <b>Match a video to each slide automatically</b> (by the words on the slide)</label>
-          <label class="check"><input type="radio" name="qBgMode" value="pick"> I'll choose the videos</label>
+        <div class="qsticky">
+        <p class="qlead"><b>Drag a video onto a slide</b> – or click a slide, then click a video. The slide's own background colour is removed so the video shows through.</p>
+        <div class="qslides" id="qSlides"></div>
+        <div class="qtools">
+          <button id="qAutoFill"><svg class="ic"><use href="#i-spark"/></svg>Fill empty slides for me</button>
+          <button id="qSameAll"><svg class="ic"><use href="#i-copy"/></svg>Use the selected slide's video everywhere</button>
+          <button id="qClearAll"><svg class="ic"><use href="#i-trash2"/></svg>Remove all</button>
+          <span class="spacer"></span><span class="muted" id="qBgCount"></span>
         </div>
-        <p class="qlead" id="qBgLead"></p>
         <div class="bgfilter"><span class="muted" id="qGalleryCount"></span><span class="spacer"></span>
           <input type="search" id="qSearch" placeholder="Search tags, e.g. ocean, city, forest…"><span class="pxlive" id="qLive"></span></div>
+        </div>
         <div id="qGallery" class="gallery qgallery"></div>
       </section>
       <section class="qstep" data-step="2">
         <div class="qchoice">
-          <label class="check"><input type="radio" name="qNarr" value="on" checked> Narrate with a voice</label>
+          <label class="check"><input type="radio" name="qNarr" value="on" checked> <b>Narrate the whole presentation with one voice</b></label>
           <label class="check"><input type="radio" name="qNarr" value="off"> No narration (each slide shows for a fixed time)</label>
         </div>
-        <div id="qVoiceHost"></div>
-        <label class="check" style="margin-top:10px"><input type="checkbox" id="qUseSlideText" checked> Slides without speaker notes: read the text written on the slide</label>
+        <div id="qNarrOn">
+          <div id="qVoiceHost"></div>
+          <div class="qgen">
+            <button id="qGenBtn" class="primary"><svg class="ic"><use href="#i-spark"/></svg>Generate the narration for all slides</button>
+            <div class="qgen-prog"><div class="fancybar" id="qNarrBar"><div class="fb-fill"><i></i></div></div>
+              <div class="status oneline" id="qNarrStatus">Slides without speaker notes read the text written on them. You can also skip this – it is done when the video is made.</div></div>
+          </div>
+        </div>
       </section>
       <section class="qstep" data-step="3">
-        <div class="avatar-empty" style="min-height:220px">
+        <div class="avatar-empty" style="min-height:240px">
           <svg class="ic"><use href="#i-user"/></svg>
-          <div><b>AI avatar – coming soon.</b><br>For now the video is made without a presenter.</div>
+          <div><b>AI avatar – coming soon.</b><br>A talking presenter over your slides. For now the video is made without one.</div>
         </div>
+      </section>
+      <section class="qstep" data-step="4">
+        <div class="qsummary" id="qSummary"></div>
       </section>
     </div>
     <div class="dlg-f">
@@ -1358,15 +1502,44 @@
     </div>
   </dialog>
 
-  <div id="busyOverlay" class="busy-ov" role="dialog" aria-modal="true" aria-live="polite">
-    <div class="bo-box">
-      <div class="bo-pct" id="boPct">0%</div>
-      <div class="bo-phase" id="boPhase">Starting…</div>
-      <div class="bo-bar"><div id="boBar"></div></div>
-      <div class="bo-detail" id="boDetail"></div>
-      <div class="bo-btns"><button id="boCancel"><svg class="ic f"><use href="#i-stop"/></svg>Cancel</button><button id="boClose" class="primary" style="display:none">Close</button></div>
+  <dialog id="renderDlg" class="dlg wide render-dlg view-run">
+    <div class="dlg-h"><b id="rdTitle">Creating your video</b><span class="muted" id="rdSub"></span>
+      <button class="sm icon-only" id="rdX" title="Hide – the work goes on and its progress stays in step 3">✕</button></div>
+    <div class="dlg-b">
+      <div class="rd-view rd-run">
+        <div class="rd-live">
+          <span class="rd-tag"><span class="rd-dot"></span>Live canvas</span>
+          <div class="rd-wait" id="rdWait"><span class="spin"></span><span id="rdWaitText">Getting ready…</span></div>
+          <div class="rd-canvas" id="rdLive"></div>
+        </div>
+        <div class="rd-prog">
+          <div class="rd-top">
+            <b class="rd-pct" id="rdPct">0%</b>
+            <div class="rd-words"><div class="rd-phase" id="rdPhase">Starting…</div><div class="rd-cheer" id="rdCheer"></div></div>
+            <span class="spacer"></span><span class="rd-eta" id="rdEta"></span>
+          </div>
+          <div class="fancybar big" id="rdBar"><div class="fb-fill"><i></i></div></div>
+          <div class="rd-detail" id="rdDetail"></div>
+        </div>
+      </div>
+      <div class="rd-view rd-final">
+        <video id="rdVideo" controls playsinline></video>
+        <div class="rd-final-meta"><span class="rd-badge">Final video</span><b id="rdFinalName"></b><span class="muted" id="rdFinalMeta"></span></div>
+      </div>
+      <div class="rd-view rd-msg"><div class="rd-msgbox" id="rdMsg"></div></div>
     </div>
-  </div>
+    <div class="dlg-f">
+      <span class="muted rd-foot" id="rdFoot">Closing this window does not stop the video – its progress stays in step 3.</span>
+      <span class="spacer"></span>
+      <button class="for-run" id="rdHide"><svg class="ic"><use href="#i-down"/></svg>Hide</button>
+      <button class="for-run danger" id="rdStop"><svg class="ic f"><use href="#i-stop"/></svg>Stop</button>
+      <button class="for-final" id="rdPlay"><svg class="ic f"><use href="#i-play"/></svg>Play</button>
+      <button class="for-final yt-btn" data-ytkit><svg class="ic"><use href="#i-film"/></svg>Download for YouTube (.zip)</button>
+      <a class="for-final" id="rdDownload"><button class="primary"><svg class="ic"><use href="#i-down"/></svg>Download video</button></a>
+      <button class="for-msg primary" id="rdExportNow" hidden><svg class="ic"><use href="#i-film"/></svg>Export video</button>
+      <button class="for-final for-msg" id="rdClose">Close</button>
+    </div>
+  </dialog>
 
   <!-- 3. Video -->
 
@@ -1462,18 +1635,23 @@
       <button id="exportBtn" class="gloss g-blue"><svg class="ic"><use href="#i-film"/></svg>Export video</button>
       <button id="stopBtn" class="gloss g-red" disabled><svg class="ic f"><use href="#i-stop"/></svg>Stop</button>
     </div>
-    <div class="progress" id="videoProgress"><div></div></div>
-    <div class="status oneline" id="videoStatus"></div>
-
-    <div class="video-grid">
-      <div id="liveWrap">
-        <h3>Live canvas</h3>
-        <canvas id="livePlaceholder" width="1920" height="1080"></canvas>
-      </div>
-      <div>
-        <h3>Result</h3>
-        <video id="resultVideo" controls playsinline></video>
+    <div class="s3run" id="s3Run" hidden>
+      <div class="s3run-head"><span class="rd-dot"></span><b id="s3RunTitle">Creating your video</b><span class="spacer"></span>
+        <button id="s3ShowLive" class="sm"><svg class="ic"><use href="#i-eye"/></svg>Show live view</button></div>
+      <div class="fancybar" id="s3Bar"><div class="fb-fill"><i></i></div></div>
+      <div class="s3run-row"><b class="s3pct" id="s3Pct">0%</b><span id="s3Phase"></span><span class="spacer"></span><span class="muted" id="s3Eta"></span></div>
+      <div class="progress" id="videoProgress" hidden><div></div></div>
+      <div class="status oneline" id="videoStatus"></div>
+    </div>
+    <div class="s3final" id="s3Final" hidden>
+      <video id="resultVideo" controls playsinline></video>
+      <div class="s3final-side">
+        <span class="rd-badge">Final video</span>
+        <b id="s3FinalName"></b>
+        <span class="muted" id="s3FinalMeta"></span>
         <a id="downloadLink"><button class="primary"><svg class="ic"><use href="#i-down"/></svg>Download video</button></a>
+        <button class="yt-btn" data-ytkit><svg class="ic"><use href="#i-film"/></svg>Download for YouTube (.zip)</button>
+        <button id="s3OpenFinal"><svg class="ic"><use href="#i-eye"/></svg>Open the big view</button>
       </div>
     </div>
   </section>
@@ -1637,12 +1815,16 @@
 
   // ── Helpers ────────────────────────────────────────────────────────────────
   function setStatus(msg, isError = false) { $('status').textContent = msg; $('status').classList.toggle('error', isError); }
-  function setVStatus(msg, isError = false) { const e = $('videoStatus'); e.textContent = msg; e.title = msg; e.classList.toggle('error', isError); }
+  function setVStatus(msg, isError = false) {
+    const e = $('videoStatus'); e.textContent = msg; e.title = msg; e.classList.toggle('error', isError);
+    const d = document.getElementById('rdDetail'); if (d) d.textContent = msg;     // also under the live canvas
+  }
   function setTtsStatus(msg, isError = false) {
-    for (const id of ['ttsStatus', 'voiceStatus', 'narrRowStatus']) {
+    for (const id of ['ttsStatus', 'voiceStatus', 'narrRowStatus', 'qNarrStatus']) {
       const e = $(id); if (!e) continue;
       e.textContent = msg; e.title = msg; e.classList.toggle('error', isError);
     }
+    if (typeof R !== 'undefined' && R.running && quick.running) { const d = document.getElementById('rdDetail'); if (d) d.textContent = msg; }
   }
 
   /** Why speech generation runs multi-threaded or not (shown in the progress line). */
@@ -1653,6 +1835,7 @@
     return 'single thread (server headers prevent isolation)';
   }
   function setBar(el, p) {
+    if (el.id === 'videoProgress') { if (p !== null) rProg(p); return; }   // the render pop-up and step 3 show it
     const els = el.id === 'ttsProgress' ? [el, $('voiceProgress')] : [el];   // a voice download shows in the Voice pop-up too
     for (const e of els) { if (!e) continue; e.style.display = p === null ? 'none' : 'block'; if (p !== null) e.firstElementChild.style.width = Math.round(p * 100) + '%'; }
   }
@@ -1719,7 +1902,7 @@
       setStatus(withNotes ? `${withNotes} slide${withNotes === 1 ? ' has' : 's have'} speaker notes – turn on Narration to voice them.` : '');
       $('loadPanel').classList.add('compact');
       slideTextCache.clear();
-      if ($('quickDlg').open) { quick.sel = []; buildQuickGallery(); updateQuickHint(); }
+      if ($('quickDlg').open) { quick.slide = 0; try { await refreshBgSuggestions(); } catch {} showQuickStep(1); }
     } catch (err) {
       console.error(err);
       setBar($('progress'), null);
@@ -1745,6 +1928,7 @@
     const c = document.querySelector(`.thumb[data-index="${i}"] canvas`);
     if (!c || !src) return;
     c.getContext('2d').drawImage(src, 0, 0, c.width, c.height);
+    if ($('quickDlg').open) setTimeout(() => qPaintSlide(i), 0);
   }
   function queueThumb(i) { if (renderer && slides[i]) { thumbQ.add(i); runThumbQueue(); } }
   async function runThumbQueue() {
@@ -2883,10 +3067,10 @@
    * and only slides whose audio is missing or was made with another voice / text are generated.
    * Slides you recorded yourself are kept.
    */
-  async function generateWholeDeck() {
+  async function generateWholeDeck(voice = null, onFrac = null) {
     const cur = slides[current];
     if (!cur || genBusy) return;
-    const v = { ...(cur.narrOn && cur.voice ? cur.voice : (defaultVoice || await initialVoice())) };
+    const v = { ...(voice || (cur.narrOn && cur.voice ? cur.voice : (defaultVoice || await initialVoice()))) };
     defaultVoice = { ...v };
     let filled = 0, turnedOn = 0, silent = 0;
     setTtsStatus('Preparing every slide…');
@@ -2908,10 +3092,10 @@
     const notes = [turnedOn && `narration turned on for ${turnedOn} slide${turnedOn === 1 ? '' : 's'}`,
       filled && `${filled} took their text from the slide`, silent && `${silent} without any text stay silent`].filter(Boolean).join(', ');
     if (notes) setTtsStatus(notes[0].toUpperCase() + notes.slice(1) + '.');
-    const made = await generateAll();
+    const made = await generateAll(onFrac);
     if (notes && made >= 0 && !genAbort && !$('ttsStatus').classList.contains('error')) setTtsStatus(`Done – ${made} slide${made === 1 ? '' : 's'} generated; ${notes}.`);
   }
-  $('genAllBtn').addEventListener('click', () => generateWholeDeck());
+  $('genAllBtn').addEventListener('click', () => generateWholeDeck());   // (the click event is not passed on)
   $('genStopBtn').addEventListener('click', () => { cancelGeneration(); setTtsStatus('Generation stopped.'); });
 
   // ── record your own voice (current slide)
@@ -3357,28 +3541,299 @@ ${parts.join('\n\n')}
     setTtsStatus($('aiStatus').textContent);
   });
 
-  // ── Quick video: presentation → videos → voice → avatar → done ─────────────
-  const quick = { step: 0, sel: [], running: false, cancelled: false };
+  // ── Render pop-up: live canvas + progress while working, then the final video ─────────────
+  const R = { kind: null, running: false, t0: 0, frac: 0, range: [0, 1], cheerT: 0, last: null, lastCheer: '' };
+  const CHEERS = [
+    [0,    ['Starting…', 'Warming up the engine…', 'Getting your slides ready…']],
+    [0.04, ['Laying out your slides…', 'This will not take long…', 'Mixing in the narration…', 'Lights, camera…']],
+    [0.3,  ['Looking good so far!', 'Polishing the transitions…', 'Making every frame count…']],
+    [0.5,  ['Halfway there!', 'Smooth sailing…', 'Your video is taking shape…']],
+    [0.75, ['Almost there…', 'Just a few more frames…', 'The finish line is in sight…']],
+    [0.95, ['Wrapping it up…', 'Putting on the final touches…']],
+  ];
+  function rCheer(force = false) {
+    if (!R.running && !force) return;
+    let band = CHEERS[0][1];
+    for (const [at, list] of CHEERS) if (R.frac >= at) band = list;
+    const pool = band.filter(t => t !== R.lastCheer);
+    const t = pool[Math.floor(Math.random() * pool.length)] || band[0];
+    R.lastCheer = t;
+    const el = $('rdCheer');
+    el.classList.remove('in'); void el.offsetWidth;
+    el.textContent = t; el.classList.add('in');
+  }
+  setInterval(() => rCheer(), 4500);
+  const setFill = (id, f) => { const e = document.querySelector(`#${id} .fb-fill`); if (e) e.style.width = (f * 100).toFixed(2) + '%'; };
+  const fmtEta = (s) => s < 10 ? 'a few seconds left' : s < 60 ? `about ${Math.round(s / 5) * 5} s left` : `about ${Math.floor(s / 60)} min ${String(Math.round(s % 60)).padStart(2, '0')} s left`;
+
+  /** Open the pop-up for a new job ('export' or 'preview'). */
+  function rOpen(kind) {
+    Object.assign(R, { kind, running: true, t0: performance.now(), frac: 0, range: [0, 1] });
+    const dlg = $('renderDlg');
+    dlg.classList.remove('view-final', 'view-msg'); dlg.classList.add('view-run');
+    $('rdTitle').textContent = kind === 'preview' ? 'Preview of the whole video' : 'Creating your video';
+    $('rdSub').textContent = fileBaseName ? `${fileBaseName}.pptx · ${slides.length} slides` : '';
+    $('rdFoot').textContent = kind === 'preview' ? 'Closing this window does not stop the preview – press Stop for that.'
+      : 'Closing this window does not stop the video – its progress stays in step 3.';
+    $('rdLive').replaceChildren(); $('rdWait').hidden = false; $('rdWaitText').textContent = 'Getting ready…';
+    $('rdDetail').textContent = ''; $('rdEta').textContent = '';
+    $('renderDlg').classList.toggle('is-preview', kind === 'preview');
+    rProg(0, kind === 'preview' ? 'Preparing the preview…' : 'Starting…');
+    rCheer(true);
+    $('s3Run').hidden = false; $('s3Run').classList.remove('error');
+    $('s3RunTitle').textContent = $('rdTitle').textContent;
+    if (kind !== 'preview') $('s3Final').hidden = true;
+    if (!dlg.open) dlg.showModal();
+  }
+  /** Show the frame being made. */
+  function rLive(canvas) {
+    $('rdLive').replaceChildren(canvas);
+    $('rdWait').hidden = true;
+  }
+  /** Progress 0..1 of the current part (mapped onto R.range), phase line, detail line. */
+  function rProg(f, phase, detail) {
+    if (f != null && isFinite(f)) {
+      const [a, b] = R.range;
+      R.frac = Math.max(R.frac * (f === 0 && a === 0 ? 0 : 1), Math.min(1, a + Math.max(0, Math.min(1, f)) * (b - a)));
+      const pct = Math.floor(R.frac * 100) + '%';
+      $('rdPct').textContent = pct; $('s3Pct').textContent = pct;
+      setFill('rdBar', R.frac); setFill('s3Bar', R.frac);
+      const el = (performance.now() - R.t0) / 1000;
+      const eta = R.kind !== 'preview' && R.frac > 0.03 && el > 3 ? fmtEta(el * (1 - R.frac) / R.frac) : '';
+      $('rdEta').textContent = eta; $('s3Eta').textContent = eta;
+    }
+    if (phase) { $('rdPhase').textContent = phase; $('s3Phase').textContent = phase; }
+    if (detail != null) $('rdDetail').textContent = detail;
+  }
+  /** The video is ready. */
+  function rFinal(url, name, meta) {
+    R.running = false;
+    const dlg = $('renderDlg');
+    dlg.classList.remove('view-run', 'view-msg'); dlg.classList.add('view-final');
+    $('rdTitle').textContent = 'Your video is ready';
+    $('rdVideo').src = url;
+    $('rdFinalName').textContent = name; $('rdFinalMeta').textContent = meta;
+    $('rdDownload').href = url; $('rdDownload').download = name;
+    $('s3Run').hidden = true;
+    $('s3Final').hidden = false;
+    $('s3FinalName').textContent = name; $('s3FinalMeta').textContent = meta;
+  }
+  /** A message instead of a video (preview finished, stopped, failed). */
+  function rMessage(title, html, { error = false, offerExport = false } = {}) {
+    R.running = false;
+    const dlg = $('renderDlg');
+    dlg.classList.remove('view-run', 'view-final'); dlg.classList.add('view-msg');
+    $('rdTitle').textContent = title;
+    $('rdMsg').innerHTML = html;
+    $('rdMsg').classList.toggle('error', error);
+    $('rdExportNow').hidden = !offerExport;
+    $('s3Run').classList.toggle('error', error);
+    $('s3RunTitle').textContent = title;
+    $('s3Phase').textContent = $('rdMsg').textContent;
+    $('s3Eta').textContent = '';
+    if (!error) $('s3Run').hidden = true;
+  }
+  const rHide = () => $('renderDlg').close();
+  $('rdX').addEventListener('click', rHide);
+  $('rdHide').addEventListener('click', rHide);
+  $('rdClose').addEventListener('click', rHide);
+  $('rdStop').addEventListener('click', () => {
+    quick.cancelled = true;
+    cancelGeneration();
+    job?.abort();
+    rProg(null, 'Stopping…');
+  });
+  $('rdPlay').addEventListener('click', () => { const v = $('rdVideo'); v.paused ? v.play() : v.pause(); });
+  $('renderDlg').addEventListener('close', () => $('rdVideo').pause());
+  $('rdExportNow').addEventListener('click', () => runExport());
+  $('s3ShowLive').addEventListener('click', () => { if (!$('renderDlg').open) $('renderDlg').showModal(); });
+  $('s3OpenFinal').addEventListener('click', () => {
+    if (!R.last) return;
+    rFinal(R.last.url, R.last.name, R.last.meta);
+    $('resultVideo').pause();
+    if (!$('renderDlg').open) $('renderDlg').showModal();
+  });
+  document.addEventListener('click', (e) => { if (e.target.closest('[data-ytkit]')) downloadYouTubeKit(e.target.closest('[data-ytkit]')); });
+
+  // ── YouTube kit: everything YouTube Studio asks for, next to the video ──────────────────
+  const CRC = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+  const crc32 = (u8) => { let c = 0xFFFFFFFF; for (let i = 0; i < u8.length; i++) c = CRC[(c ^ u8[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; };
+  /** A plain .zip (stored, no compression – the files are small or already compressed). files: [{ name, data: Uint8Array|string }] */
+  function makeZip(files) {
+    const enc = new TextEncoder(), parts = [], central = [];
+    let offset = 0;
+    const d = new Date(), dosTime = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1),
+      dosDate = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
+    for (const f of files) {
+      const name = enc.encode(f.name), data = typeof f.data === 'string' ? enc.encode(f.data) : f.data, crc = crc32(data);
+      const h = new DataView(new ArrayBuffer(30));
+      h.setUint32(0, 0x04034b50, true); h.setUint16(4, 20, true); h.setUint16(6, 0x0800, true); h.setUint16(8, 0, true);
+      h.setUint16(10, dosTime, true); h.setUint16(12, dosDate, true); h.setUint32(14, crc, true);
+      h.setUint32(18, data.length, true); h.setUint32(22, data.length, true); h.setUint16(26, name.length, true); h.setUint16(28, 0, true);
+      parts.push(new Uint8Array(h.buffer), name, data);
+      const c = new DataView(new ArrayBuffer(46));
+      c.setUint32(0, 0x02014b50, true); c.setUint16(4, 20, true); c.setUint16(6, 20, true); c.setUint16(8, 0x0800, true); c.setUint16(10, 0, true);
+      c.setUint16(12, dosTime, true); c.setUint16(14, dosDate, true); c.setUint32(16, crc, true);
+      c.setUint32(20, data.length, true); c.setUint32(24, data.length, true); c.setUint16(28, name.length, true);
+      c.setUint32(42, offset, true);
+      central.push(new Uint8Array(c.buffer), name);
+      offset += 30 + name.length + data.length;
+    }
+    const cdSize = central.reduce((n, a) => n + a.length, 0);
+    const e = new DataView(new ArrayBuffer(22));
+    e.setUint32(0, 0x06054b50, true); e.setUint16(8, files.length, true); e.setUint16(10, files.length, true);
+    e.setUint32(12, cdSize, true); e.setUint32(16, offset, true);
+    return new Blob([...parts, ...central, new Uint8Array(e.buffer)], { type: 'application/zip' });
+  }
+  const ytTime = (ms) => { const s = Math.floor(ms / 1000), h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60;
+    return h ? `${h}:${String(m).padStart(2, '0')}:${String(x).padStart(2, '0')}` : `${m}:${String(x).padStart(2, '0')}`; };
+  const subTime = (ms, sep) => { ms = Math.max(0, Math.round(ms)); const h = Math.floor(ms / 3600000), m = Math.floor(ms % 3600000 / 60000), s = Math.floor(ms % 60000 / 1000);
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}${sep}${String(ms % 1000).padStart(3, '0')}`; };
+  async function slideTitle(i) {
+    let t = slideTextCache.get(i);
+    if (t == null) { try { t = await slideText(renderer, i); } catch { t = ''; } slideTextCache.set(i, t); }
+    const line = (t || '').split('\n').map(x => x.trim()).find(Boolean) || '';
+    return line.replace(/\s+/g, ' ').replace(/^["'“”]+|["'“”]+$/g, '').slice(0, 70) || `Slide ${i + 1}`;
+  }
+  /** Caption cues for one narrated slide: sentences (long ones split), timed by their share of the characters. */
+  function captionCues(text, startMs, durMs) {
+    const sentences = text.replace(/\s+/g, ' ').trim().split(/(?<=[.!?…;:])\s+/).filter(Boolean);
+    const chunks = [];
+    for (const sn of sentences) {
+      if (sn.length <= 84) { chunks.push(sn); continue; }
+      let cur = '';
+      for (const w of sn.split(' ')) { if ((cur + ' ' + w).trim().length > 84 && cur) { chunks.push(cur); cur = w; } else cur = (cur + ' ' + w).trim(); }
+      if (cur) chunks.push(cur);
+    }
+    const total = chunks.reduce((n, c) => n + c.length, 0) || 1;
+    let t = startMs;
+    return chunks.map(c => { const d = durMs * c.length / total; const cue = { a: t, b: t + d, text: c.length > 42 ? wrap2(c) : c }; t += d; return cue; });
+  }
+  const wrap2 = (c) => { const mid = c.lastIndexOf(' ', Math.ceil(c.length / 2)); return mid > 0 ? c.slice(0, mid) + '\n' + c.slice(mid + 1) : c; };
+
+  async function downloadYouTubeKit(btn) {
+    const L = R.last;
+    if (!L?.plan) return;
+    const old = btn.innerHTML;
+    btn.disabled = true; btn.innerHTML = `<span class="spin"></span>Preparing…`;
+    try {
+      const P = L.plan, files = [];
+      const titles = [];
+      for (let i = 0; i < slides.length; i++) titles.push(await slideTitle(i));
+      const title = (titles[0] && !/^Slide \d+$/.test(titles[0]) ? titles[0] : L.base).slice(0, 100);
+
+      // chapters: one per slide, merged so each lasts at least 10 s (YouTube's rule); the first starts at 0:00
+      let ch = P.segs.map(s => ({ start: s.i === 0 ? 0 : s.t0, title: titles[s.i] }));
+      for (let k = 0; k < ch.length; k++) {
+        while (k + 1 < ch.length && ch[k + 1].start - ch[k].start < 10000) ch.splice(k + 1, 1);
+      }
+      if (ch.length > 1 && P.totalMs - ch[ch.length - 1].start < 10000) ch.pop();
+      const chaptersOk = ch.length >= 3 && P.totalMs >= 30000;
+      const chaptersTxt = ch.map(c => `${ytTime(c.start)} ${c.title}`).join('\n');
+
+      // captions + transcript from the narration
+      const cues = [], transcript = [];
+      for (const s of P.segs) {
+        const text = P.texts[s.i];
+        if (!text) continue;
+        transcript.push(`[${ytTime(s.t0)}] ${titles[s.i]}\n${text}\n`);
+        if (s.at != null && s.dur) cues.push(...captionCues(text, s.at, s.dur * 1000));
+      }
+      const lang = P.lang || 'en';
+      if (cues.length) {
+        files.push({ name: `captions.${lang}.srt`, data: cues.map((c, k) => `${k + 1}\n${subTime(c.a, ',')} --> ${subTime(c.b, ',')}\n${c.text}\n`).join('\n') });
+        files.push({ name: `captions.${lang}.vtt`, data: 'WEBVTT\n\n' + cues.map(c => `${subTime(c.a, '.')} --> ${subTime(c.b, '.')}\n${c.text}\n`).join('\n') });
+        files.push({ name: 'transcript.txt', data: transcript.join('\n') });
+      }
+
+      // tags: the words the presentation uses most
+      const count = new Map();
+      for (let i = 0; i < slides.length; i++) {
+        const t = plain(`${slideTextCache.get(i) || ''} ${P.texts[i] || ''}`);
+        for (const w of t.match(/[\p{L}][\p{L}\p{N}-]{3,}/gu) || []) if (!STOP.has(w)) count.set(w, (count.get(w) || 0) + 1);
+      }
+      const tags = [];
+      for (const [w] of [...count].sort((a, b) => b[1] - a[1])) { if ((tags.join(', ') + ', ' + w).length > 450 || tags.length >= 15) break; tags.push(w); }
+
+      // credits for the background videos
+      const credits = [...new Map(P.credits.map(c => [c.url || c.user, c])).values()]
+        .map(c => `• ${c.title ? c.title + ' – ' : ''}video by ${c.user} on ${c.source || 'Pixabay'}${c.url ? ': ' + c.url : ''}`);
+      const summary = (P.texts.find(Boolean) || '').replace(/\s+/g, ' ').slice(0, 300);
+      const description = [
+        title, '', summary && summary + (summary.length >= 300 ? '…' : ''), summary && '',
+        chaptersOk ? 'Chapters:\n' + chaptersTxt + '\n' : '',
+        credits.length ? 'Background videos:\n' + credits.join('\n') + '\n' : '',
+        'Made with PPTX to Video – https://mlapplications.com/pptx-test.html',
+      ].filter(x => x !== '' && x != null).join('\n').slice(0, 4900);
+
+      files.push({ name: 'title.txt', data: title + '\n' });
+      files.push({ name: 'description.txt', data: description + '\n' });
+      files.push({ name: 'chapters.txt', data: chaptersTxt + '\n' });
+      if (tags.length) files.push({ name: 'tags.txt', data: tags.join(', ') + '\n' });
+
+      // thumbnail 1280×720: the first slide over its background
+      try {
+        const pv = new PptxVideo(renderer, previewSettings(1280));
+        await pv.prepareSlide(0); pv.liveFrame();
+        const c = document.createElement('canvas'); c.width = 1280; c.height = 720;
+        const g = c.getContext('2d'); g.fillStyle = '#000'; g.fillRect(0, 0, 1280, 720);
+        const k = Math.min(1280 / pv.out.width, 720 / pv.out.height), w = pv.out.width * k, h = pv.out.height * k;
+        g.drawImage(pv.out, (1280 - w) / 2, (720 - h) / 2, w, h);
+        pv.dispose();
+        const jpg = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.9));
+        files.push({ name: 'thumbnail.jpg', data: new Uint8Array(await jpg.arrayBuffer()) });
+      } catch (err) { console.warn('Thumbnail failed', err); }
+
+      files.unshift({ name: 'README.txt', data: [
+        `YouTube kit for "${title}"`, '',
+        `Upload the video file (${L.name}) in YouTube Studio, then:`, '',
+        '• Title ............ copy title.txt (max. 100 characters).',
+        '• Description ...... copy description.txt. It already holds the chapters' + (credits.length ? ' and the credits for the background videos (keep them).' : '.'),
+        chaptersOk ? '• Chapters ......... they work by themselves because they are in the description (chapters.txt has them alone).'
+          : '• Chapters ......... YouTube needs at least 3 chapters of 10 s or more – this video is too short for them, so they are left out of the description.',
+        cues.length ? `• Subtitles ........ Subtitles → Add language → Upload file → "With timing" → captions.${lang}.srt (or .vtt).` : '• Subtitles ........ no narration, so no subtitle file.',
+        '• Thumbnail ........ Details → Thumbnail → Upload file → thumbnail.jpg (1280×720).',
+        tags.length ? '• Tags ............. Details → Show more → Tags → paste tags.txt.' : '',
+        cues.length ? '• transcript.txt ... the narration slide by slide, for your own use or a blog post.' : '',
+        '', 'Made with PPTX to Video – https://mlapplications.com',
+      ].filter(x => x !== '').join('\r\n') + '\r\n' });
+
+      const zip = makeZip(files);
+      const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(zip), download: `${L.base} - YouTube kit.zip` });
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+      btn.innerHTML = `${icon('down')}Downloaded`;
+      setTimeout(() => { btn.innerHTML = old; btn.disabled = false; }, 2500);
+    } catch (err) {
+      console.error(err);
+      btn.innerHTML = old; btn.disabled = false;
+      alert('The YouTube kit could not be made: ' + (err?.message || err));
+    }
+  }
+
+  // ── Quick video wizard: presentation → backgrounds (drag & drop) → narration → avatar → create ──
+  const quick = { step: 0, running: false, cancelled: false, slide: 0 };
   const qSteps = [...document.querySelectorAll('#quickDlg .qstep')];
+  const qNarrate = () => document.querySelector('input[name=qNarr]:checked').value === 'on';
 
   function showQuickStep(n) {
+    if (quick.step === 2 && n !== 2) applyQuickNarration();
     quick.step = n;
     qSteps.forEach(s => s.classList.toggle('on', +s.dataset.step === n));
     document.querySelectorAll('#qSteps span').forEach(s => {
       s.classList.toggle('on', +s.dataset.step === n);
       s.classList.toggle('done', +s.dataset.step < n);
     });
-    $('qBack').style.visibility = n === 0 ? 'hidden' : '';
-    $('qNext').innerHTML = n === 3 ? `${icon('bolt')}Create video` : `Next${icon('right')}`;
-    // the voice settings live in the voice pop-up; borrow them while step 3 is shown
+    $('qBack').style.visibility = n === 0 || (n === 1 && renderer) ? 'hidden' : '';
+    $('qNext').innerHTML = n === 4 ? `${icon('bolt')}Create the video` : `Next${icon('right')}`;
+    $('qNext').classList.toggle('go', n === 4);
+    // the voice controls live in the Voice pop-up; borrow them while the narration step is shown
     const grid = document.querySelector('.voicegrid');
-    if (n === 2) {
-      $('qVoiceHost').appendChild(grid);
-      const s = slides[current];
-      if (s && !s.voice) initialVoice().then(v => { s.voice = v; return writeVoiceControls(v); }).then(updateVoiceChip);
-    }
+    if (n === 2) $('qVoiceHost').appendChild(grid);
     else if (grid.parentElement === $('qVoiceHost')) $('voiceDlg').querySelector('.dlg-b').prepend(grid);
-    $('qVoiceHost').style.display = document.querySelector('input[name=qNarr]:checked').value === 'on' ? '' : 'none';
+    $('qNarrOn').style.display = qNarrate() ? '' : 'none';
+    if (n === 1) { buildQuickSlides(); buildQuickGallery(); }
+    if (n === 4) buildQuickSummary();
     updateQuickHint();
   }
   function updateQuickHint() {
@@ -3389,202 +3844,248 @@ ${parts.join('\n\n')}
       if (renderer) { $('qFileName').textContent = fileBaseName + '.pptx'; $('qFileMeta').textContent = $('fileMeta').textContent; $('qFileBtn').innerHTML = `${icon('down')}Change…`; }
     }
     if (quick.step === 1) {
-      const auto = document.querySelector('input[name=qBgMode]:checked').value === 'auto';
-      $('qBgLead').textContent = auto
-        ? 'Each slide gets the video whose tags best match its words. Optionally tick a few videos below to choose only among them. The slides\' own background colours are removed so the video shows through.'
-        : 'Pick one or more videos. With several, they take turns from slide to slide. The slides\' own background colours are removed so the video shows through. Pick none for plain slides.';
-      h.textContent = auto ? (quick.sel.length ? `Matching among ${quick.sel.length} selected video${quick.sel.length === 1 ? '' : 's'}` : 'Matching among all videos')
-        : quick.sel.length ? `${quick.sel.length} video${quick.sel.length === 1 ? '' : 's'} selected` : 'No video – plain slides';
+      const n = slides.filter(s => s.bg).length;
+      $('qBgCount').textContent = `${n} of ${slides.length} slides have a video`;
+      h.textContent = n < slides.length ? 'Slides without a video keep their own background' : '';
     }
   }
 
+  // slide strip – drop targets
+  function buildQuickSlides() {
+    const strip = $('qSlides');
+    strip.innerHTML = '';
+    quick.slide = Math.min(quick.slide, slides.length - 1);
+    slides.forEach((s, i) => {
+      const el = document.createElement('div');
+      el.className = 'qslide'; el.dataset.i = i;
+      el.innerHTML = `<div class="qs-thumb"><canvas></canvas><span class="qs-num">${i + 1}</span><span class="qs-wait"><span class="spin"></span></span>` +
+        `<button class="qs-x" title="Remove this slide's video">✕</button><span class="qs-drop">Drop here</span></div><div class="qs-title"></div>`;
+      el.addEventListener('click', (e) => {
+        if (e.target.closest('.qs-x')) { quickAssign(i, null); return; }
+        quick.slide = i; paintQuickSlides();
+      });
+      el.addEventListener('dragover', (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; el.classList.add('over'); });
+      el.addEventListener('dragleave', () => el.classList.remove('over'));
+      el.addEventListener('drop', (e) => {
+        e.preventDefault(); el.classList.remove('over');
+        const v = galleryByFile.get(e.dataTransfer.getData('text/x-pptx-video') || e.dataTransfer.getData('text/plain'));
+        if (v) { quick.slide = i; quickAssign(i, v); }
+      });
+      strip.appendChild(el);
+      qPaintSlide(i);
+    });
+    paintQuickSlides();
+  }
+  function qPaintSlide(i) {
+    const card = document.querySelector(`#qSlides .qslide[data-i="${i}"]`);
+    const src = document.querySelector(`.thumb[data-index="${i}"] canvas`);
+    if (!card) return;
+    const c = card.querySelector('canvas');
+    if (src && src.width) { c.width = src.width; c.height = src.height; c.getContext('2d').drawImage(src, 0, 0); }
+    const s = slides[i], b = s?.bg;
+    card.classList.toggle('has-bg', !!b);
+    card.classList.toggle('waiting', !!b && (thumbSig[i] ?? '') !== thumbSigOf(i));
+    card.querySelector('.qs-title').textContent = b ? b.title : 'No video';
+    card.querySelector('.qs-title').title = b?.err ? b.err : '';
+    card.classList.toggle('err', !!b?.err);
+  }
+  function paintQuickSlides() {
+    document.querySelectorAll('#qSlides .qslide').forEach(el => el.classList.toggle('sel', +el.dataset.i === quick.slide));
+    const strip = $('qSlides'), el = strip.querySelector(`.qslide[data-i="${quick.slide}"]`);
+    if (el) {                                      // scroll the strip sideways only – never the window
+      const l = el.offsetLeft - strip.offsetLeft, r = l + el.offsetWidth;
+      if (l < strip.scrollLeft) strip.scrollTo({ left: l - 8, behavior: 'smooth' });
+      else if (r > strip.scrollLeft + strip.clientWidth) strip.scrollTo({ left: r - strip.clientWidth + 8, behavior: 'smooth' });
+    }
+    updateQuickHint();
+  }
+  /** Give slide i the video v (null = none). The slide's own background colour goes, so the video shows through. */
+  function quickAssign(i, v) {
+    const s = slides[i];
+    if (!s) return;
+    s.bg = v ? bgFromEntry(v) : null;
+    if (v) s.mode = 'transparent';
+    updateThumbBadges(i);
+    if (i === current) { loadBgUI(); refreshLive(); }
+    if (s.bg?.px && !s.bg.source) {
+      ensureBackgrounds().then(() => { loadBgUI(); slides.forEach((_, k) => updateThumbBadges(k)); })
+        .catch(() => { qPaintSlide(i); });
+    }
+    qPaintSlide(i);
+    updateQuickHint();
+  }
+  // keep the strip's pictures in step with the editor's thumbnails
+  setInterval(() => { if ($('quickDlg').open && quick.step === 1) slides.forEach((_, i) => qPaintSlide(i)); }, 700);
+
+  // video grid – drag sources
   let qLimit = 60;
   function buildQuickGallery(reset = true) {
     if (reset) qLimit = 60;
     const g = $('qGallery');
     const q = plain(($('qSearch')?.value || '').trim()), qTerms = searchTerms(q);
-    const sel = quick.sel.map(f => galleryByFile.get(f)).filter(Boolean);
-    const rest = bySearch(gallery.filter(v => !quick.sel.includes(v.file) && searchHit(v, q, qTerms)), q);
-    const list = [...sel, ...rest.slice(0, qLimit)];
+    let list = bySearch(gallery.filter(v => searchHit(v, q, qTerms)), q);
+    if (!q) {                                       // no search: what fits the selected slide first
+      const sg = bgSugg;
+      list = [...list].sort((a, b) => (sg.get(b.file)?.score || 0) - (sg.get(a.file)?.score || 0));
+    }
     g.innerHTML = '';
-    for (const v of list) {
+    for (const v of list.slice(0, qLimit)) {
       const el = document.createElement('div');
-      el.className = 'vcard';
+      el.className = 'vcard'; el.draggable = true;
       el.dataset.file = v.file;
-      el.innerHTML = `<div class="vthumb">${v.poster ? '<img loading="lazy" alt="">' : ''}<span class="order"></span>` +
-        `${v.duration ? `<span class="badge dur">${fmtTime(v.duration)}</span>` : ''}</div><div class="vtitle"></div>`;
+      el.innerHTML = `<div class="vthumb">${v.poster ? '<img loading="lazy" alt="" draggable="false">' : ''}` +
+        `${v.px ? '<span class="badge src">Pixabay</span>' : ''}${v.duration ? `<span class="badge dur">${fmtTime(v.duration)}</span>` : ''}</div><div class="vtitle"></div>`;
       if (v.poster) el.querySelector('img').src = mediaUrl(v.poster);
       el.querySelector('.vtitle').textContent = v.title || v.file;
+      el.title = 'Drag onto a slide – or click to put it on the selected slide';
+      el.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/x-pptx-video', v.file); e.dataTransfer.setData('text/plain', v.file);
+        e.dataTransfer.effectAllowed = 'copy';
+        const img = el.querySelector('img'); if (img) e.dataTransfer.setDragImage(img, 40, 24);
+        $('qSlides').classList.add('dragging');
+      });
+      el.addEventListener('dragend', () => $('qSlides').classList.remove('dragging'));
       el.addEventListener('click', () => {
-        const k = quick.sel.indexOf(v.file);
-        if (k >= 0) quick.sel.splice(k, 1); else quick.sel.push(v.file);
-        paintQuickGallery();
+        quickAssign(quick.slide, v);
+        const nextEmpty = slides.findIndex((s, k) => k > quick.slide && !s.bg);    // move on to the next slide without a video
+        quick.slide = nextEmpty >= 0 ? nextEmpty : Math.min(quick.slide + 1, slides.length - 1);
+        paintQuickSlides();
       });
       g.appendChild(el);
     }
-    if (rest.length > qLimit) {
+    if (list.length > qLimit) {
       const more = document.createElement('div');
       more.className = 'vcard more';
-      more.innerHTML = `<div class="vthumb">⋯</div><div class="vtitle">Show more (${rest.length - qLimit} more)</div>`;
+      more.innerHTML = `<div class="vthumb">⋯</div><div class="vtitle">Show more (${list.length - qLimit} more)</div>`;
       more.addEventListener('click', () => { qLimit += 60; buildQuickGallery(false); });
       g.appendChild(more);
     }
     if (!list.length) g.innerHTML = '<div class="empty" style="grid-column:1/-1;padding:24px">No videos match.</div>';
-    paintQuickGallery();
+    $('qGalleryCount').textContent = `${gallery.length} videos`;
   }
   $('qSearch').addEventListener('input', () => {
     buildQuickGallery();
     pxLiveSearch($('qSearch').value, () => buildQuickGallery(false), $('qLive'));
   });
-  function paintQuickGallery() {
-    $('qGalleryCount').textContent = `${gallery.length} videos · ${quick.sel.length} selected`;
-    document.querySelectorAll('#qGallery .vcard').forEach(el => {
-      const k = quick.sel.indexOf(el.dataset.file);
-      el.classList.toggle('selected', k >= 0);
-      el.querySelector('.order').textContent = k >= 0 ? k + 1 : '';
-    });
-    updateQuickHint();
+  $('qAutoFill').addEventListener('click', async () => {
+    const used = new Map(slides.filter(s => s.bg).map(s => [s.bg.file, 1]));
+    let prev = null;
+    for (let i = 0; i < slides.length; i++) {
+      if (slides[i].bg) { prev = slides[i].bg.file; continue; }
+      const ranked = await suggestFor(i, gallery);
+      let pick = ranked.find(x => x.v.file !== prev && !used.has(x.v.file))?.v || ranked.find(x => x.v.file !== prev)?.v;
+      if (!pick) pick = gallery.filter(v => !used.has(v.file))[i % Math.max(1, gallery.length)] || gallery[0];
+      if (!pick) break;
+      used.set(pick.file, 1); prev = pick.file;
+      quickAssign(i, pick);
+    }
+  });
+  $('qSameAll').addEventListener('click', () => {
+    const b = slides[quick.slide]?.bg;
+    const v = b && galleryByFile.get(b.file);
+    if (!v) { $('qHint').textContent = 'Select a slide that has a video first.'; return; }
+    slides.forEach((_, i) => quickAssign(i, v));
+  });
+  $('qClearAll').addEventListener('click', () => slides.forEach((_, i) => quickAssign(i, null)));
+
+  // narration step
+  function quickVoice() { const v = readVoiceControls(); defaultVoice = { ...v }; if (slides[current]) slides[current].voice = { ...v }; return v; }
+  function applyQuickNarration() {
+    if (!renderer) return;
+    if (!qNarrate()) { slides.forEach((s, i) => { s.narrOn = false; updateThumbBadges(i); }); loadNarrationUI(); updateNarrTotal(); }
+    else quickVoice();
+  }
+  document.querySelectorAll('input[name=qNarr]').forEach(r => r.addEventListener('change', () => { $('qNarrOn').style.display = qNarrate() ? '' : 'none'; }));
+  $('qGenBtn').addEventListener('click', async () => {
+    if (genBusy) { cancelGeneration(); return; }
+    const v = quickVoice();
+    $('qGenBtn').innerHTML = `${icon('stop', true)}Stop`;
+    setFill('qNarrBar', 0); $('qNarrBar').classList.add('on');
+    try { await generateWholeDeck(v, (f) => setFill('qNarrBar', f)); }
+    finally {
+      $('qGenBtn').innerHTML = `${icon('spark')}Generate the narration for all slides`;
+      $('qNarrBar').classList.remove('on');
+    }
+  });
+
+  function buildQuickSummary() {
+    const nBg = slides.filter(s => s.bg).length;
+    const narr = qNarrate();
+    const v = narr ? readVoiceControls() : null;
+    const ready = slides.filter(s => s.narrOn && s.buffer && s.voiceSig === voiceSig(s.voice || {})).length;
+    const toSay = narr ? slides.filter(s => cleanForSpeech(s.text) || slideTextCache.get(slides.indexOf(s))).length : 0;
+    const row = (ic, t, d) => `<div class="qsum-row">${icon(ic)}<div><b>${t}</b><span>${d}</span></div></div>`;
+    $('qSummary').innerHTML =
+      row('file', `${fileBaseName}.pptx`, `${slides.length} slides`) +
+      row('film', 'Background videos', nBg ? `${nBg} of ${slides.length} slides have a video, shown through the slide` : 'None – the slides keep their own backgrounds') +
+      row('mic', 'Narration', narr ? `${($('voiceBtn')?.textContent || '').trim() || (v.engine === 'kokoro' ? 'Kokoro' : 'Piper')} · ${ready ? ready + ' slide' + (ready === 1 ? '' : 's') + ' already voiced, the rest is done now' : 'generated when the video is made'}` : 'Off – each slide shows for a fixed time') +
+      row('layers', 'Transitions', 'A different animated transition between every two slides – change any of them in the editor') +
+      row('user', 'AI avatar', 'Coming soon') +
+      `<p class="qlead" style="margin-top:14px">Press <b>Create the video</b>. You can close the progress window and keep working – step 3 shows how far it is.</p>`;
   }
 
   $('quickBtn').addEventListener('click', async () => {
     if (job || quick.running) return;
-    // start from what the presentation already uses
-    quick.sel = [...new Set(slides.map(s => s.bg?.file).filter(Boolean))];
     if (!gallery.length) await buildGallery();
-    buildQuickGallery();
     if (renderer && slides[current]) {
       if (!slides[current].voice) slides[current].voice = await initialVoice();
       await writeVoiceControls(slides[current].voice);
+      try { await refreshBgSuggestions(); } catch {}
+      quick.slide = current;
     }
-    showQuickStep(renderer ? 1 : 0);
     $('quickDlg').showModal();
+    showQuickStep(renderer ? 1 : 0);
   });
   $('quickDlg').addEventListener('close', () => {
     const grid = document.querySelector('.voicegrid');
     if (grid.parentElement === $('qVoiceHost')) $('voiceDlg').querySelector('.dlg-b').prepend(grid);
   });
-  document.querySelectorAll('input[name=qNarr]').forEach(r => r.addEventListener('change', () => showQuickStep(quick.step)));
-  document.querySelectorAll('input[name=qBgMode]').forEach(r => r.addEventListener('change', () => updateQuickHint()));
   $('qFileBtn').addEventListener('click', () => $('fileInput').click());
   const qBox = $('qFileBox');
   ['dragenter', 'dragover'].forEach(ev => qBox.addEventListener(ev, (e) => { e.preventDefault(); qBox.classList.add('drag'); }));
   ['dragleave', 'drop'].forEach(ev => qBox.addEventListener(ev, (e) => { e.preventDefault(); qBox.classList.remove('drag'); }));
   qBox.addEventListener('drop', (e) => { const f = e.dataTransfer.files[0]; if (f) loadFile(f); });
-  $('qBack').addEventListener('click', () => showQuickStep(Math.max(0, quick.step - 1)));
+  $('qBack').addEventListener('click', () => showQuickStep(Math.max(renderer ? 1 : 0, quick.step - 1)));
   $('qNext').addEventListener('click', () => {
-    if (quick.step < 3) { showQuickStep(quick.step + 1); return; }
+    if (quick.step < 4) { showQuickStep(quick.step + 1); return; }
+    applyQuickNarration();
     $('quickDlg').close();
     runQuick();
   });
 
-  // big progress overlay
-  function overlay(state) {
-    const o = $('busyOverlay');
-    if (state === false) { o.classList.remove('on', 'error'); return; }
-    o.classList.add('on');
-    if (state.error) {
-      o.classList.add('error');
-      $('boPct').textContent = 'Stopped';
-      $('boPhase').textContent = state.error;
-      $('boCancel').style.display = 'none'; $('boClose').style.display = '';
-      return;
-    }
-    o.classList.remove('error');
-    $('boCancel').style.display = ''; $('boClose').style.display = 'none';
-    if (state.pct != null) { const p = Math.max(0, Math.min(100, Math.round(state.pct))); $('boPct').textContent = p + '%'; $('boBar').style.width = p + '%'; }
-    if (state.phase) $('boPhase').textContent = state.phase;
-    if (state.detail != null) $('boDetail').textContent = state.detail;
-  }
-  $('boCancel').addEventListener('click', () => {
-    quick.cancelled = true;
-    cancelGeneration();
-    job?.abort();
-    overlay({ phase: 'Cancelling…' });
-  });
-  $('boClose').addEventListener('click', () => overlay(false));
-  // mirror the detailed status lines into the overlay while it is shown
-  const mirror = (id) => new MutationObserver(() => { if (quick.running) overlay({ detail: $(id).textContent }); })
-    .observe($(id), { childList: true, characterData: true, subtree: true });
-  mirror('ttsStatus'); mirror('videoStatus');
-
-  /** Apply the wizard's choices to every slide, voice the narration, then make the video. */
+  /** Download the Pixabay clips, voice what is missing, then make the video – all inside the render pop-up. */
   async function runQuick() {
-    if (!renderer || quick.running) return;
+    if (!renderer || quick.running || job) return;
     quick.running = true; quick.cancelled = false;
-    overlay({ pct: 0, phase: 'Setting up the slides…', detail: '' });
+    rOpen('export');
     try {
-      // 1. backgrounds: chosen videos take turns; slide background colours removed
-      const vids = quick.sel.map(f => galleryByFile.get(f)).filter(Boolean);
-      const auto = document.querySelector('input[name=qBgMode]:checked').value === 'auto';
-      if (auto && gallery.length) {
-        // best match per slide; avoid showing the same clip twice in a row when another fits nearly as well
-        const pool = vids.length ? vids : gallery;
-        const used = new Map();
-        let prev = null;
-        for (let i = 0; i < slides.length; i++) {
-          const ranked = await suggestFor(i, pool);
-          let pick = ranked[0]?.v || null;
-          if (pick && pick === prev) {
-            const alt = ranked.find(x => x.v !== prev && x.score >= ranked[0].score * 0.5);
-            if (alt) pick = alt.v;
-          }
-          if (!pick) {                                     // no word matched: the least used clip of the pool
-            pick = [...pool].sort((a, b) => (used.get(a) || 0) - (used.get(b) || 0) || (a === prev) - (b === prev))[0];
-          }
-          used.set(pick, (used.get(pick) || 0) + 1);
-          slides[i].bg = bgFromEntry(pick);
-          slides[i].mode = 'transparent';
-          prev = pick;
-        }
-      } else {
-        slides.forEach((s, i) => {
-          s.bg = vids.length ? bgFromEntry(vids[i % vids.length]) : null;
-          s.mode = 'transparent';
-        });
-      }
-      // 2. narration: notes, or the slide's own text when there are none
-      const narrate = document.querySelector('input[name=qNarr]:checked').value === 'on';
-      const voice = narrate ? readVoiceControls() : null;
-      for (let i = 0; i < slides.length; i++) {
-        const s = slides[i];
-        if (narrate && !s.text.trim() && $('qUseSlideText').checked) { try { s.text = await slideText(renderer, i); } catch {} }
-        s.narrOn = narrate && !!cleanForSpeech(s.text);
-        if (narrate) s.voice = { ...voice };
-      }
-      if (narrate) defaultVoice = { ...voice };
-      // 3. transitions: random mattes
-      randomizeTransitions();
-      for (let i = 0; i < slides.length; i++) updateThumbBadges(i);
-      loadBgUI(); await loadNarrationUI(); refreshLive();
-
-      // 3b. Pixabay clips are downloaded now (first few percent of the bar)
       if (slides.some(s => s.bg?.px && !s.bg.source)) {
-        overlay({ pct: 0, phase: 'Downloading the background videos…', detail: '' });
-        await ensureBackgrounds((f) => overlay({ pct: Math.round(f * 5) }));
+        R.range = [0, 0.05];
+        rProg(0, 'Downloading the background videos…');
+        await ensureBackgrounds((f) => rProg(f));
         loadBgUI(); refreshLive();
       }
       if (quick.cancelled) throw new Error('Cancelled.');
-      // 4. voices (first part of the bar), 5. video
-      const hasVoice = slides.some(s => s.narrOn);
-      const split = hasVoice ? 0.45 : 0;
-      if (hasVoice) {
-        overlay({ pct: 1, phase: 'Generating the narration…' });
-        await generateAll((f) => overlay({ pct: 1 + f * (split * 100 - 1) }));
-        if (quick.cancelled) throw new Error('Cancelled.');
-        const missing = slides.filter(s => s.narrOn && !s.buffer).length;
-        if (missing) throw new Error(`${missing} slide${missing === 1 ? '' : 's'} could not be voiced – ${$('ttsStatus').textContent}`);
+      let split = 0.05;
+      if (qNarrate()) {
+        const v = readVoiceControls();
+        const stale = slides.some(s => (s.narrOn || cleanForSpeech(s.text)) && !(s.kind === 'rec' && s.buffer) &&
+          !(s.buffer && s.voiceSig === voiceSig(v) && s.spokenText === cleanForSpeech(s.text)));
+        if (stale || !slides.some(s => s.narrOn)) {
+          R.range = [0.05, 0.45]; split = 0.45;
+          rProg(0, 'Generating the narration…');
+          await generateWholeDeck(v, (f) => rProg(f));
+          if (quick.cancelled) throw new Error('Cancelled.');
+          const missing = slides.filter(s => s.narrOn && !s.buffer).length;
+          if (missing) throw new Error(`${missing} slide${missing === 1 ? '' : 's'} could not be voiced – ${$('ttsStatus').textContent}`);
+        }
       }
-      overlay({ pct: split * 100, phase: 'Making the video…', detail: '' });
-      const ok = await runExport((f) => overlay({ pct: split * 100 + f * (100 - split * 100) }));
-      if (quick.cancelled) throw new Error('Cancelled.');
-      if (!ok) throw new Error($('videoStatus').textContent || 'The video could not be made.');
-      overlay({ pct: 100, phase: 'Done!' });
-      await new Promise(r => setTimeout(r, 700));
-      overlay(false);
-      $('videoPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      R.range = [split, 1];
+      const ok = await runExport();
+      if (!ok && !quick.cancelled && R.running) throw new Error($('videoStatus').textContent || 'The video could not be made.');
     } catch (err) {
-      overlay(quick.cancelled ? false : { error: err?.message || String(err) });
-      if (quick.cancelled) setVStatus('Quick video cancelled – your choices are kept, change anything and press "Export video".');
+      if (quick.cancelled) rMessage('Stopped', 'The video was stopped. Your choices are kept – change anything and press <b>Export video</b>.');
+      else rMessage('Something went wrong', esc(err?.message || String(err)), { error: true });
     } finally {
       quick.running = false;
     }
@@ -4041,10 +4542,8 @@ ${parts.join('\n\n')}
   for (const id of ['animChk', 'clickGapSec', 'holdSec']) $(id).addEventListener('change', () => {});
 
   function showLive(canvas) {
-    const wrap = $('liveWrap');
-    wrap.querySelector('canvas')?.remove();
-    wrap.appendChild(canvas);
-    $('resultVideo').style.aspectRatio = `${canvas.width} / ${canvas.height}`;
+    rLive(canvas);
+    $('resultVideo').style.aspectRatio = $('rdVideo').style.aspectRatio = `${canvas.width} / ${canvas.height}`;
   }
 
   function setJobUI(running) {
@@ -4066,6 +4565,21 @@ ${parts.join('\n\n')}
     a.style.display = 'inline-block';
     setVStatus(`Done – ${fmtSize(blob.size)} ${ext.toUpperCase()}${extra}.`);
     addHistory(blob, a.download, ext, extra);
+    const meta = `${fmtSize(blob.size)} · ${ext.toUpperCase()}${extra}`;
+    R.last = { url: lastVideoUrl, name: a.download, base: fileBaseName, meta, plan: lastPlan };
+    rFinal(lastVideoUrl, a.download, meta);
+  }
+  /** What the YouTube kit needs from the video just made: when each slide starts, the narration and its timing. */
+  let lastPlan = null;
+  function capturePlan(pv) {
+    const firstVoice = slides.find(s => s.narrOn && s.buffer && s.voice)?.voice;
+    lastPlan = {
+      totalMs: pv.totalMs,
+      segs: pv.segs.filter(x => x.kind === 'slide').map(x => ({ i: x.i, t0: x.t0, ms: x.ms, at: x.audio?.at ?? null, dur: x.audio?.buffer?.duration || 0 })),
+      texts: slides.map(s => (s.narrOn && s.buffer) ? (s.spokenText || cleanForSpeech(s.text)) : ''),
+      lang: (firstVoice?.lang || '').split(/[-_]/)[0].toLowerCase() || 'en',
+      credits: slides.map(s => s.bg?.credit ? { ...s.bg.credit, title: s.bg.title } : null).filter(c => c && c.user),
+    };
   }
 
   $('stopBtn').addEventListener('click', () => job?.abort());
@@ -4075,27 +4589,33 @@ ${parts.join('\n\n')}
     job = new AbortController();
     playerStop(); slideJob?.abort();
     setJobUI(true);
+    rOpen('preview');
     let pv = null;
     try {
       if (slides.some(s => s.bg?.px && !s.bg.source)) {
+        rProg(null, 'Downloading the background videos…');
         setVStatus('Downloading the background videos from Pixabay…');
-        await ensureBackgrounds((f) => setBar($('videoProgress'), f));
+        await ensureBackgrounds();
         loadBgUI();
       }
       pv = new PptxVideo(renderer, readSettings());
       showLive(pv.out);
       setVStatus('Preparing…');
-      setBar($('videoProgress'), 0);
+      rProg(0, 'Playing the preview…');
       const voice = narrationPlayer(false);
       const done = await pv.playRealtime({
         signal: job.signal, onSegmentStart: voice.onSegmentStart,
-        onProgress: (t, total, s) => { setBar($('videoProgress'), t / total); setVStatus(`Slide ${s + 1}/${renderer.slideCount} · ${fmtTime(t / 1000)} / ${fmtTime(total / 1000)}`); },
+        onProgress: (t, total, s) => { rProg(t / total, `Playing slide ${s + 1} of ${renderer.slideCount}`); $('rdEta').textContent = `${fmtTime(t / 1000)} / ${fmtTime(total / 1000)}`; setVStatus(`Slide ${s + 1}/${renderer.slideCount} · ${fmtTime(t / 1000)} / ${fmtTime(total / 1000)}`); },
       });
       voice.stop();
       setVStatus(done ? 'Preview finished.' : 'Preview stopped.');
+      rMessage(done ? 'Preview finished' : 'Preview stopped',
+        done ? 'Happy with it? Press <b>Export video</b> to make the video file – or close this and change anything first.'
+             : 'The preview was stopped. Press <b>Export video</b> to make the video file, or close this and keep editing.', { offerExport: true });
     } catch (err) {
       console.error(err);
       setVStatus('Preview failed: ' + (err?.message || err), true);
+      rMessage('The preview failed', esc(String(err?.message || err)), { error: true });
     } finally {
       pv?.dispose();
       setBar($('videoProgress'), null);
@@ -4113,23 +4633,28 @@ ${parts.join('\n\n')}
     playerStop(); slideJob?.abort();
     setJobUI(true);
     $('downloadLink').style.display = 'none';
+    if (!R.running) rOpen('export');
     setVStatus('Preparing…');
     const container = $('containerSel').value;
     const engine = $('engineSel').value;
     let pv = null;
     try {
       if (slides.some(s => s.bg?.px && !s.bg.source)) {
+        rProg(null, 'Downloading the background videos…');
         setVStatus('Downloading the background videos from Pixabay…');
-        await ensureBackgrounds((f) => setBar($('videoProgress'), f));
+        await ensureBackgrounds();
         loadBgUI();
       }
       pv = new PptxVideo(renderer, readSettings());
+      capturePlan(pv);
       showLive(pv.out);
-      setBar($('videoProgress'), 0);
+      rProg(0, 'Making the video…');
 
       if (engine === 'fast') {
         setVStatus('Loading encoder…');
+        rProg(null, 'Warming up the encoder…');
         await loadMediabunny();
+        rProg(null, 'Rendering and encoding the video…');
         const t0 = performance.now();
         const blob = await pv.exportFast({
           container, signal: job.signal,
@@ -4141,7 +4666,7 @@ ${parts.join('\n\n')}
             setVStatus(`Encoding slide ${s + 1}/${renderer.slideCount} · frame ${done}/${total} · ${sp.toFixed(1)}× real time`);
           },
         });
-        if (!blob) { setVStatus('Export cancelled.'); return false; }
+        if (!blob) { setVStatus('Export cancelled.'); rMessage('Stopped', 'The video was stopped. Your settings are kept – press <b>Export video</b> to try again.'); return false; }
         const secs = (performance.now() - t0) / 1000;
         made = true;
         showResult(blob, container, ` · ${fmtTime(pv.totalMs / 1000)} of video${pv.hasNarration ? ' with narration (' + pv.audioCodec.toUpperCase() + ')' : ''} made in ${secs.toFixed(1)} s`);
@@ -4159,6 +4684,7 @@ ${parts.join('\n\n')}
         const stopped = new Promise(r => { rec.onstop = r; });
         rec.start(1000);
         rec.pause();                                     // the engine resumes once the first slide is ready
+        rProg(null, 'Recording the video in real time…');
         const done = await pv.playRealtime({
           recorder: rec, signal: job.signal, onSegmentStart: voice.onSegmentStart,
           onProgress: (t, total, s) => { setBar($('videoProgress'), t / total); onFraction?.(t / total); setVStatus(`Recording slide ${s + 1}/${renderer.slideCount} · ${fmtTime(t / 1000)} / ${fmtTime(total / 1000)}`); },
@@ -4175,9 +4701,9 @@ ${parts.join('\n\n')}
     } catch (err) {
       console.error(err);
       setVStatus('Export failed: ' + (err?.message || err), true);
+      if (!quick.running) rMessage('The video could not be made', esc(String(err?.message || err)), { error: true });
     } finally {
       pv?.dispose();
-      setBar($('videoProgress'), null);
       job = null;
       setJobUI(false);
     }
