@@ -1,0 +1,15 @@
+{
+  "_comment": "MhTalk downloadable avatars. The app shows only avatars whose 'base' equals its own (the Unreal build the packs were packaged with). Upload the zip first, then publish this file.",
+  "avatars": [
+    {
+      "id": "maria",
+      "name": "Maria",
+      "chunk": 1001,
+      "base": "2026-11-20",
+      "preview": "https://mlapplications.com/aiavatars/maria.png",
+      "url": "https://avatars.mlapplications.com/maria.zip",
+      "size": 300644751,
+      "sha256": "6153dc3693d2c60ce16c53c2c68ee23dfc418b701c4526726d15a4d3b5b8c4db"
+    }
+  ]
+}
