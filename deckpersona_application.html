@@ -6,7 +6,7 @@
 <title>DeckPersona – PowerPoint to narrated video | MLApplications</title>
 <meta name="robots" content="noindex, nofollow">
 <!-- The DeckPersona app shows the highest version it has (bundled, or this page from the website): bump it on every change. -->
-<meta name="dp-page-version" content="2026.11.23.7">
+<meta name="dp-page-version" content="2026.11.23.8">
 <script>
   // Apply the saved theme before first paint (light / dark; nothing = follow the system)
   (function () { try { var t = localStorage.getItem('pptxTheme'); if (t !== 'auto') document.documentElement.dataset.theme = (t === 'light' ? 'light' : 'dark'); } catch (e) {} })();
@@ -1084,6 +1084,27 @@
   .mcard.busy img { opacity: .5; }
   .mini-grid .mg-empty { grid-column: 1 / -1; font-size: 12px; color: var(--muted); padding: 14px 4px; text-align: center; }
   #bgMiniLive { font-size: 11px; color: var(--muted); min-height: 0; }
+  /* the card shows the slide's choice; the list opens only to change it */
+  .sel-row { display: flex; gap: 10px; align-items: stretch; flex: 1 1 0; min-height: 64px; }
+  .sel-pic { flex: 0 0 auto; aspect-ratio: 16 / 9; height: 100%; max-width: 62%; min-height: 0; border-radius: 7px; overflow: hidden; position: relative;
+    background: var(--panel) center / cover no-repeat; box-shadow: 0 0 0 1px var(--border); display: grid; place-items: center; font-size: 12px; color: var(--muted); }
+  .sel-pic.av { aspect-ratio: 4 / 5; background: linear-gradient(160deg, #3a4160, #1d2234); }
+  .sel-pic.av img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
+  .sel-pic.off { opacity: .45; filter: grayscale(.6); }
+  .sel-info { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 3px; font-size: 12px; }
+  .sel-info b { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sel-info em { color: var(--muted); font-style: normal; font-size: 11.5px; line-height: 1.3; }
+  .sel-btns { margin-top: auto; display: flex; gap: 6px; flex-wrap: wrap; }
+  .sel-pick { display: none; flex: 1 1 0; min-height: 0; flex-direction: column; gap: 8px; }
+  .side-card.picking .sel-pick { display: flex; }
+  .side-card.picking .sel-row { flex: none; min-height: 0; height: 40px; }
+  .side-card.picking .sel-info { flex-direction: row; align-items: center; gap: 8px; }
+  .side-card.picking .sel-info b { flex: 1 1 auto; min-width: 0; }
+  .side-card.picking .sel-info em, .side-card.picking #bgRemove { display: none; }
+  .side-card.picking .sel-btns { margin: 0; flex: none; }
+  #avatarCard.picking .av-opts { display: none; }
+  #bgRemove[hidden] { display: none; }
+  .mcard img.portrait { object-fit: contain; object-position: center bottom; background: linear-gradient(160deg, #3a4160, #1d2234); }
   #bgMiniLive:empty { display: none; }
 
   /* avatar grid */
@@ -1385,10 +1406,19 @@
             <span class="spacer"></span>
             <button id="bgCurrent" class="sm" title="All videos, your own video, and how the slide sits on the video">More…</button>
           </div>
-          <div class="sc-sub"><span id="bgCurThumb" hidden></span><b id="bgCurTitle">No background</b> <em id="bgCurMode"></em></div>
-          <input type="search" id="bgMiniSearch" class="sc-search" placeholder="Search videos, e.g. ocean, city…">
-          <div id="bgMiniLive"></div>
-          <div class="mini-grid" id="bgMini"></div>
+          <span id="bgCurThumb" hidden></span>
+          <div class="sel-row" id="bgSelRow">
+            <div class="sel-pic" id="bgSelPic"></div>
+            <div class="sel-info">
+              <b id="bgCurTitle">No background</b><em id="bgCurMode"></em>
+              <div class="sel-btns"><button class="sm" id="bgChange">Change…</button><button class="sm" id="bgRemove" title="No background video on this slide">Remove</button></div>
+            </div>
+          </div>
+          <div class="sel-pick" id="bgPick">
+            <input type="search" id="bgMiniSearch" class="sc-search" placeholder="Search videos, e.g. ocean, city…">
+            <div id="bgMiniLive"></div>
+            <div class="mini-grid" id="bgMini"></div>
+          </div>
         </div>
 
         <div class="side-card" id="avatarCard">
@@ -1399,7 +1429,16 @@
             <label class="switch" title="A talking presenter on this slide"><input type="checkbox" id="avOn"><span></span></label></div>
           <div id="avBody">
             <div class="av-state sc-sub" id="avState"></div>
-            <div class="mini-grid av-grid" id="avGrid" title="The presenter of the whole video – every slide with the avatar switches to the one you pick"></div>
+            <div class="sel-row" id="avSelRow">
+              <div class="sel-pic av" id="avSelPic"></div>
+              <div class="sel-info">
+                <b id="avSelName">Avatar</b><em id="avSelNote"></em>
+                <div class="sel-btns"><button class="sm" id="avChange">Change…</button></div>
+              </div>
+            </div>
+            <div class="sel-pick" id="avPick">
+              <div class="mini-grid av-grid" id="avGrid" title="The presenter of the whole video – every slide with the avatar switches to the one you pick"></div>
+            </div>
             <div class="av-opts">
               <span class="seg" id="avPlace"><button data-v="left" title="Bottom left">Left</button><button data-v="center" title="Bottom centre">Centre</button><button data-v="right" title="Bottom right">Right</button></span>
               <label class="avsize" title="Height of the avatar, as a share of the video height"><input type="range" id="avSize" min="20" max="80" step="1" value="40"><span id="avSizeVal">40%</span></label>
@@ -2016,7 +2055,9 @@
 
   // the last avatar choice: new slides and "turn on" start from it
   const avDefaults = { on: false, id: null, place: 'right', size: 40 };
-  const avDeck = { style: 'friendly', strength: 1 };          // presenter style of the whole presentation
+  const avDeck = { style: 'friendly', strength: 1,            // presenter style of the whole presentation
+    chosen: false,                                            // false until the first avatar choice (that one goes on every slide)
+    byGender: {} };                                           // the presenter picked for male / female narration
   const newSlideState = (text = '') => ({
     narrOn: false, voice: null,                               // voice: { engine, lang, piperKey, speaker, kokoroVoice, kokoroQ, speed }
     text, buffer: null, kind: null, label: '', spokenText: '', voiceSig: '', marks: null,
@@ -2705,6 +2746,11 @@
     $('blendPct').value = s.blend;
     const th = $('bgCurThumb');
     th.style.backgroundImage = bg?.poster ? `url("${bg.poster}")` : '';
+    const pic = $('bgSelPic');
+    pic.style.backgroundImage = bg?.poster ? `url("${bg.poster}")` : '';
+    pic.textContent = !bg ? 'None' : bg.poster ? '' : bg.upload ? 'Your video' : 'Video';
+    $('bgRemove').hidden = !bg;
+    $('bgChange').textContent = $('bgCard').classList.contains('picking') ? 'Done' : bg ? 'Change…' : 'Choose…';
     th.textContent = !bg ? 'None' : bg.poster ? '' : bg.upload ? 'Your video' : 'Video';
     $('bgCurTitle').textContent = bg ? bg.title : 'No background';
     markBgMini();
@@ -3609,7 +3655,7 @@
     }
     const left = list.length - shown.length;
     if (bgMoreCard) bgMoreCard.querySelector('.vtitle').textContent = `Show more (${left} more)`;
-    $('gallery').replaceChildren(...[bgView === 'suggested' || q ? null : bgNoneCard, ...shown, left > 0 ? bgMoreCard : null, bgUploadCard].filter(Boolean));
+    $('gallery').replaceChildren(...[bgNoneCard, ...shown, left > 0 ? bgMoreCard : null, bgUploadCard].filter(Boolean));
     if (!list.length) $('gallery').insertAdjacentHTML('afterbegin', '<div class="empty" style="grid-column:1/-1;padding:24px">No videos match.</div>');
     loadBgUI();
   }
@@ -3628,9 +3674,19 @@
 
   // ── Background grid on the right of the slide (the full gallery stays in the "More…" pop-up) ──
   let bgMiniSugg = { slide: -1, list: [] };
+  /** The background card shows the slide's choice; the list of videos opens only to change it. */
+  function bgPickOpen(open) {
+    $('bgCard').classList.toggle('picking', open);
+    if (open) { buildBgMini(); setTimeout(() => $('bgMiniSearch').focus(), 0); }
+    loadBgUI();
+  }
+  $('bgChange').addEventListener('click', () => { if (!job) bgPickOpen(!$('bgCard').classList.contains('picking')); });
+  $('bgRemove').addEventListener('click', () => { if (!job) { setSlideBg(null); bgPickOpen(false); } });
+  $('bgMiniSearch').addEventListener('keydown', (e) => { if (e.key === 'Escape') bgPickOpen(false); });
+
   async function buildBgMini() {
     const box = $('bgMini');
-    if (!box || !slides[current]) return;
+    if (!box || !slides[current] || !$('bgCard').classList.contains('picking')) return;
     const q = plain($('bgMiniSearch').value.trim()), qTerms = searchTerms(q);
     let list;
     if (q) list = bySearch(gallery.filter(v => searchHit(v, q, qTerms)), q);
@@ -3644,10 +3700,10 @@
       list = [...bgMiniSugg.list, ...gallery.filter(v => !v.live && !seen.has(v.file))];
     }
     const cards = [];
-    if (!q) cards.push(miniCard({ cls: 'none', html: 'No background', title: 'No background video on this slide', pick: () => setSlideBg(null) }));
+    cards.push(miniCard({ cls: 'none', html: 'No background', title: 'No background video on this slide', pick: () => { setSlideBg(null); bgPickOpen(false); } }));
     for (const v of list.slice(0, 30)) cards.push(miniCard({
       file: v.file, img: v.poster ? mediaUrl(v.poster) : null, label: v.title || v.file,
-      title: `${v.title || v.file}${v.credit?.user ? ' · by ' + v.credit.user + ' on Pixabay' : ''}`, pick: () => setSlideBg(bgFromEntry(v)),
+      title: `${v.title || v.file}${v.credit?.user ? ' · by ' + v.credit.user + ' on Pixabay' : ''}`, pick: () => { setSlideBg(bgFromEntry(v)); bgPickOpen(false); },
     }));
     cards.push(miniCard({ cls: 'more', html: list.length > 30 ? `All ${list.length}…` : 'More…', title: 'All videos, your own video, and the slide-over-video options',
       pick: () => { if (q) $('bgSearch').value = $('bgMiniSearch').value; $('bgCurrent').click(); } }));
@@ -3706,7 +3762,11 @@
     const b = miniCard({ cls: (remote ? 'remote' : '') + (prog != null ? ' busy' : ''), label: a.name,
       title: remote ? `${a.name} – download (${fmtSize(a.size || 0)})` : a.name, pick: () => onPick(a) });
     b.dataset.id = a.id;
-    if (a.preview) { const im = new Image(); im.src = a.preview; im.alt = ''; b.prepend(im); }
+    if (a.preview) {
+      const im = new Image(); im.alt = ''; im.className = 'portrait';
+      im.onerror = () => { im.remove(); b.insertAdjacentHTML('afterbegin', avFace(a, idx)); };
+      im.src = avImg(a.preview); b.prepend(im);
+    }
     else b.insertAdjacentHTML('afterbegin', avFace(a, idx));
     if (remote) b.insertAdjacentHTML('beforeend', prog != null ? `<span class="av-dl">${Math.round(prog * 100)}%</span><span class="av-prog"><i style="width:${prog * 100}%"></i></span>`
       : `<span class="av-dl" title="Download">↓ ${a.size ? Math.round(a.size / 1048576) + ' MB' : ''}</span>`);
@@ -3722,18 +3782,138 @@
   const avName = (id) => avAll().find(a => a.id === id)?.name || 'Avatar';
   function avPickDefault() { return avDefaults.id && AV.list.some(a => a.id === avDefaults.id) ? avDefaults.id : AV.list[0]?.id || null; }
 
+  const avImg = (u) => !u ? '' : /^(https?:|blob:|data:)/i.test(u) ? u : APP.origin + (u.startsWith('/') ? '' : '/') + u;
+
+  // ── male / female: the presenter follows the narration voice ──
+  const AV_KNOWN_GENDER = { nikos: 'male', maria: 'female' };
+  function avGenderOf(id) {
+    const a = avAll().find(x => x.id === id);
+    const g = (a?.gender || AV_KNOWN_GENDER[(id || '').toLowerCase()] || '').toLowerCase();
+    return g.startsWith('f') ? 'female' : g.startsWith('m') ? 'male' : '';
+  }
+  const narrGenders = new WeakMap();                       // AudioBuffer -> 'male' | 'female' | ''
+  const narrGenderOf = (i) => (slides[i]?.buffer && narrGenders.get(slides[i].buffer)) || '';
+  /** Male or female narration: from the TTS voice, or from the pitch of a recording. */
+  async function narrGenderUpdate(i) {
+    const s = slides[i], buf = s?.buffer;
+    if (!buf || narrGenders.has(buf)) return;
+    narrGenders.set(buf, '');                              // working on it
+    let g = '';
+    try {
+      const v = s.voice;
+      if (s.kind !== 'rec' && v) {
+        if (v.engine === 'kokoro' && v.kokoroVoice) g = v.kokoroVoice[1] === 'f' ? 'female' : v.kokoroVoice[1] === 'm' ? 'male' : '';
+        else if (v.piperKey) {
+          const pv = (await tts.piperVoices()).find(x => x.key === v.piperKey);
+          const pg = (pv?.gender || '').toLowerCase();
+          g = pg.startsWith('f') ? 'female' : pg.startsWith('m') ? 'male' : '';
+        }
+      }
+      if (!g) g = pitchGender(buf);
+    } catch (err) { console.warn('narration gender', err); }
+    narrGenders.set(buf, g);
+    if (g && slides[i]?.buffer === buf) { updateThumbBadges(i); if (i === current) avLoadUI(); }
+  }
+  /** Median pitch of the voiced parts: above ~165 Hz is a female voice. '' when there is too little speech. */
+  function pitchGender(buf) {
+    const x = buf.getChannelData(0), step = Math.max(1, Math.round(buf.sampleRate / 8000)), fs = buf.sampleRate / step;
+    const n = Math.floor(x.length / step), d = new Float32Array(n);
+    for (let k = 0; k < n; k++) d[k] = x[k * step];
+    const win = Math.round(fs * 0.04), hop = Math.round(fs * 0.02), minLag = Math.floor(fs / 400), maxLag = Math.ceil(fs / 70);
+    let tot = 0, cnt = 0;
+    for (let s = 0; s + win < n; s += hop) { let e = 0; for (let k = 0; k < win; k++) e += d[s + k] * d[s + k]; tot += e; cnt++; }
+    const thr = cnt ? 0.5 * tot / cnt : 0;
+    const f0 = [];
+    const r = new Float32Array(maxLag + 2);
+    for (let s = 0; s + win + maxLag < n && f0.length < 800; s += hop) {
+      let e0 = 0; for (let k = 0; k < win; k++) e0 += d[s + k] * d[s + k];
+      if (e0 < thr || e0 <= 0) continue;
+      let best = 0;
+      r.fill(0);
+      for (let lag = minLag; lag <= maxLag; lag++) {
+        let c = 0, e1 = 0;
+        for (let k = 0; k < win; k++) { const y = d[s + k + lag]; c += d[s + k] * y; e1 += y * y; }
+        r[lag] = e1 > 0 ? c / Math.sqrt(e0 * e1) : 0;
+        if (r[lag] > best) best = r[lag];
+      }
+      if (best < 0.6) continue;                              // not voiced
+      let lag = minLag;                                      // first strong peak – avoids octave errors
+      while (lag <= maxLag && !(r[lag] >= 0.9 * best && r[lag] >= r[lag - 1] && r[lag] >= r[lag + 1])) lag++;
+      if (lag <= maxLag) f0.push(fs / lag);
+    }
+    if (f0.length < 15) return '';
+    f0.sort((a, b) => a - b);
+    return f0[f0.length >> 1] >= 165 ? 'female' : 'male';
+  }
+  /** The avatar that reads slide i: its own, unless the narration is of the other sex and a matching presenter is installed. */
+  function avEffective(i) {
+    const s = slides[i];
+    const id = s?.av?.id || avPickDefault();
+    if (!s || s.av?.keep) return id;
+    const ng = narrGenderOf(i), ag = avGenderOf(id);
+    if (!ng || !ag || ng === ag) return id;
+    const pref = avDeck.byGender[ng];
+    if (pref && AV.list.some(a => a.id === pref)) return pref;
+    return AV.list.find(a => avGenderOf(a.id) === ng)?.id || id;
+  }
+
+  /** The avatar card shows the slide's presenter; the list opens only to change it. */
+  function avPickOpen(open) {
+    $('avatarCard').classList.toggle('picking', open);
+    $('avChange').textContent = open ? 'Done' : 'Change…';
+  }
+  $('avChange').addEventListener('click', () => { if (!job) avPickOpen(!$('avatarCard').classList.contains('picking')); });
+  function avSelUI() {
+    const s = slides[current];
+    if (!s) return;
+    const id = s.av.on ? avEffective(current) : (avDefaults.id || avPickDefault());
+    const all = avAll(), idx = all.findIndex(a => a.id === id);
+    const a = all[idx] || { id, name: id ? avName(id) : 'No avatar installed' };
+    const pic = $('avSelPic');
+    pic.classList.toggle('off', !s.av.on);
+    pic.innerHTML = a.preview ? `<img alt="" src="${esc(avImg(a.preview))}">` : avFace(a, idx);
+    const im = pic.querySelector('img');
+    if (im) im.onerror = () => { pic.innerHTML = avFace(a, idx); };
+    $('avSelName').textContent = s.av.on ? a.name : 'No avatar on this slide';
+    const ng = narrGenderOf(current), ag = avGenderOf(id);
+    $('avSelNote').textContent = !s.av.on ? (avDeck.chosen ? `Turn it on to add ${a.name} here.` : 'Pick a presenter: it goes on every slide.')
+      : s.av.id && id !== s.av.id ? `Matches the ${ng} voice of this slide.`
+      : ng && ag && ng !== ag ? (s.av.keep ? `Your choice, with a ${ng} voice.` : `A ${ng} presenter would match this voice – download one in Change….`)
+      : '';
+  }
+  /** Put the avatar on every slide (the first choice in a presentation). */
+  function avApplyAll(id) {
+    const cur = slides[current]?.av || avDefaults;
+    avDeck.chosen = true;
+    Object.assign(avDefaults, { on: true, id, place: cur.place || avDefaults.place, size: cur.size || avDefaults.size });
+    slides.forEach((t, i) => {
+      t.av = { on: true, id, place: avDefaults.place, size: avDefaults.size };
+      updateThumbBadges(i);
+      if (t.buffer) avSendNarration(i);
+    });
+    avLoadUI();
+  }
+
   function avBuildGrid() {
     const s = slides[current];
     const all = avAll();
+    avSelUI();
     $('avGrid').replaceChildren(...all.map((a, i) => avCard(a, i, {
-      selected: s?.av?.on && s.av.id === a.id,
+      selected: s?.av?.on && avEffective(current) === a.id,
       onPick: (a) => {
         if (!a.installedHere) { avInstall(a); return; }
+        const g = avGenderOf(a.id);
+        if (g) avDeck.byGender[g] = a.id;
+        avPickOpen(false);
+        if (!avDeck.chosen) { avApplyAll(a.id); return; }        // first choice: the whole presentation
         // one presenter for the whole video: every slide that has the avatar switches to the one picked
-        slides.forEach((t, i) => { if (t.av?.on && t.av.id !== a.id) { t.av = { ...t.av, id: a.id }; updateThumbBadges(i); } });
-        avSet({ on: true, id: a.id });
+        // (slides whose narration is of the other sex keep a matching presenter)
+        slides.forEach((t, i) => { if (t.av?.on && t.av.id !== a.id) { t.av = { ...t.av, id: a.id, keep: false }; updateThumbBadges(i); } });
+        const ng = narrGenderOf(current);
+        avSet({ on: true, id: a.id, keep: !!(ng && g && ng !== g) });   // picked on purpose for this slide's voice
       },
     })));
+
     if (!all.length) $('avGrid').innerHTML = `<div class="mg-empty">${AV.status && !AV.status.player ? 'The avatar renderer is missing from this app build.' : 'Loading avatars…'}</div>`;
     if ($('qAvGrid')) avBuildQuickGrid();
   }
@@ -3750,6 +3930,7 @@
     if (!s) return;
     s.av = { ...s.av, ...patch };
     if (s.av.on && !s.av.id) s.av.id = avPickDefault();
+    if (s.av.on) avDeck.chosen = true;
     Object.assign(avDefaults, { id: s.av.id, place: s.av.place, size: s.av.size });
     if (s.av.on && s.buffer) avSendNarration(current);
     avLoadUI();
@@ -3772,6 +3953,7 @@
     $('avatarCard').classList.toggle('off', !s.av.on);
     document.querySelectorAll('#avPlace button').forEach(b => b.classList.toggle('on', b.dataset.v === s.av.place));
     $('avSize').value = s.av.size; $('avSizeVal').textContent = s.av.size + '%';
+    if (s.buffer && !narrGenders.has(s.buffer)) narrGenderUpdate(current);
     avBuildGrid();
     avStateLine();
   }
@@ -3788,7 +3970,7 @@
     if (l.state === 'queued') return set('work', 'Lip-sync waiting…');
     if (l.state === 'working') return set('work', `Lip-sync ${Math.round((l.frac || 0) * 100)}%`);
     if (l.state === 'failed') return set('bad', 'Lip-sync failed: ' + (l.error || ''));
-    return set('ok', `Lip-sync ready · ${avName(s.av.id)}, ${avPlaceName[s.av.place]}, ${$('avStyle').selectedOptions[0]?.textContent.toLowerCase() || ''}`);
+    return set('ok', `Lip-sync ready · ${avName(avEffective(current))}, ${avPlaceName[s.av.place]}, ${$('avStyle').selectedOptions[0]?.textContent.toLowerCase() || ''}`);
   }
   /** Where the avatar will stand, drawn on the slide preview (same margin and size as the final video). */
   function avGhost() {
@@ -3801,11 +3983,14 @@
     g.style.left = s.av.place === 'left' ? m : s.av.place === 'center' ? '50%' : '';
     g.style.right = s.av.place === 'right' ? m : '';
     g.style.transform = s.av.place === 'center' ? 'translateX(-50%)' : '';
-    $('avGhostName').textContent = avName(s.av.id);
+    $('avGhostName').textContent = avName(avEffective(current));
   }
 
   $('avStyle').addEventListener('change', () => { avDeck.style = $('avStyle').value; qAv.style = avDeck.style; avStateLine(); });
-  $('avOn').addEventListener('change', () => avSet({ on: $('avOn').checked }));
+  $('avOn').addEventListener('change', () => {
+    if ($('avOn').checked && !avDeck.chosen) { const id = slides[current]?.av?.id || avPickDefault(); if (id) return avApplyAll(id); }
+    avSet({ on: $('avOn').checked });
+  });
   $('avPlace').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) avSet({ place: b.dataset.v }); });
   $('avSize').addEventListener('input', () => { $('avSizeVal').textContent = $('avSize').value + '%'; avSet({ size: +$('avSize').value }); });
   $('avAll').addEventListener('click', () => {
@@ -3854,6 +4039,7 @@
    *  so turning the avatar on later costs nothing. Same audio = same name, so nothing is sent or made twice. */
   async function avSendNarration(i) {
     const s = slides[i];
+    if (s?.buffer) narrGenderUpdate(i);
     if (!APP.isDesktop || !s?.buffer || s.wavFor === s.buffer) return;
     const buf = s.buffer;
     s.wavFor = buf;
@@ -3893,6 +4079,26 @@
     for (const a of AV.list) AV.installing.delete(a.id);
     if (!avDefaults.id) avDefaults.id = AV.list[0]?.id || null;
     avLoadUI();
+    avPortraits();
+  });
+  // a picture of each installed avatar for its card: the app renders it once (about a minute) and keeps it
+  AV.portraitBusy = null; AV.noPortrait = new Set();
+  function avPortraits() {
+    if (!APP.isDesktop || !APP.connected || job || AV.portraitBusy) return;
+    const a = AV.list.find(x => !x.preview && !AV.noPortrait.has(x.id));
+    if (!a) return;
+    AV.portraitBusy = a.id;
+    APP.send('avatarPortrait', { id: a.id });
+  }
+  APP.on('avatarPortrait', (p) => {
+    AV.portraitBusy = null;
+    if (p.url) {
+      const a = AV.list.find(x => x.id === p.id);
+      if (a) a.preview = p.url;
+      avBuildGrid();
+      avPortraits();
+    } else if (p.busy) setTimeout(avPortraits, 30000);
+    else { AV.noPortrait.add(p.id); console.warn('Avatar picture', p.id, p.error); avPortraits(); }
   });
   APP.on('avatarRemoteList', (l) => { AV.remote = l.items || []; avBuildGrid(); });
   APP.on('avatarProgress', (p) => {
@@ -3962,7 +4168,7 @@
       if (!s?.av?.on || g.at == null || !s.buffer) continue;
       await avSendNarration(g.i);
       if (!s.wavName) throw new Error(`The narration of slide ${g.i + 1} could not be given to the app.`);
-      items.push({ wav: s.wavName, at: g.at / 1000, avatar: s.av.id, placement: s.av.place, heightPercent: s.av.size,
+      items.push({ wav: s.wavName, at: g.at / 1000, avatar: avEffective(g.i), placement: s.av.place, heightPercent: s.av.size,
         cues: avCues(g.i, { first: g.i === narrated[0], last: g.i === narrated[narrated.length - 1] }) });
     }
     if (!items.length) return null;
@@ -4006,6 +4212,7 @@
   function applyQuickAvatar() {
     if (!APP.isDesktop || !qAv.chosen && !slides.some(s => s.av?.on) && !qAv.id) return;
     slides.forEach((s, i) => { s.av = { on: !!qAv.id, id: qAv.id, place: qAv.place, size: qAv.size }; updateThumbBadges(i); });
+    if (qAv.id) { avDeck.chosen = true; const g = avGenderOf(qAv.id); if (g) avDeck.byGender[g] = qAv.id; }
     if (qAv.id) Object.assign(avDefaults, { id: qAv.id, place: qAv.place, size: qAv.size });
     avDeck.style = qAv.style;
     avLoadUI();
@@ -4165,6 +4372,7 @@
       s.av = { on: APP.isDesktop && scene.presenterOn && !!scene.say, id: avDefaults.id || avPickDefault(), place: scene.place, size: avDefaults.size || 40 };
       updateThumbBadges(i);
     });
+    if (slides.some(s => s.av?.on)) avDeck.chosen = true;     // the script chose the presenter
     await writeVoiceControls(voice);
     updateVoiceChip();
     await loadNarrationUI(); avLoadUI(); refreshLive();
@@ -5484,7 +5692,7 @@ ${parts.join('\n\n')}
     // While a video is made, the step 2 stage must not keep playing its background and redrawing the slide 60 times a
     // second: it competes with the export for the graphics chip (it roughly doubled the export time).
     if (running && !live.held) { live.held = true; live.token++; stopLive(); }
-    else if (!running && live.held) { live.held = false; refreshLive(); }
+    else if (!running && live.held) { live.held = false; refreshLive(); setTimeout(() => avPortraits(), 3000); }
     $('editor').classList.toggle('muted-off', running);
     for (const id of ['previewVideoBtn', 'exportBtn']) $(id).disabled = running;
     $('stopBtn').disabled = !running;
