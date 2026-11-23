@@ -166,6 +166,21 @@ function easeBounce(t) {
 }
 
 // ── Scenes (layered slide renders) ───────────────────────────────────────────
+/** Does this browser offer a hardware video encoder for this size? (cached per codec and size) */
+const hwCache = new Map();
+async function hardwareEncodeOk(codec, w, h, fps) {
+  const key = `${codec}|${w}x${h}`;
+  if (!hwCache.has(key)) hwCache.set(key, (async () => {
+    try {
+      if (typeof VideoEncoder === 'undefined') return false;
+      const r = await VideoEncoder.isConfigSupported({ codec, width: w, height: h, framerate: fps,
+        bitrate: Math.round(w * h * fps * 0.12), hardwareAcceleration: 'prefer-hardware' });
+      return r.supported === true;
+    } catch { return false; }
+  })());
+  return hwCache.get(key);
+}
+
 function makeCanvas(w, h) {
   const c = document.createElement('canvas');
   c.width = w; c.height = h;
@@ -1001,7 +1016,22 @@ export class PptxVideo {
    * Fast export with WebCodecs + Mediabunny. Returns a Blob, or null if cancelled.
    * opts: { container: 'mp4'|'webm', signal?, onProgress?(doneFrames,totalFrames,slide) }
    */
-  async exportFast({ container = 'mp4', signal = null, onProgress = null } = {}) {
+  async exportFast(opts = {}) {
+    // Moving backgrounds make H.264 encoding the slowest step by far, so ask for the graphics chip's encoder
+    // (Intel Quick Sync, NVENC, AMF) when the browser says it has one; if it fails, make the video again without it.
+    const hw = await hardwareEncodeOk(opts.container === 'webm' ? 'vp09.00.10.08' : 'avc1.640028', this.W, this.H, this.s.fps);
+    if (hw) {
+      try { return await this._exportFast(opts, 'prefer-hardware'); }
+      catch (err) {
+        if (opts.signal?.aborted) throw err;
+        console.warn('[Export] the hardware encoder failed, trying again with the default one:', err);
+      }
+    }
+    return this._exportFast(opts, undefined);
+  }
+
+  async _exportFast({ container = 'mp4', signal = null, onProgress = null } = {}, hardwareAcceleration) {
+    this.encoderKind = hardwareAcceleration ? 'hardware' : 'default';
     const MB = await loadMediabunny();
     const { Output, BufferTarget, Mp4OutputFormat, WebMOutputFormat, CanvasSource, QUALITY_HIGH, getFirstEncodableVideoCodec } = MB;
     const candidates = container === 'mp4' ? ['avc', 'hevc', 'vp9', 'av1'] : ['vp9', 'vp8', 'av1'];
@@ -1012,7 +1042,8 @@ export class PptxVideo {
       format: container === 'mp4' ? new Mp4OutputFormat({ fastStart: 'in-memory' }) : new WebMOutputFormat(),
       target: new BufferTarget(),
     });
-    const source = new CanvasSource(this.out, { codec, quality: QUALITY_HIGH, keyFrameInterval: 2 });
+    const source = new CanvasSource(this.out, { codec, quality: QUALITY_HIGH, keyFrameInterval: 2,
+      ...(hardwareAcceleration ? { hardwareAcceleration } : {}) });
     output.addVideoTrack(source, { frameRate: this.s.fps });
 
     let audioSource = null, narration = null;
@@ -1040,13 +1071,26 @@ export class PptxVideo {
     const fps = this.s.fps;
     const totalFrames = Math.max(1, Math.round(this.totalMs / 1000 * fps));
     let n = 0;
+    // Where the time goes (ms spent waiting on each step) – shown after the export so slow parts can be found.
+    const st = this.stats = { frames: 0, bgMs: 0, drawMs: 0, encMs: 0, totalMs: 0, encoder: this.encoderKind };
+    const tStart = performance.now();
+    // The steps overlap: while the encoder works on frame n (the canvas is copied when it is handed over), the next
+    // background frames are already being decoded and frame n+1 is drawn.
+    const pre = new Map();                                // source -> { t, p }: background frame asked for ahead
+    const bgAt = async (key, t) => {
+      const q = pre.get(key);
+      if (q) { pre.delete(key); const c = await q.p; if (Math.abs(q.t - t) < 1e-6) return c; }
+      return (await reader(key)).at(t);
+    };
+    const prefetch = (key, t) => { if (!pre.has(key)) pre.set(key, { t, p: reader(key).then(r => r.at(t)) }); };
+    let pendingEnc = null;
     try {
       for (const seg of this.segs) {
         await this._ensure(seg);
         const idx = seg.kind === 'slide' ? [seg.i] : [seg.from, seg.to];
         const segEnd = seg.t0 + seg.ms;
         while (n < totalFrames && (n * 1000 / fps) < segEnd) {
-          if (signal?.aborted) { await output.cancel(); return null; }
+          if (signal?.aborted) { await pendingEnc?.catch(() => {}); for (const q of pre.values()) await q.p.catch(() => {}); await output.cancel(); return null; }
           const tGlobal = n * 1000 / fps;
           const bgs = {}, perSource = new Map();
           for (const i of idx) {
@@ -1055,17 +1099,30 @@ export class PptxVideo {
             const key = cfg.source, t = this.bgTime(i, tGlobal);
             const k2 = perSource.get(key);
             if (k2 && Math.abs(k2.t - t) < 1e-3) { bgs[i] = k2.bg; continue; }   // same clip, same time
-            const c = await (await reader(key)).at(t);
+            const t0 = performance.now();
+            const c = await bgAt(key, t);
+            st.bgMs += performance.now() - t0;
             bgs[i] = c ? { src: c, w: c.width, h: c.height } : null;
             perSource.set(key, { t, bg: bgs[i] });
           }
           if (seg.kind === 'trans' && seg.t.kind === 'matte' && !seg.matte) await this._loadMatte(seg);
+          if (pendingEnc) { const t0 = performance.now(); await pendingEnc; st.encMs += performance.now() - t0; }
+          const t1 = performance.now();
           this._compose(seg, tGlobal - seg.t0, bgs);
-          await source.add(n / fps, 1 / fps);
+          st.drawMs += performance.now() - t1;
+          pendingEnc = source.add(n / fps, 1 / fps);       // the frame is copied now; encoding goes on meanwhile
           n++;
+          // ask for the next frame's backgrounds while the encoder runs
+          const tNext = n * 1000 / fps;
+          if (n < totalFrames && tNext < segEnd)
+            for (const i of idx) { const cfg = this.bgs[i]; if (cfg) prefetch(cfg.source, this.bgTime(i, tNext)); }
           if (n % 5 === 0) onProgress?.(n, totalFrames, seg.kind === 'slide' ? seg.i : seg.to);
         }
       }
+      if (pendingEnc) { const t0 = performance.now(); await pendingEnc; st.encMs += performance.now() - t0; pendingEnc = null; }
+      for (const q of pre.values()) await q.p.catch(() => {});
+      pre.clear();
+      st.frames = n; st.totalMs = performance.now() - tStart;
       source.close?.();
       await output.finalize();
     } finally {

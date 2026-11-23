@@ -6,7 +6,7 @@
 <title>DeckPersona – PowerPoint to narrated video | MLApplications</title>
 <meta name="robots" content="noindex, nofollow">
 <!-- The DeckPersona app shows the highest version it has (bundled, or this page from the website): bump it on every change. -->
-<meta name="dp-page-version" content="2026.11.22.1">
+<meta name="dp-page-version" content="2026.11.23.7">
 <script>
   // Apply the saved theme before first paint (light / dark; nothing = follow the system)
   (function () { try { var t = localStorage.getItem('pptxTheme'); if (t !== 'auto') document.documentElement.dataset.theme = (t === 'light' ? 'light' : 'dark'); } catch (e) {} })();
@@ -1124,10 +1124,11 @@
   #avWeb a { color: var(--accent); font-weight: 600; }
 
   /* where the avatar will stand, drawn on the slide preview */
-  .av-ghost { position: absolute; bottom: 0; aspect-ratio: 1 / 1; display: none; pointer-events: none; z-index: 2;
+  /* the person's own box (the app crops the render to the avatar), so: as tall as the size, a little narrower than tall */
+  .av-ghost { position: absolute; bottom: 0; aspect-ratio: 9 / 10; display: none; pointer-events: none; z-index: 2;
     border: 2px dashed rgba(124, 92, 255, .85); border-bottom: 0; border-radius: 10px 10px 0 0; background: rgba(124, 92, 255, .10); }
   .av-ghost.on { display: block; }
-  .av-ghost svg { position: absolute; left: 12%; right: 12%; bottom: 0; width: 76%; height: 88%; fill: rgba(124, 92, 255, .38); }
+  .av-ghost svg { position: absolute; left: 4%; right: 4%; bottom: 0; width: 92%; height: 96%; fill: rgba(124, 92, 255, .38); }
   .av-ghost span { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: 700; white-space: nowrap;
     color: #fff; background: rgba(124, 92, 255, .9); padding: 2px 8px; border-radius: 99px; }
 
@@ -1333,7 +1334,7 @@
 
       <!-- center: live canvas + narration -->
       <div class="center">
-        <div class="stage" id="stage"><canvas id="slideCanvas"></canvas><div class="av-ghost" id="avGhost"><svg viewBox="0 0 100 100"><circle cx="50" cy="34" r="19"/><path d="M8 100c2-26 20-40 42-40s40 14 42 40z"/></svg><span id="avGhostName">Avatar</span></div><div class="stage-msg" id="stageMsg"></div><div class="stage-busy" id="stageBusy"><span class="spin"></span><span id="stageBusyText">Preparing preview…</span></div></div>
+        <div class="stage" id="stage"><canvas id="slideCanvas"></canvas><div class="av-ghost" id="avGhost"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><ellipse cx="50" cy="30" rx="21" ry="25"/><path d="M4 100c3-28 22-42 46-42s43 14 46 42z"/></svg><span id="avGhostName">Avatar</span></div><div class="stage-msg" id="stageMsg"></div><div class="stage-busy" id="stageBusy"><span class="spin"></span><span id="stageBusyText">Preparing preview…</span></div></div>
         <div class="toolbar">
           <button id="prevBtn" class="icon-only" title="Previous slide"><svg class="ic"><use href="#i-left"/></svg></button>
           <span id="slideLabel">–</span>
@@ -1398,7 +1399,7 @@
             <label class="switch" title="A talking presenter on this slide"><input type="checkbox" id="avOn"><span></span></label></div>
           <div id="avBody">
             <div class="av-state sc-sub" id="avState"></div>
-            <div class="mini-grid av-grid" id="avGrid"></div>
+            <div class="mini-grid av-grid" id="avGrid" title="The presenter of the whole video – every slide with the avatar switches to the one you pick"></div>
             <div class="av-opts">
               <span class="seg" id="avPlace"><button data-v="left" title="Bottom left">Left</button><button data-v="center" title="Bottom centre">Centre</button><button data-v="right" title="Bottom right">Right</button></span>
               <label class="avsize" title="Height of the avatar, as a share of the video height"><input type="range" id="avSize" min="20" max="80" step="1" value="40"><span id="avSizeVal">40%</span></label>
@@ -2306,7 +2307,7 @@
   });
 
   // ── Live canvas (the slide over its own background, background playing) ──
-  const live = { pv: null, raf: 0, token: 0 };
+  const live = { pv: null, raf: 0, token: 0, held: false };   // held: a video is being made – the stage stays still
   const stageCanvas = $('slideCanvas');
 
   function stageShow(src) {
@@ -2330,7 +2331,7 @@
   function refreshLive() {
     clearTimeout(liveTimer);
     liveTimer = setTimeout(async () => {
-      if (!renderer || slideJob || trans.job) return;
+      if (!renderer || slideJob || trans.job || live.held) return;
       const token = ++live.token;
       stopLive();
       const pv = new PptxVideo(renderer, previewSettings());
@@ -2344,7 +2345,7 @@
         pv.dispose();
         return;
       }
-      if (token !== live.token || slideJob) { pv.dispose(); return; }
+      if (token !== live.token || slideJob || live.held) { pv.dispose(); return; }
       live.pv = pv;
       $('stageMsg').textContent = slides[current]?.bg ? `Background: ${slides[current].bg.title}` : '';
       {
@@ -2569,6 +2570,56 @@
       } finally { clearInterval(t); }
     }
     onFrac?.(1);
+  }
+
+  /**
+   * Pixabay's "small" file is not one size: 640×360 for old clips, full 1920×1080 (sometimes 20+ Mbit/s) for new ones.
+   * Every background frame is decoded during the export, so for each clip we use the smallest Pixabay version that is
+   * still about as wide as the video being made: "tiny" when "small" is bigger than needed, "medium" when it is too small.
+   */
+  const pxWidths = new Map();                                  // File -> its video width
+  async function videoWidthOf(file) {
+    if (pxWidths.has(file)) return pxWidths.get(file);
+    const v = document.createElement('video'), url = URL.createObjectURL(file);
+    try {
+      v.muted = true; v.preload = 'metadata'; v.src = url;
+      await new Promise((ok, no) => { v.onloadedmetadata = ok; v.onerror = no; setTimeout(no, 8000); });
+      pxWidths.set(file, v.videoWidth || 0);
+      return v.videoWidth || 0;
+    } catch { return 0; }
+    finally { v.removeAttribute('src'); v.load(); URL.revokeObjectURL(url); }
+  }
+  async function pxForWidth(bg, outW) {
+    const small = bg.source;
+    if (!(small instanceof Blob) || !/_small\.mp4(\?|$)/i.test(bg.dl || '')) return small;
+    const w = await videoWidthOf(small);
+    if (!w) return small;
+    const other = async (name) => {
+      try {
+        const f = await pxFile(`${bg.pxId}-${name}`, bg.dl.replace(/_small\.mp4/i, `_${name}.mp4`));
+        return { f, w: await videoWidthOf(f) };
+      } catch { return null; }
+    };
+    if (w > outW * 1.1) {                                     // bigger than needed: is "tiny" wide enough?
+      const t = await other('tiny');
+      if (t?.w && t.w >= outW * 0.95 && t.w < w) return t.f;
+    } else if (w < outW * 0.75) {                             // clearly too small for this video: try "medium"
+      const m = await other('medium');
+      if (m?.w > w && m.w <= Math.max(outW * 1.5, 1920)) return m.f;
+    }
+    return small;
+  }
+  /** Background files to use for a video outW wide (slide bg -> File), with the size of each logged. */
+  async function exportSources(outW) {
+    const map = new Map(), byId = new Map();
+    for (const s of slides) {
+      const bg = s.bg;
+      if (!bg?.px || !bg.source) continue;
+      if (!byId.has(bg.pxId)) byId.set(bg.pxId, pxForWidth(bg, outW).catch(() => bg.source));
+      map.set(bg, await byId.get(bg.pxId));
+    }
+    for (const [bg, f] of map) if (f !== bg.source) console.info(`[Export] ${bg.title}: using a ${await videoWidthOf(f)} px wide version instead of ${await videoWidthOf(bg.source)} px`);
+    return map;
   }
 
   // background pop-up grid: cards are made when first shown, 60 at a time
@@ -3678,6 +3729,8 @@
       selected: s?.av?.on && s.av.id === a.id,
       onPick: (a) => {
         if (!a.installedHere) { avInstall(a); return; }
+        // one presenter for the whole video: every slide that has the avatar switches to the one picked
+        slides.forEach((t, i) => { if (t.av?.on && t.av.id !== a.id) { t.av = { ...t.av, id: a.id }; updateThumbBadges(i); } });
         avSet({ on: true, id: a.id });
       },
     })));
@@ -4431,7 +4484,7 @@ ${parts.join('\n\n')}
 
   /** Open the pop-up for a new job ('export' or 'preview'). */
   function rOpen(kind) {
-    Object.assign(R, { kind, running: true, t0: performance.now(), frac: 0, range: [0, 1] });
+    Object.assign(R, { kind, running: true, t0: performance.now(), frac: 0, range: [0, 1], part: null });
     const dlg = $('renderDlg');
     dlg.classList.remove('view-final', 'view-msg'); dlg.classList.add('view-run');
     $('rdTitle').textContent = kind === 'preview' ? 'Preview of the whole video' : 'Creating your video';
@@ -4449,8 +4502,18 @@ ${parts.join('\n\n')}
     if (!dlg.open) dlg.showModal();
   }
   /** Show the frame being made. */
-  function rLive(canvas) {
-    $('rdLive').replaceChildren(canvas);
+  function rLive(canvas, live = false) {
+    if (live) { $('rdLive').replaceChildren(canvas); $('rdWait').hidden = true; return; }   // the real-time preview
+    // Exports: not the export canvas itself: showing it would make the window redraw (scaled up) on every exported frame, which
+    // costs the graphics chip as much as the export. A small copy, refreshed twice a second, is enough to watch.
+    const k = Math.min(1, 640 / (canvas.width || 640));
+    const view = document.createElement('canvas');
+    view.width = Math.max(2, Math.round(canvas.width * k)); view.height = Math.max(2, Math.round(canvas.height * k));
+    const vctx = view.getContext('2d');
+    const copy = () => { try { vctx.drawImage(canvas, 0, 0, view.width, view.height); } catch {} };
+    copy();
+    const timer = setInterval(() => { if (!view.isConnected) { clearInterval(timer); return; } copy(); }, 500);
+    $('rdLive').replaceChildren(view);
     $('rdWait').hidden = true;
   }
   /** Progress 0..1 of the current part (mapped onto R.range), phase line, detail line. */
@@ -4462,7 +4525,12 @@ ${parts.join('\n\n')}
       $('rdPct').textContent = pct; $('s3Pct').textContent = pct;
       setFill('rdBar', R.frac); setFill('s3Bar', R.frac);
       const el = (performance.now() - R.t0) / 1000;
-      const eta = R.kind !== 'preview' && R.frac > 0.03 && el > 3 ? fmtEta(el * (1 - R.frac) / R.frac) : '';
+      let eta = R.kind !== 'preview' && R.frac > 0.03 && el > 3 ? fmtEta(el * (1 - R.frac) / R.frac) : '';
+      // a video with an AI avatar is made in two parts of very different speed: the time left is per part
+      if (R.part) {
+        const pf = (R.frac - a) / Math.max(1e-6, b - a), pel = (performance.now() - R.part.t0) / 1000;
+        eta = R.part.name + (pf > 0.03 && pel > 3 ? ' · ' + fmtEta(pel * (1 - pf) / pf) : '');
+      }
       $('rdEta').textContent = eta; $('s3Eta').textContent = eta;
     }
     if (phase) { $('rdPhase').textContent = phase; $('s3Phase').textContent = phase; }
@@ -5382,7 +5450,7 @@ ${parts.join('\n\n')}
   applyTheme((() => { try { return localStorage.getItem('pptxTheme'); } catch { return null; } })() || 'dark');
 
   // ── Video settings + jobs ──────────────────────────────────────────────────
-  function readSettings() {
+  function readSettings(bgFiles = null) {
     const anyNarr = slides.some(s => s.narrOn && s.buffer);
     return {
       width: +$('resSel').value,
@@ -5395,7 +5463,7 @@ ${parts.join('\n\n')}
       transition: { choice: $('transitionSel').value, ms: Math.max(0, +$('transMs').value || 0) },
       bgLoop: $('bgLoop').checked,
       slides: slides.map(s => ({
-        bg: s.bg ? { source: s.bg.source, mode: s.mode, scale: s.inset / 100, opacity: s.blend / 100 } : null,
+        bg: s.bg ? { source: bgFiles?.get(s.bg) || s.bg.source, mode: s.mode, scale: s.inset / 100, opacity: s.blend / 100 } : null,
         trans: s.trans || null,
       })),
       narration: anyNarr ? {
@@ -5407,12 +5475,16 @@ ${parts.join('\n\n')}
   }
   for (const id of ['animChk', 'clickGapSec', 'holdSec']) $(id).addEventListener('change', () => {});
 
-  function showLive(canvas) {
-    rLive(canvas);
+  function showLive(canvas, live = false) {
+    rLive(canvas, live);
     $('resultVideo').style.aspectRatio = $('rdVideo').style.aspectRatio = `${canvas.width} / ${canvas.height}`;
   }
 
   function setJobUI(running) {
+    // While a video is made, the step 2 stage must not keep playing its background and redrawing the slide 60 times a
+    // second: it competes with the export for the graphics chip (it roughly doubled the export time).
+    if (running && !live.held) { live.held = true; live.token++; stopLive(); }
+    else if (!running && live.held) { live.held = false; refreshLive(); }
     $('editor').classList.toggle('muted-off', running);
     for (const id of ['previewVideoBtn', 'exportBtn']) $(id).disabled = running;
     $('stopBtn').disabled = !running;
@@ -5465,7 +5537,7 @@ ${parts.join('\n\n')}
         loadBgUI();
       }
       pv = new PptxVideo(renderer, readSettings());
-      showLive(pv.out);
+      showLive(pv.out, true);
       setVStatus('Preparing…');
       rProg(0, 'Playing the preview…');
       const voice = narrationPlayer(false);
@@ -5511,15 +5583,24 @@ ${parts.join('\n\n')}
         await ensureBackgrounds();
         loadBgUI();
       }
-      pv = new PptxVideo(renderer, readSettings());
+      let bgFiles = null;
+      if (slides.some(s => s.bg?.px)) {
+        rProg(null, 'Choosing the background video sizes…');
+        bgFiles = await exportSources(+$('resSel').value);
+      }
+      pv = new PptxVideo(renderer, readSettings(bgFiles));
       capturePlan(pv);
       showLive(pv.out);
       // with an AI avatar the app adds it afterwards: the slides video gets the first part of the bar
       const withAvatar = avWanted(), fullRange = R.range;
-      if (withAvatar) R.range = [fullRange[0], fullRange[0] + (fullRange[1] - fullRange[0]) * 0.35];
+      if (withAvatar) {
+        R.range = [fullRange[0], fullRange[0] + (fullRange[1] - fullRange[0]) * 0.35];
+        R.part = { name: 'Part 1 of 2: the slides', t0: performance.now() };
+      }
       const addAvatar = async (blob, ext, extra) => {
         if (!withAvatar) return showResult(blob, ext, extra);
         R.range = [R.range[1], fullRange[1]];
+        R.part = { name: 'Part 2 of 2: the AI avatar', t0: performance.now() };
         setVStatus('Adding the AI avatar…');
         let r;
         try { r = await avAddToVideo(blob, ext, job.signal); }
@@ -5555,7 +5636,10 @@ ${parts.join('\n\n')}
         if (!blob) { setVStatus('Export cancelled.'); rMessage('Stopped', 'The video was stopped. Your settings are kept – press <b>Export video</b> to try again.'); return false; }
         const secs = (performance.now() - t0) / 1000;
         made = true;
-        await addAvatar(blob, container, ` · ${fmtTime(pv.totalMs / 1000)} of video${pv.hasNarration ? ' with narration (' + pv.audioCodec.toUpperCase() + ')' : ''} made in ${secs.toFixed(1)} s`);
+        const sx = pv.stats, sec = (ms) => Math.round(ms / 1000) + ' s';
+        const where = sx?.frames ? ` (waiting on: backgrounds ${sec(sx.bgMs)} · drawing ${sec(sx.drawMs)} · ${sx.encoder || ''} encoder ${sec(sx.encMs)})` : '';
+        if (sx?.frames) console.info('[Export] stats', sx);
+        await addAvatar(blob, container, ` · ${fmtTime(pv.totalMs / 1000)} of video${pv.hasNarration ? ' with narration (' + pv.audioCodec.toUpperCase() + ')' : ''} made in ${secs.toFixed(1)} s${where}`);
       } else {
         const wantAudio = pv.hasNarration;
         const mime = mrMime(container, wantAudio) || mrMime(container === 'mp4' ? 'webm' : 'mp4', wantAudio);
