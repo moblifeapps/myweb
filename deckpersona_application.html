@@ -6,7 +6,7 @@
 <title>DeckPersona – PowerPoint to narrated video | MLApplications</title>
 <meta name="robots" content="noindex, nofollow">
 <!-- The DeckPersona app shows the highest version it has (bundled, or this page from the website): bump it on every change. -->
-<meta name="dp-page-version" content="2026.11.23.8">
+<meta name="dp-page-version" content="2026.11.23.12">
 <script>
   // Apply the saved theme before first paint (light / dark; nothing = follow the system)
   (function () { try { var t = localStorage.getItem('pptxTheme'); if (t !== 'auto') document.documentElement.dataset.theme = (t === 'light' ? 'light' : 'dark'); } catch (e) {} })();
@@ -463,7 +463,7 @@
 
   /* ── Slide editor: thumbnails | live canvas + narration | background + avatar ── */
   #editor, #videoPanel { display: none; }
-  .editor { display: grid; grid-template-columns: 150px minmax(0,1fr) 350px; gap: 16px; align-items: stretch; margin-top: 10px; }
+  .editor { display: grid; grid-template-columns: 150px minmax(0,1fr) var(--sideW, 350px); gap: 16px; align-items: stretch; margin-top: 10px; }
   .thumbcol { position: relative; min-height: 300px; }
   #thumbs { position: absolute; inset: 0; overflow-y: auto; max-height: none; padding: 2px 4px 2px 2px; gap: 0; }
   .thumb .badges { position: absolute; right: 4px; bottom: 4px; display: flex; gap: 3px; }
@@ -1063,6 +1063,7 @@
   #qSearch:focus { outline: none; border-color: var(--accent); }
   /* ── Right column: background grid + avatar grid, each half the slide's height ── */
   .side { min-height: 0; }
+  #editor { scroll-margin-top: 84px; }             /* below the sticky step bar */
   .side.fit #bgCard, .side.fit #avatarCard { flex: 1 1 0; min-height: 0; overflow: hidden; }
   #avatarCard { min-height: 0; }
   .sc-sub { font-size: 12px; color: var(--muted); margin-top: -4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -1097,13 +1098,38 @@
   .sel-btns { margin-top: auto; display: flex; gap: 6px; flex-wrap: wrap; }
   .sel-pick { display: none; flex: 1 1 0; min-height: 0; flex-direction: column; gap: 8px; }
   .side-card.picking .sel-pick { display: flex; }
-  .side-card.picking .sel-row { flex: none; min-height: 0; height: 40px; }
+  .sel-row { flex-direction: column; gap: 6px; }
+  .sel-row .sel-info { order: -1; flex: none; flex-direction: row; align-items: center; gap: 6px; min-height: 26px; }
+  .sel-row .sel-info b { flex: 0 1 auto; min-width: 0; }
+  .sel-row .sel-info em { flex: 1 1 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #bgCurMode:not(:empty)::before { content: '· '; }
+  .sel-row .sel-btns { margin: 0 0 0 auto; flex: none; }
+  .sel-row .sel-pic { flex: 1 1 0; width: 100%; height: auto; max-width: none; aspect-ratio: auto; }
+  .sel-pic.av img { object-fit: cover; object-position: center top; }
+  #avChange { display: inline-flex; align-items: center; gap: 4px; padding: 4px 9px; }
+  #avChange .ic, #avPlace .ic { width: 15px; height: 15px; flex: none; }
+  #avPlace button { display: inline-flex; align-items: center; gap: 4px; }
+  .side-card.picking .sel-pic { display: none; }
+  .side-card.picking .sel-row { flex: none; min-height: 0; height: auto; }
   .side-card.picking .sel-info { flex-direction: row; align-items: center; gap: 8px; }
   .side-card.picking .sel-info b { flex: 1 1 auto; min-width: 0; }
   .side-card.picking .sel-info em, .side-card.picking #bgRemove { display: none; }
   .side-card.picking .sel-btns { margin: 0; flex: none; }
   #avatarCard.picking .av-opts { display: none; }
-  #bgRemove[hidden] { display: none; }
+  #bgRemove[hidden], #bgModeSeg[hidden] { display: none !important; }
+  #bgCard { container-type: inline-size; }
+  #bgCard .card-h .ttl { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #bgCard .card-h button { flex: none; }
+  @container (max-width: 380px) { #bgCard .card-h .tic { display: none; } }
+  @container (max-width: 300px) { #bgCard .card-h button span { display: none; } #bgCard .card-h button:not(.icon-only) { padding-inline: 8px; } }
+  #bgCard .card-h { gap: 6px; }
+  #bgCard .card-h button .ic { width: 15px; height: 15px; }
+  #bgCard .card-h button:not(.icon-only) { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; }
+  .bg-modes { margin-top: -2px; }
+  .bg-modes .seg { display: flex; width: 100%; }
+  .bg-modes .seg button { flex: 1 1 0; padding: 5px 6px; }
+  .seg button.on { background: var(--accent); color: #fff; }
+  .side-card.picking .bg-modes { display: none; }
   .mcard img.portrait { object-fit: contain; object-position: center bottom; background: linear-gradient(160deg, #3a4160, #1d2234); }
   #bgMiniLive:empty { display: none; }
 
@@ -1149,6 +1175,13 @@
   .av-ghost { position: absolute; bottom: 0; aspect-ratio: 9 / 10; display: none; pointer-events: none; z-index: 2;
     border: 2px dashed rgba(124, 92, 255, .85); border-bottom: 0; border-radius: 10px 10px 0 0; background: rgba(124, 92, 255, .10); }
   .av-ghost.on { display: block; }
+  /* while the slide plays: the outline glows – the presenter is drawn here in the final video */
+  .stage.playing .av-ghost { animation: ghostGlow 1.6s ease-in-out infinite; }
+  .stage.playing .av-ghost span { animation: ghostPill 1.6s ease-in-out infinite; }
+  @keyframes ghostGlow { 0%, 100% { box-shadow: 0 0 0 0 rgba(124, 92, 255, 0); border-color: rgba(124, 92, 255, .6); background: rgba(124, 92, 255, .08); }
+    50% { box-shadow: 0 0 22px 4px rgba(150, 120, 255, .75), inset 0 0 18px rgba(150, 120, 255, .45); border-color: rgba(190, 170, 255, 1); background: rgba(124, 92, 255, .2); } }
+  @keyframes ghostPill { 0%, 100% { box-shadow: 0 0 0 0 rgba(150, 120, 255, 0); } 50% { box-shadow: 0 0 14px 3px rgba(170, 145, 255, .9); } }
+  @media (prefers-reduced-motion: reduce) { .stage.playing .av-ghost, .stage.playing .av-ghost span { animation: none; box-shadow: 0 0 16px 3px rgba(150, 120, 255, .6); } }
   .av-ghost svg { position: absolute; left: 4%; right: 4%; bottom: 0; width: 92%; height: 96%; fill: rgba(124, 92, 255, .38); }
   .av-ghost span { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: 700; white-space: nowrap;
     color: #fff; background: rgba(124, 92, 255, .9); padding: 2px 8px; border-radius: 99px; }
@@ -1234,7 +1267,7 @@
     <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
     <symbol id="i-auto" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M12 4v12" /></symbol>
-    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></symbol>
+    <symbol id="i-pl-left" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M6 19v-3.5a2 2 0 0 1 4 0V19M8 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-pl-center" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 19v-3.5a2 2 0 0 1 4 0V19M12 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-pl-right" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M14 19v-3.5a2 2 0 0 1 4 0V19M16 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h13l-3.5-3.5M20 16H7l3.5 3.5"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20.5c1.6-4 4.6-6 8-6s6.4 2 8 6"/></symbol>
     <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M4 16a8 8 0 1 1 16 0"/><path d="M12 16l4-5"/></symbol>
     <symbol id="i-layers" viewBox="0 0 24 24"><rect x="3" y="4" width="14" height="10" rx="1.5"/><path d="M7 18h12a2 2 0 0 0 2-2V8"/></symbol>
@@ -1402,16 +1435,20 @@
       <div class="side fit" id="sideCol">
         <div class="side-card" id="bgCard">
           <div class="card-h">
-            <b class="ttl"><span class="tic sm"><svg class="ic"><use href="#i-clapper"/></svg></span>Background video</b>
+            <b class="ttl" title="Background video"><span class="tic sm"><svg class="ic"><use href="#i-clapper"/></svg></span>Background</b>
             <span class="spacer"></span>
-            <button id="bgCurrent" class="sm" title="All videos, your own video, and how the slide sits on the video">More…</button>
+            <button class="sm" id="bgChange" title="Pick another background video"><svg class="ic"><use href="#i-swap"/></svg><span>Change</span></button>
+            <button class="sm" id="bgRemove" title="No background video on this slide"><svg class="ic"><use href="#i-trash"/></svg><span>Remove</span></button>
+            <button id="bgCurrent" class="sm icon-only" title="More: all videos, your own video, frame size and blend strength"><svg class="ic"><use href="#i-menu"/></svg></button>
+          </div>
+          <div class="bg-modes" id="bgModeSeg" title="How the slide sits on the video">
+            <span class="seg"><button data-v="transparent" title="The video fills the background, the slide on top">Background</button><button data-v="blend" title="The slide and the video blended together">Blend</button><button data-v="inset" title="The slide in a frame over the video">Frame</button></span>
           </div>
           <span id="bgCurThumb" hidden></span>
           <div class="sel-row" id="bgSelRow">
             <div class="sel-pic" id="bgSelPic"></div>
             <div class="sel-info">
               <b id="bgCurTitle">No background</b><em id="bgCurMode"></em>
-              <div class="sel-btns"><button class="sm" id="bgChange">Change…</button><button class="sm" id="bgRemove" title="No background video on this slide">Remove</button></div>
             </div>
           </div>
           <div class="sel-pick" id="bgPick">
@@ -1433,14 +1470,14 @@
               <div class="sel-pic av" id="avSelPic"></div>
               <div class="sel-info">
                 <b id="avSelName">Avatar</b><em id="avSelNote"></em>
-                <div class="sel-btns"><button class="sm" id="avChange">Change…</button></div>
+                <div class="sel-btns"><button class="sm" id="avChange" title="Pick another presenter"><svg class="ic"><use href="#i-swap"/></svg><span>Change</span></button></div>
               </div>
             </div>
             <div class="sel-pick" id="avPick">
               <div class="mini-grid av-grid" id="avGrid" title="The presenter of the whole video – every slide with the avatar switches to the one you pick"></div>
             </div>
             <div class="av-opts">
-              <span class="seg" id="avPlace"><button data-v="left" title="Bottom left">Left</button><button data-v="center" title="Bottom centre">Centre</button><button data-v="right" title="Bottom right">Right</button></span>
+              <span class="seg" id="avPlace"><button data-v="left" title="Bottom left"><svg class="ic"><use href="#i-pl-left"/></svg>Left</button><button data-v="center" title="Bottom centre"><svg class="ic"><use href="#i-pl-center"/></svg>Centre</button><button data-v="right" title="Bottom right"><svg class="ic"><use href="#i-pl-right"/></svg>Right</button></span>
               <label class="avsize" title="Height of the avatar, as a share of the video height"><input type="range" id="avSize" min="20" max="80" step="1" value="40"><span id="avSizeVal">40%</span></label>
             </div>
           </div>
@@ -2190,6 +2227,7 @@
       $('loadPanel').classList.add('compact');
       slideTextCache.clear();
       if ($('quickDlg').open) { quick.slide = 0; try { await refreshBgSuggestions(); } catch {} showQuickStep(1); }
+      else requestAnimationFrame(() => $('editor').scrollIntoView({ behavior: 'smooth', block: 'start' }));   // on to step 2
     } catch (err) {
       console.error(err);
       setBar($('progress'), null);
@@ -2420,6 +2458,8 @@
     }
     const pv = new PptxVideo(renderer, previewSettings());
     const voice = narrationPlayer(false);
+    $('stage').classList.add('playing');
+    if (slides[current]?.av?.on) $('avGhostName').textContent = `${avName(avEffective(current))} – added in the final video`;
     try {
       $('stageMsg').textContent = 'Playing slide…';
       let raf = 0;
@@ -2432,6 +2472,8 @@
       console.error(err);
       $('stageMsg').textContent = 'Playback failed: ' + (err?.message || err);
     } finally {
+      $('stage').classList.remove('playing');
+      avGhost();
       voice.stop();
       pv.dispose();
       slideJob = null;
@@ -2750,11 +2792,13 @@
     pic.style.backgroundImage = bg?.poster ? `url("${bg.poster}")` : '';
     pic.textContent = !bg ? 'None' : bg.poster ? '' : bg.upload ? 'Your video' : 'Video';
     $('bgRemove').hidden = !bg;
-    $('bgChange').textContent = $('bgCard').classList.contains('picking') ? 'Done' : bg ? 'Change…' : 'Choose…';
+    $('bgChange').querySelector('span').textContent = $('bgCard').classList.contains('picking') ? 'Done' : bg ? 'Change' : 'Choose';
+    $('bgModeSeg').hidden = !bg;
+    document.querySelectorAll('#bgModeSeg button').forEach(b => b.classList.toggle('on', b.dataset.v === s.mode));
     th.textContent = !bg ? 'None' : bg.poster ? '' : bg.upload ? 'Your video' : 'Video';
     $('bgCurTitle').textContent = bg ? bg.title : 'No background';
     markBgMini();
-    $('bgCurMode').textContent = bg ? (bg.err ? '⚠ Download failed – pick it again or choose another' : ($('bgMode').selectedOptions[0]?.textContent || '')) : '';
+    $('bgCurMode').textContent = bg ? (bg.err ? '⚠ Download failed – pick it again or choose another' : bg.credit?.user ? `by ${bg.credit.user} on Pixabay` : '') : '';
     $('bgName').textContent = !bg ? 'No background on this slide'
       : bg.err ? '⚠ ' + bg.err
       : `${bg.title}${bg.size ? ' · ' + fmtSize(bg.size) : ''}${bg.upload ? ' · uploaded' : bg.px ? ` · Pixabay${bg.credit?.user ? ', by ' + bg.credit.user : ''}` : ' · streamed from the server'}`;
@@ -3681,6 +3725,12 @@
     loadBgUI();
   }
   $('bgChange').addEventListener('click', () => { if (!job) bgPickOpen(!$('bgCard').classList.contains('picking')); });
+  $('bgModeSeg').addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (!b || job) return;
+    $('bgMode').value = b.dataset.v;
+    $('bgMode').dispatchEvent(new Event('input'));
+  });
   $('bgRemove').addEventListener('click', () => { if (!job) { setSlideBg(null); bgPickOpen(false); } });
   $('bgMiniSearch').addEventListener('keydown', (e) => { if (e.key === 'Escape') bgPickOpen(false); });
 
@@ -3734,12 +3784,23 @@
   });
 
   // the right column is exactly as tall as the slide preview: background and avatar get half each
+  // and just as wide as one half is tall, so both cards are squares
   const sideFit = () => {
-    const side = $('sideCol'), stage = $('stage');
-    if (!side || !stage) return;
+    const side = $('sideCol'), stage = $('stage'), ed = side?.parentElement;
+    if (!side || !stage || !ed) return;
+    const cols = getComputedStyle(ed).gridTemplateColumns.split(' ').filter(Boolean);
+    if (cols.length === 3 && stage.offsetWidth > 0) {
+      const r = stage.offsetHeight / stage.offsetWidth;               // slide aspect (9/16 for wide slides)
+      const gap = parseFloat(getComputedStyle(ed).columnGap) || 16, cardGap = 12;
+      const fixed = parseFloat(cols[0]) + 2 * gap;                     // thumbnail column + gaps
+      // square cards: width = (stageH - cardGap) / 2 with stageH = r · (editor width - fixed - width)
+      const w = Math.round((r * (ed.clientWidth - fixed) - cardGap) / (2 + r));
+      ed.style.setProperty('--sideW', Math.max(280, Math.min(460, w)) + 'px');
+    }
     side.style.height = side.offsetLeft > stage.offsetLeft + 20 ? stage.offsetHeight + 'px' : '';   // only side by side
   };
   new ResizeObserver(sideFit).observe($('stage'));
+  new ResizeObserver(sideFit).observe($('sideCol').parentElement);
   addEventListener('resize', sideFit);
 
   // ── AI avatar (made by the desktop app: lip-sync → Unreal render → overlay) ──────────────────
@@ -3860,7 +3921,7 @@
   /** The avatar card shows the slide's presenter; the list opens only to change it. */
   function avPickOpen(open) {
     $('avatarCard').classList.toggle('picking', open);
-    $('avChange').textContent = open ? 'Done' : 'Change…';
+    $('avChange').querySelector('span').textContent = open ? 'Done' : 'Change';
   }
   $('avChange').addEventListener('click', () => { if (!job) avPickOpen(!$('avatarCard').classList.contains('picking')); });
   function avSelUI() {
@@ -4387,7 +4448,6 @@
     if (slides.some(s => s.bg?.px && !s.bg.source))
       ensureBackgrounds().then(() => { loadBgUI(); refreshLive(); slides.forEach((_, k) => updateThumbBadges(k)); }).catch(() => {});
     setStatus(`“${h.title}” is ready to edit – the narration is being generated now. Change anything you like, then Create video.`);
-    $('editor').scrollIntoView({ behavior: 'smooth', block: 'start' });
     generateWholeDeck(voice);
   }
 
