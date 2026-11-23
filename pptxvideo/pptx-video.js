@@ -64,6 +64,22 @@ const EMPH_KIND = { 8: 'spin' };
 const SUBTYPE_DIR = { 1: 't', 2: 'r', 4: 'b', 8: 'l', 3: 'r', 6: 'r', 9: 'l', 12: 'l' };
 
 /**
+ * What each animation group of a slide shows: the text of the shapes its effects bring in (for timing the clicks
+ * to the narration). Returns [{ click, text }] in group order.
+ */
+export function clickTargets(renderer, slideIndex) {
+  const { groups } = parseSlideAnimations(renderer, slideIndex);
+  if (!groups.length) return [];
+  const doc = slideDoc(renderer, slideIndex);
+  const textOf = (spid) => {
+    const pr = desc(doc, 'cNvPr').find(c => c.getAttribute('id') === spid);
+    const sp = pr?.parentNode?.parentNode;
+    return sp ? desc(sp, 't').map(x => x.textContent).join(' ') : '';
+  };
+  return groups.map(g => ({ click: g.click, text: [...new Set(g.effects.map(e => e.spid))].map(textOf).join(' ').trim() }));
+}
+
+/**
  * Parse the main animation sequence of a slide.
  * @returns {{ groups: Array<{click:boolean, effects:object[]}> }}
  */
@@ -120,13 +136,16 @@ function walkPar(par, acc, out) {
   for (const c of lst.children) if (c.localName === 'par') walkPar(c, start, out);
 }
 
-/** Flatten groups into absolute times (ms from slide start). */
-function buildTimeline(groups, clickGapMs) {
-  let t = 0;
+/** Flatten groups into absolute times (ms from slide start).
+ *  clickAt (optional): per group, the time (ms from slide start) its click should happen – e.g. when the narration
+ *  reaches that bullet. A click never comes before the previous group has started. */
+function buildTimeline(groups, clickGapMs, clickAt = null) {
+  let t = 0, lastStart = -Infinity;
   const effects = [];
-  for (const g of groups) {
-    if (g.click) t += clickGapMs;
+  for (const [k, g] of groups.entries()) {
+    if (g.click) t = clickAt?.[k] != null ? Math.max(lastStart + 150, clickAt[k]) : t + clickGapMs;
     const gStart = t;
+    lastStart = gStart;
     for (const e of g.effects) {
       effects.push({ ...e, abs: gStart + e.start });
       t = Math.max(t, gStart + e.start + e.dur);
@@ -177,7 +196,7 @@ function alphaBBox(canvas) {
  * @param {object} opts { width, transparent, animate, clickGapMs }
  */
 export async function buildScene(renderer, slideIndex, opts) {
-  const { width, transparent = false, animate = true, clickGapMs = 500 } = opts;
+  const { width, transparent = false, animate = true, clickGapMs = 500, clickAt = null } = opts;
   const doc = slideDoc(renderer, slideIndex);
   const spTree = doc ? desc(desc(doc, 'cSld')[0], 'spTree')[0] : null;
 
@@ -195,7 +214,7 @@ export async function buildScene(renderer, slideIndex, opts) {
 
   // Animation timeline, effects grouped by top-level shape
   let timeline = { effects: [], end: 0 };
-  if (animate) timeline = buildTimeline(parseSlideAnimations(renderer, slideIndex).groups, clickGapMs);
+  if (animate) timeline = buildTimeline(parseSlideAnimations(renderer, slideIndex).groups, clickGapMs, clickAt);
   const effectsByShape = new Map();
   for (const e of timeline.effects) {
     const tid = idToTop.get(e.spid);
@@ -497,8 +516,8 @@ export function decorateScene(scene, mode, k) {
 }
 
 /** Play one slide's animations on a canvas (viewer preview). */
-export async function previewSlide(renderer, slideIndex, canvas, { width = 1280, clickGapMs = 500, signal } = {}) {
-  const scene = await buildScene(renderer, slideIndex, { width, animate: true, clickGapMs });
+export async function previewSlide(renderer, slideIndex, canvas, { width = 1280, clickGapMs = 500, clickAt = null, signal } = {}) {
+  const scene = await buildScene(renderer, slideIndex, { width, animate: true, clickGapMs, clickAt });
   canvas.width = scene.w; canvas.height = scene.h;
   const ctx = canvas.getContext('2d');
   const total = scene.animEnd + 300;
@@ -661,7 +680,7 @@ export class PptxVideo {
         if (t.duration > 0 && t.type !== 'cut') { segs.push({ kind: 'trans', from: i - 1, to: i, t, ms: t.duration, t0 }); t0 += t.duration; }
       }
       const animEnd = this.s.animate
-        ? buildTimeline(parseSlideAnimations(this.r, i).groups, this.s.clickGapMs).end : 0;
+        ? buildTimeline(parseSlideAnimations(this.r, i).groups, this.s.clickGapMs, this._clickAt(i)).end : 0;
       // Narration: the slide lasts as long as its audio (plus pauses), but never cuts animations short
       const nar = this.s.narration;
       const clip = nar?.clips?.[i] || null;
@@ -675,6 +694,15 @@ export class PptxVideo {
       t0 += len;
     }
     return segs;
+  }
+
+  /** Click times of slide i from slide start: settings.clickTimes[i] is relative to the start of its narration
+   *  (ms per animation group, null = the usual click gap); without narration on the slide they are not used. */
+  _clickAt(i) {
+    const rel = this.s.clickTimes?.[i];
+    if (!rel || !this.s.narration?.clips?.[i]) return null;
+    const lead = this.s.narration.leadMs ?? 400;
+    return rel.map(v => v == null ? null : lead + v);
   }
 
   get hasNarration() { return this.segs.some(s => s.audio); }
@@ -697,7 +725,7 @@ export class PptxVideo {
     if (!this.scenes.has(i)) {
       const transparent = this.isTransparent(i);
       this.scenes.set(i, buildScene(this.r, i, {
-        width: this.W, transparent, animate: this.s.animate, clickGapMs: this.s.clickGapMs,
+        width: this.W, transparent, animate: this.s.animate, clickGapMs: this.s.clickGapMs, clickAt: this._clickAt(i),
       }).then(sc => transparent ? decorateScene(sc, this.readMode, this.readK) : sc));
     }
     return this.scenes.get(i);

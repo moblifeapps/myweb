@@ -142,6 +142,7 @@ export function pcmToBuffer(pcm, sampleRate, audioCtx) {
 /** Make notes friendlier for TTS: drop URLs/bullets/odd symbols, keep sentences. */
 export function cleanForSpeech(text) {
   return (text || '')
+    .replace(/\[(smile|happy|serious|surprised|neutral)\]/gi, ' ')   // AI-avatar expression tags are not spoken
     .replace(/https?:\/\/\S+/g, '')
     .replace(/^[\s•▪▸►‣◦\-–—*]+/gm, '')
     .replace(/[“”«»]/g, '"')

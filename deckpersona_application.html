@@ -6,7 +6,7 @@
 <title>DeckPersona – PowerPoint to narrated video | MLApplications</title>
 <meta name="robots" content="noindex, nofollow">
 <!-- The DeckPersona app shows the highest version it has (bundled, or this page from the website): bump it on every change. -->
-<meta name="dp-page-version" content="2026.11.20.1">
+<meta name="dp-page-version" content="2026.11.22.1">
 <script>
   // Apply the saved theme before first paint (light / dark; nothing = follow the system)
   (function () { try { var t = localStorage.getItem('pptxTheme'); if (t !== 'auto') document.documentElement.dataset.theme = (t === 'light' ? 'light' : 'dark'); } catch (e) {} })();
@@ -1061,6 +1061,131 @@
   #qSearch { width: min(320px, 50vw); padding: 7px 10px; font: inherit; font-size: 13px; background: var(--bg); color: var(--text);
     border: 1px solid var(--border); border-radius: 6px; }
   #qSearch:focus { outline: none; border-color: var(--accent); }
+  /* ── Right column: background grid + avatar grid, each half the slide's height ── */
+  .side { min-height: 0; }
+  .side.fit #bgCard, .side.fit #avatarCard { flex: 1 1 0; min-height: 0; overflow: hidden; }
+  #avatarCard { min-height: 0; }
+  .sc-sub { font-size: 12px; color: var(--muted); margin-top: -4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sc-sub b { color: var(--text); font-weight: 600; }
+  .sc-search { width: 100%; min-width: 0; padding: 5px 10px !important; font-size: 13px !important; }
+  .mini-grid { flex: 1 1 0; min-height: 0; overflow-y: auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: max-content; gap: 6px; align-content: start; padding: 2px; }
+  .mcard { position: relative; display: block; padding: 0; border: 2px solid transparent; border-radius: 7px; overflow: hidden; cursor: pointer;
+    background: var(--panel); aspect-ratio: 16 / 10; min-height: 0; box-shadow: 0 0 0 1px var(--border); }
+  .mcard:hover { box-shadow: 0 0 0 1px var(--accent); }
+  .mcard img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .mcard .mt { position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 5px 3px; font-size: 10.5px; line-height: 1.15; color: #fff; text-align: left;
+    background: linear-gradient(transparent, rgba(0,0,0,.72)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mcard.none { display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--muted); }
+  .mcard.more { display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--accent); }
+  .mcard.selected { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+  .mcard.selected::after { content: '✓'; position: absolute; top: 3px; right: 3px; width: 17px; height: 17px; border-radius: 50%; display: grid; place-items: center;
+    font-size: 11px; font-weight: 700; color: #fff; background: var(--accent); }
+  .mcard.busy img { opacity: .5; }
+  .mini-grid .mg-empty { grid-column: 1 / -1; font-size: 12px; color: var(--muted); padding: 14px 4px; text-align: center; }
+  #bgMiniLive { font-size: 11px; color: var(--muted); min-height: 0; }
+  #bgMiniLive:empty { display: none; }
+
+  /* avatar grid */
+  /* avatars: one row of square tiles exactly as tall as the space left, scrolling sideways */
+  #avatarCard .av-grid { display: flex; gap: 6px; overflow-x: auto; overflow-y: hidden; padding: 2px; }
+  #avatarCard .av-grid .mcard { flex: none; height: 100%; aspect-ratio: 1 / 1; width: auto; }
+  .av-grid .mcard .mt { font-size: 11px; }
+  .qav .av-grid .mcard { aspect-ratio: 1 / 1; }
+  #avBody { gap: 7px !important; }
+  select.av-style { font-size: 12px !important; padding: 3px 6px !important; min-width: 0; max-width: 112px; }
+  .ntip { font-size: 11.5px; color: var(--muted); margin-top: 4px; } .ntip code { font-size: 11px; padding: 0 4px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); }
+  #avBody .av-state { margin-top: -4px; }
+  .side.fit .side-card { padding: 10px 12px; gap: 8px; }
+  #avWeb[hidden], #qAvWeb[hidden], #qAv[hidden], #avBody[hidden] { display: none !important; }
+  .av-grid .mcard { aspect-ratio: 1 / 1; }
+  .av-face { position: absolute; inset: 0; display: grid; place-items: center; }
+  .av-face svg { width: 62%; height: 62%; opacity: .9; }
+  .av-face b { position: absolute; top: 6px; left: 7px; font-size: 11px; color: rgba(255,255,255,.85); font-weight: 700; letter-spacing: .04em; }
+  .mcard .av-dl { position: absolute; top: 4px; right: 4px; white-space: nowrap; font-size: 9.5px; font-weight: 700; padding: 2px 6px; border-radius: 99px; background: rgba(0,0,0,.6); color: #fff; }
+  .mcard .av-prog { position: absolute; left: 6px; right: 6px; bottom: 22px; height: 4px; border-radius: 99px; background: rgba(255,255,255,.3); overflow: hidden; }
+  .mcard .av-prog i { display: block; height: 100%; width: 0; background: #fff; transition: width .2s; }
+  .mcard.remote .av-face { filter: saturate(.55); }
+  .av-opts { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .seg { display: inline-flex; border: 1px solid var(--btn-border); border-radius: 7px; overflow: hidden; }
+  .seg button { border: 0; border-radius: 0; padding: 4px 9px; font-size: 12px; background: var(--btn-bg, var(--panel)); color: var(--text); min-height: 0; box-shadow: none; }
+  .seg button + button { border-left: 1px solid var(--btn-border); }
+  .seg button.on { background: var(--accent); color: #fff; }
+  .avsize { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); flex: 1 1 110px; }
+  .avsize input { flex: 1; min-width: 60px; }
+  #avSizeVal { width: 32px; text-align: right; color: var(--text); }
+  .av-state { font-size: 11.5px; color: var(--muted); display: flex; align-items: center; gap: 6px; min-height: 16px; }
+  .av-state .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex: none; }
+  .av-state .dot.ok { background: #16a34a; } .av-state .dot.work { background: #f59e0b; animation: avpulse 1s infinite; } .av-state .dot.bad { background: #dc2626; }
+  @keyframes avpulse { 50% { opacity: .35; } }
+  #avBody { display: flex; flex-direction: column; gap: 8px; flex: 1 1 0; min-height: 0; }
+  #avatarCard.off #avBody .mini-grid, #avatarCard.off .av-opts { opacity: .45; }
+  #avWeb { flex: 1 1 0; min-height: 0; }
+  #avWeb a { color: var(--accent); font-weight: 600; }
+
+  /* where the avatar will stand, drawn on the slide preview */
+  .av-ghost { position: absolute; bottom: 0; aspect-ratio: 1 / 1; display: none; pointer-events: none; z-index: 2;
+    border: 2px dashed rgba(124, 92, 255, .85); border-bottom: 0; border-radius: 10px 10px 0 0; background: rgba(124, 92, 255, .10); }
+  .av-ghost.on { display: block; }
+  .av-ghost svg { position: absolute; left: 12%; right: 12%; bottom: 0; width: 76%; height: 88%; fill: rgba(124, 92, 255, .38); }
+  .av-ghost span { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: 700; white-space: nowrap;
+    color: #fff; background: rgba(124, 92, 255, .9); padding: 2px 8px; border-radius: 99px; }
+
+  /* quick wizard: avatar step */
+  .qav { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 18px; }
+  .qav .mini-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); max-height: 330px; }
+  .qav-side { display: flex; flex-direction: column; gap: 12px; font-size: 13px; }
+  .qav-side .qlbl { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  @media (max-width: 1150px) { .side.fit #bgCard, .side.fit #avatarCard { flex: 1 1 0; } .side { height: 340px; } }
+  /* ── Step 1: two ways to start ── */
+  .startgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+  #loadPanel.compact .startgrid { display: none; }
+  .startcard { display: flex !important; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; padding: 22px 24px !important;
+    min-height: 168px; border-radius: var(--radius); cursor: pointer; font-weight: 400; background: var(--surface); color: var(--text);
+    border: 2px dashed var(--border); box-shadow: none; }
+  .startcard.idea { border-style: solid; border-color: var(--accent); background: linear-gradient(120deg, var(--accent-glow, var(--accent-soft)), transparent 75%), var(--surface); }
+  .startcard:hover { border-color: var(--accent); }
+  .startcard b { font-size: 18px; font-weight: 650; }
+  .startcard > span:not(.sc-ic) { font-size: 14px; color: var(--muted); line-height: 1.4; }
+  .startcard small { font-size: 12px; color: var(--muted); margin-top: auto; }
+  .startcard .ai-names { color: var(--accent); font-weight: 600; }
+  .startcard .sc-ic { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); margin-bottom: 4px; }
+  .startcard .sc-ic .ic { width: 22px; height: 22px; }
+  #dropZone.startcard { text-align: left; padding: 22px 24px; }
+  #dropZone.drag { border-color: var(--accent); background: var(--accent-soft); }
+  #editor .quickrow { margin: 4px 0 14px; }
+  #loadPanel:not(.compact) #ideaAgainBtn { display: none; }
+  @media (max-width: 760px) { .startgrid { grid-template-columns: 1fr; } }
+
+  /* ── Create from an idea ── */
+  #ideaDlg { width: min(1240px, 96vw); }
+  .idea-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 22px; }
+  .idea-col { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .idea-col h3 { margin: 0; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+  .idea-col h3 i { font-style: normal; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; background: var(--accent); color: #fff; }
+  #ideaText { min-height: 96px; resize: vertical; width: 100%; font: inherit; font-size: 14px; }
+  .idea-opts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 10px; }
+  .idea-opts label.field select { width: 100%; min-width: 0; }
+  .ai-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ai-btns button { font-weight: 600; }
+  .idea-note { font-size: 12.5px; color: var(--muted); min-height: 18px; }
+  .idea-note.ok { color: #15803d; } .idea-note.bad { color: var(--danger, #c42b1c); }
+  details.idea-prompt summary { cursor: pointer; font-size: 12.5px; color: var(--accent); }
+  details.idea-prompt pre { max-height: 220px; overflow: auto; white-space: pre-wrap; font-size: 11.5px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; margin: 6px 0 0; }
+  #ideaPaste { min-height: 150px; width: 100%; resize: vertical; font-family: ui-monospace, Consolas, monospace; font-size: 12.5px; }
+  .idea-sum { font-size: 13px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+  .idea-sum b { font-size: 14px; }
+  .idea-scenes { border: 1px solid var(--border); border-radius: 8px; max-height: 236px; overflow: auto; }
+  .idea-scenes .row { display: grid; grid-template-columns: 26px 86px minmax(0, 1fr) 52px; gap: 8px; align-items: center; padding: 6px 10px; font-size: 13px; border-bottom: 1px solid var(--border); }
+  .idea-scenes .row:last-child { border-bottom: 0; }
+  .idea-scenes .row .n { color: var(--muted); font-weight: 600; }
+  .idea-scenes .row .lay { font-size: 11px; font-weight: 650; padding: 2px 8px; border-radius: 99px; background: var(--accent-soft); color: var(--accent); justify-self: start; }
+  .idea-scenes .row .h { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .idea-scenes .row .s { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .idea-warn { margin: 0; padding-left: 18px; font-size: 12.5px; color: #b45309; }
+  .idea-warn:empty { display: none; }
+  .idea-check { font-size: 12.5px; color: var(--muted); }
+  @media (max-width: 900px) { .idea-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -1157,7 +1282,7 @@
 
 <main>
   <nav class="stepbar" id="stepBar" aria-label="Steps">
-    <a href="#loadPanel" data-step="1"><span class="layer-step">1</span><span><b>Choose file</b><small>Your PowerPoint .pptx</small></span></a>
+    <a href="#loadPanel" data-step="1"><span class="layer-step">1</span><span><b>Start</b><small>A PowerPoint or an idea</small></span></a>
     <i class="stepline"></i>
     <a href="#editor" data-step="2"><span class="layer-step">2</span><span><b>Design video</b><small>Narration, backgrounds, transitions</small></span></a>
     <i class="stepline"></i>
@@ -1166,28 +1291,41 @@
 
   <!-- 1. Load -->
   <section class="panel" id="loadPanel">
-    <h2 class="ttl"><span class="layer-step">1</span>Choose file</h2>
+    <h2 class="ttl"><span class="layer-step">1</span>Start<small class="h2sub">From your presentation, or from an idea your AI assistant writes</small></h2>
     <div class="filebar">
       <svg class="ic"><use href="#i-file"/></svg>
       <b id="fileName"></b>
       <span class="muted" id="fileMeta"></span>
       <span style="flex:1"></span>
+      <button id="ideaAgainBtn" class="sm" title="Make a new video from an idea, with your AI assistant"><svg class="ic"><use href="#i-spark"/></svg>New from an idea</button>
       <button id="changeFileBtn" class="sm" title="Open another PowerPoint file (or drop one here)"><svg class="ic"><use href="#i-down"/></svg>Change file</button>
     </div>
-    <div id="dropZone" tabindex="0"><strong>Click to choose</strong> or drag &amp; drop a PowerPoint (.pptx) file here</div>
+    <div class="startgrid" id="startGrid">
+      <div id="dropZone" class="startcard" tabindex="0" role="button">
+        <span class="sc-ic"><svg class="ic"><use href="#i-file"/></svg></span>
+        <b>Use your presentation</b>
+        <span>Drop a PowerPoint file here, or click to choose one</span>
+        <small>.pptx – also from Google Slides or Keynote (download / export as .pptx)</small>
+      </div>
+      <button type="button" class="startcard idea" id="ideaBtn">
+        <span class="sc-ic"><svg class="ic"><use href="#i-spark"/></svg></span>
+        <b>Create from an idea</b>
+        <span>Describe your video – your AI assistant writes it, DeckPersona makes the slides, the voice and the video</span>
+        <small class="ai-names">Claude · ChatGPT · Gemini · DeepSeek · Copilot · any assistant</small>
+      </button>
+    </div>
     <input type="file" id="fileInput" class="hidden-input" accept=".pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation">
     <div class="progress" id="progress"><div></div></div>
     <div class="status" id="status"></div>
   </section>
 
   <!-- 2. Slide editor -->
-  <section class="quickrow">
-    <div class="qr-text"><b>In a hurry?</b><span class="quicksub">Pick background videos and a voice – transitions, timing and narration are done for you.</span></div>
-    <button id="quickBtn" class="gloss g-white" title="In a hurry? Pick videos and a voice – transitions and timing are chosen for you"><svg class="ic"><use href="#i-bolt"/></svg>Create a quick video</button>
-  </section>
-
   <section class="panel" id="editor">
     <h2 class="ttl"><span class="layer-step">2</span>Design video<small class="h2sub">Narration, background video and transition for each slide</small></h2>
+    <div class="quickrow">
+      <div class="qr-text"><b>In a hurry?</b><span class="quicksub">Pick background videos and a voice – transitions, timing and narration are done for you.</span></div>
+      <button id="quickBtn" class="gloss g-white" title="In a hurry? Pick videos and a voice – transitions and timing are chosen for you"><svg class="ic"><use href="#i-bolt"/></svg>Create a quick video</button>
+    </div>
     <div id="info" class="muted" style="display:none"></div>
     <div class="editor">
       <!-- left: slides -->
@@ -1195,7 +1333,7 @@
 
       <!-- center: live canvas + narration -->
       <div class="center">
-        <div class="stage" id="stage"><canvas id="slideCanvas"></canvas><div class="stage-msg" id="stageMsg"></div><div class="stage-busy" id="stageBusy"><span class="spin"></span><span id="stageBusyText">Preparing preview…</span></div></div>
+        <div class="stage" id="stage"><canvas id="slideCanvas"></canvas><div class="av-ghost" id="avGhost"><svg viewBox="0 0 100 100"><circle cx="50" cy="34" r="19"/><path d="M8 100c2-26 20-40 42-40s40 14 42 40z"/></svg><span id="avGhostName">Avatar</span></div><div class="stage-msg" id="stageMsg"></div><div class="stage-busy" id="stageBusy"><span class="spin"></span><span id="stageBusyText">Preparing preview…</span></div></div>
         <div class="toolbar">
           <button id="prevBtn" class="icon-only" title="Previous slide"><svg class="ic"><use href="#i-left"/></svg></button>
           <span id="slideLabel">–</span>
@@ -1238,23 +1376,38 @@
         </div>
       </div>
 
-      <!-- right: background (top half) + AI avatar (bottom half) -->
-      <div class="side">
+      <!-- right: background (top half) + AI avatar (bottom half), together as tall as the slide -->
+      <div class="side fit" id="sideCol">
         <div class="side-card" id="bgCard">
           <div class="card-h">
             <b class="ttl"><span class="tic sm"><svg class="ic"><use href="#i-clapper"/></svg></span>Background video</b>
+            <span class="spacer"></span>
+            <button id="bgCurrent" class="sm" title="All videos, your own video, and how the slide sits on the video">More…</button>
           </div>
-          <button id="bgCurrent" class="bgcur" title="Choose a background video for this slide">
-            <div class="bgcur-thumb" id="bgCurThumb"></div>
-            <div class="bgcur-text"><b id="bgCurTitle">No background</b><em id="bgCurMode"></em><span>Change…</span></div>
-          </button>
+          <div class="sc-sub"><span id="bgCurThumb" hidden></span><b id="bgCurTitle">No background</b> <em id="bgCurMode"></em></div>
+          <input type="search" id="bgMiniSearch" class="sc-search" placeholder="Search videos, e.g. ocean, city…">
+          <div id="bgMiniLive"></div>
+          <div class="mini-grid" id="bgMini"></div>
         </div>
 
         <div class="side-card" id="avatarCard">
-          <div class="card-h"><b class="ttl"><span class="tic sm"><svg class="ic"><use href="#i-user"/></svg></span>AI avatar</b><span class="spacer"></span><span class="soon">Coming soon</span></div>
-          <div class="avatar-empty">
+          <div class="card-h"><b class="ttl"><span class="tic sm"><svg class="ic"><use href="#i-user"/></svg></span>AI avatar</b><span class="spacer"></span>
+            <select id="avStyle" class="av-style" title="How the presenter comes across in the whole presentation. Smiles in pauses, brows on questions and a warm close are added automatically from the narration; [smile] [serious] [surprised] in the text fine-tune a moment.">
+              <option value="friendly">Friendly</option><option value="enthusiastic">Enthusiastic</option><option value="neutral">Calm</option><option value="serious">Serious</option></select>
+            <button class="sm icon-only" id="avAll" title="This avatar, place and size on every slide with narration"><svg class="ic"><use href="#i-copy"/></svg></button>
+            <label class="switch" title="A talking presenter on this slide"><input type="checkbox" id="avOn"><span></span></label></div>
+          <div id="avBody">
+            <div class="av-state sc-sub" id="avState"></div>
+            <div class="mini-grid av-grid" id="avGrid"></div>
+            <div class="av-opts">
+              <span class="seg" id="avPlace"><button data-v="left" title="Bottom left">Left</button><button data-v="center" title="Bottom centre">Centre</button><button data-v="right" title="Bottom right">Right</button></span>
+              <label class="avsize" title="Height of the avatar, as a share of the video height"><input type="range" id="avSize" min="20" max="80" step="1" value="40"><span id="avSizeVal">40%</span></label>
+            </div>
+          </div>
+          <div class="avatar-empty" id="avWeb" hidden>
             <svg class="ic"><use href="#i-user"/></svg>
-            <div>A talking presenter over this slide's video will be added here.</div>
+            <div><b>AI avatars are made by the DeckPersona desktop app.</b><br>It reads your narration with a talking 3D presenter, using your PC's graphics card.
+              <br><a href="https://mlapplications.com/" target="_blank" rel="noopener" id="avGetApp">Get DeckPersona for Windows</a></div>
           </div>
         </div>
       </div>
@@ -1286,6 +1439,7 @@
             <div id="narrEditor">
               <div class="nhead"><span class="ttl ntitle"><span class="tic xs"><svg class="ic"><use href="#i-text"/></svg></span><b id="narrTitle">Slide 1</b></span><span class="nstat"></span></div>
               <div class="nedit"><div class="nhl"></div><textarea rows="2" placeholder="Type what should be said on this slide (or leave empty)."></textarea></div>
+              <div class="ntip" id="avTagTip" hidden>AI avatar: <code>[smile]</code> <code>[serious]</code> <code>[surprised]</code> anywhere in the text change the presenter's face at that moment – they are not spoken.</div>
               <div class="nbtns">
                 <button class="sm rec" title="Record your own voice for this slide"><svg class="ic f"><use href="#i-rec"/></svg><span>Record</span></button>
                 <button class="sm gen" title="Generate speech with the selected voice"><svg class="ic"><use href="#i-spark"/></svg>Generate</button>
@@ -1443,6 +1597,44 @@
     <div class="dlg-f"><span class="spacer"></span><button class="primary" data-close>Done</button></div>
   </dialog>
 
+  <dialog id="ideaDlg" class="dlg xwide">
+    <div class="dlg-h"><b class="ttl"><span class="tic sm"><svg class="ic"><use href="#i-spark"/></svg></span>Create from an idea</b>
+      <span class="muted">Your AI assistant writes the script – DeckPersona makes the slides, the voice and the video</span>
+      <button class="sm icon-only" data-close title="Close">✕</button></div>
+    <div class="dlg-b">
+      <div class="idea-grid">
+        <div class="idea-col">
+          <h3><i>1</i>Describe your video</h3>
+          <textarea id="ideaText" placeholder="For example: a 90-second video for my bakery in Marousi, launching a sourdough subscription, for local families. Our website is …"></textarea>
+          <div class="idea-opts">
+            <label class="field">Length
+              <select id="ideaLen"><option value="">Let the assistant decide</option><option value="about 1 minute">About 1 minute</option><option value="about 2 minutes" selected>About 2 minutes</option><option value="3 to 5 minutes">3 to 5 minutes</option></select></label>
+            <label class="field">Language
+              <select id="ideaLang"><option value="">Same as my description</option><option>English</option><option value="Greek">Ελληνικά (Greek)</option><option value="German">Deutsch</option><option value="French">Français</option><option value="Spanish">Español</option><option value="Italian">Italiano</option><option value="Portuguese">Português</option><option value="Dutch">Nederlands</option><option value="Polish">Polski</option><option value="Turkish">Türkçe</option></select></label>
+            <label class="field" id="ideaPresField">Presenter
+              <select id="ideaPres"><option value="friendly">Friendly</option><option value="enthusiastic">Enthusiastic</option><option value="calm">Calm</option><option value="serious">Serious</option><option value="off">No presenter</option></select></label>
+          </div>
+          <h3><i>2</i>Ask your AI assistant</h3>
+          <div class="muted" style="font-size:13px">Click your assistant: the prompt is copied and the assistant opens. Paste with <b>Ctrl+V</b> and send. It may ask a question or two first.</div>
+          <div class="ai-btns" id="aiBtns"></div>
+          <div class="idea-note" id="ideaCopyNote"></div>
+          <details class="idea-prompt"><summary>See the prompt (works in any assistant)</summary><pre id="ideaPromptText"></pre></details>
+        </div>
+        <div class="idea-col">
+          <h3><i>3</i>Paste the answer</h3>
+          <textarea id="ideaPaste" spellcheck="false" placeholder="Paste the assistant's answer here – the script that starts with DECKPERSONA SCRIPT 1. You can also drop a .txt file."></textarea>
+          <div class="idea-sum" id="ideaSum"></div>
+          <div class="idea-scenes" id="ideaScenes" hidden></div>
+          <ul class="idea-warn" id="ideaWarn"></ul>
+          <div class="idea-check" id="ideaCheck" hidden>Read it through before you create: assistants sometimes add details that are not true for you – prices, times, a website. Change them here, or ask the assistant.</div>
+        </div>
+      </div>
+    </div>
+    <div class="dlg-f"><span class="muted" id="ideaBusy"></span><span class="spacer"></span>
+      <button id="ideaPptx" disabled title="Only the PowerPoint file, to open in PowerPoint"><svg class="ic"><use href="#i-down"/></svg>Download PowerPoint</button>
+      <button id="ideaBuild" class="primary" disabled><svg class="ic"><use href="#i-spark"/></svg>Create the presentation</button></div>
+  </dialog>
+
   <dialog id="quickDlg" class="dlg wide qwiz">
     <div class="dlg-h"><b><svg class="ic" style="vertical-align:-3px;color:var(--accent)"><use href="#i-bolt"/></svg> Quick video</b>
       <span class="muted">A few steps – everything you choose is also set in the editor, so you can fine-tune it later</span>
@@ -1489,9 +1681,18 @@
         </div>
       </section>
       <section class="qstep" data-step="3">
-        <div class="avatar-empty" style="min-height:240px">
+        <div class="qav" id="qAv">
+          <div><p class="qlead">Pick a presenter who reads your narration – or <b>No avatar</b>.</p><div class="mini-grid av-grid" id="qAvGrid"></div></div>
+          <div class="qav-side">
+            <div><div class="qlbl">Where</div><span class="seg" id="qAvPlace"><button data-v="left">Left</button><button data-v="center">Centre</button><button data-v="right">Right</button></span></div>
+            <div><div class="qlbl">Size</div><label class="avsize"><input type="range" id="qAvSize" min="20" max="80" step="1" value="40"><span id="qAvSizeVal">40%</span></label></div>
+            <div><div class="qlbl">Presenter style</div><span class="seg" id="qAvStyle"><button data-v="friendly">Friendly</button><button data-v="enthusiastic">Enthusiastic</button><button data-v="neutral">Calm</button><button data-v="serious">Serious</button></span></div>
+            <div class="muted" id="qAvNote">The avatar appears on every slide that has narration and turns towards the slide. It smiles in the pauses, raises its brows on questions, greets on the first slide and closes warmly on the last – all from your narration.</div>
+          </div>
+        </div>
+        <div class="avatar-empty" id="qAvWeb" style="min-height:240px" hidden>
           <svg class="ic"><use href="#i-user"/></svg>
-          <div><b>AI avatar – coming soon.</b><br>A talking presenter over your slides. For now the video is made without one.</div>
+          <div><b>AI avatars are made by the DeckPersona desktop app.</b><br>In the browser the video is made without one.</div>
         </div>
       </section>
       <section class="qstep" data-step="4">
@@ -1584,6 +1785,9 @@
       </label>
       <label class="field">Pause before "on click" animations (s)
         <input type="number" id="clickGapSec" min="0" max="10" step="0.1" value="0.6">
+      </label>
+      <label class="field" title="Bullets and other on-click animations come in when the narration reaches them, instead of one after another at the start">"On click" animations follow the narration
+        <span class="s3check"><input type="checkbox" id="clickNarrChk" checked></span>
       </label>
       <label class="field">Default transition
         <select id="transitionSel"><option value="file">From the PPTX (fade if none)</option></select>
@@ -1757,12 +1961,39 @@
 
 <script type="module">
   import { PptxRenderer } from './pptxpackage/pptxsrc/index.js';
-  import { PptxVideo, parseSlideAnimations, webCodecsAvailable, loadMediabunny } from './pptxvideo/pptx-video.js';
+  import { PptxVideo, parseSlideAnimations, clickTargets, webCodecsAvailable, loadMediabunny } from './pptxvideo/pptx-video.js';
   import { TtsClient, cleanForSpeech, slideNotes, slideText } from './pptxvideo/tts.js';
+  import { parseScript, buildPrompt, ASSISTANTS } from './pptxvideo/dp-script.js';
   import { TransitionGL, GL_TRANSITIONS, sampleFrames } from './pptxvideo/transitions.js';
 
   const $ = (id) => document.getElementById(id);
   const icon = (n, f = false) => `<svg class="ic${f ? ' f' : ''}"><use href="#i-${n}"/></svg>`;
+
+  // ── The desktop app (DeckPersona for Windows) ────────────────────────────────────────────────
+  // In the app window the page is opened as ...?mode=desktop&wsport=N from the app's own local site, and talks to the
+  // app over ws://127.0.0.1:N. On the website nothing is contacted (no prompts for visitors); the app-only parts say so.
+  const APP = (() => {
+    const qs = new URLSearchParams(location.search);
+    const isDesktop = qs.get('mode') === 'desktop' && /^\d+$/.test(qs.get('wsport') || '');
+    const handlers = new Map();
+    let ws = null, connected = false, retry = 0, queue = [];
+    const emit = (type, payload) => (handlers.get(type) || []).forEach(h => { try { h(payload); } catch (e) { console.error(e); } });
+    function connect() {
+      if (!isDesktop) return;
+      ws = new WebSocket(`ws://127.0.0.1:${qs.get('wsport')}`);
+      ws.onopen = () => { connected = true; retry = 0; emit('_status', { state: 'connected' }); queue.splice(0).forEach(m => ws.send(m)); };
+      ws.onmessage = (ev) => { let m; try { m = JSON.parse(ev.data); } catch { return; } emit(m.type, m.payload); };
+      ws.onclose = () => { const was = connected; connected = false; ws = null; emit('_status', { state: was ? 'lost' : 'absent' }); setTimeout(connect, Math.min(8000, 500 * 2 ** retry++)); };
+      ws.onerror = () => {};
+    }
+    return {
+      isDesktop, origin: location.origin,
+      get connected() { return connected; },
+      on(type, h) { if (!handlers.has(type)) handlers.set(type, []); handlers.get(type).push(h); },
+      send(type, payload = {}) { if (!isDesktop) return; const m = JSON.stringify({ type, payload }); connected ? ws.send(m) : queue.push(m); },
+      start: connect,
+    };
+  })();
 
   // ── State ──────────────────────────────────────────────────────────────────
   // Every slide has its own settings: narration on/off + voice + text + audio, and background + mode.
@@ -1782,10 +2013,15 @@
   try { localStorage.removeItem('pptxPxProxy'); } catch {}
   let lastVideoUrl = null;
 
+  // the last avatar choice: new slides and "turn on" start from it
+  const avDefaults = { on: false, id: null, place: 'right', size: 40 };
+  const avDeck = { style: 'friendly', strength: 1 };          // presenter style of the whole presentation
   const newSlideState = (text = '') => ({
     narrOn: false, voice: null,                               // voice: { engine, lang, piperKey, speaker, kokoroVoice, kokoroQ, speed }
     text, buffer: null, kind: null, label: '', spokenText: '', voiceSig: '', marks: null,
     bg: null, mode: 'transparent', inset: 80, blend: 85,      // bg: { title, source (URL string | File), poster?, upload?, size? }
+    av: { ...avDefaults },                                    // AI avatar (desktop app): { on, id, place: left|center|right, size: % of height }
+    wavName: '', wavFor: null,                                // the narration as sent to the app (cache/narration/<hash>.wav) and the buffer it was made from
   });
 
   // ── Environment checks ─────────────────────────────────────────────────────
@@ -1868,7 +2104,12 @@
   loadPanel.addEventListener('drop', (e) => { if (e.target.closest('#dropZone')) return; const f = e.dataTransfer.files[0]; if (f && !job) loadFile(f); });
 
   async function loadFile(file) {
-    if (!/\.pptx$/i.test(file.name)) { setStatus('Please choose a .pptx file (old .ppt files are not supported).', true); return; }
+    if (!/\.pptx$/i.test(file.name)) {
+      setStatus(/\.ppt$/i.test(file.name) ? 'This is an old .ppt file: open it in PowerPoint and use Save As → PowerPoint Presentation (.pptx), then choose that.'
+        : /\.pdf$/i.test(file.name) ? 'PDF files are not supported yet – export the presentation as .pptx, or use Create from an idea.'
+        : 'Please choose a PowerPoint (.pptx) file.', true);
+      return;
+    }
     job?.abort(); slideJob?.abort();
     playerStop();
     stopLive();
@@ -2000,7 +2241,8 @@
     if (thumbSigOf(i) !== (thumbSig[i] ?? '')) queueThumb(i);
     const s = slides[i];
     b.innerHTML = (s.bg ? '<i class="on" title="Background video">▣</i>' : '') +
-      (s.narrOn ? `<i class="${s.buffer ? 'on' : ''}" title="${s.buffer ? 'Narration ready' : 'Narration on, no audio yet'}">♪</i>` : '');
+      (s.narrOn ? `<i class="${s.buffer ? 'on' : ''}" title="${s.buffer ? 'Narration ready' : 'Narration on, no audio yet'}">♪</i>` : '') +
+      (APP.isDesktop && s.av?.on ? `<i class="${s.buffer ? 'on' : ''}" title="AI avatar${s.buffer ? '' : ' – needs narration'}">☺</i>` : '');
   }
 
   // ── Slide selection ────────────────────────────────────────────────────────
@@ -2025,6 +2267,8 @@
 
     await loadNarrationUI();
     loadBgUI();
+    buildBgMini();
+    avLoadUI();
     refreshLive();
   }
 
@@ -2260,27 +2504,34 @@
   // ── Live search of all of Pixabay through the Worker (results join the gallery; 24 h cache on the Worker)
   const pxLiveDone = new Map();          // query -> Promise<number of new clips>
   let pxLiveTimer = 0;
+  /** One live Pixabay search through the Worker (each query once); its clips are added to the gallery. */
+  function pxQuery(q) {
+    q = (q || '').trim().toLowerCase();
+    if (!pxProxy() || q.length < 3) return Promise.resolve({ added: 0, total: 0 });
+    if (!pxLiveDone.has(q)) pxLiveDone.set(q, (async () => {
+      const r = await fetch(`${pxProxy()}/videos?q=${encodeURIComponent(q)}&per_page=200`, { credentials: 'omit' });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(d.error || `Proxy answered ${r.status}`);
+      let added = 0;
+      for (const x of d.items || []) {
+        if (!x?.i || !x.m || galleryByFile.has('px-' + x.i)) continue;
+        const v = { ...pxEntry(x), live: true };
+        gallery.push(v); galleryByFile.set(v.file, v); added++;
+      }
+      return { added, total: d.total || 0 };
+    })().catch((err) => { pxLiveDone.delete(q); throw err; }));
+    return pxLiveDone.get(q);
+  }
   function pxLiveSearch(q, rerender, statusEl) {
     q = (q || '').trim().toLowerCase();
     clearTimeout(pxLiveTimer);
     if (statusEl) statusEl.textContent = '';
     if (!pxProxy() || q.length < 3) return;
     pxLiveTimer = setTimeout(async () => {
-      if (!pxLiveDone.has(q)) pxLiveDone.set(q, (async () => {
-        const r = await fetch(`${pxProxy()}/videos?q=${encodeURIComponent(q)}&per_page=200`, { credentials: 'omit' });
-        const d = await r.json().catch(() => ({}));
-        if (!r.ok) throw new Error(d.error || `Proxy answered ${r.status}`);
-        let added = 0;
-        for (const x of d.items || []) {
-          if (!x?.i || !x.m || galleryByFile.has('px-' + x.i)) continue;
-          const v = { ...pxEntry(x), live: true };
-          gallery.push(v); galleryByFile.set(v.file, v); added++;
-        }
-        return { added, total: d.total || 0 };
-      })().catch((err) => { pxLiveDone.delete(q); throw err; }));
+      const p = pxQuery(q);
       if (statusEl) statusEl.textContent = 'Searching all of Pixabay…';
       try {
-        const { added, total } = await pxLiveDone.get(q);
+        const { added, total } = await p;
         if (statusEl) statusEl.textContent = total ? `Pixabay has ${total} clip${total === 1 ? '' : 's'} for "${q}"${added ? ` – ${added} added below` : ''}` : `No more clips for "${q}" on Pixabay`;
         if (added) rerender();
       } catch (err) { if (statusEl) statusEl.textContent = 'Pixabay search failed: ' + err.message; }
@@ -2405,6 +2656,7 @@
     th.style.backgroundImage = bg?.poster ? `url("${bg.poster}")` : '';
     th.textContent = !bg ? 'None' : bg.poster ? '' : bg.upload ? 'Your video' : 'Video';
     $('bgCurTitle').textContent = bg ? bg.title : 'No background';
+    markBgMini();
     $('bgCurMode').textContent = bg ? (bg.err ? '⚠ Download failed – pick it again or choose another' : ($('bgMode').selectedOptions[0]?.textContent || '')) : '';
     $('bgName').textContent = !bg ? 'No background on this slide'
       : bg.err ? '⚠ ' + bg.err
@@ -2899,7 +3151,8 @@
     });
     ed.querySelector('.clear').addEventListener('click', () => {
       if (player.key === current) playerStop();
-      Object.assign(slides[current], { buffer: null, kind: null, marks: null });
+      Object.assign(slides[current], { buffer: null, kind: null, marks: null, wavName: '', wavFor: null });
+      avStateLine();
       updateRow(current);
     });
   })();
@@ -3004,6 +3257,7 @@
       if (row) row.querySelector('.nstat').textContent = 'Preparing…';
       const { buf, label } = await speakText(text, n.voice, rep.onProgress);
       Object.assign(n, { buffer: buf, kind: 'tts', label, spokenText: text, voiceSig: voiceSig(n.voice), marks: rep.marks });
+      avSendNarration(slides.indexOf(n));
     } catch (err) {
       if (/Cancelled/.test(err?.message)) { setTtsStatus(`Slide ${i + 1}: generation cancelled.`); paintHL(i, []); throw err; }
       console.error(err);
@@ -3128,6 +3382,7 @@
         const raw = await new Blob(chunks, { type: micRec.mimeType }).arrayBuffer();
         const buf = trimSilence(await audioCtx().decodeAudioData(raw));
         Object.assign(slides[i], { buffer: buf, kind: 'rec', label: 'Your recording', marks: null });
+        avSendNarration(i);
       } catch (err) { setTtsStatus('Could not read the recording: ' + (err?.message || err), true); }
       updateNav();
       updateRow(i);
@@ -3320,6 +3575,610 @@
     applyBgFilter();
   }
 
+  // ── Background grid on the right of the slide (the full gallery stays in the "More…" pop-up) ──
+  let bgMiniSugg = { slide: -1, list: [] };
+  async function buildBgMini() {
+    const box = $('bgMini');
+    if (!box || !slides[current]) return;
+    const q = plain($('bgMiniSearch').value.trim()), qTerms = searchTerms(q);
+    let list;
+    if (q) list = bySearch(gallery.filter(v => searchHit(v, q, qTerms)), q);
+    else {
+      if (bgMiniSugg.slide !== current) {
+        const i = current;
+        try { bgMiniSugg = { slide: i, list: (await suggestFor(i)).map(x => x.v) }; } catch { bgMiniSugg = { slide: i, list: [] }; }
+        if (i !== current) return;
+      }
+      const seen = new Set(bgMiniSugg.list.map(v => v.file));
+      list = [...bgMiniSugg.list, ...gallery.filter(v => !v.live && !seen.has(v.file))];
+    }
+    const cards = [];
+    if (!q) cards.push(miniCard({ cls: 'none', html: 'No background', title: 'No background video on this slide', pick: () => setSlideBg(null) }));
+    for (const v of list.slice(0, 30)) cards.push(miniCard({
+      file: v.file, img: v.poster ? mediaUrl(v.poster) : null, label: v.title || v.file,
+      title: `${v.title || v.file}${v.credit?.user ? ' · by ' + v.credit.user + ' on Pixabay' : ''}`, pick: () => setSlideBg(bgFromEntry(v)),
+    }));
+    cards.push(miniCard({ cls: 'more', html: list.length > 30 ? `All ${list.length}…` : 'More…', title: 'All videos, your own video, and the slide-over-video options',
+      pick: () => { if (q) $('bgSearch').value = $('bgMiniSearch').value; $('bgCurrent').click(); } }));
+    box.replaceChildren(...cards);
+    if (q && !list.length) box.insertAdjacentHTML('afterbegin', '<div class="mg-empty">No videos match – searching Pixabay…</div>');
+    markBgMini();
+  }
+  function miniCard({ cls = '', file = '', img = null, label = '', html = '', title = '', pick }) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'mcard ' + cls;
+    b.title = title;
+    if (file) b.dataset.file = file;
+    if (img) { const im = new Image(); im.loading = 'lazy'; im.alt = ''; im.src = img; b.appendChild(im); }
+    if (label) { const s = document.createElement('span'); s.className = 'mt'; s.textContent = label; b.appendChild(s); }
+    if (html) b.insertAdjacentHTML('beforeend', html);
+    b.addEventListener('click', () => { if (!job) pick(); });
+    return b;
+  }
+  function markBgMini() {
+    const bg = slides[current]?.bg;
+    document.querySelectorAll('#bgMini .mcard').forEach(c =>
+      c.classList.toggle('selected', !bg ? c.classList.contains('none') : !!c.dataset.file && c.dataset.file === bg.file));
+  }
+  $('bgMiniSearch').addEventListener('input', () => {
+    buildBgMini();
+    pxLiveSearch($('bgMiniSearch').value, () => buildBgMini(), $('bgMiniLive'));
+  });
+
+  // the right column is exactly as tall as the slide preview: background and avatar get half each
+  const sideFit = () => {
+    const side = $('sideCol'), stage = $('stage');
+    if (!side || !stage) return;
+    side.style.height = side.offsetLeft > stage.offsetLeft + 20 ? stage.offsetHeight + 'px' : '';   // only side by side
+  };
+  new ResizeObserver(sideFit).observe($('stage'));
+  addEventListener('resize', sideFit);
+
+  // ── AI avatar (made by the desktop app: lip-sync → Unreal render → overlay) ──────────────────
+  // The page keeps the choices per slide (slides[i].av) and hands every narration to the app as a WAV as soon as it
+  // exists – the app lip-syncs it in the background, so making the video only needs the avatar render.
+  const AV = { list: [], remote: [], status: null, installing: new Map(), lip: new Map() };   // lip: wavName -> {state, frac, error}
+  const avPlaceName = { left: 'left', center: 'centre', right: 'right' };
+
+  function avFace(a, idx) {
+    // no preview picture yet: a coloured tile with a silhouette and the initials
+    const hues = [262, 199, 152, 24, 330, 45];
+    const h = hues[(idx >= 0 ? idx : 0) % hues.length];
+    return `<div class="av-face" style="background:linear-gradient(160deg,hsl(${h} 70% 62%),hsl(${h + 25} 65% 38%))">
+      <svg viewBox="0 0 100 100" fill="rgba(255,255,255,.88)"><circle cx="50" cy="36" r="18"/><path d="M14 100c2-24 17-37 36-37s34 13 36 37z"/></svg>
+      <b>${esc((a.name || '?').slice(0, 2).toUpperCase())}</b></div>`;
+  }
+  function avCard(a, idx, { selected, onPick }) {
+    const remote = !a.installedHere;
+    const prog = AV.installing.get(a.id);
+    const b = miniCard({ cls: (remote ? 'remote' : '') + (prog != null ? ' busy' : ''), label: a.name,
+      title: remote ? `${a.name} – download (${fmtSize(a.size || 0)})` : a.name, pick: () => onPick(a) });
+    b.dataset.id = a.id;
+    if (a.preview) { const im = new Image(); im.src = a.preview; im.alt = ''; b.prepend(im); }
+    else b.insertAdjacentHTML('afterbegin', avFace(a, idx));
+    if (remote) b.insertAdjacentHTML('beforeend', prog != null ? `<span class="av-dl">${Math.round(prog * 100)}%</span><span class="av-prog"><i style="width:${prog * 100}%"></i></span>`
+      : `<span class="av-dl" title="Download">↓ ${a.size ? Math.round(a.size / 1048576) + ' MB' : ''}</span>`);
+    b.classList.toggle('selected', !!selected);
+    return b;
+  }
+  /** installed avatars first, then the ones to download */
+  function avAll() {
+    const mine = AV.list.map(a => ({ ...a, installedHere: true }));
+    const have = new Set(mine.map(a => a.id.toLowerCase()));
+    return [...mine, ...AV.remote.filter(r => !have.has(r.id.toLowerCase())).map(r => ({ ...r, installedHere: false }))];
+  }
+  const avName = (id) => avAll().find(a => a.id === id)?.name || 'Avatar';
+  function avPickDefault() { return avDefaults.id && AV.list.some(a => a.id === avDefaults.id) ? avDefaults.id : AV.list[0]?.id || null; }
+
+  function avBuildGrid() {
+    const s = slides[current];
+    const all = avAll();
+    $('avGrid').replaceChildren(...all.map((a, i) => avCard(a, i, {
+      selected: s?.av?.on && s.av.id === a.id,
+      onPick: (a) => {
+        if (!a.installedHere) { avInstall(a); return; }
+        avSet({ on: true, id: a.id });
+      },
+    })));
+    if (!all.length) $('avGrid').innerHTML = `<div class="mg-empty">${AV.status && !AV.status.player ? 'The avatar renderer is missing from this app build.' : 'Loading avatars…'}</div>`;
+    if ($('qAvGrid')) avBuildQuickGrid();
+  }
+  function avInstall(a) {
+    if (AV.installing.has(a.id)) return;
+    AV.installing.set(a.id, 0);
+    avBuildGrid();
+    APP.send('avatarInstall', { id: a.id });
+  }
+
+  /** Change the current slide's avatar (and remember it as the default for the next slides). */
+  function avSet(patch) {
+    const s = slides[current];
+    if (!s) return;
+    s.av = { ...s.av, ...patch };
+    if (s.av.on && !s.av.id) s.av.id = avPickDefault();
+    Object.assign(avDefaults, { id: s.av.id, place: s.av.place, size: s.av.size });
+    if (s.av.on && s.buffer) avSendNarration(current);
+    avLoadUI();
+    updateThumbBadges(current);
+  }
+
+  function avLoadUI() {
+    const s = slides[current];
+    const desk = APP.isDesktop;
+    $('avBody').hidden = !desk;
+    $('avOn').closest('.switch').style.display = desk ? '' : 'none';
+    $('avAll').style.display = desk ? '' : 'none';
+    $('avStyle').style.display = desk ? '' : 'none';
+    $('avTagTip').hidden = !desk;
+    $('avWeb').hidden = desk;
+    avGhost();
+    if (!desk || !s) return;
+    $('avOn').checked = !!s.av.on;
+    $('avStyle').value = avDeck.style;
+    $('avatarCard').classList.toggle('off', !s.av.on);
+    document.querySelectorAll('#avPlace button').forEach(b => b.classList.toggle('on', b.dataset.v === s.av.place));
+    $('avSize').value = s.av.size; $('avSizeVal').textContent = s.av.size + '%';
+    avBuildGrid();
+    avStateLine();
+  }
+  function avStateLine() {
+    const s = slides[current], el = $('avState');
+    if (!s || !APP.isDesktop) return;
+    const set = (cls, text) => { el.innerHTML = `<span class="dot ${cls}"></span><span></span>`; el.lastChild.textContent = text; };
+    if (!APP.connected) return set('bad', 'Connecting to the app…');
+    if (AV.status && !AV.status.ready) return set('bad', !AV.status.player ? 'Avatar renderer missing' : !AV.status.lipSyncModels ? 'Lip-sync models missing' : 'ffmpeg missing');
+    if (!s.av.on) return set('', 'Off on this slide');
+    if (!s.narrOn || !s.buffer) return set('bad', 'Needs narration – the avatar reads it');
+    const l = AV.lip.get(s.wavName);
+    if (!l || l.state === 'sending') return set('work', 'Sending the narration…');
+    if (l.state === 'queued') return set('work', 'Lip-sync waiting…');
+    if (l.state === 'working') return set('work', `Lip-sync ${Math.round((l.frac || 0) * 100)}%`);
+    if (l.state === 'failed') return set('bad', 'Lip-sync failed: ' + (l.error || ''));
+    return set('ok', `Lip-sync ready · ${avName(s.av.id)}, ${avPlaceName[s.av.place]}, ${$('avStyle').selectedOptions[0]?.textContent.toLowerCase() || ''}`);
+  }
+  /** Where the avatar will stand, drawn on the slide preview (same margin and size as the final video). */
+  function avGhost() {
+    const s = slides[current], g = $('avGhost');
+    const on = APP.isDesktop && !!s?.av?.on;
+    g.classList.toggle('on', on);
+    if (!on) return;
+    g.style.height = s.av.size + '%';
+    const m = (40 / 1920 * 100).toFixed(3) + '%';
+    g.style.left = s.av.place === 'left' ? m : s.av.place === 'center' ? '50%' : '';
+    g.style.right = s.av.place === 'right' ? m : '';
+    g.style.transform = s.av.place === 'center' ? 'translateX(-50%)' : '';
+    $('avGhostName').textContent = avName(s.av.id);
+  }
+
+  $('avStyle').addEventListener('change', () => { avDeck.style = $('avStyle').value; qAv.style = avDeck.style; avStateLine(); });
+  $('avOn').addEventListener('change', () => avSet({ on: $('avOn').checked }));
+  $('avPlace').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) avSet({ place: b.dataset.v }); });
+  $('avSize').addEventListener('input', () => { $('avSizeVal').textContent = $('avSize').value + '%'; avSet({ size: +$('avSize').value }); });
+  $('avAll').addEventListener('click', () => {
+    const s = slides[current];
+    if (!s) return;
+    const id = s.av.id || avPickDefault();
+    let n = 0;
+    slides.forEach((t, i) => {
+      if (!(t.narrOn || t === s)) return;
+      t.av = { on: true, id, place: s.av.place, size: s.av.size }; n++;
+      updateThumbBadges(i);
+      if (t.buffer) avSendNarration(i);
+    });
+    avLoadUI();
+    const b = $('avAll');
+    b.title = `Set on ${n} slide${n === 1 ? '' : 's'}`; b.classList.add('primary');
+    setTimeout(() => { b.classList.remove('primary'); b.title = 'This avatar, place and size on every slide with narration'; }, 1500);
+  });
+
+  // ── narration → app (WAV) → background lip-sync ──
+  /** 16-bit mono WAV of an AudioBuffer (what the page plays is exactly what the avatar lip-syncs). */
+  function wavOf(buf) {
+    const n = buf.length, rate = buf.sampleRate, ch = buf.numberOfChannels;
+    const out = new DataView(new ArrayBuffer(44 + n * 2));
+    const str = (o, s) => { for (let k = 0; k < s.length; k++) out.setUint8(o + k, s.charCodeAt(k)); };
+    str(0, 'RIFF'); out.setUint32(4, 36 + n * 2, true); str(8, 'WAVE'); str(12, 'fmt ');
+    out.setUint32(16, 16, true); out.setUint16(20, 1, true); out.setUint16(22, 1, true);
+    out.setUint32(24, rate, true); out.setUint32(28, rate * 2, true); out.setUint16(32, 2, true); out.setUint16(34, 16, true);
+    str(36, 'data'); out.setUint32(40, n * 2, true);
+    const data = [...Array(ch).keys()].map(c => buf.getChannelData(c));
+    for (let k = 0; k < n; k++) {
+      let v = 0;
+      for (let c = 0; c < ch; c++) v += data[c][k];
+      v = Math.max(-1, Math.min(1, v / ch));
+      out.setInt16(44 + k * 2, v < 0 ? v * 0x8000 : v * 0x7fff, true);
+    }
+    return out.buffer;
+  }
+  /** Put a file into the app's library (cache/...); returns the name the app knows it by. */
+  async function appUpload(rel, body, type) {
+    const r = await fetch(`${APP.origin}/library/cache/${rel}`, { method: 'PUT', body, headers: { 'content-type': type } });
+    if (!r.ok) throw new Error(`The app did not take the file (${r.status}).`);
+    return (await r.json()).file;
+  }
+  /** Slide i has new (or first) narration audio: send it to the app and start its lip-sync. Every narration goes,
+   *  so turning the avatar on later costs nothing. Same audio = same name, so nothing is sent or made twice. */
+  async function avSendNarration(i) {
+    const s = slides[i];
+    if (!APP.isDesktop || !s?.buffer || s.wavFor === s.buffer) return;
+    const buf = s.buffer;
+    s.wavFor = buf;
+    try {
+      const wav = wavOf(buf);
+      const hash = [...new Uint8Array(await crypto.subtle.digest('SHA-256', wav))].slice(0, 10).map(x => x.toString(16).padStart(2, '0')).join('');
+      const name = `cache/narration/${hash}.wav`;
+      if (s.buffer !== buf) return;                           // changed meanwhile – that call sends the new one
+      s.wavName = name;
+      if (!AV.lip.has(name)) {
+        AV.lip.set(name, { state: 'sending' });
+        if (i === current) avStateLine();
+        await appUpload(`narration/${hash}.wav`, wav, 'audio/wav');
+      }
+      APP.send('avatarLipSync', { wav: name });
+    } catch (err) {
+      s.wavFor = null;
+      if (s.wavName) AV.lip.set(s.wavName, { state: 'failed', error: err.message });
+      console.warn('Narration to app:', err);
+    }
+    if (i === current) avStateLine();
+  }
+  const avSendAll = () => slides.forEach((s, i) => { if (s.buffer) avSendNarration(i); });
+
+  // app events
+  APP.on('_status', (st) => {
+    if (st.state === 'connected') {
+      APP.send('avatarStatus'); APP.send('avatarList'); APP.send('avatarRemoteList');
+      slides.forEach(s => { s.wavFor = null; });               // re-check everything with the app (it may have restarted)
+      avSendAll();
+    }
+    avStateLine();
+  });
+  APP.on('avatarStatus', (st) => { AV.status = st; avStateLine(); });
+  APP.on('avatarList', (l) => {
+    AV.list = l.items || [];
+    for (const a of AV.list) AV.installing.delete(a.id);
+    if (!avDefaults.id) avDefaults.id = AV.list[0]?.id || null;
+    avLoadUI();
+  });
+  APP.on('avatarRemoteList', (l) => { AV.remote = l.items || []; avBuildGrid(); });
+  APP.on('avatarProgress', (p) => {
+    if (p.stage === 'install' && p.id) { AV.installing.set(p.id, p.frac); avBuildGrid(); }
+    if (R.avatar && p.stage !== 'install') R.avatar.progress(p);
+  });
+  APP.on('avatarInstalled', (a) => { AV.installing.delete(a.id); APP.send('avatarRemoteList'); });
+  APP.on('avatarLipSync', (l) => {
+    AV.lip.set(l.wav, l);
+    if (slides[current]?.wavName === l.wav) avStateLine();
+    if (l.state === 'ready' || l.state === 'failed') slides.forEach((s, i) => { if (s.wavName === l.wav) updateThumbBadges(i); });
+  });
+  APP.on('avatarDone', (d) => R.avatar?.done(d));
+  APP.on('avatarFailed', (f) => {
+    if (f.job === 'install') { AV.installing.delete(f.id); avBuildGrid(); setStatus('Avatar download failed: ' + f.message, true); }
+    else R.avatar?.fail(f);
+  });
+
+
+  // ── the presenter's expressions, from the narration text ──
+  // The app adds smiles in the pauses by itself (from the audio). From the text come the moments that need meaning:
+  // questions (brows), exclamations, a greeting on the first narrated slide, thanks, a warm close on the last one,
+  // and the [smile] [serious] [surprised] [neutral] tags. Times are seconds from the start of the speech.
+  const AV_TAG = /\[(smile|happy|serious|surprised|neutral)\]/gi;
+  const AV_THANKS = /\b(thank|thanks|grazie|merci|danke|gracias|obrigad)|ευχαριστ/i;
+  function avCues(i, { first = false, last = false } = {}) {
+    const s = slides[i], dur = s.buffer?.duration || 0;
+    if (!dur) return [];
+    const raw = s.text || '';
+    const cues = [];
+    // char position in the raw text -> time: from the sentence timings of generated speech, else in proportion
+    const timeAt = (pos) => {
+      const m = (s.kind === 'tts' && s.marks) ? s.marks.find(x => x && pos >= x.start && pos <= x.end) : null;
+      if (m) return m.t0 + (m.t1 - m.t0) * (pos - m.start) / Math.max(1, m.end - m.start);
+      return dur * Math.min(1, pos / Math.max(1, raw.length));
+    };
+    if (first) cues.push({ t: 0, kind: 'greet' });
+    if (s.kind === 'tts' || s.kind === 'rec') {
+      const greek = /[Ͱ-Ͽ]/.test(raw);
+      for (const m of raw.matchAll(/[^.!?;\n]+([.!?;]+|\n|$)/g)) {
+        const text = m[0].trim(), end = m.index + m[0].length;
+        if (!text.replace(AV_TAG, '').trim()) continue;
+        const p = m[1] || '';
+        if (p.includes('?') || (greek && p.includes(';'))) cues.push({ t: timeAt(end), kind: 'question' });
+        else if (p.includes('!')) cues.push({ t: timeAt(end), kind: 'exclaim' });
+        if (AV_THANKS.test(text)) cues.push({ t: timeAt(end), kind: 'thanks' });
+      }
+    }
+    for (const m of raw.matchAll(AV_TAG)) {
+      const kind = m[1].toLowerCase() === 'happy' ? 'smile' : m[1].toLowerCase();
+      const rest = raw.slice(m.index + m[0].length), stop = rest.search(/[.!?;\n]/);
+      cues.push({ t: timeAt(m.index), kind, until: timeAt(m.index + m[0].length + (stop < 0 ? rest.length : stop + 1)) });
+    }
+    if (last) cues.push({ t: dur, kind: 'closing' });
+    return cues.filter(c => isFinite(c.t)).map(c => ({ ...c, t: Math.round(c.t * 100) / 100, ...(c.until ? { until: Math.round(c.until * 100) / 100 } : {}) }));
+  }
+  /** Slides that get an avatar in the video being made. */
+  const avWanted = () => APP.isDesktop && APP.connected && AV.status?.ready && slides.some(s => s.av?.on && s.narrOn && s.buffer);
+
+  /** After the slides video is made: hand it to the app, which adds the avatar to every slide that has one. */
+  async function avAddToVideo(blob, ext, signal) {
+    const plan = lastPlan;
+    const items = [];
+    const narrated = plan.segs.filter(g => g.at != null && slides[g.i]?.buffer).map(g => g.i);
+    for (const g of plan.segs) {
+      const s = slides[g.i];
+      if (!s?.av?.on || g.at == null || !s.buffer) continue;
+      await avSendNarration(g.i);
+      if (!s.wavName) throw new Error(`The narration of slide ${g.i + 1} could not be given to the app.`);
+      items.push({ wav: s.wavName, at: g.at / 1000, avatar: s.av.id, placement: s.av.place, heightPercent: s.av.size,
+        cues: avCues(g.i, { first: g.i === narrated[0], last: g.i === narrated[narrated.length - 1] }) });
+    }
+    if (!items.length) return null;
+    rProg(0, 'Giving the video to the app…', '');
+    const video = await appUpload(`exports/${Date.now()}_${(fileBaseName || 'video').replace(/[^\w\- ]+/g, '').slice(0, 60) || 'video'}.${ext}`, blob, blob.type || 'video/mp4');
+    const result = new Promise((resolve, reject) => {
+      const stages = { lipsync: [0, 0.1, 'Lip-sync'], render: [0.1, 0.85, 'Rendering the avatar'], compose: [0.85, 1, 'Putting the avatar on the video'] };
+      R.avatar = {
+        progress: (p) => { const st = stages[p.stage]; if (st) rProg(st[0] + (st[1] - st[0]) * p.frac, st[2] + '…', p.text); },
+        done: (d) => { R.avatar = null; resolve(d); },
+        fail: (f) => { R.avatar = null; reject(new Error(f.cancelled ? 'Cancelled.' : f.message)); },
+      };
+      signal?.addEventListener('abort', () => APP.send('avatarCancel'), { once: true });
+    });
+    APP.send('avatarRender', { video, avatar: items[0].avatar, placement: items[0].placement, heightPercent: items[0].heightPercent, style: avDeck.style, strength: avDeck.strength, slides: items, addNarration: false });
+    const d = await result;
+    const out = await fetch(APP.origin + d.url).then(r => r.blob());
+    return { blob: out, name: d.name, file: d.file };
+  }
+
+  // quick wizard: one avatar for the whole deck
+  const qAv = { id: null, place: 'right', size: 40, chosen: false, style: 'friendly' };
+  function avBuildQuickGrid() {
+    const desk = APP.isDesktop;
+    $('qAv').hidden = !desk; $('qAvWeb').hidden = desk;
+    if (!desk) return;
+    if (!qAv.chosen && !qAv.id) qAv.id = slides.find(s => s.av?.on)?.av.id || avPickDefault();
+    const none = miniCard({ cls: 'none' + (qAv.id ? '' : ' selected'), html: 'No avatar', title: 'Make the video without an avatar', pick: () => { qAv.id = null; qAv.chosen = true; avBuildQuickGrid(); } });
+    $('qAvGrid').replaceChildren(none, ...avAll().map((a, i) => avCard(a, i, {
+      selected: qAv.id === a.id,
+      onPick: (a) => { if (!a.installedHere) return avInstall(a); qAv.id = a.id; qAv.chosen = true; avBuildQuickGrid(); },
+    })));
+    document.querySelectorAll('#qAvPlace button').forEach(b => b.classList.toggle('on', b.dataset.v === qAv.place));
+    document.querySelectorAll('#qAvStyle button').forEach(b => b.classList.toggle('on', b.dataset.v === qAv.style));
+    $('qAvSize').value = qAv.size; $('qAvSizeVal').textContent = qAv.size + '%';
+  }
+  $('qAvPlace').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { qAv.place = b.dataset.v; avBuildQuickGrid(); } });
+  $('qAvStyle').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { qAv.style = b.dataset.v; avBuildQuickGrid(); } });
+  $('qAvSize').addEventListener('input', () => { qAv.size = +$('qAvSize').value; $('qAvSizeVal').textContent = qAv.size + '%'; });
+  /** The wizard's choice onto every slide (called when the video is created). */
+  function applyQuickAvatar() {
+    if (!APP.isDesktop || !qAv.chosen && !slides.some(s => s.av?.on) && !qAv.id) return;
+    slides.forEach((s, i) => { s.av = { on: !!qAv.id, id: qAv.id, place: qAv.place, size: qAv.size }; updateThumbBadges(i); });
+    if (qAv.id) Object.assign(avDefaults, { id: qAv.id, place: qAv.place, size: qAv.size });
+    avDeck.style = qAv.style;
+    avLoadUI();
+  }
+  const qAvSummary = () => !APP.isDesktop ? 'Made in the DeckPersona desktop app'
+    : !qAv.id ? 'None' : `${avName(qAv.id)} – ${avPlaceName[qAv.place]}, ${qAv.size}% of the height, ${({ friendly: 'friendly', enthusiastic: 'enthusiastic', neutral: 'calm', serious: 'serious' })[qAv.style]}, on every slide with narration`;
+
+  APP.start();
+  avLoadUI();
+
+  // ── Create from an idea: any AI assistant writes a DeckPersona script, we build a PowerPoint from it ──
+  const idea = { script: null, building: false };
+  const ideaOpts = () => {
+    const pres = $('ideaPres').value;
+    return { request: $('ideaText').value, length: $('ideaLen').value, language: $('ideaLang').value,
+      presenter: APP.isDesktop ? pres !== 'off' : false, style: pres === 'off' ? '' : pres, place: avDefaults.place || 'right' };
+  };
+  const ideaPrompt = () => buildPrompt(ideaOpts());
+  function openIdea() {
+    if (job || quick.running) return;
+    $('ideaPresField').style.display = APP.isDesktop ? '' : 'none';
+    $('ideaPromptText').textContent = ideaPrompt();
+    $('ideaCopyNote').textContent = ''; $('ideaCopyNote').className = 'idea-note';
+    ideaParse();
+    $('ideaDlg').showModal();
+    if (!$('ideaText').value) $('ideaText').focus();
+  }
+  $('ideaBtn').addEventListener('click', openIdea);
+  $('ideaAgainBtn').addEventListener('click', openIdea);
+  for (const id of ['ideaText', 'ideaLen', 'ideaLang', 'ideaPres']) $(id).addEventListener('input', () => { $('ideaPromptText').textContent = ideaPrompt(); });
+
+  async function copyText(text) {
+    try { await navigator.clipboard.writeText(text); return true; }
+    catch {
+      const ta = Object.assign(document.createElement('textarea'), { value: text });
+      ta.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(ta); ta.select();
+      const ok = document.execCommand('copy'); ta.remove(); return ok;
+    }
+  }
+  for (const a of [...ASSISTANTS, { id: 'copy', name: 'Copy the prompt only' }]) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = a.id === 'copy' ? 'sm' : 'sm primary';
+    b.innerHTML = a.id === 'copy' ? `${icon('copy')}${a.name}` : esc(a.name);
+    b.title = a.url ? `Copies the prompt and opens ${a.name}` : 'Copies the prompt – paste it into any assistant';
+    b.addEventListener('click', async () => {
+      if (!$('ideaText').value.trim()) { $('ideaCopyNote').className = 'idea-note bad'; $('ideaCopyNote').textContent = 'Describe your video first (step 1) – it goes into the prompt.'; $('ideaText').focus(); return; }
+      const ok = await copyText(ideaPrompt());
+      $('ideaCopyNote').className = 'idea-note ' + (ok ? 'ok' : 'bad');
+      $('ideaCopyNote').textContent = ok ? (a.url ? `Copied. In ${a.name}: Ctrl+V, send, then copy its answer and paste it in step 3.` : 'Copied – paste it into your assistant with Ctrl+V.')
+        : 'Could not copy – open "See the prompt" and copy it by hand.';
+      if (a.url) window.open(a.url, '_blank', 'noopener');   // in the app this opens your browser
+    });
+    $('aiBtns').appendChild(b);
+  }
+
+  function ideaParse() {
+    const text = $('ideaPaste').value;
+    const r = text.trim() ? parseScript(text) : null;
+    idea.script = r?.ok ? r : null;
+    $('ideaBuild').disabled = $('ideaPptx').disabled = !idea.script || idea.building;
+    $('ideaScenes').hidden = !idea.script;
+    $('ideaCheck').hidden = !idea.script;
+    $('ideaWarn').innerHTML = (r?.warnings || []).map(w => `<li>${esc(w)}</li>`).join('');
+    if (!r) { $('ideaSum').innerHTML = ''; return; }
+    if (!r.ok) { $('ideaSum').innerHTML = '<span class="muted">No script found yet.</span>'; return; }
+    const h = r.header;
+    $('ideaSum').innerHTML = `<b>${esc(h.title)}</b><span>${r.scenes.length} slides</span><span>about ${fmtTime(r.seconds)}</span>` +
+      `<span>${esc(h.language.toUpperCase())} · ${h.voice} voice</span>` +
+      (APP.isDesktop ? `<span>${h.presenter ? `presenter: ${({ neutral: 'calm' })[h.presenter_style] || h.presenter_style}, ${({ center: 'centre' })[h.presenter_position] || h.presenter_position}` : 'no presenter'}</span>` : '') +
+      `<span>${h.theme} theme${h.accent ? ` <i style="display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:-1px;background:${esc(h.accent)}"></i>` : ''}</span>`;
+    $('ideaScenes').innerHTML = r.scenes.map((s, k) => `<div class="row"><span class="n">${k + 1}</span><span class="lay">${esc(s.layout)}</span>` +
+      `<span class="h" title="${esc(s.say)}">${esc(s.heading || s.quote || '–')}</span><span class="s">${s.words ? s.seconds + ' s' : '–'}</span></div>`).join('');
+  }
+  $('ideaPaste').addEventListener('input', ideaParse);
+  $('ideaPaste').addEventListener('dragover', (e) => e.preventDefault());
+  $('ideaPaste').addEventListener('drop', async (e) => {
+    const f = e.dataTransfer.files[0];
+    if (!f) return;
+    e.preventDefault();
+    $('ideaPaste').value = await f.text();
+    ideaParse();
+  });
+
+  /** The best clip for a slide's keywords: the site list plus a live Pixabay search, never the same clip twice. */
+  async function pickBackground(keywords, used) {
+    const q = plain((keywords || '').trim());
+    if (!q) return null;
+    if (!gallery.length) await buildGallery();
+    try { await pxQuery(q); } catch {}
+    const terms = searchTerms(q);
+    const list = bySearch(gallery.filter(v => searchHit(v, q, terms)), q);
+    const v = list.find(x => !used.has(x.file)) || list[0];
+    if (v) used.add(v.file);
+    return v || null;
+  }
+
+  /** A voice for the script's language and gender: the user's own voice when it already speaks that language. */
+  async function scriptVoice(lang, gender) {
+    const base = await initialVoice();
+    if (lang === 'en' && base.engine === 'kokoro') return { ...base, kokoroVoice: gender === 'male' ? 'am_michael' : (base.kokoroVoice?.[1] === 'f' ? base.kokoroVoice : 'af_heart') };
+    const list = await tts.piperVoices();
+    const cands = list.filter(v => v.language.code.toLowerCase().startsWith(lang));
+    if (!cands.length) return base;
+    const g = (v) => (v.gender || '').toLowerCase().startsWith(gender === 'male' ? 'm' : 'f') ? 1 : 0;
+    const pref = (navigator.language || '').replace('-', '_').toLowerCase();
+    const q = { medium: 0, high: 1, low: 2, x_low: 3 };
+    cands.sort((a, b) => g(b) - g(a) || (b.language.code.toLowerCase() === pref) - (a.language.code.toLowerCase() === pref) || (q[a.quality] ?? 9) - (q[b.quality] ?? 9));
+    const own = base.engine === 'piper' && base.lang?.toLowerCase().startsWith(lang) && cands.find(v => v.key === base.piperKey);
+    const v = own && g(own) ? own : cands[0];
+    return { engine: 'piper', lang: v.language.code, piperKey: v.key, speaker: 0, kokoroVoice: base.kokoroVoice || 'af_heart', kokoroQ: base.kokoroQ || 'auto', speed: base.speed || 1 };
+  }
+
+  async function ideaMakeDeck() {
+    const { buildDeck } = await import('./pptxvideo/dp-deck.js');
+    return buildDeck(idea.script);
+  }
+  $('ideaPptx').addEventListener('click', async () => {
+    if (!idea.script) return;
+    try { const { blob, name } = await ideaMakeDeck(); downloadBlob(blob, name); }
+    catch (err) { $('ideaBusy').textContent = '⚠ ' + (err?.message || err); }
+  });
+
+  $('ideaBuild').addEventListener('click', async () => {
+    const sc = idea.script;
+    if (!sc || idea.building) return;
+    idea.building = true; ideaParse();
+    try {
+      $('ideaBusy').textContent = 'Building the slides…';
+      const { blob, name } = await ideaMakeDeck();
+      $('ideaDlg').close();
+      await loadFile(new File([blob], name, { type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' }));
+      if (!renderer || slides.length !== sc.scenes.length) return;
+      await applyScript(sc);
+    } catch (err) {
+      console.error(err);
+      setStatus('Could not build the presentation: ' + (err?.message || err), true);
+    } finally {
+      idea.building = false; $('ideaBusy').textContent = ''; ideaParse();
+    }
+  });
+
+  /** Everything the script says about each slide: narration, voice, presenter, background – then voice it all. */
+  async function applyScript(sc) {
+    const h = sc.header;
+    setStatus('Setting up narration, presenter and backgrounds…');
+    const voice = await scriptVoice(h.language, h.voice);
+    defaultVoice = { ...voice };
+    if (APP.isDesktop) {
+      avDeck.style = h.presenter_style;
+      if (avPickDefault()) Object.assign(avDefaults, { id: avPickDefault() });
+    }
+    sc.scenes.forEach((scene, i) => {
+      const s = slides[i];
+      s.narrOn = !!scene.say;
+      s.voice = { ...voice };
+      s.av = { on: APP.isDesktop && scene.presenterOn && !!scene.say, id: avDefaults.id || avPickDefault(), place: scene.place, size: avDefaults.size || 40 };
+      updateThumbBadges(i);
+    });
+    await writeVoiceControls(voice);
+    updateVoiceChip();
+    await loadNarrationUI(); avLoadUI(); refreshLive();
+    // backgrounds: one search per slide, in order, each clip used once
+    const used = new Set();
+    for (let i = 0; i < sc.scenes.length; i++) {
+      setStatus(`Finding background videos… ${i + 1}/${sc.scenes.length}`);
+      const v = await pickBackground(sc.scenes[i].background, used).catch(() => null);
+      if (v) { slides[i].bg = bgFromEntry(v); slides[i].mode = 'transparent'; updateThumbBadges(i); }
+    }
+    loadBgUI(); buildBgMini(); refreshLive();
+    if (slides.some(s => s.bg?.px && !s.bg.source))
+      ensureBackgrounds().then(() => { loadBgUI(); refreshLive(); slides.forEach((_, k) => updateThumbBadges(k)); }).catch(() => {});
+    setStatus(`“${h.title}” is ready to edit – the narration is being generated now. Change anything you like, then Create video.`);
+    $('editor').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    generateWholeDeck(voice);
+  }
+
+
+  // ── "On click" animations timed to the narration ──
+  // Each click group (a bullet, a step, a number card …) comes in when the narration gets to it: its words are looked
+  // for in the narration, in order; what can't be found is spread between its neighbours. Times are seconds from the
+  // start of the speech, from the voice's sentence timings when there are some, else in proportion to the text.
+  function narrationClickTimes(i) {
+    const s = slides[i];
+    if (!renderer || !s?.narrOn || !s.buffer) return null;
+    let targets;
+    try { targets = clickTargets(renderer, i); } catch { return null; }
+    const clickIdx = targets.map((g, k) => g.click ? k : -1).filter(k => k >= 0);
+    if (!clickIdx.length) return null;
+    const raw = s.text || '', dur = s.buffer.duration;
+    const stem = (w) => w.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').slice(0, 5);
+    const words = [...raw.matchAll(/[\p{L}\p{N}]{4,}/gu)].map(m => ({ st: stem(m[0]), pos: m.index }));
+    const timeAt = (pos) => {
+      const m = (s.kind === 'tts' && s.marks) ? s.marks.find(x => x && pos >= x.start && pos <= x.end) : null;
+      if (m) return m.t0 + (m.t1 - m.t0) * (pos - m.start) / Math.max(1, m.end - m.start);
+      return dur * Math.min(1, pos / Math.max(1, raw.length));
+    };
+    // find each group's words in the narration, in order
+    let from = 0;
+    const at = clickIdx.map((k) => {
+      const want = new Set((targets[k].text.match(/[\p{L}\p{N}]{4,}/gu) || []).map(stem));
+      if (!want.size) return null;
+      const need = Math.min(2, want.size);
+      for (let j = from; j < words.length; j++) {
+        if (!want.has(words[j].st)) continue;
+        const seen = new Set(words.slice(j, j + 12).map(w => w.st).filter(x => want.has(x)));
+        if (seen.size >= need) { from = j + 1; return Math.max(0, timeAt(words[j].pos) - 0.3); }
+      }
+      return null;
+    });
+    // fill the gaps: evenly between found neighbours (or over the whole narration when nothing was found)
+    const n = at.length, found = at.slice(), s0 = dur * 0.06, s1 = dur * 0.85;
+    for (let k = 0; k < n; k++) {
+      if (found[k] != null) continue;
+      let a = k - 1; while (a >= 0 && found[a] == null) a--;
+      let b = k + 1; while (b < n && found[b] == null) b++;
+      at[k] = a >= 0 && b < n ? found[a] + (found[b] - found[a]) * (k - a) / (b - a)
+        : b < n ? s0 + (found[b] - s0) * k / b
+        : a >= 0 ? found[a] + (s1 - found[a]) * (k - a) / (n - a)
+        : s0 + (s1 - s0) * k / Math.max(1, n);
+    }
+    for (let k = 1; k < n; k++) at[k] = Math.max(at[k], at[k - 1] + 0.4);
+    const out = targets.map(() => null);
+    clickIdx.forEach((k, j) => { out[k] = Math.round(at[j] * 1000); });
+    return out;
+  }
   // ── Pop-up dialogs ──────────────────────────────────────────────────────────
   document.querySelectorAll('dialog.dlg').forEach(d => {
     d.addEventListener('click', (e) => {
@@ -3837,6 +4696,7 @@ ${parts.join('\n\n')}
     else if (grid.parentElement === $('qVoiceHost')) $('voiceDlg').querySelector('.dlg-b').prepend(grid);
     $('qNarrOn').style.display = qNarrate() ? '' : 'none';
     if (n === 1) { buildQuickSlides(); buildQuickGallery(); }
+    if (n === 3) avBuildQuickGrid();
     if (n === 4) buildQuickSummary();
     updateQuickHint();
   }
@@ -4024,7 +4884,7 @@ ${parts.join('\n\n')}
       row('film', 'Background videos', nBg ? `${nBg} of ${slides.length} slides have a video, shown through the slide` : 'None – the slides keep their own backgrounds') +
       row('mic', 'Narration', narr ? `${($('voiceBtn')?.textContent || '').trim() || (v.engine === 'kokoro' ? 'Kokoro' : 'Piper')} · ${ready ? ready + ' slide' + (ready === 1 ? '' : 's') + ' already voiced, the rest is done now' : 'generated when the video is made'}` : 'Off – each slide shows for a fixed time') +
       row('layers', 'Transitions', 'A different animated transition between every two slides – change any of them in the editor') +
-      row('user', 'AI avatar', 'Coming soon') +
+      row('user', 'AI avatar', qAvSummary()) +
       `<p class="qlead" style="margin-top:14px">Press <b>Create the video</b>. You can close the progress window and keep working – step 3 shows how far it is.</p>`;
   }
 
@@ -4084,6 +4944,7 @@ ${parts.join('\n\n')}
           if (missing) throw new Error(`${missing} slide${missing === 1 ? '' : 's'} could not be voiced – ${$('ttsStatus').textContent}`);
         }
       }
+      applyQuickAvatar();
       R.range = [split, 1];
       const ok = await runExport();
       if (!ok && !quick.cancelled && R.running) throw new Error($('videoStatus').textContent || 'The video could not be made.');
@@ -4529,6 +5390,7 @@ ${parts.join('\n\n')}
       holdMs: Math.max(0, +$('holdSec').value || 0) * 1000,
       clickGapMs: Math.max(0, +$('clickGapSec').value || 0) * 1000,
       animate: $('animChk').checked,
+      clickTimes: $('animChk').checked && $('clickNarrChk').checked ? slides.map((_, i) => narrationClickTimes(i)) : null,
       readability: { mode: $('readMode').value, strength: (+$('readStrength').value || 0) / 100 },
       transition: { choice: $('transitionSel').value, ms: Math.max(0, +$('transMs').value || 0) },
       bgLoop: $('bgLoop').checked,
@@ -4652,6 +5514,26 @@ ${parts.join('\n\n')}
       pv = new PptxVideo(renderer, readSettings());
       capturePlan(pv);
       showLive(pv.out);
+      // with an AI avatar the app adds it afterwards: the slides video gets the first part of the bar
+      const withAvatar = avWanted(), fullRange = R.range;
+      if (withAvatar) R.range = [fullRange[0], fullRange[0] + (fullRange[1] - fullRange[0]) * 0.35];
+      const addAvatar = async (blob, ext, extra) => {
+        if (!withAvatar) return showResult(blob, ext, extra);
+        R.range = [R.range[1], fullRange[1]];
+        setVStatus('Adding the AI avatar…');
+        let r;
+        try { r = await avAddToVideo(blob, ext, job.signal); }
+        catch (err) {
+          if (job?.signal.aborted) throw err;
+          // the slides video is fine: give it, and say why the avatar is missing
+          showResult(blob, ext, extra + ' · without the avatar');
+          setVStatus('The AI avatar could not be added: ' + err.message, true);
+          return;
+        }
+        if (!r) return showResult(blob, ext, extra);
+        R.range = fullRange;
+        showResult(r.blob, 'mp4', extra + ' · with AI avatar');
+      };
       rProg(0, 'Making the video…');
 
       if (engine === 'fast') {
@@ -4673,7 +5555,7 @@ ${parts.join('\n\n')}
         if (!blob) { setVStatus('Export cancelled.'); rMessage('Stopped', 'The video was stopped. Your settings are kept – press <b>Export video</b> to try again.'); return false; }
         const secs = (performance.now() - t0) / 1000;
         made = true;
-        showResult(blob, container, ` · ${fmtTime(pv.totalMs / 1000)} of video${pv.hasNarration ? ' with narration (' + pv.audioCodec.toUpperCase() + ')' : ''} made in ${secs.toFixed(1)} s`);
+        await addAvatar(blob, container, ` · ${fmtTime(pv.totalMs / 1000)} of video${pv.hasNarration ? ' with narration (' + pv.audioCodec.toUpperCase() + ')' : ''} made in ${secs.toFixed(1)} s`);
       } else {
         const wantAudio = pv.hasNarration;
         const mime = mrMime(container, wantAudio) || mrMime(container === 'mp4' ? 'webm' : 'mp4', wantAudio);
@@ -4700,7 +5582,8 @@ ${parts.join('\n\n')}
         voice.stop();
         stream.getTracks().forEach(t => t.stop());
         made = !!done;
-        showResult(new Blob(chunks, { type: mime.split(';')[0] }), ext, done ? '' : ' (stopped early)');
+        if (done) await addAvatar(new Blob(chunks, { type: mime.split(';')[0] }), ext, '');
+        else showResult(new Blob(chunks, { type: mime.split(';')[0] }), ext, ' (stopped early)');
       }
     } catch (err) {
       console.error(err);

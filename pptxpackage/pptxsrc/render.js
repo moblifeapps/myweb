@@ -1202,9 +1202,11 @@ export async function renderShape(ctx, spEl, rels, imageCache, themeColors, them
   };
 
   const getOutline = () => {
-    // spPr explicit line (highest priority)
+    // spPr explicit line (highest priority) – but an <a:ln> without any fill (e.g. "<a:ln></a:ln>" or only a width)
+    // takes its colour from the shape style, and with no style it draws nothing (PowerPoint does the same)
     const ln = g1(spPr, 'ln');
-    if (ln) return ln;
+    const lnHasFill = ln && ['noFill', 'solidFill', 'gradFill', 'pattFill'].some(n => g1(ln, n));
+    if (ln && lnHasFill) return ln;
     // style.lnRef — theme-based line for this shape
     const styleEl = g1(spEl, 'style');
     if (styleEl) {
@@ -1215,7 +1217,8 @@ export async function renderShape(ctx, spEl, rels, imageCache, themeColors, them
         const colorChild = findFirstColorChild(lnRef);
         if (colorChild) {
           const ns = 'http://schemas.openxmlformats.org/drawingml/2006/main';
-          const doc = parseXml('<ln xmlns="' + ns + '"><solidFill>' + colorChild.outerHTML + '</solidFill></ln>');
+          const w = ln?.getAttribute('w');
+          const doc = parseXml('<ln xmlns="' + ns + '"' + (w ? ' w="' + w + '"' : '') + '><solidFill>' + colorChild.outerHTML + '</solidFill></ln>');
           return doc.documentElement;
         }
       }
