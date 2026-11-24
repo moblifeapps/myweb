@@ -6,7 +6,7 @@
 <title>DeckPersona – PowerPoint to narrated video | MLApplications</title>
 <meta name="robots" content="noindex, nofollow">
 <!-- The DeckPersona app shows the highest version it has (bundled, or this page from the website): bump it on every change. -->
-<meta name="dp-page-version" content="2026.11.24.7">
+<meta name="dp-page-version" content="2026.11.24.8">
 <script>
   // Apply the saved theme before first paint (light / dark; nothing = follow the system)
   (function () { try { var t = localStorage.getItem('pptxTheme'); if (t !== 'auto') document.documentElement.dataset.theme = (t === 'light' ? 'light' : 'dark'); } catch (e) {} })();
@@ -1276,6 +1276,39 @@
   #voiceSex button .ic { width: 14px; height: 14px; }
   #voiceSex button[data-v="M"].on { background: #2563eb; color: #fff; } #voiceSex button[data-v="F"].on { background: #db2777; color: #fff; }
   #voiceSexNote { font-size: 11.5px; color: #f59e0b; }
+  /* connection to the desktop app (as in the other MLApplications apps) */
+  .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; flex: none; }
+  .conn { display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px 5px 10px; border-radius: 99px; font-size: 12.5px; font-weight: 600;
+    background: var(--panel-2); border: 1px solid var(--border); color: var(--text); white-space: nowrap; }
+  .conn i { width: 9px; height: 9px; border-radius: 50%; background: #8a8f98; flex: none; }
+  .conn[data-state="connected"] i { background: #6ccb5f; box-shadow: 0 0 0 3px rgba(108, 203, 95, .22); }
+  .conn[data-state="searching"] i, .conn[data-state="connecting"] i { background: #fce100; animation: connPulse 1.2s ease-in-out infinite; }
+  .conn[data-state="lost"] i, .conn[data-state="nocert"] i { background: #ff99a4; }
+  @keyframes connPulse { 50% { opacity: .35; } }
+  .conn-banner { display: flex; align-items: center; gap: 12px; margin: 10px 16px 0; padding: 10px 14px; border-radius: 10px;
+    border: 1px solid var(--border); border-left: 4px solid #fce100; background: var(--panel-2); }
+  .conn-banner[hidden] { display: none; }
+  .conn-banner[data-kind="lost"] { border-left-color: #ff99a4; }
+  .conn-banner-ic { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: rgba(252, 225, 0, .15); flex: none; }
+  .conn-banner[data-kind="lost"] .conn-banner-ic { background: rgba(255, 153, 164, .15); }
+  .conn-banner-ic .ic { width: 17px; height: 17px; }
+  .conn-banner-t { display: flex; flex-direction: column; gap: 2px; font-size: 13px; }
+  .conn-banner-t span { color: var(--muted); }
+  .conn-banner button { display: inline-flex; align-items: center; gap: 6px; }
+  .openweb { position: relative; }
+  .openweb[hidden] { display: none; }
+  .openweb > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--panel-2); font-size: 12.5px; font-weight: 600; }
+  .openweb > summary::-webkit-details-marker { display: none; }
+  .openweb > summary .ic { width: 15px; height: 15px; }
+  .openweb-menu { position: absolute; right: 0; top: calc(100% + 6px); z-index: 50; min-width: 320px; padding: 6px; border-radius: 10px;
+    background: var(--panel, #161a22); border: 1px solid var(--border); box-shadow: 0 12px 30px rgba(0,0,0,.45); display: flex; flex-direction: column; gap: 2px; }
+  .openweb-menu button { display: flex; align-items: center; gap: 10px; text-align: left; border: 0; background: none; padding: 8px 10px; border-radius: 7px; }
+  .openweb-menu button:hover { background: var(--panel-2); }
+  .openweb-menu button .ic { width: 18px; height: 18px; flex: none; }
+  .openweb-menu button { justify-content: flex-start; width: 100%; }
+  .openweb-menu span { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.3; gap: 1px; }
+  .openweb-menu small { color: var(--muted); font-size: 11.5px; }
   /* fewer colours – the WinUI 3 palette: the Windows accent for actions, "critical" red only for record / remove / cancel,
      the neutral control grey for the rest */
   :root { --wui-acc1: #2b88d8; --wui-acc2: #005fb8; --wui-crit1: #d13438; --wui-crit2: #a4262c; --wui-neu1: #6b6b6b; --wui-neu2: #464646; }
@@ -1487,7 +1520,7 @@
     <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
     <symbol id="i-auto" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M12 4v12" /></symbol>
-    <symbol id="i-pl-left" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M6 19v-3.5a2 2 0 0 1 4 0V19M8 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-pl-center" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 19v-3.5a2 2 0 0 1 4 0V19M12 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-pl-right" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M14 19v-3.5a2 2 0 0 1 4 0V19M16 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></symbol><symbol id="i-restart" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></symbol><symbol id="i-gallery" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol><symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3z"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><path d="M16 5.2a3 3 0 0 1 0 5.6M18 14.3c1.8.8 3 2.8 3 5.7"/></symbol><symbol id="i-male" viewBox="0 0 24 24"><circle cx="10" cy="14" r="6"/><path d="M14.5 9.5 20 4M15 4h5v5"/></symbol><symbol id="i-female" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M12 15v7M9 19h6"/></symbol><symbol id="i-shirt" viewBox="0 0 24 24"><path d="M8.5 3 3 6l2 4.5 3-1.2V21h8V9.3l3 1.2L21 6l-5.5-3c-.6 1.6-1.9 2.6-3.5 2.6S9.1 4.6 8.5 3z"/></symbol><symbol id="i-hair" viewBox="0 0 24 24"><path d="M5 15c-1-6 2.5-11 7-11s8 5 7 11"/><path d="M5 15c1.5-2.5 4-4.5 8-6 1.5 2.5 3.5 4.5 6 6"/><path d="M8 20c0-2.5 1.8-4 4-4s4 1.5 4 4"/></symbol><symbol id="i-moustache" viewBox="0 0 24 24"><path d="M12 11c-1.4-1.3-3.4-1.6-5-.6-1.4.9-2.2 2.6-4 2.6.8 2.6 3.6 3.6 6 2.6 1.3-.5 2.3-1.5 3-2.6.7 1.1 1.7 2.1 3 2.6 2.4 1 5.2 0 6-2.6-1.8 0-2.6-1.7-4-2.6-1.6-1-3.6-.7-5 .6z"/></symbol><symbol id="i-beard" viewBox="0 0 24 24"><path d="M4.5 8v3.5C4.5 17 8 21 12 21s7.5-4 7.5-9.5V8"/><path d="M4.5 11.5c1.5 1 3 1.5 4.5 1.5 1 0 2-.6 3-.6s2 .6 3 .6c1.5 0 3-.5 4.5-1.5"/><path d="M10 16.5h4"/></symbol><symbol id="i-okmark" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h13l-3.5-3.5M20 16H7l3.5 3.5"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></symbol>
+    <symbol id="i-pl-left" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M6 19v-3.5a2 2 0 0 1 4 0V19M8 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-pl-center" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 19v-3.5a2 2 0 0 1 4 0V19M12 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-pl-right" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M14 19v-3.5a2 2 0 0 1 4 0V19M16 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></symbol><symbol id="i-restart" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></symbol><symbol id="i-gallery" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol><symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3z"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><path d="M16 5.2a3 3 0 0 1 0 5.6M18 14.3c1.8.8 3 2.8 3 5.7"/></symbol><symbol id="i-male" viewBox="0 0 24 24"><circle cx="10" cy="14" r="6"/><path d="M14.5 9.5 20 4M15 4h5v5"/></symbol><symbol id="i-female" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M12 15v7M9 19h6"/></symbol><symbol id="i-shirt" viewBox="0 0 24 24"><path d="M8.5 3 3 6l2 4.5 3-1.2V21h8V9.3l3 1.2L21 6l-5.5-3c-.6 1.6-1.9 2.6-3.5 2.6S9.1 4.6 8.5 3z"/></symbol><symbol id="i-hair" viewBox="0 0 24 24"><path d="M5 15c-1-6 2.5-11 7-11s8 5 7 11"/><path d="M5 15c1.5-2.5 4-4.5 8-6 1.5 2.5 3.5 4.5 6 6"/><path d="M8 20c0-2.5 1.8-4 4-4s4 1.5 4 4"/></symbol><symbol id="i-moustache" viewBox="0 0 24 24"><path d="M12 11c-1.4-1.3-3.4-1.6-5-.6-1.4.9-2.2 2.6-4 2.6.8 2.6 3.6 3.6 6 2.6 1.3-.5 2.3-1.5 3-2.6.7 1.1 1.7 2.1 3 2.6 2.4 1 5.2 0 6-2.6-1.8 0-2.6-1.7-4-2.6-1.6-1-3.6-.7-5 .6z"/></symbol><symbol id="i-beard" viewBox="0 0 24 24"><path d="M4.5 8v3.5C4.5 17 8 21 12 21s7.5-4 7.5-9.5V8"/><path d="M4.5 11.5c1.5 1 3 1.5 4.5 1.5 1 0 2-.6 3-.6s2 .6 3 .6c1.5 0 3-.5 4.5-1.5"/><path d="M10 16.5h4"/></symbol><symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0z"/><path d="M12 17v4"/></symbol><symbol id="i-okmark" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h13l-3.5-3.5M20 16H7l3.5 3.5"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20.5c1.6-4 4.6-6 8-6s6.4 2 8 6"/></symbol>
     <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M4 16a8 8 0 1 1 16 0"/><path d="M12 16l4-5"/></symbol>
     <symbol id="i-layers" viewBox="0 0 24 24"><rect x="3" y="4" width="14" height="10" rx="1.5"/><path d="M7 18h12a2 2 0 0 0 2-2V8"/></symbol>
@@ -1519,6 +1552,24 @@
       <div><div class="topbar-brand-title">DeckPersona</div><div class="topbar-brand-subtitle">PowerPoint to narrated video</div></div>
     </div>
     <div class="topbar-center">Load a PowerPoint file, add narration, background videos and transitions, then press <strong>Create video</strong>. Everything runs in your browser – nothing is uploaded.</div>
+    <div class="topbar-right">
+      <details class="openweb" id="openWeb" hidden>
+        <summary class="sm" title="Open this page in your web browser – it stays connected to the app"><svg class="ic"><use href="#i-globe"/></svg>Open in browser</summary>
+        <div class="openweb-menu">
+          <button type="button" data-where="web"><svg class="ic"><use href="#i-globe"/></svg><span><b>mlapplications.com</b><small>The published page</small></span></button>
+          <button type="button" data-where="local"><svg class="ic"><use href="#i-film"/></svg><span><b>This PC's copy</b><small>To test changes before you publish them</small></span></button>
+        </div>
+      </details>
+      <span class="conn" id="connPill" data-state="searching" title="Connection to the DeckPersona desktop app"><i></i><span id="connText">Looking for the app…</span></span>
+    </div>
+  </div>
+  <div class="conn-banner" id="connBanner" hidden>
+    <span class="conn-banner-ic"><svg class="ic"><use href="#i-plug"/></svg></span>
+    <div class="conn-banner-t"><b id="connBannerTitle"></b><span id="connBannerText"></span></div>
+    <span class="spacer"></span>
+    <button class="sm primary" id="connLaunch"><svg class="ic"><use href="#i-play"/></svg>Launch DeckPersona</button>
+    <button class="sm" id="connRetry"><svg class="ic"><use href="#i-restart"/></svg>Try again</button>
+    <button class="sm icon-only" id="connHide" title="Hide this message">✕</button>
   </div>
   <div class="app-layout">
   <aside class="sidebar navpane" id="navPane" aria-label="Main">
@@ -2291,25 +2342,62 @@
   // ── The desktop app (DeckPersona for Windows) ────────────────────────────────────────────────
   // In the app window the page is opened as ...?mode=desktop&wsport=N from the app's own local site, and talks to the
   // app over ws://127.0.0.1:N. On the website nothing is contacted (no prompts for visitors); the app-only parts say so.
+  /* The connection to the DeckPersona desktop app – same transport as the other MLApplications apps:
+       • in the app window   (?mode=desktop&wsport=<port>)  -> ws://127.0.0.1:<port>          (Fleck)
+       • in a browser tab    (mlapplications.com, or the app's own copy opened in a browser)
+                             -> beacon http://127.0.0.1:49599/ -> wss://mywbsck.mlapplications.com:<wssPort>/ws (Kestrel)
+     Without the app the page still works (narration, backgrounds, export); only the AI avatar needs the app.
+     Every message: { type, payload }. */
   const APP = (() => {
     const qs = new URLSearchParams(location.search);
-    const isDesktop = qs.get('mode') === 'desktop' && /^\d+$/.test(qs.get('wsport') || '');
+    const inApp = qs.get('mode') === 'desktop' && /^\d+$/.test(qs.get('wsport') || '');
+    const BEACON = 'http://127.0.0.1:49599/', WSS_HOST = 'mywbsck.mlapplications.com';
     const handlers = new Map();
-    let ws = null, connected = false, retry = 0, queue = [];
+    let ws = null, connected = false, retry = 0, queue = [], linked = false, info = null, state = inApp ? 'connecting' : 'searching';
     const emit = (type, payload) => (handlers.get(type) || []).forEach(h => { try { h(payload); } catch (e) { console.error(e); } });
-    function connect() {
-      if (!isDesktop) return;
-      ws = new WebSocket(`ws://127.0.0.1:${qs.get('wsport')}`);
-      ws.onopen = () => { connected = true; retry = 0; emit('_status', { state: 'connected' }); queue.splice(0).forEach(m => ws.send(m)); };
+    const setState = (s) => { state = s; emit('_status', { state: s }); };
+    function open(url) {
+      ws = new WebSocket(url);
+      ws.onopen = () => { connected = true; retry = 0; setState('connected'); queue.splice(0).forEach(m => ws.send(m)); ws.send(JSON.stringify({ type: 'hello', payload: {} })); };
       ws.onmessage = (ev) => { let m; try { m = JSON.parse(ev.data); } catch { return; } emit(m.type, m.payload); };
-      ws.onclose = () => { const was = connected; connected = false; ws = null; emit('_status', { state: was ? 'lost' : 'absent' }); setTimeout(connect, Math.min(8000, 500 * 2 ** retry++)); };
+      ws.onclose = () => {
+        const was = connected; connected = false; ws = null;
+        if (!inApp) linked = false;                          // the app may come back on other ports: ask the beacon again
+        setState(was ? 'lost' : (inApp ? 'connecting' : 'absent'));
+        setTimeout(connect, inApp ? Math.min(8000, 500 * 2 ** retry++) : 3000);
+      };
       ws.onerror = () => {};
     }
+    async function connect() {
+      if (inApp) return open(`ws://127.0.0.1:${qs.get('wsport')}`);
+      if (location.protocol === 'file:') { setState('absent'); return; }
+      try {
+        const ctl = new AbortController(), tm = setTimeout(() => ctl.abort(), 2500);
+        const r = await fetch(BEACON, { cache: 'no-store', signal: ctl.signal });
+        clearTimeout(tm);
+        info = await r.json();
+        if (info?.app !== 'deckpersona') throw new Error('not DeckPersona');
+        if (!info.wssAvailable) { linked = false; if (state !== 'nocert') setState('nocert'); setTimeout(connect, 15000); return; }
+        linked = true;
+        open(`wss://${WSS_HOST}:${info.wssPort}/ws`);
+      } catch {
+        linked = false; info = null;
+        if (state !== 'absent' && state !== 'lost') setState('absent');
+        setTimeout(connect, 6000);                           // the user may start the app: find it without a reload
+      }
+    }
     return {
-      isDesktop, origin: location.origin,
+      inApp,
+      /** true when the app is there (its window, or found from a browser tab): avatars and the app's library work */
+      get isDesktop() { return inApp || linked; },
+      /** where the app's own site answers (library files, finished avatar videos, uploads) */
+      get origin() { return inApp ? location.origin : (info?.sitePort ? `http://127.0.0.1:${info.sitePort}` : location.origin); },
       get connected() { return connected; },
+      get state() { return state; },
+      get version() { return info?.version || ''; },
       on(type, h) { if (!handlers.has(type)) handlers.set(type, []); handlers.get(type).push(h); },
-      send(type, payload = {}) { if (!isDesktop) return; const m = JSON.stringify({ type, payload }); connected ? ws.send(m) : queue.push(m); },
+      send(type, payload = {}) { if (!(inApp || linked)) return; const m = JSON.stringify({ type, payload }); connected && ws?.readyState === 1 ? ws.send(m) : queue.push(m); },
+      retry() { if (!connected && !inApp) { setState('searching'); connect(); } },
       start: connect,
     };
   })();
@@ -4724,7 +4812,66 @@
   const avSendAll = () => slides.forEach((s, i) => { if (s.buffer) avSendNarration(i); });
 
   // app events
+  // ── the connection, shown like in the other apps: a pill in the header and a message when the app is missing ──
+  let connHidden = false;
+  function connUi(st) {
+    const s = st?.state || APP.state;
+    const pill = $('connPill'), txt = $('connText');
+    pill.dataset.state = s;
+    txt.textContent = s === 'connected' ? (APP.inApp ? 'Connected' : `Connected to DeckPersona${APP.version ? ' ' + APP.version.split('.').slice(0, 3).join('.') : ''}`)
+      : s === 'searching' ? 'Looking for the app…'
+      : s === 'connecting' ? 'Connecting…'
+      : s === 'lost' ? (APP.inApp ? 'Disconnected – reconnecting…' : 'Disconnected')
+      : s === 'nocert' ? 'App found – browser mode unavailable'
+      : 'App not running';
+    pill.title = APP.inApp ? 'Connection between this window and the DeckPersona app'
+      : 'This page in your browser talks to the DeckPersona desktop app on this PC for the AI avatar';
+    const b = $('connBanner');
+    const show = !connHidden && (s === 'lost' || (!APP.inApp && (s === 'absent' || s === 'nocert')));
+    b.hidden = !show;
+    if (!show) return;
+    b.dataset.kind = s === 'lost' ? 'lost' : 'absent';
+    $('connLaunch').hidden = APP.inApp || s === 'nocert';
+    $('connRetry').hidden = APP.inApp;
+    if (s === 'lost' && APP.inApp) {
+      $('connBannerTitle').textContent = 'The connection to the app was lost';
+      $('connBannerText').textContent = 'It reconnects by itself in a moment. If it doesn\'t, close DeckPersona and start it again.';
+    } else if (s === 'lost') {
+      $('connBannerTitle').textContent = 'DeckPersona was closed';
+      $('connBannerText').textContent = 'The AI avatar needs the app. Start it again – this page finds it by itself.';
+    } else if (s === 'nocert') {
+      $('connBannerTitle').textContent = 'DeckPersona is running, but browser mode isn\'t available right now';
+      $('connBannerText').textContent = 'It couldn\'t get its security certificate – this usually clears up once the PC is online. You can use the app window meanwhile.';
+    } else {
+      $('connBannerTitle').textContent = 'The DeckPersona app isn\'t running on this PC';
+      $('connBannerText').textContent = 'Everything here works in your browser – narration, backgrounds, export. Only the AI avatar needs the free desktop app; start it and this page connects by itself.';
+    }
+  }
+  $('connLaunch').addEventListener('click', () => { location.href = 'deckpersona://open'; setTimeout(() => APP.retry(), 2500); });
+  $('connRetry').addEventListener('click', () => APP.retry());
+  $('connHide').addEventListener('click', () => { connHidden = true; $('connBanner').hidden = true; });
+  if (APP.inApp) {
+    $('openWeb').hidden = false;
+    $('openWeb').addEventListener('click', (e) => {
+      const b = e.target.closest('button[data-where]');
+      if (!b) return;
+      APP.send('openInBrowser', b.dataset.where === 'local' ? { local: true } : {});
+      $('openWeb').open = false;
+    });
+    document.addEventListener('pointerdown', (e) => { if (!$('openWeb').contains(e.target)) $('openWeb').open = false; });
+  }
+  /** everything that looks different with or without the app */
+  function appUiRefresh() {
+    try {
+      slides.forEach((_, i) => updateThumbBadges(i));
+      secUpdate(); avLoadUI(); renderAvatarPage();
+      if ($('ideaPresField')) $('ideaPresField').style.display = APP.isDesktop ? '' : 'none';
+    } catch (err) { console.warn(err); }
+  }
+  connUi();
   APP.on('_status', (st) => {
+    connUi(st);
+    appUiRefresh();
     if (st.state === 'connected') {
       APP.send('avatarStatus'); APP.send('avatarList'); APP.send('avatarRemoteList');
       slides.forEach(s => { s.wavFor = null; });               // re-check everything with the app (it may have restarted)
