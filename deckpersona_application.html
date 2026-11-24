@@ -6,7 +6,7 @@
 <title>DeckPersona – PowerPoint to narrated video | MLApplications</title>
 <meta name="robots" content="noindex, nofollow">
 <!-- The DeckPersona app shows the highest version it has (bundled, or this page from the website): bump it on every change. -->
-<meta name="dp-page-version" content="2026.11.24.8">
+<meta name="dp-page-version" content="2026.11.24.11">
 <script>
   // Apply the saved theme before first paint (light / dark; nothing = follow the system)
   (function () { try { var t = localStorage.getItem('pptxTheme'); if (t !== 'auto') document.documentElement.dataset.theme = (t === 'light' ? 'light' : 'dark'); } catch (e) {} })();
@@ -1258,7 +1258,9 @@
   .rs-ico { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; flex: none; color: #fff;
     background: linear-gradient(180deg, rgba(255,255,255,.38), rgba(255,255,255,0) 52%), linear-gradient(180deg, var(--g1), var(--g2)); }
   .rs-ico .ic { width: 15px; height: 15px; stroke: #fff; }
-  img.flag { width: 26px; height: 19.5px; border-radius: 3px; object-fit: cover; flex: none; box-shadow: 0 0 0 1px rgba(255,255,255,.18), 0 1px 3px rgba(0,0,0,.4); }
+  .flag { display: inline-block; width: 26px; height: 19.5px; border-radius: 3px; flex: none; overflow: hidden;
+    background: url("pptxvideo/flags.webp") 0 0 / 520px 273px no-repeat; box-shadow: 0 0 0 1px rgba(255,255,255,.18), 0 1px 3px rgba(0,0,0,.4); }
+  .flag.none { background: var(--panel-2); }
   .vsex { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; flex: none; background: #475569; color: #fff; }
   .vsex.f { background: linear-gradient(180deg, #f472b6, #db2777); } .vsex.m { background: linear-gradient(180deg, #60a5fa, #2563eb); }
   .vsex .ic { width: 14px; height: 14px; stroke: #fff; stroke-width: 2.4; }
@@ -1266,7 +1268,8 @@
     font-size: 11px; color: var(--muted); white-space: nowrap; flex: none; }
   .vtag .ic { width: 12px; height: 12px; }
   .rsel-btn .rs-row { overflow: hidden; }
-  .rsel-btn .vtag[title^="Speakers"] { display: none; }
+  .rsel-btn .vtag[title^="Speakers"], .rsel-btn .vtag[title^="Download"] { display: none; }
+  .rsel-btn .rs-t { flex: 1 1 auto; }
   .qbars { display: inline-flex; align-items: flex-end; gap: 1.5px; height: 10px; }
   .qbars i { width: 3px; border-radius: 1px; background: rgba(255,255,255,.2); }
   .qbars i:nth-child(1) { height: 4px; } .qbars i:nth-child(2) { height: 7px; } .qbars i:nth-child(3) { height: 10px; }
@@ -1324,7 +1327,8 @@
     box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 2px 8px rgba(0, 95, 184, .45); }
   #voiceSex button[data-v="M"].on, #voiceSex button[data-v="F"].on { background: var(--wui-acc2); }
   /* presenter settings: one block per setting, separated by lines */
-  .avr-look { display: flex; flex-wrap: wrap; align-items: stretch; gap: 0; border: 1px solid var(--border); border-radius: 10px; background: rgba(0,0,0,.14); }
+  .avr-look { display: flex; flex-wrap: wrap; align-items: stretch; gap: 0; border: 1px solid var(--border); border-radius: 10px;
+    background: color-mix(in srgb, var(--text) 4%, transparent); }   /* a light tint of the text colour: right in both themes */
   .avr-p { display: flex; flex-direction: column; justify-content: space-between; gap: 8px; padding: 10px 16px; min-width: 150px; }
   .avr-p + .avr-p { border-left: 1px solid var(--border); }
   .avr-pl { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; color: var(--text); }
@@ -1420,8 +1424,19 @@
   @keyframes avpulse { 50% { opacity: .35; } }
   #avBody { display: flex; flex-direction: column; gap: 8px; flex: 1 1 0; min-height: 0; }
   #avatarCard.off #avBody .mini-grid, #avatarCard.off .av-opts { opacity: .45; }
-  #avWeb { flex: 1 1 0; min-height: 0; }
-  #avWeb a { color: var(--accent); font-weight: 600; }
+  /* the avatar card in a browser tab while the app is not connected */
+  .av-web { flex: 1 1 0; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 8px; padding: 12px 14px;
+    border: 1px dashed var(--border); border-radius: 10px; font-size: 12.5px; }
+  .av-web-h { display: flex; align-items: center; gap: 8px; }
+  .av-web-h b { font-size: 13px; }
+  .av-web p { margin: 0; color: var(--muted); line-height: 1.45; }
+  .av-web-b { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: auto; }
+  .av-web-b button { display: inline-flex; align-items: center; gap: 6px; }
+  .av-web-b button[hidden] { display: none; }
+  .sm-link { color: var(--accent); font-weight: 600; font-size: 12.5px; }
+  .conn-dot { width: 9px; height: 9px; border-radius: 50%; background: #8a8f98; flex: none; }
+  .conn-dot[data-state="searching"], .conn-dot[data-state="connecting"] { background: #fce100; animation: connPulse 1.2s ease-in-out infinite; }
+  .conn-dot[data-state="lost"], .conn-dot[data-state="nocert"] { background: #ff99a4; }
 
   /* where the avatar will stand, drawn on the slide preview */
   /* the person's own box (the app crops the render to the avatar), so: as tall as the size, a little narrower than tall */
@@ -1753,10 +1768,13 @@
               <label class="avsize" title="Height of the avatar, as a share of the video height"><input type="range" id="avSize" min="20" max="80" step="1" value="40"><span id="avSizeVal">40%</span></label>
             </div>
           </div>
-          <div class="avatar-empty" id="avWeb" hidden>
-            <svg class="ic"><use href="#i-user"/></svg>
-            <div><b>AI avatars are made by the DeckPersona desktop app.</b><br>It reads your narration with a talking 3D presenter, using your PC's graphics card.
-              <br><a href="https://mlapplications.com/" target="_blank" rel="noopener" id="avGetApp">Get DeckPersona for Windows</a></div>
+          <div class="av-web" id="avWeb" hidden>
+            <div class="av-web-h"><span class="conn-dot" id="avWebDot"></span><b id="avWebTitle">Looking for the DeckPersona app…</b></div>
+            <p id="avWebText">The AI presenter is made by the DeckPersona app on this PC, controlled from this page.</p>
+            <div class="av-web-b">
+              <button class="sm primary" id="avWebLaunch"><svg class="ic"><use href="#i-play"/></svg>Launch DeckPersona</button>
+              <a class="sm-link" href="https://mlapplications.com/" target="_blank" rel="noopener" id="avGetApp">Get it for Windows</a>
+            </div>
           </div>
         </div>
       </div>
@@ -3315,12 +3333,17 @@
 
   // ── Picture drop-downs for the voice pop-up (a native <select> cannot show flags or icons) ──
   // The <select> stays the source of truth (its value and "change" events); this draws a richer button and list over it.
+  // every country flag in one picture (pptxvideo/flags.webp, 20 per row, from the MIT-licensed flag-icons set):
+  // one small download instead of a file per flag
   const FLAG_FILE = { ca: 'es-ct', cy: 'gb-wls' };
+  const FLAG_CODES = 'ad ae af ag ai al am ao aq ar arab as asean at au aw ax az ba bb bd be bf bg bh bi bj bl bm bn bo bq br bs bt bv bw by bz ca cc cd cefta cf cg ch ci ck cl cm cn co cp cr cu cv cw cx cy cz de dg dj dk dm do dz eac ec ee eg eh er es es-ct es-ga es-pv et eu fi fj fk fm fo fr ga gb gb-eng gb-nir gb-sct gb-wls gd ge gf gg gh gi gl gm gn gp gq gr gs gt gu gw gy hk hm hn hr ht hu ic id ie il im in io iq ir is it je jm jo jp ke kg kh ki km kn kp kr kw ky kz la lb lc li lk lr ls lt lu lv ly ma mc md me mf mg mh mk ml mm mn mo mp mq mr ms mt mu mv mw mx my mz na nc ne nf ng ni nl no np nr nu nz om pa pc pe pf pg ph pk pl pm pn pr ps pt pw py qa re ro rs ru rw sa sb sc sd se sg sh sh-ac sh-hl sh-ta si sj sk sl sm sn so sr ss st sv sx sy sz tc td tf tg th tj tk tl tm tn to tr tt tv tw tz ua ug um un us uy uz va vc ve vg vi vn vu wf ws xk xx ye yt za zm zw'.split(' ');
+  const FLAG_INDEX = new Map(FLAG_CODES.map((c, i) => [c, i]));
   function flagFor(code) {
     if (!code) return '';
     const [lang, region] = code.split(/[_-]/);
-    const f = FLAG_FILE[lang] || (region || '').toLowerCase();
-    return f ? `<img class="flag" alt="" loading="lazy" src="pptxvideo/flags/${f}.svg">` : '';
+    const i = FLAG_INDEX.get(FLAG_FILE[lang] || (region || '').toLowerCase());
+    if (i === undefined) return '<span class="flag none"></span>';
+    return `<span class="flag" style="background-position:${-(i % 20) * 26}px ${-Math.floor(i / 20) * 19.5}px"></span>`;
   }
   const QUALITY = { high: ['High', 3], medium: ['Medium', 2], low: ['Low', 1], x_low: ['Very low', 1] };
   const sexIcon = (g) => g === 'F' ? '<span class="vsex f" title="Female"><svg class="ic"><use href="#i-female"/></svg></span>'
@@ -4684,6 +4707,20 @@
     updateThumbBadges(current);
   }
 
+  /** The avatar card in a browser tab without the app: what the page sees, and how to get the app connected. */
+  function avWebUi() {
+    const s = APP.state;
+    $('avWebDot').dataset.state = s;
+    $('avWebTitle').textContent = s === 'searching' || s === 'connecting' ? 'Looking for the DeckPersona app…'
+      : s === 'nocert' ? 'DeckPersona is running, but browser mode isn\'t available'
+      : s === 'lost' ? 'DeckPersona was closed' : 'Start DeckPersona to add a presenter';
+    $('avWebText').textContent = s === 'nocert'
+      ? 'It couldn\'t get its security certificate – this usually clears up once the PC is online. Meanwhile use the app window.'
+      : 'The AI presenter is made by the DeckPersona app on this PC and controlled from this page. Start the app and this card switches on by itself.';
+    $('avWebLaunch').hidden = s === 'nocert' || s === 'searching';
+  }
+  $('avWebLaunch').addEventListener('click', () => { location.href = 'deckpersona://open'; setTimeout(() => APP.retry(), 2500); });
+
   function avLoadUI() {
     const s = slides[current];
     const desk = APP.isDesktop;
@@ -4693,6 +4730,7 @@
     $('avStyle').style.display = desk ? '' : 'none';
     $('avTagTip').hidden = !desk;
     $('avWeb').hidden = desk;
+    if (!desk) avWebUi();
     avGhost();
     if (!desk || !s) return;
     $('avOn').checked = !!s.av.on;
