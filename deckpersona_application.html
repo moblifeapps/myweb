@@ -6,7 +6,7 @@
 <title>DeckPersona – PowerPoint to narrated video | MLApplications</title>
 <meta name="robots" content="noindex, nofollow">
 <!-- The DeckPersona app shows the highest version it has (bundled, or this page from the website): bump it on every change. -->
-<meta name="dp-page-version" content="2026.11.24.1">
+<meta name="dp-page-version" content="2026.11.24.7">
 <script>
   // Apply the saved theme before first paint (light / dark; nothing = follow the system)
   (function () { try { var t = localStorage.getItem('pptxTheme'); if (t !== 'auto') document.documentElement.dataset.theme = (t === 'light' ? 'light' : 'dark'); } catch (e) {} })();
@@ -1158,6 +1158,185 @@
   .side-card.picking .sel-btns { margin: 0; flex: none; }
   #avatarCard.picking .av-opts { display: none; }
   #bgRemove[hidden], #bgModeSeg[hidden] { display: none !important; }
+  #bgSelPic { cursor: pointer; }
+  #bgSelPic:hover { box-shadow: 0 0 0 2px var(--accent); }
+  .sel-empty { display: grid; place-items: center; gap: 6px; color: var(--muted); font-size: 12.5px; }
+  .sel-empty .ic { width: 26px; height: 26px; opacity: .7; }
+  /* step 2 header: Start over on the right */
+  #editor > h2.ttl { display: flex; align-items: center; }
+  #startOverBtn { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; }
+  /* background pop-up: the top part stays while the clips scroll */
+  .bgdlg-sticky { position: sticky; top: -14px; z-index: 5; margin: -14px -16px 12px; padding: 14px 16px 6px; background: var(--panel, #161a22);
+    box-shadow: 0 8px 14px -10px rgba(0,0,0,.5); }
+  .bgdlg-sticky .bgdlg-top { margin-bottom: 10px; }
+  .bgdlg-sticky .bgfilter { margin-bottom: 6px; }
+  #bgCatToggle { display: inline-flex; align-items: center; gap: 6px; }
+  #bgCatToggle em { font-style: normal; color: var(--accent-hi, #8fb0ff); font-weight: 600; }
+  #bgCatToggle em:empty { display: none; }
+  #bgFilter.folded #bgChips { display: none; }
+  #bgFilter:not(.folded) #bgChips { flex: 1 1 100%; order: 5; }
+  #bgFilter:not(.folded) #bgCatNow { display: none; }
+  #bgFilter.folded .caret { transform: rotate(180deg); }
+  dialog .dlg-f button .ic { width: 16px; height: 16px; margin-right: 5px; vertical-align: -3px; }
+  /* Video Gallery page: your videos */
+  .vg-bar { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; }
+  .vg-bar button { display: inline-flex; align-items: center; gap: 6px; }
+  .vg-bar [hidden] { display: none; }
+  .myv-grid, .avp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+  .myv, .avp { border: 1px solid var(--border); border-radius: 12px; background: var(--panel-2); overflow: hidden; display: flex; flex-direction: column; }
+  .myv-pic { position: relative; aspect-ratio: 16 / 9; background: #0d1016 center / cover no-repeat; }
+  .myv-pic video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .myv-kind { position: absolute; left: 8px; top: 8px; z-index: 1; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; background: rgba(0,0,0,.6); color: #fff; }
+  .myv-kind.k-own { background: var(--sec-av); } .myv-kind.k-pixabay { background: rgba(0,0,0,.6); } .myv-kind.k-site { background: var(--sec-bg); }
+  .myv-t, .avp-t { padding: 10px 12px 4px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .myv-t b, .avp-t b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .myv-t span, .avp-t span { font-size: 12px; color: var(--muted); }
+  .myv-b, .avp-b { padding: 8px 12px 12px; display: flex; gap: 8px; align-items: center; margin-top: auto; }
+  .myv-b .use { display: inline-flex; align-items: center; gap: 6px; flex: 1 1 auto; justify-content: center; }
+  .avp-pic { position: relative; aspect-ratio: 1; background: linear-gradient(160deg, #3a4160, #1d2234); overflow: hidden; }
+  .avp-pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .avp-pic .av-face, .avp-pic svg { width: 100%; height: 100%; }
+  .avp:not(.have) .avp-pic { filter: saturate(.6); }
+  .avp-b button { display: inline-flex; align-items: center; gap: 6px; }
+  .avp-b button.primary { flex: 1 1 auto; justify-content: center; }
+  .avp-ok { display: inline-flex; align-items: center; gap: 6px; color: #4ade80; font-weight: 600; font-size: 13px; flex: 1 1 auto; }
+  .avp-ok .ic { width: 16px; height: 16px; }
+  .avp-prog { flex: 1 1 auto; height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; }
+  .avp-prog i { display: block; height: 100%; background: var(--accent); }
+  /* glossy icon tiles: a coloured rounded square, white icon, a light top highlight */
+  .gi { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; flex: none; color: #fff;
+    background: linear-gradient(180deg, rgba(255,255,255,.38), rgba(255,255,255,0) 52%), linear-gradient(180deg, var(--g1), var(--g2));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.5), inset 0 -1px 0 rgba(0,0,0,.18), 0 2px 5px rgba(0,0,0,.35); }
+  .gi .ic { width: 15px; height: 15px; stroke: #fff; }
+  .gi .ic.f { fill: #fff; }
+  .gi-green { --g1: #34d399; --g2: #059669; } .gi-sky { --g1: #60a5fa; --g2: #2563eb; } .gi-violet { --g1: #a78bfa; --g2: #6d28d9; }
+  .gi-red { --g1: #f87171; --g2: #dc2626; } .gi-amber { --g1: #fbbf24; --g2: #d97706; } .gi-rose { --g1: #fb7185; --g2: #be123c; }
+  .gi-teal { --g1: #2dd4bf; --g2: #0f766e; } .gi-slate { --g1: #94a3b8; --g2: #475569; } .gi-indigo { --g1: #818cf8; --g2: #4338ca; }
+  .dlg-h .ttl { display: inline-flex; align-items: center; gap: 10px; }
+  .dlg-h .ttl .gi { width: 30px; height: 30px; border-radius: 9px; }
+  .dlg-h .ttl .gi .ic { width: 17px; height: 17px; }
+  /* the same tiles on the buttons of the narration and voice pop-ups (CSS only: the buttons are redrawn by code) */
+  #narrDlg button > svg.ic, #voiceDlg .voicegrid > button > svg.ic {
+    width: 22px; height: 22px; padding: 4px; border-radius: 7px; stroke: #fff; color: #fff; flex: none;
+    background: linear-gradient(180deg, rgba(255,255,255,.38), rgba(255,255,255,0) 52%), linear-gradient(180deg, var(--g1, #94a3b8), var(--g2, #475569));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 1px 4px rgba(0,0,0,.35); }
+  #narrDlg button > svg.ic.f { fill: #fff; }
+  #narrDlg button, #voiceDlg .voicegrid > button { display: inline-flex; align-items: center; gap: 8px; }
+  #narrDlg .rec { --g1: #f87171; --g2: #dc2626; } #narrDlg .gen, #genAllBtn { --g1: #a78bfa; --g2: #6d28d9; }
+  #narrDlg .play { --g1: #34d399; --g2: #059669; } #narrDlg .fromslide { --g1: #60a5fa; --g2: #2563eb; }
+  #narrDlg .clear { --g1: #fb7185; --g2: #be123c; } #aiBtn { --g1: #fbbf24; --g2: #d97706; } #narrApplyAll { --g1: #2dd4bf; --g2: #0f766e; }
+  #voiceBtn { --g1: #60a5fa; --g2: #2563eb; } #ttsTestBtn { --g1: #34d399; --g2: #059669; } #kokoroRetest { --g1: #fbbf24; --g2: #d97706; }
+  #narrDlg .dlg-f button > svg.ic, #voiceDlg .dlg-f button > svg.ic { width: 16px; height: 16px; padding: 0; background: none; box-shadow: none; }
+  /* narration pop-up header: on/off with its label, colourful arrows */
+  #narrDlg .dlg-h { gap: 14px; flex-wrap: wrap; }
+  .nd-on { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px 4px 6px; border-radius: 99px; background: var(--panel-2); border: 1px solid var(--border);
+    font-size: 13px; font-weight: 600; cursor: pointer; }
+  .nd-on .switch { margin: 0; }
+  .nd-nav { margin-left: 0; gap: 8px; }
+  #ndSlide { padding: 4px 12px; border-radius: 99px; background: var(--panel-2); border: 1px solid var(--border); color: var(--text); font-weight: 600; font-size: 13px; }
+  .nd-arrow { width: 34px; height: 34px; padding: 0; border: 0; border-radius: 50%; display: inline-grid; place-items: center; color: #fff; cursor: pointer;
+    background: linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0) 55%), linear-gradient(135deg, #3b82f6, #8b5cf6);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 3px 10px rgba(99, 102, 241, .45); transition: transform .12s, filter .12s; }
+  .nd-arrow .ic { width: 18px; height: 18px; stroke: #fff; stroke-width: 2.6; }
+  .nd-arrow:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.12); }
+  .nd-arrow:disabled { background: var(--panel-2); box-shadow: none; opacity: .5; cursor: default; }
+  #narrDlg .nd-arrow > svg.ic { width: 18px; height: 18px; padding: 0; background: none; box-shadow: none; }
+  /* voice pop-up: picture drop-downs */
+  .rs-native { position: absolute !important; opacity: 0; pointer-events: none; width: 1px !important; height: 1px; }
+  .rsel { position: relative; }
+  .rsel-btn { width: 100%; display: flex; align-items: center; gap: 8px; text-align: left; min-height: 42px; padding: 6px 10px; }
+  .rsel-caret { margin-left: auto; color: var(--muted); }
+  .rsel-pop { position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 30; max-height: 320px; overflow: auto; padding: 4px;
+    background: var(--panel, #161a22); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 12px 30px rgba(0,0,0,.5); }
+  .rsel-opt { padding: 7px 8px; border-radius: 7px; cursor: pointer; }
+  .rsel-opt:hover { background: var(--panel-2); }
+  .rsel-opt.on { background: rgba(99, 102, 241, .22); }
+  .rs-row { display: flex; align-items: center; gap: 9px; min-width: 0; flex: 1 1 auto; }
+  .rs-t { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
+  .rs-t b { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rs-t small { color: var(--muted); font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rs-ico { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; flex: none; color: #fff;
+    background: linear-gradient(180deg, rgba(255,255,255,.38), rgba(255,255,255,0) 52%), linear-gradient(180deg, var(--g1), var(--g2)); }
+  .rs-ico .ic { width: 15px; height: 15px; stroke: #fff; }
+  img.flag { width: 26px; height: 19.5px; border-radius: 3px; object-fit: cover; flex: none; box-shadow: 0 0 0 1px rgba(255,255,255,.18), 0 1px 3px rgba(0,0,0,.4); }
+  .vsex { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; flex: none; background: #475569; color: #fff; }
+  .vsex.f { background: linear-gradient(180deg, #f472b6, #db2777); } .vsex.m { background: linear-gradient(180deg, #60a5fa, #2563eb); }
+  .vsex .ic { width: 14px; height: 14px; stroke: #fff; stroke-width: 2.4; }
+  .vtag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 7px; border-radius: 99px; background: var(--panel-2); border: 1px solid var(--border);
+    font-size: 11px; color: var(--muted); white-space: nowrap; flex: none; }
+  .vtag .ic { width: 12px; height: 12px; }
+  .rsel-btn .rs-row { overflow: hidden; }
+  .rsel-btn .vtag[title^="Speakers"] { display: none; }
+  .qbars { display: inline-flex; align-items: flex-end; gap: 1.5px; height: 10px; }
+  .qbars i { width: 3px; border-radius: 1px; background: rgba(255,255,255,.2); }
+  .qbars i:nth-child(1) { height: 4px; } .qbars i:nth-child(2) { height: 7px; } .qbars i:nth-child(3) { height: 10px; }
+  .qbars i.on { background: #4ade80; }
+  #voiceSex { display: flex; }
+  #voiceSex button { flex: 1 1 0; display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
+  #voiceSex button .ic { width: 14px; height: 14px; }
+  #voiceSex button[data-v="M"].on { background: #2563eb; color: #fff; } #voiceSex button[data-v="F"].on { background: #db2777; color: #fff; }
+  #voiceSexNote { font-size: 11.5px; color: #f59e0b; }
+  /* fewer colours – the WinUI 3 palette: the Windows accent for actions, "critical" red only for record / remove / cancel,
+     the neutral control grey for the rest */
+  :root { --wui-acc1: #2b88d8; --wui-acc2: #005fb8; --wui-crit1: #d13438; --wui-crit2: #a4262c; --wui-neu1: #6b6b6b; --wui-neu2: #464646; }
+  .gi-sky, .gi-violet, .gi-indigo, .gi-green, .gi-teal, .gi-amber, .rs-ico { --g1: var(--wui-acc1); --g2: var(--wui-acc2); }
+  .gi-red, .gi-rose { --g1: var(--wui-crit1); --g2: var(--wui-crit2); }
+  .gi-slate { --g1: var(--wui-neu1); --g2: var(--wui-neu2); }
+  #narrDlg button, #voiceDlg .voicegrid > button { --g1: var(--wui-neu1); --g2: var(--wui-neu2); }
+  #narrDlg .gen, #narrDlg #genAllBtn, #narrDlg .play, #narrDlg #voiceBtn, #narrDlg #aiBtn, #voiceDlg #ttsTestBtn { --g1: var(--wui-acc1); --g2: var(--wui-acc2); }
+  #narrDlg .rec, #narrDlg .clear { --g1: var(--wui-crit1); --g2: var(--wui-crit2); }
+  #narrDlg .fromslide, #narrDlg .stop, #narrDlg #narrApplyAll, #narrDlg #genStopBtn, #voiceDlg #kokoroRetest { --g1: var(--wui-neu1); --g2: var(--wui-neu2); }
+  #narrDlg button.danger > svg.ic, #narrDlg button.rec.on > svg.ic { background: rgba(255,255,255,.2); box-shadow: inset 0 1px 0 rgba(255,255,255,.35); }
+  .nd-arrow { background: linear-gradient(180deg, rgba(255,255,255,.3), rgba(255,255,255,0) 55%), linear-gradient(180deg, var(--wui-acc1), var(--wui-acc2));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 2px 8px rgba(0, 95, 184, .45); }
+  #voiceSex button[data-v="M"].on, #voiceSex button[data-v="F"].on { background: var(--wui-acc2); }
+  /* presenter settings: one block per setting, separated by lines */
+  .avr-look { display: flex; flex-wrap: wrap; align-items: stretch; gap: 0; border: 1px solid var(--border); border-radius: 10px; background: rgba(0,0,0,.14); }
+  .avr-p { display: flex; flex-direction: column; justify-content: space-between; gap: 8px; padding: 10px 16px; min-width: 150px; }
+  .avr-p + .avr-p { border-left: 1px solid var(--border); }
+  .avr-pl { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; color: var(--text); }
+  /* plain icons in the text colour (light or dark theme), no tile */
+  .avr-pl .gi { width: auto; height: auto; border-radius: 0; background: none; box-shadow: none; color: currentColor; }
+  .avr-pl .gi .ic { width: 17px; height: 17px; stroke: currentColor; }
+  .avr-cv { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 56px; }
+  .avr-col button .ic { width: 14px; height: 14px; }
+  .avr-sw { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+  .avr-sw .switch { margin: 0; }
+  .avr-sw em { font-style: normal; font-size: 12px; color: var(--muted); }
+  /* presenter pop-up: one avatar per row */
+  #avSelPic { cursor: pointer; }
+  #avSelPic:hover { box-shadow: 0 0 0 2px var(--accent); }
+  .avlist { display: flex; flex-direction: column; gap: 12px; }
+  .avrow { display: flex; gap: 16px; padding: 12px; border: 1px solid var(--border); border-radius: 12px; background: var(--panel-2); }
+  .avrow.sel { border-color: var(--sec-av); box-shadow: 0 0 0 2px var(--sec-av) inset; }
+  .avr-pic { position: relative; flex: none; width: 150px; height: 150px; border-radius: 10px; overflow: hidden; background: linear-gradient(160deg, #3a4160, #1d2234); }
+  .avr-pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .avr-pic .av-face, .avr-pic > svg { width: 100%; height: 100%; }
+  .avrow.remote .avr-pic { filter: saturate(.6); }
+  .avr-busy { position: absolute; inset: 0; display: grid; place-content: center; gap: 8px; justify-items: center; text-align: center; font-size: 12px; color: #fff; background: rgba(10, 12, 20, .62); }
+  .avr-busy i { width: 26px; height: 26px; border-radius: 50%; border: 3px solid rgba(255,255,255,.25); border-top-color: #fff; animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .avr-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+  .avr-h { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .avr-h b { font-size: 16px; }
+  .avr-h span { color: var(--muted); font-size: 12.5px; }
+  .avr-now { margin-left: auto; font-style: normal; font-size: 12px; font-weight: 700; color: #fff; background: var(--sec-av); border-radius: 99px; padding: 2px 10px 2px 6px; display: inline-flex; align-items: center; gap: 4px; }
+  .avr-now .ic { width: 14px; height: 14px; }
+  .avr-look { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: flex-end; }
+  .avr-look[hidden] { display: none; }
+  .avr-f { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); }
+  .avr-col { display: inline-flex; align-items: center; gap: 6px; }
+  .avr-col input[type=color] { width: 40px; height: 30px; padding: 2px; border-radius: 6px; border: 1px solid var(--border); background: var(--panel); cursor: pointer; }
+  .avr-col em { font-style: normal; font-size: 11.5px; }
+  .avr-f select { min-width: 130px; }
+  .avr-chk { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding-bottom: 6px; }
+  .avr-b { display: flex; gap: 8px; align-items: center; margin-top: auto; }
+  .avr-b button { display: inline-flex; align-items: center; gap: 6px; }
+  .avr-b .pick { margin-left: auto; min-width: 120px; justify-content: center; }
+  /* History: saved projects */
+  .histitem .hthumb { width: 160px; aspect-ratio: 16 / 9; border-radius: 8px; object-fit: cover; background: #0d1016; flex: none; }
+  .histitem .hbtns { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  .histitem .hbtns button, .histitem .hbtns a button { display: inline-flex; align-items: center; gap: 6px; }
   #bgCard { container-type: inline-size; }
   #bgCard .card-h .ttl { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   #bgCard .card-h button { flex: none; }
@@ -1308,7 +1487,7 @@
     <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
     <symbol id="i-auto" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M12 4v12" /></symbol>
-    <symbol id="i-pl-left" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M6 19v-3.5a2 2 0 0 1 4 0V19M8 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-pl-center" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 19v-3.5a2 2 0 0 1 4 0V19M12 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-pl-right" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M14 19v-3.5a2 2 0 0 1 4 0V19M16 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-okmark" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h13l-3.5-3.5M20 16H7l3.5 3.5"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></symbol>
+    <symbol id="i-pl-left" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M6 19v-3.5a2 2 0 0 1 4 0V19M8 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-pl-center" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 19v-3.5a2 2 0 0 1 4 0V19M12 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-pl-right" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M14 19v-3.5a2 2 0 0 1 4 0V19M16 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></symbol><symbol id="i-restart" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></symbol><symbol id="i-gallery" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol><symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3z"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><path d="M16 5.2a3 3 0 0 1 0 5.6M18 14.3c1.8.8 3 2.8 3 5.7"/></symbol><symbol id="i-male" viewBox="0 0 24 24"><circle cx="10" cy="14" r="6"/><path d="M14.5 9.5 20 4M15 4h5v5"/></symbol><symbol id="i-female" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M12 15v7M9 19h6"/></symbol><symbol id="i-shirt" viewBox="0 0 24 24"><path d="M8.5 3 3 6l2 4.5 3-1.2V21h8V9.3l3 1.2L21 6l-5.5-3c-.6 1.6-1.9 2.6-3.5 2.6S9.1 4.6 8.5 3z"/></symbol><symbol id="i-hair" viewBox="0 0 24 24"><path d="M5 15c-1-6 2.5-11 7-11s8 5 7 11"/><path d="M5 15c1.5-2.5 4-4.5 8-6 1.5 2.5 3.5 4.5 6 6"/><path d="M8 20c0-2.5 1.8-4 4-4s4 1.5 4 4"/></symbol><symbol id="i-moustache" viewBox="0 0 24 24"><path d="M12 11c-1.4-1.3-3.4-1.6-5-.6-1.4.9-2.2 2.6-4 2.6.8 2.6 3.6 3.6 6 2.6 1.3-.5 2.3-1.5 3-2.6.7 1.1 1.7 2.1 3 2.6 2.4 1 5.2 0 6-2.6-1.8 0-2.6-1.7-4-2.6-1.6-1-3.6-.7-5 .6z"/></symbol><symbol id="i-beard" viewBox="0 0 24 24"><path d="M4.5 8v3.5C4.5 17 8 21 12 21s7.5-4 7.5-9.5V8"/><path d="M4.5 11.5c1.5 1 3 1.5 4.5 1.5 1 0 2-.6 3-.6s2 .6 3 .6c1.5 0 3-.5 4.5-1.5"/><path d="M10 16.5h4"/></symbol><symbol id="i-okmark" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h13l-3.5-3.5M20 16H7l3.5 3.5"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20.5c1.6-4 4.6-6 8-6s6.4 2 8 6"/></symbol>
     <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M4 16a8 8 0 1 1 16 0"/><path d="M12 16l4-5"/></symbol>
     <symbol id="i-layers" viewBox="0 0 24 24"><rect x="3" y="4" width="14" height="10" rx="1.5"/><path d="M7 18h12a2 2 0 0 0 2-2V8"/></symbol>
@@ -1417,7 +1596,8 @@
 
   <!-- 2. Slide editor -->
   <section class="panel" id="editor">
-    <h2 class="ttl"><span class="layer-step">2</span>Design video<small class="h2sub">Narration, background video and transition for each slide</small></h2>
+    <h2 class="ttl"><span class="layer-step">2</span>Design video<small class="h2sub">Narration, background video and transition for each slide</small>
+      <button class="sm" id="startOverBtn" title="Clear the presentation and all your choices, and start a new video"><svg class="ic"><use href="#i-restart"/></svg>Start over</button></h2>
     <div class="quickrow">
       <div class="qr-text"><b>In a hurry?</b><span class="quicksub">Pick background videos and a voice – transitions, timing and narration are done for you.</span></div>
       <button id="quickBtn" class="gloss g-white" title="In a hurry? Pick videos and a voice – transitions and timing are chosen for you"><svg class="ic"><use href="#i-bolt"/></svg>Create a quick video</button>
@@ -1478,9 +1658,9 @@
           <div class="card-h">
             <b class="ttl" title="Background video"><span class="tic sm"><svg class="ic"><use href="#i-clapper"/></svg></span>Background</b>
             <span class="spacer"></span>
-            <button class="sm" id="bgChange" title="Pick another background video"><svg class="ic"><use href="#i-swap"/></svg><span>Change</span></button>
+            <button class="sm" id="bgUpload" title="Use a video from your computer"><svg class="ic"><use href="#i-upload"/></svg><span>Upload</span></button>
             <button class="sm icon-only" id="bgRemove" title="Remove the background video from this slide"><svg class="ic"><use href="#i-trash"/></svg></button>
-            <button id="bgCurrent" class="sm icon-only" title="More: all videos, your own video, frame size and blend strength"><svg class="ic"><use href="#i-menu"/></svg></button>
+            <button id="bgCurrent" class="sm icon-only" title="Video gallery: pick or change the background video"><svg class="ic"><use href="#i-gallery"/></svg></button>
           </div>
           <div class="bg-modes" id="bgModeSeg" title="How the slide sits on the video">
             <span class="seg"><button data-v="transparent" title="The video fills the background, the slide on top">Background</button><button data-v="blend" title="The slide and the video blended together">Blend</button><button data-v="inset" title="The slide in a frame over the video">Frame</button></span>
@@ -1536,16 +1716,16 @@
   <!-- ═══ pop-up dialogs ═══ -->
   <dialog id="narrDlg" class="dlg xwide">
     <div class="dlg-h">
-      <b class="ttl"><span class="tic sm"><svg class="ic"><use href="#i-mic"/></svg></span>Narration</b>
-      <span class="nd-nav"><button class="sm icon-only" id="ndPrev" title="Previous slide"><svg class="ic"><use href="#i-left"/></svg></button>
+      <b class="ttl"><span class="gi gi-green"><svg class="ic"><use href="#i-mic"/></svg></span>Narration</b>
+      <label class="nd-on" title="Narration for this slide"><span class="switch"><input type="checkbox" id="narrOn"><span></span></span><span id="narrOnLbl">On for this slide</span></label>
+      <span class="nd-nav"><button class="nd-arrow" id="ndPrev" title="Previous slide"><svg class="ic"><use href="#i-left"/></svg></button>
         <span id="ndSlide">Slide 1 / 1</span>
-        <button class="sm icon-only" id="ndNext" title="Next slide"><svg class="ic"><use href="#i-right"/></svg></button></span>
+        <button class="nd-arrow" id="ndNext" title="Next slide"><svg class="ic"><use href="#i-right"/></svg></button></span>
+      <span class="spacer"></span>
       <button class="sm icon-only" data-close title="Close">✕</button></div>
     <div class="dlg-b">
         <div class="card" id="narrCard">
           <div class="card-h">
-            <label class="switch" title="Narration for this slide"><input type="checkbox" id="narrOn"><span></span></label>
-            <b class="ttl"><span class="tic sm"><svg class="ic"><use href="#i-mic"/></svg></span>Narration</b>
             <button id="voiceBtn" class="sm voicechip" title="Choose engine, language, voice and speed"><svg class="ic"><use href="#i-sound"/></svg><span id="voiceSummary">Voice</span><span class="caret">▾</span></button>
             <span class="muted" id="narrHint"></span>
             <span class="spacer"></span>
@@ -1581,11 +1761,11 @@
 
         </div>
     </div>
-    <div class="dlg-f"><span class="spacer"></span><button class="primary" data-close>Done</button></div>
+    <div class="dlg-f"><span class="spacer"></span><button class="primary" data-close><svg class="ic"><use href="#i-okmark"/></svg>Done</button></div>
   </dialog>
 
   <dialog id="voiceDlg" class="dlg">
-    <div class="dlg-h"><b id="voiceDlgTitle">Voice</b><span class="spacer"></span>
+    <div class="dlg-h"><b class="ttl"><span class="gi gi-sky"><svg class="ic"><use href="#i-sound"/></svg></span><span id="voiceDlgTitle">Voice</span></b><span class="spacer"></span>
       <button class="sm icon-only" data-close title="Close">✕</button></div>
     <div class="dlg-b">
             <div class="form-row voicegrid">
@@ -1597,7 +1777,10 @@
               </label>
 
               <label class="field" id="langField">Language <select id="ttsLang"></select></label>
-              <label class="field">Voice <select id="ttsVoice"></select></label>
+              <div class="field" id="sexField">Voice type
+                <span class="seg" id="voiceSex"><button type="button" data-v=""><svg class="ic"><use href="#i-users"/></svg>All</button><button type="button" data-v="M"><svg class="ic"><use href="#i-male"/></svg>Male</button><button type="button" data-v="F"><svg class="ic"><use href="#i-female"/></svg>Female</button></span>
+                <small class="muted" id="voiceSexNote"></small></div>
+              <label class="field" id="voiceField">Voice <select id="ttsVoice"></select></label>
               <label class="field" id="speakerField">Speaker <select id="ttsSpeaker"></select></label>
               <label class="field" id="kokoroQField">Model
                 <select id="kokoroQ">
@@ -1615,7 +1798,7 @@
             <div class="status oneline" id="voiceStatus"></div>
             <p class="hint" style="margin:10px 0 0">The settings apply to the current slide. Use "Apply to all" in the narration card to copy them to every slide.</p>
     </div>
-    <div class="dlg-f"><span class="spacer"></span><button class="primary" data-close>Done</button></div>
+    <div class="dlg-f"><span class="spacer"></span><button class="primary" data-close><svg class="ic"><use href="#i-okmark"/></svg>Done</button></div>
   </dialog>
 
   <dialog id="aiDlg" class="dlg">
@@ -1683,6 +1866,7 @@
     <div class="dlg-h"><b id="bgDlgTitle">Background video</b><span class="muted">Hover a clip to preview it</span><span class="spacer"></span>
       <button class="sm icon-only" data-close title="Close">✕</button></div>
     <div class="dlg-b">
+      <div class="bgdlg-sticky" id="bgSticky">
       <div class="bgdlg-top">
           <input type="file" id="bgInput" class="hidden-input" accept="video/*">
           <div id="bgName" class="muted"></div>
@@ -1704,15 +1888,29 @@
         <button id="bgApplyAll" class="sm" title="Use this background and its settings on every slide"><svg class="ic"><use href="#i-copy"/></svg>Apply to all slides</button>
       </div>
       <div class="bgfilter" id="bgFilter">
+        <button class="sm" id="bgCatToggle" aria-expanded="true" title="Show or hide the categories"><svg class="ic"><use href="#i-gallery"/></svg><span>Categories</span><em id="bgCatNow"></em><b class="caret">▴</b></button>
         <span id="bgChips" class="chips"></span>
         <span class="spacer"></span>
         <input type="search" id="bgSearch" placeholder="Search tags, e.g. ocean, city, forest…">
         <span class="pxlive kept" id="bgSearchKept" hidden>search kept from the previous slide</span>
         <span class="pxlive" id="bgLive"></span>
       </div>
+      </div>
       <div id="gallery" class="gallery"></div>
     </div>
-    <div class="dlg-f"><span class="spacer"></span><button class="primary" data-close>Done</button></div>
+    <div class="dlg-f"><span class="spacer"></span><button class="primary" data-close><svg class="ic"><use href="#i-okmark"/></svg>Done</button></div>
+  </dialog>
+
+  <dialog id="avDlg" class="dlg wide">
+    <div class="dlg-h"><b class="ttl"><span class="gi gi-violet"><svg class="ic"><use href="#i-user"/></svg></span>Choose your presenter</b><small class="h2sub">Pick an avatar and its look – one presenter reads the whole video</small><span class="spacer"></span><button class="sm icon-only" data-close title="Close">✕</button></div>
+    <div class="dlg-b"><div class="avlist" id="avList"></div></div>
+    <div class="dlg-f"><span class="muted" id="avDlgNote" style="font-size:12.5px;max-width:70%"></span><span class="spacer"></span><button class="primary" data-close><svg class="ic"><use href="#i-okmark"/></svg>Done</button></div>
+  </dialog>
+
+  <dialog id="resetDlg" class="dlg">
+    <div class="dlg-h"><b>Start over?</b><span class="spacer"></span><button class="sm icon-only" data-close title="Close">✕</button></div>
+    <div class="dlg-b"><p id="resetText" style="margin:0;line-height:1.5"></p></div>
+    <div class="dlg-f"><span class="spacer"></span><button data-close>Cancel</button><button class="primary" id="resetGo"><svg class="ic"><use href="#i-restart"/></svg>Start over</button></div>
   </dialog>
 
   <dialog id="ideaDlg" class="dlg xwide">
@@ -1986,23 +2184,26 @@
   </section>
 
   <section class="page" data-page="history">
-    <div class="pagehead"><h1>History</h1><p>The videos you made. Files stay in this browser tab only – download the ones you want to keep.</p></div>
+    <div class="pagehead"><h1>History</h1><p>The videos you made, with everything you chose. Open one again to change it and make a new video, or delete it. They are kept on this computer only.</p></div>
     <div class="pagebody" id="historyList"></div>
   </section>
 
   <section class="page" data-page="videos">
-    <div class="pagehead"><h1>Video Gallery</h1><p>More than 2,000 background videos from Pixabay, sorted by category and tags. Hover a clip to preview it; it is downloaded to your browser only when you use it.</p></div>
+    <div class="pagehead"><h1>Video Gallery</h1><p>The background videos you have used – from the gallery and your own files. They are kept on this computer, ready to use again.</p></div>
     <div class="pagebody">
-      <div class="bgfilter"><span id="vgChips" class="chips"></span><span class="spacer"></span><input type="search" id="vgSearch" placeholder="Search tags, e.g. ocean, city, forest…"></div>
-      <div class="muted" id="vgCount" style="font-size:12px"></div><div class="pxlive" id="vgLive"></div>
-      <div class="vg-grid" id="vgGrid"></div>
+      <div class="vg-bar"><span class="muted" id="vgCount"></span><span class="spacer"></span>
+        <button class="sm" id="vgAdd"><svg class="ic"><use href="#i-upload"/></svg>Add your own video</button>
+        <button class="sm" id="vgClear"><svg class="ic"><use href="#i-trash"/></svg>Clear all</button></div>
+      <input type="file" id="vgInput" class="hidden-input" accept="video/*" multiple>
+      <div hidden><span id="vgChips"></span><input type="search" id="vgSearch"><div id="vgLive"></div></div>
+      <div class="myv-grid" id="vgGrid"></div>
       <p class="hint linkrow">Videos from <a href="https://pixabay.com/" target="_blank" rel="noopener">Pixabay</a> and Pexels, free to use under their licences.</p>
     </div>
   </section>
 
   <section class="page" data-page="avatars">
-    <div class="pagehead"><h1>Avatar Gallery</h1><p>Talking presenters that appear over your slides.</p></div>
-    <div class="pagebody"><div class="empty"><svg class="ic"><use href="#i-avatar"/></svg><b>Coming soon</b>AI avatars that read your narration will appear here.</div></div>
+    <div class="pagehead"><h1>Avatar Gallery</h1><p>Talking presenters that read your narration over the slides. The ones on this PC are ready to use; the others download in a few minutes.</p></div>
+    <div class="pagebody"><div class="vg-bar"><span class="muted" id="avPageCount"></span></div><div class="avp-grid" id="avPageGrid"></div></div>
   </section>
 
   <section class="page" data-page="samples">
@@ -2118,6 +2319,7 @@
   let renderer = null;
   let current = 0;
   let fileBaseName = 'presentation';
+  let deckFile = null;                                   // the open .pptx – kept with the project in History
   let job = null;               // AbortController of a running whole-video preview/export
   let slideJob = null;          // AbortController of "Play slide"
   let slides = [];
@@ -2135,7 +2337,8 @@
   const avDefaults = { on: false, id: null, place: 'right', size: 40 };
   const avDeck = { style: 'friendly', strength: 1,            // presenter style of the whole presentation
     chosen: false,                                            // false until the first avatar choice (that one goes on every slide)
-    byGender: {} };                                           // the presenter picked for male / female narration
+    byGender: {},                                             // the presenter picked for male / female narration
+    looks: {} };                                              // per avatar: clothing colours, hair colour, hidden grooms
   const newSlideState = (text = '') => ({
     narrOn: false, voice: null,                               // voice: { engine, lang, piperKey, speaker, kokoroVoice, kokoroQ, speed }
     text, buffer: null, kind: null, label: '', spokenText: '', voiceSig: '', marks: null,
@@ -2236,6 +2439,7 @@
     if (renderer) renderer.destroy();
     renderer = new PptxRenderer();
     fileBaseName = file.name.replace(/\.pptx$/i, '') || 'presentation';
+    deckFile = file;
     setStatus('Loading ' + file.name + '…');
     setBar($('progress'), 0);
     try {
@@ -2854,15 +3058,20 @@
     loadBgUI();
   }
 
-  $('bgInput').addEventListener('change', (e) => {
+  $('bgInput').addEventListener('change', async (e) => {
     const f = e.target.files[0];
     e.target.value = '';
-    if (f) setSlideBg({ title: f.name, source: f, upload: true, size: f.size });
+    if (!f) return;
+    const bg = { title: f.name, source: f, upload: true, size: f.size };
+    setSlideBg(bg);
+    bg.poster = await videoPoster(f);                      // your own file has no poster: its own frame
+    if (bg.poster) { noteUsedVideo(bg); loadBgUI(); updateThumbBadges(current); }
   });
 
   function setSlideBg(bg) {
     if (!slides[current]) return;
     slides[current].bg = bg;
+    if (bg) noteUsedVideo(bg);
     loadBgUI();
     updateThumbBadges(current);
     refreshLive();
@@ -2891,9 +3100,10 @@
     th.style.backgroundImage = bg?.poster ? `url("${bg.poster}")` : '';
     const pic = $('bgSelPic');
     pic.style.backgroundImage = bg?.poster ? `url("${bg.poster}")` : '';
-    pic.textContent = !bg ? 'None' : bg.poster ? '' : bg.upload ? 'Your video' : 'Video';
+    pic.textContent = !bg ? '' : bg.poster ? '' : bg.upload ? 'Your video' : 'Video';
     $('bgRemove').hidden = !bg;
-    $('bgChange').querySelector('span').textContent = $('bgCard').classList.contains('picking') ? 'Done' : bg ? 'Change' : 'Choose';
+    pic.title = bg ? 'Change the background video' : 'Pick a background video';
+    if (!bg) pic.innerHTML = '<span class="sel-empty"><svg class="ic"><use href="#i-gallery"/></svg>Pick a video</span>';
     $('bgModeSeg').hidden = !bg;
     document.querySelectorAll('#bgModeSeg button').forEach(b => b.classList.toggle('on', b.dataset.v === s.mode));
     th.textContent = !bg ? 'None' : bg.poster ? '' : bg.upload ? 'Your video' : 'Video';
@@ -2962,10 +3172,14 @@
   async function fillLanguages() {
     const list = await tts.piperVoices();
     const langs = new Map();
-    for (const v of list) langs.set(v.language.code, `${v.language.name_english} – ${v.language.name_native} (${v.language.country_english})`);
+    for (const v of list) langs.set(v.language.code, v.language);
     const sel = $('ttsLang');
     sel.innerHTML = '';
-    [...langs.entries()].sort((a, b) => a[1].localeCompare(b[1])).forEach(([code, label]) => sel.append(new Option(label, code)));
+    [...langs.entries()].sort((a, b) => (a[1].name_english + a[1].country_english).localeCompare(b[1].name_english + b[1].country_english)).forEach(([code, L]) => {
+      const o = new Option(`${L.name_english} – ${L.name_native} (${L.country_english})`, code);
+      Object.assign(o.dataset, { name: L.name_english, native: L.name_native, country: L.country_english });
+      sel.append(o);
+    });
     langsFilled = true;
     return langs;
   }
@@ -2986,7 +3200,9 @@
         language: key[0] === 'a' ? 'en-us' : 'en-gb', gender: key[1] === 'f' ? 'Female' : 'Male' }));
       for (const v of voices) {
         const g = /^f/i.test(v.gender) ? 'F' : 'M';
-        sel.append(new Option(`${v.name} · ${g} · ${/gb/i.test(v.language) ? 'UK' : 'US'}${v.overallGrade ? ' · grade ' + v.overallGrade : ''}`, v.key));
+        const o = new Option(`${v.name} · ${g} · ${/gb/i.test(v.language) ? 'UK' : 'US'}${v.overallGrade ? ' · grade ' + v.overallGrade : ''}`, v.key);
+        Object.assign(o.dataset, { name: v.name, g, flag: /gb/i.test(v.language) ? 'en_GB' : 'en_US', grade: v.overallGrade || '' });
+        sel.append(o);
       }
       sel.value = 'af_heart';
     } else {
@@ -2998,12 +3214,111 @@
         const mb = Object.entries(v.files).find(([f]) => f.endsWith('.onnx'))?.[1]?.size_bytes || 0;
         const g = v.gender ? ` · ${v.gender}` : '';
         const multi = v.num_speakers > 1 ? ` · ${v.num_speakers} speakers` : '';
-        sel.append(new Option(`${v.name}${g} · ${v.quality}${multi} · ${Math.round(mb / 1048576)} MB`, v.key));
+        const o = new Option(`${v.name}${g} · ${v.quality}${multi} · ${Math.round(mb / 1048576)} MB`, v.key);
+        Object.assign(o.dataset, { name: v.name.replace(/[_-]/g, ' ').replace(/^./, c => c.toUpperCase()), g: (v.gender || '').toUpperCase().slice(0, 1),
+          q: v.quality, mb: Math.round(mb / 1048576), spk: v.num_speakers || 1 });
+        sel.append(o);
       }
     }
+    applyVoiceSexFilter(false);
     await fillSpeakers();
     updateKokoroAutoUI();
   }
+
+  // ── Picture drop-downs for the voice pop-up (a native <select> cannot show flags or icons) ──
+  // The <select> stays the source of truth (its value and "change" events); this draws a richer button and list over it.
+  const FLAG_FILE = { ca: 'es-ct', cy: 'gb-wls' };
+  function flagFor(code) {
+    if (!code) return '';
+    const [lang, region] = code.split(/[_-]/);
+    const f = FLAG_FILE[lang] || (region || '').toLowerCase();
+    return f ? `<img class="flag" alt="" loading="lazy" src="pptxvideo/flags/${f}.svg">` : '';
+  }
+  const QUALITY = { high: ['High', 3], medium: ['Medium', 2], low: ['Low', 1], x_low: ['Very low', 1] };
+  const sexIcon = (g) => g === 'F' ? '<span class="vsex f" title="Female"><svg class="ic"><use href="#i-female"/></svg></span>'
+    : g === 'M' ? '<span class="vsex m" title="Male"><svg class="ic"><use href="#i-male"/></svg></span>' : '<span class="vsex" title="Not known"><svg class="ic"><use href="#i-user"/></svg></span>';
+  const bars = (n) => `<span class="qbars" aria-hidden="true">${[1, 2, 3].map(k => `<i class="${k <= n ? 'on' : ''}"></i>`).join('')}</span>`;
+  const RS_ITEM = {
+    ttsEngine: (o) => o.value === 'kokoro'
+      ? `<span class="rs-ico gi-violet"><svg class="ic"><use href="#i-spark"/></svg></span><span class="rs-t"><b>Kokoro</b><small>English · the most natural voices</small></span>`
+      : `<span class="rs-ico gi-sky"><svg class="ic"><use href="#i-globe"/></svg></span><span class="rs-t"><b>Piper</b><small>30+ languages, Greek included</small></span>`,
+    ttsLang: (o) => `${flagFor(o.value)}<span class="rs-t"><b>${esc(o.dataset.name || o.textContent)}</b><small>${esc(o.dataset.country || '')}${o.dataset.native && o.dataset.native !== o.dataset.name ? ' · ' + esc(o.dataset.native) : ''}</small></span>`,
+    ttsVoice: (o) => {
+      const d = o.dataset, q = QUALITY[d.q];
+      return `${sexIcon(d.g)}<span class="rs-t"><b>${esc(d.name || o.textContent)}</b></span>` +
+        (d.flag ? flagFor(d.flag) : '') +
+        (q ? `<span class="vtag" title="Sound quality">${bars(q[1])}${q[0]}</span>` : d.grade ? `<span class="vtag" title="Kokoro grade"><svg class="ic"><use href="#i-spark"/></svg>${esc(d.grade)}</span>` : '') +
+        (+d.spk > 1 ? `<span class="vtag" title="Speakers in this model"><svg class="ic"><use href="#i-users"/></svg>${d.spk}</span>` : '') +
+        (+d.mb ? `<span class="vtag" title="Download size (once)"><svg class="ic"><use href="#i-down"/></svg>${d.mb} MB</span>` : '');
+    },
+  };
+  const richSels = [];
+  function richSelect(sel, item) {
+    const wrap = document.createElement('div');
+    wrap.className = 'rsel';
+    wrap.innerHTML = '<button type="button" class="rsel-btn"></button><div class="rsel-pop" hidden></div>';
+    sel.classList.add('rs-native');
+    sel.after(wrap);
+    const btn = wrap.firstChild, pop = wrap.lastChild;
+    let shown = null;
+    const draw = () => {
+      const o = sel.selectedOptions[0];
+      shown = sel.value + '|' + sel.options.length;
+      btn.innerHTML = `<span class="rs-row">${o ? item(o) : '<span class="muted">—</span>'}</span><span class="rsel-caret">▾</span>`;
+      btn.disabled = sel.disabled || !sel.options.length;
+    };
+    const close = () => { pop.hidden = true; wrap.classList.remove('open'); };
+    const open = () => {
+      pop.replaceChildren(...[...sel.options].filter(o => !o.hidden).map(o => {
+        const r = document.createElement('div');
+        r.className = 'rsel-opt' + (o.selected ? ' on' : '');
+        r.innerHTML = `<span class="rs-row">${item(o)}</span>`;
+        r.addEventListener('click', () => { sel.value = o.value; close(); draw(); sel.dispatchEvent(new Event('change', { bubbles: true })); });
+        return r;
+      }));
+      // floats over everything (fixed), so the pop-up's own scrolling and edges do not cut it off
+      const r = btn.getBoundingClientRect(), below = innerHeight - r.bottom - 12, above = r.top - 12;
+      const up = below < 220 && above > below;
+      Object.assign(pop.style, { position: 'fixed', left: r.left + 'px', width: Math.max(r.width, 300) + 'px',
+        top: up ? 'auto' : (r.bottom + 4) + 'px', bottom: up ? (innerHeight - r.top + 4) + 'px' : 'auto',
+        maxHeight: Math.min(380, up ? above : below) + 'px' });
+      pop.hidden = false; wrap.classList.add('open');
+      const on = pop.querySelector('.on');                  // scroll the list only (not the pop-up behind it)
+      if (on) pop.scrollTop = on.offsetTop - pop.clientHeight / 2 + on.offsetHeight / 2;
+    };
+    btn.addEventListener('click', () => (pop.hidden ? open() : close()));
+    document.addEventListener('pointerdown', (e) => { if (!wrap.contains(e.target)) close(); });
+    document.addEventListener('scroll', (e) => { if (!pop.hidden && !pop.contains(e.target)) close(); }, true);
+    addEventListener('resize', close);
+    sel.addEventListener('change', draw);
+    new MutationObserver(draw).observe(sel, { childList: true });
+    // the value is also set from code (no event): keep the button in step while the pop-up is open
+    richSels.push(() => { if (shown !== sel.value + '|' + sel.options.length) draw(); });
+    draw();
+  }
+  for (const id of ['ttsEngine', 'ttsLang', 'ttsVoice']) richSelect($(id), RS_ITEM[id]);
+  setInterval(() => { if ($('voiceDlg').open) richSels.forEach(f => f()); }, 250);
+
+  // male / female filter for the voice list
+  let voiceSexFilter = (() => { try { return localStorage.getItem('dpVoiceSex') || ''; } catch { return ''; } })();
+  function applyVoiceSexFilter(userChange = false) {
+    const sel = $('ttsVoice');
+    document.querySelectorAll('#voiceSex button').forEach(b => b.classList.toggle('on', b.dataset.v === voiceSexFilter));
+    for (const o of sel.options) o.hidden = !!voiceSexFilter && o.dataset.g !== voiceSexFilter && !(o.selected && !userChange);
+    if (userChange && sel.selectedOptions[0]?.hidden) {
+      const first = [...sel.options].find(o => !o.hidden);
+      if (first) { sel.value = first.value; sel.dispatchEvent(new Event('change', { bubbles: true })); }
+    }
+    const n = [...sel.options].filter(o => !o.hidden).length;
+    $('voiceSexNote').textContent = voiceSexFilter && !n ? `No ${voiceSexFilter === 'F' ? 'female' : 'male'} voice in this language.` : '';
+  }
+  $('voiceSex').addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    voiceSexFilter = b.dataset.v;
+    try { localStorage.setItem('dpVoiceSex', voiceSexFilter); } catch {}
+    applyVoiceSexFilter(true);
+  });
 
   async function fillSpeakers() {
     const sel = $('ttsSpeaker');
@@ -3074,6 +3389,7 @@
     const s = slides[current];
     if (!s) return;
     $('narrOn').checked = s.narrOn;
+    $('narrOnLbl').textContent = s.narrOn ? 'On for this slide' : 'Off for this slide';
     $('narrBody').style.display = s.narrOn ? '' : 'none';
     $('narrHint').textContent = s.narrOn ? '' : (s.text.trim() ? 'This slide has speaker notes – turn on to voice them.' : 'Off – the slide uses the normal hold time.');
     $('narrTitle').textContent = `Slide ${current + 1}`;
@@ -3094,6 +3410,7 @@
     const s = slides[current];
     if (!s) return;
     s.narrOn = $('narrOn').checked;
+    $('narrOnLbl').textContent = s.narrOn ? 'On for this slide' : 'Off for this slide';
     if (s.narrOn && !s.voice) s.voice = await initialVoice();
     await loadNarrationUI();
     updateThumbBadges(current);
@@ -3822,10 +4139,11 @@
   /** The background card shows the slide's choice; the list of videos opens only to change it. */
   function bgPickOpen(open) {
     $('bgCard').classList.toggle('picking', open);
-    if (open) { buildBgMini(); setTimeout(() => $('bgMiniSearch').focus(), 0); }
+    if (open) { buildBgMini(); setTimeout(() => $('bgMiniSearch').focus(), 0); }   // (the inline list is no longer offered)
     loadBgUI();
   }
-  $('bgChange').addEventListener('click', () => { if (!job) bgPickOpen(!$('bgCard').classList.contains('picking')); });
+  $('bgUpload').addEventListener('click', () => { if (!job) $('bgInput').click(); });
+  $('bgSelPic').addEventListener('click', () => { if (!job) $('bgCurrent').click(); });
   $('bgModeSeg').addEventListener('click', (e) => {
     const b = e.target.closest('button');
     if (!b || job) return;
@@ -4022,9 +4340,10 @@
   /** The avatar card shows the slide's presenter; the list opens only to change it. */
   function avPickOpen(open) {
     $('avatarCard').classList.toggle('picking', open);
-    $('avChange').querySelector('span').textContent = open ? 'Done' : 'Change';
+    $('avChange').querySelector('span').textContent = 'Change';
   }
-  $('avChange').addEventListener('click', () => { if (!job) avPickOpen(!$('avatarCard').classList.contains('picking')); });
+  $('avChange').addEventListener('click', () => { if (!job) avDlgOpen(); });
+  $('avSelPic').addEventListener('click', () => { if (!job) avDlgOpen(); });
   function avSelUI() {
     const s = slides[current];
     if (!s) return;
@@ -4033,7 +4352,8 @@
     const a = all[idx] || { id, name: id ? avName(id) : 'No avatar installed' };
     const pic = $('avSelPic');
     pic.classList.toggle('off', !s.av.on);
-    pic.innerHTML = a.preview ? `<img alt="" src="${esc(avImg(a.preview))}">` : avFace(a, idx);
+    const pu = a.id ? avPicFor(a) : null;
+    pic.innerHTML = pu ? `<img alt="" src="${esc(avImg(pu))}">` : avFace(a, idx);
     const im = pic.querySelector('img');
     if (im) im.onerror = () => { pic.innerHTML = avFace(a, idx); };
     $('avSelName').textContent = s.av.on ? a.name : 'No avatar on this slide';
@@ -4056,24 +4376,201 @@
     avLoadUI();
   }
 
+  // ── Presenter pop-up: every avatar in a row, with its look (clothing colour, hair colour, moustache / beard) ──
+  const GROOM_NAME = { mustache: 'Moustache', beard: 'Beard', eyebrows: 'Eyebrows' };
+  const HAIR_DEFAULT = ['Default', 'Black', 'Dark brown', 'Brown', 'Light brown', 'Dark blonde', 'Blonde', 'Platinum', 'Auburn', 'Ginger', 'Salt & pepper', 'Grey', 'White'];
+  AV.lookPics = new Map();                                  // "id|look" -> picture made by the app
+  AV.lookBusy = new Set();
+  const avLook = (id) => (avDeck.looks ||= {})[id] ||= { colors: {}, hairColor: 'Default', hideGrooms: [] };
+  const lookSig = (lk) => !lk ? '' : Object.entries(lk.colors || {}).filter(([, v]) => v).sort().map(([k, v]) => k + '=' + v).join(';') +
+    '|' + (lk.hairColor || 'Default') + '|' + [...(lk.hideGrooms || [])].sort().join(',');
+  const lookIsDefault = (lk) => lookSig(lk) === '|Default|';
+  const lookKey = (id) => id + '|' + lookSig(avDeck.looks?.[id]);
+  /** The picture to show for an avatar: its current look when the app has made one, else its plain portrait. */
+  function avPicFor(a) {
+    const lk = avDeck.looks?.[a.id];
+    if (lk && !lookIsDefault(lk)) { const u = AV.lookPics.get(lookKey(a.id)); if (u) return u; }
+    return a.preview || null;
+  }
+  /** Looks to send with a render: only the avatars whose look was changed. */
+  function avLooksPayload() {
+    const out = {};
+    for (const [id, lk] of Object.entries(avDeck.looks || {})) if (!lookIsDefault(lk)) out[id] = lk;
+    return out;
+  }
+
+  function avDlgOpen() {
+    if (!APP.isDesktop) return;
+    avDlgBuild();
+    $('avDlg').showModal();
+  }
+  function avDlgBuild() {
+    const box = $('avList');
+    if (!box) return;
+    const all = avAll(), s = slides[current];
+    const ng = narrGenderOf(current);
+    $('avDlgNote').textContent = ng ? `The narration on this slide is a ${ng} voice. Picking a ${ng === 'male' ? 'female' : 'male'} presenter makes the narration again with a matching voice.` : '';
+    box.replaceChildren(...all.map((a, idx) => avRow(a, idx, s)));
+  }
+  function avRow(a, idx, s) {
+    const row = document.createElement('div');
+    const chosen = !!s?.av?.on && avEffective(current) === a.id;
+    row.className = 'avrow' + (chosen ? ' sel' : '') + (a.installedHere ? '' : ' remote');
+    const g = avGenderOf(a.id), lk = avLook(a.id), pic = avPicFor(a), busy = AV.lookBusy.has(lookKey(a.id));
+    const hairs = AV.status?.hairColors?.length ? AV.status.hairColors : HAIR_DEFAULT;
+    const grooms = a.grooms || [];
+    const colors = a.colors || [];
+    row.innerHTML = `
+      <div class="avr-pic">${pic ? `<img alt="" src="${esc(avImg(pic))}">` : avFace(a, idx)}${busy ? '<span class="avr-busy"><i></i>Making the preview…</span>' : ''}</div>
+      <div class="avr-main">
+        <div class="avr-h"><b>${esc(a.name)}</b><span>${[g === 'female' ? 'Female' : g === 'male' ? 'Male' : '',
+          a.installedHere ? (a.builtIn ? 'Built in' : 'On this PC') : (a.size ? fmtSize(a.size) + ' download' : 'Download')].filter(Boolean).join(' · ')}</span>
+          ${chosen ? '<em class="avr-now"><svg class="ic"><use href="#i-okmark"/></svg>On this slide</em>' : ''}</div>
+        <div class="avr-look"${a.installedHere ? '' : ' hidden'}>
+          ${colors.map(c => `<div class="avr-p"><span class="avr-pl"><span class="gi gi-sky"><svg class="ic"><use href="#i-shirt"/></svg></span>${esc(c.label || 'Clothing')}</span>
+              <span class="avr-col"><input type="color" data-color="${esc(c.param)}" value="${esc(lk.colors[c.param] || c.default || '#4a6fd8')}" title="Pick a colour">
+              <span class="avr-cv">${lk.colors[c.param] ? esc(lk.colors[c.param].toUpperCase()) : 'Original'}</span>
+              <button class="sm icon-only" data-reset="${esc(c.param)}" title="Back to the original colour"${lk.colors[c.param] ? '' : ' disabled'}><svg class="ic"><use href="#i-restart"/></svg></button></span></div>`).join('')}
+          <div class="avr-p"><span class="avr-pl"><span class="gi gi-amber"><svg class="ic"><use href="#i-hair"/></svg></span>Hair colour</span>
+            <select data-hair>${hairs.map(h => `<option value="${esc(h)}"${h === (lk.hairColor || 'Default') ? ' selected' : ''}>${esc(h === 'Default' ? 'Original' : h)}</option>`).join('')}</select></div>
+          ${grooms.map(gr => `<div class="avr-p"><span class="avr-pl"><span class="gi gi-rose"><svg class="ic"><use href="#i-${/beard/i.test(gr) ? 'beard' : 'moustache'}"/></svg></span>${esc(GROOM_NAME[gr.toLowerCase()] || gr)}</span>
+            <label class="avr-sw"><span class="switch"><input type="checkbox" data-groom="${esc(gr)}"${(lk.hideGrooms || []).includes(gr) ? '' : ' checked'}><span></span></span><em>${(lk.hideGrooms || []).includes(gr) ? 'Off' : 'On'}</em></label></div>`).join('')}
+        </div>
+        <div class="avr-b"></div>
+      </div>`;
+    const img = row.querySelector('.avr-pic img'); if (img) img.onerror = () => { img.remove(); row.querySelector('.avr-pic').insertAdjacentHTML('afterbegin', avFace(a, idx)); };
+    const b = row.querySelector('.avr-b');
+    const inst = AV.installing.get(a.id);
+    if (inst !== undefined) b.innerHTML = `<div class="avp-prog"><i style="width:${Math.round((inst || 0) * 100)}%"></i></div><span class="muted">Downloading… ${Math.round((inst || 0) * 100)}%</span>`;
+    else if (!a.installedHere) {
+      b.innerHTML = `<button class="sm primary"><svg class="ic"><use href="#i-down"/></svg>Download</button>`;
+      b.firstChild.addEventListener('click', () => { avInstall(a); avDlgBuild(); });
+    } else {
+      const lkDefault = lookIsDefault(lk), have = lkDefault || AV.lookPics.has(lookKey(a.id));
+      b.innerHTML = `<button class="sm prev"${have || busy ? ' disabled' : ''} title="Let the app draw this look (about a minute the first time)"><svg class="ic"><use href="#i-play"/></svg>${have ? 'Preview up to date' : busy ? 'Making the preview…' : 'Preview this look'}</button>
+        <button class="sm primary pick"><svg class="ic"><use href="#i-okmark"/></svg>${chosen ? 'Selected' : 'Select'}</button>`;
+      b.querySelector('.prev').addEventListener('click', () => avLookPreview(a));
+      b.querySelector('.pick').addEventListener('click', () => { $('avDlg').close(); avChoose(a); });
+    }
+    // look changes
+    const changed = () => { avDlgBuild(); avSelUI(); };
+    row.querySelectorAll('input[data-color]').forEach(inp => inp.addEventListener('change', () => { lk.colors[inp.dataset.color] = inp.value; changed(); }));
+    row.querySelectorAll('[data-reset]').forEach(btn => btn.addEventListener('click', () => { delete lk.colors[btn.dataset.reset]; changed(); }));
+    row.querySelector('[data-hair]')?.addEventListener('change', (e) => { lk.hairColor = e.target.value; changed(); });
+    row.querySelectorAll('input[data-groom]').forEach(cb => cb.addEventListener('change', () => {
+      const set = new Set(lk.hideGrooms || []); cb.checked ? set.delete(cb.dataset.groom) : set.add(cb.dataset.groom);
+      lk.hideGrooms = [...set]; changed();
+    }));
+    return row;
+  }
+  function avLookPreview(a) {
+    const key = lookKey(a.id);
+    if (AV.lookBusy.has(key) || job) return;
+    AV.lookBusy.add(key);
+    APP.send('avatarPortrait', { id: a.id, key, look: avLook(a.id) });
+    avDlgBuild();
+  }
+
+  /** The user picked a presenter (from the pop-up or the grid). */
+  function avChoose(a) {
+    if (!a.installedHere) { avInstall(a); return; }
+    const g = avGenderOf(a.id);
+    avDeck.byGender = g ? { [g]: a.id } : {};               // picked on purpose: this presenter, the narration follows
+    avPickOpen(false);
+    if (!avDeck.chosen) avApplyAll(a.id);                    // first choice: the whole presentation
+    else avSet({ on: true, id: a.id });
+    // one presenter for the whole video: every slide that has the avatar switches to the one picked
+    slides.forEach((t, i) => { if (t.av?.on) { t.av = { ...t.av, id: a.id, keep: true }; updateThumbBadges(i); } });
+    avLoadUI();
+    avMatchNarration(a.id);
+  }
+
+  // ── a presenter of the other sex: the narration is made again with a matching voice ──
+  async function voiceGenderOf(v) {
+    if (!v) return '';
+    if (v.engine === 'kokoro' && v.kokoroVoice) return v.kokoroVoice[1] === 'f' ? 'female' : v.kokoroVoice[1] === 'm' ? 'male' : '';
+    if (v.piperKey) {
+      const pv = (await tts.piperVoices()).find(x => x.key === v.piperKey);
+      const pg = (pv?.gender || '').toLowerCase();
+      return pg.startsWith('f') ? 'female' : pg.startsWith('m') ? 'male' : '';
+    }
+    return '';
+  }
+  /** The same kind of voice (engine, language, speed) but of the given sex; null when there is none in that language. */
+  async function voiceForGender(v, g) {
+    if (!v || !g) return null;
+    const want = g === 'male' ? 'm' : 'f';
+    if (v.engine === 'kokoro') {
+      const pre = (v.kokoroVoice || 'af_heart')[0];
+      const pick = { a: { m: 'am_michael', f: 'af_heart' }, b: { m: 'bm_george', f: 'bf_emma' } }[pre]?.[want]
+        || KOKORO_VOICES.find(k => k[0] === pre && k[1] === want);
+      return pick ? { ...v, kokoroVoice: pick } : null;
+    }
+    const list = await tts.piperVoices();
+    const cur = list.find(x => x.key === v.piperKey);
+    const lang = cur?.language.code || v.lang || 'en_US';
+    const sameSex = (x) => (x.gender || '').toLowerCase().startsWith(want);
+    const q = { medium: 0, high: 1, low: 2, x_low: 3 };
+    const cands = list.filter(x => sameSex(x) && x.language.code === lang).concat(list.filter(x => sameSex(x) && x.language.code !== lang && x.language.code.slice(0, 2) === lang.slice(0, 2)));
+    cands.sort((x, y) => (x.language.code !== lang) - (y.language.code !== lang) || (x.quality === cur?.quality ? -1 : 0) - (y.quality === cur?.quality ? -1 : 0) || (q[x.quality] ?? 9) - (q[y.quality] ?? 9));
+    const c = cands[0];
+    return c ? { ...v, engine: 'piper', lang: c.language.code, piperKey: c.key, speaker: 0 } : null;
+  }
+  async function avMatchNarration(id) {
+    const g = avGenderOf(id);
+    if (!g) return;
+    let changed = 0, recorded = 0, none = 0;
+    for (const [i, s] of slides.entries()) {
+      if (!s.av?.on || s.av.id !== id || !s.narrOn) continue;
+      if (s.kind === 'rec') { if (narrGenderOf(i) && narrGenderOf(i) !== g) recorded++; continue; }
+      const vg = await voiceGenderOf(s.voice);
+      if (!vg || vg === g) continue;
+      const nv = await voiceForGender(s.voice, g);
+      if (!nv) { none++; continue; }
+      s.voice = nv; changed++;
+      updateThumbBadges(i);
+    }
+    if (defaultVoice && (await voiceGenderOf(defaultVoice)) !== g) defaultVoice = (await voiceForGender(defaultVoice, g)) || defaultVoice;
+    const notes = [];
+    if (recorded) notes.push(`${recorded} slide${recorded === 1 ? ' has' : 's have'} your own recording, which stays as it is`);
+    if (none) notes.push(`there is no ${g} voice in the language of ${none} slide${none === 1 ? '' : 's'}`);
+    if (!changed) { if (notes.length) setTtsStatus(notes.join('; ') + '.'); return; }
+    await loadNarrationUI();
+    setTtsStatus(`Your presenter is ${g}: making the narration again with a ${g} voice on ${changed} slide${changed === 1 ? '' : 's'}…`);
+    const made = await generateAll();
+    if (made >= 0) setTtsStatus(`Done – the narration of ${changed} slide${changed === 1 ? '' : 's'} now uses a ${g} voice.` + (notes.length ? ' ' + notes.join('; ') + '.' : ''));
+  }
+
+  /** A first frame of a video file, as a small picture (for your own uploads, which have no poster). */
+  function videoPoster(file) {
+    return new Promise((ok) => {
+      const v = document.createElement('video'), url = URL.createObjectURL(file);
+      const done = (val) => { clearTimeout(tm); v.removeAttribute('src'); v.load(); URL.revokeObjectURL(url); ok(val); };
+      const tm = setTimeout(() => done(null), 8000);
+      Object.assign(v, { muted: true, preload: 'auto', playsInline: true });
+      v.onloadedmetadata = () => { v.currentTime = Math.min(1, (v.duration || 2) / 3); };
+      v.onseeked = () => {
+        try {
+          const w = 480, h = Math.max(2, Math.round(w * (v.videoHeight || 270) / (v.videoWidth || 480)));
+          const c = Object.assign(document.createElement('canvas'), { width: w, height: h });
+          c.getContext('2d').drawImage(v, 0, 0, w, h);
+          done(c.toDataURL('image/jpeg', 0.8));
+        } catch { done(null); }
+      };
+      v.onerror = () => done(null);
+      v.src = url;
+    });
+  }
+
   function avBuildGrid() {
+    renderAvatarPage();
+    if ($('avDlg')?.open) avDlgBuild();
     const s = slides[current];
     const all = avAll();
     avSelUI();
     $('avGrid').replaceChildren(...all.map((a, i) => avCard(a, i, {
       selected: s?.av?.on && avEffective(current) === a.id,
-      onPick: (a) => {
-        if (!a.installedHere) { avInstall(a); return; }
-        const g = avGenderOf(a.id);
-        if (g) avDeck.byGender[g] = a.id;
-        avPickOpen(false);
-        if (!avDeck.chosen) { avApplyAll(a.id); return; }        // first choice: the whole presentation
-        // one presenter for the whole video: every slide that has the avatar switches to the one picked
-        // (slides whose narration is of the other sex keep a matching presenter)
-        slides.forEach((t, i) => { if (t.av?.on && t.av.id !== a.id) { t.av = { ...t.av, id: a.id, keep: false }; updateThumbBadges(i); } });
-        const ng = narrGenderOf(current);
-        avSet({ on: true, id: a.id, keep: !!(ng && g && ng !== g) });   // picked on purpose for this slide's voice
-      },
+      onPick: (a) => avChoose(a),
     })));
 
     if (!all.length) $('avGrid').innerHTML = `<div class="mg-empty">${AV.status && !AV.status.player ? 'The avatar renderer is missing from this app build.' : 'Loading avatars…'}</div>`;
@@ -4253,6 +4750,13 @@
     APP.send('avatarPortrait', { id: a.id });
   }
   APP.on('avatarPortrait', (p) => {
+    if (p.key) {                                           // a look preview from the pop-up
+      AV.lookBusy.delete(p.key);
+      if (p.url) AV.lookPics.set(p.key, p.url);
+      else if (p.busy) setTtsStatus('The app is busy making a video – try the preview again when it is done.');
+      avDlgBuild(); avSelUI(); renderAvatarPage();
+      return;
+    }
     AV.portraitBusy = null;
     if (p.url) {
       const a = AV.list.find(x => x.id === p.id);
@@ -4345,7 +4849,7 @@
       };
       signal?.addEventListener('abort', () => APP.send('avatarCancel'), { once: true });
     });
-    APP.send('avatarRender', { video, avatar: items[0].avatar, placement: items[0].placement, heightPercent: items[0].heightPercent, style: avDeck.style, strength: avDeck.strength, slides: items, addNarration: false });
+    APP.send('avatarRender', { video, avatar: items[0].avatar, placement: items[0].placement, heightPercent: items[0].heightPercent, style: avDeck.style, strength: avDeck.strength, slides: items, addNarration: false, looks: avLooksPayload() });
     const d = await result;
     const out = await fetch(APP.origin + d.url).then(r => r.blob());
     return { blob: out, name: d.name, file: d.file };
@@ -5637,8 +6141,10 @@ ${parts.join('\n\n')}
     }
     if (narrow()) setNav('compact');
     $('content').scrollTop = 0;
-    if (id === 'history') renderHistory();
-    if (id === 'videos') renderVideoGallery();
+    // (after the current script has run: on start-up the page can open straight on one of these)
+    if (id === 'history') setTimeout(renderHistory, 0);
+    if (id === 'videos') setTimeout(renderMyVideos, 0);
+    if (id === 'avatars') setTimeout(renderAvatarPage, 0);
     if (id === 'settings') showVoiceCache();
   }
   window.addEventListener('hashchange', () => showPage(location.hash.slice(1)));
@@ -5698,35 +6204,344 @@ ${parts.join('\n\n')}
       localStorage.setItem('pptxHistory', JSON.stringify(meta));
     } catch {}
   }
-  function renderHistory() {
+  async function renderHistory() {
     const box = $('historyList');
+    const projects = await projAll();
+    const known = new Set(projects.map(p => p.name + '|' + p.size));
+    const older = pastHistory.filter(x => !known.has(x.name + '|' + x.size) && !histList.some(h => h.when === x.when));
     box.innerHTML = '';
-    const nowNames = new Set(histList.map(x => x.when));
-    const older = pastHistory.filter(x => !nowNames.has(x.when));
-    if (!histList.length && !older.length) {
-      box.innerHTML = `<div class="empty"><svg class="ic"><use href="#i-history"/></svg><b>No videos yet</b>Videos you export on the Create page appear here.</div>`;
+    if (!projects.length && !older.length) {
+      box.innerHTML = `<div class="empty"><svg class="ic"><use href="#i-history"/></svg><b>No videos yet</b>Videos you make on the Create page appear here, with everything you chose, so you can open them again.</div>`;
       return;
     }
-    const row = (x, live) => {
+    const urls = [];
+    for (const p of projects) {
       const el = document.createElement('div');
       el.className = 'setcard histitem';
-      el.innerHTML = (live ? '<video preload="metadata" muted playsinline></video>' : `<svg class="ic"><use href="#i-film"/></svg>`) +
-        `<div class="st"><b></b><span></span></div>` +
-        (live ? `<button class="sm play">${icon('play', true)}Play</button><a class="dl"><button class="sm primary">${icon('down')}Download</button></a>` : '');
-      el.querySelector('b').textContent = `${x.name}`;
-      el.querySelector('.st span').textContent = `${new Date(x.when).toLocaleString()} · ${fmtSize(x.size)}${x.info ? ' · ' + x.info : ''}` +
-        (live ? '' : ' · made in an earlier visit, no longer in this browser');
-      if (live) {
-        const v = el.querySelector('video');
-        v.src = x.url + '#t=0.5';
-        el.querySelector('.play').addEventListener('click', () => { v.controls = true; v.muted = false; v.src = x.url; v.play().catch(() => {}); });
-        const a = el.querySelector('.dl'); a.href = x.url; a.download = x.name;
+      el.innerHTML = `${p.thumb ? `<img class="hthumb" alt="" src="${p.thumb}">` : '<svg class="ic"><use href="#i-film"/></svg>'}
+        <div class="st"><b></b><span></span></div>
+        <div class="hbtns">
+          ${p.video ? `<button class="sm play"><svg class="ic"><use href="#i-play"/></svg>Play</button><a class="dl"><button class="sm"><svg class="ic"><use href="#i-down"/></svg>Download</button></a>` : ''}
+          <button class="sm primary open" title="Open this presentation again with the same narration, backgrounds, avatar and settings"><svg class="ic"><use href="#i-restart"/></svg>Open again</button>
+          <button class="sm icon-only del" title="Delete from History"><svg class="ic"><use href="#i-trash"/></svg></button>
+        </div>`;
+      el.querySelector('b').textContent = p.title || p.name;
+      el.querySelector('.st span').textContent = `${new Date(p.when).toLocaleString()} · ${p.name} · ${fmtSize(p.size)}${p.info ? ' · ' + p.info : ''}${p.video ? '' : ' · video not kept (no room) – open it again to make it'}`;
+      if (p.video) {
+        const url = URL.createObjectURL(p.video); urls.push(url);
+        const a = el.querySelector('.dl'); a.href = url; a.download = p.name;
+        el.querySelector('.play').addEventListener('click', () => {
+          const v = document.createElement('video'); Object.assign(v, { src: url, controls: true, autoplay: true, className: 'hthumb' });
+          el.querySelector('.hthumb, .ic')?.replaceWith(v);
+        });
+      }
+      el.querySelector('.open').addEventListener('click', () => openProject(p.id));
+      el.querySelector('.del').addEventListener('click', async () => {
+        if (!confirm(`Delete “${p.title || p.name}” from History?`)) return;
+        await projDel(p.id); renderHistory();
+      });
+      box.appendChild(el);
+    }
+    if (older.length) {
+      box.insertAdjacentHTML('beforeend', '<div class="grouptitle">Earlier (only the name was kept)</div>');
+      for (const x of older.slice(0, 20)) {
+        const el = document.createElement('div');
+        el.className = 'setcard histitem';
+        el.innerHTML = `<svg class="ic"><use href="#i-film"/></svg><div class="st"><b></b><span></span></div>
+          <div class="hbtns"><button class="sm icon-only del" title="Delete from History"><svg class="ic"><use href="#i-trash"/></svg></button></div>`;
+        el.querySelector('b').textContent = x.name;
+        el.querySelector('.st span').textContent = `${new Date(x.when).toLocaleString()} · ${fmtSize(x.size)}${x.info ? ' · ' + x.info : ''}`;
+        el.querySelector('.del').addEventListener('click', () => {
+          pastHistory = pastHistory.filter(y => y.when !== x.when);
+          try { localStorage.setItem('pptxHistory', JSON.stringify(pastHistory)); } catch {}
+          renderHistory();
+        });
+        box.appendChild(el);
+      }
+    }
+  }
+
+  // ── Saved projects (History): the presentation, every choice and the narration, kept in this browser ──
+  const idbOpen = (() => {
+    let p = null;
+    return () => p ||= new Promise((ok, no) => {
+      const r = indexedDB.open('deckpersona', 1);
+      r.onupgradeneeded = () => r.result.createObjectStore('projects', { keyPath: 'id' });
+      r.onsuccess = () => ok(r.result);
+      r.onerror = () => { p = null; no(r.error); };
+    });
+  })();
+  async function projDo(mode, fn) {
+    const db = await idbOpen();
+    return new Promise((ok, no) => {
+      const tx = db.transaction('projects', mode), req = fn(tx.objectStore('projects'));
+      tx.oncomplete = () => ok(req?.result);
+      tx.onerror = tx.onabort = () => no(tx.error);
+    });
+  }
+  const projAll = () => projDo('readonly', st => st.getAll()).then(l => (l || []).sort((a, b) => b.when - a.when)).catch(() => []);
+  const projGet = (id) => projDo('readonly', st => st.get(id));
+  const projDel = (id) => projDo('readwrite', st => st.delete(id));
+  const projPut = (p) => projDo('readwrite', st => st.put(p));
+
+  const SETTING_IDS = ['resSel', 'containerSel', 'fpsSel', 'engineSel', 'holdSec', 'leadSec', 'tailSec', 'animChk', 'clickGapSec',
+    'clickNarrChk', 'transitionSel', 'transMs', 'readMode', 'readStrength', 'bgLoop'];
+  /** Everything the user chose, as plain data (the narration audio is stored next to it as WAV files). */
+  function captureState() {
+    const plain = (o) => { try { return o == null ? null : JSON.parse(JSON.stringify(o)); } catch { return null; } };
+    return {
+      v: 1,
+      settings: Object.fromEntries(SETTING_IDS.filter(id => $(id)).map(id => [id, $(id).type === 'checkbox' ? $(id).checked : $(id).value])),
+      avDeck: plain({ style: avDeck.style, strength: avDeck.strength, chosen: avDeck.chosen, byGender: avDeck.byGender, looks: avDeck.looks || {} }),
+      slides: slides.map(s => ({
+        narrOn: s.narrOn, voice: plain(s.voice), text: s.text, kind: s.kind, label: s.label, spokenText: s.spokenText,
+        voiceSig: s.voiceSig, marks: plain(s.marks), mode: s.mode, inset: s.inset, blend: s.blend, trans: plain(s.trans), av: plain(s.av),
+        bg: s.bg ? plain({ title: s.bg.title, poster: s.bg.poster, size: s.bg.size, px: s.bg.px, pxId: s.bg.pxId, dl: s.bg.dl,
+          credit: s.bg.credit, file: s.bg.file, upload: s.bg.upload, ownKey: s.bg.ownKey,
+          src: typeof s.bg.source === 'string' ? s.bg.source : null }) : null,
+      })),
+    };
+  }
+  /** Called when a video is finished: keep the project (and the video, when there is room) for History. */
+  async function saveProject(videoBlob, name, ext, info) {
+    if (!deckFile || !slides.length) return;
+    let thumb = null;
+    try {
+      const c = document.querySelector('.thumb[data-index="0"] canvas');
+      if (c?.width) { const t = makeCanvas(320, Math.round(320 * c.height / c.width)); t.getContext('2d').drawImage(c, 0, 0, t.width, t.height); thumb = t.toDataURL('image/jpeg', 0.75); }
+    } catch {}
+    const p = {
+      id: Date.now(), when: Date.now(), name, ext, size: videoBlob.size, info: info.replace(/^ · /, ''),
+      title: fileBaseName, deck: deckFile, deckName: deckFile.name, state: captureState(), thumb,
+      audio: slides.map(s => s.buffer ? new Blob([wavOf(s.buffer)], { type: 'audio/wav' }) : null),
+      video: videoBlob,
+    };
+    try { await projPut(p); }
+    catch (err) {                                        // no room for the video itself: keep the project without it
+      console.warn('History: keeping the project without the video', err);
+      try { await projPut({ ...p, video: null }); } catch (e2) { console.warn('History: could not save the project', e2); }
+    }
+    for (const s of slides) if (s.bg) noteUsedVideo(s.bg);
+  }
+  const makeCanvas = (w, h) => Object.assign(document.createElement('canvas'), { width: w, height: h });
+
+  /** Open a project from History again: the same presentation with every choice and the narration. */
+  async function openProject(id) {
+    const p = await projGet(id);
+    if (!p?.deck) return;
+    if (job) { setStatus('Wait until the current video is finished (or stop it) before opening another project.', true); return; }
+    location.hash = '#create';
+    await loadFile(p.deck instanceof File ? p.deck : new File([p.deck], p.deckName || (p.title + '.pptx')));
+    const st = p.state;
+    if (!renderer || !st || slides.length !== st.slides.length) { setStatus('This project could not be opened again: its slides do not match.', true); return; }
+    for (const [id, v] of Object.entries(st.settings || {})) {
+      const el = $(id); if (!el) continue;
+      if (el.type === 'checkbox') el.checked = !!v; else el.value = v;
+      el.dispatchEvent(new Event('change')); el.dispatchEvent(new Event('input'));
+    }
+    if (st.avDeck) { Object.assign(avDeck, st.avDeck); if ($('avStyle')) $('avStyle').value = avDeck.style; }
+    const ctx = audioCtx();
+    for (let i = 0; i < slides.length; i++) {
+      const x = st.slides[i], s = slides[i];
+      Object.assign(s, { narrOn: !!x.narrOn, voice: x.voice, text: x.text ?? s.text, kind: x.kind, label: x.label || '', spokenText: x.spokenText || '',
+        voiceSig: x.voiceSig || '', marks: x.marks || null, mode: x.mode || 'transparent', inset: x.inset ?? 80, blend: x.blend ?? 85,
+        av: x.av || { ...avDefaults }, wavName: '', wavFor: null });
+      if (i > 0) s.trans = x.trans || s.trans;
+      const a = p.audio?.[i];
+      if (a) { try { s.buffer = await ctx.decodeAudioData(await a.arrayBuffer()); } catch { s.buffer = null; } }
+      s.bg = null;
+      if (x.bg) { try { s.bg = await bgRestore(x.bg); } catch (err) { console.warn('background', err); } }
+      updatePill(i);
+    }
+    slides.forEach((s, i) => { updateThumbBadges(i); if (s.av?.on && s.buffer) avSendNarration(i); });
+    if (slides.some(s => s.bg?.px && !s.bg.source))
+      ensureBackgrounds().then(() => { loadBgUI(); refreshLive(); slides.forEach((_, k) => updateThumbBadges(k)); }).catch(() => {});
+    await selectSlide(0);
+    await loadNarrationUI(); avLoadUI(); loadBgUI(); refreshLive();
+    setStatus(`“${p.title}” is open again with your choices – change anything, then Create video.`);
+  }
+  async function bgRestore(b) {
+    if (b.upload) {
+      const r = b.ownKey ? await (await caches.open(OWN_CACHE)).match(b.ownKey) : null;
+      if (!r) return null;
+      const blob = await r.blob();
+      const poster = b.poster || usedList().find(x => x.key === b.ownKey)?.poster || null;
+      return { title: b.title, source: new File([blob], b.title || 'video.mp4', { type: blob.type }), upload: true, size: blob.size, ownKey: b.ownKey, poster };
+    }
+    if (b.px) return { ...b, source: pxDone.get(b.pxId) || null };
+    return { title: b.title, poster: b.poster, size: b.size, source: b.src, file: b.file };
+  }
+
+  // ── Your videos: every background video used in the app – Pixabay downloads, your own files, the site's clips ──
+  const OWN_CACHE = 'dp-own-videos';
+  const USED_KEY = 'dpUsedVideos';
+  const usedList = () => { try { return JSON.parse(localStorage.getItem(USED_KEY) || '[]'); } catch { return []; } };
+  const usedSave = (l) => { try { localStorage.setItem(USED_KEY, JSON.stringify(l.slice(0, 300))); } catch {} };
+  const ownKeyOf = (f) => `https://deckpersona.local/own/${encodeURIComponent(f.name)}?s=${f.size}&m=${f.lastModified || 0}`;
+  /** Remember a background video the user picked; his own files are copied into the browser so they can be used again. */
+  async function noteUsedVideo(bg) {
+    if (!bg) return;
+    const kind = bg.upload ? 'own' : bg.px ? 'pixabay' : 'site';
+    if (kind === 'own' && !bg.ownKey && bg.source instanceof Blob) {
+      const key = ownKeyOf(bg.source);
+      try {
+        const c = await caches.open(OWN_CACHE);
+        if (!(await c.match(key))) await c.put(key, new Response(bg.source, { headers: { 'content-type': bg.source.type || 'video/mp4' } }));
+        bg.ownKey = key;
+      } catch (err) { console.warn('Could not keep a copy of your video', err); return; }
+    }
+    const key = kind === 'own' ? bg.ownKey : kind === 'pixabay' ? bg.dl : (typeof bg.source === 'string' ? bg.source : '');
+    if (!key) return;
+    const l = usedList().filter(x => x.key !== key);
+    l.unshift({ key, kind, title: bg.title || '', poster: bg.poster || null, pxId: bg.pxId || null, credit: bg.credit || null,
+      file: bg.file || null, size: bg.size || bg.source?.size || 0, when: Date.now() });
+    usedSave(l);
+  }
+  async function bgFromUsed(x) {
+    if (x.kind === 'pixabay') return { title: x.title, poster: x.poster, size: x.size, source: pxDone.get(x.pxId) || null, px: true, pxId: x.pxId, dl: x.key, credit: x.credit, file: x.file };
+    if (x.kind === 'own') return bgRestore({ upload: true, title: x.title, ownKey: x.key });
+    return { title: x.title, poster: x.poster, size: x.size, source: x.key, file: x.file };
+  }
+  async function removeUsedVideo(x) {
+    try {
+      if (x.kind === 'pixabay') {
+        const c = await caches.open(PX_CACHE);
+        for (const v of ['small', 'tiny', 'medium']) await c.delete(x.key.replace(/_small\.mp4/i, `_${v}.mp4`));
+        pxDone.delete(x.pxId); pxDone.delete(`${x.pxId}-tiny`); pxDone.delete(`${x.pxId}-medium`);
+      } else if (x.kind === 'own') await (await caches.open(OWN_CACHE)).delete(x.key);
+    } catch (err) { console.warn(err); }
+    usedSave(usedList().filter(y => y.key !== x.key));
+  }
+  let vgUrls = [];
+  async function renderMyVideos() {
+    const box = $('vgGrid');
+    vgUrls.forEach(u => URL.revokeObjectURL(u)); vgUrls = [];
+    let l = usedList();
+    // Pixabay clips downloaded before this list existed
+    try {
+      const c = await caches.open(PX_CACHE);
+      for (const req of await c.keys()) {
+        const u = req.url;
+        if (/_(tiny|medium)\.mp4/i.test(u) || l.some(x => x.key === u)) continue;
+        const id = (u.match(/\/(\d+)[-_][^/]*$/) || [])[1] || u;
+        l.push({ key: u, kind: 'pixabay', title: 'Pixabay clip ' + id, pxId: id, when: 0 });
+      }
+    } catch {}
+    $('vgCount').textContent = l.length ? `${l.length} video${l.length === 1 ? '' : 's'} used in DeckPersona` : '';
+    $('vgClear').hidden = !l.length;
+    if (!l.length) {
+      box.innerHTML = `<div class="empty" style="grid-column:1/-1"><svg class="ic"><use href="#i-film"/></svg><b>No videos yet</b>The background videos you use – from the gallery or your own files – appear here, ready to use again.</div>`;
+      return;
+    }
+    const kindName = { pixabay: 'Pixabay', own: 'Your video', site: 'DeckPersona library' };
+    box.replaceChildren(...l.map(x => {
+      const el = document.createElement('div');
+      el.className = 'myv';
+      el.innerHTML = `<div class="myv-pic"><span class="myv-kind k-${x.kind}">${kindName[x.kind]}</span></div>
+        <div class="myv-t"><b></b><span></span></div>
+        <div class="myv-b"><button class="sm primary use"><svg class="ic"><use href="#i-okmark"/></svg>Use on this slide</button>
+        <button class="sm icon-only del" title="Remove from this list${x.kind === 'site' ? '' : ' and delete the copy kept here'}"><svg class="ic"><use href="#i-trash"/></svg></button></div>`;
+      el.querySelector('b').textContent = x.title || 'Video';
+      el.querySelector('.myv-t span').textContent = [x.credit?.user ? 'by ' + x.credit.user : '', x.size ? fmtSize(x.size) : '',
+        x.when ? 'used ' + new Date(x.when).toLocaleDateString() : ''].filter(Boolean).join(' · ');
+      const pic = el.querySelector('.myv-pic');
+      if (x.poster) pic.style.backgroundImage = `url("${x.poster}")`;
+      else (async () => {                                  // no poster: the video's own frame
+        try {
+          let src = x.key;
+          if (x.kind !== 'site') {
+            const r = await (await caches.open(x.kind === 'own' ? OWN_CACHE : PX_CACHE)).match(x.key);
+            if (!r) return;
+            src = URL.createObjectURL(await r.blob()); vgUrls.push(src);
+          }
+          const v = document.createElement('video');
+          Object.assign(v, { muted: true, preload: 'metadata', playsInline: true, src: src + '#t=1' });
+          pic.prepend(v);
+        } catch {}
+      })();
+      const use = el.querySelector('.use');
+      use.disabled = !slides.length;
+      use.title = slides.length ? `Use it on slide ${current + 1}` : 'Open a presentation first';
+      use.addEventListener('click', async () => {
+        try { setSlideBg(await bgFromUsed(x)); location.hash = '#create'; }
+        catch (err) { use.textContent = err.message; }
+      });
+      el.querySelector('.del').addEventListener('click', async () => { await removeUsedVideo(x); renderMyVideos(); });
+      return el;
+    }));
+  }
+
+  // ── Avatar gallery page: the avatars on this PC and every avatar that can be downloaded ──
+  function renderAvatarPage() {
+    const box = $('avPageGrid');
+    if (!box) return;
+    if (!APP.isDesktop) {
+      box.innerHTML = `<div class="empty" style="grid-column:1/-1"><svg class="ic"><use href="#i-user"/></svg><b>AI avatars are made by the DeckPersona desktop app</b>
+        It reads your narration with a talking 3D presenter, using your PC's graphics card. <a href="#about">Get DeckPersona for Windows</a></div>`;
+      return;
+    }
+    const all = avAll();
+    $('avPageCount').textContent = `${AV.list.length} on this PC · ${all.length - AV.list.length} more to download`;
+    if (!all.length) { box.innerHTML = '<div class="empty" style="grid-column:1/-1"><b>Connecting to the app…</b></div>'; return; }
+    box.replaceChildren(...all.map((a, idx) => {
+      const el = document.createElement('div');
+      el.className = 'avp' + (a.installedHere ? ' have' : '');
+      const g = avGenderOf(a.id), inst = AV.installing.get(a.id);
+      el.innerHTML = `<div class="avp-pic">${avPicFor(a) ? `<img alt="" src="${esc(avImg(avPicFor(a)))}">` : avFace(a, idx)}</div>
+        <div class="avp-t"><b>${esc(a.name)}</b><span>${[g ? (g === 'female' ? 'Female' : 'Male') : '', a.installedHere ? (a.builtIn ? 'Built in' : 'On this PC') : (a.size ? fmtSize(a.size) + ' download' : 'Download')].filter(Boolean).join(' · ')}</span></div>
+        <div class="avp-b"></div>`;
+      const img = el.querySelector('img'); if (img) img.onerror = () => { el.querySelector('.avp-pic').innerHTML = avFace(a, idx); };
+      const b = el.querySelector('.avp-b');
+      if (inst !== undefined) b.innerHTML = `<div class="avp-prog"><i style="width:${Math.round((inst || 0) * 100)}%"></i></div><span class="muted">Downloading… ${Math.round((inst || 0) * 100)}%</span>`;
+      else if (!a.installedHere) {
+        b.innerHTML = `<button class="sm primary"><svg class="ic"><use href="#i-down"/></svg>Download</button>`;
+        b.firstChild.addEventListener('click', () => { avInstall(a); renderAvatarPage(); });
+      } else {
+        b.innerHTML = `<span class="avp-ok"><svg class="ic"><use href="#i-okmark"/></svg>Ready to use</span>` +
+          (a.builtIn ? '' : `<button class="sm icon-only" title="Remove ${esc(a.name)} from this PC"><svg class="ic"><use href="#i-trash"/></svg></button>`);
+        b.querySelector('button')?.addEventListener('click', () => { if (confirm(`Remove ${a.name} from this PC? You can download it again later.`)) APP.send('avatarRemove', { id: a.id }); });
       }
       return el;
-    };
-    if (histList.length) { box.insertAdjacentHTML('beforeend', '<div class="grouptitle">This visit</div>'); histList.forEach(x => box.appendChild(row(x, true))); }
-    if (older.length) { box.insertAdjacentHTML('beforeend', '<div class="grouptitle">Earlier</div>'); older.slice(0, 12).forEach(x => box.appendChild(row(x, false))); }
+    }));
   }
+
+  // Start over: clear the presentation and every choice (finished videos stay in History)
+  $('startOverBtn').addEventListener('click', () => {
+    $('resetText').textContent = (job ? 'The video being made now will be stopped. ' : '') +
+      'This closes the presentation and clears all your choices – narration, backgrounds, avatar and settings for this video. ' +
+      'Your finished videos and projects stay in History.';
+    $('resetDlg').showModal();
+  });
+  $('resetGo').addEventListener('click', async () => {
+    $('resetGo').disabled = true;
+    job?.abort(); slideJob?.abort();
+    await new Promise(r => setTimeout(r, 300));
+    location.hash = '#create';
+    location.reload();
+  });
+  // background pop-up: the categories fold away (open by default, remembered)
+  function bgCatFold(folded) {
+    $('bgFilter').classList.toggle('folded', folded);
+    $('bgCatToggle').setAttribute('aria-expanded', String(!folded));
+    $('bgCatNow').textContent = document.querySelector('#bgChips .chip.on')?.firstChild?.textContent?.trim() || '';
+    try { localStorage.setItem('dpBgCatsFolded', folded ? '1' : ''); } catch {}
+  }
+  $('bgCatToggle').addEventListener('click', () => bgCatFold(!$('bgFilter').classList.contains('folded')));
+  try { if (localStorage.getItem('dpBgCatsFolded')) bgCatFold(true); } catch {}
+  // Video Gallery page
+  $('vgAdd').addEventListener('click', () => $('vgInput').click());
+  $('vgInput').addEventListener('change', async (e) => {
+    for (const f of [...e.target.files]) await noteUsedVideo({ title: f.name, source: f, upload: true, size: f.size, poster: await videoPoster(f) });
+    e.target.value = '';
+    renderMyVideos();
+  });
+  $('vgClear').addEventListener('click', async () => {
+    if (!confirm('Remove all videos from this list, and delete the copies kept on this computer?')) return;
+    for (const x of usedList()) await removeUsedVideo(x);
+    try { await caches.delete(PX_CACHE); await caches.delete(OWN_CACHE); } catch {}
+    pxDone.clear();
+    renderMyVideos();
+  });
 
   // ── Video gallery page
   let vgView = 'all';
@@ -5873,6 +6688,7 @@ ${parts.join('\n\n')}
     a.style.display = 'inline-block';
     setVStatus(`Done – ${fmtSize(blob.size)} ${ext.toUpperCase()}${extra}.`);
     addHistory(blob, a.download, ext, extra);
+    saveProject(blob, a.download, ext, extra).catch(err => console.warn('History', err));
     const meta = `${fmtSize(blob.size)} · ${ext.toUpperCase()}${extra}`;
     R.last = { url: lastVideoUrl, name: a.download, base: fileBaseName, meta, plan: lastPlan };
     rFinal(lastVideoUrl, a.download, meta);
@@ -5953,6 +6769,8 @@ ${parts.join('\n\n')}
         await ensureBackgrounds();
         loadBgUI();
       }
+      // an idle avatar player (e.g. after a look preview) would share the graphics card with this export
+      if (APP.isDesktop && APP.connected) APP.send('avatarIdle');
       let bgFiles = null;
       if (slides.some(s => s.bg?.px)) {
         rProg(null, 'Choosing the background video sizes…');
