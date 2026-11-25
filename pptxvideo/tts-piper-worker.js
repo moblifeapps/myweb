@@ -9,7 +9,7 @@
  * Progress out: { type:'progress', id, loaded, total, label }
  */
 /* global ort, createPiperPhonemize */
-const HERE = self.location.href.replace(/[^/]*$/, '');
+const HERE = (self.WORKER_URL || self.location.href).replace(/[^/]*$/, '');   // started from an in-page script: its real address
 const TTS_DIR = HERE + '../tts/';
 importScripts(TTS_DIR + 'ort/ort.wasm.min.js', TTS_DIR + 'piper/piper_phonemize.js');
 
@@ -39,6 +39,21 @@ async function cachedFetch(url, onProgress) {
   const blob = new Blob(parts);
   try { await cache?.put(url, new Response(blob)); } catch {}
   return await blob.arrayBuffer();
+}
+
+/** With several threads ONNX Runtime starts extra workers from its .mjs file. A cross-origin-isolated page blocks
+ *  worker files served without a Cross-Origin-Embedder-Policy header (GitHub Pages can't send one), and the
+ *  runtime then waits forever. Handing it the same script as in-page code (a blob) works on any server. */
+let threadScriptDone = false;
+async function threadScript() {
+  if (threadScriptDone || ort.env.wasm.numThreads <= 1) return;
+  threadScriptDone = true;
+  try {
+    const r = await fetch(TTS_DIR + 'ort/ort-wasm-simd-threaded.mjs');
+    if (!r.ok) throw new Error(r.status);
+    const mjs = URL.createObjectURL(new Blob([await r.text()], { type: 'text/javascript' }));
+    ort.env.wasm.wasmPaths = { mjs, wasm: TTS_DIR + 'ort/ort-wasm-simd-threaded.wasm' };
+  } catch (e) { ort.env.wasm.numThreads = 1; }       // no thread script: one thread still works
 }
 
 async function ensurePhonemizer() {
@@ -81,6 +96,7 @@ async function load(id, voice, base) {
   const size = voice.files[model]?.size_bytes || 0;
   const buf = await cachedFetch(root + model, (got, total) =>
     postMessage({ type: 'progress', id, loaded: got, total: total || size, label: voice.key }));
+  await threadScript();
   session = await ort.InferenceSession.create(buf, { executionProviders: ['wasm'] });
   loadedKey = voice.key;
   await ensurePhonemizer();

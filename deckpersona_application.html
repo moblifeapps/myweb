@@ -6,7 +6,7 @@
 <title>DeckPersona – PowerPoint to narrated video | MLApplications</title>
 <meta name="robots" content="noindex, nofollow">
 <!-- The DeckPersona app shows the highest version it has (bundled, or this page from the website): bump it on every change. -->
-<meta name="dp-page-version" content="2026.11.25.1">
+<meta name="dp-page-version" content="2026.11.25.2">
 <script>
   // Apply the saved theme before first paint (light / dark; nothing = follow the system)
   (function () { try { var t = localStorage.getItem('pptxTheme'); if (t !== 'auto') document.documentElement.dataset.theme = (t === 'light' ? 'light' : 'dark'); } catch (e) {} })();
@@ -204,11 +204,12 @@
   @media (min-width: 1151px) { .tlink { padding-top: 13px; padding-bottom: 13px; } }
   /* each arrow is its own shaft + head in the gap: it starts a little below the rectangle above
      and its tip touches the rectangle below, never drawn over either */
-  .tarrow { position: absolute; left: 50%; z-index: 2; width: 8px; transform: translateX(-50%); top: 4px; height: 9px; pointer-events: none; }
-  .tarrow::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 4px; width: 1.5px; transform: translateX(-50%); background: var(--accent); border-radius: 1px; }
+  .tarrow { position: absolute; left: 50%; z-index: 2; width: 8px; transform: translateX(-50%); top: 1px; height: 11px; pointer-events: none; }
+  .tarrow::before { content: ''; position: absolute; left: 3px; top: 0; bottom: 4px; width: 2px; background: var(--accent); }
   .tarrow::after { content: ''; position: absolute; left: 0; bottom: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid var(--accent); }
-  .tarrow.b { top: auto; bottom: 0; }
-  .tlink:has(+ .thumb.active) .tarrow.b { bottom: 2px; height: 7px; }
+  .tarrow.b { top: auto; bottom: 1px; }
+  .thumb.active + .tlink .tarrow:not(.b) { top: 3px; height: 9px; }          /* the selected slide has a 2px ring outside its frame */
+  .tlink:has(+ .thumb.active) .tarrow.b { bottom: 3px; height: 9px; }
   @media (min-width: 1151px) { .tlink::before { display: none; } }
   .tpill { justify-content: flex-start !important; gap: 8px !important; padding: 4px 10px 4px 4px !important; }
   .tpill .tthumb { width: 46px; height: 26px; border-radius: 5px; object-fit: cover; flex: none; box-shadow: 0 0 0 1px rgba(0,0,0,.25); }
@@ -3956,15 +3957,17 @@
       const msPerChar = speed.chars ? speed.ms / speed.chars : 0;
       const left = msPerChar ? ((cleaned.length - doneChars) + charsAfter) * msPerChar / 1000 : 0;
       genHook?.(doneChars);
+      if (!cur) return;          // still loading the voice: its own messages ("Downloading … 12 MB / 60 MB") and bar stay visible
       setBar($('ttsProgress'), cleaned.length ? Math.min(1, (doneChars + (cur ? 0.35 * (cur.text?.length || 0) : 0)) / cleaned.length) : null);
       const row = rowEl(i);
       if (row && cur) row.querySelector('.nstat').textContent = `Generating sentence ${cur.index}/${cur.total} · ${fmtTime(el)}`;
       setTtsStatus(
-        (cur ? `Slide ${i + 1}, sentence ${cur.index}/${cur.total}: “${short(cur.text)}”` : `Slide ${i + 1}: preparing…`) +
+        `Slide ${i + 1}, sentence ${cur.index}/${cur.total}: “${short(cur.text)}”` +
         (rtf ? ` · speed ${rtf.toFixed(2)}× real time` : '') +
         (left ? ` · about ${fmtTime(left)} left` : '') +
         ` · ${threadInfo()}`);
     };
+    setTtsStatus(`Slide ${i + 1}: preparing the voice…`);
     const timer = setInterval(paint, 500);
     return {
       onProgress: (p) => {

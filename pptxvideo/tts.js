@@ -25,6 +25,17 @@ const PIPER_GENDER = {
   'fi_FI-harri': 'M', 'cs_CZ-jirka': 'M', 'zh_CN-huayan': 'F',
 };
 
+/** Start a worker from a tiny in-page script that loads the real file. A cross-origin-isolated page (needed for
+ *  multi-threaded speech) blocks worker files that are not served with a Cross-Origin-Embedder-Policy header –
+ *  GitHub Pages can't send one, and the helper service worker doesn't always get to add it. Workers made from
+ *  in-page code take the page's policy, so this works the same on any server, in the browser and in the app. */
+function startWorker(file, module) {
+  const url = new URL(file, import.meta.url).href;
+  const src = module ? `import ${JSON.stringify(url)};`
+    : `self.WORKER_URL = ${JSON.stringify(url)}; importScripts(${JSON.stringify(url)});`;
+  return new Worker(URL.createObjectURL(new Blob([src], { type: 'text/javascript' })), module ? { type: 'module' } : undefined);
+}
+
 export class TtsClient {
   constructor() {
     this.workers = {};
@@ -36,9 +47,7 @@ export class TtsClient {
 
   _worker(engine) {
     if (!this.workers[engine]) {
-      const w = engine === 'kokoro'
-        ? new Worker(new URL('./tts-kokoro-worker.js', import.meta.url), { type: 'module' })
-        : new Worker(new URL('./tts-piper-worker.js', import.meta.url));
+      const w = startWorker(engine === 'kokoro' ? './tts-kokoro-worker.js' : './tts-piper-worker.js', engine === 'kokoro');
       w.onmessage = (e) => {
         const m = e.data, p = this.pending.get(m.id);
         if (!p) return;
