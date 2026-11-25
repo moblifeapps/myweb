@@ -4,6 +4,7 @@
     {
       "id": "maria",
       "name": "Maria",
+      "gender": "female",
       "chunk": 1001,
       "base": "2026-11-20",
       "preview": "https://mlapplications.com/aiavatars/maria.png",
