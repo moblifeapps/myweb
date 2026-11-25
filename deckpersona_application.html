@@ -6,7 +6,7 @@
 <title>DeckPersona – PowerPoint to narrated video | MLApplications</title>
 <meta name="robots" content="noindex, nofollow">
 <!-- The DeckPersona app shows the highest version it has (bundled, or this page from the website): bump it on every change. -->
-<meta name="dp-page-version" content="2026.11.24.11">
+<meta name="dp-page-version" content="2026.11.25.1">
 <script>
   // Apply the saved theme before first paint (light / dark; nothing = follow the system)
   (function () { try { var t = localStorage.getItem('pptxTheme'); if (t !== 'auto') document.documentElement.dataset.theme = (t === 'light' ? 'light' : 'dark'); } catch (e) {} })();
@@ -185,6 +185,36 @@
   .status.oneline { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-height: 19px; }
   .nstat { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
   .nhead { min-width: 0; }
+
+  #voiceSummary { display: inline-flex; align-items: center; gap: 7px; }
+  #voiceSummary .vsex { width: 20px; height: 20px; } #voiceSummary .vsex .ic { width: 12px; height: 12px; }
+  #voiceSummary .flag { --fw: 22px; }
+  /* the narration text: the thing the user reads and edits, so it stands out */
+  :root { --narr-bg: color-mix(in srgb, var(--accent) 7%, var(--input-bg, var(--panel))); }
+  .nedit textarea { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)) !important; }
+  /* the slide list reads top to bottom like the video: slide → transition → slide, joined by arrows in the theme colour */
+  #thumbs { padding-left: 10px !important; padding-top: 10px !important; }
+  .thumb .tnum { left: -9px !important; top: -9px !important; z-index: 2; min-width: 24px; height: 24px; padding: 0 6px !important; display: grid; place-items: center;
+    font-size: 12.5px !important; font-weight: 800; line-height: 1 !important; border-radius: 7px !important; color: #fff;
+    background: linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,0) 55%), var(--accent) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 2px 6px rgba(0,0,0,.35); }
+  .thumb.active .tnum { box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 0 0 2px var(--panel), 0 0 0 4px var(--accent); }
+  .tlink::before { border-left-color: color-mix(in srgb, var(--accent) 55%, transparent) !important; }
+  /* two short arrows: slide → transition and transition → next slide; a shaft with a small head at its end */
+  @media (min-width: 1151px) { .tlink { padding-top: 13px; padding-bottom: 13px; } }
+  /* each arrow is its own shaft + head in the gap: it starts a little below the rectangle above
+     and its tip touches the rectangle below, never drawn over either */
+  .tarrow { position: absolute; left: 50%; z-index: 2; width: 8px; transform: translateX(-50%); top: 4px; height: 9px; pointer-events: none; }
+  .tarrow::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 4px; width: 1.5px; transform: translateX(-50%); background: var(--accent); border-radius: 1px; }
+  .tarrow::after { content: ''; position: absolute; left: 0; bottom: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid var(--accent); }
+  .tarrow.b { top: auto; bottom: 0; }
+  .tlink:has(+ .thumb.active) .tarrow.b { bottom: 2px; height: 7px; }
+  @media (min-width: 1151px) { .tlink::before { display: none; } }
+  .tpill { justify-content: flex-start !important; gap: 8px !important; padding: 4px 10px 4px 4px !important; }
+  .tpill .tthumb { width: 46px; height: 26px; border-radius: 5px; object-fit: cover; flex: none; box-shadow: 0 0 0 1px rgba(0,0,0,.25); }
+  .tpill .tedit { margin-left: auto; width: 14px !important; height: 14px !important; opacity: .55; }
+  .tpill:hover .tedit { opacity: 1; }
+  @media (max-width: 1150px) { .tarrow { display: none; } }
 
   /* transition pills between thumbnails */
   .tlink { position: relative; display: flex; justify-content: center; padding: 8px 0; flex: none; }
@@ -435,11 +465,11 @@
   .nstat.warn { color: var(--warn); }
   .nedit { position: relative; }
   .nedit .nhl, .nedit textarea {
-    font: inherit; font-size: 14.5px; line-height: 1.55; letter-spacing: normal;
+    font: inherit; font-size: 16.5px; line-height: 1.6; letter-spacing: normal;
     padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px;
     white-space: pre-wrap; overflow-wrap: break-word; word-break: normal; tab-size: 4;
   }
-  .nedit .nhl { position: absolute; inset: 0; color: transparent; background: var(--input-bg); overflow: hidden; pointer-events: none;
+  .nedit .nhl { position: absolute; inset: 0; color: transparent; background: var(--narr-bg, var(--input-bg)); overflow: hidden; pointer-events: none;
     scrollbar-gutter: stable; }
   .nedit textarea { position: relative; display: block; width: 100%; min-height: 64px; resize: none; overflow-y: auto;
     scrollbar-gutter: stable;
@@ -1095,6 +1125,8 @@
   .sec-chips i.on[data-sec="narr"] { background: var(--sec-narr); }
   .sec-chips i.on[data-sec="bg"] { background: var(--sec-bg); }
   .sec-chips i.on[data-sec="av"] { background: var(--sec-av); }
+  .sec-chips i.dur { color: #fff; font-variant-numeric: tabular-nums; background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,0) 55%), rgba(0, 0, 0, .8);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 1px 4px rgba(0,0,0,.4); }
   .sec-links { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: visible; }
   .sec-links path { fill: none; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
   .sec-links circle { stroke: none; }
@@ -1258,8 +1290,12 @@
   .rs-ico { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; flex: none; color: #fff;
     background: linear-gradient(180deg, rgba(255,255,255,.38), rgba(255,255,255,0) 52%), linear-gradient(180deg, var(--g1), var(--g2)); }
   .rs-ico .ic { width: 15px; height: 15px; stroke: #fff; }
-  .flag { display: inline-block; width: 26px; height: 19.5px; border-radius: 3px; flex: none; overflow: hidden;
-    background: url("pptxvideo/flags.webp") 0 0 / 520px 273px no-repeat; box-shadow: 0 0 0 1px rgba(255,255,255,.18), 0 1px 3px rgba(0,0,0,.4); }
+  /* a flag out of the sprite (20 per row, 4:3): position and size follow --fw, so any size works */
+  .flag { --fw: 26px; display: inline-block; width: var(--fw); height: calc(var(--fw) * .75); border-radius: 3px; flex: none; overflow: hidden;
+    background: url("pptxvideo/flags.webp") no-repeat;
+    background-size: calc(var(--fw) * 20) calc(var(--fw) * .75 * 14);
+    background-position: calc(var(--fx, 0) * var(--fw) * -1) calc(var(--fy, 0) * var(--fw) * -.75);
+    box-shadow: 0 0 0 1px rgba(255,255,255,.18), 0 1px 3px rgba(0,0,0,.4); }
   .flag.none { background: var(--panel-2); }
   .vsex { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; flex: none; background: #475569; color: #fff; }
   .vsex.f { background: linear-gradient(180deg, #f472b6, #db2777); } .vsex.m { background: linear-gradient(180deg, #60a5fa, #2563eb); }
@@ -1451,6 +1487,9 @@
   @keyframes ghostPill { 0%, 100% { box-shadow: 0 0 0 0 rgba(150, 120, 255, 0); } 50% { box-shadow: 0 0 14px 3px rgba(170, 145, 255, .9); } }
   @media (prefers-reduced-motion: reduce) { .stage.playing .av-ghost, .stage.playing .av-ghost span { animation: none; box-shadow: 0 0 16px 3px rgba(150, 120, 255, .6); } }
   .av-ghost svg { position: absolute; left: 4%; right: 4%; bottom: 0; width: 92%; height: 96%; fill: rgba(124, 92, 255, .38); }
+  .av-ghost img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; opacity: .92; }
+  .av-ghost.has-pic svg { display: none; }
+  .av-ghost.has-pic { background: rgba(124, 92, 255, .06); }
   .av-ghost span { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: 700; white-space: nowrap;
     color: #fff; background: rgba(124, 92, 255, .9); padding: 2px 8px; border-radius: 99px; }
 
@@ -1535,7 +1574,7 @@
     <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
     <symbol id="i-auto" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M12 4v12" /></symbol>
-    <symbol id="i-pl-left" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M6 19v-3.5a2 2 0 0 1 4 0V19M8 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-pl-center" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 19v-3.5a2 2 0 0 1 4 0V19M12 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-pl-right" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M14 19v-3.5a2 2 0 0 1 4 0V19M16 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></symbol><symbol id="i-restart" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></symbol><symbol id="i-gallery" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol><symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3z"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><path d="M16 5.2a3 3 0 0 1 0 5.6M18 14.3c1.8.8 3 2.8 3 5.7"/></symbol><symbol id="i-male" viewBox="0 0 24 24"><circle cx="10" cy="14" r="6"/><path d="M14.5 9.5 20 4M15 4h5v5"/></symbol><symbol id="i-female" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M12 15v7M9 19h6"/></symbol><symbol id="i-shirt" viewBox="0 0 24 24"><path d="M8.5 3 3 6l2 4.5 3-1.2V21h8V9.3l3 1.2L21 6l-5.5-3c-.6 1.6-1.9 2.6-3.5 2.6S9.1 4.6 8.5 3z"/></symbol><symbol id="i-hair" viewBox="0 0 24 24"><path d="M5 15c-1-6 2.5-11 7-11s8 5 7 11"/><path d="M5 15c1.5-2.5 4-4.5 8-6 1.5 2.5 3.5 4.5 6 6"/><path d="M8 20c0-2.5 1.8-4 4-4s4 1.5 4 4"/></symbol><symbol id="i-moustache" viewBox="0 0 24 24"><path d="M12 11c-1.4-1.3-3.4-1.6-5-.6-1.4.9-2.2 2.6-4 2.6.8 2.6 3.6 3.6 6 2.6 1.3-.5 2.3-1.5 3-2.6.7 1.1 1.7 2.1 3 2.6 2.4 1 5.2 0 6-2.6-1.8 0-2.6-1.7-4-2.6-1.6-1-3.6-.7-5 .6z"/></symbol><symbol id="i-beard" viewBox="0 0 24 24"><path d="M4.5 8v3.5C4.5 17 8 21 12 21s7.5-4 7.5-9.5V8"/><path d="M4.5 11.5c1.5 1 3 1.5 4.5 1.5 1 0 2-.6 3-.6s2 .6 3 .6c1.5 0 3-.5 4.5-1.5"/><path d="M10 16.5h4"/></symbol><symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0z"/><path d="M12 17v4"/></symbol><symbol id="i-okmark" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h13l-3.5-3.5M20 16H7l3.5 3.5"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></symbol>
+    <symbol id="i-pl-left" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M6 19v-3.5a2 2 0 0 1 4 0V19M8 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-pl-center" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 19v-3.5a2 2 0 0 1 4 0V19M12 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-pl-right" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M14 19v-3.5a2 2 0 0 1 4 0V19M16 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></symbol><symbol id="i-restart" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></symbol><symbol id="i-gallery" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol><symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3z"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><path d="M16 5.2a3 3 0 0 1 0 5.6M18 14.3c1.8.8 3 2.8 3 5.7"/></symbol><symbol id="i-male" viewBox="0 0 24 24"><circle cx="10" cy="14" r="6"/><path d="M14.5 9.5 20 4M15 4h5v5"/></symbol><symbol id="i-female" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M12 15v7M9 19h6"/></symbol><symbol id="i-shirt" viewBox="0 0 24 24"><path d="M8.5 3 3 6l2 4.5 3-1.2V21h8V9.3l3 1.2L21 6l-5.5-3c-.6 1.6-1.9 2.6-3.5 2.6S9.1 4.6 8.5 3z"/></symbol><symbol id="i-hair" viewBox="0 0 24 24"><path d="M5 15c-1-6 2.5-11 7-11s8 5 7 11"/><path d="M5 15c1.5-2.5 4-4.5 8-6 1.5 2.5 3.5 4.5 6 6"/><path d="M8 20c0-2.5 1.8-4 4-4s4 1.5 4 4"/></symbol><symbol id="i-moustache" viewBox="0 0 24 24"><path d="M12 11c-1.4-1.3-3.4-1.6-5-.6-1.4.9-2.2 2.6-4 2.6.8 2.6 3.6 3.6 6 2.6 1.3-.5 2.3-1.5 3-2.6.7 1.1 1.7 2.1 3 2.6 2.4 1 5.2 0 6-2.6-1.8 0-2.6-1.7-4-2.6-1.6-1-3.6-.7-5 .6z"/></symbol><symbol id="i-beard" viewBox="0 0 24 24"><path d="M4.5 8v3.5C4.5 17 8 21 12 21s7.5-4 7.5-9.5V8"/><path d="M4.5 11.5c1.5 1 3 1.5 4.5 1.5 1 0 2-.6 3-.6s2 .6 3 .6c1.5 0 3-.5 4.5-1.5"/><path d="M10 16.5h4"/></symbol><symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0z"/><path d="M12 17v4"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol><symbol id="i-okmark" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h13l-3.5-3.5M20 16H7l3.5 3.5"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20.5c1.6-4 4.6-6 8-6s6.4 2 8 6"/></symbol>
     <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M4 16a8 8 0 1 1 16 0"/><path d="M12 16l4-5"/></symbol>
     <symbol id="i-layers" viewBox="0 0 24 24"><rect x="3" y="4" width="14" height="10" rx="1.5"/><path d="M7 18h12a2 2 0 0 0 2-2V8"/></symbol>
@@ -1675,7 +1714,7 @@
 
       <!-- center: live canvas + narration -->
       <div class="center">
-        <div class="stage" id="stage"><canvas id="slideCanvas"></canvas><div class="sec-chips" id="secChips"></div><div class="av-ghost" id="avGhost"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><ellipse cx="50" cy="30" rx="21" ry="25"/><path d="M4 100c3-28 22-42 46-42s43 14 46 42z"/></svg><span id="avGhostName">Avatar</span></div><div class="stage-msg" id="stageMsg"></div><div class="stage-busy" id="stageBusy"><span class="spin"></span><span id="stageBusyText">Preparing preview…</span></div></div>
+        <div class="stage" id="stage"><canvas id="slideCanvas"></canvas><div class="sec-chips" id="secChips"></div><div class="av-ghost" id="avGhost"><img id="avGhostImg" alt="" hidden><svg viewBox="0 0 100 100" preserveAspectRatio="none"><ellipse cx="50" cy="30" rx="21" ry="25"/><path d="M4 100c3-28 22-42 46-42s43 14 46 42z"/></svg><span id="avGhostName">Avatar</span></div><div class="stage-msg" id="stageMsg"></div><div class="stage-busy" id="stageBusy"><span class="spin"></span><span id="stageBusyText">Preparing preview…</span></div></div>
         <div class="toolbar">
           <button id="prevBtn" class="icon-only" title="Previous slide"><svg class="ic"><use href="#i-left"/></svg></button>
           <span id="slideLabel">–</span>
@@ -1819,8 +1858,8 @@
               </div>
             </div>
           </div>
-          <div class="progress" id="ttsProgress"><div></div></div>
           <div class="status oneline" id="ttsStatus">The voice model downloads once, then your browser keeps it.</div>
+          <div class="progress" id="ttsProgress"><div></div></div>
           <div class="toolbar" style="margin-top:10px; border-top:1px solid var(--border); padding-top:12px">
             <button id="genAllBtn" title="Turns narration on for every slide and voices the whole presentation with this voice – only slides without up-to-date audio are generated; your own recordings are kept"><svg class="ic"><use href="#i-spark"/></svg>Generate all slides</button>
             <button id="genStopBtn" disabled><svg class="ic f"><use href="#i-stop"/></svg>Stop</button>
@@ -2639,6 +2678,7 @@
       if (i > 0) {
         const link = document.createElement('div');
         link.className = 'tlink';
+        link.innerHTML = '<i class="tarrow"></i><i class="tarrow b"></i>';
         const pill = document.createElement('button');
         pill.className = 'tpill';
         pill.dataset.to = i;
@@ -2652,7 +2692,7 @@
       wrap.className = 'thumb';
       wrap.dataset.index = i;
       const c = document.createElement('canvas');
-      wrap.append(c, Object.assign(document.createElement('span'), { textContent: i + 1 }));
+      wrap.append(c, Object.assign(document.createElement('span'), { className: 'tnum', textContent: i + 1 }));
       const fx = fxCountOf(i);
       if (fx) wrap.append(Object.assign(document.createElement('span'), { className: 'anim', textContent: '★ ' + fx, title: fx + ' animation effects' }));
       wrap.append(Object.assign(document.createElement('div'), { className: 'badges' }));
@@ -2676,6 +2716,39 @@
       `<i data-sec="${x.sec}" class="${x.on ? 'on' : ''}${x.warn ? ' warn' : ''}" title="${esc(x.tip)}">${x.glyph}</i>`).join('');
     if (i === current) secUpdate();
   }
+
+  /** How long slide i lasts in the video – the same rule as the export: narration (with the pauses before and after)
+   *  or the hold time, and never shorter than its animations. */
+  function slideLenMs(i) {
+    const s = slides[i];
+    if (!s || !renderer) return 0;
+    const sec = (id) => Math.max(0, +$(id).value || 0) * 1000;
+    const hold = sec('holdSec'), gap = sec('clickGapSec'), lead = sec('leadSec'), tail = sec('tailSec');
+    const clip = s.narrOn && s.buffer ? s.buffer : null;
+    let animEnd = 0;
+    if ($('animChk').checked) {
+      try {
+        const rel = clip && $('clickNarrChk').checked ? narrationClickTimes(i) : null;
+        const at = rel ? rel.map(v => v == null ? null : lead + v) : null;
+        animEnd = animTimelineEnd(parseSlideAnimations(renderer, i).groups, gap, at);
+      } catch {}
+    }
+    return clip ? Math.max(animEnd + 300, lead + clip.duration * 1000 + tail) : animEnd + hold;
+  }
+  /** End of a slide's click animations (as buildTimeline in pptx-video.js): groups play one after another. */
+  function animTimelineEnd(groups, gapMs, clickAt) {
+    let t = 0, lastStart = -Infinity;
+    for (const [k, g] of groups.entries()) {
+      if (g.click) t = clickAt?.[k] != null ? Math.max(lastStart + 150, clickAt[k]) : t + gapMs;
+      const gStart = t;
+      lastStart = gStart;
+      for (const e of g.effects) t = Math.max(t, gStart + e.start + e.dur);
+    }
+    return t;
+  }
+  const fmtLen = (ms) => ms < 60000 ? (ms / 1000).toFixed(1) + ' s' : fmtTime(ms / 1000);
+  for (const id of ['holdSec', 'leadSec', 'tailSec', 'clickGapSec', 'animChk', 'clickNarrChk']) $(id).addEventListener('input', () => secUpdate());
+  for (const id of ['holdSec', 'leadSec', 'tailSec', 'clickGapSec', 'animChk', 'clickNarrChk']) $(id).addEventListener('change', () => secUpdate());
 
   /** Narration, background video, AI avatar: on or off for slide i (with a warning when on but not ready). */
   function secState(i) {
@@ -2701,8 +2774,10 @@
       if (!el.firstChild) el.innerHTML = '<svg><use href="#i-okmark"/></svg>';
       el.classList.toggle('on', x.on); el.classList.toggle('warn', x.warn);
     }
+    const len = slideLenMs(current);
     $('secChips').innerHTML = st.map(x => x.sec === 'av' && !APP.isDesktop ? '' :
-      `<i data-sec="${x.sec}" class="${x.on ? 'on' : ''}" title="${esc(x.tip)}"><svg><use href="#${x.on ? 'i-okmark' : SEC_ICON[x.sec]}"/></svg>${x.name}</i>`).join('');
+      `<i data-sec="${x.sec}" class="${x.on ? 'on' : ''}" title="${esc(x.tip)}"><svg><use href="#${x.on ? 'i-okmark' : SEC_ICON[x.sec]}"/></svg>${x.name}</i>`).join('') +
+      (len ? `<i class="dur" title="Length of this slide in the video${slides[current]?.narrOn && slides[current]?.buffer ? ' (narration + pauses)' : ' (no narration: hold time + animations)'} – the transition comes on top"><svg><use href="#i-clock"/></svg>${fmtLen(len)}</i>` : '');
     secLinks();
   }
   /** Thick lines from the slide to each section: in its colour when on, grey dots when off. */
@@ -3343,7 +3418,7 @@
     const [lang, region] = code.split(/[_-]/);
     const i = FLAG_INDEX.get(FLAG_FILE[lang] || (region || '').toLowerCase());
     if (i === undefined) return '<span class="flag none"></span>';
-    return `<span class="flag" style="background-position:${-(i % 20) * 26}px ${-Math.floor(i / 20) * 19.5}px"></span>`;
+    return `<span class="flag" style="--fx:${i % 20};--fy:${Math.floor(i / 20)}"></span>`;
   }
   const QUALITY = { high: ['High', 3], medium: ['Medium', 2], low: ['Low', 1], x_low: ['Very low', 1] };
   const sexIcon = (g) => g === 'F' ? '<span class="vsex f" title="Female"><svg class="ic"><use href="#i-female"/></svg></span>'
@@ -3415,7 +3490,7 @@
   function applyVoiceSexFilter(userChange = false) {
     const sel = $('ttsVoice');
     document.querySelectorAll('#voiceSex button').forEach(b => b.classList.toggle('on', b.dataset.v === voiceSexFilter));
-    for (const o of sel.options) o.hidden = !!voiceSexFilter && o.dataset.g !== voiceSexFilter && !(o.selected && !userChange);
+    for (const o of sel.options) o.hidden = !!voiceSexFilter && o.dataset.g !== voiceSexFilter;
     if (userChange && sel.selectedOptions[0]?.hidden) {
       const first = [...sel.options].find(o => !o.hidden);
       if (first) { sel.value = first.value; sel.dispatchEvent(new Event('change', { bubbles: true })); }
@@ -3881,6 +3956,7 @@
       const msPerChar = speed.chars ? speed.ms / speed.chars : 0;
       const left = msPerChar ? ((cleaned.length - doneChars) + charsAfter) * msPerChar / 1000 : 0;
       genHook?.(doneChars);
+      setBar($('ttsProgress'), cleaned.length ? Math.min(1, (doneChars + (cur ? 0.35 * (cur.text?.length || 0) : 0)) / cleaned.length) : null);
       const row = rowEl(i);
       if (row && cur) row.querySelector('.nstat').textContent = `Generating sentence ${cur.index}/${cur.total} · ${fmtTime(el)}`;
       setTtsStatus(
@@ -3906,7 +3982,7 @@
         paint();
       },
       marks,
-      done: () => clearInterval(timer),
+      done: () => { clearInterval(timer); setBar($('ttsProgress'), null); },
     };
   }
 
@@ -4769,7 +4845,12 @@
     g.style.right = s.av.place === 'right' ? m : '';
     g.style.transform = s.av.place === 'center' ? 'translateX(-50%)' : '';
     $('avGhostName').textContent = avName(avEffective(current));
+    // the presenter's picture (with the chosen look) where it will be drawn; the silhouette until the app made one
+    const a = avAll().find(x => x.id === avEffective(current)), pic = a ? avPicFor(a) : null, img = $('avGhostImg');
+    if (pic) { const u = avImg(pic); if (img.dataset.src !== u) { img.dataset.src = u; img.src = u; } }
+    img.hidden = !pic; g.classList.toggle('has-pic', !!pic);
   }
+  $('avGhostImg').addEventListener('error', () => { $('avGhostImg').hidden = true; $('avGhost').classList.remove('has-pic'); });
 
   $('avStyle').addEventListener('change', () => { avDeck.style = $('avStyle').value; qAv.style = avDeck.style; avStateLine(); });
   $('avOn').addEventListener('change', () => {
@@ -5361,7 +5442,10 @@
       txt = `Piper · ${lang}${name ? ' · ' + name : ''}`;
     }
     if (v.speed && v.speed !== 1) txt += ` · ${(+v.speed).toFixed(2)}×`;
-    $('voiceSummary').textContent = txt;
+    const vo = $('ttsVoice').selectedOptions[0];
+    const sex = v.engine === 'kokoro' ? ({ f: 'F', m: 'M' })[(v.kokoroVoice || '')[1]] || '' : (vo?.dataset.g || '');
+    const flag = v.engine === 'kokoro' ? ((v.kokoroVoice || 'a')[0] === 'b' ? 'en_GB' : 'en_US') : ($('ttsLang').value || v.lang || '');
+    $('voiceSummary').innerHTML = `${sexIcon(sex)}${flagFor(flag)}<span>${esc(txt)}</span>`;
     $('voiceBtn').title = txt + ' – click to change';
     updateNarrRow();
   }
@@ -6136,7 +6220,36 @@ ${parts.join('\n\n')}
     const type = t ? t.type : $('transitionSel').value;
     const ms = t ? t.ms : defaultTrans().ms;
     pill.classList.toggle('custom', !!t);
-    pill.innerHTML = `<svg class="ic"><use href="#i-film"/></svg><span>${transLabel(type)}${type === 'cut' ? '' : ' · ' + (ms / 1000).toFixed(1) + 's'}</span>`;
+    const pic = transThumb(type === 'default' || type === 'file' ? defaultTrans().type : type);
+    pill.innerHTML = `${pic ? `<img class="tthumb" alt="" src="${pic}">` : '<svg class="ic"><use href="#i-film"/></svg>'}<span>${transLabel(type)}${type === 'cut' ? '' : ' · ' + (ms / 1000).toFixed(1) + 's'}</span><svg class="ic tedit"><use href="#i-swap"/></svg>`;
+    pill.title = `Transition into slide ${i + 1}: ${transLabel(type)} – click to change it`;
+  }
+  /** A small picture of a transition for its button in the slide list (made once per kind). */
+  const transThumbs = new Map();
+  let thumbGL = null;
+  function transThumb(type) {
+    if (!type) return null;
+    if (transThumbs.has(type)) return transThumbs.get(type);
+    let url = null;
+    try {
+      if (type.startsWith('matte:')) {
+        const m = mattes.find(x => 'matte:' + x.id === type);
+        url = m?.poster ? MATTE_DIR + m.poster : null;
+      } else {
+        const { A, B } = sampleFrames();
+        const c = Object.assign(document.createElement('canvas'), { width: 96, height: 54 }), ctx = c.getContext('2d');
+        if (type === 'cut') ctx.drawImage(B, 0, 0, 96, 54);
+        else {
+          thumbGL ||= new TransitionGL();
+          const big = Object.assign(document.createElement('canvas'), { width: 192, height: 108 });
+          if (!thumbGL.render(big.getContext('2d'), A, B, { kind: 'gl', name: type }, 0.45)) { big.getContext('2d').drawImage(A, 0, 0, 96, 108, 0, 0, 96, 108); big.getContext('2d').drawImage(B, 96, 0, 96, 108, 96, 0, 96, 108); }
+          ctx.drawImage(big, 0, 0, 96, 54);
+        }
+        url = c.toDataURL('image/jpeg', 0.8);
+      }
+    } catch (err) { console.warn('transition picture', err); }
+    transThumbs.set(type, url);
+    return url;
   }
 
   const trans = { to: 0, job: null, gl: null, built: false };
