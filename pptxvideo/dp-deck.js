@@ -2,13 +2,16 @@
  * Script (dp-script.js) -> a real PowerPoint file, with PptxGenJS (MIT, ../pptxgen/pptxgen.bundle.js, loaded on first use).
  * The file then opens in DeckPersona like any other deck – and in PowerPoint, to polish it by hand.
  *
- * Every slide: the theme colour as its own background (shown when the slide has no background video), and a soft
- * rounded panel that carries the words, so they stay readable over a video. The panel keeps clear of the presenter:
- * presenter on the right -> panel on the left, and so on. The narration goes into the speaker notes.
+ * Every slide: the theme colour as its own background (shown when the slide has no background video). Nothing is
+ * drawn behind the words – no panel, no card fill – so a background video shows through in full. The text area
+ * keeps clear of the presenter: presenter on the right -> text on the left, and so on. The narration goes into the
+ * speaker notes.
  */
 
 const W = 13.333, H = 7.5;                       // 16:9 "wide" slide, inches
-const FONT = 'Segoe UI';
+// Calibri: installed on every Windows PC (and with every Office, Mac included), and its free twin Carlito has the
+// exact same letter widths – so the lines break in the same places in PowerPoint, the app, the website and the video.
+const FONT = 'Calibri';
 
 const THEMES = {
   light: { bg: 'F4F1EC', panel: 'FFFFFF', panelT: 10, text: '1F2937', sub: '4B5563', accent: '2563EB', onAccent: 'FFFFFF', card: 'F3F4F6' },
@@ -41,6 +44,7 @@ export async function buildDeck(script, { fileName } = {}) {
   const PptxGenJS = await lib();
   const pptx = new PptxGenJS();
   pptx.layout = 'LAYOUT_WIDE';
+  pptx.theme = { headFontFace: FONT, bodyFontFace: FONT };   // text boxes the user adds in PowerPoint match too
   pptx.title = script.header.title;
   pptx.author = 'DeckPersona';
   pptx.company = 'Made with DeckPersona – mlapplications.com';
@@ -60,9 +64,7 @@ export async function buildDeck(script, { fileName } = {}) {
     slide.background = { color: t.bg };
     const a = areaFor(sc);
     const center = sc.presenterOn && sc.place === 'center';
-    // the panel and its accent edge
-    slide.addShape(pptx.ShapeType.roundRect, { x: a.x, y: a.y, w: a.w, h: a.h, rectRadius: 0.18,
-      fill: { color: t.panel, transparency: t.panelT }, line: { color: t.panel, transparency: 100 } });
+    // no panel behind the text: transparent by default, so the background video stays the eye-catcher
     const ix = a.x + 0.7, iw = a.w - 1.1, iy = a.y + 0.38;            // inner box
     // a heading at the top of the panel, with the accent bar beside it
     const heading = (size, h = 1.0, y = iy) => {
@@ -91,7 +93,7 @@ export async function buildDeck(script, { fileName } = {}) {
         const cw = (iw - gap * (n - 1)) / n, cy = iy + (center ? 1.05 : 1.6), ch = center ? 2.2 : 2.9;
         items.forEach((it, k) => {
           const cx = ix + k * (cw + gap);
-          slide.addShape(pptx.ShapeType.roundRect, anim(k, { x: cx, y: cy, w: cw, h: ch, rectRadius: 0.12, fill: { color: t.card }, line: { color: t.card } }));
+          slide.addShape(pptx.ShapeType.roundRect, anim(k, { x: cx, y: cy, w: cw, h: ch, rectRadius: 0.12, fill: { color: t.card, transparency: 100 }, line: { color: t.accent, width: 1.5 } }));
           slide.addText(it.value, anim(k, txt({ x: cx + 0.2, y: cy + 0.25, w: cw - 0.4, h: ch * 0.45, fontSize: n > 3 ? 34 : 42, bold: true, color: t.accent, align: 'center', valign: 'middle', fit: 'shrink' })));
           slide.addText(it.label, anim(k, txt({ x: cx + 0.2, y: cy + 0.25 + ch * 0.45, w: cw - 0.4, h: ch * 0.45, fontSize: 17, color: t.sub, align: 'center', valign: 'top' })));
         });
