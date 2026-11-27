@@ -203,6 +203,27 @@ export function isFontAvailable(family) {
   return false;
 }
 
+// Is this font really installed on the system? Canvas measurement only:
+// document.fonts.check() answers true for fonts that don't exist at all.
+const _localFonts = new Map();
+function hasLocalFont(family) {
+  if (_localFonts.has(family)) return _localFonts.get(family);
+  let found = false;
+  try {
+    const ctx = getProbeCtx();
+    outer: for (const size of PROBE_SIZES) {
+      for (const baseline of ['monospace', 'serif']) {
+        ctx.font = `${size}px ${baseline}`;
+        const baseW = ctx.measureText(PROBE_TEXT).width;
+        ctx.font = `${size}px "${family}", ${baseline}`;
+        if (Math.abs(ctx.measureText(PROBE_TEXT).width - baseW) > 0.5) { found = true; break outer; }
+      }
+    }
+  } catch (_) {}
+  _localFonts.set(family, found);
+  return found;
+}
+
 // ── Custom font registration ─────────────────────────────────────────────────
 
 /**
@@ -400,6 +421,9 @@ export function resolveFontFamily(name) {
   if (mapped) {
     // Custom override for a known MS font name
     if (mapped._custom) return name;
+    // The real font is installed on this PC (e.g. Aptos, Calibri) — use it, so the slides
+    // look exactly as they do in PowerPoint instead of using the look-alike web font
+    if (mapped.google && hasLocalFont(name)) return name;
     // Web-safe — use as-is
     if (mapped.google === null) return name;
     // Check if the substitute is available (may already be on the system)
