@@ -6,7 +6,7 @@
 <title>DeckPersona – PowerPoint to narrated video | MLApplications</title>
 <meta name="robots" content="noindex, nofollow">
 <!-- The DeckPersona app shows the highest version it has (bundled, or this page from the website): bump it on every change. -->
-<meta name="dp-page-version" content="2026.11.25.4">
+<meta name="dp-page-version" content="2026.11.27.1">
 <script>
   // Apply the saved theme before first paint (light / dark; nothing = follow the system)
   (function () { try { var t = localStorage.getItem('pptxTheme'); if (t !== 'auto') document.documentElement.dataset.theme = (t === 'light' ? 'light' : 'dark'); } catch (e) {} })();
@@ -189,6 +189,69 @@
   #voiceSummary { display: inline-flex; align-items: center; gap: 7px; }
   #voiceSummary .vsex { width: 20px; height: 20px; } #voiceSummary .vsex .ic { width: 12px; height: 12px; }
   #voiceSummary .flag { --fw: 22px; }
+  /* ── step 2 header: title (description underneath) | the wizard | Start over ── */
+  #editor .ed-head { display: flex; align-items: center; gap: 18px; margin-bottom: 14px; flex-wrap: wrap; }
+  #editor .ed-head h2.ttl { margin: 0; flex: none; }
+  #editor .ed-head .ttl-t { display: flex; flex-direction: column; line-height: 1.15; }
+  #editor .ed-head .h2sub { margin: 4px 0 0; display: block; }
+  #editor .ed-head .quickrow { flex: 1 1 340px; min-width: 0; max-width: 920px; margin: 0 auto !important; padding: 10px 14px 10px 12px; gap: 12px; flex-wrap: nowrap; justify-content: flex-start; }
+  #editor .ed-head .quickrow .qr-text { flex: 1; min-width: 0; }
+  #editor .ed-head .quickrow .qr-text b { font-size: 14.5px; }
+  #editor .ed-head .quickrow .quicksub { font-size: 12.5px; }
+  #editor .ed-head .quickrow button { flex: none; white-space: nowrap; }
+  #editor .ed-head .qr-ic { flex: none; width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; color: #fff;
+    background: linear-gradient(180deg, rgba(255,255,255,.25), rgba(255,255,255,0) 55%), linear-gradient(135deg, #8b5cf6, #2563eb);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 2px 6px rgba(37,99,235,.35); }
+  #editor .ed-head .qr-ic .ic { width: 21px; height: 21px; }
+  #editor .ed-head #startOverBtn { margin-left: 0; flex: none; }
+  #editor .ed-head .quickrow .qr-text b { white-space: nowrap; }
+  @media (max-width: 1500px) { #editor .ed-head .quickrow .quicksub { display: none; } #editor .ed-head .quickrow { padding-block: 8px; } }
+  @media (max-width: 1150px) { #editor .ed-head .quickrow { order: 3; flex-basis: 100%; max-width: none; } #editor .ed-head #startOverBtn { margin-left: auto; } }
+
+  /* ── under the slide: controls card (its own colour) + narration card, across to the right edge ── */
+  :root { --sec-ctrl: #e8890c; }
+  .editor { grid-template-rows: auto auto; }
+  .editor > .thumbcol { grid-column: 1; grid-row: 1 / span 3; }
+  .editor > .center { grid-column: 2; grid-row: 1; }
+  .editor > .side { grid-column: 3; grid-row: 1; }
+  .editor > .stagebar { grid-column: 2 / -1; grid-row: 2; display: flex; gap: 12px; align-items: stretch; min-width: 0; }
+  .editor > #animInfo { grid-column: 2 / -1; grid-row: 3; }
+  .editor > #animInfo:empty { display: none; }
+  .ctrlcard { flex: none; margin: 0 !important; padding: 8px 10px; flex-wrap: nowrap; border-radius: var(--radius, 10px); background: var(--surface, var(--panel-2));
+    border: 1.5px solid color-mix(in srgb, var(--sec-ctrl) 70%, transparent); box-shadow: inset 3px 0 0 var(--sec-ctrl); }
+  .ctrlcard #slideLabel { white-space: nowrap; min-width: 84px; text-align: center; }
+  .ctrlcard .tb-sep { width: 1px; align-self: stretch; margin: 2px 2px; background: var(--border); }
+  .ctrlcard #pptEditBtn { white-space: nowrap; }
+  /* controls + narration always share one row: narration takes every pixel left after the controls */
+  .editor > .stagebar { flex-wrap: nowrap !important; }
+  .stagebar .narrrow { flex: 1 1 0; width: auto; min-width: 150px; margin-top: 0 !important; overflow: hidden; container-type: inline-size; }
+  .stagebar .narrrow .nr-main { flex: 0 1 auto; min-width: 0; overflow: hidden; }
+  .stagebar .narrrow .nr-main b { flex: none; white-space: nowrap; }
+  .stagebar .narrrow .nr-main { flex-shrink: 0; max-width: 60%; }
+  .stagebar .narrrow .nr-pill, .stagebar .narrrow .sec-check, .stagebar .narrrow .tic { flex: none; }
+  .stagebar .narrrow .nr-info { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .stagebar .narrrow .nr-voice { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .stagebar .narrrow .nr-open { flex: none; margin-left: auto; white-space: nowrap; }
+  @container (max-width: 440px) { .stagebar .narrrow .nr-info { display: none; } }
+  @container (max-width: 300px) { .stagebar .narrrow .nr-voice, .stagebar .narrrow .nr-pill { display: none; } }
+  @container (max-width: 200px) { .stagebar .narrrow .nr-open .cb-t, .stagebar .narrrow .tic { display: none; } }
+  .stagebar .narrrow { min-width: 120px; }
+  /* tight windows: the controls lose their labels so the narration keeps its room on the same row */
+  @media (max-width: 1300px) { .ctrlcard #slideLabel { min-width: 0; } .ctrlcard { gap: 4px; } }
+  @media (max-width: 1100px) { .ctrlcard #playSlideBtn .cb-t, .ctrlcard #stopSlideBtn .cb-t { display: none; } .ctrlcard #playSlideBtn, .ctrlcard #stopSlideBtn { padding-inline: 10px; } }
+  @media (max-width: 1600px) { .ctrlcard #pptEditBtn .pe-t { display: none; } .ctrlcard #pptEditBtn { padding-inline: 9px; } }
+  @media (max-width: 1150px) {
+    .editor > .thumbcol { grid-row: 1; }
+    .editor > .stagebar { grid-column: 1 / -1; grid-row: 2; }
+    .editor > #animInfo { grid-column: 1 / -1; grid-row: 3; }
+    .editor > .side { grid-column: 1 / -1; grid-row: 4; }
+  }
+  @media (max-width: 900px) { .ctrlcard { gap: 4px; padding-inline: 6px; } .ctrlcard .tb-sep { display: none; } }
+  @media (max-width: 760px) {
+    .editor > .thumbcol, .editor > .center, .editor > .stagebar, .editor > #animInfo, .editor > .side { grid-column: 1; grid-row: auto; }
+  }
+  @media (max-width: 600px) { .editor > .stagebar { flex-wrap: wrap !important; } .stagebar .narrrow { flex-basis: 100%; } }
+
   /* the narration text: the thing the user reads and edits, so it stands out */
   :root { --narr-bg: color-mix(in srgb, var(--accent) 7%, var(--input-bg, var(--panel))); }
   .nedit textarea { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)) !important; }
@@ -1607,7 +1670,7 @@
     <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
     <symbol id="i-auto" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M12 4v12" /></symbol>
-    <symbol id="i-pl-left" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M6 19v-3.5a2 2 0 0 1 4 0V19M8 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-pl-center" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 19v-3.5a2 2 0 0 1 4 0V19M12 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-pl-right" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M14 19v-3.5a2 2 0 0 1 4 0V19M16 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></symbol><symbol id="i-restart" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></symbol><symbol id="i-gallery" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol><symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3z"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><path d="M16 5.2a3 3 0 0 1 0 5.6M18 14.3c1.8.8 3 2.8 3 5.7"/></symbol><symbol id="i-male" viewBox="0 0 24 24"><circle cx="10" cy="14" r="6"/><path d="M14.5 9.5 20 4M15 4h5v5"/></symbol><symbol id="i-female" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M12 15v7M9 19h6"/></symbol><symbol id="i-shirt" viewBox="0 0 24 24"><path d="M8.5 3 3 6l2 4.5 3-1.2V21h8V9.3l3 1.2L21 6l-5.5-3c-.6 1.6-1.9 2.6-3.5 2.6S9.1 4.6 8.5 3z"/></symbol><symbol id="i-hair" viewBox="0 0 24 24"><path d="M5 15c-1-6 2.5-11 7-11s8 5 7 11"/><path d="M5 15c1.5-2.5 4-4.5 8-6 1.5 2.5 3.5 4.5 6 6"/><path d="M8 20c0-2.5 1.8-4 4-4s4 1.5 4 4"/></symbol><symbol id="i-moustache" viewBox="0 0 24 24"><path d="M12 11c-1.4-1.3-3.4-1.6-5-.6-1.4.9-2.2 2.6-4 2.6.8 2.6 3.6 3.6 6 2.6 1.3-.5 2.3-1.5 3-2.6.7 1.1 1.7 2.1 3 2.6 2.4 1 5.2 0 6-2.6-1.8 0-2.6-1.7-4-2.6-1.6-1-3.6-.7-5 .6z"/></symbol><symbol id="i-beard" viewBox="0 0 24 24"><path d="M4.5 8v3.5C4.5 17 8 21 12 21s7.5-4 7.5-9.5V8"/><path d="M4.5 11.5c1.5 1 3 1.5 4.5 1.5 1 0 2-.6 3-.6s2 .6 3 .6c1.5 0 3-.5 4.5-1.5"/><path d="M10 16.5h4"/></symbol><symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0z"/><path d="M12 17v4"/></symbol><symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol><symbol id="i-okmark" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h13l-3.5-3.5M20 16H7l3.5 3.5"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></symbol>
+    <symbol id="i-pl-left" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M6 19v-3.5a2 2 0 0 1 4 0V19M8 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-pl-center" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 19v-3.5a2 2 0 0 1 4 0V19M12 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-pl-right" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M14 19v-3.5a2 2 0 0 1 4 0V19M16 12.5a1.5 1.5 0 1 0 0-.01"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></symbol><symbol id="i-restart" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></symbol><symbol id="i-gallery" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol><symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3z"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><path d="M16 5.2a3 3 0 0 1 0 5.6M18 14.3c1.8.8 3 2.8 3 5.7"/></symbol><symbol id="i-male" viewBox="0 0 24 24"><circle cx="10" cy="14" r="6"/><path d="M14.5 9.5 20 4M15 4h5v5"/></symbol><symbol id="i-female" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M12 15v7M9 19h6"/></symbol><symbol id="i-shirt" viewBox="0 0 24 24"><path d="M8.5 3 3 6l2 4.5 3-1.2V21h8V9.3l3 1.2L21 6l-5.5-3c-.6 1.6-1.9 2.6-3.5 2.6S9.1 4.6 8.5 3z"/></symbol><symbol id="i-hair" viewBox="0 0 24 24"><path d="M5 15c-1-6 2.5-11 7-11s8 5 7 11"/><path d="M5 15c1.5-2.5 4-4.5 8-6 1.5 2.5 3.5 4.5 6 6"/><path d="M8 20c0-2.5 1.8-4 4-4s4 1.5 4 4"/></symbol><symbol id="i-moustache" viewBox="0 0 24 24"><path d="M12 11c-1.4-1.3-3.4-1.6-5-.6-1.4.9-2.2 2.6-4 2.6.8 2.6 3.6 3.6 6 2.6 1.3-.5 2.3-1.5 3-2.6.7 1.1 1.7 2.1 3 2.6 2.4 1 5.2 0 6-2.6-1.8 0-2.6-1.7-4-2.6-1.6-1-3.6-.7-5 .6z"/></symbol><symbol id="i-beard" viewBox="0 0 24 24"><path d="M4.5 8v3.5C4.5 17 8 21 12 21s7.5-4 7.5-9.5V8"/><path d="M4.5 11.5c1.5 1 3 1.5 4.5 1.5 1 0 2-.6 3-.6s2 .6 3 .6c1.5 0 3-.5 4.5-1.5"/><path d="M10 16.5h4"/></symbol><symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0z"/><path d="M12 17v4"/></symbol><symbol id="i-wand" viewBox="0 0 24 24"><path d="M4 20 15 9M13 7l4 4"/><path d="M18 2.5v3M16.5 4h3M20.5 8.5v2M19.5 9.5h2M11 3v2M10 4h2"/></symbol><symbol id="i-ppt" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M9.5 16.5v-9h3.2a2.7 2.7 0 0 1 0 5.4H9.5"/></symbol><symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol><symbol id="i-okmark" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h13l-3.5-3.5M20 16H7l3.5 3.5"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20.5c1.6-4 4.6-6 8-6s6.4 2 8 6"/></symbol>
     <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M4 16a8 8 0 1 1 16 0"/><path d="M12 16l4-5"/></symbol>
     <symbol id="i-layers" viewBox="0 0 24 24"><rect x="3" y="4" width="14" height="10" rx="1.5"/><path d="M7 18h12a2 2 0 0 0 2-2V8"/></symbol>
@@ -1734,11 +1797,14 @@
 
   <!-- 2. Slide editor -->
   <section class="panel" id="editor">
-    <h2 class="ttl"><span class="layer-step">2</span>Design video<small class="h2sub">Narration, background video and transition for each slide</small>
-      <button class="sm" id="startOverBtn" title="Clear the presentation and all your choices, and start a new video"><svg class="ic"><use href="#i-restart"/></svg>Start over</button></h2>
-    <div class="quickrow">
-      <div class="qr-text"><b>In a hurry?</b><span class="quicksub">Pick background videos and a voice – transitions, timing and narration are done for you.</span></div>
-      <button id="quickBtn" class="gloss g-white" title="In a hurry? Pick videos and a voice – transitions and timing are chosen for you"><svg class="ic"><use href="#i-bolt"/></svg>Create a quick video</button>
+    <div class="ed-head">
+      <h2 class="ttl"><span class="layer-step">2</span><span class="ttl-t">Design video<small class="h2sub">Narration, background video and transition for each slide</small></span></h2>
+      <div class="quickrow">
+        <span class="qr-ic"><svg class="ic"><use href="#i-wand"/></svg></span>
+        <div class="qr-text" title="Pick background videos and a voice – transitions, timing and narration are done for you."><b>Wizard: In a hurry?</b><span class="quicksub">Pick background videos and a voice – transitions, timing and narration are done for you.</span></div>
+        <button id="quickBtn" class="gloss g-white" title="In a hurry? Pick videos and a voice – transitions and timing are chosen for you"><svg class="ic"><use href="#i-bolt"/></svg>Create a quick video</button>
+      </div>
+      <button class="primary" id="startOverBtn" title="Clear the presentation and all your choices, and start a new video"><svg class="ic"><use href="#i-restart"/></svg>Start over</button>
     </div>
     <div id="info" class="muted" style="display:none"></div>
     <div class="editor">
@@ -1748,27 +1814,6 @@
       <!-- center: live canvas + narration -->
       <div class="center">
         <div class="stage" id="stage"><canvas id="slideCanvas"></canvas><div class="sec-chips" id="secChips"></div><div class="av-ghost" id="avGhost"><img id="avGhostImg" alt="" hidden><svg viewBox="0 0 100 100" preserveAspectRatio="none"><ellipse cx="50" cy="30" rx="21" ry="25"/><path d="M4 100c3-28 22-42 46-42s43 14 46 42z"/></svg><span id="avGhostName">Avatar</span></div><div class="stage-msg" id="stageMsg"></div><div class="stage-busy" id="stageBusy"><span class="spin"></span><span id="stageBusyText">Preparing preview…</span></div></div>
-        <div class="toolbar">
-          <button id="prevBtn" class="icon-only" title="Previous slide"><svg class="ic"><use href="#i-left"/></svg></button>
-          <span id="slideLabel">–</span>
-          <button id="nextBtn" class="icon-only" title="Next slide"><svg class="ic"><use href="#i-right"/></svg></button>
-          <button id="playSlideBtn" class="primary" title="Play this slide with animations, background and narration"><svg class="ic f"><use href="#i-play"/></svg>Play slide</button>
-          <button id="stopSlideBtn" disabled title="Stop"><svg class="ic f"><use href="#i-stop"/></svg>Stop</button>
-          <span class="spacer"></span>
-          <button id="showBtn" class="sm icon-only" title="Slide show (full screen)"><svg class="ic"><use href="#i-show"/></svg></button>
-          <button id="pngBtn" class="sm icon-only" title="Save this frame as PNG"><svg class="ic"><use href="#i-image"/></svg></button>
-          <button id="pdfBtn" class="sm icon-only" title="Save all slides as PDF"><svg class="ic"><use href="#i-file"/></svg></button>
-        </div>
-        <div id="animInfo"></div>
-
-        <!-- narration for this slide -->
-        <button class="narrrow" id="narrRow" title="Open the narration of this slide"><span class="sec-check" data-sec="narr"></span>
-          <span class="tic sm"><svg class="ic"><use href="#i-mic"/></svg></span>
-          <span class="nr-main"><b>Narration</b><span class="nr-pill" id="nrState">Off</span><span class="nr-voice" id="nrVoice"></span></span>
-          <span class="nr-info" id="nrInfo"></span>
-          <span class="nr-open">Open<svg class="ic"><use href="#i-right"/></svg></span>
-        </button>
-
       </div>
 
       <!-- transition picker: opens over the background and avatar cards when a transition between two slides is clicked -->
@@ -1788,6 +1833,28 @@
           </div>
           <div class="tlist" id="transList"></div>
         </div>
+
+      <!-- under the slide: the slide controls, then the narration of this slide (under the AI avatar card) -->
+      <div class="stagebar">
+        <div class="toolbar ctrlcard">
+          <button id="prevBtn" class="icon-only" title="Previous slide"><svg class="ic"><use href="#i-left"/></svg></button>
+          <span id="slideLabel">–</span>
+          <button id="nextBtn" class="icon-only" title="Next slide"><svg class="ic"><use href="#i-right"/></svg></button>
+          <button id="playSlideBtn" class="primary" title="Play this slide with animations, background and narration"><svg class="ic f"><use href="#i-play"/></svg><span class="cb-t">Play slide</span></button>
+          <button id="stopSlideBtn" disabled title="Stop"><svg class="ic f"><use href="#i-stop"/></svg><span class="cb-t">Stop</span></button>
+          <span class="tb-sep"></span>
+          <button id="pngBtn" class="sm icon-only" title="Save this frame as PNG"><svg class="ic"><use href="#i-image"/></svg></button>
+          <button id="pdfBtn" class="sm icon-only" title="Save all slides as PDF"><svg class="ic"><use href="#i-file"/></svg></button>
+          <button id="pptEditBtn" class="sm" hidden title="Open the slides in PowerPoint to change text, pictures and layout – every save there updates the slides here, keeping your narration, backgrounds, avatar and transitions"><svg class="ic"><use href="#i-ppt"/></svg><span class="pe-t">Edit in PowerPoint</span></button>
+        </div>
+        <button class="narrrow" id="narrRow" title="Open the narration of this slide"><span class="sec-check" data-sec="narr"></span>
+          <span class="tic sm"><svg class="ic"><use href="#i-mic"/></svg></span>
+          <span class="nr-main"><b>Narration</b><span class="nr-pill" id="nrState">Off</span><span class="nr-voice" id="nrVoice"></span></span>
+          <span class="nr-info" id="nrInfo"></span>
+          <span class="nr-open"><span class="cb-t">Open</span><svg class="ic"><use href="#i-right"/></svg></span>
+        </button>
+      </div>
+      <div id="animInfo"></div>
 
       <!-- right: background (top half) + AI avatar (bottom half), together as tall as the slide -->
       <div class="side fit" id="sideCol">
@@ -2603,7 +2670,8 @@
   ['dragleave', 'drop'].forEach(ev => loadPanel.addEventListener(ev, (e) => { e.preventDefault(); loadPanel.classList.remove('drag'); }));
   loadPanel.addEventListener('drop', (e) => { if (e.target.closest('#dropZone')) return; const f = e.dataTransfer.files[0]; if (f && !job) loadFile(f); });
 
-  async function loadFile(file) {
+  let notesAtLoad = [];                 // each slide's speaker notes when the deck was loaded (to tell edits apart)
+  async function loadFile(file, opts = {}) {
     if (!/\.pptx$/i.test(file.name)) {
       setStatus(/\.ppt$/i.test(file.name) ? 'This is an old .ppt file: open it in PowerPoint and use Save As → PowerPoint Presentation (.pptx), then choose that.'
         : /\.pdf$/i.test(file.name) ? 'PDF files are not supported yet – export the presentation as .pptx, or use Create from an idea.'
@@ -2632,11 +2700,13 @@
       $('fileMeta').textContent = `${info.slideCount} slide${info.slideCount === 1 ? '' : 's'} · ${info.width.toFixed(2)}″ × ${info.height.toFixed(2)}″ · ${animTotal} animation effect${animTotal === 1 ? '' : 's'}`;
       exitTransMode(true);
       slides = [];
+      pptUi();
       for (let i = 0; i < renderer.slideCount; i++) {
         let text = '';
         try { text = await slideNotes(renderer, i); } catch {}
         slides.push(newSlideState(text));
       }
+      notesAtLoad = slides.map(s => s.text);
       await mattesReady;
       randomizeTransitions();                            // default: a random matte between every two slides
       $('editor').style.display = 'block';
@@ -2648,6 +2718,7 @@
       setStatus(withNotes ? `${withNotes} slide${withNotes === 1 ? ' has' : 's have'} speaker notes – turn on Narration to voice them.` : '');
       $('loadPanel').classList.add('compact');
       slideTextCache.clear();
+      if (opts.reload) return;
       if ($('quickDlg').open) { quick.slide = 0; try { await refreshBgSuggestions(); } catch {} showQuickStep(1); }
       else requestAnimationFrame(() => $('editor').scrollIntoView({ behavior: 'smooth', block: 'start' }));   // on to step 2
     } catch (err) {
@@ -2655,6 +2726,74 @@
       setBar($('progress'), null);
       setStatus('Could not open file: ' + (err?.message || err), true);
     }
+  }
+
+  // ── Edit in PowerPoint (desktop app): the app keeps a copy of the deck in its library, opens it in PowerPoint and
+  //    watches it. Every save there comes back here: the slides reload and each keeps its narration, background,
+  //    avatar and transition (by position). A deck made from an idea is a .pptx too, so it works the same way.
+  const ppt = { file: '', deck: null, pending: null };
+  function pptUi() { $('pptEditBtn').hidden = !APP.isDesktop || !deckFile; }
+  async function pptEdit() {
+    if (!deckFile || !APP.isDesktop) return;
+    const btn = $('pptEditBtn');
+    btn.disabled = true;
+    try {
+      if (ppt.deck !== deckFile || !ppt.file) {           // first time for this deck: hand it to the app
+        const buf = await deckFile.arrayBuffer();
+        const h = [...new Uint8Array(await crypto.subtle.digest('SHA-256', buf))].slice(0, 4).map(x => x.toString(16).padStart(2, '0')).join('');
+        const base = (fileBaseName || 'presentation').replace(/[^\w\- ]+/g, '').trim().slice(0, 60) || 'presentation';
+        const name = `${base}-${h}.pptx`;
+        const r = await fetch(`${APP.origin}/library/projects/decks/${encodeURIComponent(name)}`, { method: 'PUT', body: buf,
+          headers: { 'content-type': 'application/vnd.openxmlformats-officedocument.presentationml.presentation' } });
+        if (!r.ok) throw new Error(`the app did not take the file (${r.status})`);
+        ppt.file = `projects/decks/${name}`;
+        ppt.deck = deckFile;
+      }
+      APP.send('pptEdit', { file: ppt.file });
+      setStatus('Opening the slides in PowerPoint… Change text, pictures or layout there and press Save (Ctrl+S) – the slides here update by themselves.');
+    } catch (err) {
+      setStatus('Could not open PowerPoint: ' + (err?.message || err), true);
+    } finally { btn.disabled = false; }
+  }
+  $('pptEditBtn').addEventListener('click', () => pptEdit());
+  APP.on('pptEditing', (p) => {
+    if (p?.file === ppt.file && p.opened === false)
+      setStatus('No program on this PC opens PowerPoint files – install PowerPoint (or another app that edits .pptx) to change the slides.', true);
+  });
+  APP.on('pptChanged', (p) => {
+    if (!p || p.file !== ppt.file) return;
+    if (job) { ppt.pending = p; setStatus('The slides changed in PowerPoint – they reload here when this video is finished.'); return; }
+    pptReload(p);
+  });
+  async function pptReload(p) {
+    try {
+      const r = await fetch(`${APP.origin}${p.url}?v=${encodeURIComponent(p.stamp || Date.now())}`, { cache: 'no-store' });
+      if (!r.ok) throw new Error(`the app answered ${r.status}`);
+      const blob = await r.blob();
+      await reloadDeck(new File([blob], deckFile?.name || 'presentation.pptx', { type: blob.type }));
+      ppt.deck = deckFile;
+      setStatus('Slides updated from PowerPoint – your narration, backgrounds, avatar and transitions are kept.');
+    } catch (err) { setStatus('Could not load the changed slides: ' + (err?.message || err), true); }
+  }
+  /** Load a new version of the same deck and give every slide back its choices (slide 1 keeps slide 1's, and so on).
+   *  Narration text the user wrote here stays; narration that came from the notes follows the notes – if those changed,
+   *  its audio is dropped so it is made again. Slides added in PowerPoint start empty, removed ones lose theirs. */
+  async function reloadDeck(file) {
+    const old = slides.map(s => ({ ...s })), oldNotes = notesAtLoad.slice(), at = current;
+    await loadFile(file, { reload: true });
+    if (!renderer || !slides.length) return;
+    for (let i = 0; i < Math.min(old.length, slides.length); i++) {
+      const o = old[i], s = slides[i];
+      const ownText = o.text !== oldNotes[i];
+      const keepAudio = ownText || s.text === oldNotes[i];
+      Object.assign(s, { narrOn: o.narrOn, voice: o.voice, bg: o.bg, mode: o.mode, inset: o.inset, blend: o.blend, av: o.av });
+      if (ownText) s.text = o.text;
+      if (keepAudio) Object.assign(s, { buffer: o.buffer, kind: o.kind, label: o.label, spokenText: o.spokenText, voiceSig: o.voiceSig,
+        marks: o.marks, wavName: o.wavName, wavFor: o.wavFor });
+      if (i > 0 && o.trans) s.trans = o.trans;
+      updatePill(i); updateThumbBadges(i); queueThumb(i);
+    }
+    await selectSlide(Math.min(at, slides.length - 1));
   }
 
   // ── Thumbnails: the slide as it will appear – over the first frame of its background video
@@ -2834,10 +2973,14 @@
       const y = Math.max(C.top + 12, Math.min(C.bottom - 12, R.top + R.height / 2));
       line(sec, [[C.right, y], [R.left, y]]);
     }
-    const N = $('narrRow').getBoundingClientRect(), sp = document.querySelector('.center .toolbar .spacer')?.getBoundingClientRect();
+    const N = $('narrRow').getBoundingClientRect();
+    const T = document.querySelector('.ctrlcard')?.getBoundingClientRect();
     if (N.height) {
-      const x = sp && sp.width > 20 ? sp.left + sp.width / 2 : C.left + C.width * 0.62;
-      line('narr', [[x, C.bottom], [x, N.top]]);
+      // beside the controls: down from the slide at the narration card's left; under them: past their right end
+      const below = T && N.top >= T.bottom - 2;
+      const x = !below ? N.left + Math.min(90, (Math.min(N.right, C.right) - N.left) / 2)
+        : T.right + 24 < C.right - 12 ? (T.right + Math.min(C.right, N.right)) / 2 : null;
+      if (x != null && x < C.right - 10) line('narr', [[x, C.bottom], [x, N.top]]);
     }
     svg.innerHTML = parts.join('');
   }
@@ -2884,10 +3027,6 @@
     if (e.key === 'ArrowRight') selectSlide(current + 1);
   });
 
-  $('showBtn').addEventListener('click', async () => {
-    const show = renderer.createShow(document.body, { fullscreen: true, showHud: true });
-    await show.start(current);
-  });
   $('pngBtn').addEventListener('click', async () => {
     // the composed frame (slide + background) when there is one, else the plain slide
     if (live.pv && slides[current].bg) live.pv.out.toBlob((b) => downloadBlob(b, `${fileBaseName}-slide${current + 1}.png`), 'image/png');
@@ -4623,21 +4762,23 @@
   const HAIR_DEFAULT = ['Default', 'Black', 'Dark brown', 'Brown', 'Light brown', 'Dark blonde', 'Blonde', 'Platinum', 'Auburn', 'Ginger', 'Salt & pepper', 'Grey', 'White'];
   AV.lookPics = new Map();                                  // "id|look" -> picture made by the app
   AV.lookBusy = new Set();
-  const avLook = (id) => (avDeck.looks ||= {})[id] ||= { colors: {}, hairColor: 'Default', hideGrooms: [] };
+  /** An avatar's look when nobody changed it: the app says which grooms start off (Nikos is clean-shaven by default). */
+  const avDefaultLook = (id) => ({ colors: {}, hairColor: 'Default', hideGrooms: [...(avAll().find(x => x.id === id)?.groomsOff || [])] });
+  const avLook = (id) => (avDeck.looks ||= {})[id] ||= avDefaultLook(id);
   const lookSig = (lk) => !lk ? '' : Object.entries(lk.colors || {}).filter(([, v]) => v).sort().map(([k, v]) => k + '=' + v).join(';') +
     '|' + (lk.hairColor || 'Default') + '|' + [...(lk.hideGrooms || [])].sort().join(',');
-  const lookIsDefault = (lk) => lookSig(lk) === '|Default|';
+  const lookIsDefault = (lk, id) => lookSig(lk) === lookSig(avDefaultLook(id));
   const lookKey = (id) => id + '|' + lookSig(avDeck.looks?.[id]);
   /** The picture to show for an avatar: its current look when the app has made one, else its plain portrait. */
   function avPicFor(a) {
     const lk = avDeck.looks?.[a.id];
-    if (lk && !lookIsDefault(lk)) { const u = AV.lookPics.get(lookKey(a.id)); if (u) return u; }
+    if (lk && !lookIsDefault(lk, a.id)) { const u = AV.lookPics.get(lookKey(a.id)); if (u) return u; }
     return a.preview || null;
   }
   /** Looks to send with a render: only the avatars whose look was changed. */
   function avLooksPayload() {
     const out = {};
-    for (const [id, lk] of Object.entries(avDeck.looks || {})) if (!lookIsDefault(lk)) out[id] = lk;
+    for (const [id, lk] of Object.entries(avDeck.looks || {})) if (!lookIsDefault(lk, id)) out[id] = lk;
     return out;
   }
 
@@ -4688,7 +4829,7 @@
       b.innerHTML = `<button class="sm primary"><svg class="ic"><use href="#i-down"/></svg>Download</button>`;
       b.firstChild.addEventListener('click', () => { avInstall(a); avDlgBuild(); });
     } else {
-      const lkDefault = lookIsDefault(lk), have = lkDefault || AV.lookPics.has(lookKey(a.id));
+      const lkDefault = lookIsDefault(lk, a.id), have = lkDefault || AV.lookPics.has(lookKey(a.id));
       b.innerHTML = `<button class="sm prev"${have || busy ? ' disabled' : ''} title="Let the app draw this look (about a minute the first time)"><svg class="ic"><use href="#i-play"/></svg>${have ? 'Preview up to date' : busy ? 'Making the preview…' : 'Preview this look'}</button>
         <button class="sm primary pick"><svg class="ic"><use href="#i-okmark"/></svg>${chosen ? 'Selected' : 'Select'}</button>`;
       b.querySelector('.prev').addEventListener('click', () => avLookPreview(a));
@@ -5040,6 +5181,7 @@
       slides.forEach((_, i) => updateThumbBadges(i));
       secUpdate(); avLoadUI(); renderAvatarPage();
       if ($('ideaPresField')) $('ideaPresField').style.display = APP.isDesktop ? '' : 'none';
+      pptUi();
     } catch (err) { console.warn(err); }
   }
   connUi();
@@ -7016,6 +7158,7 @@ ${parts.join('\n\n')}
     // second: it competes with the export for the graphics chip (it roughly doubled the export time).
     if (running && !live.held) { live.held = true; live.token++; stopLive(); }
     else if (!running && live.held) { live.held = false; refreshLive(); setTimeout(() => avPortraits(), 3000); }
+    if (!running && ppt.pending) { const p = ppt.pending; ppt.pending = null; setTimeout(() => pptReload(p), 500); }
     $('editor').classList.toggle('muted-off', running);
     for (const id of ['previewVideoBtn', 'exportBtn']) $(id).disabled = running;
     $('stopBtn').disabled = !running;
